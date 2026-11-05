@@ -1,0 +1,5789 @@
+{
+ "version": "57.4",
+ "researched": "2026-11-05",
+ "costBasis": "Medium, single upgrade, no Monkey Knowledge/Village discounts",
+ "costMultipliers": {
+  "easy": 0.85,
+  "medium": 1,
+  "hard": 1.08,
+  "impoppable": 1.2
+ },
+ "costRounding": "round to nearest $5 after multiplying (verified: Dart $200 -> 170/215/240; Quincy $540 -> 460/585/650) CAVEAT (2026-11-05): bloonswiki's Easy figures round upgrade-price halves DOWN (Cold Snap 350 -> 295, Flash Bomb 2,250 -> 1,910; Ice 0-0-5 Easy total 30,085, Ninja 0-0-4 7,135, Sniper 5-0-0 36,125 only reconcile that way); base-price halves are inconsistent (Sniper/Engineer 350 -> 300 but Beast Handler 250 -> 210). Half-up rounding can overstate an Easy price by $5.",
+ "tokens": [
+  "black",
+  "buff",
+  "camo",
+  "ddt",
+  "decamo",
+  "defortify",
+  "degrow",
+  "fortified",
+  "frozen",
+  "income",
+  "lead",
+  "moab",
+  "purple",
+  "slow",
+  "stun",
+  "white"
+ ],
+ "towers": [
+  {
+   "id": "dart",
+   "name": "Dart Monkey",
+   "class": "Primary",
+   "baseCost": 200,
+   "waterOnly": false,
+   "placement": "land",
+   "innate": {
+    "camo": false,
+    "lead": false,
+    "purple": true,
+    "black": true,
+    "white": true,
+    "frozen": false,
+    "moabDamage": false
+   },
+   "paths": [
+    [
+     {
+      "tier": 1,
+      "name": "Sharp Shots",
+      "cost": 140,
+      "xp": 0,
+      "grants": [],
+      "effect": "+1 pierce"
+     },
+     {
+      "tier": 2,
+      "name": "Razor Sharp Shots",
+      "cost": 200,
+      "xp": 100,
+      "grants": [],
+      "effect": "+2 more pierce"
+     },
+     {
+      "tier": 3,
+      "name": "Spike-o-pult",
+      "cost": 320,
+      "xp": 2100,
+      "grants": [],
+      "effect": "Throws a big spiked ball: high pierce, slower attack"
+     },
+     {
+      "tier": 4,
+      "name": "Juggernaut",
+      "cost": 1800,
+      "xp": 7500,
+      "grants": [
+       "lead",
+       "frozen"
+      ],
+      "effect": "Giant ball pops Lead and Frozen, bonus Ceramic damage, bounces off walls"
+     },
+     {
+      "tier": 5,
+      "name": "Ultra-Juggernaut",
+      "cost": 15000,
+      "xp": 22000,
+      "grants": [],
+      "effect": "Huge ball that splits into more Juggernaut balls; strong vs Ceramics"
+     }
+    ],
+    [
+     {
+      "tier": 1,
+      "name": "Quick Shots",
+      "cost": 100,
+      "xp": 0,
+      "grants": [],
+      "effect": "Attack speed up"
+     },
+     {
+      "tier": 2,
+      "name": "Very Quick Shots",
+      "cost": 190,
+      "xp": 100,
+      "grants": [],
+      "effect": "Attack speed up again"
+     },
+     {
+      "tier": 3,
+      "name": "Triple Shot",
+      "cost": 450,
+      "xp": 2000,
+      "grants": [],
+      "effect": "Throws 3 darts per shot"
+     },
+     {
+      "tier": 4,
+      "name": "Super Monkey Fan Club",
+      "cost": 7200,
+      "xp": 9500,
+      "grants": [
+       "buff"
+      ],
+      "effect": "Ability: this and up to 9 nearby Dart Monkeys become Super Monkeys for a few seconds"
+     },
+     {
+      "tier": 5,
+      "name": "Plasma Monkey Fan Club",
+      "cost": 45000,
+      "xp": 30000,
+      "grants": [
+       "lead",
+       "buff"
+      ],
+      "effect": "Ability: Plasma Monkeys (plasma darts pop Lead but not Purple during the ability)"
+     }
+    ],
+    [
+     {
+      "tier": 1,
+      "name": "Long Range Darts",
+      "cost": 90,
+      "xp": 0,
+      "grants": [],
+      "effect": "+range, faster darts"
+     },
+     {
+      "tier": 2,
+      "name": "Enhanced Eyesight",
+      "cost": 200,
+      "xp": 100,
+      "grants": [
+       "camo"
+      ],
+      "effect": "Camo detection and more range; cheapest camo in the game"
+     },
+     {
+      "tier": 3,
+      "name": "Crossbow",
+      "cost": 575,
+      "xp": 1900,
+      "grants": [],
+      "effect": "Crossbow bolts: more damage and range (v57: pierce 4->5)"
+     },
+     {
+      "tier": 4,
+      "name": "Sharp Shooter",
+      "cost": 2050,
+      "xp": 12000,
+      "grants": [],
+      "effect": "Fast crossbow with critical hits (v57: crit 50->60)"
+     },
+     {
+      "tier": 5,
+      "name": "Crossbow Master",
+      "cost": 21500,
+      "xp": 35000,
+      "grants": [
+       "moab"
+      ],
+      "effect": "Very fast high-damage bolts; v57: fires 2 parallel bolts at half attack speed"
+     }
+    ]
+   ],
+   "paragon": {
+    "name": "Apex Plasma Master",
+    "cost": 150000,
+    "xp": 500000
+   },
+   "roles": [
+    "early",
+    "popping",
+    "camo",
+    "cleanup"
+   ],
+   "crosspaths": [
+    {
+     "code": "0-0-2",
+     "name": "Enhanced Eyesight",
+     "use": "Cheapest early camo answer",
+     "popular": true
+    },
+    {
+     "code": "0-2-3",
+     "name": "Crossbow w/ Very Quick Shots",
+     "use": "Cheap mid-game single-lane damage",
+     "popular": true
+    },
+    {
+     "code": "0-2-4",
+     "name": "Sharp Shooter w/ Very Quick Shots",
+     "use": "Ceramic damage; wants pierce buffs, Berserker Brew hurts it",
+     "popular": true
+    },
+    {
+     "code": "0-2-5",
+     "name": "Crossbow Master w/ Very Quick Shots",
+     "use": "Mid-game carry; falls off vs R80+ Super Ceramics",
+     "popular": true
+    },
+    {
+     "code": "4-0-2",
+     "name": "Juggernaut w/ Enhanced Eyesight",
+     "use": "Lead + camo in one cheap tower, best where the ball bounces off walls",
+     "popular": true
+    },
+    {
+     "code": "5-2-0",
+     "name": "Ultra-Juggernaut w/ Very Quick Shots",
+     "use": "Ceramic shredder on closed-in maps; pair with Berserker Brew",
+     "popular": true
+    },
+    {
+     "code": "2-4-0",
+     "name": "Super Monkey Fan Club w/ Razor Sharp",
+     "use": "Ability burst; keep nearby darts at tier 2 or below to be transformed",
+     "popular": false
+    }
+   ],
+   "tier5Rank": [
+    "Ultra-Juggernaut",
+    "Crossbow Master",
+    "Plasma Monkey Fan Club"
+   ],
+   "notes": "Only tower whose tier 1 XP cost is 0 (tier 2 = 100). Base darts are sharp: no Lead/Frozen. Stats page v53.0; v57 Crossbow buffs applied in effects (no v54-v57 price changes found)."
+  },
+  {
+   "id": "boomerang",
+   "name": "Boomerang Monkey",
+   "class": "Primary",
+   "baseCost": 315,
+   "waterOnly": false,
+   "placement": "land",
+   "innate": {
+    "camo": false,
+    "lead": false,
+    "purple": true,
+    "black": true,
+    "white": true,
+    "frozen": false,
+    "moabDamage": false
+   },
+   "paths": [
+    [
+     {
+      "tier": 1,
+      "name": "Improved Rangs",
+      "cost": 200,
+      "xp": 100,
+      "grants": [],
+      "effect": "+pierce"
+     },
+     {
+      "tier": 2,
+      "name": "Glaives",
+      "cost": 280,
+      "xp": 520,
+      "grants": [],
+      "effect": "Glaives: more pierce"
+     },
+     {
+      "tier": 3,
+      "name": "Glaive Ricochet",
+      "cost": 600,
+      "xp": 2500,
+      "grants": [],
+      "effect": "Glaives bounce between Bloons automatically"
+     },
+     {
+      "tier": 4,
+      "name": "M.O.A.R Glaives",
+      "cost": 2000,
+      "xp": 8500,
+      "grants": [],
+      "effect": "Much more pierce and damage, faster ricochets"
+     },
+     {
+      "tier": 5,
+      "name": "Glaive Lord",
+      "cost": 32500,
+      "xp": 37500,
+      "grants": [
+       "moab"
+      ],
+      "effect": "Orbiting glaives shred everything nearby, including blimps"
+     }
+    ],
+    [
+     {
+      "tier": 1,
+      "name": "Faster Throwing",
+      "cost": 175,
+      "xp": 120,
+      "grants": [],
+      "effect": "Attack speed up"
+     },
+     {
+      "tier": 2,
+      "name": "Faster Rangs",
+      "cost": 250,
+      "xp": 550,
+      "grants": [],
+      "effect": "Faster boomerangs"
+     },
+     {
+      "tier": 3,
+      "name": "Bionic Boomerang",
+      "cost": 1250,
+      "xp": 2500,
+      "grants": [
+       "moab"
+      ],
+      "effect": "Very fast throws with bonus MOAB damage"
+     },
+     {
+      "tier": 4,
+      "name": "Turbo Charge",
+      "cost": 4200,
+      "xp": 9000,
+      "grants": [],
+      "effect": "Ability: huge attack-speed burst"
+     },
+     {
+      "tier": 5,
+      "name": "Perma Charge",
+      "cost": 35000,
+      "xp": 32000,
+      "grants": [
+       "moab"
+      ],
+      "effect": "Permanent Turbo-level speed plus big damage ability"
+     }
+    ],
+    [
+     {
+      "tier": 1,
+      "name": "Long Range Rangs",
+      "cost": 100,
+      "xp": 110,
+      "grants": [],
+      "effect": "+range"
+     },
+     {
+      "tier": 2,
+      "name": "Red Hot Rangs",
+      "cost": 300,
+      "xp": 490,
+      "grants": [
+       "lead",
+       "frozen"
+      ],
+      "effect": "Pops Lead and Frozen, +1 damage to Lead"
+     },
+     {
+      "tier": 3,
+      "name": "Kylie Boomerang",
+      "cost": 1300,
+      "xp": 3000,
+      "grants": [],
+      "effect": "Straight-line Kylie that goes out and back, high pierce"
+     },
+     {
+      "tier": 4,
+      "name": "MOAB Press",
+      "cost": 2700,
+      "xp": 9500,
+      "grants": [
+       "moab",
+       "slow"
+      ],
+      "effect": "Kylie knocks back blimps and does extra MOAB damage"
+     },
+     {
+      "tier": 5,
+      "name": "MOAB Domination",
+      "cost": 50000,
+      "xp": 28000,
+      "grants": [
+       "moab",
+       "slow"
+      ],
+      "effect": "Massive blimp knockback and damage"
+     }
+    ]
+   ],
+   "paragon": {
+    "name": "Glaive Dominus",
+    "cost": 375000,
+    "xp": 500000
+   },
+   "roles": [
+    "early",
+    "popping",
+    "lead",
+    "ceramic"
+   ],
+   "crosspaths": [
+    {
+     "code": "0-0-2",
+     "name": "Red Hot Rangs",
+     "use": "Cheap early Lead fix",
+     "popular": true
+    },
+    {
+     "code": "1-0-2",
+     "name": "Red Hot Rangs w/ Improved Rangs",
+     "use": "Early-game staple in Boss Events",
+     "popular": true
+    },
+    {
+     "code": "0-2-2",
+     "name": "Faster Rangs w/ Red Hot",
+     "use": "Can carry early CHIMPS",
+     "popular": true
+    },
+    {
+     "code": "3-0-2",
+     "name": "Glaive Ricochet w/ Red Hot Rangs",
+     "use": "Mid-game cleanup on track-dense maps with Lead coverage",
+     "popular": true
+    },
+    {
+     "code": "2-5-0",
+     "name": "Perma Charge w/ Glaives",
+     "use": "Single-target/blimp DPS (glaives add pierce)",
+     "popular": true
+    },
+    {
+     "code": "2-0-4",
+     "name": "MOAB Press w/ Glaives",
+     "use": "Late-game blimp knockback support",
+     "popular": false
+    }
+   ],
+   "tier5Rank": [
+    "Glaive Lord",
+    "Perma Charge",
+    "MOAB Domination"
+   ],
+   "notes": "No camo upgrade on any path: needs Village/Etienne/other camo. Bionic Augmentation MK gives camo only during Turbo Charge."
+  },
+  {
+   "id": "bomb",
+   "name": "Bomb Shooter",
+   "class": "Primary",
+   "baseCost": 375,
+   "waterOnly": false,
+   "placement": "land",
+   "innate": {
+    "camo": false,
+    "lead": true,
+    "purple": true,
+    "black": false,
+    "white": true,
+    "frozen": true,
+    "moabDamage": false
+   },
+   "paths": [
+    [
+     {
+      "tier": 1,
+      "name": "Bigger Bombs",
+      "cost": 250,
+      "xp": 200,
+      "grants": [],
+      "effect": "Bigger blast radius, more pierce"
+     },
+     {
+      "tier": 2,
+      "name": "Heavy Bombs",
+      "cost": 650,
+      "xp": 1000,
+      "grants": [],
+      "effect": "+1 damage per bomb"
+     },
+     {
+      "tier": 3,
+      "name": "Really Big Bombs",
+      "cost": 1100,
+      "xp": 3000,
+      "grants": [],
+      "effect": "Even bigger blast, more pierce"
+     },
+     {
+      "tier": 4,
+      "name": "Bloon Impact",
+      "cost": 2800,
+      "xp": 10000,
+      "grants": [
+       "stun"
+      ],
+      "effect": "Bombs stun Bloons they hit"
+     },
+     {
+      "tier": 5,
+      "name": "Bloon Crush",
+      "cost": 55000,
+      "xp": 37500,
+      "grants": [
+       "stun",
+       "moab"
+      ],
+      "effect": "Huge damage, stuns MOAB-class too"
+     }
+    ],
+    [
+     {
+      "tier": 1,
+      "name": "Faster Reload",
+      "cost": 250,
+      "xp": 180,
+      "grants": [],
+      "effect": "Attack speed up"
+     },
+     {
+      "tier": 2,
+      "name": "Missile Launcher",
+      "cost": 400,
+      "xp": 650,
+      "grants": [],
+      "effect": "Missiles: faster, longer range"
+     },
+     {
+      "tier": 3,
+      "name": "MOAB Mauler",
+      "cost": 1000,
+      "xp": 2700,
+      "grants": [
+       "moab"
+      ],
+      "effect": "Big bonus damage to MOAB-class"
+     },
+     {
+      "tier": 4,
+      "name": "MOAB Assassin",
+      "cost": 3450,
+      "xp": 10000,
+      "grants": [
+       "moab"
+      ],
+      "effect": "Assassinate ability: heavy blimp missile"
+     },
+     {
+      "tier": 5,
+      "name": "MOAB Eliminator",
+      "cost": 26000,
+      "xp": 35000,
+      "grants": [
+       "moab"
+      ],
+      "effect": "Much stronger missiles; ability ~6x Assassinate"
+     }
+    ],
+    [
+     {
+      "tier": 1,
+      "name": "Extra Range",
+      "cost": 200,
+      "xp": 150,
+      "grants": [],
+      "effect": "+range"
+     },
+     {
+      "tier": 2,
+      "name": "Frag Bombs",
+      "cost": 300,
+      "xp": 600,
+      "grants": [
+       "black"
+      ],
+      "effect": "Bombs throw sharp frags (frags can hit Black; v57 frag pierce 1->2)"
+     },
+     {
+      "tier": 3,
+      "name": "Cluster Bombs",
+      "cost": 700,
+      "xp": 2500,
+      "grants": [],
+      "effect": "Bombs split into smaller bombs"
+     },
+     {
+      "tier": 4,
+      "name": "Recursive Cluster",
+      "cost": 2500,
+      "xp": 10000,
+      "grants": [],
+      "effect": "Cluster bombs split again"
+     },
+     {
+      "tier": 5,
+      "name": "Bomb Blitz",
+      "cost": 30000,
+      "xp": 25000,
+      "grants": [],
+      "effect": "Losing lives clears the screen (v57: once per round)"
+     }
+    ]
+   ],
+   "paragon": {
+    "name": "Ballistic Obliteration Missile Bunker",
+    "cost": 650000,
+    "xp": 750000
+   },
+   "roles": [
+    "popping",
+    "lead",
+    "moab",
+    "crowd"
+   ],
+   "crosspaths": [
+    {
+     "code": "0-4-2",
+     "name": "MOAB Assassin w/ Frag Bombs",
+     "use": "Standard cheap MOAB/BFB answer; v57 buffed exactly this crosspath",
+     "popular": true
+    },
+    {
+     "code": "2-3-0",
+     "name": "MOAB Mauler w/ Heavy Bombs",
+     "use": "First cheap MOAB answer around R40-50",
+     "popular": true
+    },
+    {
+     "code": "0-3-2",
+     "name": "MOAB Mauler w/ Frag Bombs",
+     "use": "Cheap MOAB answer with frag cleanup",
+     "popular": true
+    },
+    {
+     "code": "4-2-0",
+     "name": "Bloon Impact w/ Missile Launcher",
+     "use": "Crowd stun",
+     "popular": false
+    },
+    {
+     "code": "0-2-4",
+     "name": "Recursive Cluster w/ Missile Launcher",
+     "use": "Ground-crowd damage",
+     "popular": false
+    }
+   ],
+   "tier5Rank": [
+    "MOAB Eliminator",
+    "Bloon Crush",
+    "Bomb Blitz"
+   ],
+   "notes": "Explosions can't pop Black/Zebra and there is no camo upgrade. Base cost history $600->$525->$375 (fandom still shows $525). Striker Jones lets explosives pop Black."
+  },
+  {
+   "id": "tack",
+   "name": "Tack Shooter",
+   "class": "Primary",
+   "baseCost": 260,
+   "waterOnly": false,
+   "placement": "land",
+   "innate": {
+    "camo": false,
+    "lead": false,
+    "purple": true,
+    "black": true,
+    "white": true,
+    "frozen": false,
+    "moabDamage": false
+   },
+   "paths": [
+    [
+     {
+      "tier": 1,
+      "name": "Faster Shooting",
+      "cost": 150,
+      "xp": 150,
+      "grants": [],
+      "effect": "Attack speed up"
+     },
+     {
+      "tier": 2,
+      "name": "Even Faster Shooting",
+      "cost": 220,
+      "xp": 550,
+      "grants": [],
+      "effect": "Attack speed up again (v56: $300->$220; alt: $300 on pre-v56 wiki stats)"
+     },
+     {
+      "tier": 3,
+      "name": "Hot Shots",
+      "cost": 600,
+      "xp": 2400,
+      "grants": [
+       "lead",
+       "frozen"
+      ],
+      "effect": "Fire tacks pop Lead and Frozen (v56: damage 2->3)"
+     },
+     {
+      "tier": 4,
+      "name": "Ring of Fire",
+      "cost": 3500,
+      "xp": 9500,
+      "grants": [],
+      "effect": "Ring of fire hits everything in range (fire: can't pop Purple)"
+     },
+     {
+      "tier": 5,
+      "name": "Inferno Ring",
+      "cost": 45500,
+      "xp": 32500,
+      "grants": [
+       "moab"
+      ],
+      "effect": "Stronger ring plus meteors on strong targets (can't pop Purple)"
+     }
+    ],
+    [
+     {
+      "tier": 1,
+      "name": "Long Range Tacks",
+      "cost": 100,
+      "xp": 140,
+      "grants": [],
+      "effect": "+range"
+     },
+     {
+      "tier": 2,
+      "name": "Super Range Tacks",
+      "cost": 225,
+      "xp": 500,
+      "grants": [],
+      "effect": "More range and pierce"
+     },
+     {
+      "tier": 3,
+      "name": "Blade Shooter",
+      "cost": 550,
+      "xp": 2300,
+      "grants": [
+       "frozen"
+      ],
+      "effect": "Blades: more pierce, pop Frozen"
+     },
+     {
+      "tier": 4,
+      "name": "Blade Maelstrom",
+      "cost": 2700,
+      "xp": 9000,
+      "grants": [],
+      "effect": "Ability: spinning blades with huge pierce"
+     },
+     {
+      "tier": 5,
+      "name": "Super Maelstrom",
+      "cost": 15000,
+      "xp": 28000,
+      "grants": [],
+      "effect": "Stronger, longer Maelstrom; good vs packed Ceramics"
+     }
+    ],
+    [
+     {
+      "tier": 1,
+      "name": "More Tacks",
+      "cost": 150,
+      "xp": 150,
+      "grants": [],
+      "effect": "10 tacks per volley (v56: $110->$150; alt: $110)"
+     },
+     {
+      "tier": 2,
+      "name": "Even More Tacks",
+      "cost": 150,
+      "xp": 490,
+      "grants": [],
+      "effect": "12 tacks per volley (v56: $110->$150; alt: $110)"
+     },
+     {
+      "tier": 3,
+      "name": "Tack Sprayer",
+      "cost": 450,
+      "xp": 2450,
+      "grants": [],
+      "effect": "Sprays many tacks very fast"
+     },
+     {
+      "tier": 4,
+      "name": "Overdrive",
+      "cost": 3200,
+      "xp": 8750,
+      "grants": [],
+      "effect": "Extremely fast tack spray"
+     },
+     {
+      "tier": 5,
+      "name": "The Tack Zone",
+      "cost": 20000,
+      "xp": 26500,
+      "grants": [],
+      "effect": "Massive tack output and pierce"
+     }
+    ]
+   ],
+   "paragon": {
+    "name": "Crucible of Steel and Flame",
+    "cost": 200000,
+    "xp": 500000
+   },
+   "roles": [
+    "early",
+    "popping",
+    "crowd",
+    "ceramic"
+   ],
+   "crosspaths": [
+    {
+     "code": "2-0-4",
+     "name": "Overdrive w/ Even Faster Shooting",
+     "use": "Most common Tack crosspath",
+     "popular": true
+    },
+    {
+     "code": "2-0-5",
+     "name": "The Tack Zone w/ Even Faster Shooting",
+     "use": "Late-game corner shredder",
+     "popular": true
+    },
+    {
+     "code": "4-2-0",
+     "name": "Ring of Fire w/ Super Range",
+     "use": "Area damage (no Purple)",
+     "popular": true
+    },
+    {
+     "code": "2-0-3",
+     "name": "Tack Sprayer w/ Even Faster Shooting",
+     "use": "Cheap early-mid corner tower",
+     "popular": false
+    },
+    {
+     "code": "0-4-2",
+     "name": "Blade Maelstrom w/ Even More Tacks",
+     "use": "Ability pierce burst; Race events",
+     "popular": false
+    }
+   ],
+   "tier5Rank": [
+    "The Tack Zone",
+    "Inferno Ring",
+    "Super Maelstrom"
+   ],
+   "notes": "Range is tiny (23): place inside loops. No camo upgrade. v56 kept 3-0-2 and 2-0-3 total costs unchanged while repricing tier 1-2 upgrades."
+  },
+  {
+   "id": "ice",
+   "name": "Ice Monkey",
+   "class": "Primary",
+   "baseCost": 400,
+   "waterOnly": false,
+   "placement": "land",
+   "innate": {
+    "camo": false,
+    "lead": false,
+    "purple": true,
+    "black": true,
+    "white": false,
+    "frozen": false,
+    "moabDamage": false
+   },
+   "paths": [
+    [
+     {
+      "tier": 1,
+      "name": "Permafrost",
+      "cost": 150,
+      "xp": 160,
+      "grants": [
+       "slow"
+      ],
+      "effect": "Bloons stay slowed after thawing"
+     },
+     {
+      "tier": 2,
+      "name": "Cold Snap",
+      "cost": 350,
+      "xp": 500,
+      "grants": [
+       "lead",
+       "camo"
+      ],
+      "effect": "Can freeze and pop Lead and Camo"
+     },
+     {
+      "tier": 3,
+      "name": "Ice Shards",
+      "cost": 1500,
+      "xp": 2500,
+      "grants": [],
+      "effect": "Frozen Bloons shatter into damaging shards"
+     },
+     {
+      "tier": 4,
+      "name": "Embrittlement",
+      "cost": 2300,
+      "xp": 8250,
+      "grants": [
+       "moab",
+       "buff",
+       "decamo"
+      ],
+      "effect": "Brittle Bloons take extra damage from all towers; can affect MOAB-class. Projectile and its ice shards remove Camo from Bloons they damage; brittle Bloons lose Lead immunity for 2s (bloonswiki Embrittlement page)."
+     },
+     {
+      "tier": 5,
+      "name": "Super Brittle",
+      "cost": 28000,
+      "xp": 25000,
+      "grants": [
+       "moab",
+       "buff"
+      ],
+      "effect": "Much stronger brittle debuff (v56: cooldown 1.2s->1.56s)"
+     }
+    ],
+    [
+     {
+      "tier": 1,
+      "name": "Enhanced Freeze",
+      "cost": 200,
+      "xp": 160,
+      "grants": [],
+      "effect": "Faster attack, longer freeze"
+     },
+     {
+      "tier": 2,
+      "name": "Deep Freeze",
+      "cost": 300,
+      "xp": 500,
+      "grants": [],
+      "effect": "Freezes 2 layers"
+     },
+     {
+      "tier": 3,
+      "name": "Arctic Wind",
+      "cost": 2750,
+      "xp": 2500,
+      "grants": [
+       "slow"
+      ],
+      "effect": "Aura slows all non-MOAB Bloons in range; lets towers sit on water"
+     },
+     {
+      "tier": 4,
+      "name": "Snowstorm",
+      "cost": 4750,
+      "xp": 8500,
+      "grants": [
+       "slow",
+       "white",
+       "moab"
+      ],
+      "effect": "Ability: freezes everything incl. White/Zebra and briefly MOABs (v56: $4,000->$4,750; alt: $4,000)"
+     },
+     {
+      "tier": 5,
+      "name": "Absolute Zero",
+      "cost": 21000,
+      "xp": 27500,
+      "grants": [
+       "slow",
+       "white",
+       "moab"
+      ],
+      "effect": "Stronger global freeze ability, buffs Ice attack speed"
+     }
+    ],
+    [
+     {
+      "tier": 1,
+      "name": "Larger Radius",
+      "cost": 150,
+      "xp": 160,
+      "grants": [],
+      "effect": "+freeze radius"
+     },
+     {
+      "tier": 2,
+      "name": "Re-Freeze",
+      "cost": 200,
+      "xp": 500,
+      "grants": [
+       "frozen"
+      ],
+      "effect": "Can re-freeze already-frozen Bloons"
+     },
+     {
+      "tier": 3,
+      "name": "Cryo Cannon",
+      "cost": 1900,
+      "xp": 2500,
+      "grants": [],
+      "effect": "Fires freezing bombs at range"
+     },
+     {
+      "tier": 4,
+      "name": "Icicles",
+      "cost": 2750,
+      "xp": 9000,
+      "grants": [
+       "moab"
+      ],
+      "effect": "Frozen Bloons grow damaging icicles; can freeze/damage MOAB-class"
+     },
+     {
+      "tier": 5,
+      "name": "Icicle Impale",
+      "cost": 30000,
+      "xp": 30000,
+      "grants": [
+       "moab",
+       "stun"
+      ],
+      "effect": "Huge icicle that damages and freezes blimps"
+     }
+    ]
+   ],
+   "paragon": {
+    "name": "Herald of Everfrost",
+    "cost": 300000,
+    "xp": 750000
+   },
+   "roles": [
+    "support",
+    "stall",
+    "slow"
+   ],
+   "crosspaths": [
+    {
+     "code": "5-2-0",
+     "name": "Super Brittle w/ Deep Freeze",
+     "use": "Best all-round damage + support (wiki)",
+     "popular": true
+    },
+    {
+     "code": "0-2-5",
+     "name": "Icicle Impale w/ Deep Freeze",
+     "use": "Highest damage except vs BADs; needs outside camo for DDTs",
+     "popular": true
+    },
+    {
+     "code": "0-5-2",
+     "name": "Absolute Zero w/ Re-Freeze",
+     "use": "Maximum support (slows/freezes up to 300 Bloons)",
+     "popular": true
+    },
+    {
+     "code": "4-2-0",
+     "name": "Embrittlement w/ Deep Freeze",
+     "use": "Mid-game support: brittle makes everything hit harder",
+     "popular": true
+    },
+    {
+     "code": "2-0-0",
+     "name": "Cold Snap",
+     "use": "Early Lead/Camo coverage",
+     "popular": false
+    }
+   ],
+   "tier5Rank": [
+    "Super Brittle",
+    "Icicle Impale",
+    "Absolute Zero"
+   ],
+   "notes": "Cold damage: no Lead, no White/Zebra, can't hit MOAB-class at base. Frozen Bloons are immune to sharp damage from other towers. v57: freeze now applies after damage."
+  },
+  {
+   "id": "glue",
+   "name": "Glue Gunner",
+   "class": "Primary",
+   "baseCost": 225,
+   "waterOnly": false,
+   "placement": "land",
+   "innate": {
+    "camo": false,
+    "lead": true,
+    "purple": true,
+    "black": true,
+    "white": true,
+    "frozen": true,
+    "moabDamage": false
+   },
+   "paths": [
+    [
+     {
+      "tier": 1,
+      "name": "Glue Soak",
+      "cost": 200,
+      "xp": 150,
+      "grants": [],
+      "effect": "Glue soaks through all layers"
+     },
+     {
+      "tier": 2,
+      "name": "Corrosive Glue",
+      "cost": 300,
+      "xp": 550,
+      "grants": [],
+      "effect": "Glue deals damage over time"
+     },
+     {
+      "tier": 3,
+      "name": "Bloon Dissolver",
+      "cost": 2000,
+      "xp": 2500,
+      "grants": [],
+      "effect": "Faster, stronger corrosion"
+     },
+     {
+      "tier": 4,
+      "name": "Bloon Liquefier",
+      "cost": 5000,
+      "xp": 9000,
+      "grants": [],
+      "effect": "Very fast corrosion"
+     },
+     {
+      "tier": 5,
+      "name": "The Bloon Solver",
+      "cost": 22500,
+      "xp": 37500,
+      "grants": [],
+      "effect": "Glue splashes and melts Bloons; strong cleanup"
+     }
+    ],
+    [
+     {
+      "tier": 1,
+      "name": "Bigger Globs",
+      "cost": 100,
+      "xp": 120,
+      "grants": [],
+      "effect": "Glue affects more Bloons per shot"
+     },
+     {
+      "tier": 2,
+      "name": "Glue Splatter",
+      "cost": 650,
+      "xp": 900,
+      "grants": [],
+      "effect": "Glue splatters to many Bloons (v57: $970->$650; alt: $970)"
+     },
+     {
+      "tier": 3,
+      "name": "Glue Hose",
+      "cost": 1950,
+      "xp": 2500,
+      "grants": [],
+      "effect": "Very fast glue firing"
+     },
+     {
+      "tier": 4,
+      "name": "Glue Strike",
+      "cost": 4500,
+      "xp": 8500,
+      "grants": [
+       "buff"
+      ],
+      "effect": "Ability: glues every Bloon on screen; glued Bloons take more damage (v57: $4,000->$4,500; alt: $4,000)"
+     },
+     {
+      "tier": 5,
+      "name": "Glue Storm",
+      "cost": 16000,
+      "xp": 25000,
+      "grants": [
+       "buff"
+      ],
+      "effect": "Stronger global glue ability"
+     }
+    ],
+    [
+     {
+      "tier": 1,
+      "name": "Stickier Glue",
+      "cost": 280,
+      "xp": 130,
+      "grants": [
+       "slow"
+      ],
+      "effect": "Glue lasts longer (v57 duration 24s->18s)"
+     },
+     {
+      "tier": 2,
+      "name": "Stronger Glue",
+      "cost": 400,
+      "xp": 600,
+      "grants": [
+       "slow"
+      ],
+      "effect": "Stronger slow"
+     },
+     {
+      "tier": 3,
+      "name": "MOAB Glue",
+      "cost": 3600,
+      "xp": 2500,
+      "grants": [
+       "moab",
+       "slow"
+      ],
+      "effect": "Glue sticks to MOAB-class"
+     },
+     {
+      "tier": 4,
+      "name": "Relentless Glue",
+      "cost": 4000,
+      "xp": 8000,
+      "grants": [
+       "slow"
+      ],
+      "effect": "Glue carries to children; more potent"
+     },
+     {
+      "tier": 5,
+      "name": "Super Glue",
+      "cost": 24000,
+      "xp": 30000,
+      "grants": [
+       "moab",
+       "slow"
+      ],
+      "effect": "Strongly slows/holds MOAB-class (wiki: 18s)"
+     }
+    ]
+   ],
+   "paragon": null,
+   "roles": [
+    "support",
+    "slow",
+    "stall"
+   ],
+   "crosspaths": [
+    {
+     "code": "2-3-0",
+     "name": "Glue Hose w/ Corrosive Glue",
+     "use": "Most common crosspath; good vs big Ceramic counts",
+     "popular": true
+    },
+    {
+     "code": "2-0-4",
+     "name": "Relentless Glue w/ Corrosive Glue",
+     "use": "Blimp slow + corrosive DoT on blimps (v51 buff)",
+     "popular": true
+    },
+    {
+     "code": "2-0-5",
+     "name": "Super Glue w/ Corrosive Glue",
+     "use": "Late-game blimp control",
+     "popular": true
+    },
+    {
+     "code": "5-2-0",
+     "name": "The Bloon Solver w/ Glue Splatter",
+     "use": "Very strong cleanup",
+     "popular": true
+    }
+   ],
+   "tier5Rank": [
+    "Super Glue",
+    "The Bloon Solver",
+    "Glue Storm"
+   ],
+   "notes": "Base glue does no damage; it slows. Innate flags here mean glue can affect that type (unverified for Lead). Can't target Camo or MOAB-class until MOAB Glue."
+  },
+  {
+   "id": "desperado",
+   "name": "Desperado",
+   "class": "Primary",
+   "baseCost": 300,
+   "waterOnly": false,
+   "placement": "land",
+   "innate": {
+    "camo": false,
+    "lead": false,
+    "purple": true,
+    "black": true,
+    "white": true,
+    "frozen": false,
+    "moabDamage": false
+   },
+   "paths": [
+    [
+     {
+      "tier": 1,
+      "name": "Quickdraw",
+      "cost": 200,
+      "xp": 200,
+      "grants": [],
+      "effect": "Faster revolver fire"
+     },
+     {
+      "tier": 2,
+      "name": "Standoff",
+      "cost": 200,
+      "xp": 450,
+      "grants": [],
+      "effect": "Stacking duel bonus (v56: max stacks 4->6)"
+     },
+     {
+      "tier": 3,
+      "name": "Big Iron",
+      "cost": 1200,
+      "xp": 2100,
+      "grants": [
+       "lead"
+      ],
+      "effect": "Heavy revolver; v56: now pops Lead"
+     },
+     {
+      "tier": 4,
+      "name": "Twin Sixes",
+      "cost": 5800,
+      "xp": 9500,
+      "grants": [],
+      "effect": "Dual revolvers, big single-target DPS"
+     },
+     {
+      "tier": 5,
+      "name": "The Blazing Sun",
+      "cost": 16500,
+      "xp": 29000,
+      "grants": [
+       "moab"
+      ],
+      "effect": "Boss/blimp single-target; Normal damage type (since v51)"
+     }
+    ],
+    [
+     {
+      "tier": 1,
+      "name": "Eagle Eye",
+      "cost": 150,
+      "xp": 200,
+      "grants": [
+       "camo"
+      ],
+      "effect": "Rifle: camo detection, long range"
+     },
+     {
+      "tier": 2,
+      "name": "Bullseye",
+      "cost": 350,
+      "xp": 650,
+      "grants": [],
+      "effect": "More rifle damage"
+     },
+     {
+      "tier": 3,
+      "name": "Deadeye",
+      "cost": 3000,
+      "xp": 3750,
+      "grants": [
+       "lead",
+       "ddt"
+      ],
+      "effect": "Heavy rifle; pops Lead; Take Aim can help another tower's camo"
+     },
+     {
+      "tier": 4,
+      "name": "Bounty Hunter",
+      "cost": 6000,
+      "xp": 18000,
+      "grants": [
+       "moab"
+      ],
+      "effect": "Strong vs Ceramics and blimps"
+     },
+     {
+      "tier": 5,
+      "name": "Golden Justice",
+      "cost": 42000,
+      "xp": 40000,
+      "grants": [],
+      "effect": "Infinite-pierce slow shots; needs cleanup"
+     }
+    ],
+    [
+     {
+      "tier": 1,
+      "name": "Wanderer",
+      "cost": 220,
+      "xp": 150,
+      "grants": [],
+      "effect": "Shotgun stance bonus (v56: max stacks 3->5)"
+     },
+     {
+      "tier": 2,
+      "name": "Nomad",
+      "cost": 280,
+      "xp": 600,
+      "grants": [],
+      "effect": "Short-range shotgun crowd control"
+     },
+     {
+      "tier": 3,
+      "name": "Enforcer",
+      "cost": 2100,
+      "xp": 3000,
+      "grants": [],
+      "effect": "Stronger shotgun"
+     },
+     {
+      "tier": 4,
+      "name": "Avenger",
+      "cost": 9500,
+      "xp": 14000,
+      "grants": [
+       "moab",
+       "slow"
+      ],
+      "effect": "Knocks back MOABs (wiki $9,500; v51 notes had $8,500, later raised)"
+     },
+     {
+      "tier": 5,
+      "name": "The Desert Phantom",
+      "cost": 31000,
+      "xp": 29000,
+      "grants": [
+       "moab"
+      ],
+      "effect": "Crowd control with MOAB bonus (v56: shrapnel pierce 10->6)"
+     }
+    ]
+   ],
+   "paragon": null,
+   "roles": [
+    "early",
+    "camo",
+    "single-target"
+   ],
+   "crosspaths": [
+    {
+     "code": "0-1-0",
+     "name": "Eagle Eye",
+     "use": "Cheap camo spotter, e.g. for 2-x-x Advanced Intel Subs",
+     "popular": true
+    },
+    {
+     "code": "0-0-0",
+     "name": "Base Desperado",
+     "use": "Useful CHIMPS opener; snipes strays on Strong/First",
+     "popular": true
+    }
+   ],
+   "tier5Rank": [
+    "The Blazing Sun",
+    "Golden Justice",
+    "The Desert Phantom"
+   ],
+   "notes": "Primary class, added v49.0 per bloonswiki (chapter 02 wrongly says Military). Best crosspaths are not documented by the wiki (unverified)."
+  },
+  {
+   "id": "sniper",
+   "name": "Sniper Monkey",
+   "class": "Military",
+   "baseCost": 350,
+   "waterOnly": false,
+   "placement": "land",
+   "innate": {
+    "camo": false,
+    "lead": false,
+    "purple": true,
+    "black": true,
+    "white": true,
+    "frozen": false,
+    "moabDamage": false
+   },
+   "paths": [
+    [
+     {
+      "tier": 1,
+      "name": "Full Metal Jacket",
+      "cost": 350,
+      "xp": 120,
+      "grants": [
+       "lead",
+       "frozen"
+      ],
+      "effect": "4 damage, pops Lead and Frozen"
+     },
+     {
+      "tier": 2,
+      "name": "Large Calibre",
+      "cost": 1300,
+      "xp": 800,
+      "grants": [],
+      "effect": "7 damage per shot"
+     },
+     {
+      "tier": 3,
+      "name": "Deadly Precision",
+      "cost": 2200,
+      "xp": 3500,
+      "grants": [],
+      "effect": "Big damage, bonus vs Ceramics (alt: $3,000 fandom)"
+     },
+     {
+      "tier": 4,
+      "name": "Maim MOAB",
+      "cost": 6300,
+      "xp": 10500,
+      "grants": [
+       "moab",
+       "stun"
+      ],
+      "effect": "Stuns MOAB-class Bloons (alt: $5,650 fandom)"
+     },
+     {
+      "tier": 5,
+      "name": "Cripple MOAB",
+      "cost": 32000,
+      "xp": 37500,
+      "grants": [
+       "moab",
+       "stun"
+      ],
+      "effect": "Longer stuns; crippled blimps take extra damage from everything"
+     }
+    ],
+    [
+     {
+      "tier": 1,
+      "name": "Night Vision Goggles",
+      "cost": 250,
+      "xp": 200,
+      "grants": [
+       "camo"
+      ],
+      "effect": "Camo detection, bonus damage vs Camo"
+     },
+     {
+      "tier": 2,
+      "name": "Shrapnel Shot",
+      "cost": 450,
+      "xp": 600,
+      "grants": [],
+      "effect": "Hits spray shrapnel"
+     },
+     {
+      "tier": 3,
+      "name": "Bouncing Bullet",
+      "cost": 2100,
+      "xp": 2500,
+      "grants": [],
+      "effect": "Bullets bounce to several Bloons (alt: $2,400 fandom)"
+     },
+     {
+      "tier": 4,
+      "name": "Supply Drop",
+      "cost": 7600,
+      "xp": 11000,
+      "grants": [
+       "income"
+      ],
+      "effect": "Ability: crate of cash; v57 toggle Cash Drop / Ammo Drop. No cash in CHIMPS"
+     },
+     {
+      "tier": 5,
+      "name": "Elite Sniper",
+      "cost": 12000,
+      "xp": 35000,
+      "grants": [
+       "income",
+       "buff"
+      ],
+      "effect": "All Snipers attack faster; bigger drops (alt: $14,500 fandom)"
+     }
+    ],
+    [
+     {
+      "tier": 1,
+      "name": "Fast Firing",
+      "cost": 450,
+      "xp": 130,
+      "grants": [],
+      "effect": "Attack speed up"
+     },
+     {
+      "tier": 2,
+      "name": "Even Faster Firing",
+      "cost": 450,
+      "xp": 600,
+      "grants": [],
+      "effect": "Attack speed up again"
+     },
+     {
+      "tier": 3,
+      "name": "Semi-Automatic",
+      "cost": 2700,
+      "xp": 2750,
+      "grants": [],
+      "effect": "Attacks 3x as fast (alt: $2,900 fandom; v57 pierce set to 1)"
+     },
+     {
+      "tier": 4,
+      "name": "Full Auto Rifle",
+      "cost": 4100,
+      "xp": 10000,
+      "grants": [
+       "moab"
+      ],
+      "effect": "Very fast fire, MOAB bonus"
+     },
+     {
+      "tier": 5,
+      "name": "Elite Defender",
+      "cost": 14900,
+      "xp": 30000,
+      "grants": [
+       "moab"
+      ],
+      "effect": "Faster as Bloons advance and lives are lost (alt: $14,700 fandom)"
+     }
+    ]
+   ],
+   "paragon": {
+    "name": "S.P.I.D.E.R. Monkey",
+    "cost": 800000,
+    "xp": 750000
+   },
+   "roles": [
+    "camo",
+    "lead",
+    "moab",
+    "boss",
+    "stall",
+    "income"
+   ],
+   "crosspaths": [
+    {
+     "code": "0-4-2",
+     "name": "Supply Drop w/ Even Faster Firing",
+     "use": "Income outside CHIMPS; wiki-preferred general crosspath",
+     "popular": true
+    },
+    {
+     "code": "2-5-0",
+     "name": "Elite Sniper w/ Large Calibre",
+     "use": "Elite Sniper damage build",
+     "popular": true
+    },
+    {
+     "code": "0-2-4",
+     "name": "Full Auto Rifle w/ Shrapnel Shot",
+     "use": "Shrapnel gets MOAB damage; NOT Supply Drop",
+     "popular": true
+    },
+    {
+     "code": "5-0-2",
+     "name": "Cripple MOAB w/ Even Faster Firing",
+     "use": "Preferred Cripple unless heavily speed-buffed",
+     "popular": true
+    },
+    {
+     "code": "4-2-0",
+     "name": "Maim MOAB w/ Shrapnel Shot",
+     "use": "Spreads the stun to groups; classic blimp stall with Berserker Brew",
+     "popular": true
+    },
+    {
+     "code": "2-0-5",
+     "name": "Elite Defender w/ Large Calibre",
+     "use": "Tier 1 Bosses and R97/R100",
+     "popular": true
+    }
+   ],
+   "tier5Rank": [
+    "Elite Sniper",
+    "Elite Defender",
+    "Cripple MOAB"
+   ],
+   "notes": "Infinite range but needs line of sight: obstacles block it (bloonswiki Line of sight page and Strategy:Sniper Monkey, checked 2026-11-05). Elevated spots help. Per-upgrade costs derived from bloonswiki's cumulative Medium table and its update history; fandom's per-upgrade list is stale (values kept as alt)."
+  },
+  {
+   "id": "sub",
+   "name": "Monkey Sub",
+   "class": "Military",
+   "baseCost": 325,
+   "waterOnly": true,
+   "placement": "water",
+   "innate": {
+    "camo": false,
+    "lead": false,
+    "purple": true,
+    "black": true,
+    "white": true,
+    "frozen": false,
+    "moabDamage": false
+   },
+   "paths": [
+    [
+     {
+      "tier": 1,
+      "name": "Longer Range",
+      "cost": 130,
+      "xp": 125,
+      "grants": [],
+      "effect": "+range"
+     },
+     {
+      "tier": 2,
+      "name": "Advanced Intel",
+      "cost": 500,
+      "xp": 750,
+      "grants": [],
+      "effect": "Can target anything in range of other towers (camo only if those towers see camo)"
+     },
+     {
+      "tier": 3,
+      "name": "Submerge and Support",
+      "cost": 700,
+      "xp": 2250,
+      "grants": [
+       "decamo"
+      ],
+      "effect": "Submerged: pulse removes Camo; cuts nearby hero ability cooldowns"
+     },
+     {
+      "tier": 4,
+      "name": "Bloontonium Reactor",
+      "cost": 2400,
+      "xp": 11000,
+      "grants": [],
+      "effect": "Strong radioactive pulse (alt: $2,300 fandom)"
+     },
+     {
+      "tier": 5,
+      "name": "Energizer",
+      "cost": 28000,
+      "xp": 33000,
+      "grants": [
+       "buff"
+      ],
+      "effect": "Buffs heroes (XP/cooldowns) and nearby towers' abilities (alt: $29,000/$31,000 fandom)"
+     }
+    ],
+    [
+     {
+      "tier": 1,
+      "name": "Barbed Darts",
+      "cost": 450,
+      "xp": 130,
+      "grants": [],
+      "effect": "More pierce"
+     },
+     {
+      "tier": 2,
+      "name": "Heat-tipped Darts",
+      "cost": 300,
+      "xp": 600,
+      "grants": [
+       "lead",
+       "frozen"
+      ],
+      "effect": "Pops Lead and Frozen"
+     },
+     {
+      "tier": 3,
+      "name": "Ballistic Missile",
+      "cost": 1350,
+      "xp": 3000,
+      "grants": [
+       "moab"
+      ],
+      "effect": "Missile with extra MOAB and Ceramic damage"
+     },
+     {
+      "tier": 4,
+      "name": "First Strike Capability",
+      "cost": 13000,
+      "xp": 20000,
+      "grants": [
+       "moab"
+      ],
+      "effect": "Ability: huge strike on the strongest blimp"
+     },
+     {
+      "tier": 5,
+      "name": "Pre-emptive Strike",
+      "cost": 29000,
+      "xp": 45000,
+      "grants": [
+       "moab"
+      ],
+      "effect": "Auto-hits every blimp as it spawns (ability 20k dmg since v51)"
+     }
+    ],
+    [
+     {
+      "tier": 1,
+      "name": "Twin Guns",
+      "cost": 450,
+      "xp": 150,
+      "grants": [],
+      "effect": "Attack speed up"
+     },
+     {
+      "tier": 2,
+      "name": "Airburst Darts",
+      "cost": 1000,
+      "xp": 1000,
+      "grants": [],
+      "effect": "Darts burst into 3 on impact"
+     },
+     {
+      "tier": 3,
+      "name": "Triple Guns",
+      "cost": 1100,
+      "xp": 2750,
+      "grants": [],
+      "effect": "Attack speed up again"
+     },
+     {
+      "tier": 4,
+      "name": "Armor Piercing Darts",
+      "cost": 2500,
+      "xp": 10000,
+      "grants": [
+       "moab",
+       "fortified"
+      ],
+      "effect": "Bonus damage vs MOAB-class and Fortified (alt: $3,000 fandom)"
+     },
+     {
+      "tier": 5,
+      "name": "Sub Commander",
+      "cost": 25000,
+      "xp": 25000,
+      "grants": [
+       "buff"
+      ],
+      "effect": "Huge damage, buffs other Subs"
+     }
+    ]
+   ],
+   "paragon": {
+    "name": "Nautic Siege Core",
+    "cost": 400000,
+    "xp": 1000000
+   },
+   "roles": [
+    "water",
+    "early",
+    "moab",
+    "support"
+   ],
+   "crosspaths": [
+    {
+     "code": "2-0-2",
+     "name": "Advanced Intel w/ Airburst",
+     "use": "Standard early-game Sub; great with Berserker Brew",
+     "popular": true
+    },
+    {
+     "code": "2-0-4",
+     "name": "Armor Piercing Darts w/ Advanced Intel",
+     "use": "Mid-game DPS",
+     "popular": true
+    },
+    {
+     "code": "0-2-4",
+     "name": "Armor Piercing Darts w/ Heat-tipped",
+     "use": "Lead/Frozen + MOAB damage",
+     "popular": false
+    },
+    {
+     "code": "2-0-3",
+     "name": "Triple Guns w/ Advanced Intel",
+     "use": "Cheap mid-game step",
+     "popular": false
+    },
+    {
+     "code": "0-5-2",
+     "name": "Pre-emptive Strike w/ Airburst",
+     "use": "DDT/BAD insurance; pairs with Silas",
+     "popular": true
+    }
+   ],
+   "tier5Rank": [
+    "Energizer",
+    "Pre-emptive Strike",
+    "Sub Commander"
+   ],
+   "notes": "Water only. Advanced Intel needs a camo-seeing tower nearby to hit camo. Fandom costs for Bloontonium, Energizer and AP Darts are older values; bloonswiki update history shows later changes."
+  },
+  {
+   "id": "buccaneer",
+   "name": "Monkey Buccaneer",
+   "class": "Military",
+   "baseCost": 400,
+   "waterOnly": true,
+   "placement": "water",
+   "innate": {
+    "camo": false,
+    "lead": false,
+    "purple": true,
+    "black": true,
+    "white": true,
+    "frozen": false,
+    "moabDamage": false
+   },
+   "paths": [
+    [
+     {
+      "tier": 1,
+      "name": "Faster Shooting",
+      "cost": 275,
+      "xp": 150,
+      "grants": [],
+      "effect": "Attack speed up"
+     },
+     {
+      "tier": 2,
+      "name": "Double Shot",
+      "cost": 425,
+      "xp": 700,
+      "grants": [],
+      "effect": "Fires 2 darts"
+     },
+     {
+      "tier": 3,
+      "name": "Destroyer",
+      "cost": 3350,
+      "xp": 3000,
+      "grants": [],
+      "effect": "Very fast firing"
+     },
+     {
+      "tier": 4,
+      "name": "Aircraft Carrier",
+      "cost": 8000,
+      "xp": 12500,
+      "grants": [
+       "moab"
+      ],
+      "effect": "Launches planes with anti-MOAB missiles"
+     },
+     {
+      "tier": 5,
+      "name": "Carrier Flagship",
+      "cost": 26000,
+      "xp": 37000,
+      "grants": [
+       "moab"
+      ],
+      "effect": "More planes; other towers can sit on deck"
+     }
+    ],
+    [
+     {
+      "tier": 1,
+      "name": "Grape Shot",
+      "cost": 550,
+      "xp": 200,
+      "grants": [],
+      "effect": "Adds grape shot spread (v56 cooldown 1.3s->1.35s)"
+     },
+     {
+      "tier": 2,
+      "name": "Hot Shot",
+      "cost": 500,
+      "xp": 650,
+      "grants": [
+       "lead"
+      ],
+      "effect": "Fire grapes pop Lead (fire: no Purple)"
+     },
+     {
+      "tier": 3,
+      "name": "Cannon Ship",
+      "cost": 900,
+      "xp": 2700,
+      "grants": [],
+      "effect": "Explosive cannon (v56: pierce 28->20)"
+     },
+     {
+      "tier": 4,
+      "name": "Monkey Pirates",
+      "cost": 3900,
+      "xp": 13000,
+      "grants": [
+       "moab"
+      ],
+      "effect": "MOAB Takedown harpoon ability"
+     },
+     {
+      "tier": 5,
+      "name": "Pirate Lord",
+      "cost": 29000,
+      "xp": 35000,
+      "grants": [
+       "moab",
+       "income"
+      ],
+      "effect": "Hooks several blimps, plunders cash (v56: $27,000->$29,000; alt: $27,000)"
+     }
+    ],
+    [
+     {
+      "tier": 1,
+      "name": "Long Range",
+      "cost": 200,
+      "xp": 150,
+      "grants": [],
+      "effect": "+range"
+     },
+     {
+      "tier": 2,
+      "name": "Crow's Nest",
+      "cost": 350,
+      "xp": 600,
+      "grants": [
+       "camo"
+      ],
+      "effect": "Camo detection"
+     },
+     {
+      "tier": 3,
+      "name": "Merchantman",
+      "cost": 2400,
+      "xp": 3100,
+      "grants": [
+       "income"
+      ],
+      "effect": "Cash every round (no income in CHIMPS)"
+     },
+     {
+      "tier": 4,
+      "name": "Favored Trades",
+      "cost": 5500,
+      "xp": 10000,
+      "grants": [
+       "income",
+       "buff"
+      ],
+      "effect": "More cash, buffs nearby Merchantmen, better sellback"
+     },
+     {
+      "tier": 5,
+      "name": "Trade Empire",
+      "cost": 23000,
+      "xp": 40000,
+      "grants": [
+       "income",
+       "buff"
+      ],
+      "effect": "Buffs up to 20 Merchantmen/Favored Trades"
+     }
+    ]
+   ],
+   "paragon": {
+    "name": "Navarch of the Seas",
+    "cost": 550000,
+    "xp": 750000
+   },
+   "roles": [
+    "water",
+    "income",
+    "moab"
+   ],
+   "crosspaths": [
+    {
+     "code": "3-2-0",
+     "name": "Destroyer w/ Hot Shot",
+     "use": "Early-mid MOAB help, synergises with Berserker Brew",
+     "popular": true
+    },
+    {
+     "code": "0-2-3",
+     "name": "Merchantman w/ Hot Shot",
+     "use": "Income boat with some Lead self-defence",
+     "popular": true
+    },
+    {
+     "code": "2-0-4",
+     "name": "Favored Trades w/ Double Shot",
+     "use": "Income on water maps",
+     "popular": false
+    },
+    {
+     "code": "0-0-2",
+     "name": "Crow's Nest",
+     "use": "Cheap camo on water",
+     "popular": false
+    }
+   ],
+   "tier5Rank": [
+    "Carrier Flagship",
+    "Pirate Lord",
+    "Trade Empire"
+   ],
+   "notes": "Water only. Merchantman line is useless in CHIMPS (no income). Navarch Paragon is the easiest high Degree (income counts toward power)."
+  },
+  {
+   "id": "ace",
+   "name": "Monkey Ace",
+   "class": "Military",
+   "baseCost": 800,
+   "waterOnly": false,
+   "placement": "land",
+   "innate": {
+    "camo": false,
+    "lead": false,
+    "purple": true,
+    "black": true,
+    "white": true,
+    "frozen": false,
+    "moabDamage": false
+   },
+   "paths": [
+    [
+     {
+      "tier": 1,
+      "name": "Rapid Fire",
+      "cost": 450,
+      "xp": 160,
+      "grants": [],
+      "effect": "Attack speed up"
+     },
+     {
+      "tier": 2,
+      "name": "Lots More Darts",
+      "cost": 550,
+      "xp": 750,
+      "grants": [],
+      "effect": "12 darts per volley"
+     },
+     {
+      "tier": 3,
+      "name": "Fighter Plane",
+      "cost": 1000,
+      "xp": 2700,
+      "grants": [
+       "moab"
+      ],
+      "effect": "Homing anti-MOAB missiles"
+     },
+     {
+      "tier": 4,
+      "name": "Operation: Dart Storm",
+      "cost": 3300,
+      "xp": 8000,
+      "grants": [
+       "moab"
+      ],
+      "effect": "Very fast radial darts"
+     },
+     {
+      "tier": 5,
+      "name": "Sky Shredder",
+      "cost": 42500,
+      "xp": 35000,
+      "grants": [
+       "moab"
+      ],
+      "effect": "Extreme dart output, big blimp DPS"
+     }
+    ],
+    [
+     {
+      "tier": 1,
+      "name": "Exploding Pineapple",
+      "cost": 200,
+      "xp": 120,
+      "grants": [
+       "lead"
+      ],
+      "effect": "Drops explosive pineapples (explosions pop Lead; unverified)"
+     },
+     {
+      "tier": 2,
+      "name": "Spy Plane",
+      "cost": 350,
+      "xp": 600,
+      "grants": [
+       "camo"
+      ],
+      "effect": "Camo detection"
+     },
+     {
+      "tier": 3,
+      "name": "Bomber Ace",
+      "cost": 900,
+      "xp": 2500,
+      "grants": [],
+      "effect": "Drops bombs along the flight path"
+     },
+     {
+      "tier": 4,
+      "name": "Ground Zero",
+      "cost": 16000,
+      "xp": 15000,
+      "grants": [
+       "moab"
+      ],
+      "effect": "Ability: big bomb damaging everything on screen"
+     },
+     {
+      "tier": 5,
+      "name": "Tsar Bomba",
+      "cost": 26000,
+      "xp": 30000,
+      "grants": [
+       "moab",
+       "stun"
+      ],
+      "effect": "Ability: massive bomb that stuns"
+     }
+    ],
+    [
+     {
+      "tier": 1,
+      "name": "Sharper Darts",
+      "cost": 500,
+      "xp": 160,
+      "grants": [],
+      "effect": "More pierce"
+     },
+     {
+      "tier": 2,
+      "name": "Centered Path",
+      "cost": 550,
+      "xp": 600,
+      "grants": [],
+      "effect": "Flies a centered figure-8 path"
+     },
+     {
+      "tier": 3,
+      "name": "Neva-Miss Targeting",
+      "cost": 2550,
+      "xp": 3000,
+      "grants": [],
+      "effect": "Homing darts that chase Bloons"
+     },
+     {
+      "tier": 4,
+      "name": "Spectre",
+      "cost": 23400,
+      "xp": 19000,
+      "grants": [
+       "moab"
+      ],
+      "effect": "Circles target, alternating darts and bombs (v55 nerf)"
+     },
+     {
+      "tier": 5,
+      "name": "Flying Fortress",
+      "cost": 90000,
+      "xp": 45000,
+      "grants": [
+       "moab"
+      ],
+      "effect": "Huge late-game plane, big boss damage (v55: $85,000->$90,000)"
+     }
+    ]
+   ],
+   "paragon": {
+    "name": "Goliath Doomship",
+    "cost": 900000,
+    "xp": 1000000
+   },
+   "roles": [
+    "moab",
+    "late",
+    "boss"
+   ],
+   "crosspaths": [
+    {
+     "code": "0-2-3",
+     "name": "Neva-Miss w/ Spy Plane",
+     "use": "Chases leaks with camo",
+     "popular": true
+    },
+    {
+     "code": "4-2-0",
+     "name": "Dart Storm w/ Spy Plane",
+     "use": "Blimp DPS with camo",
+     "popular": true
+    },
+    {
+     "code": "5-2-0",
+     "name": "Sky Shredder w/ Spy Plane",
+     "use": "Late blimp DPS with camo",
+     "popular": true
+    },
+    {
+     "code": "2-4-0",
+     "name": "Ground Zero w/ Lots More Darts",
+     "use": "Ability nuke",
+     "popular": false
+    }
+   ],
+   "tier5Rank": [
+    "Flying Fortress",
+    "Sky Shredder",
+    "Tsar Bomba"
+   ],
+   "notes": "Flies over obstacles; works on any map. Wingmonkey MK removes most micro."
+  },
+  {
+   "id": "heli",
+   "name": "Heli Pilot",
+   "class": "Military",
+   "baseCost": 1500,
+   "waterOnly": false,
+   "placement": "land",
+   "innate": {
+    "camo": false,
+    "lead": false,
+    "purple": true,
+    "black": true,
+    "white": true,
+    "frozen": false,
+    "moabDamage": false
+   },
+   "paths": [
+    [
+     {
+      "tier": 1,
+      "name": "Quad Darts",
+      "cost": 800,
+      "xp": 200,
+      "grants": [],
+      "effect": "Fires 4 darts"
+     },
+     {
+      "tier": 2,
+      "name": "Pursuit",
+      "cost": 500,
+      "xp": 650,
+      "grants": [],
+      "effect": "Pursuit mode: auto-chases Bloons"
+     },
+     {
+      "tier": 3,
+      "name": "Razor Rotors",
+      "cost": 1850,
+      "xp": 2700,
+      "grants": [
+       "lead",
+       "frozen"
+      ],
+      "effect": "Rotor blades pop Lead and Frozen"
+     },
+     {
+      "tier": 4,
+      "name": "Apache Dartship",
+      "cost": 19600,
+      "xp": 20000,
+      "grants": [
+       "moab"
+      ],
+      "effect": "Machine guns and missiles"
+     },
+     {
+      "tier": 5,
+      "name": "Apache Prime",
+      "cost": 45000,
+      "xp": 55000,
+      "grants": [
+       "moab"
+      ],
+      "effect": "Plasma/laser weapons (can't pop Purple) plus missiles"
+     }
+    ],
+    [
+     {
+      "tier": 1,
+      "name": "Bigger Jets",
+      "cost": 300,
+      "xp": 150,
+      "grants": [],
+      "effect": "Faster movement"
+     },
+     {
+      "tier": 2,
+      "name": "IFR",
+      "cost": 600,
+      "xp": 650,
+      "grants": [
+       "camo"
+      ],
+      "effect": "Camo detection"
+     },
+     {
+      "tier": 3,
+      "name": "Downdraft",
+      "cost": 3500,
+      "xp": 3300,
+      "grants": [
+       "slow"
+      ],
+      "effect": "Blows Bloons back along the track"
+     },
+     {
+      "tier": 4,
+      "name": "Support Chinook",
+      "cost": 9500,
+      "xp": 15000,
+      "grants": [
+       "income"
+      ],
+      "effect": "Ability: cash/lives crates, can move towers"
+     },
+     {
+      "tier": 5,
+      "name": "Special Poperations",
+      "cost": 30000,
+      "xp": 40000,
+      "grants": [
+       "income"
+      ],
+      "effect": "Drops a marine and supply crates"
+     }
+    ],
+    [
+     {
+      "tier": 1,
+      "name": "Faster Darts",
+      "cost": 250,
+      "xp": 140,
+      "grants": [],
+      "effect": "Faster darts"
+     },
+     {
+      "tier": 2,
+      "name": "Faster Firing",
+      "cost": 350,
+      "xp": 550,
+      "grants": [],
+      "effect": "Attack speed up"
+     },
+     {
+      "tier": 3,
+      "name": "MOAB Shove",
+      "cost": 3400,
+      "xp": 2500,
+      "grants": [
+       "moab",
+       "slow"
+      ],
+      "effect": "Pushes back or slows MOAB-class"
+     },
+     {
+      "tier": 4,
+      "name": "Comanche Defense",
+      "cost": 8500,
+      "xp": 12500,
+      "grants": [],
+      "effect": "Summons mini Comanches when Bloons near"
+     },
+     {
+      "tier": 5,
+      "name": "Comanche Commander",
+      "cost": 35000,
+      "xp": 50000,
+      "grants": [
+       "moab"
+      ],
+      "effect": "Permanent mini Comanches, big damage"
+     }
+    ]
+   ],
+   "paragon": null,
+   "roles": [
+    "moab",
+    "stall",
+    "late"
+   ],
+   "crosspaths": [
+    {
+     "code": "0-2-3",
+     "name": "MOAB Shove w/ IFR",
+     "use": "Best Heli support upgrade; jets and IFR amplify the shove",
+     "popular": true
+    },
+    {
+     "code": "4-2-0",
+     "name": "Apache Dartship w/ IFR",
+     "use": "Damage with camo",
+     "popular": true
+    },
+    {
+     "code": "2-0-0",
+     "name": "Pursuit",
+     "use": "Auto-chase, no micro",
+     "popular": false
+    }
+   ],
+   "tier5Rank": [
+    "Apache Prime",
+    "Comanche Commander",
+    "Special Poperations"
+   ],
+   "notes": "Base $1,500 per bloonswiki (fandom still $1,600). Mobile flying tower; ignores obstacles."
+  },
+  {
+   "id": "mortar",
+   "name": "Mortar Monkey",
+   "class": "Military",
+   "baseCost": 600,
+   "waterOnly": false,
+   "placement": "land",
+   "innate": {
+    "camo": false,
+    "lead": true,
+    "purple": true,
+    "black": false,
+    "white": true,
+    "frozen": true,
+    "moabDamage": false
+   },
+   "paths": [
+    [
+     {
+      "tier": 1,
+      "name": "Bigger Blast",
+      "cost": 300,
+      "xp": 180,
+      "grants": [],
+      "effect": "Bigger blast radius"
+     },
+     {
+      "tier": 2,
+      "name": "Bloon Buster",
+      "cost": 500,
+      "xp": 600,
+      "grants": [],
+      "effect": "+damage, more layers"
+     },
+     {
+      "tier": 3,
+      "name": "Shell Shock",
+      "cost": 825,
+      "xp": 2500,
+      "grants": [
+       "stun"
+      ],
+      "effect": "Shells stun and deal extra damage"
+     },
+     {
+      "tier": 4,
+      "name": "The Big One",
+      "cost": 7000,
+      "xp": 15000,
+      "grants": [],
+      "effect": "Very large blast"
+     },
+     {
+      "tier": 5,
+      "name": "The Biggest One",
+      "cost": 36000,
+      "xp": 29000,
+      "grants": [],
+      "effect": "Huge blast radius and damage"
+     }
+    ],
+    [
+     {
+      "tier": 1,
+      "name": "Faster Reload",
+      "cost": 400,
+      "xp": 150,
+      "grants": [],
+      "effect": "Attack speed up"
+     },
+     {
+      "tier": 2,
+      "name": "Rapid Reload",
+      "cost": 500,
+      "xp": 600,
+      "grants": [],
+      "effect": "Attack speed up again"
+     },
+     {
+      "tier": 3,
+      "name": "Heavy Shells",
+      "cost": 900,
+      "xp": 2300,
+      "grants": [
+       "black"
+      ],
+      "effect": "Shells can pop Black; more damage"
+     },
+     {
+      "tier": 4,
+      "name": "Artillery Battery",
+      "cost": 6500,
+      "xp": 12500,
+      "grants": [],
+      "effect": "Fires 3 shells; ability doubles speed"
+     },
+     {
+      "tier": 5,
+      "name": "Pop and Awe",
+      "cost": 38000,
+      "xp": 32000,
+      "grants": [
+       "stun"
+      ],
+      "effect": "Very high DPS; ability stuns everything below BAD"
+     }
+    ],
+    [
+     {
+      "tier": 1,
+      "name": "Increased Accuracy",
+      "cost": 200,
+      "xp": 140,
+      "grants": [
+       "camo"
+      ],
+      "effect": "Tighter spread; v56: can damage Camo"
+     },
+     {
+      "tier": 2,
+      "name": "Burny Stuff",
+      "cost": 400,
+      "xp": 650,
+      "grants": [],
+      "effect": "Shells set Bloons on fire"
+     },
+     {
+      "tier": 3,
+      "name": "Signal Flare",
+      "cost": 1100,
+      "xp": 2200,
+      "grants": [
+       "decamo"
+      ],
+      "effect": "Permanently removes Camo, long range"
+     },
+     {
+      "tier": 4,
+      "name": "Shattering Shells",
+      "cost": 9500,
+      "xp": 12000,
+      "grants": [
+       "moab",
+       "defortify"
+      ],
+      "effect": "Strips Fortified; burns blimps"
+     },
+     {
+      "tier": 5,
+      "name": "Blooncineration",
+      "cost": 40000,
+      "xp": 35000,
+      "grants": [
+       "moab",
+       "defortify"
+      ],
+      "effect": "Incinerates MOAB-class; late CHIMPS carry"
+     }
+    ]
+   ],
+   "paragon": null,
+   "roles": [
+    "popping",
+    "camo",
+    "crowd"
+   ],
+   "crosspaths": [
+    {
+     "code": "1-3-0",
+     "name": "Heavy Shells w/ Bigger Blast",
+     "use": "Race events: speed + Black popping",
+     "popular": true
+    },
+    {
+     "code": "0-4-0",
+     "name": "Artillery Battery",
+     "use": "Strong mid-game carry",
+     "popular": true
+    },
+    {
+     "code": "2-0-4",
+     "name": "Shattering Shells w/ Bloon Buster",
+     "use": "Burn path, defortify",
+     "popular": true
+    },
+    {
+     "code": "2-0-5",
+     "name": "Blooncineration w/ Bloon Buster",
+     "use": "Late-game CHIMPS carry",
+     "popular": true
+    },
+    {
+     "code": "0-0-3",
+     "name": "Signal Flare",
+     "use": "Long-range permanent decamo for the whole defence",
+     "popular": true
+    }
+   ],
+   "tier5Rank": [
+    "Pop and Awe",
+    "Blooncineration",
+    "The Biggest One"
+   ],
+   "notes": "Fires at a reticle anywhere on the map. Base cost cut $750->$600 in v50. Explosions don't pop Black until Heavy Shells."
+  },
+  {
+   "id": "dartling",
+   "name": "Dartling Gunner",
+   "class": "Military",
+   "baseCost": 850,
+   "waterOnly": false,
+   "placement": "land",
+   "innate": {
+    "camo": false,
+    "lead": false,
+    "purple": true,
+    "black": true,
+    "white": true,
+    "frozen": false,
+    "moabDamage": false
+   },
+   "paths": [
+    [
+     {
+      "tier": 1,
+      "name": "Focused Firing",
+      "cost": 300,
+      "xp": 150,
+      "grants": [],
+      "effect": "Tighter spread"
+     },
+     {
+      "tier": 2,
+      "name": "Laser Shock",
+      "cost": 900,
+      "xp": 600,
+      "grants": [],
+      "effect": "Shock damage over time (v56: bonuses trigger on Bloons shocked by other tiers)"
+     },
+     {
+      "tier": 3,
+      "name": "Laser Cannon",
+      "cost": 3000,
+      "xp": 2600,
+      "grants": [
+       "frozen",
+       "moab"
+      ],
+      "effect": "Laser beam: pops Frozen, MOAB bonus; energy (no Purple)"
+     },
+     {
+      "tier": 4,
+      "name": "Plasma Accelerator",
+      "cost": 11750,
+      "xp": 12500,
+      "grants": [
+       "lead",
+       "moab"
+      ],
+      "effect": "Plasma beam pops Lead; still no Purple"
+     },
+     {
+      "tier": 5,
+      "name": "Ray of Doom",
+      "cost": 75000,
+      "xp": 75000,
+      "grants": [
+       "moab"
+      ],
+      "effect": "Continuous beam across the map"
+     }
+    ],
+    [
+     {
+      "tier": 1,
+      "name": "Advanced Targeting",
+      "cost": 250,
+      "xp": 130,
+      "grants": [
+       "camo"
+      ],
+      "effect": "Camo detection, better accuracy"
+     },
+     {
+      "tier": 2,
+      "name": "Faster Barrel Spin",
+      "cost": 950,
+      "xp": 700,
+      "grants": [],
+      "effect": "Attack speed up"
+     },
+     {
+      "tier": 3,
+      "name": "Hydra Rocket Pods",
+      "cost": 4500,
+      "xp": 2700,
+      "grants": [
+       "lead",
+       "frozen",
+       "black",
+       "ddt"
+      ],
+      "effect": "Rockets; can damage all Bloon types (wiki)"
+     },
+     {
+      "tier": 4,
+      "name": "Rocket Storm",
+      "cost": 5000,
+      "xp": 14000,
+      "grants": [],
+      "effect": "Ability: missile barrage"
+     },
+     {
+      "tier": 5,
+      "name": "M.A.D",
+      "cost": 65000,
+      "xp": 60000,
+      "grants": [
+       "moab"
+      ],
+      "effect": "Extreme MOAB-class damage"
+     }
+    ],
+    [
+     {
+      "tier": 1,
+      "name": "Faster Swivel",
+      "cost": 150,
+      "xp": 110,
+      "grants": [],
+      "effect": "Turns faster"
+     },
+     {
+      "tier": 2,
+      "name": "Powerful Darts",
+      "cost": 1200,
+      "xp": 650,
+      "grants": [
+       "frozen"
+      ],
+      "effect": "More damage, pops Frozen"
+     },
+     {
+      "tier": 3,
+      "name": "Buckshot",
+      "cost": 3000,
+      "xp": 3000,
+      "grants": [],
+      "effect": "Shotgun spread"
+     },
+     {
+      "tier": 4,
+      "name": "Bloon Area Denial System",
+      "cost": 12000,
+      "xp": 15000,
+      "grants": [
+       "moab"
+      ],
+      "effect": "Fires at many targets independently"
+     },
+     {
+      "tier": 5,
+      "name": "Bloon Exclusion Zone",
+      "cost": 58000,
+      "xp": 55000,
+      "grants": [
+       "moab"
+      ],
+      "effect": "Huge multi-target output"
+     }
+    ]
+   ],
+   "paragon": null,
+   "roles": [
+    "camo",
+    "moab",
+    "late"
+   ],
+   "crosspaths": [
+    {
+     "code": "2-5-0",
+     "name": "M.A.D w/ Laser Shock",
+     "use": "Blimp killer (unverified preferred crosspath)",
+     "popular": false
+    },
+    {
+     "code": "0-4-2",
+     "name": "Rocket Storm w/ Powerful Darts",
+     "use": "Strong vs rushes (unverified)",
+     "popular": false
+    },
+    {
+     "code": "5-2-0",
+     "name": "Ray of Doom w/ Faster Barrel Spin",
+     "use": "Line damage (unverified)",
+     "popular": false
+    }
+   ],
+   "tier5Rank": [
+    "M.A.D",
+    "Ray of Doom",
+    "Bloon Exclusion Zone"
+   ],
+   "notes": "Aims at your cursor; use Locked targeting for AFK/mobile. Laser path can't pop Purple (Cross the Streams MK fixes this)."
+  },
+  {
+   "id": "wizard",
+   "name": "Wizard Monkey",
+   "class": "Magic",
+   "baseCost": 250,
+   "waterOnly": false,
+   "placement": "land",
+   "innate": {
+    "camo": false,
+    "lead": false,
+    "purple": false,
+    "black": true,
+    "white": true,
+    "frozen": true,
+    "moabDamage": false
+   },
+   "paths": [
+    [
+     {
+      "tier": 1,
+      "name": "Guided Magic",
+      "cost": 175,
+      "xp": 110,
+      "grants": [],
+      "effect": "Bolts home in and go through walls (was $150)"
+     },
+     {
+      "tier": 2,
+      "name": "Arcane Blast",
+      "cost": 450,
+      "xp": 600,
+      "grants": [],
+      "effect": "+1 damage"
+     },
+     {
+      "tier": 3,
+      "name": "Arcane Mastery",
+      "cost": 1450,
+      "xp": 2300,
+      "grants": [],
+      "effect": "Faster attacks, more range and pierce"
+     },
+     {
+      "tier": 4,
+      "name": "Arcane Spike",
+      "cost": 10000,
+      "xp": 11000,
+      "grants": [
+       "lead",
+       "moab"
+      ],
+      "effect": "Plasma bolts pop Lead, big MOAB bonus"
+     },
+     {
+      "tier": 5,
+      "name": "Archmage",
+      "cost": 32000,
+      "xp": 35000,
+      "grants": [
+       "decamo",
+       "moab",
+       "ddt"
+      ],
+      "effect": "Huge DPS plus Shimmer decamo and fireball/wall attacks"
+     }
+    ],
+    [
+     {
+      "tier": 1,
+      "name": "Fireball",
+      "cost": 300,
+      "xp": 130,
+      "grants": [
+       "lead"
+      ],
+      "effect": "Adds a fireball (fire pops Lead)"
+     },
+     {
+      "tier": 2,
+      "name": "Wall of Fire",
+      "cost": 800,
+      "xp": 700,
+      "grants": [
+       "lead"
+      ],
+      "effect": "Places a wall of fire on the track; classic Lead answer"
+     },
+     {
+      "tier": 3,
+      "name": "Dragon's Breath",
+      "cost": 3300,
+      "xp": 2600,
+      "grants": [],
+      "effect": "Flamethrower area damage"
+     },
+     {
+      "tier": 4,
+      "name": "Summon Phoenix",
+      "cost": 6000,
+      "xp": 13000,
+      "grants": [],
+      "effect": "Ability: temporary Phoenix"
+     },
+     {
+      "tier": 5,
+      "name": "Wizard Lord Phoenix",
+      "cost": 50000,
+      "xp": 35000,
+      "grants": [
+       "moab"
+      ],
+      "effect": "Permanent Phoenix; ability summons Lava Phoenix"
+     }
+    ],
+    [
+     {
+      "tier": 1,
+      "name": "Intense Magic",
+      "cost": 300,
+      "xp": null,
+      "grants": [],
+      "effect": "Bigger, stronger bolts"
+     },
+     {
+      "tier": 2,
+      "name": "Monkey Sense",
+      "cost": 300,
+      "xp": 500,
+      "grants": [
+       "camo"
+      ],
+      "effect": "Camo detection"
+     },
+     {
+      "tier": 3,
+      "name": "Shimmer",
+      "cost": 1500,
+      "xp": 2200,
+      "grants": [
+       "decamo"
+      ],
+      "effect": "Permanently removes Camo in range, incl. DDTs"
+     },
+     {
+      "tier": 4,
+      "name": "Necromancer: Unpopped Army",
+      "cost": 2800,
+      "xp": 10000,
+      "grants": [
+       "lead",
+       "purple",
+       "ddt"
+      ],
+      "effect": "Zombie Bloons from graveyard; damage any type"
+     },
+     {
+      "tier": 5,
+      "name": "Prince of Darkness",
+      "cost": 26500,
+      "xp": 30000,
+      "grants": [
+       "moab"
+      ],
+      "effect": "Zombie MOABs and stronger army"
+     }
+    ]
+   ],
+   "paragon": {
+    "name": "Magus Perfectus",
+    "cost": 800000,
+    "xp": 1000000
+   },
+   "roles": [
+    "popping",
+    "lead",
+    "camo",
+    "decamo",
+    "ddt"
+   ],
+   "crosspaths": [
+    {
+     "code": "0-2-0",
+     "name": "Wall of Fire",
+     "use": "Cheap Lead answer for R28/R30 and cleanup",
+     "popular": true
+    },
+    {
+     "code": "0-3-2",
+     "name": "Dragon's Breath w/ Monkey Sense",
+     "use": "Mid-game area damage with camo",
+     "popular": true
+    },
+    {
+     "code": "0-2-4",
+     "name": "Necromancer w/ Wall of Fire",
+     "use": "Wall feeds the graveyard; strong in CHIMPS",
+     "popular": true
+    },
+    {
+     "code": "0-2-5",
+     "name": "Prince of Darkness w/ Wall of Fire",
+     "use": "Cheap tier 5 that stalls and damages",
+     "popular": true
+    },
+    {
+     "code": "5-2-0",
+     "name": "Archmage w/ Wall of Fire",
+     "use": "Fire crosspath upgrades Archmage's fireball and wall",
+     "popular": true
+    },
+    {
+     "code": "0-0-3",
+     "name": "Shimmer",
+     "use": "Cheap DDT decamo before you have MIB",
+     "popular": true
+    }
+   ],
+   "tier5Rank": [
+    "Prince of Darkness",
+    "Archmage",
+    "Wizard Lord Phoenix"
+   ],
+   "notes": "Magic damage: no Lead or Purple at base. Main tower page could not be read; tier 1-2 costs/XP from individual bloonswiki upgrade pages and update history, cross-checked with fandom crosspath totals. Intense Magic XP not confirmed."
+  },
+  {
+   "id": "super",
+   "name": "Super Monkey",
+   "class": "Magic",
+   "baseCost": 2500,
+   "waterOnly": false,
+   "placement": "land",
+   "innate": {
+    "camo": false,
+    "lead": false,
+    "purple": true,
+    "black": true,
+    "white": true,
+    "frozen": false,
+    "moabDamage": false
+   },
+   "paths": [
+    [
+     {
+      "tier": 1,
+      "name": "Laser Blasts",
+      "cost": 2000,
+      "xp": 500,
+      "grants": [
+       "frozen"
+      ],
+      "effect": "Energy lasers: pop Frozen, but lose Purple popping"
+     },
+     {
+      "tier": 2,
+      "name": "Plasma Blasts",
+      "cost": 2500,
+      "xp": 2200,
+      "grants": [
+       "lead"
+      ],
+      "effect": "Plasma pops Lead (still no Purple)"
+     },
+     {
+      "tier": 3,
+      "name": "Sun Avatar",
+      "cost": 20000,
+      "xp": 7000,
+      "grants": [],
+      "effect": "Sunbeams: huge DPS"
+     },
+     {
+      "tier": 4,
+      "name": "Sun Temple",
+      "cost": 100000,
+      "xp": 50000,
+      "grants": [
+       "moab"
+      ],
+      "effect": "Sacrifice towers for power; v57: $20,001+ Magic sacrifice storm decamos (DDTs need $35,001+)"
+     },
+     {
+      "tier": 5,
+      "name": "True Sun God",
+      "cost": 500000,
+      "xp": 150000,
+      "grants": [
+       "moab"
+      ],
+      "effect": "Ultimate Temple; sacrifices again"
+     }
+    ],
+    [
+     {
+      "tier": 1,
+      "name": "Super Range",
+      "cost": 1500,
+      "xp": 300,
+      "grants": [],
+      "effect": "+range"
+     },
+     {
+      "tier": 2,
+      "name": "Epic Range",
+      "cost": 1900,
+      "xp": 1300,
+      "grants": [],
+      "effect": "More range, faster darts"
+     },
+     {
+      "tier": 3,
+      "name": "Robo Monkey",
+      "cost": 7500,
+      "xp": 6000,
+      "grants": [],
+      "effect": "Two arms, double attacks"
+     },
+     {
+      "tier": 4,
+      "name": "Tech Terror",
+      "cost": 25000,
+      "xp": 35000,
+      "grants": [
+       "moab"
+      ],
+      "effect": "Annihilation ability: damages everything nearby"
+     },
+     {
+      "tier": 5,
+      "name": "The Anti-Bloon",
+      "cost": 70000,
+      "xp": 85000,
+      "grants": [
+       "moab"
+      ],
+      "effect": "Stronger annihilation and attacks"
+     }
+    ],
+    [
+     {
+      "tier": 1,
+      "name": "Knockback",
+      "cost": 3000,
+      "xp": 550,
+      "grants": [
+       "slow"
+      ],
+      "effect": "Shots knock Bloons back"
+     },
+     {
+      "tier": 2,
+      "name": "Ultravision",
+      "cost": 1200,
+      "xp": 2000,
+      "grants": [
+       "camo"
+      ],
+      "effect": "Camo detection, +1 damage to Camo"
+     },
+     {
+      "tier": 3,
+      "name": "Dark Knight",
+      "cost": 5600,
+      "xp": 6500,
+      "grants": [
+       "moab"
+      ],
+      "effect": "Dark blades with MOAB bonus. Blades are Sharp (pop Purple, not Lead); 1-0-3 makes them Sharp+Energy and 2-0-3 Energy+Plasma (pop Lead, not Purple) (bloonswiki Dark Knight page)."
+     },
+     {
+      "tier": 4,
+      "name": "Dark Champion",
+      "cost": 55555,
+      "xp": 47500,
+      "grants": [
+       "lead",
+       "frozen",
+       "ddt"
+      ],
+      "effect": "Blades pop all Bloon types"
+     },
+     {
+      "tier": 5,
+      "name": "Legend of the Night",
+      "cost": 165650,
+      "xp": 100000,
+      "grants": [
+       "moab"
+      ],
+      "effect": "Elite MOAB and boss damage"
+     }
+    ]
+   ],
+   "paragon": null,
+   "roles": [
+    "late",
+    "moab",
+    "boss"
+   ],
+   "crosspaths": [
+    {
+     "code": "3-0-2",
+     "name": "Sun Avatar w/ Ultravision",
+     "use": "Classic mid-late carry with camo",
+     "popular": true
+    },
+    {
+     "code": "2-0-4",
+     "name": "Dark Champion w/ Plasma",
+     "use": "Anti-MOAB with Lead",
+     "popular": true
+    },
+    {
+     "code": "2-4-0",
+     "name": "Tech Terror w/ Plasma",
+     "use": "Annihilation panic button",
+     "popular": true
+    },
+    {
+     "code": "4-0-2",
+     "name": "Sun Temple w/ Ultravision",
+     "use": "Temple attacks see camo",
+     "popular": true
+    },
+    {
+     "code": "0-3-2",
+     "name": "Robo Monkey w/ Ultravision",
+     "use": "Mid-game DPS",
+     "popular": false
+    }
+   ],
+   "tier5Rank": [
+    "The Anti-Bloon",
+    "Legend of the Night",
+    "True Sun God"
+   ],
+   "notes": "Most expensive upgrade tree. Laser/Plasma paths can't pop Purple. Sun Temple strength depends on sacrifices."
+  },
+  {
+   "id": "ninja",
+   "name": "Ninja Monkey",
+   "class": "Magic",
+   "baseCost": 400,
+   "waterOnly": false,
+   "placement": "land",
+   "innate": {
+    "camo": true,
+    "lead": false,
+    "purple": true,
+    "black": true,
+    "white": true,
+    "frozen": false,
+    "moabDamage": false
+   },
+   "paths": [
+    [
+     {
+      "tier": 1,
+      "name": "Ninja Discipline",
+      "cost": 350,
+      "xp": 150,
+      "grants": [],
+      "effect": "Faster attacks, more range"
+     },
+     {
+      "tier": 2,
+      "name": "Sharp Shurikens",
+      "cost": 350,
+      "xp": 550,
+      "grants": [],
+      "effect": "+pierce"
+     },
+     {
+      "tier": 3,
+      "name": "Double Shot",
+      "cost": 900,
+      "xp": 2000,
+      "grants": [],
+      "effect": "Throws 2 shurikens"
+     },
+     {
+      "tier": 4,
+      "name": "Bloonjitsu",
+      "cost": 2750,
+      "xp": 16000,
+      "grants": [],
+      "effect": "Throws 5 shurikens"
+     },
+     {
+      "tier": 5,
+      "name": "Grandmaster Ninja",
+      "cost": 35000,
+      "xp": 50000,
+      "grants": [],
+      "effect": "Very fast, many shurikens; needs Shinobi buffs"
+     }
+    ],
+    [
+     {
+      "tier": 1,
+      "name": "Distraction",
+      "cost": 250,
+      "xp": 200,
+      "grants": [
+       "slow"
+      ],
+      "effect": "Chance to knock Bloons back"
+     },
+     {
+      "tier": 2,
+      "name": "Counter-Espionage",
+      "cost": 400,
+      "xp": 600,
+      "grants": [
+       "decamo"
+      ],
+      "effect": "Strips Camo from Bloons it damages"
+     },
+     {
+      "tier": 3,
+      "name": "Shinobi Tactics",
+      "cost": 1200,
+      "xp": 2000,
+      "grants": [
+       "buff"
+      ],
+      "effect": "Buffs nearby Ninjas (stacks to 20)"
+     },
+     {
+      "tier": 4,
+      "name": "Bloon Sabotage",
+      "cost": 5200,
+      "xp": 14000,
+      "grants": [
+       "slow"
+      ],
+      "effect": "Ability: halves Bloon speed for 15s"
+     },
+     {
+      "tier": 5,
+      "name": "Grand Saboteur",
+      "cost": 22000,
+      "xp": 35000,
+      "grants": [
+       "slow",
+       "moab"
+      ],
+      "effect": "Weakens blimps as they spawn; sabotage ability"
+     }
+    ],
+    [
+     {
+      "tier": 1,
+      "name": "Seeking Shuriken",
+      "cost": 300,
+      "xp": 140,
+      "grants": [],
+      "effect": "Homing shurikens"
+     },
+     {
+      "tier": 2,
+      "name": "Caltrops",
+      "cost": 450,
+      "xp": 500,
+      "grants": [],
+      "effect": "Drops caltrops on the track"
+     },
+     {
+      "tier": 3,
+      "name": "Flash Bomb",
+      "cost": 2250,
+      "xp": 2500,
+      "grants": [
+       "stun",
+       "lead",
+       "frozen"
+      ],
+      "effect": "Bombs that stun groups. The flash bomb's explosion is Normal damage that can damage every Bloon type, so it pops Lead (bloonswiki Flash Bomb page)."
+     },
+     {
+      "tier": 4,
+      "name": "Sticky Bomb",
+      "cost": 5000,
+      "xp": 15500,
+      "grants": [
+       "moab"
+      ],
+      "effect": "Sticky bombs for heavy MOAB damage"
+     },
+     {
+      "tier": 5,
+      "name": "Master Bomber",
+      "cost": 40000,
+      "xp": 37500,
+      "grants": [
+       "moab"
+      ],
+      "effect": "Huge sticky-bomb blimp damage"
+     }
+    ]
+   ],
+   "paragon": {
+    "name": "Ascended Shadow",
+    "cost": 500000,
+    "xp": 500000
+   },
+   "roles": [
+    "early",
+    "camo",
+    "decamo",
+    "slow"
+   ],
+   "crosspaths": [
+    {
+     "code": "4-0-1",
+     "name": "Bloonjitsu w/ Seeking Shuriken",
+     "use": "Budget build with AMD Alchemists",
+     "popular": true
+    },
+    {
+     "code": "3-0-1",
+     "name": "Double Shot w/ Seeking",
+     "use": "Cheap spam with AMD",
+     "popular": true
+    },
+    {
+     "code": "0-2-3",
+     "name": "Flash Bomb w/ Counter-Espionage",
+     "use": "Decamos groups incl. DDTs",
+     "popular": true
+    },
+    {
+     "code": "0-4-2",
+     "name": "Bloon Sabotage w/ Caltrops",
+     "use": "Halves Bloon speed; great vs DDTs",
+     "popular": true
+    },
+    {
+     "code": "0-2-5",
+     "name": "Master Bomber w/ Counter-Espionage",
+     "use": "Self-contained MOAB killer with decamo",
+     "popular": false
+    }
+   ],
+   "tier5Rank": [
+    "Grand Saboteur",
+    "Master Bomber",
+    "Grandmaster Ninja"
+   ],
+   "notes": "Innate camo detection. Shurikens are sharp: no Lead/Frozen without AMD Alchemist, MIB or Gwendolin."
+  },
+  {
+   "id": "alchemist",
+   "name": "Alchemist",
+   "class": "Magic",
+   "baseCost": 550,
+   "waterOnly": false,
+   "placement": "land",
+   "innate": {
+    "camo": false,
+    "lead": true,
+    "purple": true,
+    "black": true,
+    "white": true,
+    "frozen": true,
+    "moabDamage": false
+   },
+   "paths": [
+    [
+     {
+      "tier": 1,
+      "name": "Larger Potions",
+      "cost": 250,
+      "xp": 140,
+      "grants": [],
+      "effect": "Bigger splash"
+     },
+     {
+      "tier": 2,
+      "name": "Acidic Mixture Dip",
+      "cost": 350,
+      "xp": 550,
+      "grants": [
+       "buff"
+      ],
+      "effect": "Buffs a tower: pops Lead, bonus Ceramic/MOAB damage"
+     },
+     {
+      "tier": 3,
+      "name": "Berserker Brew",
+      "cost": 1400,
+      "xp": 2250,
+      "grants": [
+       "buff"
+      ],
+      "effect": "Brew: +damage, pierce, range, attack speed"
+     },
+     {
+      "tier": 4,
+      "name": "Stronger Stimulant",
+      "cost": 2850,
+      "xp": 10000,
+      "grants": [
+       "buff"
+      ],
+      "effect": "Stronger, longer brew"
+     },
+     {
+      "tier": 5,
+      "name": "Permanent Brew",
+      "cost": 48000,
+      "xp": 30000,
+      "grants": [
+       "buff"
+      ],
+      "effect": "Brew effects become permanent"
+     }
+    ],
+    [
+     {
+      "tier": 1,
+      "name": "Stronger Acid",
+      "cost": 250,
+      "xp": 140,
+      "grants": [],
+      "effect": "Acid does more damage"
+     },
+     {
+      "tier": 2,
+      "name": "Perishing Potions",
+      "cost": 475,
+      "xp": 500,
+      "grants": [],
+      "effect": "More damage vs MOAB-class"
+     },
+     {
+      "tier": 3,
+      "name": "Unstable Concoction",
+      "cost": 2800,
+      "xp": 2500,
+      "grants": [
+       "moab"
+      ],
+      "effect": "MOABs explode for area damage when popped"
+     },
+     {
+      "tier": 4,
+      "name": "Transforming Tonic",
+      "cost": 4200,
+      "xp": 10000,
+      "grants": [],
+      "effect": "Ability: turns into a laser monster briefly"
+     },
+     {
+      "tier": 5,
+      "name": "Total Transformation",
+      "cost": 45000,
+      "xp": 28000,
+      "grants": [
+       "buff"
+      ],
+      "effect": "Ability: 5 nearby Monkeys transform for 20s (v57: no stacking with Fan Clubs)"
+     }
+    ],
+    [
+     {
+      "tier": 1,
+      "name": "Faster Throwing",
+      "cost": 650,
+      "xp": 145,
+      "grants": [],
+      "effect": "Attack speed up"
+     },
+     {
+      "tier": 2,
+      "name": "Acid Pool",
+      "cost": 450,
+      "xp": 700,
+      "grants": [],
+      "effect": "Leaves acid pools on the track"
+     },
+     {
+      "tier": 3,
+      "name": "Lead to Gold",
+      "cost": 1000,
+      "xp": 2000,
+      "grants": [
+       "income"
+      ],
+      "effect": "Popping Lead gives bonus cash (+$50 per Lead; CHIMPS after 57.1: conflicting, verify in game)"
+     },
+     {
+      "tier": 4,
+      "name": "Rubber to Gold",
+      "cost": 2750,
+      "xp": 8500,
+      "grants": [
+       "income"
+      ],
+      "effect": "Bloons hit pay extra cash (57.1: no longer pays in CHIMPS)"
+     },
+     {
+      "tier": 5,
+      "name": "Bloon Master Alchemist",
+      "cost": 40000,
+      "xp": 24000,
+      "grants": [],
+      "effect": "Shrinks Bloons down to Reds"
+     }
+    ]
+   ],
+   "paragon": null,
+   "roles": [
+    "support",
+    "buff",
+    "lead",
+    "moab"
+   ],
+   "crosspaths": [
+    {
+     "code": "2-0-0",
+     "name": "Acidic Mixture Dip",
+     "use": "Cheap Lead/MOAB support; stack 2-0-0s rather than crosspath",
+     "popular": true
+    },
+    {
+     "code": "3-2-0",
+     "name": "Berserker Brew w/ Perishing Potions",
+     "use": "For fast-attacking towers (40-shot brew)",
+     "popular": true
+    },
+    {
+     "code": "3-0-1",
+     "name": "Berserker Brew w/ Faster Throwing",
+     "use": "For slow-attacking towers (brews 1.25x as often)",
+     "popular": true
+    },
+    {
+     "code": "4-2-0",
+     "name": "Stronger Stimulant w/ Perishing Potions",
+     "use": "Main carry buffer",
+     "popular": true
+    },
+    {
+     "code": "0-2-3",
+     "name": "Lead to Gold w/ Perishing",
+     "use": "Income",
+     "popular": false
+    }
+   ],
+   "tier5Rank": [
+    "Permanent Brew",
+    "Bloon Master Alchemist",
+    "Total Transformation"
+   ],
+   "notes": "Acid pops every Bloon type (not Glass in Frontier Legends) but never detects Camo. Doesn't buff Beast Handlers."
+  },
+  {
+   "id": "druid",
+   "name": "Druid",
+   "class": "Magic",
+   "baseCost": 400,
+   "waterOnly": false,
+   "placement": "land",
+   "innate": {
+    "camo": false,
+    "lead": false,
+    "purple": true,
+    "black": true,
+    "white": true,
+    "frozen": false,
+    "moabDamage": false
+   },
+   "paths": [
+    [
+     {
+      "tier": 1,
+      "name": "Hard Thorns",
+      "cost": 350,
+      "xp": 150,
+      "grants": [
+       "lead",
+       "frozen"
+      ],
+      "effect": "Thorns pop any Bloon type"
+     },
+     {
+      "tier": 2,
+      "name": "Heart of Thunder",
+      "cost": 850,
+      "xp": 750,
+      "grants": [],
+      "effect": "Adds lightning attack"
+     },
+     {
+      "tier": 3,
+      "name": "Druid of the Storm",
+      "cost": 1700,
+      "xp": 2500,
+      "grants": [
+       "slow"
+      ],
+      "effect": "Tornado blows Bloons back"
+     },
+     {
+      "tier": 4,
+      "name": "Ball Lightning",
+      "cost": 4500,
+      "xp": 12000,
+      "grants": [
+       "camo",
+       "ddt"
+      ],
+      "effect": "Ball lightning; camo detection"
+     },
+     {
+      "tier": 5,
+      "name": "Monarch of Storms",
+      "cost": 60000,
+      "xp": 35000,
+      "grants": [
+       "moab"
+      ],
+      "effect": "Storm attack blows blimps back and damages them"
+     }
+    ],
+    [
+     {
+      "tier": 1,
+      "name": "Thorn Swarm",
+      "cost": 250,
+      "xp": 140,
+      "grants": [],
+      "effect": "+thorns per volley"
+     },
+     {
+      "tier": 2,
+      "name": "Heart of Oak",
+      "cost": 350,
+      "xp": 600,
+      "grants": [
+       "degrow"
+      ],
+      "effect": "Strips Regrow"
+     },
+     {
+      "tier": 3,
+      "name": "Druid of the Jungle",
+      "cost": 1050,
+      "xp": 2000,
+      "grants": [],
+      "effect": "Vines grab and pop Bloons"
+     },
+     {
+      "tier": 4,
+      "name": "Jungle's Bounty",
+      "cost": 4900,
+      "xp": 11000,
+      "grants": [
+       "income"
+      ],
+      "effect": "Passive since v53: $120 + $10-$120 per Banana Farm in range, +1 life at end of round (cap $10,000); its ability is now Vine Crush (crush 10 Bloons, 30s). No cash in CHIMPS"
+     },
+     {
+      "tier": 5,
+      "name": "Spirit of the Forest",
+      "cost": 35000,
+      "xp": 40000,
+      "grants": [
+       "moab",
+       "income"
+      ],
+      "effect": "Damaging vines along the track"
+     }
+    ],
+    [
+     {
+      "tier": 1,
+      "name": "Druidic Reach",
+      "cost": 100,
+      "xp": 120,
+      "grants": [],
+      "effect": "+range"
+     },
+     {
+      "tier": 2,
+      "name": "Heart of Vengeance",
+      "cost": 300,
+      "xp": 550,
+      "grants": [],
+      "effect": "Faster attacks when lives are lost"
+     },
+     {
+      "tier": 3,
+      "name": "Druid of Wrath",
+      "cost": 600,
+      "xp": 1700,
+      "grants": [],
+      "effect": "Attack speed ramps up while hitting"
+     },
+     {
+      "tier": 4,
+      "name": "Poplust",
+      "cost": 2350,
+      "xp": 14000,
+      "grants": [
+       "buff"
+      ],
+      "effect": "Buffs other Druids in range (stacks to 5)"
+     },
+     {
+      "tier": 5,
+      "name": "Avatar of Wrath",
+      "cost": 45000,
+      "xp": 33000,
+      "grants": [],
+      "effect": "Damage scales with Bloons on screen"
+     }
+    ]
+   ],
+   "paragon": {
+    "name": "Root of all Nature",
+    "cost": 475000,
+    "xp": 750000
+   },
+   "roles": [
+    "early",
+    "popping",
+    "income"
+   ],
+   "crosspaths": [
+    {
+     "code": "1-0-3",
+     "name": "Druid of Wrath w/ Hard Thorns",
+     "use": "Cheap ramping damage with Lead",
+     "popular": true
+    },
+    {
+     "code": "1-0-4",
+     "name": "Poplust w/ Hard Thorns",
+     "use": "Druid stacks buffing each other",
+     "popular": true
+    },
+    {
+     "code": "1-4-0",
+     "name": "Jungle's Bounty w/ Hard Thorns",
+     "use": "Passive end-of-round income ($120 base) that works without farms; none in CHIMPS",
+     "popular": true
+    },
+    {
+     "code": "3-2-0",
+     "name": "Druid of the Storm w/ Heart of Oak",
+     "use": "Blowback stall (unverified preferred)",
+     "popular": false
+    }
+   ],
+   "tier5Rank": [
+    "Spirit of the Forest",
+    "Avatar of Wrath",
+    "Monarch of Storms"
+   ],
+   "notes": "Thorns are sharp: take Hard Thorns (1-x-x) for Lead. Obyn buffs Druids."
+  },
+  {
+   "id": "mermonkey",
+   "name": "Mermonkey",
+   "class": "Magic",
+   "baseCost": 300,
+   "waterOnly": false,
+   "placement": "land_or_water",
+   "innate": {
+    "camo": false,
+    "lead": false,
+    "purple": true,
+    "black": true,
+    "white": true,
+    "frozen": true,
+    "moabDamage": false
+   },
+   "paths": [
+    [
+     {
+      "tier": 1,
+      "name": "Trident Efficiency",
+      "cost": 150,
+      "xp": 160,
+      "grants": [],
+      "effect": "Trident upgrades"
+     },
+     {
+      "tier": 2,
+      "name": "Trident Swiftness",
+      "cost": 250,
+      "xp": 580,
+      "grants": [],
+      "effect": "Faster attacks"
+     },
+     {
+      "tier": 3,
+      "name": "Abyss Dweller",
+      "cost": 1800,
+      "xp": 2800,
+      "grants": [],
+      "effect": "Abyss form, stronger attacks"
+     },
+     {
+      "tier": 4,
+      "name": "Abyssal Warrior",
+      "cost": 4200,
+      "xp": 11000,
+      "grants": [
+       "slow"
+      ],
+      "effect": "Ink slows Bloons"
+     },
+     {
+      "tier": 5,
+      "name": "Lord of the Abyss",
+      "cost": 23000,
+      "xp": 68000,
+      "grants": [
+       "buff"
+      ],
+      "effect": "Adds water to the map; buffs Spike Factories"
+     }
+    ],
+    [
+     {
+      "tier": 1,
+      "name": "Sharper Prongs",
+      "cost": 200,
+      "xp": 150,
+      "grants": [],
+      "effect": "More damage"
+     },
+     {
+      "tier": 2,
+      "name": "Tidal Chill",
+      "cost": 225,
+      "xp": 700,
+      "grants": [],
+      "effect": "Chilling tridents"
+     },
+     {
+      "tier": 3,
+      "name": "Riptide Champion",
+      "cost": 2000,
+      "xp": 2500,
+      "grants": [
+       "lead"
+      ],
+      "effect": "Pops Lead; long-range Ceramic stall"
+     },
+     {
+      "tier": 4,
+      "name": "Arctic Knight",
+      "cost": 8000,
+      "xp": 16000,
+      "grants": [
+       "slow"
+      ],
+      "effect": "Freezing attacks"
+     },
+     {
+      "tier": 5,
+      "name": "Popseidon",
+      "cost": 52000,
+      "xp": 70000,
+      "grants": [
+       "slow",
+       "moab"
+      ],
+      "effect": "Ability: flood deals 70 to everything and slows all Bloons incl. Camo"
+     }
+    ],
+    [
+     {
+      "tier": 1,
+      "name": "Echosense Precision",
+      "cost": 200,
+      "xp": 150,
+      "grants": [
+       "camo"
+      ],
+      "effect": "Camo detection, homing tridents"
+     },
+     {
+      "tier": 2,
+      "name": "Echosense Network",
+      "cost": 280,
+      "xp": 670,
+      "grants": [
+       "buff"
+      ],
+      "effect": "+range per Echosense Mermonkey (stacks to 10)"
+     },
+     {
+      "tier": 3,
+      "name": "Alluring Melody",
+      "cost": 2000,
+      "xp": 3000,
+      "grants": [
+       "decamo"
+      ],
+      "effect": "Strips Camo; trances Bloons"
+     },
+     {
+      "tier": 4,
+      "name": "Symphonic Resonance",
+      "cost": 7600,
+      "xp": 14500,
+      "grants": [
+       "slow"
+      ],
+      "effect": "Can trance low-tier MOABs"
+     },
+     {
+      "tier": 5,
+      "name": "The Final Harmonic",
+      "cost": 25000,
+      "xp": 52000,
+      "grants": [
+       "buff"
+      ],
+      "effect": "Heroes +15% range/-15% cooldown; Magic towers +3 pierce"
+     }
+    ]
+   ],
+   "paragon": null,
+   "roles": [
+    "early",
+    "water",
+    "support"
+   ],
+   "crosspaths": [
+    {
+     "code": "0-3-2",
+     "name": "Riptide Champion w/ Echosense Network",
+     "use": "Long-range Ceramic stall spam (wiki)",
+     "popular": true
+    },
+    {
+     "code": "5-0-0",
+     "name": "Lord of the Abyss",
+     "use": "Only CHIMPS way to add water; Spike Factory support",
+     "popular": true
+    },
+    {
+     "code": "0-0-5",
+     "name": "The Final Harmonic",
+     "use": "Hero and Magic support",
+     "popular": false
+    }
+   ],
+   "tier5Rank": [
+    "Lord of the Abyss",
+    "The Final Harmonic",
+    "Popseidon"
+   ],
+   "notes": "Land or water (+35% range in water). Damage type Shatter: pops Frozen, not Lead. Added v44.0; Gift Box unlock (3,000,000 pops)."
+  },
+  {
+   "id": "skywarden",
+   "name": "Skywarden",
+   "class": "Magic",
+   "baseCost": 205,
+   "waterOnly": false,
+   "placement": "land",
+   "innate": {
+    "camo": false,
+    "lead": false,
+    "purple": true,
+    "black": true,
+    "white": true,
+    "frozen": false,
+    "moabDamage": false
+   },
+   "paths": [
+    [
+     {
+      "tier": 1,
+      "name": "Aerial Attunement",
+      "cost": 140,
+      "xp": null,
+      "grants": [
+       "buff"
+      ],
+      "effect": "Range buff to nearby towers up to one tier above the Skywarden (v57: $110->$140; alt: $110)"
+     },
+     {
+      "tier": 2,
+      "name": "Zephyr Sense",
+      "cost": 175,
+      "xp": null,
+      "grants": [
+       "camo"
+      ],
+      "effect": "Camo detection, long-range stance toggle (v57: $215->$175; alt: $215)"
+     },
+     {
+      "tier": 3,
+      "name": "Wind Weaver",
+      "cost": 1200,
+      "xp": 2750,
+      "grants": [],
+      "effect": "Wind combo mark (v57: $1,650->$1,200; alt: $1,650)"
+     },
+     {
+      "tier": 4,
+      "name": "Galesage",
+      "cost": 3000,
+      "xp": 16000,
+      "grants": [
+       "decamo"
+      ],
+      "effect": "Disables Camo inside its radius (not permanent) (v57: $3,300->$3,000; alt: $3,300)"
+     },
+     {
+      "tier": 5,
+      "name": "Farwind Seer",
+      "cost": 19000,
+      "xp": 30000,
+      "grants": [],
+      "effect": "Wind path tier 5"
+     }
+    ],
+    [
+     {
+      "tier": 1,
+      "name": "Storm's Pulse",
+      "cost": 175,
+      "xp": null,
+      "grants": [],
+      "effect": "Thunder pulse"
+     },
+     {
+      "tier": 2,
+      "name": "Thundering Arc",
+      "cost": 275,
+      "xp": null,
+      "grants": [
+       "lead"
+      ],
+      "effect": "Arc burst; v57: Plasma damage, pops Lead"
+     },
+     {
+      "tier": 3,
+      "name": "Galvanic Conduit",
+      "cost": 2500,
+      "xp": 3000,
+      "grants": [
+       "moab"
+      ],
+      "effect": "+3 damage to MOAB, Ceramic and Lead (v57: $1,800->$2,500; alt: $1,800)"
+     },
+     {
+      "tier": 4,
+      "name": "Thunder's Decree",
+      "cost": 3500,
+      "xp": 12000,
+      "grants": [
+       "stun"
+      ],
+      "effect": "Thunder combo stuns, up to ZOMGs (v57: $2,000->$3,500, ability 15s->9s; alt: $2,000)"
+     },
+     {
+      "tier": 5,
+      "name": "Stormwrath Archon",
+      "cost": 32000,
+      "xp": 36000,
+      "grants": [
+       "moab",
+       "stun"
+      ],
+      "effect": "Bonus rises to +9 (v57: $35,000->$32,000; alt: $35,000)"
+     }
+    ],
+    [
+     {
+      "tier": 1,
+      "name": "Shatterpoint",
+      "cost": 150,
+      "xp": null,
+      "grants": [],
+      "effect": "Ice path tier 1"
+     },
+     {
+      "tier": 2,
+      "name": "Icebore",
+      "cost": 250,
+      "xp": null,
+      "grants": [],
+      "effect": "Ice path tier 2"
+     },
+     {
+      "tier": 3,
+      "name": "Coldchain",
+      "cost": 1500,
+      "xp": 2750,
+      "grants": [
+       "slow"
+      ],
+      "effect": "Ice combo mark: slow and shatter"
+     },
+     {
+      "tier": 4,
+      "name": "Frozen Verdict",
+      "cost": 3900,
+      "xp": 14000,
+      "grants": [
+       "slow"
+      ],
+      "effect": "Stronger ice combo"
+     },
+     {
+      "tier": 5,
+      "name": "Winter's Mercy",
+      "cost": 20000,
+      "xp": 32000,
+      "grants": [
+       "slow"
+      ],
+      "effect": "Ice path tier 5"
+     }
+    ]
+   ],
+   "paragon": null,
+   "roles": [
+    "early",
+    "camo",
+    "support"
+   ],
+   "crosspaths": [
+    {
+     "code": "x-2-x",
+     "name": "Thundering Arc crosspath",
+     "use": "Plasma Lead popping since v57 (community view not settled)",
+     "popular": false
+    },
+    {
+     "code": "2-x-x",
+     "name": "Zephyr Sense crosspath",
+     "use": "Camo for the thunder or ice path (unverified)",
+     "popular": false
+    }
+   ],
+   "tier5Rank": [
+    "Farwind Seer",
+    "Winter's Mercy",
+    "Stormwrath Archon"
+   ],
+   "notes": "New in v56.0 (Aug 2026), reworked in v57.0/57.2. Gift Box unlock at 3,500,000 pops. Arrows are sharp-like: no Lead/Frozen/Camo at base. Tier 3-5 values from chapter 02 (bloonswiki); tier 1-2 XP not found. Tier 5 ranking is by price only."
+  },
+  {
+   "id": "farm",
+   "name": "Banana Farm",
+   "class": "Support",
+   "baseCost": 1250,
+   "waterOnly": false,
+   "placement": "land",
+   "innate": {
+    "camo": false,
+    "lead": false,
+    "purple": false,
+    "black": false,
+    "white": false,
+    "frozen": false,
+    "moabDamage": false
+   },
+   "paths": [
+    [
+     {
+      "tier": 1,
+      "name": "Increased Production",
+      "cost": 500,
+      "xp": 200,
+      "grants": [
+       "income"
+      ],
+      "effect": "+2 bananas per round ($120/round)"
+     },
+     {
+      "tier": 2,
+      "name": "Greater Production",
+      "cost": 600,
+      "xp": 750,
+      "grants": [
+       "income"
+      ],
+      "effect": "+2 more bananas ($160/round)"
+     },
+     {
+      "tier": 3,
+      "name": "Banana Plantation",
+      "cost": 3000,
+      "xp": 3000,
+      "grants": [
+       "income"
+      ],
+      "effect": "16 bananas per round"
+     },
+     {
+      "tier": 4,
+      "name": "Banana Research Facility",
+      "cost": 19000,
+      "xp": 20000,
+      "grants": [
+       "income"
+      ],
+      "effect": "Crates of $300 (about $1,500/round)"
+     },
+     {
+      "tier": 5,
+      "name": "Banana Central",
+      "cost": 115000,
+      "xp": 50000,
+      "grants": [
+       "income",
+       "buff"
+      ],
+      "effect": "$1,200 crates; all BRFs +25%"
+     }
+    ],
+    [
+     {
+      "tier": 1,
+      "name": "Long Life Bananas",
+      "cost": 300,
+      "xp": 200,
+      "grants": [],
+      "effect": "Bananas last longer"
+     },
+     {
+      "tier": 2,
+      "name": "Valuable Bananas",
+      "cost": 800,
+      "xp": 1000,
+      "grants": [
+       "income"
+      ],
+      "effect": "+25% banana value"
+     },
+     {
+      "tier": 3,
+      "name": "Monkey Bank",
+      "cost": 3650,
+      "xp": 3500,
+      "grants": [
+       "income"
+      ],
+      "effect": "Deposits cash with 15% interest per round"
+     },
+     {
+      "tier": 4,
+      "name": "IMF Loan",
+      "cost": 7200,
+      "xp": 20000,
+      "grants": [
+       "income"
+      ],
+      "effect": "Ability: $9,000 loan repaid from income"
+     },
+     {
+      "tier": 5,
+      "name": "Monkey-Nomics",
+      "cost": 100000,
+      "xp": 50000,
+      "grants": [
+       "income"
+      ],
+      "effect": "Ability: $9,000 with no debt"
+     }
+    ],
+    [
+     {
+      "tier": 1,
+      "name": "EZ Collect",
+      "cost": 250,
+      "xp": 200,
+      "grants": [],
+      "effect": "Bananas easier to collect"
+     },
+     {
+      "tier": 2,
+      "name": "Banana Salvage",
+      "cost": 400,
+      "xp": null,
+      "grants": [],
+      "effect": "+10% sellback"
+     },
+     {
+      "tier": 3,
+      "name": "Marketplace",
+      "cost": 2700,
+      "xp": 3200,
+      "grants": [
+       "income"
+      ],
+      "effect": "Auto-collected cash, $320/round"
+     },
+     {
+      "tier": 4,
+      "name": "Central Market",
+      "cost": 15000,
+      "xp": 20000,
+      "grants": [
+       "income",
+       "buff"
+      ],
+      "effect": "$1,120/round; buffs Merchantmen"
+     },
+     {
+      "tier": 5,
+      "name": "Monkey Wall Street",
+      "cost": 70000,
+      "xp": 50000,
+      "grants": [
+       "income"
+      ],
+      "effect": "+$4,000 and 15 lives at round end"
+     }
+    ]
+   ],
+   "paragon": null,
+   "roles": [
+    "income"
+   ],
+   "crosspaths": [
+    {
+     "code": "2-0-0",
+     "name": "Greater Production",
+     "use": "Best early value per dollar",
+     "popular": true
+    },
+    {
+     "code": "2-3-0",
+     "name": "Monkey Bank w/ Greater Production",
+     "use": "Interest farm",
+     "popular": true
+    },
+    {
+     "code": "4-2-0",
+     "name": "BRF w/ Valuable Bananas",
+     "use": "Mid-game income",
+     "popular": true
+    },
+    {
+     "code": "5-2-0",
+     "name": "Banana Central w/ Valuable Bananas",
+     "use": "Late income (about $7,500/round)",
+     "popular": true
+    },
+    {
+     "code": "0-2-4",
+     "name": "Central Market w/ Valuable Bananas",
+     "use": "Merchantman buff setups",
+     "popular": false
+    }
+   ],
+   "tier5Rank": [
+    "Banana Central",
+    "Monkey Wall Street",
+    "Monkey-Nomics"
+   ],
+   "notes": "No attack. Banned in CHIMPS. Fandom page is stale (e.g. Central $100,000, Wall Street $60,000); bloonswiki update history confirms the values used. Banana Salvage XP not found."
+  },
+  {
+   "id": "spike",
+   "name": "Spike Factory",
+   "class": "Support",
+   "baseCost": 1000,
+   "waterOnly": false,
+   "placement": "land",
+   "innate": {
+    "camo": true,
+    "lead": false,
+    "purple": true,
+    "black": true,
+    "white": true,
+    "frozen": false,
+    "moabDamage": false
+   },
+   "paths": [
+    [
+     {
+      "tier": 1,
+      "name": "Bigger Stacks",
+      "cost": 800,
+      "xp": 170,
+      "grants": [],
+      "effect": "More spikes per pile"
+     },
+     {
+      "tier": 2,
+      "name": "White Hot Spikes",
+      "cost": 600,
+      "xp": 600,
+      "grants": [
+       "lead",
+       "frozen",
+       "ddt"
+      ],
+      "effect": "New spikes pop Lead and Frozen (incl. DDT lead layer)"
+     },
+     {
+      "tier": 3,
+      "name": "Spiked Balls",
+      "cost": 2300,
+      "xp": 2400,
+      "grants": [],
+      "effect": "Spiked balls with Ceramic bonus"
+     },
+     {
+      "tier": 4,
+      "name": "Spiked Mines",
+      "cost": 9500,
+      "xp": 15000,
+      "grants": [],
+      "effect": "Mines that explode"
+     },
+     {
+      "tier": 5,
+      "name": "Super Mines",
+      "cost": 125000,
+      "xp": 32500,
+      "grants": [
+       "moab"
+      ],
+      "effect": "Massive mine explosions"
+     }
+    ],
+    [
+     {
+      "tier": 1,
+      "name": "Faster Production",
+      "cost": 600,
+      "xp": 180,
+      "grants": [],
+      "effect": "Faster production"
+     },
+     {
+      "tier": 2,
+      "name": "Even Faster Production",
+      "cost": 800,
+      "xp": 650,
+      "grants": [],
+      "effect": "Faster again"
+     },
+     {
+      "tier": 3,
+      "name": "MOAB SHREDR",
+      "cost": 2500,
+      "xp": 2500,
+      "grants": [
+       "moab"
+      ],
+      "effect": "Spikes shred MOAB-class"
+     },
+     {
+      "tier": 4,
+      "name": "Spike Storm",
+      "cost": 7000,
+      "xp": 11000,
+      "grants": [
+       "moab"
+      ],
+      "effect": "Ability: spikes everywhere; good vs R100 BAD"
+     },
+     {
+      "tier": 5,
+      "name": "Carpet of Spikes",
+      "cost": 41000,
+      "xp": 35000,
+      "grants": [
+       "moab"
+      ],
+      "effect": "Carpets the track regularly"
+     }
+    ],
+    [
+     {
+      "tier": 1,
+      "name": "Long Reach",
+      "cost": 150,
+      "xp": 120,
+      "grants": [],
+      "effect": "+range"
+     },
+     {
+      "tier": 2,
+      "name": "Smart Spikes",
+      "cost": 400,
+      "xp": 550,
+      "grants": [],
+      "effect": "Choose where spikes land"
+     },
+     {
+      "tier": 3,
+      "name": "Long Life Spikes",
+      "cost": 1300,
+      "xp": 2100,
+      "grants": [],
+      "effect": "Spikes last longer"
+     },
+     {
+      "tier": 4,
+      "name": "Deadly Spikes",
+      "cost": 3600,
+      "xp": 9000,
+      "grants": [],
+      "effect": "More damage, survive rounds"
+     },
+     {
+      "tier": 5,
+      "name": "Perma-Spike",
+      "cost": 30000,
+      "xp": 29500,
+      "grants": [
+       "moab"
+      ],
+      "effect": "Huge long-lasting stockpile"
+     }
+    ]
+   ],
+   "paragon": {
+    "name": "Mega Massive Munitions Factory",
+    "cost": 750000,
+    "xp": 1000000
+   },
+   "roles": [
+    "cleanup",
+    "camo",
+    "moab"
+   ],
+   "crosspaths": [
+    {
+     "code": "2-3-0",
+     "name": "MOAB SHREDR w/ White Hot",
+     "use": "Blimp cleanup that also pops Lead/DDTs",
+     "popular": true
+    },
+    {
+     "code": "2-4-0",
+     "name": "Spike Storm w/ White Hot",
+     "use": "R100 BAD answer",
+     "popular": true
+    },
+    {
+     "code": "2-0-4",
+     "name": "Deadly Spikes w/ White Hot",
+     "use": "Late-game cleanup stockpile",
+     "popular": true
+    },
+    {
+     "code": "2-0-5",
+     "name": "Perma-Spike w/ White Hot",
+     "use": "Very safe backstop",
+     "popular": true
+    },
+    {
+     "code": "0-2-2",
+     "name": "Smart Spikes w/ Even Faster",
+     "use": "Placement control on multi-lane maps",
+     "popular": false
+    }
+   ],
+   "tier5Rank": [
+    "Perma-Spike",
+    "Carpet of Spikes",
+    "Super Mines"
+   ],
+   "notes": "Spikes hit Camo (innate camo=true here means spikes damage Camo; the factory itself has no camo detection). Lead/Frozen destroy spikes until White Hot Spikes. v57: Paragon mini-spike MOAB bonus +100->+200."
+  },
+  {
+   "id": "village",
+   "name": "Monkey Village",
+   "class": "Support",
+   "baseCost": 1200,
+   "waterOnly": false,
+   "placement": "land",
+   "innate": {
+    "camo": false,
+    "lead": false,
+    "purple": false,
+    "black": false,
+    "white": false,
+    "frozen": false,
+    "moabDamage": false
+   },
+   "paths": [
+    [
+     {
+      "tier": 1,
+      "name": "Bigger Radius",
+      "cost": 400,
+      "xp": 160,
+      "grants": [],
+      "effect": "+radius"
+     },
+     {
+      "tier": 2,
+      "name": "Jungle Drums",
+      "cost": 1500,
+      "xp": 1000,
+      "grants": [
+       "buff"
+      ],
+      "effect": "+15% attack speed in range"
+     },
+     {
+      "tier": 3,
+      "name": "Primary Training",
+      "cost": 800,
+      "xp": 2000,
+      "grants": [
+       "buff"
+      ],
+      "effect": "Primary towers: +pierce, +range"
+     },
+     {
+      "tier": 4,
+      "name": "Primary Mentoring",
+      "cost": 2500,
+      "xp": 12000,
+      "grants": [
+       "buff"
+      ],
+      "effect": "Stronger Primary buffs incl. cheaper/free low-tier Primary upgrades and shorter Primary ability cooldowns"
+     },
+     {
+      "tier": 5,
+      "name": "Primary Expertise",
+      "cost": 25000,
+      "xp": 32000,
+      "grants": [
+       "buff",
+       "moab"
+      ],
+      "effect": "Strongest Primary buffs; fires a Mega Ballista"
+     }
+    ],
+    [
+     {
+      "tier": 1,
+      "name": "Grow Blocker",
+      "cost": 250,
+      "xp": 150,
+      "grants": [
+       "degrow"
+      ],
+      "effect": "Stops Regrow in range"
+     },
+     {
+      "tier": 2,
+      "name": "Radar Scanner",
+      "cost": 2000,
+      "xp": 2500,
+      "grants": [
+       "camo",
+       "buff"
+      ],
+      "effect": "Camo detection for all towers in range"
+     },
+     {
+      "tier": 3,
+      "name": "Monkey Intelligence Bureau",
+      "cost": 7500,
+      "xp": 3500,
+      "grants": [
+       "lead",
+       "purple",
+       "black",
+       "white",
+       "frozen",
+       "buff",
+       "ddt"
+      ],
+      "effect": "All towers in range deal Normal damage (pop every type)"
+     },
+     {
+      "tier": 4,
+      "name": "Call to Arms",
+      "cost": 20000,
+      "xp": 20000,
+      "grants": [
+       "buff"
+      ],
+      "effect": "Ability: +50% attack speed and pierce (v57: can't stack with itself/Homeland)"
+     },
+     {
+      "tier": 5,
+      "name": "Homeland Defense",
+      "cost": 40000,
+      "xp": 30000,
+      "grants": [
+       "buff"
+      ],
+      "effect": "Ability: +100% global for 20s"
+     }
+    ],
+    [
+     {
+      "tier": 1,
+      "name": "Monkey Business",
+      "cost": 500,
+      "xp": 250,
+      "grants": [
+       "buff"
+      ],
+      "effect": "10% off towers/upgrades up to tier 3 in range"
+     },
+     {
+      "tier": 2,
+      "name": "Monkey Commerce",
+      "cost": 500,
+      "xp": 750,
+      "grants": [
+       "buff"
+      ],
+      "effect": "+5% more discount (stacks to 25% across 3 Villages)"
+     },
+     {
+      "tier": 3,
+      "name": "Monkey Town",
+      "cost": 10000,
+      "xp": 3000,
+      "grants": [
+       "income"
+      ],
+      "effect": "+50% cash per pop in range"
+     },
+     {
+      "tier": 4,
+      "name": "Monkey City",
+      "cost": 3000,
+      "xp": 15500,
+      "grants": [
+       "income",
+       "buff"
+      ],
+      "effect": "+20% income towers in range, free Dart each round (fandom XP: 15,000)"
+     },
+     {
+      "tier": 5,
+      "name": "Monkeyopolis",
+      "cost": 5000,
+      "xp": 28000,
+      "grants": [
+       "income"
+      ],
+      "effect": "Absorbs Banana Farms into income; real cost $5,000 + $5,000 per absorbed Farm (wiki text)"
+     }
+    ]
+   ],
+   "paragon": null,
+   "roles": [
+    "support",
+    "buff",
+    "camo",
+    "ddt"
+   ],
+   "crosspaths": [
+    {
+     "code": "2-2-0",
+     "name": "Radar Scanner w/ Jungle Drums",
+     "use": "Standard mid-game Village: speed + camo",
+     "popular": true
+    },
+    {
+     "code": "2-3-0",
+     "name": "MIB w/ Jungle Drums",
+     "use": "DDTs, Purple and late game",
+     "popular": true
+    },
+    {
+     "code": "0-2-2",
+     "name": "Radar Scanner w/ Monkey Commerce",
+     "use": "Camo + discount; place first",
+     "popular": true
+    },
+    {
+     "code": "1-0-4",
+     "name": "Monkey City w/ Bigger Radius",
+     "use": "Farm setups",
+     "popular": false
+    }
+   ],
+   "tier5Rank": [
+    "Homeland Defense",
+    "Primary Expertise",
+    "Monkeyopolis"
+   ],
+   "notes": "No attack: grants tokens describe buffs given to towers in range. Stats page last updated v46.2; prices cross-checked with fandom (match)."
+  },
+  {
+   "id": "engineer",
+   "name": "Engineer Monkey",
+   "class": "Support",
+   "baseCost": 350,
+   "waterOnly": false,
+   "placement": "land",
+   "innate": {
+    "camo": false,
+    "lead": false,
+    "purple": true,
+    "black": true,
+    "white": true,
+    "frozen": false,
+    "moabDamage": false
+   },
+   "paths": [
+    [
+     {
+      "tier": 1,
+      "name": "Sentry Gun",
+      "cost": 500,
+      "xp": 160,
+      "grants": [],
+      "effect": "Builds temporary sentries"
+     },
+     {
+      "tier": 2,
+      "name": "Faster Engineering",
+      "cost": 400,
+      "xp": 550,
+      "grants": [],
+      "effect": "Sentries built faster"
+     },
+     {
+      "tier": 3,
+      "name": "Sprockets",
+      "cost": 575,
+      "xp": 1850,
+      "grants": [],
+      "effect": "Engineer and sentries attack faster"
+     },
+     {
+      "tier": 4,
+      "name": "Sentry Expert",
+      "cost": 2500,
+      "xp": 9500,
+      "grants": [
+       "lead",
+       "frozen"
+      ],
+      "effect": "Sentries of different damage types (no camo)"
+     },
+     {
+      "tier": 5,
+      "name": "Sentry Champion",
+      "cost": 32000,
+      "xp": 30000,
+      "grants": [],
+      "effect": "Powerful plasma sentries (needs Purple support)"
+     }
+    ],
+    [
+     {
+      "tier": 1,
+      "name": "Larger Service Area",
+      "cost": 250,
+      "xp": 170,
+      "grants": [],
+      "effect": "+range"
+     },
+     {
+      "tier": 2,
+      "name": "Deconstruction",
+      "cost": 350,
+      "xp": 500,
+      "grants": [
+       "moab",
+       "fortified"
+      ],
+      "effect": "Bonus damage to MOAB-class and Fortified"
+     },
+     {
+      "tier": 3,
+      "name": "Cleansing Foam",
+      "cost": 900,
+      "xp": 2000,
+      "grants": [
+       "decamo",
+       "degrow",
+       "lead"
+      ],
+      "effect": "Foam removes Camo/Regrow and pops Lead layers"
+     },
+     {
+      "tier": 4,
+      "name": "Overclock",
+      "cost": 13500,
+      "xp": 14000,
+      "grants": [
+       "buff"
+      ],
+      "effect": "Ability: big attack-speed boost to one tower"
+     },
+     {
+      "tier": 5,
+      "name": "Ultraboost",
+      "cost": 72000,
+      "xp": 35000,
+      "grants": [
+       "buff"
+      ],
+      "effect": "Permanent stacking boosts"
+     }
+    ],
+    [
+     {
+      "tier": 1,
+      "name": "Oversize Nails",
+      "cost": 450,
+      "xp": 150,
+      "grants": [
+       "frozen"
+      ],
+      "effect": "Shatter damage pops Frozen"
+     },
+     {
+      "tier": 2,
+      "name": "Pin",
+      "cost": 220,
+      "xp": 500,
+      "grants": [
+       "stun"
+      ],
+      "effect": "Nails pin (stun) Bloons"
+     },
+     {
+      "tier": 3,
+      "name": "Double Gun",
+      "cost": 450,
+      "xp": 1800,
+      "grants": [],
+      "effect": "Double fire rate"
+     },
+     {
+      "tier": 4,
+      "name": "Bloon Trap",
+      "cost": 3600,
+      "xp": 11000,
+      "grants": [
+       "income"
+      ],
+      "effect": "Trap collects Bloons for cash (v57: pop cash now immediate). Traps do not affect MOAB-class Bloons (bloonswiki)."
+     },
+     {
+      "tier": 5,
+      "name": "XXXL Trap",
+      "cost": 45000,
+      "xp": 40000,
+      "grants": [
+       "income",
+       "moab"
+      ],
+      "effect": "Traps larger Bloons incl. some blimps (alt: $48,000 fandom)"
+     }
+    ]
+   ],
+   "paragon": {
+    "name": "Master Builder",
+    "cost": 600000,
+    "xp": 750000
+   },
+   "roles": [
+    "early",
+    "support",
+    "buff",
+    "income"
+   ],
+   "crosspaths": [
+    {
+     "code": "4-0-2",
+     "name": "Sentry Expert w/ Pin",
+     "use": "Wiki-preferred sentry build",
+     "popular": true
+    },
+    {
+     "code": "0-3-2",
+     "name": "Cleansing Foam w/ Pin",
+     "use": "Slows, decamos, pops Lead",
+     "popular": true
+    },
+    {
+     "code": "0-4-0",
+     "name": "Overclock",
+     "use": "Put on your best tower or a BRF",
+     "popular": true
+    },
+    {
+     "code": "0-0-3",
+     "name": "Double Gun",
+     "use": "Cheap single-lane saving tower",
+     "popular": false
+    },
+    {
+     "code": "0-0-4",
+     "name": "Bloon Trap",
+     "use": "Income R30s-R50s (not in CHIMPS)",
+     "popular": false
+    }
+   ],
+   "tier5Rank": [
+    "Ultraboost",
+    "XXXL Trap",
+    "Sentry Champion"
+   ],
+   "notes": "Main bloonswiki page could not be read; costs from chapter 02 + bloonswiki update history, XP from fandom (tier 3-5 XP match chapter 02). Master Builder $600k since v55 (fandom still $650k)."
+  },
+  {
+   "id": "beast",
+   "name": "Beast Handler",
+   "class": "Support",
+   "baseCost": 250,
+   "waterOnly": false,
+   "placement": "land",
+   "innate": {
+    "camo": false,
+    "lead": false,
+    "purple": false,
+    "black": true,
+    "white": true,
+    "frozen": true,
+    "moabDamage": false
+   },
+   "paths": [
+    [
+     {
+      "tier": 1,
+      "name": "Piranha",
+      "cost": 160,
+      "xp": 250,
+      "grants": [],
+      "effect": "Water beast: pulls Bloons under"
+     },
+     {
+      "tier": 2,
+      "name": "Barracuda",
+      "cost": 810,
+      "xp": 500,
+      "grants": [],
+      "effect": "Stronger fish"
+     },
+     {
+      "tier": 3,
+      "name": "Great White",
+      "cost": 2010,
+      "xp": 1000,
+      "grants": [
+       "lead"
+      ],
+      "effect": "Shark; can crush Lead"
+     },
+     {
+      "tier": 4,
+      "name": "Orca",
+      "cost": 12500,
+      "xp": 4250,
+      "grants": [
+       "moab"
+      ],
+      "effect": "Drags blimps (up to ZOMG at max Beast Power)"
+     },
+     {
+      "tier": 5,
+      "name": "Megalodon",
+      "cost": 45000,
+      "xp": 100000,
+      "grants": [
+       "moab"
+      ],
+      "effect": "Needs 3 more same-path tier-4 beasts merged in"
+     }
+    ],
+    [
+     {
+      "tier": 1,
+      "name": "Microraptor",
+      "cost": 175,
+      "xp": 250,
+      "grants": [],
+      "effect": "Land beast"
+     },
+     {
+      "tier": 2,
+      "name": "Adasaurus",
+      "cost": 830,
+      "xp": 500,
+      "grants": [
+       "lead"
+      ],
+      "effect": "Pops Lead"
+     },
+     {
+      "tier": 3,
+      "name": "Velociraptor",
+      "cost": 2065,
+      "xp": 1000,
+      "grants": [],
+      "effect": "Pounces; x1.5 vs stunned (v56)"
+     },
+     {
+      "tier": 4,
+      "name": "Tyrannosaurus Rex",
+      "cost": 9500,
+      "xp": 5000,
+      "grants": [
+       "stun",
+       "moab"
+      ],
+      "effect": "Stomp stuns up to ZOMGs; CHIMPS powerhouse"
+     },
+     {
+      "tier": 5,
+      "name": "Giganotosaurus",
+      "cost": 60000,
+      "xp": 90000,
+      "grants": [
+       "stun",
+       "moab"
+      ],
+      "effect": "Mapwide stomp (v56 rebalanced); needs 3 extra tier-4s"
+     }
+    ],
+    [
+     {
+      "tier": 1,
+      "name": "Gyrfalcon",
+      "cost": 190,
+      "xp": 250,
+      "grants": [],
+      "effect": "Bird that grabs Bloons"
+     },
+     {
+      "tier": 2,
+      "name": "Horned Owl",
+      "cost": 860,
+      "xp": 550,
+      "grants": [
+       "camo"
+      ],
+      "effect": "Camo detection"
+     },
+     {
+      "tier": 3,
+      "name": "Golden Eagle",
+      "cost": 2120,
+      "xp": 1000,
+      "grants": [],
+      "effect": "Grabs bigger Bloons"
+     },
+     {
+      "tier": 4,
+      "name": "Giant Condor",
+      "cost": 9000,
+      "xp": 5500,
+      "grants": [
+       "moab"
+      ],
+      "effect": "Picks up small MOAB-class"
+     },
+     {
+      "tier": 5,
+      "name": "Pouākai",
+      "cost": 30000,
+      "xp": 110000,
+      "grants": [
+       "moab",
+       "lead",
+       "ddt"
+      ],
+      "effect": "Normal damage; grabs DDTs and Leads; needs 3 extra tier-4s"
+     }
+    ]
+   ],
+   "paragon": null,
+   "roles": [
+    "early",
+    "moab",
+    "stall"
+   ],
+   "crosspaths": [
+    {
+     "code": "0-4-0",
+     "name": "Tyrannosaurus Rex",
+     "use": "CHIMPS powerhouse; pair with Overclock and Pat/Sauda stuns",
+     "popular": true
+    },
+    {
+     "code": "0-2-3",
+     "name": "Golden Eagle w/ Adasaurus",
+     "use": "Second beast adds Lead coverage",
+     "popular": false
+    }
+   ],
+   "tier5Rank": [
+    "Giganotosaurus",
+    "Pouākai",
+    "Megalodon"
+   ],
+   "notes": "Energy damage: no Lead/Purple/Camo at base. Merging same-path beasts adds Beast Power; tier 3 is the most cost-efficient. Each tier 5 effectively costs four tier-4 Handlers plus the upgrade. Alchemists can't buff it. Stats page v54.0."
+  }
+ ],
+ "heroes": [
+  {
+   "id": "quincy",
+   "name": "Quincy",
+   "cost": 540,
+   "mmUnlock": 0,
+   "unlockLevel": 0,
+   "xpCurve": 1.0,
+   "added": null,
+   "camo": "level 5",
+   "lead": "no (arrows can't pop Lead or Frozen at any level; no DDTs without support)",
+   "roles": [
+    "early",
+    "generalist"
+   ],
+   "bestFor": "Free all-round early game on almost any map; good with Berserker Brew. v57 adds a Focus toggle at L4.",
+   "beginnerTier": "B"
+  },
+  {
+   "id": "gwendolin",
+   "name": "Gwendolin",
+   "cost": 725,
+   "mmUnlock": 0,
+   "unlockLevel": 14,
+   "xpCurve": 1.0,
+   "added": null,
+   "camo": "no on main attack; her abilities (L3 Cocktail of Fire, L10 Firestorm) hit Camo",
+   "lead": "own fire attack: unverified; L4 Heat It Up gives nearby towers Lead+Frozen popping (+1 pierce)",
+   "roles": [
+    "support",
+    "lead",
+    "buff"
+   ],
+   "bestFor": "Lead/DDT support and fire towers (Dragon's Breath, Ring of Fire, Signal Flare); abilities help R63/R76/R78.",
+   "beginnerTier": "B"
+  },
+  {
+   "id": "striker",
+   "name": "Striker Jones",
+   "cost": 700,
+   "mmUnlock": 0,
+   "unlockLevel": 21,
+   "xpCurve": 1.0,
+   "added": null,
+   "camo": "no",
+   "lead": "explosive (Lead OK, unverified); Black: 50% from L5, 100% from L19 for explosive towers",
+   "roles": [
+    "support",
+    "buff",
+    "explosive"
+   ],
+   "bestFor": "Bomb Shooter and Mortar builds; L8 pierce/range buff also helps Spike Factories.",
+   "beginnerTier": "C"
+  },
+  {
+   "id": "obyn",
+   "name": "Obyn Greenfoot",
+   "cost": 650,
+   "mmUnlock": 0,
+   "unlockLevel": 28,
+   "xpCurve": 1.0,
+   "added": null,
+   "camo": "no on his own wolves; L3 Brambles hit Camo (fandom: 'Level 3+'); L8 gives Camo detection to nearby Druids, and since v56 also to Skywardens",
+   "lead": "yes (wolves pop all visible Bloons except Purple, per wiki)",
+   "roles": [
+    "support",
+    "magic",
+    "income"
+   ],
+   "bestFor": "Druid, Skywarden and other Magic builds; Jungle's Bounty income. Often called the best free hero.",
+   "beginnerTier": "A"
+  },
+  {
+   "id": "churchill",
+   "name": "Captain Churchill",
+   "cost": 2000,
+   "mmUnlock": 2500,
+   "unlockLevel": 15,
+   "xpCurve": 1.71,
+   "added": null,
+   "camo": "level 6",
+   "lead": "shells are explosive (Lead OK, unverified); L3 Armor Piercing Shells pop Black",
+   "roles": [
+    "dps",
+    "moab"
+   ],
+   "bestFor": "Early-mid carry on long straight maps; you must save up to place him. Slowest leveler.",
+   "beginnerTier": "C"
+  },
+  {
+   "id": "benjamin",
+   "name": "Benjamin",
+   "cost": 1200,
+   "mmUnlock": 3000,
+   "unlockLevel": 15,
+   "xpCurve": 1.5,
+   "added": null,
+   "camo": "n/a (no attack); L10 Syphon Funding can affect Camo Bloons (fandom Camo strategies table)",
+   "lead": "n/a (no attack)",
+   "roles": [
+    "income",
+    "lives",
+    "support"
+   ],
+   "bestFor": "Standard/casual games and MM farming: cash and lives every round. No income in CHIMPS or Deflation.",
+   "beginnerTier": "A"
+  },
+  {
+   "id": "ezili",
+   "name": "Ezili",
+   "cost": 550,
+   "mmUnlock": 3000,
+   "unlockLevel": 25,
+   "xpCurve": 1.425,
+   "added": null,
+   "camo": "level 1",
+   "lead": "level 1 (base attack always pops Lead)",
+   "roles": [
+    "late",
+    "moab",
+    "decamo"
+   ],
+   "bestFor": "Deep Freeplay (MOAB Hex % damage) and Necromancer builds; weak early. L9 strips Camo/Regrow/Fortified.",
+   "beginnerTier": "C"
+  },
+  {
+   "id": "pat",
+   "name": "Pat Fusty",
+   "cost": 800,
+   "mmUnlock": 3000,
+   "unlockLevel": 15,
+   "xpCurve": 1.425,
+   "added": null,
+   "camo": "no",
+   "lead": "yes (damages every non-Camo type, per wiki)",
+   "roles": [
+    "stun",
+    "buff",
+    "support"
+   ],
+   "bestFor": "Maps where he reaches every lane; Rallying Roar for many-projectile towers; T-Rex synergy.",
+   "beginnerTier": "B"
+  },
+  {
+   "id": "adora",
+   "name": "Adora",
+   "cost": 1000,
+   "mmUnlock": 5000,
+   "unlockLevel": 25,
+   "xpCurve": 1.71,
+   "added": null,
+   "camo": "no",
+   "lead": "yes (plasma bolts pop Lead, not Purple/Glass)",
+   "roles": [
+    "late",
+    "boss",
+    "sun-temple"
+   ],
+   "bestFor": "Super Monkey / Sun Temple builds and Boss events; slow leveler, weak in CHIMPS R50-R80.",
+   "beginnerTier": "A"
+  },
+  {
+   "id": "brickell",
+   "name": "Admiral Brickell",
+   "cost": 900,
+   "mmUnlock": 5000,
+   "unlockLevel": 35,
+   "xpCurve": 1.425,
+   "added": null,
+   "camo": "level 7 (Naval Tactics gives Camo to affected towers from L8)",
+   "lead": "pistol is Sharp (no); mines: unverified",
+   "roles": [
+    "water",
+    "buff"
+   ],
+   "bestFor": "Water maps with Sub/Buccaneer armies; must be placed on water. Reworked in v57 (weaker early, stronger late).",
+   "beginnerTier": "C"
+  },
+  {
+   "id": "etienne",
+   "name": "Etienne",
+   "cost": 650,
+   "mmUnlock": 5000,
+   "unlockLevel": 25,
+   "xpCurve": 1.0,
+   "added": null,
+   "camo": "level 5 (own drones); level 8 UAV = global Camo for every tower",
+   "lead": "no via drone darts (Sharp); later attacks unverified",
+   "roles": [
+    "camo",
+    "support"
+   ],
+   "bestFor": "Replacing Radar Scanners with the L8 global-camo UAV; weak before L10.",
+   "beginnerTier": "B"
+  },
+  {
+   "id": "sauda",
+   "name": "Sauda",
+   "cost": 600,
+   "mmUnlock": 5000,
+   "unlockLevel": 25,
+   "xpCurve": 1.425,
+   "added": null,
+   "camo": "level 1",
+   "lead": "level 13 (Frozen from level 7)",
+   "roles": [
+    "early",
+    "carry"
+   ],
+   "bestFor": "Easiest strong early carry on Beginner/Intermediate maps; needs help mid-late game.",
+   "beginnerTier": "S"
+  },
+  {
+   "id": "psi",
+   "name": "Psi",
+   "cost": 1000,
+   "mmUnlock": 5000,
+   "unlockLevel": 35,
+   "xpCurve": 1.5,
+   "added": null,
+   "camo": "level 1",
+   "lead": "level 6 (Purple from L11; MOAB instakill L14, BFB L16, DDT/ZOMG L20)",
+   "roles": [
+    "global",
+    "carry",
+    "chimps"
+   ],
+   "bestFor": "Advanced/Expert maps, CHIMPS and obstacle-heavy maps; attacks anywhere through walls.",
+   "beginnerTier": "S"
+  },
+  {
+   "id": "geraldo",
+   "name": "Geraldo",
+   "cost": 750,
+   "mmUnlock": 7000,
+   "unlockLevel": 35,
+   "xpCurve": 1.0,
+   "added": null,
+   "camo": "no on his own attack; the L1 shop item Stack of Old Nails hits Camo (fandom Camo strategies table: 'Level 1+')",
+   "lead": "from level 8 via the Gerry's Fire shop item; main attack can't",
+   "roles": [
+    "utility",
+    "boss",
+    "paragon"
+   ],
+   "bestFor": "Flexible shop items; Boss events; Paragon Power Totems (L20). Beginners tend to overspend.",
+   "beginnerTier": "A"
+  },
+  {
+   "id": "corvus",
+   "name": "Corvus",
+   "cost": 1325,
+   "mmUnlock": 7000,
+   "unlockLevel": 35,
+   "xpCurve": 1.425,
+   "added": null,
+   "camo": "no by default (Vision spell grants it temporarily)",
+   "lead": "no (Spirit can't damage Lead or Purple)",
+   "roles": [
+    "micro",
+    "chimps",
+    "carry"
+   ],
+   "bestFor": "Skilled CHIMPS/Half Cash play with spell micro; highest-skill hero.",
+   "beginnerTier": "C"
+  },
+  {
+   "id": "rosalia",
+   "name": "Rosalia",
+   "cost": 875,
+   "mmUnlock": 5000,
+   "unlockLevel": 25,
+   "xpCurve": 1.425,
+   "added": "43.0",
+   "camo": "none listed by default (unverified)",
+   "lead": "yes (lasers pop Lead)",
+   "roles": [
+    "carry",
+    "ace-heli"
+   ],
+   "bestFor": "Maps with one active entrance per round; Ace/Heli builds (L6 discount); strong early-mid.",
+   "beginnerTier": "A"
+  },
+  {
+   "id": "silas",
+   "name": "Silas",
+   "cost": 850,
+   "mmUnlock": 5000,
+   "unlockLevel": 25,
+   "xpCurve": 1.5,
+   "added": "50.0",
+   "camo": "level 1",
+   "lead": "unverified (rime explosion can't hit Lead); White: 50% from L5, 100% from L13",
+   "roles": [
+    "ice",
+    "control",
+    "support"
+   ],
+   "bestFor": "Ice Monkey and Coldchain Skywarden builds; Flooded Valley, #Ouch. Hard early game.",
+   "beginnerTier": "B"
+  },
+  {
+   "id": "dan",
+   "name": "Dan D'Monke",
+   "cost": 650,
+   "mmUnlock": 7000,
+   "unlockLevel": 35,
+   "xpCurve": 1.425,
+   "added": "55.0",
+   "camo": "Masqued Macaque form only (innate); base Dan none",
+   "lead": "Masqued Macaque form (Normal damage); base Dan unverified",
+   "roles": [
+    "support",
+    "lives",
+    "reposition"
+   ],
+   "bestFor": "Leak insurance, mid-game Reposition (free Chinook-style move), Macaque form for ABR.",
+   "beginnerTier": "A"
+  }
+ ],
+ "uncertain": [
+  "Tier 1-2 tower XP for Skywarden (Aerial Attunement, Zephyr Sense, Storm's Pulse, Thundering Arc, Shatterpoint, Icebore) is unknown: every bloonswiki/fandom Skywarden page failed to load. Their combined total is about 2,225 XP (calc: chapter 03's 150,725 all-upgrade total minus 148,500 for tiers 3-5). Set to null.",
+  "Intense Magic (Wizard 0-0-1) XP unknown (page failed to load); cost $300 confirmed by fandom crosspath totals. Set to null.",
+  "Banana Salvage (Farm 0-0-2) XP unknown (page failed to load). Set to null.",
+  "Skywarden tier 3-5 costs/XP come from chapter 02 (bloonswiki via API) and match the v57 patch-note prices; they could not be re-read today. Skywarden had further fixes in 57.2 (no price changes found).",
+  "Sniper per-upgrade costs are derived from bloonswiki's cumulative Medium cost table; its update-history page lists entries without version numbers and has one inconsistent step (Elite Sniper '$14,000 -> $12,000' after '$13,000 -> $14,500'). Fandom values kept as 'alt'.",
+  "Monkey Sub: bloonswiki update history (latest) gives Bloontonium $2,400, Energizer $28,000, AP Darts $2,500; fandom shows older $2,300 / $29,000-$31,000 / $3,000. Chapters 01 and 07 used the fandom values and were corrected on 2026-11-05 (07's Sub Deflation setup and crosspath costs recomputed).",
+  "Monkey Village stats page is dated v46.2. Prices match fandom; Monkey City XP is 15,500 on bloonswiki vs 15,000 on fandom.",
+  "Monkeyopolis cost is not a flat price: bloonswiki text gives $5,000 plus $5,000 per absorbed Banana Farm/Village; dataset stores 5000.",
+  "Engineer Monkey main bloonswiki page could not be read; tier 1-2 XP values come from fandom (fandom's tier 3-5 XP match bloonswiki/chapter 02, so likely correct).",
+  "Dart Monkey stats page is dated v53.0 and Beast Handler v54.0; v55-v57 patch notes list no price changes for them.",
+  "Glue Gunner innate Lead/Black/White/Purple/Frozen flags mean 'glue can affect it'; base glue deals no damage. Whether plain glue sticks to Lead was not confirmed.",
+  "'grants' tokens are this dataset's reading of wiki/patch-note text, not a game export. Least certain: Frag Bombs 'black' (frags only), Exploding Pineapple 'lead', Hydra Rocket Pods 'black', Dark Champion all-types, Necromancer 'lead/purple', Ice Shards decamo (chapter 01 claims it; not used here).",
+  "RESOLVED 2026-11-05: Desperado is Primary, added v49.0 (bloonswiki infobox + v49.0 update page: 'A new Primary Monkey strolls into town!'). Chapter 02's 'Military/v47' was wrong and has been corrected; no Elite Military Training bonus.",
+  "Hero unlock prices for Benjamin (3,000 MM, level 15) come from chapter 02 only; his and Corvus's current bloonswiki pages partly failed (Corvus confirmed via the Spellbook redirect: $1,325, 7,000 MM, level 35).",
+  "Churchill and Dan D'Monke unlock wording on bloonswiki is ambiguous ('reach level X, or buy for N MM'); stored as MM price + unlock level.",
+  "Hero 'lead' answers for Gwendolin, Striker, Churchill, Brickell mines, Etienne late attacks, Silas orb and Rosalia camo were not stated outright on their wiki pages (marked unverified in the strings).",
+  "beginnerTier, roles, crosspaths 'popular' and tier5Rank are opinions (wiki strategy sections, Pocket Gamer 1 Nov 2026 list, community), not data.",
+  "Console versions (Xbox/PS/Switch) were not on v57 when researched; v56/v57 price changes may not apply there.",
+  "Roster count: the v57.4 roster has 26 towers, not 25 (7 Primary incl. Desperado, 7 Military, 7 Magic incl. Mermonkey and Skywarden, 5 Support incl. Beast Handler). All 26 are included.",
+  "RESOLVED 2026-11-05: Wizard all-15 XP is 143,140 + Intense Magic (unknown, ~150 assumed). 13 of 15 Wizard upgrade pages were re-read on bloonswiki and all matched; chapter 03's ~173k has been corrected to ~143k.",
+  "Tower XP values are the bloonswiki 'XP to unlock' figures (stats mostly v55.1). No v56/v57 patch note changed tower XP costs, but none of those notes were read line by line for XP.",
+  "v57 price changes NOT re-verified on 2026-11-05: Glue Splatter $650 and Glue Strike $4,500 (bloonswiki pages, which appear to be cached pre-v57, show $970 and $4,000), and the seven Skywarden price changes. The v57 patch notes (Steam, bloonswiki 'Version 57.0', fandom 'Balance changes/Version 57.x') all refused to load. The v56 changes (Tack x3, Snowstorm $4,750, Pirate Lord $29,000) WERE confirmed via the changelog.gg copy of the Steam notes.",
+  "Line of sight: Sniper Monkey IS blocked by line-of-sight obstacles (bloonswiki 'Line of sight' page: Snipers 'can attack to any location in the map as long they are not impeded by line of sight blockers'; Strategy:Sniper Monkey: 'they need line of sight to land shots'). Chapter 05 §3.3 lists Snipers as LoS-ignoring; that is wrong. Whether S.P.I.D.E.R. Monkey ignores LoS (chapter 03 says 'full-map line of sight') is unverified: its page failed to load."
+ ],
+ "missingXp": [
+  "Wizard Monkey: Intense Magic",
+  "Skywarden: Aerial Attunement",
+  "Skywarden: Zephyr Sense",
+  "Skywarden: Storm's Pulse",
+  "Skywarden: Thundering Arc",
+  "Skywarden: Shatterpoint",
+  "Skywarden: Icebore",
+  "Banana Farm: Banana Salvage"
+ ]
+}

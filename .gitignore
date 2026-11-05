@@ -1,0 +1,4 @@
+src/btd6-planner.html
+src/*.png
+__pycache__/
+node_modules/

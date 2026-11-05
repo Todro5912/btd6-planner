@@ -1,0 +1,1705 @@
+{
+ "meta": {
+  "version": "57.4",
+  "generated": "2026-11-05",
+  "currency": "Medium dollars unless noted",
+  "script": "data/econ_calc.py",
+  "chapter": "08-Economy-Numbers-Predictions.md"
+ },
+ "incomeSources": [
+  {
+   "id": "farm-000",
+   "tower": "Banana Farm",
+   "code": "0-0-0",
+   "cost": 1250,
+   "incomePerRound": 80,
+   "payback": 15.6,
+   "chimpsLegal": false,
+   "notes": "4 bananas x $20"
+  },
+  {
+   "id": "farm-100",
+   "tower": "Banana Farm",
+   "code": "1-0-0",
+   "cost": 1750,
+   "incomePerRound": 120,
+   "payback": 14.6,
+   "chimpsLegal": false,
+   "notes": "6 bananas"
+  },
+  {
+   "id": "farm-200",
+   "tower": "Banana Farm",
+   "code": "2-0-0",
+   "cost": 2350,
+   "incomePerRound": 160,
+   "payback": 14.7,
+   "chimpsLegal": false,
+   "notes": "8 bananas; best early value"
+  },
+  {
+   "id": "farm-020",
+   "tower": "Banana Farm",
+   "code": "0-2-0",
+   "cost": 2350,
+   "incomePerRound": 100,
+   "payback": 23.5,
+   "chimpsLegal": false,
+   "notes": "4 x $25"
+  },
+  {
+   "id": "farm-220",
+   "tower": "Banana Farm",
+   "code": "2-2-0",
+   "cost": 3450,
+   "incomePerRound": 200,
+   "payback": 17.2,
+   "chimpsLegal": false,
+   "notes": "8 x $25"
+  },
+  {
+   "id": "farm-300",
+   "tower": "Banana Farm",
+   "code": "3-0-0 Banana Plantation",
+   "cost": 5350,
+   "incomePerRound": 320,
+   "payback": 16.7,
+   "chimpsLegal": false,
+   "notes": "16 bananas; worse $/cost than 2-0-0"
+  },
+  {
+   "id": "farm-320",
+   "tower": "Banana Farm",
+   "code": "3-2-0 Banana Plantation",
+   "cost": 6450,
+   "incomePerRound": 400,
+   "payback": 16.1,
+   "chimpsLegal": false,
+   "notes": ""
+  },
+  {
+   "id": "farm-420",
+   "tower": "Banana Farm",
+   "code": "4-2-0 Banana Research Facility",
+   "cost": 25450,
+   "incomePerRound": 1875,
+   "payback": 13.6,
+   "chimpsLegal": false,
+   "notes": "5 crates x $375"
+  },
+  {
+   "id": "farm-520",
+   "tower": "Banana Farm",
+   "code": "5-2-0 Banana Central",
+   "cost": 140450,
+   "incomePerRound": 7500,
+   "payback": 18.7,
+   "chimpsLegal": false,
+   "notes": "5 crates x $1,500; +25% to every BRF (+$468.75 per 4-2-0 BRF)"
+  },
+  {
+   "id": "farm-030",
+   "tower": "Banana Farm",
+   "code": "0-3-0 Monkey Bank",
+   "cost": 6000,
+   "incomePerRound": 225,
+   "payback": 26.7,
+   "chimpsLegal": false,
+   "notes": "deposits $225 + 15% interest/round, cap $7,000; see bank model"
+  },
+  {
+   "id": "farm-230",
+   "tower": "Banana Farm",
+   "code": "2-3-0 Monkey Bank",
+   "cost": 7100,
+   "incomePerRound": 325,
+   "payback": 21.8,
+   "chimpsLegal": false,
+   "notes": "deposits $325 + 15% interest/round, cap $7,000"
+  },
+  {
+   "id": "farm-240",
+   "tower": "Banana Farm",
+   "code": "2-4-0 IMF Loan",
+   "cost": 14300,
+   "incomePerRound": 325,
+   "payback": 44.0,
+   "chimpsLegal": false,
+   "notes": "bank cap $10,000; ability: $9,000 loan, 85s cd, repaid by 50% of all income"
+  },
+  {
+   "id": "farm-250",
+   "tower": "Banana Farm",
+   "code": "2-5-0 Monkey-Nomics",
+   "cost": 114300,
+   "incomePerRound": 325,
+   "payback": 351.7,
+   "chimpsLegal": false,
+   "notes": "ability: $9,000 free, 60s cd, max 2 per round"
+  },
+  {
+   "id": "farm-003",
+   "tower": "Banana Farm",
+   "code": "0-0-3 Marketplace",
+   "cost": 4600,
+   "incomePerRound": 320,
+   "payback": 14.4,
+   "chimpsLegal": false,
+   "notes": "16 x $20, auto-collected"
+  },
+  {
+   "id": "farm-203",
+   "tower": "Banana Farm",
+   "code": "2-0-3 Marketplace",
+   "cost": 5700,
+   "incomePerRound": 400,
+   "payback": 14.2,
+   "chimpsLegal": false,
+   "notes": "20 x $20"
+  },
+  {
+   "id": "farm-023",
+   "tower": "Banana Farm",
+   "code": "0-2-3 Marketplace",
+   "cost": 5700,
+   "incomePerRound": 400,
+   "payback": 14.2,
+   "chimpsLegal": false,
+   "notes": "16 x $25 ($416 with More Valuable Bananas)"
+  },
+  {
+   "id": "farm-004",
+   "tower": "Banana Farm",
+   "code": "0-0-4 Central Market",
+   "cost": 19600,
+   "incomePerRound": 1120,
+   "payback": 17.5,
+   "chimpsLegal": false,
+   "notes": "16 x $70; +10% to every Merchantman (cap +100%)"
+  },
+  {
+   "id": "farm-024",
+   "tower": "Banana Farm",
+   "code": "0-2-4 Central Market",
+   "cost": 20700,
+   "incomePerRound": 1400,
+   "payback": 14.8,
+   "chimpsLegal": false,
+   "notes": "16 x $87.50"
+  },
+  {
+   "id": "farm-204",
+   "tower": "Banana Farm",
+   "code": "2-0-4 Central Market",
+   "cost": 20700,
+   "incomePerRound": 1400,
+   "payback": 14.8,
+   "chimpsLegal": false,
+   "notes": "20 x $70"
+  },
+  {
+   "id": "farm-205",
+   "tower": "Banana Farm",
+   "code": "2-0-5 Monkey Wall Street",
+   "cost": 90700,
+   "incomePerRound": 5400,
+   "payback": 16.8,
+   "chimpsLegal": false,
+   "notes": "$1,400 + $4,000 end of round + 15 lives"
+  },
+  {
+   "id": "benjamin",
+   "tower": "Benjamin (hero)",
+   "code": "L2-7",
+   "cost": 1200,
+   "incomePerRound": 140,
+   "payback": 8.6,
+   "chimpsLegal": false,
+   "notes": "L1 $90, L2-7 $140, L8-10 $250, L11-14 $1,000, L15-16 $2,500, L17-20 $5,000 (fandom + biligame wikis; an older fan site lists 100/150/250/300/500/800)"
+  },
+  {
+   "id": "merchantman",
+   "tower": "Monkey Buccaneer",
+   "code": "0-0-3 Merchantman",
+   "cost": 3350,
+   "incomePerRound": 200,
+   "payback": 16.8,
+   "chimpsLegal": false,
+   "notes": "+$20 with Trade Agreements MK; +10% per Central Market"
+  },
+  {
+   "id": "favored-trades",
+   "tower": "Monkey Buccaneer",
+   "code": "0-0-4 Favored Trades",
+   "cost": 8850,
+   "incomePerRound": 500,
+   "payback": 17.7,
+   "chimpsLegal": false,
+   "notes": "also +4% sell value to towers in range per stack, max 3 stacks (+12%), sell cap 95%"
+  },
+  {
+   "id": "trade-empire",
+   "tower": "Monkey Buccaneer",
+   "code": "0-0-5 Trade Empire",
+   "cost": 31850,
+   "incomePerRound": 500,
+   "payback": 63.7,
+   "chimpsLegal": false,
+   "notes": "own base income unverified (>= $500 assumed); +$20 per Favored Trades and +$10 per Merchantman on the map (max 20 boats)"
+  },
+  {
+   "id": "supply-drop",
+   "tower": "Sniper Monkey",
+   "code": "0-4-0 Supply Drop",
+   "cost": 10750,
+   "incomePerRound": 550,
+   "payback": 19.5,
+   "chimpsLegal": false,
+   "notes": "$1,100 crate per 90s ability; income/round assumes ~1 crate every 2 rounds (unverified)"
+  },
+  {
+   "id": "lead-to-gold",
+   "tower": "Alchemist",
+   "code": "0-0-3 Lead to Gold",
+   "cost": 2650,
+   "incomePerRound": 0,
+   "payback": null,
+   "chimpsLegal": false,
+   "notes": "+$50 per Lead it pops (not cut by per-pop reduction); round-dependent (e.g. R28 $300, R59 $2,500); CHIMPS after 57.1: conflicting, verify in game (assume none)"
+  },
+  {
+   "id": "rubber-to-gold",
+   "tower": "Alchemist",
+   "code": "0-0-4 Rubber to Gold",
+   "cost": 5400,
+   "incomePerRound": 0,
+   "payback": null,
+   "chimpsLegal": false,
+   "notes": "affected bloons give +100% pop cash; since 57.1 cut by the late per-pop reduction and no cash in CHIMPS"
+  },
+  {
+   "id": "jungles-bounty",
+   "tower": "Druid",
+   "code": "1-4-0 Jungle's Bounty",
+   "cost": 7300,
+   "incomePerRound": 120,
+   "payback": 60.8,
+   "chimpsLegal": false,
+   "notes": "Passive end-of-round income since v53.0 (the old cash ability was replaced by Vine Crush; base $320 -> $120): +$10..$120 per Banana Farm in range by farm tier, +1 life/round, cap $10,000"
+  },
+  {
+   "id": "bloon-trap",
+   "tower": "Engineer Monkey",
+   "code": "0-0-4 Bloon Trap",
+   "cost": 5070,
+   "incomePerRound": 0,
+   "payback": null,
+   "chimpsLegal": false,
+   "notes": "500 RBE per trap; +100% cash on trapped bloons; 12s redeploy; v57: pop cash paid instantly, works in Deflation"
+  },
+  {
+   "id": "monkey-city",
+   "tower": "Monkey Village",
+   "code": "0-0-4 Monkey City",
+   "cost": 15200,
+   "incomePerRound": 0,
+   "payback": null,
+   "chimpsLegal": false,
+   "notes": "+20% to income towers in range (rounded down); free Dart Monkey every round"
+  },
+  {
+   "id": "monkey-town",
+   "tower": "Monkey Village",
+   "code": "0-0-3 Monkey Town",
+   "cost": 12200,
+   "incomePerRound": 0,
+   "payback": null,
+   "chimpsLegal": false,
+   "notes": "+50% cash per pop in range (+60% with Inland Revenue Streams)"
+  },
+  {
+   "id": "monkeyopolis",
+   "tower": "Monkey Village",
+   "code": "0-0-5 Monkeyopolis",
+   "cost": 5000,
+   "incomePerRound": 1200,
+   "payback": null,
+   "chimpsLegal": false,
+   "notes": "cost is $5,000 PER Banana Farm absorbed (on top of a $15,200 0-0-4 City); min $1,200/round (10 crates); crate value scales with absorbed farm value (formula unverified); payback not meaningful because it replaces the farms' income"
+  }
+ ],
+ "noIncome": [
+  {
+   "id": "ezili",
+   "tower": "Ezili (hero)",
+   "notes": "No income. Curses and MOAB Hex only."
+  },
+  {
+   "id": "spike-o-pult",
+   "tower": "Dart Monkey 3-x-x Spike-o-pult",
+   "notes": "No income; it's a damage upgrade."
+  },
+  {
+   "id": "pat",
+   "tower": "Pat Fusty (hero)",
+   "notes": "No income."
+  },
+  {
+   "id": "mermonkey",
+   "tower": "Mermonkey",
+   "notes": "No income path (all three paths are damage/support)."
+  }
+ ],
+ "dpsTable": [
+  {
+   "build": "MOAB Eliminator 2-5-0",
+   "towerId": "bomb",
+   "code": "2-5-0",
+   "cost": 32375,
+   "dpsVsCeramic": 2.4,
+   "dpsVsMoab": 572.4,
+   "dpsPerK": 17.68,
+   "source": "BW:MOAB_Eliminator",
+   "caveat": "ability averaged over 10s cd"
+  },
+  {
+   "build": "Sticky Bomb 0-0-4",
+   "towerId": "ninja",
+   "code": "0-0-4",
+   "cost": 8400,
+   "dpsVsCeramic": 1.6,
+   "dpsVsMoab": 123.8,
+   "dpsPerK": 14.74,
+   "source": "BW:Sticky_Bomb",
+   "caveat": "450 + 100 explosion on the blimp every 4.5s"
+  },
+  {
+   "build": "MOAB SHREDR 2-3-0",
+   "towerId": "spike",
+   "code": "2-3-0",
+   "cost": 6300,
+   "dpsVsCeramic": 9.5,
+   "dpsVsMoab": 76.2,
+   "dpsPerK": 12.09,
+   "source": "BW:MOAB_SHREDR",
+   "caveat": "80 MOAB damage per pile (BW); assumes every spike lands on the target"
+  },
+  {
+   "build": "MOAB Assassin 2-4-0",
+   "towerId": "bomb",
+   "code": "2-4-0",
+   "cost": 6375,
+   "dpsVsCeramic": 2.4,
+   "dpsVsMoab": 63.8,
+   "dpsPerK": 10.01,
+   "source": "BW:MOAB_Assassin",
+   "caveat": "2-x-x damage 1->2 assumed as on Mauler/Eliminator; ability averaged over 30s cd"
+  },
+  {
+   "build": "Sharp Shooter 0-2-4",
+   "towerId": "dart",
+   "code": "0-2-4",
+   "cost": 3405,
+   "dpsVsCeramic": 32.7,
+   "dpsVsMoab": 32.7,
+   "dpsPerK": 9.6,
+   "source": "BW:Sharp_Shooter (v55.1 stats)",
+   "caveat": "crit averaged; v57 crit 60 (unverified) would add ~10%"
+  },
+  {
+   "build": "Super Monkey (base) 0-0-0",
+   "towerId": "super",
+   "code": "0-0-0",
+   "cost": 2500,
+   "dpsVsCeramic": 22.2,
+   "dpsVsMoab": 22.2,
+   "dpsPerK": 8.89,
+   "source": "BW:Super_Monkey",
+   "caveat": ""
+  },
+  {
+   "build": "Full Auto Rifle 2-0-4",
+   "towerId": "sniper",
+   "code": "2-0-4",
+   "cost": 9700,
+   "dpsVsCeramic": 53.9,
+   "dpsVsMoab": 69.3,
+   "dpsPerK": 7.15,
+   "source": "BW:Full_Auto_Rifle",
+   "caveat": ""
+  },
+  {
+   "build": "MOAB Mauler 2-3-0",
+   "towerId": "bomb",
+   "code": "2-3-0",
+   "cost": 2925,
+   "dpsVsCeramic": 2.4,
+   "dpsVsMoab": 20.6,
+   "dpsPerK": 7.04,
+   "source": "BW:MOAB_Mauler",
+   "caveat": ""
+  },
+  {
+   "build": "Elite Defender 2-0-5",
+   "towerId": "sniper",
+   "code": "2-0-5",
+   "cost": 24600,
+   "dpsVsCeramic": 107.9,
+   "dpsVsMoab": 169.5,
+   "dpsPerK": 6.89,
+   "source": "BW:Elite_Defender",
+   "caveat": "base rate; up to +100% as bloons advance, x4 for 7s after a leak"
+  },
+  {
+   "build": "Sharp Shooter 2-0-4",
+   "towerId": "dart",
+   "code": "2-0-4",
+   "cost": 3455,
+   "dpsVsCeramic": 21.9,
+   "dpsVsMoab": 21.9,
+   "dpsPerK": 6.34,
+   "source": "BW:Sharp_Shooter (v55.1 stats)",
+   "caveat": "crit 50 every 10th shot averaged; v57 crit 60 (ch.07, unverified) would add ~10%"
+  },
+  {
+   "build": "Plasma Accelerator 4-2-0",
+   "towerId": "dartling",
+   "code": "4-2-0",
+   "cost": 18000,
+   "dpsVsCeramic": 37.9,
+   "dpsVsMoab": 113.6,
+   "dpsPerK": 6.31,
+   "source": "BW:Plasma_Accelerator",
+   "caveat": "beam 1 + tip 2 (+10 MOAB), each +1 vs shocked bloons included; plasma: can't pop Purple"
+  },
+  {
+   "build": "Dark Knight 2-0-3",
+   "towerId": "super",
+   "code": "2-0-3",
+   "cost": 16800,
+   "dpsVsCeramic": 33.3,
+   "dpsVsMoab": 100.0,
+   "dpsPerK": 5.95,
+   "source": "BW:Dark_Knight",
+   "caveat": ""
+  },
+  {
+   "build": "Spike Storm 0-4-0",
+   "towerId": "spike",
+   "code": "0-4-0",
+   "cost": 11900,
+   "dpsVsCeramic": 4.8,
+   "dpsVsMoab": 70.7,
+   "dpsPerK": 5.94,
+   "source": "BW:Spike_Storm",
+   "caveat": "40/pile + ability 204 spikes x 8 every 50s"
+  },
+  {
+   "build": "Crossbow Master 0-2-5",
+   "towerId": "dart",
+   "code": "0-2-5",
+   "cost": 24905,
+   "dpsVsCeramic": 140.8,
+   "dpsVsMoab": 140.8,
+   "dpsPerK": 5.65,
+   "source": "BW:Crossbow_Master (v55.1 stats)",
+   "caveat": "crit 80 every 5th shot. v57 change (2 parallel bolts at half attack speed per ch.07/towers.json) roughly cancels out on one target: not applied (unverified)"
+  },
+  {
+   "build": "Dart Monkey (base) 0-0-0",
+   "towerId": "dart",
+   "code": "0-0-0",
+   "cost": 200,
+   "dpsVsCeramic": 1.1,
+   "dpsVsMoab": 1.1,
+   "dpsPerK": 5.26,
+   "source": "BW:Dart_Monkey",
+   "caveat": ""
+  },
+  {
+   "build": "Dark Champion 2-0-4",
+   "towerId": "super",
+   "code": "2-0-4",
+   "cost": 72355,
+   "dpsVsCeramic": 266.7,
+   "dpsVsMoab": 333.3,
+   "dpsPerK": 4.61,
+   "source": "BW:Dark_Champion; BW:Dark_Knight",
+   "caveat": "'+100% attack speed' applied to the 2-0-3 cooldown (calc)"
+  },
+  {
+   "build": "Arcane Spike 4-0-2",
+   "towerId": "wizard",
+   "code": "4-0-2",
+   "cost": 12925,
+   "dpsVsCeramic": 21.8,
+   "dpsVsMoab": 58.2,
+   "dpsPerK": 4.5,
+   "source": "BW:Arcane_Spike",
+   "caveat": "magic: can't pop Purple"
+  },
+  {
+   "build": "Ring of Fire 4-0-2",
+   "towerId": "tack",
+   "code": "4-0-2",
+   "cost": 5030,
+   "dpsVsCeramic": 22.2,
+   "dpsVsMoab": 22.2,
+   "dpsPerK": 4.42,
+   "source": "BW:Ring_of_Fire",
+   "caveat": "fire: can't pop Purple"
+  },
+  {
+   "build": "Ray of Doom 5-2-0",
+   "towerId": "dartling",
+   "code": "5-2-0",
+   "cost": 93000,
+   "dpsVsCeramic": 399.8,
+   "dpsVsMoab": 399.8,
+   "dpsPerK": 4.3,
+   "source": "BW:Ray_of_Doom",
+   "caveat": "30 + 20 vs shocked, plus 20/0.95s shock DoT"
+  },
+  {
+   "build": "Cripple MOAB 5-0-2",
+   "towerId": "sniper",
+   "code": "5-0-2",
+   "cost": 43400,
+   "dpsVsCeramic": 243.9,
+   "dpsVsMoab": 179.7,
+   "dpsPerK": 4.14,
+   "source": "BW:Cripple_MOAB",
+   "caveat": "plus +5 dmg taken from all sources on blimps (not counted)"
+  },
+  {
+   "build": "Maim MOAB 4-0-2",
+   "towerId": "sniper",
+   "code": "4-0-2",
+   "cost": 11400,
+   "dpsVsCeramic": 102.7,
+   "dpsVsMoab": 38.5,
+   "dpsPerK": 3.38,
+   "source": "BW:Maim_MOAB",
+   "caveat": "plus stun (MOAB 3s)"
+  },
+  {
+   "build": "Sun Avatar 3-2-0",
+   "towerId": "super",
+   "code": "3-2-0",
+   "cost": 30400,
+   "dpsVsCeramic": 100.0,
+   "dpsVsMoab": 100.0,
+   "dpsPerK": 3.29,
+   "source": "BW:Sun_Avatar; fandom Sun_Avatar",
+   "caveat": "assumes all 3 beams hit (true on blimps, optimistic on a lone ceramic); plasma: no Purple"
+  },
+  {
+   "build": "Bloonjitsu 4-0-2",
+   "towerId": "ninja",
+   "code": "4-0-2",
+   "cost": 5500,
+   "dpsVsCeramic": 11.5,
+   "dpsVsMoab": 11.5,
+   "dpsPerK": 2.09,
+   "source": "BW:Bloonjitsu",
+   "caveat": "5 shurikens hit a blimp; a ceramic usually takes 1-2 (ceramic DPS below assumes 5, so optimistic)"
+  },
+  {
+   "build": "Apache Dartship 4-0-2",
+   "towerId": "heli",
+   "code": "4-0-2",
+   "cost": 24850,
+   "dpsVsCeramic": 52.0,
+   "dpsVsMoab": 52.0,
+   "dpsPerK": 2.09,
+   "source": "BW:Apache_Dartship",
+   "caveat": "rotors only hit near the heli"
+  },
+  {
+   "build": "MOAB Domination 0-2-5",
+   "towerId": "boomerang",
+   "code": "0-2-5",
+   "cost": 55140,
+   "dpsVsCeramic": 40.4,
+   "dpsVsMoab": 50.4,
+   "dpsPerK": 0.91,
+   "source": "BW:MOAB_Domination",
+   "caveat": "one Kylie hit per throw assumed (lower bound)"
+  },
+  {
+   "build": "MOAB Press 0-2-4",
+   "towerId": "boomerang",
+   "code": "0-2-4",
+   "cost": 5140,
+   "dpsVsCeramic": 3.5,
+   "dpsVsMoab": 4.2,
+   "dpsPerK": 0.81,
+   "source": "BW:MOAB_Press",
+   "caveat": "one Kylie hit per throw assumed (lower bound)"
+  }
+ ],
+ "playstyles": [
+  {
+   "id": "safe",
+   "name": "Safe / defensive",
+   "bestFor": [
+    "easy",
+    "medium",
+    "first clear of a new map",
+    "Impoppable"
+   ],
+   "template": "Opener -> hero by R15 -> camo by R24, lead by R28 -> MOAB answer by R36 -> one Village 2-2-0 -> one tier-4 carry; at most one 2-0-0 farm before R40",
+   "risks": "Slow money; you reach R63/R80 with a thin bank and no tier 5. Over-building early wastes the cheapest cash in the game.",
+   "cashCurve": "Spend 85-100% of income on defence; bank stays near $0; cash curve = the mode's raw income line."
+  },
+  {
+   "id": "eco",
+   "name": "Eco / farm-heavy",
+   "bestFor": [
+    "medium",
+    "hard",
+    "abr",
+    "freeplay"
+   ],
+   "template": "2-0-0 farms from ~R15-30 while 3 darts + hero hold; 2-3-0 bank or 2-0-3/0-2-3 Marketplaces by R30-40; BRF 4-2-0s from R45-55; Banana Central 5-2-0 + Monkey City by ~R60; sell farms into tier 5s",
+   "risks": "R40 MOAB, R45 camo purples and R63 ceramic rush punish greed. Every farm bought after ~R60-65 on Hard won't pay back by R80.",
+   "cashCurve": "Lower than 'safe' until ~R35-45, then pulls ahead fast (BRF $1,875/round, Central $7,500/round)."
+  },
+  {
+   "id": "rush-t5",
+   "name": "Rush to tier 5",
+   "bestFor": [
+    "medium",
+    "hard",
+    "boss events"
+   ],
+   "template": "Minimal cheap defence (darts + hero + one T3) while saving; buy one carry T5 early (e.g. Sun Avatar->Temple, Glaive Lord $36k, Elite Defender $24.6k, Crossbow Master $24.9k, MOAB Eliminator $32.4k)",
+   "risks": "Everything else is under-built while you save; camo/lead/purple gaps; single point of failure.",
+   "cashCurve": "Saw-tooth: bank climbs to the T5 price, drops to ~$0, repeats."
+  },
+  {
+   "id": "mono",
+   "name": "Mono-tower (one tower type)",
+   "bestFor": [
+    "Primary/Military/Magic Only",
+    "Tower XP grinding",
+    "Easy/Medium"
+   ],
+   "template": "Pick a tower with an all-rounder T5 and all-type crosspaths (Dart, Ninja, Super Monkey, Sniper); spread it for camo/lead coverage",
+   "risks": "Each tower type has a hole (sharp vs Lead, magic vs Purple, bombs vs Black/Zebra). Mono needs crosspaths that patch the hole.",
+   "cashCurve": "Same as safe; slightly worse value because you can't buy the cheapest answer for each threat."
+  },
+  {
+   "id": "lcc",
+   "name": "Low-cost / LCC",
+   "bestFor": [
+    "CHIMPS black medal practice",
+    "Index-style challenges"
+   ],
+   "template": "Only buy what the next danger round needs; prefer cheap T3/T4 with buffs (Jungle Drums, Berserker Brew, Overclock); save the rest",
+   "risks": "Zero margin; one misjudged round ends the run. Needs round knowledge.",
+   "cashCurve": "Spent value stays far below earned cash; bank grows all game."
+  },
+  {
+   "id": "chimps-tight",
+   "name": "CHIMPS-tight",
+   "bestFor": [
+    "CHIMPS",
+    "Impoppable"
+   ],
+   "template": "Opener -> hero by R15 -> camo R24 / lead R28 -> MOAB answer R40 -> mid carry R41-60 -> win condition before R85 (pop cash drops to 10% at R86) -> supports -> R100 burst",
+   "risks": "No selling, no farms, 1 life. Mistakes are permanent; every dollar must be in a tower that keeps working to R100.",
+   "cashCurve": "Fixed: ~$178.7k total. CHIMPS uses Hard prices (x1.08) = ~$165.5k Medium-equivalent; Impoppable (x1.2) = ~$148.9k. About 68% of it arrives from R63 onward, so the late game is where the money is."
+  },
+  {
+   "id": "freeplay",
+   "name": "Freeplay endurance",
+   "bestFor": [
+    "post-R100",
+    "Insta R200/300",
+    "Paragon fuel"
+   ],
+   "template": "Farm hard before R100 (BRF spam + Banana Central + Monkeyopolis, Overclocks), then convert into Paragons, Ultraboost, Homeland Defense, Permanent Brew; Big Bloon Sabotage MK on",
+   "risks": "Pop cash is 8% at R101-120, 5% at R121-140 and 2% from R141 (v53.0); only farms keep paying. MOAB HP ramps +15%/round from R125, +35% from R151.",
+   "cashCurve": "Income becomes almost entirely tower income; cash per pop is negligible."
+  },
+  {
+   "id": "boss",
+   "name": "Boss-event",
+   "bestFor": [
+    "Boss events (Normal/Elite)"
+   ],
+   "template": "Strong single-target (Elite Defender, Cripple MOAB, Dark Champion, Paragons) + farms/Benjamin to fund it + Overclock/Ultraboost",
+   "risks": "Boss tier HP walls; Elite needs much more DPS; round 140 counts as failure.",
+   "cashCurve": "Like eco until the boss, then all-in on single-target DPS."
+  }
+ ],
+ "budgetCheck": [
+  {
+   "round": 10,
+   "minDefenceValue": 600,
+   "note": "3 Dart Monkeys (opener); CHIMPS cash available ~$1,291 Medium-eq (46% used)"
+  },
+  {
+   "round": 15,
+   "minDefenceValue": 1140,
+   "note": "+ hero (Quincy $540); CHIMPS cash available ~$2,435 Medium-eq (47% used)"
+  },
+  {
+   "round": 24,
+   "minDefenceValue": 1540,
+   "note": "+ Ninja 0-0-0 for camo; CHIMPS cash available ~$4,684 Medium-eq (33% used)"
+  },
+  {
+   "round": 28,
+   "minDefenceValue": 2240,
+   "note": "+ Sniper 1-0-0 (FMJ) for lead; CHIMPS cash available ~$6,070 Medium-eq (37% used)"
+  },
+  {
+   "round": 33,
+   "minDefenceValue": 4640,
+   "note": "+ Druid 1-3-0 Druid of the Jungle; CHIMPS cash available ~$8,067 Medium-eq (58% used)"
+  },
+  {
+   "round": 40,
+   "minDefenceValue": 7565,
+   "note": "+ Bomb 2-3-0 MOAB Mauler; CHIMPS cash available ~$15,046 Medium-eq (50% used)"
+  },
+  {
+   "round": 45,
+   "minDefenceValue": 11015,
+   "note": "+ Village 0-2-0 (Radar Scanner); CHIMPS cash available ~$20,540 Medium-eq (54% used)"
+  },
+  {
+   "round": 50,
+   "minDefenceValue": 16115,
+   "note": "+ Ninja to 4-0-2 Bloonjitsu (+$5,100); CHIMPS cash available ~$31,999 Medium-eq (50% used)"
+  },
+  {
+   "round": 60,
+   "minDefenceValue": 19565,
+   "note": "+ Bomb to 2-4-0 MOAB Assassin (+$3,450); CHIMPS cash available ~$49,515 Medium-eq (40% used)"
+  },
+  {
+   "round": 63,
+   "minDefenceValue": 37565,
+   "note": "+ Dartling 4-2-0 Plasma Accelerator; CHIMPS cash available ~$52,794 Medium-eq (71% used)"
+  },
+  {
+   "round": 76,
+   "minDefenceValue": 39465,
+   "note": "+ Village to 2-2-0 Jungle Drums (+$1,900); CHIMPS cash available ~$74,714 Medium-eq (53% used)"
+  },
+  {
+   "round": 78,
+   "minDefenceValue": 50165,
+   "note": "+ Sniper to 4-0-2 Maim MOAB (+$10,700); CHIMPS cash available ~$78,285 Medium-eq (64% used)"
+  },
+  {
+   "round": 90,
+   "minDefenceValue": 57665,
+   "note": "+ Village to 2-3-0 MIB (+$7,500) for DDTs; CHIMPS cash available ~$121,408 Medium-eq (47% used)"
+  },
+  {
+   "round": 95,
+   "minDefenceValue": 83665,
+   "note": "+ Bomb to 2-5-0 MOAB Eliminator (+$26,000); CHIMPS cash available ~$138,706 Medium-eq (60% used)"
+  },
+  {
+   "round": 98,
+   "minDefenceValue": 114065,
+   "note": "+ Super Monkey 3-2-0 Sun Avatar; CHIMPS cash available ~$152,679 Medium-eq (75% used)"
+  }
+ ],
+ "modes": {
+  "easy": {
+   "name": "Easy Standard",
+   "startRound": 1,
+   "endRound": 40,
+   "startCash": 650,
+   "priceMult": 0.85,
+   "cashMult": 1.0,
+   "totalCash": 17366,
+   "totalCashMediumEq": 20431,
+   "keyRounds": [
+    {
+     "round": 10,
+     "cash": 2129,
+     "mediumEq": 2505
+    },
+    {
+     "round": 24,
+     "cash": 5794,
+     "mediumEq": 6816
+    },
+    {
+     "round": 28,
+     "cash": 7291,
+     "mediumEq": 8578
+    },
+    {
+     "round": 40,
+     "cash": 16985,
+     "mediumEq": 19982
+    }
+   ]
+  },
+  "deflation": {
+   "name": "Deflation (Easy)",
+   "startRound": 31,
+   "endRound": 60,
+   "startCash": 20000,
+   "priceMult": 0.85,
+   "cashMult": 0.0,
+   "totalCash": 20000,
+   "totalCashMediumEq": 23529,
+   "keyRounds": [
+    {
+     "round": 31,
+     "cash": 20000,
+     "mediumEq": 23529
+    },
+    {
+     "round": 60,
+     "cash": 20000,
+     "mediumEq": 23529
+    }
+   ]
+  },
+  "medium": {
+   "name": "Medium Standard",
+   "startRound": 1,
+   "endRound": 60,
+   "startCash": 650,
+   "priceMult": 1.0,
+   "cashMult": 1.0,
+   "totalCash": 54974,
+   "totalCashMediumEq": 54974,
+   "keyRounds": [
+    {
+     "round": 24,
+     "cash": 5794,
+     "mediumEq": 5794
+    },
+    {
+     "round": 28,
+     "cash": 7291,
+     "mediumEq": 7291
+    },
+    {
+     "round": 40,
+     "cash": 16985,
+     "mediumEq": 16985
+    },
+    {
+     "round": 50,
+     "cash": 35294,
+     "mediumEq": 35294
+    },
+    {
+     "round": 60,
+     "cash": 54212,
+     "mediumEq": 54212
+    }
+   ]
+  },
+  "apopalypse": {
+   "name": "Apopalypse (Medium)",
+   "startRound": 1,
+   "endRound": 60,
+   "startCash": 650,
+   "priceMult": 1.0,
+   "cashMult": 1.0,
+   "totalCash": 54974,
+   "totalCashMediumEq": 54974,
+   "keyRounds": [
+    {
+     "round": 20,
+     "cash": 4682,
+     "mediumEq": 4682
+    },
+    {
+     "round": 33,
+     "cash": 9447,
+     "mediumEq": 9447
+    },
+    {
+     "round": 40,
+     "cash": 16985,
+     "mediumEq": 16985
+    },
+    {
+     "round": 60,
+     "cash": 54212,
+     "mediumEq": 54212
+    }
+   ]
+  },
+  "hard": {
+   "name": "Hard Standard",
+   "startRound": 3,
+   "endRound": 80,
+   "startCash": 650,
+   "priceMult": 1.08,
+   "cashMult": 1.0,
+   "totalCash": 97816,
+   "totalCashMediumEq": 90570,
+   "keyRounds": [
+    {
+     "round": 24,
+     "cash": 5536,
+     "mediumEq": 5126
+    },
+    {
+     "round": 40,
+     "cash": 16727,
+     "mediumEq": 15488
+    },
+    {
+     "round": 50,
+     "cash": 35036,
+     "mediumEq": 32441
+    },
+    {
+     "round": 63,
+     "cash": 57494,
+     "mediumEq": 53236
+    },
+    {
+     "round": 78,
+     "cash": 85024,
+     "mediumEq": 78726
+    },
+    {
+     "round": 80,
+     "cash": 96595,
+     "mediumEq": 89440
+    }
+   ]
+  },
+  "halfcash": {
+   "name": "Half Cash (Hard)",
+   "startRound": 3,
+   "endRound": 80,
+   "startCash": 650,
+   "priceMult": 1.08,
+   "cashMult": 0.5,
+   "totalCash": 48908,
+   "totalCashMediumEq": 45285,
+   "keyRounds": [
+    {
+     "round": 24,
+     "cash": 2768,
+     "mediumEq": 2563
+    },
+    {
+     "round": 40,
+     "cash": 8364,
+     "mediumEq": 7744
+    },
+    {
+     "round": 63,
+     "cash": 28747,
+     "mediumEq": 26618
+    },
+    {
+     "round": 80,
+     "cash": 48298,
+     "mediumEq": 44720
+    }
+   ]
+  },
+  "abr": {
+   "name": "ABR (Hard)",
+   "startRound": 3,
+   "endRound": 80,
+   "startCash": 650,
+   "priceMult": 1.08,
+   "cashMult": 1.0,
+   "totalCash": 100813,
+   "totalCashMediumEq": 93345,
+   "keyRounds": [
+    {
+     "round": 5,
+     "cash": 970,
+     "mediumEq": 898
+    },
+    {
+     "round": 27,
+     "cash": 6604,
+     "mediumEq": 6115
+    },
+    {
+     "round": 30,
+     "cash": 7999,
+     "mediumEq": 7406
+    },
+    {
+     "round": 40,
+     "cash": 17404,
+     "mediumEq": 16115
+    },
+    {
+     "round": 50,
+     "cash": 33944,
+     "mediumEq": 31430
+    },
+    {
+     "round": 63,
+     "cash": 58434,
+     "mediumEq": 54105
+    },
+    {
+     "round": 75,
+     "cash": 78216,
+     "mediumEq": 72422
+    },
+    {
+     "round": 80,
+     "cash": 98373,
+     "mediumEq": 91086
+    }
+   ]
+  },
+  "impoppable": {
+   "name": "Impoppable",
+   "startRound": 6,
+   "endRound": 100,
+   "startCash": 650,
+   "priceMult": 1.2,
+   "cashMult": 1.0,
+   "totalCash": 178709,
+   "totalCashMediumEq": 148924,
+   "keyRounds": [
+    {
+     "round": 24,
+     "cash": 5059,
+     "mediumEq": 4216
+    },
+    {
+     "round": 40,
+     "cash": 16250,
+     "mediumEq": 13542
+    },
+    {
+     "round": 50,
+     "cash": 34559,
+     "mediumEq": 28799
+    },
+    {
+     "round": 63,
+     "cash": 57017,
+     "mediumEq": 47514
+    },
+    {
+     "round": 80,
+     "cash": 96118,
+     "mediumEq": 80099
+    },
+    {
+     "round": 90,
+     "cash": 131121,
+     "mediumEq": 109267
+    },
+    {
+     "round": 95,
+     "cash": 149802,
+     "mediumEq": 124835
+    },
+    {
+     "round": 98,
+     "cash": 164893,
+     "mediumEq": 137411
+    },
+    {
+     "round": 100,
+     "cash": 177375,
+     "mediumEq": 147812
+    }
+   ]
+  },
+  "chimps": {
+   "name": "CHIMPS",
+   "startRound": 6,
+   "endRound": 100,
+   "startCash": 650,
+   "priceMult": 1.08,
+   "cashMult": 1.0,
+   "totalCash": 178709,
+   "totalCashMediumEq": 165472,
+   "keyRounds": [
+    {
+     "round": 24,
+     "cash": 5059,
+     "mediumEq": 4684
+    },
+    {
+     "round": 40,
+     "cash": 16250,
+     "mediumEq": 15046
+    },
+    {
+     "round": 50,
+     "cash": 34559,
+     "mediumEq": 31999
+    },
+    {
+     "round": 63,
+     "cash": 57017,
+     "mediumEq": 52794
+    },
+    {
+     "round": 80,
+     "cash": 96118,
+     "mediumEq": 88999
+    },
+    {
+     "round": 90,
+     "cash": 131121,
+     "mediumEq": 121408
+    },
+    {
+     "round": 95,
+     "cash": 149802,
+     "mediumEq": 138706
+    },
+    {
+     "round": 98,
+     "cash": 164893,
+     "mediumEq": 152679
+    },
+    {
+     "round": 100,
+     "cash": 177375,
+     "mediumEq": 164236
+    }
+   ]
+  }
+ },
+ "priceRule": {
+  "multipliers": {
+   "easy": 0.85,
+   "medium": 1.0,
+   "hard": 1.08,
+   "impoppable": 1.2
+  },
+  "modeMultipliers": {
+   "deflation": 0.85,
+   "primaryOnly": 0.85,
+   "militaryOnly": 1.0,
+   "apopalypse": 1.0,
+   "reverse": 1.0,
+   "halfCash": 1.08,
+   "abr": 1.08,
+   "doubleHpMoabs": 1.08,
+   "magicOnly": 1.08,
+   "chimps": 1.08,
+   "impoppable": 1.2
+  },
+  "chimpsNote": "CHIMPS uses Hard prices (x1.08), not x1.2 (BW Strategy:CHIMPS Monkey Town $10,800; Steam/kosgames)",
+  "rounding": "nearest $5 per individual upgrade; exact ties (Easy only) round down",
+  "verifiedAgainst": 32
+ },
+ "cumulativeCashStd": [
+  {
+   "round": 1,
+   "pop": 20,
+   "bonus": 101
+  },
+  {
+   "round": 2,
+   "pop": 35,
+   "bonus": 102
+  },
+  {
+   "round": 3,
+   "pop": 35,
+   "bonus": 103
+  },
+  {
+   "round": 4,
+   "pop": 71,
+   "bonus": 104
+  },
+  {
+   "round": 5,
+   "pop": 59,
+   "bonus": 105
+  },
+  {
+   "round": 6,
+   "pop": 57,
+   "bonus": 106
+  },
+  {
+   "round": 7,
+   "pop": 75,
+   "bonus": 107
+  },
+  {
+   "round": 8,
+   "pop": 92,
+   "bonus": 108
+  },
+  {
+   "round": 9,
+   "pop": 90,
+   "bonus": 109
+  },
+  {
+   "round": 10,
+   "pop": 204,
+   "bonus": 110
+  },
+  {
+   "round": 11,
+   "pop": 78,
+   "bonus": 111
+  },
+  {
+   "round": 12,
+   "pop": 80,
+   "bonus": 112
+  },
+  {
+   "round": 13,
+   "pop": 169,
+   "bonus": 113
+  },
+  {
+   "round": 14,
+   "pop": 145,
+   "bonus": 114
+  },
+  {
+   "round": 15,
+   "pop": 151,
+   "bonus": 115
+  },
+  {
+   "round": 16,
+   "pop": 152,
+   "bonus": 116
+  },
+  {
+   "round": 17,
+   "pop": 48,
+   "bonus": 117
+  },
+  {
+   "round": 18,
+   "pop": 240,
+   "bonus": 118
+  },
+  {
+   "round": 19,
+   "pop": 141,
+   "bonus": 119
+  },
+  {
+   "round": 20,
+   "pop": 66,
+   "bonus": 120
+  },
+  {
+   "round": 21,
+   "pop": 230,
+   "bonus": 121
+  },
+  {
+   "round": 22,
+   "pop": 176,
+   "bonus": 122
+  },
+  {
+   "round": 23,
+   "pop": 154,
+   "bonus": 123
+  },
+  {
+   "round": 24,
+   "pop": 43,
+   "bonus": 124
+  },
+  {
+   "round": 25,
+   "pop": 210,
+   "bonus": 125
+  },
+  {
+   "round": 26,
+   "pop": 207,
+   "bonus": 126
+  },
+  {
+   "round": 27,
+   "pop": 535,
+   "bonus": 127
+  },
+  {
+   "round": 28,
+   "pop": 138,
+   "bonus": 128
+  },
+  {
+   "round": 29,
+   "pop": 260,
+   "bonus": 129
+  },
+  {
+   "round": 30,
+   "pop": 207,
+   "bonus": 130
+  },
+  {
+   "round": 31,
+   "pop": 406,
+   "bonus": 131
+  },
+  {
+   "round": 32,
+   "pop": 495,
+   "bonus": 132
+  },
+  {
+   "round": 33,
+   "pop": 72,
+   "bonus": 133
+  },
+  {
+   "round": 34,
+   "pop": 778,
+   "bonus": 134
+  },
+  {
+   "round": 35,
+   "pop": 1015,
+   "bonus": 135
+  },
+  {
+   "round": 36,
+   "pop": 760,
+   "bonus": 136
+  },
+  {
+   "round": 37,
+   "pop": 1202,
+   "bonus": 137
+  },
+  {
+   "round": 38,
+   "pop": 1139,
+   "bonus": 138
+  },
+  {
+   "round": 39,
+   "pop": 1620,
+   "bonus": 139
+  },
+  {
+   "round": 40,
+   "pop": 381,
+   "bonus": 140
+  },
+  {
+   "round": 41,
+   "pop": 2040,
+   "bonus": 141
+  },
+  {
+   "round": 42,
+   "pop": 517,
+   "bonus": 142
+  },
+  {
+   "round": 43,
+   "pop": 1135,
+   "bonus": 143
+  },
+  {
+   "round": 44,
+   "pop": 1150,
+   "bonus": 144
+  },
+  {
+   "round": 45,
+   "pop": 2277,
+   "bonus": 145
+  },
+  {
+   "round": 46,
+   "pop": 570,
+   "bonus": 146
+  },
+  {
+   "round": 47,
+   "pop": 1490,
+   "bonus": 147
+  },
+  {
+   "round": 48,
+   "pop": 2695,
+   "bonus": 148
+  },
+  {
+   "round": 49,
+   "pop": 4609,
+   "bonus": 149
+  },
+  {
+   "round": 50,
+   "pop": 2866,
+   "bonus": 150
+  },
+  {
+   "round": 51,
+   "pop": 947.5,
+   "bonus": 151
+  },
+  {
+   "round": 52,
+   "pop": 1443.5,
+   "bonus": 152
+  },
+  {
+   "round": 53,
+   "pop": 771.5,
+   "bonus": 153
+  },
+  {
+   "round": 54,
+   "pop": 2043.5,
+   "bonus": 154
+  },
+  {
+   "round": 55,
+   "pop": 2328,
+   "bonus": 155
+  },
+  {
+   "round": 56,
+   "pop": 1130.5,
+   "bonus": 156
+  },
+  {
+   "round": 57,
+   "pop": 1702,
+   "bonus": 157
+  },
+  {
+   "round": 58,
+   "pop": 2140,
+   "bonus": 158
+  },
+  {
+   "round": 59,
+   "pop": 2000,
+   "bonus": 159
+  },
+  {
+   "round": 60,
+   "pop": 762.5,
+   "bonus": 160
+  },
+  {
+   "round": 61,
+   "pop": 1071,
+   "bonus": 161
+  },
+  {
+   "round": 62,
+   "pop": 1224.4,
+   "bonus": 162
+  },
+  {
+   "round": 63,
+   "pop": 2663,
+   "bonus": 163
+  },
+  {
+   "round": 64,
+   "pop": 685.8,
+   "bonus": 164
+  },
+  {
+   "round": 65,
+   "pop": 2906.6,
+   "bonus": 165
+  },
+  {
+   "round": 66,
+   "pop": 838.2,
+   "bonus": 166
+  },
+  {
+   "round": 67,
+   "pop": 856.6,
+   "bonus": 167
+  },
+  {
+   "round": 68,
+   "pop": 609.8,
+   "bonus": 168
+  },
+  {
+   "round": 69,
+   "pop": 1222,
+   "bonus": 169
+  },
+  {
+   "round": 70,
+   "pop": 2448.8,
+   "bonus": 170
+  },
+  {
+   "round": 71,
+   "pop": 1332,
+   "bonus": 171
+  },
+  {
+   "round": 72,
+   "pop": 1332,
+   "bonus": 172
+  },
+  {
+   "round": 73,
+   "pop": 1219.6,
+   "bonus": 173
+  },
+  {
+   "round": 74,
+   "pop": 2870,
+   "bonus": 174
+  },
+  {
+   "round": 75,
+   "pop": 2492.4,
+   "bonus": 175
+  },
+  {
+   "round": 76,
+   "pop": 1140,
+   "bonus": 176
+  },
+  {
+   "round": 77,
+   "pop": 2363.2,
+   "bonus": 177
+  },
+  {
+   "round": 78,
+   "pop": 4684,
+   "bonus": 178
+  },
+  {
+   "round": 79,
+   "pop": 6530,
+   "bonus": 179
+  },
+  {
+   "round": 80,
+   "pop": 1220.2,
+   "bonus": 180
+  },
+  {
+   "round": 81,
+   "pop": 5185,
+   "bonus": 181
+  },
+  {
+   "round": 82,
+   "pop": 4575,
+   "bonus": 182
+  },
+  {
+   "round": 83,
+   "pop": 4566,
+   "bonus": 183
+  },
+  {
+   "round": 84,
+   "pop": 6860,
+   "bonus": 184
+  },
+  {
+   "round": 85,
+   "pop": 2440.4,
+   "bonus": 185
+  },
+  {
+   "round": 86,
+   "pop": 762.5,
+   "bonus": 186
+  },
+  {
+   "round": 87,
+   "pop": 2440.4,
+   "bonus": 187
+  },
+  {
+   "round": 88,
+   "pop": 3126,
+   "bonus": 188
+  },
+  {
+   "round": 89,
+   "pop": 1982,
+   "bonus": 189
+  },
+  {
+   "round": 90,
+   "pop": 149.3,
+   "bonus": 190
+  },
+  {
+   "round": 91,
+   "pop": 4000,
+   "bonus": 191
+  },
+  {
+   "round": 92,
+   "pop": 4345.4,
+   "bonus": 192
+  },
+  {
+   "round": 93,
+   "pop": 1753.6,
+   "bonus": 193
+  },
+  {
+   "round": 94,
+   "pop": 7473.1,
+   "bonus": 194
+  },
+  {
+   "round": 95,
+   "pop": 3523,
+   "bonus": 195
+  },
+  {
+   "round": 96,
+   "pop": 9759.6,
+   "bonus": 196
+  },
+  {
+   "round": 97,
+   "pop": 1220.2,
+   "bonus": 197
+  },
+  {
+   "round": 98,
+   "pop": 9455.8,
+   "bonus": 198
+  },
+  {
+   "round": 99,
+   "pop": 2628.9,
+   "bonus": 199
+  },
+  {
+   "round": 100,
+   "pop": 1334.6,
+   "bonus": 200
+  }
+ ]
+}

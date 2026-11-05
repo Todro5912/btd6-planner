@@ -1,0 +1,831 @@
+<title>Bloons Planner</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* Layout: a sticky control rail on the left, results stacked summary-first on the right; one column under 900px. */
+:root {
+  --bg: #EDF0F5;
+  --surface: #FFFFFF;
+  --surface-2: #F5F7FB;
+  --ink: #141A2B;
+  --muted: #5A6378;
+  --line: #D5DBE6;
+  --accent: #2147B5;
+  --accent-ink: #FFFFFF;
+  --accent-soft: #E1E8FB;
+  --cash: #C98B00;
+  --cash-soft: rgba(229, 168, 18, .18);
+  --ok: #24804F;
+  --ok-soft: #DDF1E5;
+  --warn: #A86A00;
+  --warn-soft: #FBEFD3;
+  --crit: #CC2A35;
+  --crit-soft: #FBE1E3;
+  --bronze: #A8642B;
+  --silver: #7D8794;
+  --gold: #B98A00;
+  --diamond: #2A8FB5;
+  --black-medal: #161616;
+  --path-1: #2147B5;
+  --path-2: #8A3FB8;
+  --path-3: #1E8A72;
+  --shadow: 0 1px 2px rgba(20, 26, 43, .06), 0 4px 16px rgba(20, 26, 43, .05);
+  --font-display: "Lilita One", "Arial Rounded MT Bold", "Trebuchet MS", system-ui, sans-serif;
+  --font-body: "Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  --r: 10px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0D1120; --surface: #151A2B; --surface-2: #1B2135; --ink: #E6E9F2; --muted: #98A0B6; --line: #2A3150;
+    --accent: #8EA6FF; --accent-ink: #0D1120; --accent-soft: #232C4E;
+    --cash: #F1C24A; --cash-soft: rgba(241, 194, 74, .16);
+    --ok: #5CCB8E; --ok-soft: #173326; --warn: #F0B54A; --warn-soft: #3A2C10; --crit: #FF6B73; --crit-soft: #3D1A20;
+    --bronze: #D8925A; --silver: #B5BDC8; --gold: #E9C048; --diamond: #6CC8EA; --black-medal: #E8E8E8;
+    --path-1: #8EA6FF; --path-2: #C792EA; --path-3: #5FD3B6;
+    --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 6px 20px rgba(0, 0, 0, .25);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0D1120; --surface: #151A2B; --surface-2: #1B2135; --ink: #E6E9F2; --muted: #98A0B6; --line: #2A3150;
+  --accent: #8EA6FF; --accent-ink: #0D1120; --accent-soft: #232C4E;
+  --cash: #F1C24A; --cash-soft: rgba(241, 194, 74, .16);
+  --ok: #5CCB8E; --ok-soft: #173326; --warn: #F0B54A; --warn-soft: #3A2C10; --crit: #FF6B73; --crit-soft: #3D1A20;
+  --bronze: #D8925A; --silver: #B5BDC8; --gold: #E9C048; --diamond: #6CC8EA; --black-medal: #E8E8E8;
+  --path-1: #8EA6FF; --path-2: #C792EA; --path-3: #5FD3B6;
+  --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 6px 20px rgba(0, 0, 0, .25);
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  background: var(--bg); color: var(--ink);
+  font-family: var(--font-body); font-size: 14px; line-height: 1.45;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 16px 40px;
+}
+.num, td.n, .mono { font-variant-numeric: tabular-nums; }
+.mono, code { font-family: var(--font-mono); font-size: .92em; }
+h1, h2, h3 { margin: 0; text-wrap: balance; }
+p { margin: 0; }
+button, input, select { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.wrap { max-width: 1320px; margin: 0 auto; display: grid; gap: 16px; }
+
+/* header */
+.top { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 8px 16px; }
+.brand { display: flex; align-items: center; gap: 12px; min-width: 0; }
+.brand-mark { width: 40px; height: 40px; flex: none; }
+.brand h1 { font-family: var(--font-display); font-weight: 400; font-size: 30px; line-height: 1; letter-spacing: .5px; }
+.brand p { color: var(--muted); font-size: 13px; margin-top: 3px; }
+.example { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.tag { display: inline-flex; align-items: center; gap: 6px; padding: 3px 9px; border-radius: 999px; font-size: 12px; font-weight: 600; background: var(--accent-soft); color: var(--accent); }
+.btn { border: 1px solid var(--line); background: var(--surface); border-radius: 8px; padding: 6px 10px; cursor: pointer; font-weight: 600; font-size: 13px; }
+.jump { display: none; text-decoration: none; color: var(--accent); }
+@media (max-width: 900px) { .jump { display: inline-block; } }
+.btn:hover { border-color: var(--accent); color: var(--accent); }
+
+.grid { display: grid; grid-template-columns: 340px minmax(0, 1fr); gap: 16px; align-items: start; }
+@media (max-width: 900px) { .grid { grid-template-columns: minmax(0, 1fr); } }
+
+/* control rail */
+.rail { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; box-shadow: var(--shadow); padding: 14px; display: grid; gap: 14px; position: sticky; top: max(12px, env(safe-area-inset-top, 0px)); max-height: calc(100vh - 24px); overflow: auto; min-width: 0; }
+@media (max-width: 900px) { .rail { position: static; max-height: none; } }
+.field { display: grid; gap: 6px; min-width: 0; }
+.field > label, .lbl { font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); display: flex; justify-content: space-between; gap: 8px; align-items: baseline; }
+.lbl .hint { text-transform: none; letter-spacing: 0; font-weight: 500; }
+.input, select.input { width: 100%; border: 1px solid var(--line); background: var(--surface-2); border-radius: 8px; padding: 7px 9px; min-width: 0; }
+.input:focus { border-color: var(--accent); }
+
+.maplist { position: relative; border: 1px solid var(--line); border-radius: 8px; max-height: 190px; overflow: auto; background: var(--surface-2); }
+.mapgroup { position: sticky; top: 0; background: var(--surface-2); padding: 5px 9px 3px; font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); display: flex; align-items: center; gap: 6px; border-bottom: 1px solid var(--line); }
+.mapbtn { display: flex; width: 100%; justify-content: space-between; gap: 8px; text-align: left; border: 0; background: none; padding: 5px 9px; cursor: pointer; border-radius: 0; }
+.mapbtn:hover { background: var(--accent-soft); }
+.mapbtn[aria-selected="true"] { background: var(--accent); color: var(--accent-ink); font-weight: 600; }
+.mapbtn small { opacity: .75; font-size: 11px; }
+.dot { width: 9px; height: 9px; border-radius: 50%; display: inline-block; flex: none; }
+.d-Beginner { background: #4FA65B; } .d-Intermediate { background: #D9A400; } .d-Advanced { background: #D46A1F; } .d-Expert { background: #C3263A; }
+
+.chips { display: flex; flex-wrap: wrap; gap: 5px; }
+.tchip { border: 1px solid var(--line); background: var(--surface-2); border-radius: 999px; padding: 3px 9px; font-size: 12.5px; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; }
+.tchip i { width: 6px; height: 6px; border-radius: 50%; display: inline-block; }
+.tchip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); font-weight: 600; }
+.tchip:disabled { opacity: .4; cursor: not-allowed; }
+.c-Primary { background: #4A86E8; } .c-Military { background: #5B8A3A; } .c-Magic { background: #9B59D0; } .c-Support { background: #D9963A; }
+
+.picks { display: grid; gap: 8px; }
+.pick { border: 1px solid var(--line); border-radius: var(--r); padding: 9px; display: grid; gap: 8px; background: var(--surface-2); }
+.pick-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.pick-name { font-weight: 700; min-width: 0; }
+.pick-name small { display: block; font-weight: 500; color: var(--muted); font-size: 12px; }
+.xcode { font-family: var(--font-mono); font-weight: 700; font-size: 18px; letter-spacing: .5px; }
+.x { border: 0; background: none; cursor: pointer; color: var(--muted); font-size: 18px; line-height: 1; padding: 2px 6px; border-radius: 6px; }
+.x:hover { color: var(--crit); background: var(--crit-soft); }
+.steppers { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; }
+.stp { display: grid; gap: 3px; min-width: 0; }
+.stp > span { font-size: 10.5px; color: var(--muted); font-weight: 600; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.stp-ctl { display: grid; grid-template-columns: 22px minmax(0, 1fr) 22px; align-items: center; border: 1px solid var(--line); border-radius: 7px; background: var(--surface); overflow: hidden; }
+.stp-ctl button { border: 0; background: none; height: 26px; cursor: pointer; font-weight: 700; color: var(--muted); padding: 0; }
+.stp-ctl button:hover { color: var(--accent); background: var(--accent-soft); }
+.stp-ctl b { text-align: center; font-family: var(--font-mono); font-size: 14px; }
+.stp.p0 b { color: var(--path-1); } .stp.p1 b { color: var(--path-2); } .stp.p2 b { color: var(--path-3); }
+.pips { display: flex; gap: 2px; justify-content: center; }
+.pips i { width: 5px; height: 5px; border-radius: 1px; background: var(--line); }
+.stp.p0 .pips i.on { background: var(--path-1); } .stp.p1 .pips i.on { background: var(--path-2); } .stp.p2 .pips i.on { background: var(--path-3); }
+.lvl { display: grid; gap: 6px; border-top: 1px dashed var(--line); padding-top: 8px; }
+.lvl-row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 6px; }
+.check { display: flex; align-items: center; gap: 7px; cursor: pointer; font-size: 13px; }
+.check input { accent-color: var(--accent); width: 15px; height: 15px; margin: 0; }
+.toggles { display: grid; gap: 7px; }
+.subtle { color: var(--muted); font-size: 12px; }
+
+/* results */
+.results { display: grid; gap: 16px; min-width: 0; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; box-shadow: var(--shadow); padding: 16px; display: grid; gap: 12px; min-width: 0; }
+.card-h { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 6px 12px; }
+.card-h h2 { font-family: var(--font-display); font-weight: 400; font-size: 21px; letter-spacing: .3px; }
+.card-h .subtle { font-size: 12.5px; }
+
+/* verdict */
+.verdict { border-width: 2px; }
+.vtop { display: flex; flex-wrap: wrap; gap: 8px 18px; align-items: center; }
+.vmap { font-family: var(--font-display); font-size: 26px; line-height: 1.05; }
+.medal { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; font-size: 12.5px; padding: 3px 10px 3px 4px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface-2); }
+.medal i { width: 16px; height: 16px; border-radius: 50%; display: inline-block; box-shadow: inset 0 -2px 0 rgba(0,0,0,.18); }
+.m-easy { background: var(--bronze); } .m-medium { background: var(--silver); } .m-hard { background: var(--gold); } .m-imp { background: var(--diamond); } .m-chimps { background: var(--black-medal); outline: 2px solid var(--crit); outline-offset: -2px; } .m-none { background: var(--line); }
+.stats { display: flex; flex-wrap: wrap; gap: 6px 18px; }
+.stat { display: grid; gap: 0; }
+.stat b { font-size: 18px; font-variant-numeric: tabular-nums; }
+.stat span { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; font-weight: 600; }
+.notes { display: grid; gap: 5px; margin: 0; padding: 0; list-style: none; }
+.notes li { display: grid; grid-template-columns: 12px minmax(0, 1fr); gap: 8px; align-items: baseline; font-size: 13.5px; }
+.notes li::before { content: ""; width: 9px; height: 9px; border-radius: 2px; transform: translateY(1px); background: var(--ok); }
+.notes li.warn::before { background: var(--warn); }
+.notes li.crit::before { background: var(--crit); }
+.notes li.crit { color: var(--crit); font-weight: 600; }
+.notes li.info::before { background: var(--muted); }
+.notes li.info { color: var(--muted); font-size: 12.5px; }
+.ixev { border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; display: grid; gap: 9px; min-width: 0; }
+.ixev-h { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 12px; }
+.ixrows { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.ixrows li { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; font-size: 13.5px; min-width: 0; }
+.ixrows li .subtle { overflow-wrap: anywhere; }
+.ixchip { font-size: 12px; padding: 2px 8px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface-2); white-space: nowrap; }
+.ixchip.ok { background: var(--ok-soft); border-color: var(--ok); color: var(--ok); font-weight: 700; }
+.ixchip.no { color: var(--muted); font-weight: 700; min-width: 28px; text-align: center; }
+.cov { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 8px; }
+.covc { border-radius: 10px; padding: 8px 10px; display: grid; gap: 2px; border: 1px solid transparent; min-width: 0; }
+.covc .cl { display: flex; justify-content: space-between; align-items: baseline; gap: 6px; font-weight: 700; }
+.covc .cl span { font-family: var(--font-mono); font-size: 12px; font-weight: 700; }
+.covc .cb { font-size: 12px; line-height: 1.3; overflow-wrap: anywhere; }
+.s-covered { background: var(--ok-soft); color: var(--ok); }
+.s-covered .cb { color: var(--ink); }
+.s-partial, .s-late { background: var(--warn-soft); color: var(--warn); }
+.s-partial .cb, .s-late .cb { color: var(--ink); }
+.s-uncovered { background: var(--crit-soft); color: var(--crit); border-color: var(--crit); }
+.s-uncovered .cb { font-weight: 700; }
+.s-na { background: var(--surface-2); color: var(--muted); border-color: var(--line); }
+
+/* map */
+.facts { display: grid; grid-template-columns: repeat(auto-fill, minmax(118px, 1fr)); gap: 8px; }
+.fact { background: var(--surface-2); border-radius: 8px; padding: 7px 9px; min-width: 0; }
+.fact span { display: block; font-size: 10.5px; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); font-weight: 700; }
+.fact b { font-weight: 600; overflow-wrap: anywhere; }
+.plan { background: var(--surface-2); border-left: 3px solid var(--accent); border-radius: 0 8px 8px 0; padding: 10px 12px; max-width: 80ch; line-height: 1.55; overflow-wrap: anywhere; }
+.plan-h { font-size: 11px; text-transform: uppercase; letter-spacing: .08em; font-weight: 700; color: var(--accent); margin-bottom: 4px; }
+.tlist { display: flex; flex-wrap: wrap; gap: 5px; align-items: center; }
+.tlist > em { font-style: normal; font-size: 12px; color: var(--muted); font-weight: 700; min-width: 54px; }
+.tt { font-size: 12.5px; padding: 2px 8px; border-radius: 6px; background: var(--surface-2); border: 1px solid var(--line); }
+.tt.hit-good { background: var(--ok-soft); border-color: var(--ok); color: var(--ok); font-weight: 700; }
+.tt.hit-bad { background: var(--crit-soft); border-color: var(--crit); color: var(--crit); font-weight: 700; }
+.conf { font-weight: 700; }
+.conf-high { color: var(--ok); } .conf-med { color: var(--warn); } .conf-low { color: var(--crit); }
+.two { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 12px; }
+@media (max-width: 640px) { .two { grid-template-columns: minmax(0, 1fr); } }
+.prose { max-width: 75ch; overflow-wrap: anywhere; }
+.prose b { font-weight: 700; }
+
+/* chart + tables */
+.chart-wrap { overflow-x: auto; }
+.chart { width: 100%; min-width: 480px; height: auto; display: block; }
+.chart text { fill: var(--muted); font-family: var(--font-body); font-size: 11px; }
+.chart .grid-l { stroke: var(--line); stroke-width: 1; }
+.chart .avail { fill: var(--cash-soft); stroke: var(--cash); stroke-width: 2; }
+.chart .spent { fill: none; stroke: var(--accent); stroke-width: 2.25; }
+.chart .buy { fill: var(--accent); stroke: var(--surface); stroke-width: 1.5; }
+.chart .danger { fill: var(--crit); }
+.chart .danger-t { fill: var(--crit); font-weight: 700; font-size: 10px; }
+.legend { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 12px; color: var(--muted); }
+.legend i { display: inline-block; width: 14px; height: 3px; border-radius: 2px; vertical-align: middle; margin-right: 5px; }
+.tbl-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; }
+.tbl-wrap.scroll { max-height: 340px; overflow-y: auto; }
+table { border-collapse: collapse; width: 100%; font-size: 13px; }
+th, td { padding: 6px 10px; text-align: left; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); background: var(--surface-2); position: sticky; top: 0; z-index: 1; white-space: nowrap; }
+td.n, th.n { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+tr:last-child td { border-bottom: 0; }
+tr.flag td { background: var(--crit-soft); color: var(--crit); }
+tr.hi td { background: var(--accent-soft); }
+.rnd { font-family: var(--font-mono); font-weight: 700; white-space: nowrap; }
+.donechips { display: flex; flex-wrap: wrap; gap: 6px; }
+.dchip { font-size: 12.5px; padding: 4px 9px; border-radius: 8px; background: var(--surface-2); border: 1px solid var(--line); }
+.dchip.bad { border-color: var(--crit); color: var(--crit); background: var(--crit-soft); font-weight: 600; }
+
+/* XP */
+.xpline { font-size: 13.5px; }
+.xpline b { font-variant-numeric: tabular-nums; }
+.split { display: flex; height: 14px; border-radius: 7px; overflow: hidden; background: var(--surface-2); border: 1px solid var(--line); }
+.split span { height: 100%; }
+.split-l { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 12px; }
+.split-l i { display: inline-block; width: 9px; height: 9px; border-radius: 2px; margin-right: 5px; }
+.lvcard { border: 1px solid var(--line); border-radius: 12px; padding: 12px; display: grid; gap: 10px; background: var(--surface-2); min-width: 0; }
+.lvtop { display: flex; flex-wrap: wrap; gap: 6px 22px; align-items: baseline; }
+.lvtop h3 { font-size: 16px; }
+.big { font-size: 28px; font-weight: 700; font-variant-numeric: tabular-nums; line-height: 1; }
+.big small { font-size: 13px; color: var(--muted); font-weight: 500; }
+.goals { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 8px; }
+.goal { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 9px 10px; display: grid; gap: 5px; min-width: 0; }
+.goal.target { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+.goal .gl { font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); font-weight: 700; display: flex; justify-content: space-between; gap: 6px; }
+.goal .gv { font-size: 22px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.goal .gv small { font-size: 12px; font-weight: 500; color: var(--muted); }
+.goal .gs { font-size: 12px; color: var(--muted); overflow-wrap: anywhere; }
+.bar { height: 6px; background: var(--line); border-radius: 3px; overflow: hidden; }
+.bar span { display: block; height: 100%; background: var(--accent); }
+.callout { font-size: 13px; padding: 8px 10px; border-radius: 8px; background: var(--warn-soft); color: var(--ink); max-width: 85ch; }
+.callout.info { background: var(--accent-soft); }
+
+/* guide */
+.guide { display: grid; gap: 10px; }
+.gtower { border: 1px solid var(--line); border-radius: 12px; padding: 12px; display: grid; gap: 8px; min-width: 0; }
+.gtower h3 { font-size: 16px; display: flex; gap: 8px; align-items: baseline; flex-wrap: wrap; }
+.gtower h3 .subtle { font-weight: 500; }
+.gtower ul { margin: 0; padding-left: 18px; display: grid; gap: 2px; }
+.xps { display: flex; flex-wrap: wrap; gap: 6px; }
+.xp { border: 1px solid var(--line); border-radius: 8px; padding: 5px 8px; font-size: 12.5px; max-width: 100%; }
+.xp b { font-family: var(--font-mono); }
+.xp.match { border-color: var(--accent); background: var(--accent-soft); }
+.empty { color: var(--muted); font-style: italic; }
+footer { color: var(--muted); font-size: 12px; max-width: 90ch; }
+
+@media (max-width: 480px) {
+  .brand h1 { font-size: 25px; }
+  .vmap { font-size: 22px; }
+  .card { padding: 12px; }
+  .cov { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .bar span, .split span { transition: width .25s ease; }
+}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div class="brand">
+      <svg class="brand-mark" viewBox="0 0 40 40" aria-hidden="true">
+        <ellipse cx="20" cy="17" rx="12" ry="14" fill="var(--crit)"></ellipse>
+        <ellipse cx="15.5" cy="11.5" rx="3" ry="4.5" fill="var(--surface)" opacity=".55"></ellipse>
+        <path d="M20 31 l-2.5 4 h5 z" fill="var(--crit)"></path>
+        <path d="M20 35 q-3 2 0 5" stroke="var(--muted)" stroke-width="1.4" fill="none"></path>
+      </svg>
+      <div>
+        <h1>Bloons Planner</h1>
+        <p id="sub">BTD6 build, cash and tower XP planner</p>
+      </div>
+    </div>
+    <div class="example">
+      <a class="btn jump" href="#results">Jump to results</a>
+      <span class="tag" id="exampleTag">Example setup</span>
+      <button class="btn" id="resetBtn" type="button">Load example</button>
+    </div>
+  </header>
+
+  <div class="grid">
+    <aside class="rail" aria-label="Planner inputs">
+      <div class="field">
+        <label for="mapSearch">Map <span class="hint" id="mapPicked"></span></label>
+        <input class="input" id="mapSearch" type="search" placeholder="Search 90 maps" autocomplete="off">
+        <div class="maplist" id="mapList" role="listbox" aria-label="Maps"></div>
+      </div>
+      <div class="field">
+        <label for="mode">Mode</label>
+        <select class="input" id="mode"></select>
+      </div>
+      <div class="field">
+        <div class="lbl">Towers I'll use <span class="hint">tap to add</span></div>
+        <div class="chips" id="towerChips"></div>
+      </div>
+      <div class="field">
+        <div class="lbl">Crosspaths and counts <span class="hint" id="buildTotal"></span></div>
+        <div class="picks" id="picks"></div>
+      </div>
+      <div class="field">
+        <label for="hero">Hero <span class="hint">takes no tower XP</span></label>
+        <select class="input" id="hero"></select>
+      </div>
+      <div class="field">
+        <label for="playstyle">Playstyle</label>
+        <select class="input" id="playstyle"></select>
+      </div>
+      <div class="field">
+        <div class="lbl">Monkey Knowledge</div>
+        <div class="toggles">
+          <label class="check"><input type="checkbox" id="me"> Monkey Education (+8% tower XP)</label>
+          <label class="check"><input type="checkbox" id="emt"> Elite Military Training (+5% Military)</label>
+        </div>
+      </div>
+      <div class="field">
+        <label for="freeplay">Continue into freeplay to round <span class="hint">optional</span></label>
+        <input class="input" id="freeplay" type="number" min="0" max="500" step="1" inputmode="numeric" placeholder="No freeplay">
+      </div>
+    </aside>
+
+    <main class="results" id="results" aria-live="polite"></main>
+  </div>
+  <footer id="foot"></footer>
+</div>
+
+<script id="data" type="application/json">__DATA__</script>
+<script id="logic">
+__LOGIC__
+</script>
+<script>
+(function () {
+  'use strict';
+  var L = window.BTD;
+  var D;
+  try { D = JSON.parse(document.getElementById('data').textContent); } catch (e) { D = { towers: [], maps: [], modes: [], rounds: {}, heroes: [], economy: {} }; }
+  D.towers = D.towers || []; D.maps = D.maps || []; D.modes = D.modes || []; D.heroes = D.heroes || [];
+  D.economy = D.economy || {}; D.guides = D.guides || {}; D.strats = D.strats || {};
+
+  var APP_VERSION = '0.3.0';
+  var KEY = 'bloons-planner-v1';
+  var EXAMPLE = {
+    mapId: 'infernal', modeId: 'deflation', heroId: 'quincy', playstyle: 'mono', me: true, emt: true, freeplayTo: null,
+    picks: [
+      { id: 'sniper', cross: [2, 0, 4], count: 2, level: true, banked: 0, target: 'paragon' },
+      { id: 'village', cross: [0, 2, 0], count: 1, level: false, banked: 0, target: 'next' }
+    ]
+  };
+  var SHORT = { dart: 'Dart', boomerang: 'Boomer', bomb: 'Bomb', tack: 'Tack', ice: 'Ice', glue: 'Glue', desperado: 'Desperado', sniper: 'Sniper', sub: 'Sub', buccaneer: 'Bucc', ace: 'Ace', heli: 'Heli', mortar: 'Mortar', dartling: 'Dartling', wizard: 'Wizard', super: 'Super', ninja: 'Ninja', alchemist: 'Alch', druid: 'Druid', mermonkey: 'Mermonkey', skywarden: 'Skywarden', farm: 'Farm', spike: 'Spike', village: 'Village', engineer: 'Engi', beast: 'Beast' };
+  var SPLIT_COLORS = ['var(--accent)', 'var(--cash)', 'var(--path-2)', 'var(--path-3)', 'var(--crit)', 'var(--silver)', 'var(--bronze)', 'var(--diamond)'];
+
+  function clone(o) { return JSON.parse(JSON.stringify(o)); }
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+  function $(id) { return document.getElementById(id); }
+  function mapById(id) { return D.maps.find(function (m) { return m.id === id; }) || null; }
+  function modeById(id) { return D.modes.find(function (m) { return m.id === id; }) || null; }
+  function medalClass(mode) {
+    if (!mode) return 'm-none';
+    if (L.isSandbox(mode)) return 'm-none';
+    if (mode.id === 'chimps') return 'm-chimps';
+    if (mode.id === 'impoppable') return 'm-imp';
+    return { easy: 'm-easy', medium: 'm-medium', hard: 'm-hard' }[mode.base] || 'm-none';
+  }
+
+  function sanitize(s) {
+    var o = clone(EXAMPLE);
+    if (!s || typeof s !== 'object') return o;
+    if (mapById(s.mapId)) o.mapId = s.mapId;
+    var md = modeById(s.modeId); if (md && !L.isSandbox(md)) o.modeId = s.modeId;
+    o.heroId = (s.heroId === '' || L.heroById(D, s.heroId)) ? s.heroId : o.heroId;
+    if ((D.economy.playstyles || []).some(function (p) { return p.id === s.playstyle; })) o.playstyle = s.playstyle;
+    o.me = !!s.me; o.emt = !!s.emt;
+    o.freeplayTo = typeof s.freeplayTo === 'number' && isFinite(s.freeplayTo) ? s.freeplayTo : null;
+    if (Array.isArray(s.picks)) {
+      var seen = {};
+      o.picks = s.picks.filter(function (p) { return p && L.towerById(D, p.id) && !seen[p.id] && (seen[p.id] = true); }).map(function (p) {
+        var c = Array.isArray(p.cross) ? p.cross.map(function (x) { return Math.max(0, Math.min(5, Math.round(+x || 0))); }) : [0, 0, 0];
+        while (c.length < 3) c.push(0);
+        c = c.slice(0, 3);
+        if (!L.validCross(c)) c = [0, 0, 0];
+        return { id: p.id, cross: c, count: Math.max(1, Math.min(20, Math.round(+p.count || 1))), level: !!p.level, banked: Math.max(0, +p.banked || 0), target: ['next', 't5', 'paragon'].indexOf(p.target) >= 0 ? p.target : 'next' };
+      });
+    }
+    return o;
+  }
+  var S;
+  try { var raw = localStorage.getItem(KEY); S = sanitize(raw ? JSON.parse(raw) : null); } catch (e) { S = clone(EXAMPLE); }
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) { /* storage blocked: keep working in memory */ } }
+  function isExample() { return JSON.stringify(sanitize(S)) === JSON.stringify(sanitize(EXAMPLE)); }
+
+  /* ---------- controls ---------- */
+  function renderMapList() {
+    var q = ($('mapSearch').value || '').trim().toLowerCase();
+    var html = '';
+    L.DIFF_ORDER.forEach(function (d) {
+      var ms = D.maps.filter(function (m) { return m.difficulty === d && (!q || m.name.toLowerCase().indexOf(q) >= 0); });
+      if (!ms.length) return;
+      html += '<div class="mapgroup"><span class="dot d-' + d + '"></span>' + d + ' <span style="font-weight:500">×' + L.TIER_XP_MULT[d].toFixed(1) + ' XP</span></div>';
+      ms.forEach(function (m) {
+        var w = m.water === 'none' ? 'no water' : m.water === 'lots' ? 'lots of water' : 'some water';
+        html += '<button type="button" class="mapbtn" role="option" data-map="' + esc(m.id) + '" aria-selected="' + (m.id === S.mapId) + '"><span>' + esc(m.name) + '</span><small>' + w + (m.losBlockers === 'heavy' ? ' · heavy LoS' : '') + '</small></button>';
+      });
+    });
+    $('mapList').innerHTML = html || '<div class="subtle" style="padding:8px">No map matches.</div>';
+    var m = mapById(S.mapId);
+    $('mapPicked').textContent = m ? m.name + ' · ' + m.difficulty : '';
+  }
+  function scrollMapIntoView() {
+    var el = $('mapList').querySelector('[aria-selected="true"]');
+    if (el) { var list = $('mapList'); list.scrollTop = Math.max(0, el.offsetTop - list.clientHeight / 2 + el.offsetHeight / 2); }
+  }
+  function renderModes() {
+    var groups = { easy: 'Easy · bronze', medium: 'Medium · silver', hard: 'Hard · gold and up' };
+    var html = '';
+    Object.keys(groups).forEach(function (b) {
+      var ms = D.modes.filter(function (m) { return m.base === b; });
+      if (!ms.length) return;
+      html += '<optgroup label="' + groups[b] + '">';
+      ms.forEach(function (m) {
+        var sb = L.isSandbox(m);
+        var r = L.modeRange(m);
+        html += '<option value="' + esc(m.id) + '"' + (sb ? ' disabled' : '') + (m.id === S.modeId ? ' selected' : '') + '>' + esc(m.name) + (sb ? ' (no XP)' : ' · R' + r[0] + '–' + r[1]) + '</option>';
+      });
+      html += '</optgroup>';
+    });
+    $('mode').innerHTML = html;
+  }
+  function renderHeroes() {
+    var mode = modeById(S.modeId);
+    var mult = mode ? mode.costMult : 1;
+    $('hero').innerHTML = '<option value="">No hero</option>' + D.heroes.map(function (h) {
+      return '<option value="' + esc(h.id) + '"' + (h.id === S.heroId ? ' selected' : '') + '>' + esc(h.name) + ' · ' + L.money(L.price(h.cost, mult)) + '</option>';
+    }).join('');
+  }
+  function renderPlaystyles() {
+    $('playstyle').innerHTML = (D.economy.playstyles || []).map(function (p) {
+      return '<option value="' + esc(p.id) + '"' + (p.id === S.playstyle ? ' selected' : '') + '>' + esc(p.name) + '</option>';
+    }).join('');
+  }
+  function renderChips() {
+    var chosen = {}; S.picks.forEach(function (p) { chosen[p.id] = true; });
+    $('towerChips').innerHTML = D.towers.map(function (t) {
+      return '<button type="button" class="tchip" data-tower="' + esc(t.id) + '" aria-pressed="' + !!chosen[t.id] + '" title="' + esc(t.name + ' · ' + t.class) + '"><i class="c-' + esc(t.class) + '"></i>' + esc(SHORT[t.id] || t.name) + '</button>';
+    }).join('');
+  }
+  function stepper(label, cls, val, act, idx, title) {
+    var pips = '';
+    if (cls) { for (var k = 1; k <= 5; k++) pips += '<i class="' + (k <= val ? 'on' : '') + '"></i>'; pips = '<div class="pips" aria-hidden="true">' + pips + '</div>'; }
+    return '<div class="stp ' + cls + '"><span title="' + esc(title || label) + '">' + esc(label) + '</span><div class="stp-ctl"><button type="button" data-act="' + act + '" data-i="' + idx + '" data-d="-1" aria-label="' + esc(label) + ' down">−</button><b>' + val + '</b><button type="button" data-act="' + act + '" data-i="' + idx + '" data-d="1" aria-label="' + esc(label) + ' up">+</button></div>' + pips + '</div>';
+  }
+  function renderPicks() {
+    var mode = modeById(S.modeId);
+    var mult = mode ? mode.costMult : 1;
+    var total = 0;
+    var html = S.picks.map(function (p, i) {
+      var t = L.towerById(D, p.id);
+      if (!t) return '';
+      var cost = L.towerCost(t, p.cross, mult);
+      total += cost * p.count;
+      var pathNames = [0, 1, 2].map(function (k) { var u = L.upgrade(t, k, Math.max(1, p.cross[k])); return p.cross[k] > 0 && u ? u.name : ['Top', 'Middle', 'Bottom'][k] + ' path'; });
+      var lv = '';
+      if (p.level) {
+        lv = '<div class="lvl-row"><div class="field"><label for="bank' + i + '">XP so far</label><input class="input" id="bank' + i + '" data-bank="' + i + '" type="number" min="0" step="100" inputmode="numeric" value="' + (p.banked || '') + '" placeholder="0"></div>' +
+          '<div class="field"><label for="tgt' + i + '">Target</label><select class="input" id="tgt' + i + '" data-tgt="' + i + '"><option value="next"' + (p.target === 'next' ? ' selected' : '') + '>Next tier</option><option value="t5"' + (p.target === 't5' ? ' selected' : '') + '>All T5s</option>' + (t.paragon ? '<option value="paragon"' + (p.target === 'paragon' ? ' selected' : '') + '>Paragon</option>' : '') + '</select></div></div>';
+      }
+      return '<div class="pick"><div class="pick-head"><div class="pick-name">' + esc(t.name) + '<small>' + L.money(cost) + ' each' + (p.count > 1 ? ' · ' + L.money(cost * p.count) + ' total' : '') + '</small></div><span class="xcode" aria-label="crosspath">' + L.code(p.cross) + '</span><button type="button" class="x" data-remove="' + i + '" aria-label="Remove ' + esc(t.name) + '">×</button></div>' +
+        '<div class="steppers">' + stepper('Top', 'p0', p.cross[0], 'path0', i, pathNames[0]) + stepper('Mid', 'p1', p.cross[1], 'path1', i, pathNames[1]) + stepper('Bot', 'p2', p.cross[2], 'path2', i, pathNames[2]) + stepper('Count', '', p.count, 'count', i) + '</div>' +
+        '<div class="lvl"><label class="check"><input type="checkbox" data-level="' + i + '"' + (p.level ? ' checked' : '') + '> Levelling this tower (XP target)</label>' + lv + '</div></div>';
+    }).join('');
+    $('picks').innerHTML = html || '<p class="empty">Pick towers above to price a build.</p>';
+    $('buildTotal').textContent = S.picks.length ? L.money(total) + ' at ' + (mode ? mode.name : '') + ' prices' : '';
+  }
+  function renderControls() {
+    renderMapList(); renderModes(); renderHeroes(); renderPlaystyles(); renderChips(); renderPicks();
+    $('me').checked = !!S.me; $('emt').checked = !!S.emt;
+    $('freeplay').value = S.freeplayTo == null ? '' : S.freeplayTo;
+    $('exampleTag').textContent = isExample() ? 'Example setup: Infernal Sniper farm' : 'Your setup (saved in this browser)';
+    $('resetBtn').textContent = isExample() ? 'Example loaded' : 'Load example';
+    $('resetBtn').disabled = isExample();
+  }
+
+  /* ---------- results ---------- */
+  function niceStep(max, n) {
+    var raw = max / n, p = Math.pow(10, Math.floor(Math.log10(raw || 1))), f = raw / p;
+    return (f <= 1 ? 1 : f <= 2 ? 2 : f <= 2.5 ? 2.5 : f <= 5 ? 5 : 10) * p;
+  }
+  function kfmt(v) { return v >= 1000 ? '$' + (v / 1000).toLocaleString('en-US', { maximumFractionDigits: 1 }) + 'k' : '$' + Math.round(v); }
+
+  function chartSvg(build, mode, rounds) {
+    var a = build.start, b = build.end;
+    var W = 720, H = 250, ml = 50, mr = 14, mt = 14, mb = 34;
+    var curve = build.curve.filter(function (c) { return c.round >= a && c.round <= b; });
+    var ymaxRaw = Math.max(build.endAvail, build.totalWanted, 1);
+    var step = niceStep(ymaxRaw, 4), ymax = Math.ceil(ymaxRaw * 1.04 / step) * step;
+    var span = Math.max(1, b - a);
+    function X(r) { return ml + (r - a) / span * (W - ml - mr); }
+    function Y(v) { return mt + (1 - v / ymax) * (H - mt - mb); }
+    var s = '<svg class="chart" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Cash available and cumulative spend by round">';
+    for (var v = 0; v <= ymax + 1e-6; v += step) {
+      s += '<line class="grid-l" x1="' + ml + '" x2="' + (W - mr) + '" y1="' + Y(v).toFixed(1) + '" y2="' + Y(v).toFixed(1) + '"></line>';
+      s += '<text x="' + (ml - 6) + '" y="' + (Y(v) + 4).toFixed(1) + '" text-anchor="end">' + kfmt(v) + '</text>';
+    }
+    var xs = niceStep(span, 7); if (xs < 1) xs = 1;
+    var firstTick = Math.ceil(a / xs) * xs;
+    var ticks = [a]; for (var t = firstTick; t <= b; t += xs) if (t - a >= xs * 0.5 && b - t >= xs * 0.3) ticks.push(t); ticks.push(b);
+    ticks.forEach(function (r) { s += '<text x="' + X(r).toFixed(1) + '" y="' + (H - mb + 15) + '" text-anchor="middle">R' + r + '</text>'; });
+    /* available-cash area */
+    if (curve.length) {
+      var pts = curve.map(function (c) { return X(c.round).toFixed(1) + ',' + Y(c.avail).toFixed(1); });
+      s += '<path class="avail" d="M' + X(curve[0].round).toFixed(1) + ',' + Y(0).toFixed(1) + ' L' + pts.join(' L') + ' L' + X(curve[curve.length - 1].round).toFixed(1) + ',' + Y(0).toFixed(1) + ' Z" stroke-linejoin="round"></path>';
+    }
+    /* cumulative spend step line */
+    var bought = build.rows.filter(function (r) { return r.round != null; });
+    var d = 'M' + X(a).toFixed(1) + ',' + Y(0).toFixed(1), cum = 0, lastX = X(a);
+    var byRound = {};
+    bought.forEach(function (r) { byRound[r.round] = r.cum; });
+    Object.keys(byRound).map(Number).sort(function (p, q) { return p - q; }).forEach(function (r) {
+      d += ' L' + X(r).toFixed(1) + ',' + Y(cum).toFixed(1) + ' L' + X(r).toFixed(1) + ',' + Y(byRound[r]).toFixed(1);
+      cum = byRound[r]; lastX = X(r);
+    });
+    d += ' L' + X(b).toFixed(1) + ',' + Y(cum).toFixed(1);
+    s += '<path class="spent" d="' + d + '"></path>';
+    Object.keys(byRound).forEach(function (r) {
+      var items = bought.filter(function (x) { return x.round === +r; });
+      s += '<circle class="buy" cx="' + X(+r).toFixed(1) + '" cy="' + Y(byRound[r]).toFixed(1) + '" r="4.5"><title>R' + r + ': ' + esc(items.map(function (x) { return x.towerName + (x.kind === 'hero' ? '' : ' → ' + x.code); }).join(', ')) + ' · total ' + L.money(byRound[r]) + '</title></circle>';
+    });
+    /* danger markers */
+    var lastLabel = -1e9;
+    rounds.filter(function (r) { return r.round >= a && r.round <= b && r.danger >= 3; }).forEach(function (r) {
+      var x = X(r.round);
+      s += '<path class="danger" d="M' + (x - 4).toFixed(1) + ',' + (H - mb + 0) + ' L' + (x + 4).toFixed(1) + ',' + (H - mb) + ' L' + x.toFixed(1) + ',' + (H - mb - 7) + ' Z"><title>R' + r.round + ' danger: ' + esc((r.threats || []).join(', ')) + (r.notes ? ' · ' + esc(r.notes) : '') + '</title></path>';
+      if (x - lastLabel > 26) { s += '<text class="danger-t" x="' + x.toFixed(1) + '" y="' + (H - 2) + '" text-anchor="middle">' + r.round + '</text>'; lastLabel = x; }
+    });
+    s += '</svg>';
+    return s;
+  }
+
+  /* Index evidence block for the map card (btd6index.win, v57.4 data). */
+  function indexBlock(ev, mode) {
+    if (!ev) return '';
+    var yn = function (b) { return b == null ? '?' : b ? 'yes' : 'no'; };
+    var lanes = ev.lanes.length ? ev.lanes.map(function (l) { return (ev.lanes.length > 1 ? l.lane + ' ' : '') + l.rbs; }).join(' · ') : (ev.laneNotes || 'not measured');
+    var listTxt = !ev.twoMP ? 'no data' : ev.twoMP.count + ' solo-CHIMPS wins' + (ev.listState === 'complete' ? ' (full list)' : ev.listState === 'partial' ? ' (first ' + ev.twoMP.shown + ' names)' : ' (names not captured)');
+    var h = '<div class="ixev" aria-label="Index evidence"><div class="ixev-h"><span class="lbl">Index evidence</span><span class="subtle">btd6index.win, v57.4 data, fetched 2026-11-05</span></div>';
+    h += '<div class="facts">' +
+      '<div class="fact" style="grid-column:span 2"><span>Lane RBS</span><b class="mono">' + esc(lanes) + '</b></div>' +
+      '<div class="fact"><span>Entrances / exits</span><b>' + esc(ev.entrances == null ? '?' : ev.entrances) + ' / ' + esc(ev.exits == null ? '?' : ev.exits) + '</b></div>' +
+      '<div class="fact"><span>Water (Index)</span><b>' + yn(ev.water) + '</b></div>' +
+      '<div class="fact"><span>LoS (Index)</span><b>' + yn(ev.los) + '</b></div>' +
+      '<div class="fact"><span>Removal cost</span><b>' + esc(ev.removalCost || 'none') + '</b></div>' +
+      '<div class="fact"><span>LCC record</span><b>' + (ev.lcc ? L.money(ev.lcc.money) + ' · v' + esc(ev.lcc.version) : '—') + '</b></div>' +
+      '<div class="fact"><span>2MP list</span><b>' + esc(listTxt) + '</b></div>' +
+      '</div>';
+    var rows = ev.towers.slice();
+    if (ev.hero) rows.push(ev.hero);
+    if (rows.length) {
+      h += '<ul class="ixrows">' + rows.map(function (r) {
+        var chip = r.proven ? '<span class="ixchip ok">✓ solo-CHIMPS proven on this map</span>' : '<span class="ixchip no" title="No 2MP entry found">—</span>';
+        var detail = r.proven ? esc(r.entities.slice(0, 4).join(', ') + (r.entities.length > 4 ? ' +' + (r.entities.length - 4) + ' more' : ''))
+          : (r.listState === 'complete' ? 'no single-tower CHIMPS with it here' + (r.kind === 'tower' ? ' (support towers rarely solo)' : '') : r.listState === 'partial' ? 'not in the names captured (list incomplete)' : 'list not captured for this map');
+        return '<li><b>' + esc(r.name) + '</b>' + chip + '<span class="subtle">' + detail + '</span></li>';
+      }).join('') + '</ul>';
+    } else h += '<p class="subtle">Pick towers to see whether each has soloed CHIMPS here.</p>';
+    if (ev.flags.length) h += '<ul class="notes">' + ev.flags.map(function (x) { return '<li class="' + x.level + '">' + esc(x.text) + '</li>'; }).join('') + '</ul>';
+    if (ev.conflicts.length) h += '<p class="subtle">Conflict kept in the data: ' + esc(ev.conflicts.map(function (c) { return c.field + ': Index ' + (c.index === true ? 'yes' : c.index === false ? 'no' : c.index) + ' vs ' + c.other + ' (kept ' + c.kept + ')'; }).join(' | ')) + '</p>';
+    return h + '</div>';
+  }
+
+  function renderResults() {
+    var map = mapById(S.mapId), mode = modeById(S.modeId);
+    if (!map || !mode) { $('results').innerHTML = '<div class="card"><p class="empty">Pick a map and a mode.</p></div>'; return; }
+    var rounds = L.roundSetFor(D, mode);
+    var build = L.buildOrder(D, S.picks, S.heroId, mode, S.playstyle);
+    var cov = L.coverage(D, S.picks, mode, build.ready);
+    var legal = L.legality(D, S.picks, mode, map, S.heroId);
+    var xp = L.xpProjection(D, mode, map, build, { me: S.me, emt: S.emt, freeplayTo: S.freeplayTo });
+    var range = L.modeRange(mode);
+    var hero = L.heroById(D, S.heroId);
+    var html = '';
+
+    /* A. verdict */
+    var crit = legal.filter(function (x) { return x.level === 'crit'; }).length + cov.filter(function (c) { return c.status === 'uncovered'; }).length;
+    var warn = legal.filter(function (x) { return x.level === 'warn'; }).length + cov.filter(function (c) { return c.status === 'partial' || c.status === 'late'; }).length;
+    var verdictWord = crit ? crit + ' blocker' + (crit > 1 ? 's' : '') : warn ? 'Playable, ' + warn + ' to watch' : 'Good to go';
+    var verdictColor = crit ? 'var(--crit)' : warn ? 'var(--warn)' : 'var(--ok)';
+    html += '<section class="card verdict" style="border-color:' + verdictColor + '" aria-labelledby="hA">';
+    html += '<div class="card-h"><h2 id="hA">Verdict</h2><span style="color:' + verdictColor + ';font-weight:700">' + verdictWord + '</span></div>';
+    html += '<div class="vtop"><div class="vmap">' + esc(map.name) + '</div><span class="medal"><i class="' + medalClass(mode) + '"></i>' + esc(mode.name) + '</span><span class="tag"><span class="dot d-' + esc(map.difficulty) + '"></span>' + esc(map.difficulty) + ' ×' + (L.TIER_XP_MULT[map.difficulty] || 1).toFixed(1) + ' XP</span></div>';
+    html += '<div class="stats">' +
+      '<div class="stat"><b class="mono">R' + range[0] + '–' + range[1] + '</b><span>Rounds</span></div>' +
+      '<div class="stat"><b>' + L.money(mode.startCash) + '</b><span>Start cash</span></div>' +
+      '<div class="stat"><b>' + L.money(build.endAvail) + '</b><span>' + (mode.rules && mode.rules.noIncome ? 'All the cash you get' : 'Cash by R' + range[1] + ' (no income towers)') + '</span></div>' +
+      '<div class="stat"><b style="color:' + (build.totalWanted > build.endAvail ? 'var(--crit)' : 'inherit') + '">' + L.money(build.totalWanted) + '</b><span>Build cost</span></div>' +
+      '<div class="stat"><b>×' + mode.costMult + '</b><span>Prices</span></div>' +
+      '</div>';
+    html += '<ul class="notes">' + legal.map(function (x) { return '<li class="' + x.level + '">' + esc(x.text) + '</li>'; }).join('') + '</ul>';
+    html += '<div class="cov">' + cov.map(function (c) {
+      var tag = c.firstRound != null ? 'R' + c.firstRound : '—';
+      var body;
+      if (c.status === 'na') body = 'Not in R' + range[0] + '–' + range[1];
+      else if (c.status === 'uncovered') body = 'uncovered!';
+      else body = esc(c.by) + (c.note ? '<br><span style="color:inherit">' + esc(c.note) + '</span>' : '');
+      return '<div class="covc s-' + c.status + '" title="' + esc(c.needNote) + '"><div class="cl">' + esc(c.label) + '<span>' + tag + '</span></div><div class="cb">' + body + '</div></div>';
+    }).join('') + '</div>';
+    html += '<p class="subtle">Each chip shows the first round in ' + (mode.roundSet === 'abr' ? 'the ABR round set' : 'the standard round set') + ' (R' + range[0] + '–' + range[1] + ') that needs the property, and the tower that answers it from its innate attack or its chosen upgrades.' + (hero ? ' ' + esc(hero.name) + ' is not counted: camo ' + esc(hero.camo || '?') + '; lead ' + esc(hero.lead || '?') + '.' : '') + '</p>';
+    html += '</section>';
+
+    /* B. map card */
+    var mp = L.mapPlan(D, map.id, mode);
+    var chosenIds = S.picks.map(function (p) { return p.id; });
+    var tname = function (id) { var t = L.towerById(D, id); return t ? t.name : id; };
+    html += '<section class="card" aria-labelledby="hB"><div class="card-h"><h2 id="hB">' + esc(map.name) + '</h2><span class="subtle">' + (mp ? 'Strategy confidence <span class="conf conf-' + esc(mp.s.confidence) + '">' + esc(mp.s.confidence || '?') + '</span>' : 'No strategy notes') + '</span></div>';
+    var removables = (map.removables || []).map(function (r) { return r.name + (r.cost ? ' ' + L.money(L.price(r.cost, mode.costMult)) : '') + (r.count ? ' ×' + r.count : ''); }).join(', ');
+    html += '<div class="facts">' +
+      '<div class="fact"><span>Tier</span><b>' + esc(map.difficulty) + '</b></div>' +
+      '<div class="fact"><span>Water</span><b>' + esc(map.water) + '</b></div>' +
+      '<div class="fact"><span>LoS blockers</span><b>' + esc(map.losBlockers) + ((map.unverified || []).indexOf('losBlockers') >= 0 ? ' (unverified)' : '') + '</b></div>' +
+      '<div class="fact"><span>Lanes</span><b>' + esc(map.paths) + '</b></div>' +
+      '<div class="fact"><span>Track</span><b>' + esc(map.trackClass || '') + (map.trackLength ? ' · ' + map.trackLength : '') + '</b></div>' +
+      '<div class="fact"><span>CHIMPS friendly</span><b>' + (map.chimpsFriendly ? 'yes' : 'no') + '</b></div>' +
+      (removables ? '<div class="fact" style="grid-column:span 2"><span>Removables</span><b>' + esc(removables) + '</b></div>' : '') +
+      '</div>';
+    if (map.special || map.notes) html += '<p class="prose">' + esc([map.special, map.notes].filter(Boolean).join(' ')) + '</p>';
+    html += indexBlock(L.indexEvidence(D, map, S.picks, S.heroId), mode);
+    if (mp) {
+      var tierName = { easy: 'Easy / Medium plan', hard: 'Hard / Impoppable plan', chimps: 'CHIMPS plan' }[mp.tier];
+      html += '<div class="plan"><div class="plan-h">' + tierName + '</div>' + esc(mp.plan || 'No plan written for this tier.') + '</div>';
+      html += '<div class="tlist"><em>Strong</em>' + (mp.s.strongTowers || []).map(function (id) { return '<span class="tt' + (chosenIds.indexOf(id) >= 0 ? ' hit-good' : '') + '">' + esc(tname(id)) + '</span>'; }).join('') + '</div>';
+      html += '<div class="tlist"><em>Avoid</em>' + ((mp.s.avoidTowers || []).length ? mp.s.avoidTowers.map(function (id) { return '<span class="tt' + (chosenIds.indexOf(id) >= 0 ? ' hit-bad' : '') + '">' + esc(tname(id)) + '</span>'; }).join('') : '<span class="subtle">nothing listed</span>') + '</div>';
+      html += '<div class="tlist"><em>Heroes</em>' + (mp.s.heroes || []).map(function (h) { return '<span class="tt' + (hero && hero.name === h ? ' hit-good' : '') + '">' + esc(h) + '</span>'; }).join('') + '</div>';
+      var extra = [];
+      if (mp.s.placement) extra.push('<div><div class="lbl">Placement</div><p class="prose">' + esc(mp.s.placement) + '</p></div>');
+      if (mp.s.xpFarm) extra.push('<div><div class="lbl">XP farming here</div><p class="prose">' + esc(mp.s.xpFarm) + '</p></div>');
+      if (extra.length) html += '<div class="two">' + extra.join('') + '</div>';
+    }
+    html += '</section>';
+
+    /* C. cash and build */
+    html += '<section class="card" aria-labelledby="hC"><div class="card-h"><h2 id="hC">Cash and build order</h2><span class="subtle">' + esc(((D.economy.playstyles || []).find(function (p) { return p.id === S.playstyle; }) || {}).name || '') + ' order · ' + esc(mode.name) + ' prices</span></div>';
+    html += '<div class="legend"><span><i style="background:var(--cash)"></i>Cash available at the start of the round' + (mode.rules && mode.rules.noIncome ? ' (flat: Deflation has no income)' : '') + '</span><span><i style="background:var(--accent)"></i>Spent so far</span><span><i style="background:var(--crit);width:8px;height:8px;border-radius:0;clip-path:polygon(50% 0,100% 100%,0 100%)"></i>Danger round</span></div>';
+    html += '<div class="chart-wrap">' + chartSvg(build, mode, rounds) + '</div>';
+    if (S.picks.length || hero) {
+      html += '<div class="donechips">' + build.completes.map(function (c) {
+        return '<span class="dchip' + (c.ok ? '' : ' bad') + '">' + esc(c.towerName) + ' #' + (c.inst + 1) + ' <b class="mono">' + esc(c.target) + '</b> ' + (c.ok ? 'done <b class="mono">R' + c.round + '</b>' : 'not affordable by R' + range[1]) + '</span>';
+      }).join('') + '</div>';
+      if (build.unaffordable.length) html += '<p class="callout" style="background:var(--crit-soft)">' + build.unaffordable.length + ' purchase' + (build.unaffordable.length > 1 ? 's' : '') + ' cannot be paid for by R' + range[1] + '. The build costs ' + L.money(build.totalWanted) + ' and this mode gives ' + L.money(build.endAvail) + ' without income towers.</p>';
+      html += '<div class="tbl-wrap scroll"><table><thead><tr><th>Round</th><th>Purchase</th><th class="n">Cost</th><th class="n">Spent</th><th class="n">Bank after</th></tr></thead><tbody>' +
+        build.rows.map(function (r) {
+          var what = r.kind === 'hero' ? esc(r.towerName) + ' <span class="subtle">(hero)</span>' : r.kind === 'place' ? 'Place ' + esc(r.towerName) + ' #' + (r.inst + 1) : esc(r.towerName) + ' #' + (r.inst + 1) + ' → <span class="mono">' + esc(r.code) + '</span> ' + esc(r.name);
+          return '<tr class="' + (r.round == null ? 'flag' : '') + '"><td class="rnd">' + (r.round == null ? (r.flag === 'blocked' ? 'blocked' : 'never') : 'R' + r.round) + '</td><td>' + what + '</td><td class="n">' + L.money(r.cost) + '</td><td class="n">' + (r.round == null ? '–' : L.money(r.cum)) + '</td><td class="n">' + (r.round == null ? '–' : L.money(r.bank)) + '</td></tr>';
+        }).join('') + '</tbody></table></div>';
+    } else html += '<p class="empty">Add towers to see a build order.</p>';
+    html += '<p class="subtle">Each step lands on the first round whose starting cash covers everything bought so far. Tower income, selling and Monkey Knowledge cash are not added to the curve.</p>';
+    html += '</section>';
+
+    /* D. XP */
+    html += '<section class="card" aria-labelledby="hD"><div class="card-h"><h2 id="hD">Tower XP</h2><span class="subtle">split by cash invested each round; hero takes none</span></div>';
+    if (L.isSandbox(mode)) html += '<p class="callout">Sandbox pays no XP.</p>';
+    else {
+      var parts = [L.int(xp.base) + ' base (R' + range[0] + '–' + range[1] + ')', '×' + xp.mapMult.toFixed(1) + ' ' + esc(map.difficulty)];
+      if (xp.meMult > 1) parts.push('×1.08 Monkey Education');
+      var fpNote = xp.freeplayTo > range[1] ? ' + freeplay to R' + xp.freeplayTo + ' at ' + (range[1] < 100 ? '30% to R100, 10% after' : '10%') : '';
+      html += '<p class="xpline">One run: ' + parts.join(' ') + fpNote + ' = <b>' + L.int(xp.total) + ' XP</b> to share.' + (xp.emtMult > 1 ? ' Military towers then get ×1.05 from Elite Military Training.' : '') + (xp.lost > 0.5 ? ' <span style="color:var(--warn)">' + L.int(xp.lost) + ' XP is lost on rounds where nothing is built yet.</span>' : '') + '</p>';
+      var ids = Object.keys(xp.perTower);
+      if (ids.length) {
+        html += '<div class="split" role="img" aria-label="XP share by tower">' + ids.map(function (id, k) { return '<span style="width:' + (xp.perTower[id].share * 100).toFixed(2) + '%;background:' + SPLIT_COLORS[k % SPLIT_COLORS.length] + '" title="' + esc(tname(id)) + '"></span>'; }).join('') + '</div>';
+        html += '<div class="split-l">' + ids.map(function (id, k) { var p = xp.perTower[id]; return '<span><i style="background:' + SPLIT_COLORS[k % SPLIT_COLORS.length] + '"></i>' + esc(tname(id)) + ' ' + (p.share * 100).toFixed(1) + '% · <b class="num">' + L.int(p.xp) + '</b> XP</span>'; }).join('') + '</div>';
+      }
+      var lv = S.picks.filter(function (p) { return p.level; });
+      if (!lv.length) html += '<p class="empty">Tick "Levelling this tower" on a tower to see runs to its next tier, all T5s and Paragon.</p>';
+      lv.forEach(function (p) {
+        var t = L.towerById(D, p.id); if (!t) return;
+        var mine = xp.perTower[p.id] || { xp: 0, share: 0 };
+        var plan = L.levelPlan(D, p.id, p.banked, mine.xp);
+        var goal = function (key, label, g, sub, total) {
+          if (!g) return '';
+          var pct = total ? Math.min(100, (p.banked || 0) / total * 100) : 0;
+          return '<div class="goal' + (p.target === key ? ' target' : '') + '"><div class="gl">' + label + (p.target === key ? '<span style="color:var(--accent)">target</span>' : '') + '</div><div class="gv">' + L.runs(g.runs) + ' <small>' + (g.runs === 0 ? '' : 'runs') + '</small></div><div class="gs">' + sub + '</div>' + (total ? '<div class="bar"><span style="width:' + pct.toFixed(1) + '%"></span></div>' : '') + '</div>';
+        };
+        html += '<div class="lvcard"><div class="lvtop"><h3>' + esc(t.name) + '</h3><div class="big">' + L.int(mine.xp) + ' <small>XP per run · ' + (mine.share * 100).toFixed(1) + '% of the cash</small></div></div>';
+        html += '<div class="goals">' +
+          goal('next', 'Next tier', plan.next ? plan.next : { runs: 0 }, plan.next ? esc(plan.next.name) + ' <span class="mono">' + plan.next.code + '</span> · ' + L.int(plan.next.need) + ' XP to go' : 'Every upgrade unlocked', null) +
+          goal('t5', 'All T5s', plan.allT5, L.int(plan.allT5.need) + ' of ' + L.int(plan.allT5.total) + ' XP to go', plan.allT5.total) +
+          (plan.paragon ? goal('paragon', 'Paragon', plan.paragon, esc(plan.paragon.name) + ' · ' + L.int(plan.paragon.need) + ' of ' + L.int(plan.paragon.total) + ' XP to go', plan.paragon.total) : '<div class="goal"><div class="gl">Paragon</div><div class="gs">' + esc(t.name) + ' has no Paragon.</div></div>') +
+          '</div>';
+        var cmp = L.farmCompare(D, p.id, mine.share, { me: S.me, emt: S.emt });
+        var tgtNeed = p.target === 'paragon' && plan.paragon ? plan.paragon.need : p.target === 't5' ? plan.allT5.need : plan.next ? plan.next.need : 0;
+        var tgtLabel = p.target === 'paragon' ? 'Paragon' : p.target === 't5' ? 'all T5s' : 'next tier';
+        html += '<div class="tbl-wrap"><table><thead><tr><th>Best farms</th><th>Rounds</th><th class="n">Your split (' + (mine.share * 100).toFixed(0) + '%)</th><th class="n">Mono (100%)</th><th class="n">Runs to ' + tgtLabel + '</th></tr></thead><tbody>' +
+          cmp.map(function (c) { return '<tr class="' + (c.modeId === mode.id && map.difficulty === 'Expert' ? 'hi' : '') + '"><td>' + esc(c.label) + '</td><td class="rnd">' + c.rounds + '</td><td class="n">' + L.int(c.yours) + '</td><td class="n">' + L.int(c.mono) + '</td><td class="n">' + L.runs(c.yours > 0 ? tgtNeed / c.yours : Infinity) + ' / ' + L.runs(tgtNeed / c.mono) + '</td></tr>'; }).join('') +
+          '</tbody></table></div>';
+        html += '<p class="subtle">"Mono" means every dollar on the map is in ' + esc(t.name) + 's, so it takes 100% of the XP. Hard and Impoppable need a full defence to reach the end, and any helper towers take their cash share, so the mono column is the ceiling, not a promise. Hard and Impoppable runs also take far longer than a 30-round Deflation.' + (plan.missingXp ? ' ' + plan.missingXp + ' upgrade XP value(s) are unknown and counted as 0.' : '') + (t.class === 'Military' && S.emt ? ' Elite Military Training also gave a one-off +1,000 XP; include it in "XP so far".' : '') + '</p>';
+        html += '</div>';
+      });
+      if (lv.length) html += '<p class="subtle">"XP so far" is everything this tower has earned, spent on unlocks plus unspent. "Next tier" follows the cheapest-first unlock order. Paragon totals include every upgrade plus the Paragon unlock.</p>';
+    }
+    html += '</section>';
+
+    /* E. playstyle and economy */
+    var ps = (D.economy.playstyles || []).find(function (p) { return p.id === S.playstyle; });
+    html += '<section class="card" aria-labelledby="hE"><div class="card-h"><h2 id="hE">Playstyle and economy</h2>' + (ps ? '<span class="subtle">best for ' + esc((ps.bestFor || []).join(', ')) + '</span>' : '') + '</div>';
+    if (ps) {
+      html += '<div class="two"><div><div class="lbl">' + esc(ps.name) + ' template</div><p class="prose">' + esc(ps.template) + '</p></div><div><div class="lbl">Risks</div><p class="prose">' + esc(ps.risks) + '</p>' + (ps.cashCurve ? '<p class="prose subtle" style="margin-top:6px">' + esc(ps.cashCurve) + '</p>' : '') + '</div></div>';
+    }
+    var inc = L.incomeRows(D, mode);
+    var okInc = inc.filter(function (r) { return r.status === 'ok'; });
+    var specialInc = inc.filter(function (r) { return r.status === 'special'; });
+    html += '<div class="lbl">Income sources in ' + esc(mode.name) + '</div>';
+    if (mode.rules && mode.rules.noIncomeTowers) html += '<p class="callout">' + esc(mode.name) + ' bans Banana Farms and pays no income from any tower. Spend on defence only.</p>';
+    else if (mode.rules && mode.rules.noIncome) html += '<p class="callout">Deflation pays no income: farms, Supply Drop and banks make nothing.' + (specialInc.length ? ' Exception (v57): ' + specialInc.map(function (r) { return esc(r.tower + ' ' + r.code); }).join(', ') + ' still turns pops into cash here.' : '') + '</p>';
+    if (okInc.length) {
+      html += '<div class="tbl-wrap scroll"><table><thead><tr><th>Source</th><th class="n">Cost ≈</th><th class="n">$/round</th><th class="n">Payback</th><th class="n">Buy by</th></tr></thead><tbody>' +
+        okInc.map(function (r) { var late = r.lastBuy != null && r.lastBuy < range[0]; return '<tr' + (late ? ' class="flag"' : '') + '><td>' + esc(r.tower) + ' <span class="mono">' + esc(r.code) + '</span></td><td class="n">' + L.money(r.cost) + '</td><td class="n">' + (r.income ? L.money(r.income) : '–') + '</td><td class="n">' + (r.payback ? r.payback.toFixed(1) + ' rds' : '–') + '</td><td class="n">' + (r.lastBuy != null ? 'R' + r.lastBuy : '–') + '</td></tr>'; }).join('') +
+        '</tbody></table></div><p class="subtle">"Buy by" is the last round a purchase still pays for itself by R' + range[1] + '. Costs are the Medium total times ×' + mode.costMult + ', so they can be a few dollars off the in-game price.' + (mode.cashMult !== 1 ? ' Income is halved in this mode.' : '') + '</p>';
+    }
+    var dps = L.dpsRows(D, S.picks);
+    if (dps.length) {
+      html += '<div class="lbl">DPS per $1,000 (Medium prices)</div><div class="tbl-wrap"><table><thead><tr><th>Build</th><th class="n">Cost</th><th class="n">vs Ceramic</th><th class="n">vs MOAB</th><th class="n">DPS/$1k</th></tr></thead><tbody>' +
+        dps.map(function (d) { return '<tr class="' + (d.match ? 'hi' : '') + '"><td>' + esc(d.build) + (d.match ? ' <span class="tag">your build</span>' : '') + (d.caveat ? '<br><span class="subtle">' + esc(d.caveat) + '</span>' : '') + '</td><td class="n">' + L.money(d.cost) + '</td><td class="n">' + d.dpsVsCeramic + '</td><td class="n">' + d.dpsVsMoab + '</td><td class="n"><b>' + d.dpsPerK + '</b></td></tr>'; }).join('') +
+        '</tbody></table></div>';
+    }
+    html += '</section>';
+
+    /* F. tower guide */
+    html += '<section class="card" aria-labelledby="hF"><div class="card-h"><h2 id="hF">Tower guide</h2></div><div class="guide">';
+    if (!S.picks.length) html += '<p class="empty">No towers chosen.</p>';
+    S.picks.forEach(function (p) {
+      var t = L.towerById(D, p.id), g = D.guides[p.id] || {};
+      if (!t) return;
+      var my = L.code(p.cross);
+      html += '<div class="gtower"><h3>' + esc(t.name) + ' <span class="mono">' + my + '</span><span class="subtle">' + esc(t.class) + (t.paragon ? ' · Paragon: ' + esc(t.paragon.name) : '') + '</span></h3>';
+      if (g.summary) html += '<p class="prose">' + esc(g.summary) + '</p>';
+      var bc = g.bestCrosspaths || [];
+      if (bc.length) html += '<div class="xps">' + bc.map(function (x) { return '<div class="xp' + (x.code === my ? ' match' : '') + '"><b>' + esc(x.code) + '</b> ' + (x.cost ? L.money(L.price(x.cost, mode.costMult)) + ' ' : '') + '<span class="subtle">' + esc(x.use || '') + '</span></div>'; }).join('') + '</div>';
+      var cols = [];
+      if ((g.synergies || []).length) cols.push('<div><div class="lbl">Synergies</div><ul>' + g.synergies.map(function (s) { return '<li>' + esc(s) + '</li>'; }).join('') + '</ul></div>');
+      if ((g.lacks || []).length) cols.push('<div><div class="lbl">Lacks</div><ul>' + g.lacks.map(function (s) { return '<li>' + esc(s) + '</li>'; }).join('') + '</ul></div>');
+      if (cols.length) html += '<div class="two">' + cols.join('') + '</div>';
+      if (g.buyTiming) html += '<p class="prose"><b>Timing:</b> ' + esc(g.buyTiming) + '</p>';
+      if (g.farm && g.farm.setup) html += '<p class="prose subtle"><b>Reference farm:</b> ' + esc(g.farm.map) + ', ' + esc(g.farm.mode) + ': ' + esc(g.farm.setup) + (g.farm.helpers ? ' (' + esc(g.farm.helpers) + ')' : '') + (g.farm.xpPerRun ? ' ≈ ' + L.int(g.farm.xpPerRun) + ' XP/run with Monkey Education' + (t.class === 'Military' ? ' and EMT' : '') : '') + '.</p>';
+      html += '</div>';
+    });
+    html += '</div></section>';
+
+    $('results').innerHTML = html;
+    var meta = D.meta || {};
+    $('sub').textContent = 'BTD6 v' + (meta.version || '?') + ' build, cash and tower-XP planner';
+    $('foot').textContent = 'Bloons Planner v' + APP_VERSION + ' · Unofficial fan tool, not affiliated with or endorsed by Ninja Kiwi. Data researched ' + (meta.researched || '?') + ' for v' + (meta.version || '?') + '. Prices are Medium × mode multiplier, rounded to the nearest $5. Grants, roles and strategy text are the dataset’s reading of wiki pages, not a game export.';
+  }
+
+  function renderAll() { renderControls(); renderResults(); save(); }
+  function changed(opts) {
+    if (opts && opts.controls) renderControls(); else { $('exampleTag').textContent = isExample() ? 'Example setup: Infernal Sniper farm' : 'Your setup (saved in this browser)'; $('resetBtn').disabled = isExample(); $('resetBtn').textContent = isExample() ? 'Example loaded' : 'Load example'; }
+    renderResults(); save();
+  }
+
+  /* ---------- events ---------- */
+  $('mapSearch').addEventListener('input', renderMapList);
+  $('mapList').addEventListener('click', function (e) {
+    var b = e.target.closest('[data-map]'); if (!b) return;
+    S.mapId = b.getAttribute('data-map');
+    renderMapList(); changed();
+  });
+  $('mode').addEventListener('change', function () { S.modeId = this.value; changed({ controls: true }); });
+  $('hero').addEventListener('change', function () { S.heroId = this.value; changed(); });
+  $('playstyle').addEventListener('change', function () { S.playstyle = this.value; changed(); });
+  $('me').addEventListener('change', function () { S.me = this.checked; changed(); });
+  $('emt').addEventListener('change', function () { S.emt = this.checked; changed(); });
+  $('freeplay').addEventListener('input', function () { var v = parseInt(this.value, 10); S.freeplayTo = isFinite(v) && v > 0 ? Math.min(500, v) : null; changed(); });
+  $('towerChips').addEventListener('click', function (e) {
+    var b = e.target.closest('[data-tower]'); if (!b) return;
+    var id = b.getAttribute('data-tower');
+    var i = S.picks.findIndex(function (p) { return p.id === id; });
+    if (i >= 0) S.picks.splice(i, 1);
+    else S.picks.push({ id: id, cross: [0, 0, 0], count: 1, level: false, banked: 0, target: 'next' });
+    changed({ controls: true });
+  });
+  $('picks').addEventListener('click', function (e) {
+    var rm = e.target.closest('[data-remove]');
+    if (rm) { S.picks.splice(+rm.getAttribute('data-remove'), 1); changed({ controls: true }); return; }
+    var b = e.target.closest('[data-act]'); if (!b) return;
+    var p = S.picks[+b.getAttribute('data-i')]; if (!p) return;
+    var d = +b.getAttribute('data-d'), act = b.getAttribute('data-act');
+    if (act === 'count') p.count = Math.max(1, Math.min(20, p.count + d));
+    else { var k = +act.slice(4); p.cross = L.setPath(p.cross, k, p.cross[k] + d); }
+    changed({ controls: true });
+    var again = document.querySelector('#picks [data-act="' + act + '"][data-i="' + b.getAttribute('data-i') + '"][data-d="' + d + '"]');
+    if (again) again.focus();
+  });
+  $('picks').addEventListener('change', function (e) {
+    var t = e.target;
+    if (t.hasAttribute('data-level')) { var p = S.picks[+t.getAttribute('data-level')]; if (p) { p.level = t.checked; if (p.level && !L.towerById(D, p.id).paragon && p.target === 'paragon') p.target = 'next'; } changed({ controls: true }); }
+    else if (t.hasAttribute('data-tgt')) { var q = S.picks[+t.getAttribute('data-tgt')]; if (q) q.target = t.value; changed(); }
+  });
+  $('picks').addEventListener('input', function (e) {
+    var t = e.target;
+    if (t.hasAttribute('data-bank')) { var p = S.picks[+t.getAttribute('data-bank')]; if (p) p.banked = Math.max(0, +t.value || 0); changed(); }
+  });
+  $('resetBtn').addEventListener('click', function () { S = clone(EXAMPLE); $('mapSearch').value = ''; renderAll(); scrollMapIntoView(); });
+
+  renderAll();
+  scrollMapIntoView();
+})();
+</script>

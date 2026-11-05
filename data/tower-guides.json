@@ -1,0 +1,1936 @@
+[
+ {
+  "towerId": "dart",
+  "name": "Dart Monkey",
+  "class": "Primary",
+  "xpAllUpgrades": 122300,
+  "xpParagon": 500000,
+  "farm": {
+   "map": "Dark Castle",
+   "mode": "Expert Deflation",
+   "setup": "4x Dart Monkey 4-0-2; 3x Dart Monkey 0-2-4",
+   "helpers": "hero Gwendolin ($615 Easy, no XP share)",
+   "xpPerRun": 64514,
+   "runsToT5": 2,
+   "runsToParagon": 10,
+   "runsToT5Base": 3,
+   "runsToParagonBase": 11,
+   "monoDeflation": "yes"
+  },
+  "unlockOrder": [
+   "0-0-2 Enhanced Eyesight (100 XP, cheapest camo)",
+   "0-2-0 Very Quick Shots (100)",
+   "Crossbow 0-0-3 (1,900)",
+   "Spike-o-pult 3-0-0 (2,100)",
+   "Juggernaut 4-0-0 (7,500): unlocks mono Deflation",
+   "Sharp Shooter 0-0-4 (12,000)",
+   "Ultra-Juggernaut 5-0-0 (22,000): cheapest T5 carry",
+   "Triple Shot (2,000) then SMFC (9,500)",
+   "Crossbow Master (35,000)",
+   "Plasma Monkey Fan Club (30,000)",
+   "Apex Plasma Master (500,000)"
+  ],
+  "bestCrosspaths": [
+   {
+    "code": "4-0-2",
+    "cost": 2950,
+    "use": "Juggernaut with camo: lead/ceramic cleanup"
+   },
+   {
+    "code": "0-2-4",
+    "cost": 3405,
+    "use": "Sharp Shooter: cheap MOAB crits (v57 crit 60)"
+   },
+   {
+    "code": "5-0-2",
+    "cost": 17950,
+    "use": "Ultra-Jugg: walled maps, Deflation carry"
+   },
+   {
+    "code": "0-2-5",
+    "cost": 24905,
+    "use": "Crossbow Master: mid-game, falls off after R80"
+   },
+   {
+    "code": "2-4-0",
+    "cost": 8480,
+    "use": "SMFC ability burst"
+   }
+  ],
+  "buyTiming": "Base/0-0-2 on R1-R24 for camo; Juggernaut by R28-R38 for lead; Sharp Shooter R40s; Ultra-Jugg R50-R60; PMFC late CHIMPS only.",
+  "synergies": [
+   "Alchemist Berserker Brew (Jugg/UJ; Brew hurts Sharp Shooter per ch01)",
+   "Primary Training/Mentoring Village (Primary pierce/range)",
+   "Jungle Drums",
+   "Overclock on Ultra-Jugg",
+   "Gwendolin Heat It Up"
+  ],
+  "lacks": [
+   "Lead before Juggernaut",
+   "Strong MOAB DPS until Sharp Shooter/Crossbow Master",
+   "DDTs without camo+lead path"
+  ],
+  "playstyles": [
+   "safe/beginner",
+   "CHIMPS",
+   "low-cost",
+   "boss events (Apex)",
+   "eco/farming (cheap XP target)"
+  ],
+  "summary": "Best first Paragon target: ~$245k Apex, 622,300 XP total, mono-Deflation capable once Juggernaut is unlocked."
+ },
+ {
+  "towerId": "boomerang",
+  "name": "Boomerang Monkey",
+  "class": "Primary",
+  "xpAllUpgrades": 134390,
+  "xpParagon": 500000,
+  "farm": {
+   "map": "Dark Castle",
+   "mode": "Expert Deflation",
+   "setup": "4x Boomerang Monkey 3-0-2; 2x Boomerang Monkey 0-4-2",
+   "helpers": "1x Monkey Sub 3-0-0 ($1,405 Easy); hero Etienne ($555 Easy, no XP share)",
+   "xpPerRun": 59678,
+   "runsToT5": 3,
+   "runsToParagon": 11,
+   "runsToT5Base": 3,
+   "runsToParagonBase": 11,
+   "monoDeflation": "no"
+  },
+  "unlockOrder": [
+   "0-0-2 Red Hot Rangs (600 XP total) for lead",
+   "Glaive Ricochet 3-0-0 (2,500 + 620)",
+   "Bionic Boomerang 0-3-0 (2,500 + 670)",
+   "Turbo Charge 0-4-0 (9,000)",
+   "M.O.A.R Glaives (8,500)",
+   "MOAB Press (9,500 + Kylie 3,000)",
+   "Perma Charge (32,000)",
+   "MOAB Domination (28,000)",
+   "Glaive Lord (37,500)",
+   "Glaive Dominus (500,000)"
+  ],
+  "bestCrosspaths": [
+   {
+    "code": "1-0-2",
+    "cost": 915,
+    "use": "Boss-event early staple"
+   },
+   {
+    "code": "3-0-2",
+    "cost": 1795,
+    "use": "Glaive Ricochet with lead: cleanup"
+   },
+   {
+    "code": "0-4-2",
+    "cost": 6590,
+    "use": "Turbo Charge with lead"
+   },
+   {
+    "code": "2-5-0",
+    "cost": 41670,
+    "use": "Perma Charge (glaives add pierce)"
+   },
+   {
+    "code": "0-2-4",
+    "cost": 5140,
+    "use": "MOAB Press knockback"
+   }
+  ],
+  "buyTiming": "1-0-2/0-0-2 by R28 (lead); Ricochet R30s; Turbo/Perma Charge R50+ as single-target.",
+  "synergies": [
+   "Berserker Brew (fast projectiles)",
+   "Jungle Drums/Radar Village (camo)",
+   "Primary Training Village",
+   "Overclock on Perma Charge",
+   "Etienne UAV for camo"
+  ],
+  "lacks": [
+   "Camo (always)",
+   "Lead without x-x-2",
+   "Heavy late-game DPS before T5"
+  ],
+  "playstyles": [
+   "safe/beginner",
+   "boss events (Glaive Dominus, MOAB Press)",
+   "freeplay (knockback)",
+   "CHIMPS (0-2-2 early)"
+  ],
+  "summary": "Needs a camo helper for Deflation (~8% XP share); Glaive Dominus is the 3rd-cheapest Paragon by XP (634k)."
+ },
+ {
+  "towerId": "bomb",
+  "name": "Bomb Shooter",
+  "class": "Primary",
+  "xpAllUpgrades": 138480,
+  "xpParagon": 750000,
+  "farm": {
+   "map": "Dark Castle",
+   "mode": "Expert Deflation",
+   "setup": "2x Bomb Shooter 0-4-2; 1x Bomb Shooter 0-2-4; 1x Bomb Shooter 0-2-3",
+   "helpers": "1x Monkey Sub 3-0-0 ($1,405 Easy); hero Striker Jones ($595 Easy, no XP share)",
+   "xpPerRun": 59331,
+   "runsToT5": 3,
+   "runsToParagon": 15,
+   "runsToT5Base": 3,
+   "runsToParagonBase": 15,
+   "monoDeflation": "no"
+  },
+  "unlockOrder": [
+   "0-2-0 Missile Launcher (830)",
+   "MOAB Mauler 0-3-0 (2,700)",
+   "0-0-2 Frag (750)",
+   "MOAB Assassin 0-4-0 (10,000)",
+   "Cluster 0-0-3 (2,500)",
+   "Recursive Cluster (10,000)",
+   "MOAB Eliminator (35,000)",
+   "Top path (Bloon Impact 10,000; Bloon Crush 37,500)",
+   "Bomb Blitz (25,000)",
+   "B.O.M.B. (750,000)"
+  ],
+  "bestCrosspaths": [
+   {
+    "code": "0-4-2",
+    "cost": 5975,
+    "use": "MOAB Assassin with frags (buffed v57)"
+   },
+   {
+    "code": "0-3-2",
+    "cost": 2525,
+    "use": "MOAB Mauler: first MOAB answer R40-50"
+   },
+   {
+    "code": "0-2-4",
+    "cost": 4725,
+    "use": "Recursive Cluster crowd"
+   },
+   {
+    "code": "4-2-0",
+    "cost": 5825,
+    "use": "Bloon Impact stun"
+   },
+   {
+    "code": "0-5-2",
+    "cost": 31975,
+    "use": "MOAB Eliminator: cheapest strong anti-blimp T5"
+   }
+  ],
+  "buyTiming": "Mauler by R39; Assassin by R50-R60; Eliminator R70s-R90s.",
+  "synergies": [
+   "Striker Jones (black popping, ability reset)",
+   "Radar/MIB Village (camo, black)",
+   "Berserker Brew",
+   "Overclock on Eliminator"
+  ],
+  "lacks": [
+   "Camo",
+   "Black/Zebra (explosion immune)",
+   "DDTs (camo+black)"
+  ],
+  "playstyles": [
+   "safe/beginner",
+   "CHIMPS (MOAB Assassin)",
+   "boss events (Eliminator, B.O.M.B.)"
+  ],
+  "summary": "Cheap MOAB answer; farm with a 3-0-0 Sub helper (~7% share). 888k XP to B.O.M.B."
+ },
+ {
+  "towerId": "tack",
+  "name": "Tack Shooter",
+  "class": "Primary",
+  "xpAllUpgrades": 123380,
+  "xpParagon": 500000,
+  "farm": {
+   "map": "Tricky Tracks or Dark Castle",
+   "mode": "Expert Deflation",
+   "setup": "2x Tack Shooter 4-2-0; 2x Tack Shooter 2-0-4",
+   "helpers": "1x Monkey Sub 3-0-0 ($1,405 Easy); hero Gwendolin ($615 Easy, no XP share)",
+   "xpPerRun": 59420,
+   "runsToT5": 3,
+   "runsToParagon": 11,
+   "runsToT5Base": 3,
+   "runsToParagonBase": 11,
+   "monoDeflation": "no"
+  },
+  "unlockOrder": [
+   "2-0-0 (700) and 0-0-2 (640)",
+   "Hot Shots 3-0-0 (2,400) for lead",
+   "Tack Sprayer (2,450)",
+   "Overdrive (8,750)",
+   "Ring of Fire (9,500)",
+   "The Tack Zone (26,500)",
+   "Blade Shooter/Maelstrom (2,300 + 9,000)",
+   "Super Maelstrom (28,000)",
+   "Inferno Ring (32,500)",
+   "Crucible (500,000)"
+  ],
+  "bestCrosspaths": [
+   {
+    "code": "2-0-4",
+    "cost": 4580,
+    "use": "Overdrive: most common Tack crosspath"
+   },
+   {
+    "code": "2-0-5",
+    "cost": 24580,
+    "use": "The Tack Zone"
+   },
+   {
+    "code": "4-2-0",
+    "cost": 5055,
+    "use": "Ring of Fire with range"
+   },
+   {
+    "code": "0-5-2",
+    "cost": 19135,
+    "use": "Super Maelstrom: race/ceramic ability"
+   }
+  ],
+  "buyTiming": "2-0-x/x-0-2 R1-R20 on tight curves; Hot Shots by R28; Overdrive/RoF R40-60; Tack Zone R60+.",
+  "synergies": [
+   "Primary Training/Mentoring Village (huge on low-range primaries)",
+   "Alchemist Brew (flat damage/pierce)",
+   "Jungle Drums",
+   "Gwendolin (L5 RoF buff)",
+   "Pat Rallying Roar",
+   "Overclock"
+  ],
+  "lacks": [
+   "Camo",
+   "Range (23)",
+   "Purple on fire paths"
+  ],
+  "playstyles": [
+   "safe/beginner (tight maps)",
+   "CHIMPS (Tack Zone)",
+   "races (Maelstrom)",
+   "boss events (Crucible)"
+  ],
+  "summary": "Second-cheapest Paragon (Crucible $200k, 623k XP). Needs one cheap decamo helper in Deflation."
+ },
+ {
+  "towerId": "ice",
+  "name": "Ice Monkey",
+  "class": "Primary",
+  "xpAllUpgrades": 117730,
+  "xpParagon": 750000,
+  "farm": {
+   "map": "Dark Castle",
+   "mode": "Expert Deflation",
+   "setup": "2x Ice Monkey 4-2-0; 2x Ice Monkey 0-2-4",
+   "helpers": "hero Silas ($725 Easy, no XP share)",
+   "xpPerRun": 64514,
+   "runsToT5": 2,
+   "runsToParagon": 14,
+   "runsToT5Base": 2,
+   "runsToParagonBase": 15,
+   "monoDeflation": "partial"
+  },
+  "unlockOrder": [
+   "Cold Snap 2-0-0 (660) for lead+camo",
+   "Ice Shards (2,500)",
+   "Embrittlement (8,250)",
+   "Cryo Cannon/Icicles (2,500 + 9,000)",
+   "Super Brittle (25,000)",
+   "Arctic Wind/Snowstorm (2,500 + 8,500)",
+   "Icicle Impale (30,000)",
+   "Absolute Zero (27,500)",
+   "Herald of Everfrost (750,000)"
+  ],
+  "bestCrosspaths": [
+   {
+    "code": "4-2-0",
+    "cost": 5200,
+    "use": "Embrittlement: mid-game debuff/decamo"
+   },
+   {
+    "code": "5-2-0",
+    "cost": 33200,
+    "use": "Super Brittle: best all-round"
+   },
+   {
+    "code": "0-2-5",
+    "cost": 35900,
+    "use": "Icicle Impale: top damage"
+   },
+   {
+    "code": "0-5-2",
+    "cost": 29750,
+    "use": "Absolute Zero: max support"
+   }
+  ],
+  "buyTiming": "Embrittlement R50-R70 as support; Super Brittle R80+ / bosses.",
+  "synergies": [
+   "Silas (hero)",
+   "Village Drums/Radar",
+   "Alchemist Brew",
+   "Overclock on Super Brittle"
+  ],
+  "lacks": [
+   "Damage on White/Zebra",
+   "Sharp-tower synergy (frozen bloons block sharp)",
+   "Base MOAB damage before Embrittlement"
+  ],
+  "playstyles": [
+   "boss events (Herald)",
+   "CHIMPS (support)",
+   "freeplay (Herald/Super Brittle)"
+  ],
+  "summary": "Lowest all-upgrade XP of any Paragon tower (118k) but the Herald unlock is 750k. Farm with Silas; share in normal games is low."
+ },
+ {
+  "towerId": "glue",
+  "name": "Glue Gunner",
+  "class": "Primary",
+  "xpAllUpgrades": 127950,
+  "xpParagon": null,
+  "farm": {
+   "map": "Infernal",
+   "mode": "Expert Deflation",
+   "setup": "1x Glue Gunner 4-2-0; 1x Glue Gunner 2-0-3; 1x Glue Gunner 3-2-0",
+   "helpers": "1x Mortar Monkey 0-0-3 ($1,955 Easy); hero Sauda ($510 Easy, no XP share)",
+   "xpPerRun": 56809,
+   "runsToT5": 3,
+   "runsToParagon": null,
+   "runsToT5Base": 3,
+   "runsToParagonBase": null,
+   "monoDeflation": "no",
+   "caveat": "Round 3: the Mortar 0-0-3 Signal Flare decamo has the same flaw as the rejected Sniper plan: one fixed reticle covers only one of Infernal's two alternating lanes (odd top, even bottom). Glue cannot target camo, so camo rounds on the other lane leak. Use a Village 0-2-0 Radar ($2,930 Easy) within reach of the Glues instead, or run it on a single-lane Expert map. Untested (calc)."
+  },
+  "unlockOrder": [
+   "2-0-0 Corrosive (700)",
+   "MOAB Glue 0-0-3 (3,230 total)",
+   "Bloon Dissolver (2,500)",
+   "Bloon Liquefier (9,000)",
+   "Glue Hose/Strike (2,500 + 8,500)",
+   "Relentless Glue (8,000)",
+   "Super Glue (30,000)",
+   "Glue Storm (25,000)",
+   "Bloon Solver (37,500)"
+  ],
+  "bestCrosspaths": [
+   {
+    "code": "0-2-3",
+    "cost": 5255,
+    "use": "MOAB Glue with splatter: blimp slow"
+   },
+   {
+    "code": "2-0-4",
+    "cost": 9005,
+    "use": "Relentless + MOAB corrosion (v51)"
+   },
+   {
+    "code": "2-0-5",
+    "cost": 33005,
+    "use": "Super Glue"
+   },
+   {
+    "code": "5-2-0",
+    "cost": 30975,
+    "use": "The Bloon Solver cleanup"
+   },
+   {
+    "code": "0-4-2",
+    "cost": 8105,
+    "use": "Glue Strike: lead + damage amp"
+   }
+  ],
+  "buyTiming": "2-x-x/x-2-x early only if you're slowing a carry; MOAB Glue R50+; Super Glue R80+.",
+  "synergies": [
+   "Etienne/Radar Village (camo)",
+   "Sauda (bonus vs slowed/DoT at L11)",
+   "Any carry (glue makes them hit more)"
+  ],
+  "lacks": [
+   "Camo (cannot target)",
+   "Burst damage",
+   "Blimps before x-x-3"
+  ],
+  "playstyles": [
+   "CHIMPS (support)",
+   "freeplay (Super Glue)",
+   "low-cost"
+  ],
+  "summary": "No Paragon; low priority XP. Most realistic farm is Deflation with a decamo Mortar and Sauda."
+ },
+ {
+  "towerId": "desperado",
+  "name": "Desperado",
+  "class": "Primary",
+  "xpAllUpgrades": 150600,
+  "xpParagon": null,
+  "farm": {
+   "map": "Infernal or Dark Castle",
+   "mode": "Expert Deflation",
+   "setup": "2x Desperado 4-2-0; 2x Desperado 3-2-0",
+   "helpers": "hero Gwendolin ($615 Easy, no XP share)",
+   "xpPerRun": 64514,
+   "runsToT5": 3,
+   "runsToParagon": null,
+   "runsToT5Base": 3,
+   "runsToParagonBase": null,
+   "monoDeflation": "yes"
+  },
+  "unlockOrder": [
+   "0-1-0 Eagle Eye (200, camo)",
+   "Big Iron 3-0-0 (2,750)",
+   "Twin Sixes (9,500)",
+   "Blazing Sun (29,000)",
+   "Deadeye (3,750 + 850)",
+   "Enforcer (3,750)",
+   "Bounty Hunter (18,000)",
+   "Avenger (14,000)",
+   "Desert Phantom (29,000)",
+   "Golden Justice (40,000)"
+  ],
+  "bestCrosspaths": [
+   {
+    "code": "4-2-0",
+    "cost": 8200,
+    "use": "Twin Sixes with camo"
+   },
+   {
+    "code": "5-2-0",
+    "cost": 24700,
+    "use": "The Blazing Sun: cheap boss damage"
+   },
+   {
+    "code": "0-3-2",
+    "cost": 4300,
+    "use": "Deadeye: ceramics/blimps"
+   },
+   {
+    "code": "0-4-0",
+    "cost": 9800,
+    "use": "Bounty Hunter (supports Blazing Sun)"
+   }
+  ],
+  "buyTiming": "Base/0-1-0 from R1 (CHIMPS starts); Big Iron R28; Twin Sixes R40-50; Blazing Sun R60+.",
+  "synergies": [
+   "Berserker Brew",
+   "Jungle Drums",
+   "Overclock on Blazing Sun",
+   "Spotter for 2-x-x Advanced Intel Subs"
+  ],
+  "lacks": [
+   "Frozen popping at base",
+   "Crowd damage outside the shotgun path"
+  ],
+  "playstyles": [
+   "safe/beginner",
+   "CHIMPS starts",
+   "low-cost",
+   "boss events (Blazing Sun)"
+  ],
+  "summary": "Mono-farmable from tier 3. Note: Desperado is Primary (bloonswiki), so no Elite Military bonus."
+ },
+ {
+  "towerId": "sniper",
+  "name": "Sniper Monkey",
+  "class": "Military",
+  "xpAllUpgrades": 145200,
+  "xpParagon": 750000,
+  "farm": {
+   "map": "Infernal",
+   "mode": "Expert Deflation",
+   "setup": "2x Sniper Monkey 2-0-4 (Full Auto Rifle, $8,240 Easy each)",
+   "helpers": "Monkey Village 0-2-0 Grow Blocker + Radar Scanner ($2,930 Easy; Radar gives camo to the infinite-range Snipers on both alternating lanes); hero Quincy ($460 Easy, no XP share). Total $19,870 of $20,000",
+   "costEasy": 19410,
+   "share": 0.849,
+   "xpPerRun": 57514,
+   "xpPerRunNoMK": 50718,
+   "runsToT5": 3,
+   "runsToParagon": 16,
+   "runsToT5NoMK": 3,
+   "runsToParagonNoMK": 18,
+   "runsToT5Base": 3,
+   "runsToParagonBase": 15,
+   "calc": "share 16,480/19,410 = 0.849; no MK 59,735 x 0.849 = 50,718; MK 67,739 x 0.849 = 57,514; T5 ceil(144,200/57,514) = 3 (no MK ceil(145,200/50,718) = 3); Paragon ceil(894,200/57,514) = 16 (no MK ceil(895,200/50,718) = 18). XP totals from towers.json (145,200 + 750,000), EMT -1,000 with MK",
+   "rank2": "Etienne ($555 Easy) instead of Quincy; once Etienne shows level 8 (UAV camo, ~end of R48, unverified) sell the Village (~$2,050) and add a 3rd Sniper 1-0-2 ($1,355): ~55,496 XP/run no MK (62,933 MK) -> 3 runs to T5, 17 (15 MK) to Paragon",
+   "rejected": "Mortar 0-0-3 Signal Flare decamo plan fails on Infernal: one fixed reticle, lanes alternate (odd top / even bottom); R56 full leak 1,880 lives vs 200",
+   "alternative100pct": "1x 4-2-0 + 2x 2-3-0 + Sauda ($18,220 Easy, 100% share, 67,739 XP/run MK, 14 runs to Paragon) - covers camo/lead in-tower but has no attack-speed upgrades; DPS untested",
+   "verified": "VERIFY-3 section 3 ranking; untested in game",
+   "monoDeflation": "yes",
+   "indexEvidence": "Index v57.4 (btd6index.win, fetched 2026-11-05): Infernal lanes 19.3 RBS each (longest Expert; Glacial Trail next at 17.7), no LoS blockers, water yes; Elite Sniper and Elite Defender both have 2MP (solo CHIMPS) completions on Infernal."
+  },
+  "unlockOrder": [
+   "1-0-0 FMJ (120) and 0-1-0 NVG (200)",
+   "Bouncing Bullet 0-3-0 (2,500 + 800)",
+   "Large Calibre/Deadly Precision (800 + 3,500)",
+   "Maim MOAB (10,500)",
+   "Semi-Auto/Full Auto (2,750 + 10,000)",
+   "Elite Defender (30,000)",
+   "Supply Drop (11,000)",
+   "Elite Sniper (35,000)",
+   "Cripple MOAB (37,500)",
+   "S.P.I.D.E.R. (750,000)"
+  ],
+  "bestCrosspaths": [
+   {
+    "code": "4-2-0",
+    "cost": 11200,
+    "use": "Maim MOAB with shrapnel"
+   },
+   {
+    "code": "5-0-2",
+    "cost": 43400,
+    "use": "Cripple MOAB (preferred unless heavy speed buffs)"
+   },
+   {
+    "code": "2-5-0",
+    "cost": 24400,
+    "use": "Elite Sniper damage build"
+   },
+   {
+    "code": "0-4-2",
+    "cost": 11650,
+    "use": "Supply Drop income (not CHIMPS)"
+   },
+   {
+    "code": "0-2-5",
+    "cost": 23650,
+    "use": "Elite Defender: bosses, R97/R100"
+   }
+  ],
+  "buyTiming": "Several 0-0-0s R1-R10; 1-1-0 by R24-R28; Maim R60s; Elite Defender for R95-R100/bosses.",
+  "synergies": [
+   "Berserker Brew + Maim (classic stall)",
+   "Jungle Drums/Overclock (attack speed)",
+   "Sauda",
+   "Village Radar Scanner (camo for 2-0-4 farms)",
+   "Alchemist AMD (extra MOAB/ceramic damage)"
+  ],
+  "lacks": [
+   "Crowd damage (pierce 1)",
+   "Line of sight on cluttered maps"
+  ],
+  "playstyles": [
+   "CHIMPS",
+   "boss events (S.P.I.D.E.R., Elite Defender)",
+   "safe/beginner",
+   "eco (Supply Drop, non-CHIMPS)"
+  ],
+  "summary": "Military (+5% XP, +1,000 one-off). Mono-farmable; S.P.I.D.E.R. needs 895,200 XP (894,200 after the EMT +1,000)."
+ },
+ {
+  "towerId": "sub",
+  "name": "Monkey Sub",
+  "class": "Military",
+  "xpAllUpgrades": 154755,
+  "xpParagon": 1000000,
+  "farm": {
+   "map": "Dark Castle",
+   "mode": "Expert Deflation",
+   "setup": "2x Monkey Sub 0-2-4; 1x Monkey Sub 2-0-4; 1x Monkey Sub 3-2-0",
+   "helpers": "hero Admiral Brickell ($765 Easy, no XP share)",
+   "xpPerRun": 67739,
+   "runsToT5": 3,
+   "runsToParagon": 18,
+   "runsToT5Base": 3,
+   "runsToParagonBase": 20,
+   "monoDeflation": "yes"
+  },
+  "unlockOrder": [
+   "2-0-0 Advanced Intel (875)",
+   "0-2-0 Heat-tipped (730)",
+   "Submerge and Support (2,250)",
+   "Triple Guns (2,750 + 1,150)",
+   "Armor Piercing Darts (10,000)",
+   "Bloontonium Reactor (11,000)",
+   "Ballistic Missile (3,000)",
+   "Sub Commander (25,000)",
+   "Energizer (33,000)",
+   "First Strike (20,000) then Pre-emptive (45,000)",
+   "Nautic Siege Core (1,000,000)"
+  ],
+  "bestCrosspaths": [
+   {
+    "code": "2-0-2",
+    "cost": 2405,
+    "use": "Early Advanced Intel + Airburst"
+   },
+   {
+    "code": "2-0-4",
+    "cost": 6005,
+    "use": "AP Darts with Intel"
+   },
+   {
+    "code": "0-2-4",
+    "cost": 6125,
+    "use": "AP Darts with lead"
+   },
+   {
+    "code": "0-4-2",
+    "cost": 16875,
+    "use": "First Strike Capability"
+   },
+   {
+    "code": "5-0-2",
+    "cost": 33505,
+    "use": "Energizer support"
+   }
+  ],
+  "buyTiming": "2-0-2 R1-R30 on water maps; Submerge for camo; AP Darts R40-R60; Pre-emptive for R90+ DDTs.",
+  "synergies": [
+   "Admiral Brickell",
+   "Berserker Brew",
+   "Camo spotter (0-0-2 Dart or 0-1-0 Desperado) for Intel",
+   "Energizer with Psi/Brickell"
+  ],
+  "lacks": [
+   "Land placement",
+   "Lead on Advanced Intel paths without x-2-x",
+   "Late game without Pre-emptive/Energizer"
+  ],
+  "playstyles": [
+   "safe/beginner (water maps)",
+   "CHIMPS (water maps)",
+   "boss events (Nautic Siege Core)"
+  ],
+  "summary": "Water-locked but mono-farmable on Dark Castle. Biggest XP walls: First Strike 20k, Pre-emptive 45k, Paragon 1M."
+ },
+ {
+  "towerId": "buccaneer",
+  "name": "Monkey Buccaneer",
+  "class": "Military",
+  "xpAllUpgrades": 158750,
+  "xpParagon": 750000,
+  "farm": {
+   "map": "Dark Castle",
+   "mode": "Expert Deflation",
+   "setup": "1x Monkey Buccaneer 4-0-2; 1x Monkey Buccaneer 0-4-2",
+   "helpers": "hero Admiral Brickell ($765 Easy, no XP share)",
+   "xpPerRun": 67739,
+   "runsToT5": 3,
+   "runsToParagon": 14,
+   "runsToT5Base": 3,
+   "runsToParagonBase": 16,
+   "monoDeflation": "yes"
+  },
+  "unlockOrder": [
+   "0-0-2 Crow's Nest (750)",
+   "0-2-0 Hot Shot (850)",
+   "Destroyer (3,000)",
+   "Cannon Ship (2,700)",
+   "Aircraft Carrier (12,500)",
+   "Monkey Pirates (13,000)",
+   "Merchantman (3,100) then Favored Trades (10,000)",
+   "Trade Empire (40,000)",
+   "Carrier Flagship (37,000)",
+   "Pirate Lord (35,000)",
+   "Navarch (750,000)"
+  ],
+  "bestCrosspaths": [
+   {
+    "code": "3-2-0",
+    "cost": 5500,
+    "use": "Destroyer with grapes: early MOABs"
+   },
+   {
+    "code": "4-0-2",
+    "cost": 13000,
+    "use": "Aircraft Carrier with camo"
+   },
+   {
+    "code": "0-4-2",
+    "cost": 6800,
+    "use": "Monkey Pirates: lead + MOAB Takedown"
+   },
+   {
+    "code": "2-0-4",
+    "cost": 9550,
+    "use": "Favored Trades income (non-CHIMPS)"
+   },
+   {
+    "code": "0-2-5",
+    "cost": 32900,
+    "use": "Trade Empire (Navarch power)"
+   }
+  ],
+  "buyTiming": "0-0-2 for camo early; Destroyer R35-R40; Merchantmen R20-R50 in non-CHIMPS eco.",
+  "synergies": [
+   "Admiral Brickell",
+   "Berserker Brew (Destroyer)",
+   "Central Markets +10% each to Merchantmen",
+   "Monkey City income +20%"
+  ],
+  "lacks": [
+   "Land placement",
+   "Purple on Hot Shot grapes",
+   "Frozen"
+  ],
+  "playstyles": [
+   "eco/farming (Merchantman, Trade Empire)",
+   "boss events/freeplay (Navarch)",
+   "safe/beginner (water)"
+  ],
+  "summary": "Navarch is the easiest high-Degree Paragon because Merchantman income feeds power. Mono-farmable on Dark Castle."
+ },
+ {
+  "towerId": "ace",
+  "name": "Monkey Ace",
+  "class": "Military",
+  "xpAllUpgrades": 162590,
+  "xpParagon": 1000000,
+  "farm": {
+   "map": "Dark Castle",
+   "mode": "Expert Deflation",
+   "setup": "1x Monkey Ace 4-2-0; 1x Monkey Ace 3-2-0; 3x Monkey Ace 2-3-0",
+   "helpers": "hero Rosalia ($745 Easy, no XP share)",
+   "xpPerRun": 67739,
+   "runsToT5": 3,
+   "runsToParagon": 18,
+   "runsToT5Base": 3,
+   "runsToParagonBase": 20,
+   "monoDeflation": "yes"
+  },
+  "unlockOrder": [
+   "2-0-0 (910) and 0-2-0 Spy Plane (720)",
+   "Fighter Plane (2,700)",
+   "Bomber Ace (2,500)",
+   "Dart Storm (8,000)",
+   "Sky Shredder (35,000)",
+   "Neva-Miss (3,000 + 760)",
+   "Ground Zero (15,000)",
+   "Spectre (19,000)",
+   "Tsar Bomba (30,000)",
+   "Flying Fortress (45,000)",
+   "Goliath Doomship (1,000,000)"
+  ],
+  "bestCrosspaths": [
+   {
+    "code": "4-2-0",
+    "cost": 6650,
+    "use": "Dart Storm with camo"
+   },
+   {
+    "code": "5-2-0",
+    "cost": 49150,
+    "use": "Sky Shredder with camo"
+   },
+   {
+    "code": "2-0-3",
+    "cost": 5400,
+    "use": "Neva-Miss (bloonswiki Deflation pick)"
+   },
+   {
+    "code": "2-3-0",
+    "cost": 3250,
+    "use": "Bomber Ace: races, Deflation"
+   },
+   {
+    "code": "0-2-5",
+    "cost": 118350,
+    "use": "Flying Fortress late game"
+   }
+  ],
+  "buyTiming": "Not early ($800). Fighter Plane R40; Dart Storm R50-R60; Sky Shredder/Fortress R80+.",
+  "synergies": [
+   "Rosalia discount",
+   "Wingmonkey MK (no micro)",
+   "Berserker Brew (dart pierce)",
+   "Jungle Drums",
+   "Overclock on Sky Shredder"
+  ],
+  "lacks": [
+   "Early value",
+   "Precision (wasted shots) without Neva-Miss"
+  ],
+  "playstyles": [
+   "boss events (Goliath Doomship)",
+   "freeplay",
+   "eco games (AFK)",
+   "races (Bomber+)"
+  ],
+  "summary": "Strongest Paragon (Doomship) and the best-known AFK Deflation farm; 1.16M XP to Paragon (1.16M minus 1,000 EMT)."
+ },
+ {
+  "towerId": "heli",
+  "name": "Heli Pilot",
+  "class": "Military",
+  "xpAllUpgrades": 203340,
+  "xpParagon": null,
+  "farm": {
+   "map": "Dark Castle",
+   "mode": "Expert Deflation",
+   "setup": "1x Heli Pilot 3-2-0; 1x Heli Pilot 0-2-4",
+   "helpers": "hero Rosalia ($745 Easy, no XP share)",
+   "xpPerRun": 67739,
+   "runsToT5": 3,
+   "runsToParagon": null,
+   "runsToT5Base": 4,
+   "runsToParagonBase": null,
+   "monoDeflation": "yes"
+  },
+  "unlockOrder": [
+   "0-2-0 IFR (800)",
+   "Razor Rotors (2,700 + 850)",
+   "MOAB Shove (2,500 + 690)",
+   "Comanche Defense (12,500)",
+   "Downdraft (3,300)",
+   "Support Chinook (15,000)",
+   "Apache Dartship (20,000)",
+   "Special Poperations (40,000)",
+   "Comanche Commander (50,000)",
+   "Apache Prime (55,000)"
+  ],
+  "bestCrosspaths": [
+   {
+    "code": "0-2-3",
+    "cost": 6400,
+    "use": "MOAB Shove: cheap blimp stall"
+   },
+   {
+    "code": "3-2-0",
+    "cost": 5550,
+    "use": "Razor Rotors with camo"
+   },
+   {
+    "code": "4-2-0",
+    "cost": 25150,
+    "use": "Apache Dartship with camo"
+   },
+   {
+    "code": "0-2-4",
+    "cost": 14900,
+    "use": "Comanche Defense"
+   }
+  ],
+  "buyTiming": "Mid-game buy ($1,500 base). MOAB Shove by R40-R60; Apache R60+.",
+  "synergies": [
+   "Rosalia discount",
+   "Berserker Brew",
+   "Jungle Drums",
+   "Pursuit for no-micro"
+  ],
+  "lacks": [
+   "Early value",
+   "Purple on Apache Prime plasma"
+  ],
+  "playstyles": [
+   "boss events",
+   "CHIMPS (MOAB Shove)",
+   "safe/beginner (Pursuit)"
+  ],
+  "summary": "No Paragon; heavy T5 XP (Apache Prime 55k, Comanche Commander 50k). Mono-farmable."
+ },
+ {
+  "towerId": "mortar",
+  "name": "Mortar Monkey",
+  "class": "Military",
+  "xpAllUpgrades": 144820,
+  "xpParagon": null,
+  "farm": {
+   "map": "Dark Castle",
+   "mode": "Expert Deflation",
+   "setup": "1x Mortar Monkey 0-4-2; 3x Mortar Monkey 0-3-2; 1x Mortar Monkey 0-2-3",
+   "helpers": "hero Striker Jones ($595 Easy, no XP share)",
+   "xpPerRun": 67739,
+   "runsToT5": 3,
+   "runsToParagon": null,
+   "runsToT5Base": 3,
+   "runsToParagonBase": null,
+   "monoDeflation": "yes"
+  },
+  "unlockOrder": [
+   "0-0-1 Increased Accuracy (140, camo damage)",
+   "0-2-0 (750)",
+   "Heavy Shells (2,300)",
+   "Signal Flare (2,990 total)",
+   "Artillery Battery (12,500)",
+   "Shattering Shells (12,000)",
+   "Pop and Awe (32,000)",
+   "Blooncineration (35,000)",
+   "Top path (2,500 / 15,000 / 29,000)"
+  ],
+  "bestCrosspaths": [
+   {
+    "code": "0-3-2",
+    "cost": 3000,
+    "use": "Heavy Shells: black + MOAB"
+   },
+   {
+    "code": "0-4-2",
+    "cost": 9500,
+    "use": "Artillery Battery mid-game carry"
+   },
+   {
+    "code": "0-5-2",
+    "cost": 47500,
+    "use": "Pop and Awe"
+   },
+   {
+    "code": "2-0-4",
+    "cost": 12600,
+    "use": "Shattering Shells (de-fortify)"
+   },
+   {
+    "code": "2-0-5",
+    "cost": 52600,
+    "use": "Blooncineration CHIMPS carry"
+   }
+  ],
+  "buyTiming": "0-0-0 for R4 blues; Heavy Shells by R40; Artillery R50-R70; Pop and Awe/Blooncineration R80+.",
+  "synergies": [
+   "Striker Jones",
+   "Gwendolin (Signal Flare buff)",
+   "Jungle Drums/Overclock",
+   "Berserker Brew"
+  ],
+  "lacks": [
+   "Black before x-3-x",
+   "Accuracy without x-x-1"
+  ],
+  "playstyles": [
+   "CHIMPS (Blooncineration)",
+   "races (1-3-0)",
+   "safe/beginner (no placement skill)",
+   "boss events"
+  ],
+  "summary": "Mono-farmable and nearly AFK. Also the best land decamo helper (0-0-3 Signal Flare) for other towers' farms."
+ },
+ {
+  "towerId": "dartling",
+  "name": "Dartling Gunner",
+  "class": "Military",
+  "xpAllUpgrades": 242140,
+  "xpParagon": null,
+  "farm": {
+   "map": "Dark Castle",
+   "mode": "Expert Deflation",
+   "setup": "1x Dartling Gunner 0-4-2; 1x Dartling Gunner 0-3-2",
+   "helpers": "hero Psi ($850 Easy, no XP share)",
+   "xpPerRun": 67739,
+   "runsToT5": 4,
+   "runsToParagon": null,
+   "runsToT5Base": 5,
+   "runsToParagonBase": null,
+   "monoDeflation": "yes"
+  },
+  "unlockOrder": [
+   "0-1-0 Advanced Targeting (130, camo)",
+   "Hydra Rocket Pods (2,700 + 830)",
+   "Rocket Storm (14,000)",
+   "Laser Cannon (2,600 + 750)",
+   "Plasma Accelerator (12,500)",
+   "Buckshot/BADS (3,000 + 15,000)",
+   "M.A.D (60,000)",
+   "Bloon Exclusion Zone (55,000)",
+   "Ray of Doom (75,000)"
+  ],
+  "bestCrosspaths": [
+   {
+    "code": "0-4-2",
+    "cost": 12900,
+    "use": "Rocket Storm: rushes"
+   },
+   {
+    "code": "2-5-0",
+    "cost": 77750,
+    "use": "M.A.D blimp killer"
+   },
+   {
+    "code": "5-2-0",
+    "cost": 93000,
+    "use": "Ray of Doom"
+   },
+   {
+    "code": "0-2-4",
+    "cost": 18400,
+    "use": "BADS (Deflation pick)"
+   }
+  ],
+  "buyTiming": "Mid-game ($850 base). Hydra/Rocket Storm R40-R60; M.A.D R80+.",
+  "synergies": [
+   "Overclock",
+   "Jungle Drums",
+   "Berserker Brew",
+   "Cross the Streams MK (laser purple)"
+  ],
+  "lacks": [
+   "Purple on laser paths",
+   "Auto-aim (needs cursor or lock)",
+   "Early value"
+  ],
+  "playstyles": [
+   "boss events (Ray of Doom)",
+   "freeplay",
+   "CHIMPS (BADS)"
+  ],
+  "summary": "No Paragon and the highest Military T5 XP (Ray of Doom 75k, M.A.D 60k)."
+ },
+ {
+  "towerId": "wizard",
+  "name": "Wizard Monkey",
+  "class": "Magic",
+  "xpAllUpgrades": 143290,
+  "xpParagon": 1000000,
+  "farm": {
+   "map": "Dark Castle",
+   "mode": "Expert Deflation",
+   "setup": "2x Wizard Monkey 0-2-4; 1x Wizard Monkey 0-3-2; 1x Wizard Monkey 0-2-3",
+   "helpers": "hero Ezili ($470 Easy, no XP share)",
+   "xpPerRun": 64514,
+   "runsToT5": 3,
+   "runsToParagon": 18,
+   "runsToT5Base": 3,
+   "runsToParagonBase": 20,
+   "monoDeflation": "partial"
+  },
+  "unlockOrder": [
+   "0-2-0 Wall of Fire (830)",
+   "0-0-2 Monkey Sense (650)",
+   "Shimmer (2,200)",
+   "Dragon's Breath (2,600)",
+   "Necromancer (10,000)",
+   "Prince of Darkness (30,000)",
+   "Arcane Mastery/Spike (2,300 + 11,000)",
+   "Archmage (35,000)",
+   "Summon Phoenix (13,000)",
+   "Wizard Lord Phoenix (35,000)",
+   "Magus Perfectus (1,000,000)"
+  ],
+  "bestCrosspaths": [
+   {
+    "code": "0-2-4",
+    "cost": 6250,
+    "use": "Necromancer"
+   },
+   {
+    "code": "0-2-5",
+    "cost": 32750,
+    "use": "Prince of Darkness (cheap, CHIMPS)"
+   },
+   {
+    "code": "0-3-2",
+    "cost": 5250,
+    "use": "Dragon's Breath"
+   },
+   {
+    "code": "5-2-0",
+    "cost": 45425,
+    "use": "Archmage"
+   },
+   {
+    "code": "0-5-2",
+    "cost": 61250,
+    "use": "Wizard Lord Phoenix"
+   }
+  ],
+  "buyTiming": "0-2-0 for R28/R30 leads; Dragon's Breath R30s; Necromancer R40s; Archmage/PoD R60+.",
+  "synergies": [
+   "Ezili (purple, Sacrificial Totem)",
+   "Obyn L11 (Magic range/pierce)",
+   "Gwendolin L5 (Dragon's Breath)",
+   "Jungle Drums",
+   "Berserker Brew"
+  ],
+  "lacks": [
+   "Purple on bolt/fire attacks (Necromancer undead can damage any type)",
+   "Camo before x-x-2"
+  ],
+  "playstyles": [
+   "CHIMPS (PoD)",
+   "boss events (Magus)",
+   "safe/beginner"
+  ],
+  "summary": "~1.14M XP to Magus Perfectus (143,290 for all 15 incl. an estimated 150 for Intense Magic, + 1,000,000); third-highest Paragon total after Ace and Sub. Deflation-farmable: Necromancer undead cover Purple in-tower; Ezili is insurance."
+ },
+ {
+  "towerId": "super",
+  "name": "Super Monkey",
+  "class": "Magic",
+  "xpAllUpgrades": 493850,
+  "xpParagon": null,
+  "farm": {
+   "map": "Dark Castle",
+   "mode": "Expert Deflation",
+   "setup": "1x Super Monkey 2-0-3",
+   "helpers": "1x Mortar Monkey 0-0-3 ($1,955 Easy); hero Ezili ($470 Easy, no XP share)",
+   "xpPerRun": 56745,
+   "runsToT5": 9,
+   "runsToParagon": null,
+   "runsToT5Base": 9,
+   "runsToParagonBase": null,
+   "monoDeflation": "partial"
+  },
+  "unlockOrder": [
+   "0-0-2 Ultravision (2,550)",
+   "Plasma Blasts (2,700)",
+   "Sun Avatar (7,000)",
+   "Dark Knight (6,500)",
+   "Robo Monkey (6,000 + 1,600)",
+   "Tech Terror (35,000)",
+   "Sun Temple (50,000)",
+   "Dark Champion (47,500)",
+   "The Anti-Bloon (85,000)",
+   "Legend of the Night (100,000)",
+   "True Sun God (150,000)"
+  ],
+  "bestCrosspaths": [
+   {
+    "code": "3-0-2",
+    "cost": 31200,
+    "use": "Sun Avatar: classic carry"
+   },
+   {
+    "code": "2-0-4",
+    "cost": 72355,
+    "use": "Dark Champion: lead + MOAB"
+   },
+   {
+    "code": "2-4-0",
+    "cost": 42900,
+    "use": "Tech Terror (Annihilation)"
+   },
+   {
+    "code": "4-0-2",
+    "cost": 131200,
+    "use": "Sun Temple with camo"
+   }
+  ],
+  "buyTiming": "Not before ~R50 (base $2,500); Sun Avatar R55-R70; Temple/Anti-Bloon R80+ or freeplay.",
+  "synergies": [
+   "Adora (Sun Avatar buff, True Sun God)",
+   "Ezili/MIB (Purple)",
+   "Jungle Drums",
+   "Overclock",
+   "Alchemist Brew"
+  ],
+  "lacks": [
+   "Purple on plasma/laser",
+   "Camo before x-x-2",
+   "Affordability early"
+  ],
+  "playstyles": [
+   "freeplay",
+   "boss events",
+   "eco/farming (late)"
+  ],
+  "summary": "Most XP-expensive tower (493,850 XP for all 15; T5s alone 335k) and no Paragon. Level it last unless you love Sun Temples."
+ },
+ {
+  "towerId": "ninja",
+  "name": "Ninja Monkey",
+  "class": "Magic",
+  "xpAllUpgrades": 176640,
+  "xpParagon": 500000,
+  "farm": {
+   "map": "Dark Castle",
+   "mode": "Expert Deflation",
+   "setup": "2x Ninja Monkey 4-0-1; 1x Ninja Monkey 0-2-4",
+   "helpers": "hero Gwendolin ($615 Easy, no XP share)",
+   "xpPerRun": 64514,
+   "runsToT5": 3,
+   "runsToParagon": 11,
+   "runsToT5Base": 3,
+   "runsToParagonBase": 12,
+   "monoDeflation": "yes"
+  },
+  "unlockOrder": [
+   "Double Shot 3-0-0 (2,700 total)",
+   "Seeking 0-0-1 (140)",
+   "Flash Bomb (2,500 + 640)",
+   "Bloonjitsu (16,000)",
+   "Shinobi Tactics (2,000 + 800)",
+   "Bloon Sabotage (14,000)",
+   "Sticky Bomb (15,500)",
+   "Grand Saboteur (35,000)",
+   "Master Bomber (37,500)",
+   "Grandmaster (50,000)",
+   "Ascended Shadow (500,000)"
+  ],
+  "bestCrosspaths": [
+   {
+    "code": "4-0-1",
+    "cost": 5050,
+    "use": "Bloonjitsu with seeking"
+   },
+   {
+    "code": "0-2-3",
+    "cost": 4050,
+    "use": "Flash Bomb + decamo"
+   },
+   {
+    "code": "0-4-2",
+    "cost": 8200,
+    "use": "Bloon Sabotage (max 4-5)"
+   },
+   {
+    "code": "0-2-4",
+    "cost": 9050,
+    "use": "Sticky Bomb"
+   },
+   {
+    "code": "2-5-0",
+    "cost": 30150,
+    "use": "Grand Saboteur"
+   }
+  ],
+  "buyTiming": "Base Ninja R1-R24 for camo; 3-0-1 R30s; Sabotage before DDTs (R90); Sticky R40-R60.",
+  "synergies": [
+   "Alchemist AMD/Brew (lead, double damage on shurikens)",
+   "MIB Village",
+   "Obyn L11",
+   "Shinobi Tactics stacking (x-3-x)"
+  ],
+  "lacks": [
+   "Lead on shurikens",
+   "Frozen"
+  ],
+  "playstyles": [
+   "CHIMPS",
+   "freeplay (Ascended Shadow)",
+   "safe/beginner",
+   "low-cost"
+  ],
+  "summary": "Fourth-cheapest Paragon by XP (677k). Mono-farmable; Ascended Shadow is a freeplay staple."
+ },
+ {
+  "towerId": "alchemist",
+  "name": "Alchemist",
+  "class": "Magic",
+  "xpAllUpgrades": 119425,
+  "xpParagon": null,
+  "farm": {
+   "map": "Dark Castle",
+   "mode": "Expert Deflation",
+   "setup": "2x Alchemist 4-2-0",
+   "helpers": "2x Ninja Monkey 4-0-1 ($8,600 Easy); hero Obyn Greenfoot ($555 Easy, no XP share)",
+   "xpPerRun": 35374,
+   "runsToT5": 4,
+   "runsToParagon": null,
+   "runsToT5Base": 2,
+   "runsToParagonBase": null,
+   "monoDeflation": "no"
+  },
+  "unlockOrder": [
+   "2-0-0 AMD (690)",
+   "Berserker Brew (2,250)",
+   "Stronger Stimulant (10,000)",
+   "Unstable Concoction (2,500 + 640)",
+   "Lead to Gold/Rubber to Gold (2,845 + 8,500)",
+   "Permanent Brew (30,000)",
+   "Transforming Tonic (10,000)",
+   "Bloon Master Alchemist (24,000)",
+   "Total Transformation (28,000)"
+  ],
+  "bestCrosspaths": [
+   {
+    "code": "3-2-0",
+    "cost": 3275,
+    "use": "Brew for fast attackers (40-shot cap)"
+   },
+   {
+    "code": "3-0-1",
+    "cost": 3200,
+    "use": "Brew for slow attackers (1.25x as often)"
+   },
+   {
+    "code": "4-2-0",
+    "cost": 6125,
+    "use": "Stronger Stimulant"
+   },
+   {
+    "code": "2-0-0",
+    "cost": 1150,
+    "use": "AMD spam: lead + MOAB damage"
+   },
+   {
+    "code": "0-4-0",
+    "cost": 8275,
+    "use": "Transforming Tonic"
+   },
+   {
+    "code": "2-0-4",
+    "cost": 6000,
+    "use": "Rubber to Gold (income; none in CHIMPS since the 57.1 hotfix)"
+   }
+  ],
+  "buyTiming": "2-0-0/3-x-x next to your carry R30-R50; Stronger Stim R60s; Permanent Brew R80+.",
+  "synergies": [
+   "Any fast many-projectile tower (Ninja, Dart, Quincy, Adora, Sub)",
+   "Cannot buff Beast Handler",
+   "Jungle Drums"
+  ],
+  "lacks": [
+   "Camo (never)",
+   "Standalone DPS"
+  ],
+  "playstyles": [
+   "CHIMPS",
+   "boss events",
+   "eco (Rubber to Gold)"
+  ],
+  "summary": "Highest value per dollar but low XP share as a helper. Use the Alchemist+Ninja split farm to level both at once."
+ },
+ {
+  "towerId": "druid",
+  "name": "Druid",
+  "class": "Magic",
+  "xpAllUpgrades": 153510,
+  "xpParagon": 750000,
+  "farm": {
+   "map": "Infernal",
+   "mode": "Expert Deflation",
+   "setup": "1x Druid 4-0-2; 3x Druid 1-0-4",
+   "helpers": "hero Obyn Greenfoot ($555 Easy, no XP share)",
+   "xpPerRun": 64514,
+   "runsToT5": 3,
+   "runsToParagon": 15,
+   "runsToT5Base": 3,
+   "runsToParagonBase": 16,
+   "monoDeflation": "yes"
+  },
+  "unlockOrder": [
+   "Hard Thorns 1-0-0 (150)",
+   "Druid of Wrath (2,370 total)",
+   "Poplust (14,000)",
+   "Druid of the Storm (2,500 + 900)",
+   "Ball Lightning (12,000)",
+   "Druid of the Jungle (2,740 total)",
+   "Jungle's Bounty (11,000)",
+   "Avatar of Wrath (33,000)",
+   "Spirit of the Forest (40,000)",
+   "Monarch of Storms (35,000)",
+   "Root of all Nature (750,000)"
+  ],
+  "bestCrosspaths": [
+   {
+    "code": "1-0-4",
+    "cost": 4100,
+    "use": "Poplust: buffs other Druids"
+   },
+   {
+    "code": "1-3-0",
+    "cost": 2400,
+    "use": "Jungle/Bounty income (works in CHIMPS)"
+   },
+   {
+    "code": "4-0-2",
+    "cost": 8200,
+    "use": "Ball Lightning with camo"
+   },
+   {
+    "code": "1-0-5",
+    "cost": 49100,
+    "use": "Avatar of Wrath"
+   },
+   {
+    "code": "2-5-0",
+    "cost": 43150,
+    "use": "Spirit of the Forest"
+   }
+  ],
+  "buyTiming": "1-0-x early; Wrath/Poplust R30-R50; Spirit of the Forest R60+.",
+  "synergies": [
+   "Obyn (Druid hero)",
+   "Poplust stacking",
+   "Jungle Drums",
+   "Berserker Brew",
+   "Banana Farms (Jungle's Bounty bonus)"
+  ],
+  "lacks": [
+   "Lead without Hard Thorns",
+   "Camo before Ball Lightning/Obyn"
+  ],
+  "playstyles": [
+   "CHIMPS",
+   "eco (Jungle's Bounty: passive end-of-round cash since v53, ability now Vine Crush; none in CHIMPS)",
+   "boss events (Root of all Nature)",
+   "safe/beginner"
+  ],
+  "summary": "Mono-farmable with Obyn; Root of all Nature needs 903,510 XP total."
+ },
+ {
+  "towerId": "mermonkey",
+  "name": "Mermonkey",
+  "class": "Magic",
+  "xpAllUpgrades": 242210,
+  "xpParagon": null,
+  "farm": {
+   "map": "Dark Castle",
+   "mode": "Expert Deflation",
+   "setup": "1x Mermonkey 0-4-2; 3x Mermonkey 0-3-2",
+   "helpers": "hero Admiral Brickell ($765 Easy, no XP share)",
+   "xpPerRun": 64514,
+   "runsToT5": 4,
+   "runsToParagon": null,
+   "runsToT5Base": 5,
+   "runsToParagonBase": null,
+   "monoDeflation": "yes"
+  },
+  "unlockOrder": [
+   "0-0-1 Echosense (150) + 0-0-2 Network (670)",
+   "Riptide Champion (2,500 + 850)",
+   "Arctic Knight (16,000)",
+   "Abyss Dweller/Abyssal Warrior (2,800 + 11,000)",
+   "Alluring Melody/Symphonic (3,000 + 14,500)",
+   "Final Harmonic (52,000)",
+   "Lord of the Abyss (68,000)",
+   "Popseidon (70,000)"
+  ],
+  "bestCrosspaths": [
+   {
+    "code": "0-3-2",
+    "cost": 3205,
+    "use": "Riptide spam with Echosense"
+   },
+   {
+    "code": "5-x-x",
+    "cost": null,
+    "use": "Lord of the Abyss: water on dry maps (CHIMPS)"
+   },
+   {
+    "code": "x-x-5",
+    "cost": null,
+    "use": "The Final Harmonic: hero/magic support"
+   }
+  ],
+  "buyTiming": "Base Mermonkey R1 (very cost-effective); Riptide R30s; T5s are late and XP-heavy.",
+  "synergies": [
+   "Admiral Brickell",
+   "Obyn L11 (Magic)",
+   "Spike Factory (Lord of the Abyss buff)",
+   "Final Harmonic + heroes"
+  ],
+  "lacks": [
+   "Range on land",
+   "Lead before x-3-x"
+  ],
+  "playstyles": [
+   "safe/beginner",
+   "CHIMPS (Lord of the Abyss)",
+   "low-cost"
+  ],
+  "summary": "No Paragon but huge T5 XP (190k total in T5s). Mono-farmable from tier 3."
+ },
+ {
+  "towerId": "skywarden",
+  "name": "Skywarden",
+  "class": "Magic",
+  "xpAllUpgrades": 150725,
+  "xpParagon": null,
+  "farm": {
+   "map": "Dark Castle",
+   "mode": "Expert Deflation",
+   "setup": "1x Skywarden 2-4-0; 3x Skywarden 2-3-0; 2x Skywarden 3-2-0",
+   "helpers": "hero Obyn Greenfoot ($555 Easy, no XP share)",
+   "xpPerRun": 64514,
+   "runsToT5": 3,
+   "runsToParagon": null,
+   "runsToT5Base": 3,
+   "runsToParagonBase": null,
+   "monoDeflation": "yes"
+  },
+  "unlockOrder": [
+   "2-0-0 Zephyr Sense (camo)",
+   "0-2-0 Thundering Arc (lead)",
+   "Galvanic Conduit (3,000)",
+   "Wind Weaver (2,750)",
+   "Thunder's Decree (12,000)",
+   "Galesage (16,000)",
+   "Coldchain/Frozen Verdict (2,750 + 14,000)",
+   "Farwind Seer (30,000)",
+   "Winter's Mercy (32,000)",
+   "Stormwrath Archon (36,000)"
+  ],
+  "bestCrosspaths": [
+   {
+    "code": "2-3-0",
+    "cost": 3470,
+    "use": "Galvanic Conduit combo group"
+   },
+   {
+    "code": "3-2-0",
+    "cost": 2170,
+    "use": "Wind Weaver"
+   },
+   {
+    "code": "2-4-0",
+    "cost": 6970,
+    "use": "Thunder's Decree (ZOMG stun combos)"
+   },
+   {
+    "code": "5-2-0",
+    "cost": 24170,
+    "use": "Farwind Seer"
+   }
+  ],
+  "buyTiming": "Cheap ($205) from R1; T3 combos R30-R50 (balance still moving).",
+  "synergies": [
+   "Obyn (pierce, camo L8)",
+   "Silas (Coldchain path 3)",
+   "Same-path Skywarden stacking"
+  ],
+  "lacks": [
+   "Lead/camo at base",
+   "Settled meta (expect patches)"
+  ],
+  "playstyles": [
+   "safe/beginner",
+   "low-cost",
+   "CHIMPS (unverified)"
+  ],
+  "summary": "No Paragon; ~150.7k XP for all upgrades. Mono-farmable on paper; recheck after each patch."
+ },
+ {
+  "towerId": "farm",
+  "name": "Banana Farm",
+  "class": "Support",
+  "xpAllUpgrades": 222650,
+  "xpParagon": null,
+  "farm": {
+   "map": "Infernal or Dark Castle (Expert)",
+   "mode": "Expert Impoppable (R6-100)",
+   "setup": "Best real method: Impoppable (or Hard) on an Expert map with a heavy farming plan - farms typically hold a large share of invested cash from R20-R60.",
+   "helpers": "Full normal defence; target share ~35% (estimate)",
+   "xpPerRun": 113587,
+   "runsToT5": 2,
+   "runsToParagon": null,
+   "runsToT5Base": 4,
+   "runsToParagonBase": null,
+   "monoDeflation": "no"
+  },
+  "unlockOrder": [
+   "2-0-0 then 2-2-0 (tier 1/2 XP small)",
+   "Monkey Bank 0-3-0 (3,500)",
+   "Plantation 3-0-0 (3,000)",
+   "Marketplace 0-0-3 (3,200)",
+   "BRF 4-0-0 (20,000)",
+   "Central Market (20,000)",
+   "IMF Loan (20,000)",
+   "Banana Central (50,000)",
+   "Monkey Wall Street (50,000)",
+   "Monkey-Nomics (50,000)"
+  ],
+  "bestCrosspaths": [
+   {
+    "code": "2-0-0",
+    "cost": 2350,
+    "use": "Best early value"
+   },
+   {
+    "code": "2-3-0",
+    "cost": 7100,
+    "use": "Monkey Bank"
+   },
+   {
+    "code": "4-2-0",
+    "cost": 25450,
+    "use": "BRF"
+   },
+   {
+    "code": "5-2-0",
+    "cost": 140450,
+    "use": "Banana Central"
+   },
+   {
+    "code": "0-2-4",
+    "cost": 20700,
+    "use": "Central Market (+10% Merchantmen)"
+   }
+  ],
+  "buyTiming": "2-0-0 farms R10-R35 when safe; Bank R30s; BRFs R40-R60; Central R50-R60; stop before R40 if shaky.",
+  "synergies": [
+   "Benjamin Bank Hack",
+   "Monkey City +20%",
+   "Overclock/Ultraboost on BRF/Central",
+   "Jungle's Bounty bonus"
+  ],
+  "lacks": [
+   "Any damage",
+   "Use in CHIMPS/Deflation"
+  ],
+  "playstyles": [
+   "eco/farming",
+   "freeplay",
+   "boss events (non-CHIMPS)"
+  ],
+  "summary": "Level it inside normal Hard/Impoppable eco games; Deflation only as a share sponge."
+ },
+ {
+  "towerId": "spike",
+  "name": "Spike Factory",
+  "class": "Support",
+  "xpAllUpgrades": 141270,
+  "xpParagon": 1000000,
+  "farm": {
+   "map": "Dark Castle",
+   "mode": "Expert Deflation",
+   "setup": "2x Spike Factory 2-0-4; 1x Spike Factory 2-3-0",
+   "helpers": "hero Striker Jones ($595 Easy, no XP share)",
+   "xpPerRun": 64514,
+   "runsToT5": 3,
+   "runsToParagon": 18,
+   "runsToT5Base": 3,
+   "runsToParagonBase": 20,
+   "monoDeflation": "yes"
+  },
+  "unlockOrder": [
+   "2-0-0 White Hot (770)",
+   "Long Life Spikes (2,100 + 670)",
+   "MOAB SHREDR (2,500 + 830)",
+   "Deadly Spikes (9,000)",
+   "Spike Storm (11,000)",
+   "Spiked Balls/Mines (2,400 + 15,000)",
+   "Perma-Spike (29,500)",
+   "Carpet of Spikes (35,000)",
+   "Super Mines (32,500)",
+   "MMMF (1,000,000)"
+  ],
+  "bestCrosspaths": [
+   {
+    "code": "2-0-4",
+    "cost": 7850,
+    "use": "Deadly Spikes"
+   },
+   {
+    "code": "2-0-5",
+    "cost": 37850,
+    "use": "Perma-Spike backstop"
+   },
+   {
+    "code": "2-4-0",
+    "cost": 13300,
+    "use": "Spike Storm (R100 BAD answer)"
+   },
+   {
+    "code": "4-2-0",
+    "cost": 15600,
+    "use": "Spiked Mines"
+   }
+  ],
+  "buyTiming": "Base factory R20-R37 as camo backstop; 2-x-x by R28; SHREDR R40; Spike Storm before R100.",
+  "synergies": [
+   "Striker Jones/Lord of the Abyss (pierce)",
+   "Jungle Drums",
+   "Overclock",
+   "Smart Spikes for placement"
+  ],
+  "lacks": [
+   "Range control without Smart Spikes",
+   "Lead before White Hot"
+  ],
+  "playstyles": [
+   "safe/beginner",
+   "CHIMPS (backstop)",
+   "boss events (Carpet, MMMF)",
+   "freeplay"
+  ],
+  "summary": "One of the easiest mono-farms (Dark Castle). 1.14M XP to MMMF."
+ },
+ {
+  "towerId": "village",
+  "name": "Monkey Village",
+  "class": "Support",
+  "xpAllUpgrades": 150810,
+  "xpParagon": null,
+  "farm": {
+   "map": "Dark Castle",
+   "mode": "Expert Deflation",
+   "setup": "1x Monkey Village 2-3-0",
+   "helpers": "3x Dart Monkey 4-0-2 ($7,515 Easy); hero Gwendolin ($615 Easy, no XP share)",
+   "xpPerRun": 38222,
+   "runsToT5": 4,
+   "runsToParagon": null,
+   "runsToT5Base": 3,
+   "runsToParagonBase": null,
+   "monoDeflation": "no"
+  },
+  "unlockOrder": [
+   "0-2-0 Radar Scanner (2,650 total)",
+   "2-0-0 Jungle Drums (1,160)",
+   "MIB (3,500)",
+   "0-0-2 Commerce (1,000)",
+   "Primary Training (2,000)",
+   "Monkey Town (3,000)",
+   "Call to Arms (20,000)",
+   "Primary Mentoring (12,000)",
+   "Monkey City (15,500)",
+   "Homeland Defense (30,000)",
+   "Primary Expertise (32,000)",
+   "Monkeyopolis (28,000)"
+  ],
+  "bestCrosspaths": [
+   {
+    "code": "2-2-0",
+    "cost": 5350,
+    "use": "Standard mid-game: drums + camo"
+   },
+   {
+    "code": "2-3-0",
+    "cost": 12850,
+    "use": "MIB for DDTs/purple"
+   },
+   {
+    "code": "0-2-2",
+    "cost": 4450,
+    "use": "Camo + discount"
+   },
+   {
+    "code": "0-0-2",
+    "cost": 2200,
+    "use": "Commerce discount, sold after building (Deflation trick)"
+   },
+   {
+    "code": "1-0-4",
+    "cost": 15600,
+    "use": "Monkey City for farms"
+   }
+  ],
+  "buyTiming": "0-0-2 placed first before tier-3 buys; 2-2-0 by R30-R40; MIB before R90 DDTs.",
+  "synergies": [
+   "Every tower in radius",
+   "Commerce discount stacks to 25% across 3 villages"
+  ],
+  "lacks": [
+   "Damage"
+  ],
+  "playstyles": [
+   "safe/beginner",
+   "CHIMPS",
+   "boss events",
+   "eco (Monkey City)",
+   "freeplay"
+  ],
+  "summary": "Highest utility per XP in the game; level it via split farms and normal games."
+ },
+ {
+  "towerId": "engineer",
+  "name": "Engineer Monkey",
+  "class": "Support",
+  "xpAllUpgrades": 147180,
+  "xpParagon": 750000,
+  "farm": {
+   "map": "Dark Castle",
+   "mode": "Expert Deflation",
+   "setup": "2x Engineer Monkey 4-0-2; 1x Engineer Monkey 0-3-2; 1x Engineer Monkey 0-2-4",
+   "helpers": "hero Gwendolin ($615 Easy, no XP share)",
+   "xpPerRun": 64514,
+   "runsToT5": 3,
+   "runsToParagon": 14,
+   "runsToT5Base": 3,
+   "runsToParagonBase": 16,
+   "monoDeflation": "partial"
+  },
+  "unlockOrder": [
+   "0-0-2 Pin (650)",
+   "Cleansing Foam (2,000 + 670)",
+   "Sprockets (1,850 + 710)",
+   "Sentry Expert (9,500)",
+   "Double Gun (1,800)",
+   "Overclock (14,000)",
+   "Bloon Trap (11,000)",
+   "Sentry Champion (30,000)",
+   "Ultraboost (35,000)",
+   "XXXL Trap (40,000)",
+   "Master Builder (750,000)"
+  ],
+  "bestCrosspaths": [
+   {
+    "code": "4-0-2",
+    "cost": 4995,
+    "use": "Sentry Expert"
+   },
+   {
+    "code": "0-3-2",
+    "cost": 2520,
+    "use": "Foam decamo + lead"
+   },
+   {
+    "code": "0-4-0",
+    "cost": 15350,
+    "use": "Overclock (crosspath irrelevant)"
+   },
+   {
+    "code": "0-0-4",
+    "cost": 5070,
+    "use": "Bloon Trap income"
+   },
+   {
+    "code": "0-5-0",
+    "cost": 87350,
+    "use": "Ultraboost"
+   }
+  ],
+  "buyTiming": "0-0-3 Double Gun early on single lanes; Foam R30s; Overclock once you have a carry (R50+); Trap R30-R55.",
+  "synergies": [
+   "Overclock on any carry/BRF",
+   "Gwendolin (lead)",
+   "Jungle Drums"
+  ],
+  "lacks": [
+   "Lead/Frozen at base",
+   "Camo without Foam",
+   "MOAB/BFB damage inside a $20k Deflation budget (Bloon Trap ignores MOAB-class; XXXL Trap is $45k)"
+  ],
+  "playstyles": [
+   "CHIMPS (Overclock)",
+   "boss events (Master Builder, Ultraboost)",
+   "eco (Bloon Trap)",
+   "freeplay"
+  ],
+  "summary": "Overclock is one of the most valuable T4s in the game. The all-Engineer Deflation farm covers every Bloon type but lacks a blimp answer inside $20k (Bloon Trap can't catch MOAB-class), so bring a blimp helper."
+ },
+ {
+  "towerId": "beast",
+  "name": "Beast Handler",
+  "class": "Support",
+  "xpAllUpgrades": 320050,
+  "xpParagon": null,
+  "farm": {
+   "map": "Dark Castle",
+   "mode": "Expert Deflation",
+   "setup": "1x Beast Handler 0-4-0; 1x Beast Handler 0-2-3; 1x Beast Handler 0-0-3",
+   "helpers": "hero Pat Fusty ($680 Easy, no XP share)",
+   "xpPerRun": 64514,
+   "runsToT5": 5,
+   "runsToParagon": null,
+   "runsToT5Base": 6,
+   "runsToParagonBase": null,
+   "monoDeflation": "partial"
+  },
+  "unlockOrder": [
+   "Tier 3s first (1,000 XP each, best value)",
+   "T-Rex (5,000)",
+   "Orca (4,250)",
+   "Giant Condor (5,500)",
+   "Giganotosaurus (90,000)",
+   "Megalodon (100,000)",
+   "Pouākai (110,000)"
+  ],
+  "bestCrosspaths": [
+   {
+    "code": "0-4-0",
+    "cost": 12820,
+    "use": "T-Rex: CHIMPS powerhouse with Overclock"
+   },
+   {
+    "code": "0-2-3",
+    "cost": 4425,
+    "use": "Bird + lead coverage"
+   },
+   {
+    "code": "3-0-0",
+    "cost": 3230,
+    "use": "Great White (cheap merge base)"
+   }
+  ],
+  "buyTiming": "Tier 3s R20-R40; T-Rex R50-R60 (CHIMPS).",
+  "synergies": [
+   "Overclock (T-Rex)",
+   "Pat Fusty/Sauda stuns",
+   "Not Alchemist (can't buff)"
+  ],
+  "lacks": [
+   "Range",
+   "Alchemist buffs",
+   "Lead/purple at base"
+  ],
+  "playstyles": [
+   "CHIMPS (T-Rex)",
+   "boss events (T5s)"
+  ],
+  "summary": "Cheap tiers 1-4 (21,050 XP) but brutal T5 XP (300k). Farm tiers 3-4 early, T5s last."
+ }
+]

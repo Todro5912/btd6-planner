@@ -1,0 +1,8735 @@
+[
+ {
+  "id": "alpine-run",
+  "name": "Alpine Run",
+  "difficulty": "Beginner",
+  "addedVersion": "7.0",
+  "water": "none",
+  "losBlockers": "none",
+  "removables": [],
+  "paths": 1,
+  "trackLength": 32.2,
+  "trackClass": "long",
+  "rbsHard": [
+   32.2
+  ],
+  "special": "Sharp ski-slope turns.",
+  "easiness": 3,
+  "chimpsFriendly": true,
+  "medals": true,
+  "notes": "Medium single lane.",
+  "unverified": [],
+  "rbs": {
+   "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
+   "avg": 32.2,
+   "lanes": [
+    {
+     "lane": "single lane",
+     "rbs": 32.2
+    }
+   ],
+   "notes": null
+  },
+  "entrances": 1,
+  "exits": 1,
+  "indexLength": 32.2,
+  "indexWater": false,
+  "indexLos": false,
+  "removalCost": null,
+  "indexObjects": 0,
+  "lcc": {
+   "money": 26540,
+   "version": "49.3",
+   "date": "2025-07-18"
+  },
+  "twoMP": {
+   "count": 160,
+   "complete": false,
+   "entities": []
+  }
+ },
+ {
+  "id": "candy-falls",
+  "name": "Candy Falls",
+  "difficulty": "Beginner",
+  "addedVersion": "17.0",
+  "water": "little",
+  "losBlockers": "none",
+  "removables": [],
+  "paths": 1,
+  "trackLength": 42.2,
+  "trackClass": "long",
+  "rbsHard": [
+   42.2
+  ],
+  "special": "Very long looping lane; chocolate river holds water towers.",
+  "easiness": 5,
+  "chimpsFriendly": true,
+  "medals": true,
+  "notes": "One of the easiest maps in the game; good first CHIMPS. Wiki: chocolate river takes water towers.",
+  "unverified": [],
+  "rbs": {
+   "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
+   "avg": 42.2,
+   "lanes": [
+    {
+     "lane": "single lane",
+     "rbs": 42.2
+    }
+   ],
+   "notes": null
+  },
+  "entrances": 1,
+  "exits": 1,
+  "indexLength": 42.2,
+  "indexWater": true,
+  "indexLos": false,
+  "removalCost": null,
+  "indexObjects": 0,
+  "lcc": {
+   "money": 24655,
+   "version": "19.2",
+   "date": "2020-08-03"
+  },
+  "twoMP": {
+   "count": 217,
+   "complete": false,
+   "entities": []
+  }
+ },
+ {
+  "id": "carved",
+  "name": "Carved",
+  "difficulty": "Beginner",
+  "addedVersion": "13.0",
+  "water": "little",
+  "losBlockers": "none",
+  "removables": [],
+  "paths": 1,
+  "trackLength": 39.3,
+  "trackClass": "long",
+  "rbsHard": [
+   39.3
+  ],
+  "special": "Jack-o'-lantern lane; water in the \"eyes\" plus a cauldron spot; trees by entrance/exit block LoS.",
+  "easiness": 4,
+  "chimpsFriendly": true,
+  "medals": true,
+  "notes": "",
+  "unverified": [],
+  "rbs": {
+   "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
+   "avg": 39.3,
+   "lanes": [
+    {
+     "lane": "single lane",
+     "rbs": 39.3
+    }
+   ],
+   "notes": null
+  },
+  "entrances": 1,
+  "exits": 1,
+  "indexLength": 39.3,
+  "indexWater": true,
+  "indexLos": false,
+  "removalCost": null,
+  "indexObjects": 0,
+  "lcc": {
+   "money": 18355,
+   "version": "44.1",
+   "date": "2024-08-31"
+  },
+  "twoMP": {
+   "count": 169,
+   "complete": false,
+   "entities": []
+  },
+  "conflicts": [
+   {
+    "field": "losBlockers",
+    "index": false,
+    "other": "some (ch04/ch06a: trees by the entrance and exit block LoS)",
+    "source": "Index haslos is a yes/no flag; \"slight\" blockers may be counted as no",
+    "kept": "index"
+   }
+  ]
+ },
+ {
+  "id": "cubism",
+  "name": "Cubism",
+  "difficulty": "Beginner",
+  "addedVersion": "1.0",
+  "water": "little",
+  "losBlockers": "none",
+  "removables": [],
+  "paths": 1,
+  "trackLength": 43.3,
+  "trackClass": "long",
+  "rbsHard": [
+   43.3
+  ],
+  "special": "Many track intersections left of centre.",
+  "easiness": 5,
+  "chimpsFriendly": true,
+  "medals": true,
+  "notes": "Among the easiest maps; easy CHIMPS.",
+  "unverified": [],
+  "rbs": {
+   "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
+   "avg": 43.3,
+   "lanes": [
+    {
+     "lane": "single lane",
+     "rbs": 43.3
+    }
+   ],
+   "notes": null
+  },
+  "entrances": 1,
+  "exits": 1,
+  "indexLength": 43.3,
+  "indexWater": true,
+  "indexLos": false,
+  "removalCost": null,
+  "indexObjects": 0,
+  "lcc": {
+   "money": 22285,
+   "version": "44.1",
+   "date": "2024-09-04"
+  },
+  "twoMP": {
+   "count": 215,
+   "complete": false,
+   "entities": []
+  }
+ },
+ {
+  "id": "end-of-the-road",
+  "name": "End Of The Road",
+  "difficulty": "Beginner",
+  "addedVersion": "1.0",
+  "water": "little",
+  "losBlockers": "none",
+  "removables": [],
+  "paths": 1,
+  "trackLength": 26.4,
+  "trackClass": "medium",
+  "rbsHard": [
+   26.4
+  ],
+  "special": "Shortest Beginner map; entrance close to exit; cacti block LoS; central pool.",
+  "easiness": 2,
+  "chimpsFriendly": false,
+  "medals": true,
+  "notes": "",
+  "unverified": [],
+  "rbs": {
+   "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
+   "avg": 26.4,
+   "lanes": [
+    {
+     "lane": "single lane",
+     "rbs": 26.4
+    }
+   ],
+   "notes": null
+  },
+  "entrances": 1,
+  "exits": 1,
+  "indexLength": 26.4,
+  "indexWater": true,
+  "indexLos": false,
+  "removalCost": null,
+  "indexObjects": 0,
+  "lcc": {
+   "money": 31665,
+   "version": "34.3",
+   "date": "2023-01-10"
+  },
+  "twoMP": {
+   "count": 170,
+   "complete": false,
+   "entities": []
+  },
+  "conflicts": [
+   {
+    "field": "losBlockers",
+    "index": false,
+    "other": "some (ch06a: buildings/props listed as LoS blockers)",
+    "source": "Index haslos is a yes/no flag; \"slight\" blockers may be counted as no",
+    "kept": "index"
+   }
+  ]
+ },
+ {
+  "id": "four-circles",
+  "name": "Four Circles",
+  "difficulty": "Beginner",
+  "addedVersion": "1.0",
+  "water": "little",
+  "losBlockers": "none",
+  "removables": [],
+  "paths": 1,
+  "trackLength": 36.4,
+  "trackClass": "long",
+  "rbsHard": [
+   36.4
+  ],
+  "special": "Loops around four circles; two pools.",
+  "easiness": 5,
+  "chimpsFriendly": true,
+  "medals": true,
+  "notes": "One of the least difficult maps.",
+  "unverified": [],
+  "rbs": {
+   "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
+   "avg": 36.4,
+   "lanes": [
+    {
+     "lane": "single lane",
+     "rbs": 36.4
+    }
+   ],
+   "notes": null
+  },
+  "entrances": 1,
+  "exits": 1,
+  "indexLength": 36.4,
+  "indexWater": true,
+  "indexLos": false,
+  "removalCost": null,
+  "indexObjects": 0,
+  "lcc": {
+   "money": 26540,
+   "version": "49.3",
+   "date": "2025-08-04"
+  },
+  "twoMP": {
+   "count": 216,
+   "complete": false,
+   "entities": []
+  }
+ },
+ {
+  "id": "frozen-over",
+  "name": "Frozen Over",
+  "difficulty": "Beginner",
+  "addedVersion": "5.0",
+  "water": "lots",
+  "losBlockers": "none",
+  "removables": [],
+  "paths": 1,
+  "trackLength": 35.5,
+  "trackClass": "long",
+  "rbsHard": [
+   35.5
+  ],
+  "special": "Many loops; lots of ice/water spots.",
+  "easiness": 5,
+  "chimpsFriendly": true,
+  "medals": true,
+  "notes": "One of the easiest maps.",
+  "unverified": [],
+  "rbs": {
+   "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
+   "avg": 35.5,
+   "lanes": [
+    {
+     "lane": "single lane",
+     "rbs": 35.5
+    }
+   ],
+   "notes": null
+  },
+  "entrances": 1,
+  "exits": 1,
+  "indexLength": 35.5,
+  "indexWater": true,
+  "indexLos": false,
+  "removalCost": null,
+  "indexObjects": 0,
+  "lcc": {
+   "money": 26540,
+   "version": "49.3",
+   "date": "2025-07-18"
+  },
+  "twoMP": {
+   "count": 206,
+   "complete": false,
+   "entities": []
+  }
+ },
+ {
+  "id": "hedge",
+  "name": "Hedge",
+  "difficulty": "Beginner",
+  "addedVersion": "1.0",
+  "water": "none",
+  "losBlockers": "some",
+  "removables": [],
+  "paths": 1,
+  "trackLength": 38.5,
+  "trackClass": "long",
+  "rbsHard": [
+   38.5
+  ],
+  "special": "Hedges block LoS but have gaps; edge walls bounce projectiles.",
+  "easiness": 4,
+  "chimpsFriendly": true,
+  "medals": true,
+  "notes": "",
+  "unverified": [],
+  "rbs": {
+   "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
+   "avg": 38.5,
+   "lanes": [
+    {
+     "lane": "single lane",
+     "rbs": 38.5
+    }
+   ],
+   "notes": null
+  },
+  "entrances": 1,
+  "exits": 1,
+  "indexLength": 38.5,
+  "indexWater": false,
+  "indexLos": true,
+  "removalCost": null,
+  "indexObjects": 0,
+  "lcc": {
+   "money": 25175,
+   "version": "44.0",
+   "date": "2024-08-04"
+  },
+  "twoMP": {
+   "count": 156,
+   "complete": false,
+   "entities": []
+  }
+ },
+ {
+  "id": "in-the-loop",
+  "name": "In The Loop",
+  "difficulty": "Beginner",
+  "addedVersion": "1.0",
+  "water": "little",
+  "losBlockers": "none",
+  "removables": [],
+  "paths": 1,
+  "trackLength": 39.0,
+  "trackClass": "long",
+  "rbsHard": [
+   39.0
+  ],
+  "special": "Square track with three corner loops; one loop filled with water; trees block LoS.",
+  "easiness": 4,
+  "chimpsFriendly": true,
+  "medals": true,
+  "notes": "",
+  "unverified": [],
+  "rbs": {
+   "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
+   "avg": 39.0,
+   "lanes": [
+    {
+     "lane": "single lane",
+     "rbs": 39.0
+    }
+   ],
+   "notes": null
+  },
+  "entrances": 1,
+  "exits": 1,
+  "indexLength": 39.0,
+  "indexWater": true,
+  "indexLos": false,
+  "removalCost": null,
+  "indexObjects": 0,
+  "lcc": {
+   "money": 26540,
+   "version": "49.3",
+   "date": "2025-08-03"
+  },
+  "twoMP": {
+   "count": 190,
+   "complete": false,
+   "entities": []
+  },
+  "conflicts": [
+   {
+    "field": "losBlockers",
+    "index": false,
+    "other": "some (ch06a: props listed as LoS blockers)",
+    "source": "Index haslos is a yes/no flag; \"slight\" blockers may be counted as no",
+    "kept": "index"
+   }
+  ]
+ },
+ {
+  "id": "logs",
+  "name": "Logs",
+  "difficulty": "Beginner",
+  "addedVersion": "1.0",
+  "water": "little",
+  "losBlockers": "some",
+  "removables": [],
+  "paths": 1,
+  "trackLength": 53.0,
+  "trackClass": "long",
+  "rbsHard": [
+   53.0
+  ],
+  "special": "Second-longest map; six hollow logs block LoS (LoS-ignoring towers still hit under them); central pond.",
+  "easiness": 5,
+  "chimpsFriendly": true,
+  "medals": true,
+  "notes": "Consensus easiest map in BTD6; most 2TC completions; cheapest CHIMPS on record $1,215 (Corvus + 0-0-0 Dart). Best freeplay map (fits ~38 farms).",
+  "unverified": [],
+  "rbs": {
+   "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
+   "avg": 53.0,
+   "lanes": [
+    {
+     "lane": "single lane",
+     "rbs": 53.0
+    }
+   ],
+   "notes": null
+  },
+  "entrances": 1,
+  "exits": 1,
+  "indexLength": 53.0,
+  "indexWater": true,
+  "indexLos": true,
+  "removalCost": null,
+  "indexObjects": 0,
+  "lcc": {
+   "money": 5615,
+   "version": "44.1",
+   "date": "2024-09-07"
+  },
+  "twoMP": {
+   "count": 231,
+   "complete": false,
+   "entities": []
+  }
+ },
+ {
+  "id": "lotus-island",
+  "name": "Lotus Island",
+  "difficulty": "Beginner",
+  "addedVersion": "19.0",
+  "water": "lots",
+  "losBlockers": "some",
+  "removables": [],
+  "paths": 1,
+  "trackLength": 32.3,
+  "trackClass": "long",
+  "rbsHard": [
+   32.3
+  ],
+  "special": "Mostly water; lotus plants block LoS and can be tapped to release pollen pods.",
+  "easiness": 2,
+  "chimpsFriendly": false,
+  "medals": true,
+  "notes": "Second-hardest Beginner map.",
+  "unverified": [],
+  "rbs": {
+   "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
+   "avg": 32.3,
+   "lanes": [
+    {
+     "lane": "single lane",
+     "rbs": 32.3
+    }
+   ],
+   "notes": null
+  },
+  "entrances": 1,
+  "exits": 1,
+  "indexLength": 32.3,
+  "indexWater": true,
+  "indexLos": true,
+  "removalCost": null,
+  "indexObjects": 0,
+  "lcc": {
+   "money": 35945,
+   "version": "31.0",
+   "date": "2024-01-28"
+  },
+  "twoMP": {
+   "count": 138,
+   "complete": false,
+   "entities": []
+  }
+ },
+ {
+  "id": "middle-of-the-road",
+  "name": "Middle of the Road",
+  "difficulty": "Beginner",
+  "addedVersion": "35.0",
+  "water": "little",
+  "losBlockers": "heavy",
+  "removables": [],
+  "paths": 1,
+  "trackLength": 40.1,
+  "trackClass": "long",
+  "rbsHard": [
+   40.1
+  ],
+  "special": "Buildings, windmill and water tower heavily block LoS.",
+  "easiness": 2,
+  "chimpsFriendly": false,
+  "medals": true,
+  "notes": "One of the harder Beginner maps despite its length.",
+  "unverified": [],
+  "sourceNotes": [
+   "water: none -> little (xcheck 2026-11-05: btd6index.win map data + bloons.fandom.com; Index haswater=true; fandom: \"a pool of water that fits several water-based towers\"). Amount 'little' is an estimate."
+  ],
+  "rbs": {
+   "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
+   "avg": 40.1,
+   "lanes": [
+    {
+     "lane": "single lane",
+     "rbs": 40.1
+    }
+   ],
+   "notes": null
+  },
+  "entrances": 1,
+  "exits": 1,
+  "indexLength": 40.1,
+  "indexWater": true,
+  "indexLos": true,
+  "removalCost": null,
+  "indexObjects": 0,
+  "lcc": {
+   "money": 26540,
+   "version": "49.3",
+   "date": "2025-07-19"
+  },
+  "twoMP": {
+   "count": 168,
+   "complete": false,
+   "entities": []
+  }
+ },
+ {
+  "id": "monkey-meadow",
+  "name": "Monkey Meadow",
+  "difficulty": "Beginner",
+  "addedVersion": "1.0",
+  "water": "none",
+  "losBlockers": "none",
+  "removables": [],
+  "paths": 1,
+  "trackLength": 29.2,
+  "trackClass": "medium",
+  "rbsHard": [
+   29.2
+  ],
+  "special": "The classic starter; light LoS from bushes.",
+  "easiness": 4,
+  "chimpsFriendly": true,
+  "medals": true,
+  "notes": "Good first CHIMPS.",
+  "unverified": [],
+  "rbs": {
+   "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
+   "avg": 29.2,
+   "lanes": [
+    {
+     "lane": "single lane",
+     "rbs": 29.2
+    }
+   ],
+   "notes": null
+  },
+  "entrances": 1,
+  "exits": 1,
+  "indexLength": 29.2,
+  "indexWater": false,
+  "indexLos": false,
+  "removalCost": null,
+  "indexObjects": 0,
+  "lcc": {
+   "money": 26540,
+   "version": "49.3",
+   "date": "2025-07-19"
+  },
+  "twoMP": {
+   "count": 176,
+   "complete": false,
+   "entities": []
+  },
+  "conflicts": [
+   {
+    "field": "losBlockers",
+    "index": false,
+    "other": "some (bloonswiki: corner bushes (not bottom-left) block LoS slightly (group-1); fandom: no LoS blockers)",
+    "source": "Index haslos is a yes/no flag; \"slight\" blockers may be counted as no",
+    "kept": "index"
+   }
+  ]
+ },
+ {
+  "id": "one-two-tree",
+  "name": "One Two Tree",
+  "difficulty": "Beginner",
+  "addedVersion": "34.0",
+  "water": "little",
+  "losBlockers": "some",
+  "removables": [],
+  "paths": 1,
+  "trackLength": 38.6,
+  "trackClass": "long",
+  "rbsHard": [
+   38.6
+  ],
+  "special": "Fences and trees block LoS; the trees on the tiles disappear later; a map gimmick buffs towers (details unverified).",
+  "easiness": 3,
+  "chimpsFriendly": true,
+  "medals": true,
+  "notes": "",
+  "unverified": [
+   "special",
+   "water amount",
+   "chimpsFriendly"
+  ],
+  "rbs": {
+   "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
+   "avg": 38.6,
+   "lanes": [
+    {
+     "lane": "single lane",
+     "rbs": 38.6
+    }
+   ],
+   "notes": null
+  },
+  "entrances": 1,
+  "exits": 1,
+  "indexLength": 38.6,
+  "indexWater": true,
+  "indexLos": true,
+  "removalCost": null,
+  "indexObjects": 20,
+  "lcc": {
+   "money": 35355,
+   "version": "34.0",
+   "date": "2022-12-07"
+  },
+  "twoMP": {
+   "count": 180,
+   "complete": false,
+   "entities": []
+  }
+ },
+ {
+  "id": "park-path",
+  "name": "Park Path",
+  "difficulty": "Beginner",
+  "addedVersion": "11.0",
+  "water": "little",
+  "losBlockers": "none",
+  "removables": [],
+  "paths": 1,
+  "trackLength": 35.4,
+  "trackClass": "long",
+  "rbsHard": [
+   35.4
+  ],
+  "special": "Stream with four water spots; trees block LoS.",
+  "easiness": 4,
+  "chimpsFriendly": true,
+  "medals": true,
+  "notes": "Good first CHIMPS.",
+  "unverified": [],
+  "rbs": {
+   "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
+   "avg": 35.4,
+   "lanes": [
+    {
+     "lane": "single lane",
+     "rbs": 35.4
+    }
+   ],
+   "notes": null
+  },
+  "entrances": 1,
+  "exits": 1,
+  "indexLength": 35.4,
+  "indexWater": true,
+  "indexLos": false,
+  "removalCost": null,
+  "indexObjects": 0,
+  "lcc": {
+   "money": 26540,
+   "version": "49.3",
+   "date": "2025-08-03"
+  },
+  "twoMP": {
+   "count": 175,
+   "complete": false,
+   "entities": []
+  },
+  "conflicts": [
+   {
+    "field": "losBlockers",
+    "index": false,
+    "other": "some (ch04/ch06a: trees block LoS)",
+    "source": "Index haslos is a yes/no flag; \"slight\" blockers may be counted as no",
+    "kept": "index"
+   }
+  ]
+ },
+ {
+  "id": "resort",
+  "name": "Resort",
+  "difficulty": "Beginner",
+  "addedVersion": "25.0",
+  "water": "little",
+  "losBlockers": "some",
+  "removables": [],
+  "paths": 1,
+  "trackLength": 47.8,
+  "trackClass": "long",
+  "rbsHard": [
+   47.8
+  ],
+  "special": "Three nested loops and a pool.",
+  "easiness": 5,
+  "chimpsFriendly": true,
+  "medals": true,
+  "notes": "Second-easiest map by consensus; second-best freeplay map. Wiki: the two umbrellas and the bottom-left palm slightly block LoS.",
+  "unverified": [],
+  "rbs": {
+   "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
+   "avg": 47.8,
+   "lanes": [
+    {
+     "lane": "single lane",
+     "rbs": 47.8
+    }
+   ],
+   "notes": null
+  },
+  "entrances": 1,
+  "exits": 1,
+  "indexLength": 47.8,
+  "indexWater": true,
+  "indexLos": true,
+  "removalCost": null,
+  "indexObjects": 0,
+  "lcc": {
+   "money": 14890,
+   "version": "44.1",
+   "date": "2024-09-05"
+  },
+  "twoMP": {
+   "count": 226,
+   "complete": false,
+   "entities": []
+  }
+ },
+ {
+  "id": "scrapyard",
+  "name": "Scrapyard",
+  "difficulty": "Beginner",
+  "addedVersion": "31.0",
+  "water": "none",
+  "losBlockers": "some",
+  "removables": [],
+  "paths": 1,
+  "trackLength": 53.4,
+  "trackClass": "long",
+  "rbsHard": [
+   53.4
+  ],
+  "special": "Longest map in the game; clickable crusher; junk pile blocks LoS; four elevated crates hold towers.",
+  "easiness": 4,
+  "chimpsFriendly": true,
+  "medals": true,
+  "notes": "",
+  "unverified": [
+   "easiness"
+  ],
+  "rbs": {
+   "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
+   "avg": 53.4,
+   "lanes": [
+    {
+     "lane": "single lane",
+     "rbs": 53.4
+    }
+   ],
+   "notes": null
+  },
+  "entrances": 1,
+  "exits": 1,
+  "indexLength": 53.4,
+  "indexWater": false,
+  "indexLos": true,
+  "removalCost": null,
+  "indexObjects": 1,
+  "lcc": {
+   "money": 14575,
+   "version": "47.3",
+   "date": "2025-03-28"
+  },
+  "twoMP": {
+   "count": 135,
+   "complete": false,
+   "entities": []
+  }
+ },
+ {
+  "id": "skates",
+  "name": "Skates",
+  "difficulty": "Beginner",
+  "addedVersion": "22.0",
+  "water": "little",
+  "losBlockers": "some",
+  "removables": [
+   {
+    "name": "Houses (all three)",
+    "cost": 500,
+    "count": 1,
+    "note": "one $500 purchase removes all three houses and reveals water"
+   }
+  ],
+  "paths": 1,
+  "trackLength": 37.8,
+  "trackClass": "long",
+  "rbsHard": [
+   37.8
+  ],
+  "special": "Ice cracks act as water; three houses block LoS.",
+  "easiness": 4,
+  "chimpsFriendly": true,
+  "medals": true,
+  "notes": "",
+  "unverified": [],
+  "rbs": {
+   "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
+   "avg": 37.8,
+   "lanes": [
+    {
+     "lane": "single lane",
+     "rbs": 37.8
+    }
+   ],
+   "notes": null
+  },
+  "entrances": 1,
+  "exits": 1,
+  "indexLength": 37.8,
+  "indexWater": true,
+  "indexLos": true,
+  "removalCost": "$500",
+  "indexObjects": 1,
+  "lcc": {
+   "money": 26540,
+   "version": "49.3",
+   "date": "2025-07-19"
+  },
+  "twoMP": {
+   "count": 171,
+   "complete": false,
+   "entities": []
+  }
+ },
+ {
+  "id": "skull-tweak",
+  "name": "Skull Tweak",
+  "difficulty": "Beginner",
+  "addedVersion": "55.0",
+  "water": "little",
+  "losBlockers": "some",
+  "removables": [],
+  "paths": 1,
+  "trackLength": 36.3,
+  "trackClass": "long",
+  "rbsHard": [
+   36.3
+  ],
+  "special": "Two lakes; the skull blocks LoS and cannot be built on.",
+  "easiness": 4,
+  "chimpsFriendly": true,
+  "medals": true,
+  "notes": "On the easier side of Beginner. Wiki lists two RBS values for its single lane. Index: 36.3 RBS is the whole lane; 33.5 is the part outside the skull (not a second lane).",
+  "unverified": [],
+  "rbs": {
+   "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
+   "avg": 36.3,
+   "lanes": [
+    {
+     "lane": "total",
+     "rbs": 36.3
+    },
+    {
+     "lane": "outside skull",
+     "rbs": 33.5
+    }
+   ],
+   "notes": "36.3 RBS total; 33.5 RBS outside skull"
+  },
+  "entrances": 1,
+  "exits": 1,
+  "indexLength": 36.3,
+  "indexWater": true,
+  "indexLos": true,
+  "removalCost": "$0",
+  "indexObjects": 1,
+  "lcc": {
+   "money": 61300,
+   "version": "56.0",
+   "date": "2026-08-08"
+  },
+  "twoMP": {
+   "count": 149,
+   "complete": false,
+   "entities": []
+  }
+ },
+ {
+  "id": "spa-pits",
+  "name": "Spa Pits",
+  "difficulty": "Beginner",
+  "addedVersion": "48.0",
+  "water": "little",
+  "losBlockers": "some",
+  "removables": [],
+  "paths": 1,
+  "trackLength": 48.7,
+  "trackClass": "long",
+  "rbsHard": [
+   48.7
+  ],
+  "special": "Easier remake of Tar Pits; five hot springs hold water towers.",
+  "easiness": 5,
+  "chimpsFriendly": true,
+  "medals": true,
+  "notes": "Among the easiest maps. Wiki: the five caves block LoS; hot springs take water towers.",
+  "unverified": [],
+  "rbs": {
+   "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
+   "avg": 48.7,
+   "lanes": [
+    {
+     "lane": "single lane",
+     "rbs": 48.7
+    }
+   ],
+   "notes": null
+  },
+  "entrances": 1,
+  "exits": 1,
+  "indexLength": 48.7,
+  "indexWater": true,
+  "indexLos": true,
+  "removalCost": null,
+  "indexObjects": 0,
+  "lcc": {
+   "money": 4610,
+   "version": "48.0",
+   "date": "2025-07-31"
+  },
+  "twoMP": {
+   "count": 246,
+   "complete": false,
+   "entities": []
+  }
+ },
+ {
+  "id": "the-cabin",
+  "name": "The Cabin",
+  "difficulty": "Beginner",
+  "addedVersion": "28.0",
+  "water": "little",
+  "losBlockers": "some",
+  "removables": [
+   {
+    "name": "Car",
+    "cost": 500,
+    "count": 1
+   }
+  ],
+  "paths": 1,
+  "trackLength": 30.5,
+  "trackClass": "long",
+  "rbsHard": [
+   30.5
+  ],
+  "special": "Trees, cabin and car block LoS; central pond.",
+  "easiness": 1,
+  "chimpsFriendly": false,
+  "medals": true,
+  "notes": "Hardest Beginner map by consensus.",
+  "unverified": [],
+  "rbs": {
+   "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
+   "avg": 30.5,
+   "lanes": [
+    {
+     "lane": "single lane",
+     "rbs": 30.5
+    }
+   ],
+   "notes": null
+  },
+  "entrances": 1,
+  "exits": 1,
+  "indexLength": 30.5,
+  "indexWater": true,
+  "indexLos": true,
+  "removalCost": "$500",
+  "indexObjects": 1,
+  "lcc": {
+   "money": 40095,
+   "version": "31.2",
+   "date": "2022-07-13"
+  },
+  "twoMP": {
+   "count": 158,
+   "complete": false,
+   "entities": []
+  }
+ },
+ {
+  "id": "three-mines-round",
+  "name": "Three Mines 'Round",
+  "difficulty": "Beginner",
+  "addedVersion": "51.0",
+  "water": "little",
+  "losBlockers": "some",
+  "removables": [
+   {
+    "name": "Bananite crystal",
+    "cost": 435,
+    "count": 6,
+    "note": "six crystals at $435 / $3,000 / $10,000 / $25,000 / $50,000 / $100,000 (Index total $188,435); each PAYS OUT after 10 rounds (20 for the $100k one): $870 / $4.6k / $15k / $37k / $72k / $160k (bloonswiki), even in Deflation and CHIMPS"
+   }
+  ],
+  "paths": 1,
+  "trackLength": 41.7,
+  "trackClass": "long",
+  "rbsHard": [
+   41.7
+  ],
+  "special": "Removable Bananite crystals return cash (works in Deflation/CHIMPS).",
+  "easiness": 5,
+  "chimpsFriendly": true,
+  "medals": true,
+  "notes": "Among the easiest Beginner maps. Wiki: crystal rocks and the tent block LoS; crystal payouts work in CHIMPS, Deflation and Half Cash.",
+  "unverified": [],
+  "rbs": {
+   "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
+   "avg": 41.7,
+   "lanes": [
+    {
+     "lane": "single lane",
+     "rbs": 41.7
+    }
+   ],
+   "notes": null
+  },
+  "entrances": 1,
+  "exits": 1,
+  "indexLength": 41.7,
+  "indexWater": true,
+  "indexLos": true,
+  "removalCost": "$188,435",
+  "indexObjects": 6,
+  "lcc": null,
+  "twoMP": {
+   "count": 258,
+   "complete": false,
+   "entities": []
+  }
+ },
+ {
+  "id": "tinkerton",
+  "name": "Tinkerton",
+  "difficulty": "Beginner",
+  "addedVersion": "43.0",
+  "water": "little",
+  "losBlockers": "some",
+  "removables": [],
+  "paths": 1,
+  "trackLength": 39.0,
+  "trackClass": "long",
+  "rbsHard": [
+   39.0
+  ],
+  "special": "Bloons (BADs too) are slowed 40% on the grassy stretch; one open juice container holds water towers.",
+  "easiness": 4,
+  "chimpsFriendly": true,
+  "medals": true,
+  "notes": "",
+  "unverified": [],
+  "rbs": {
+   "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
+   "avg": 39.0,
+   "lanes": [
+    {
+     "lane": "single lane",
+     "rbs": 39.0
+    }
+   ],
+   "notes": null
+  },
+  "entrances": 1,
+  "exits": 1,
+  "indexLength": 39.0,
+  "indexWater": true,
+  "indexLos": true,
+  "removalCost": null,
+  "indexObjects": 0,
+  "lcc": {
+   "money": 26540,
+   "version": "49.3",
+   "date": "2025-07-19"
+  },
+  "twoMP": {
+   "count": 161,
+   "complete": false,
+   "entities": []
+  }
+ },
+ {
+  "id": "town-center",
+  "name": "Town Center",
+  "difficulty": "Beginner",
+  "addedVersion": "1.0",
+  "water": "little",
+  "losBlockers": "some",
+  "removables": [],
+  "paths": 1,
+  "trackLength": 30.5,
+  "trackClass": "long",
+  "rbsHard": [
+   30.5
+  ],
+  "special": "Coastal: ocean strip on the left; buildings and windmill block LoS.",
+  "easiness": 3,
+  "chimpsFriendly": true,
+  "medals": true,
+  "notes": "Listed among good first CHIMPS maps.",
+  "unverified": [
+   "water amount"
+  ],
+  "rbs": {
+   "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
+   "avg": 30.5,
+   "lanes": [
+    {
+     "lane": "single lane",
+     "rbs": 30.5
+    }
+   ],
+   "notes": null
+  },
+  "entrances": 1,
+  "exits": 1,
+  "indexLength": 30.5,
+  "indexWater": true,
+  "indexLos": true,
+  "removalCost": null,
+  "indexObjects": 0,
+  "lcc": {
+   "money": 26540,
+   "version": "49.3",
+   "date": "2025-08-05"
+  },
+  "twoMP": {
+   "count": 160,
+   "complete": false,
+   "entities": []
+  }
+ },
+ {
+  "id": "tree-stump",
+  "name": "Tree Stump",
+  "difficulty": "Beginner",
+  "addedVersion": "1.0",
+  "water": "none",
+  "losBlockers": "some",
+  "removables": [],
+  "paths": 1,
+  "trackLength": 38.9,
+  "trackClass": "long",
+  "rbsHard": [
+   38.9
+  ],
+  "special": "Towers on the central stump ignore LoS blockers.",
+  "easiness": 4,
+  "chimpsFriendly": true,
+  "medals": true,
+  "notes": "",
+  "unverified": [],
+  "rbs": {
+   "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
+   "avg": 38.9,
+   "lanes": [
+    {
+     "lane": "single lane",
+     "rbs": 38.9
+    }
+   ],
+   "notes": null
+  },
+  "entrances": 1,
+  "exits": 1,
+  "indexLength": 38.9,
+  "indexWater": false,
+  "indexLos": true,
+  "removalCost": null,
+  "indexObjects": 0,
+  "lcc": {
+   "money": 26540,
+   "version": "49.3",
+   "date": "2025-08-03"
+  },
+  "twoMP": {
+   "count": 168,
+   "complete": false,
+   "entities": []
+  }
+ },
+ {
+  "id": "winter-park",
+  "name": "Winter Park",
+  "difficulty": "Beginner",
+  "addedVersion": "14.0",
+  "water": "little",
+  "losBlockers": "none",
+  "removables": [],
+  "paths": 1,
+  "trackLength": 36.1,
+  "trackClass": "long",
+  "rbsHard": [
+   36.1
+  ],
+  "special": "Four loops; central fountain fits a few water towers.",
+  "easiness": 4,
+  "chimpsFriendly": true,
+  "medals": true,
+  "notes": "Good first CHIMPS. Wiki: the map-edge barrier only marginally blocks LoS.",
+  "unverified": [],
+  "rbs": {
+   "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
+   "avg": 36.1,
+   "lanes": [
+    {
+     "lane": "single lane",
+     "rbs": 36.1
+    }
+   ],
+   "notes": null
+  },
+  "entrances": 1,
+  "exits": 1,
+  "indexLength": 36.1,
+  "indexWater": true,
+  "indexLos": false,
+  "removalCost": null,
+  "indexObjects": 0,
+  "lcc": {
+   "money": 26540,
+   "version": "49.3",
+   "date": "2025-08-04"
+  },
+  "twoMP": {
+   "count": 171,
+   "complete": false,
+   "entities": []
+  }
+ },
+ {
+  "id": "adoras-temple",
+  "name": "Adora's Temple",
+  "difficulty": "Intermediate",
+  "addedVersion": "14.0",
+  "water": "little",
+  "losBlockers": "some",
+  "removables": [],
+  "paths": 4,
+  "trackLength": 27.8,
+  "trackClass": "medium",
+  "rbsHard": [
+   27.8,
+   30.1
+  ],
+  "special": "Four entrances: left+right on odd rounds, top+bottom on even rounds; temple tiers block LoS; four ponds.",
+  "easiness": 3,
+  "chimpsFriendly": false,
+  "medals": true,
+  "notes": "",
+  "unverified": [
+   "easiness"
+  ],
+  "rbs": {
+   "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
+   "avg": 29.0,
+   "lanes": [
+    {
+     "lane": "Vertical Entrances",
+     "rbs": 27.8
+    },
+    {
+     "lane": "Horizontal Entrances",
+     "rbs": 30.1
+    }
+   ],
+   "notes": "Vertical Entrances: 27.8; Horizontal Entrances: 30.1"
+  },
+  "entrances": 4,
+  "exits": 4,
+  "indexLength": 29.0,
+  "indexWater": true,
+  "indexLos": true,
+  "removalCost": null,
+  "indexObjects": 0,
+  "lcc": {
+   "money": 34565,
+   "version": "34.3",
+   "date": "2023-01-05"
+  },
+  "twoMP": {
+   "count": 130,
+   "complete": false,
+   "entities": [
+    "Abyssal Warrior",
+    "Adora",
+    "Aircraft Carrier",
+    "Apache Dartship",
+    "Apache Prime",
+    "Arcane Spike",
+    "Archmage",
+    "Arctic Knight",
+    "Armor Piercing Darts",
+    "Artillery Battery",
+    "Avatar Of Wrath",
+    "Avenger",
+    "Base Dart",
+    "Base Super",
+    "Bloon Area Denial System",
+    "Bloon Crush",
+    "Bloon Exclusion Zone",
+    "Blooncineration",
+    "Bloonjitsu",
+    "Bomb Blitz",
+    "Bouncing Bullet",
+    "Bounty Hunter",
+    "Carpet Of Spikes",
+    "Carrier Flagship",
+    "Churchill",
+    "Comanche Commander",
+    "Comanche Defense",
+    "Corvus",
+    "Cripple Moab",
+    "Crossbow",
+    "Crossbow Master",
+    "Dark Champion",
+    "Dark Knight",
+    "Destroyer",
+    "Dragon's Breath",
+    "Druid Of Wrath",
+    "Elite Defender",
+    "Elite Sniper",
+    "Etienne",
+    "Farwind Seer",
+    "First Strike Capability",
+    "Flying Fortress",
+    "Full Auto Rifle",
+    "Geraldo",
+    "Giant Condor",
+    "Giganotosaurus",
+    "Glaive Lord",
+    "Golden Justice",
+    "Grandmaster Ninja",
+    "Great White",
+    "Ground Zero",
+    "Gwen",
+    "Hydra Rocket Pods",
+    "Icicle Impale",
+    "Icicles",
+    "Inferno Ring",
+    "Jones",
+    "Juggernaut",
+    "Lord Of The Abyss",
+    "M.a.d",
+    "M.o.a.r Glaives",
+    "Master Bomber",
+    "Megalodon",
+    "Moab Domination",
+    "Moab Eliminator",
+    "Moab Press",
+    "Monarch Of Storms",
+    "Monkey Pirates",
+    "Neva-Miss Targeting",
+    "Operation: Dart Storm",
+    "Orca",
+    "Overdrive",
+    "Perma Charge",
+    "Perma-Spike",
+    "Pirate Lord",
+    "Plasma Accelerator",
+    "Plasma Monkey Fan Club",
+    "Pop And Awe",
+    "Poplust",
+    "Popseidon",
+    "Pouākai",
+    "Pre-Emptive Strike",
+    "Primary Expertise",
+    "Prince Of Darkness",
+    "Quincy",
+    "Ray Of Doom",
+    "Recursive Cluster",
+    "Robo Monkey",
+    "Rocket Storm",
+    "Rosalia",
+    "Sauda",
+    "Semi Automatic",
+    "Sentry Champion",
+    "Sentry Expert",
+    "Sharp Shooter",
+    "Silas",
+    "Sky Shredder",
+    "Special Poperations",
+    "Spectre",
+    "Spike-O-Pult"
+   ]
+  }
+ },
+ {
+  "id": "ancient-portal",
+  "name": "Ancient Portal",
+  "difficulty": "Intermediate",
+  "addedVersion": "45.0",
+  "water": "little",
+  "losBlockers": "some",
+  "removables": [],
+  "paths": 2,
+  "trackLength": 15.7,
+  "trackClass": "medium",
+  "rbsHard": [
+   15.7,
+   20.0
+  ],
+  "special": "One entrance spirals into a portal that sends bloons to one of two exits; you can switch the active exit for free.",
+  "easiness": 3,
+  "chimpsFriendly": false,
+  "medals": true,
+  "notes": "",
+  "unverified": [
+   "easiness"
+  ],
+  "rbs": {
+   "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
+   "avg": 17.9,
+   "lanes": [
+    {
+     "lane": "right path",
+     "rbs": 15.7
+    },
+    {
+     "lane": "left path",
+     "rbs": 20.0
+    }
+   ],
+   "notes": "15.7 (right path); 20.0 (left path)"
+  },
+  "entrances": 1,
+  "exits": 2,
+  "indexLength": 17.9,
+  "indexWater": true,
+  "indexLos": true,
+  "removalCost": null,
+  "indexObjects": 2,
+  "lcc": {
+   "money": 13710,
+   "version": "51.2",
+   "date": "2025-11-01"
+  },
+  "twoMP": {
+   "count": 145,
+   "complete": false,
+   "entities": [
+    "Abyssal Warrior",
+    "Adora",
+    "Aircraft Carrier",
+    "Apache Dartship",
+    "Apache Prime",
+    "Arcane Spike",
+    "Archmage",
+    "Arctic Knight",
+    "Armor Piercing Darts",
+    "Artillery Battery",
+    "Avatar Of Wrath",
+    "Avenger",
+    "Base Dart",
+    "Base Super",
+    "Blade Maelstrom",
+    "Bloon Area Denial System",
+    "Bloon Crush",
+    "Bloon Exclusion Zone",
+    "Bloon Impact",
+    "Blooncineration",
+    "Bloonjitsu",
+    "Bomb Blitz",
+    "Bomber Ace",
+    "Bouncing Bullet",
+    "Bounty Hunter",
+    "Brickell",
+    "Carpet Of Spikes",
+    "Carrier Flagship",
+    "Churchill",
+    "Cluster Bombs",
+    "Comanche Commander",
+    "Comanche Defense",
+    "Corvus",
+    "Cripple Moab",
+    "Crossbow Master",
+    "Dan",
+    "Dark Champion",
+    "Dark Knight",
+    "Destroyer",
+    "Dragon's Breath",
+    "Druid Of Wrath",
+    "Elite Defender",
+    "Elite Sniper",
+    "Energizer",
+    "Etienne",
+    "Ezili",
+    "Farwind Seer",
+    "First Strike Capability",
+    "Flying Fortress",
+    "Frozen Verdict",
+    "Full Auto Rifle",
+    "Galesage",
+    "Geraldo",
+    "Giant Condor",
+    "Giganotosaurus",
+    "Glaive Lord",
+    "Golden Justice",
+    "Grandmaster Ninja",
+    "Great White",
+    "Ground Zero",
+    "Gwen",
+    "Hydra Rocket Pods",
+    "Icicle Impale",
+    "Icicles",
+    "Inferno Ring",
+    "Jones",
+    "Juggernaut",
+    "Lord Of The Abyss",
+    "M.a.d",
+    "M.o.a.r Glaives",
+    "Master Bomber",
+    "Megalodon",
+    "Moab Assassin",
+    "Moab Domination",
+    "Moab Eliminator",
+    "Moab Press",
+    "Monarch Of Storms",
+    "Monkey Pirates",
+    "Neva-Miss Targeting",
+    "Obyn",
+    "Operation: Dart Storm",
+    "Orca",
+    "Overdrive",
+    "Pat",
+    "Perma Charge",
+    "Perma-Spike",
+    "Pirate Lord",
+    "Plasma Accelerator",
+    "Plasma Monkey Fan Club",
+    "Pop And Awe",
+    "Poplust",
+    "Popseidon",
+    "Pouākai",
+    "Pre-Emptive Strike",
+    "Primary Expertise",
+    "Prince Of Darkness",
+    "Quincy",
+    "Ray Of Doom",
+    "Recursive Cluster",
+    "Ring Of Fire"
+   ]
+  }
+ },
+ {
+  "id": "balance",
+  "name": "Balance",
+  "difficulty": "Intermediate",
+  "addedVersion": "24.0",
+  "water": "little",
+  "losBlockers": "some",
+  "removables": [],
+  "paths": 2,
+  "trackLength": 24.0,
+  "trackClass": "medium",
+  "rbsHard": [
+   24.0,
+   25.1
+  ],
+  "special": "Two entrances split into eight sub-paths meeting at a central loop (~24-25 RBS each); hedges limit placement.",
+  "easiness": 5,
+  "chimpsFriendly": true,
+  "medals": true,
+  "notes": "Often called one of the easiest Intermediate maps.",
+  "unverified": [],
+  "sourceNotes": [
+   "water: none -> little (xcheck 2026-11-05: btd6index.win map data + bloons.fandom.com; Index haswater=true; fandom: \"two small pools of water ... allowing placement for water towers\"). Amount 'little' is an estimate."
+  ],
+  "rbs": {
+   "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
+   "avg": 24.5,
+   "lanes": [
+    {
+     "lane": "shortest of 8 routes",
+     "rbs": 24.0
+    },
+    {
+     "lane": "longest of 8 routes",
+     "rbs": 25.1
+    }
+   ],
+   "notes": "8 routes between 24.0 and 25.1"
+  },
+  "entrances": 2,
+  "exits": 2,
+  "indexLength": 24.5,
+  "indexWater": true,
+  "indexLos": true,
+  "removalCost": null,
+  "indexObjects": 0,
+  "lcc": {
+   "money": 33470,
+   "version": "35.2",
+   "date": "2023-03-15"
+  },
+  "twoMP": {
+   "count": 127,
+   "complete": false,
+   "entities": [
+    "Abyssal Warrior",
+    "Adora",
+    "Aircraft Carrier",
+    "Apache Dartship",
+    "Apache Prime",
+    "Arcane Spike",
+    "Archmage",
+    "Arctic Knight",
+    "Armor Piercing Darts",
+    "Artillery Battery",
+    "Avatar Of Wrath",
+    "Avenger",
+    "Base Dart",
+    "Base Super",
+    "Blade Maelstrom",
+    "Bloon Area Denial System",
+    "Bloon Crush",
+    "Bloon Exclusion Zone",
+    "Bloon Impact",
+    "Blooncineration",
+    "Bloonjitsu",
+    "Bomb Blitz",
+    "Bouncing Bullet",
+    "Brickell",
+    "Carpet Of Spikes",
+    "Carrier Flagship",
+    "Churchill",
+    "Comanche Commander",
+    "Comanche Defense",
+    "Corvus",
+    "Cripple Moab",
+    "Crossbow Master",
+    "Dark Champion",
+    "Dark Knight",
+    "Destroyer",
+    "Dragon's Breath",
+    "Elite Defender",
+    "Elite Sniper",
+    "Farwind Seer",
+    "First Strike Capability",
+    "Flying Fortress",
+    "Full Auto Rifle",
+    "Geraldo",
+    "Giant Condor",
+    "Giganotosaurus",
+    "Glaive Lord",
+    "Golden Justice",
+    "Grandmaster Ninja",
+    "Great White",
+    "Ground Zero",
+    "Gwen",
+    "Hydra Rocket Pods",
+    "Icicle Impale",
+    "Icicles",
+    "Inferno Ring",
+    "Jones",
+    "Juggernaut",
+    "Lord Of The Abyss",
+    "M.a.d",
+    "M.o.a.r Glaives",
+    "Master Bomber",
+    "Megalodon",
+    "Moab Domination",
+    "Monarch Of Storms",
+    "Monkey Pirates",
+    "Necromancer",
+    "Neva-Miss Targeting",
+    "Operation: Dart Storm",
+    "Orca",
+    "Overdrive",
+    "Perma Charge",
+    "Perma-Spike",
+    "Pirate Lord",
+    "Plasma Accelerator",
+    "Plasma Monkey Fan Club",
+    "Pop And Awe",
+    "Popseidon",
+    "Pouākai",
+    "Pre-Emptive Strike",
+    "Primary Expertise",
+    "Prince Of Darkness",
+    "Quincy",
+    "Ray Of Doom",
+    "Really Big Bombs",
+    "Recursive Cluster",
+    "Ring Of Fire",
+    "Robo Monkey",
+    "Rocket Storm",
+    "Rosalia",
+    "Sauda",
+    "Sentry Champion",
+    "Sentry Expert",
+    "Silas",
+    "Sky Shredder",
+    "Special Poperations",
+    "Spectre",
+    "Spike-O-Pult",
+    "Spirit Of The Forest",
+    "Sub Commander",
+    "Summon Phoenix"
+   ]
+  }
+ },
+ {
+  "id": "bazaar",
+  "name": "Bazaar",
+  "difficulty": "Intermediate",
+  "addedVersion": "18.0",
+  "water": "little",
+  "losBlockers": "some",
+  "removables": [
+   {
+    "name": "Tree",
+    "cost": 500,
+    "count": 4
+   }
+  ],
+  "paths": 2,
+  "trackLength": 20.4,
+  "trackClass": "medium",
+  "rbsHard": [
+   20.4,
+   20.4
+  ],
+  "special": "Two lanes alternate each round; water canal through the middle.",
+  "easiness": 1,
+  "chimpsFriendly": false,
+  "medals": true,
+  "notes": "Among the hardest Intermediate maps; Comanche shines here.",
+  "unverified": [],
+  "rbs": {
+   "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
+   "avg": 20.4,
+   "lanes": [
+    {
+     "lane": "Bottom Path",
+     "rbs": 20.4
+    },
+    {
+     "lane": "Top Path",
+     "rbs": 20.4
+    }
+   ],
+   "notes": "Bottom Path: 20.4; Top Path: 20.4"
+  },
+  "entrances": 2,
+  "exits": 2,
+  "indexLength": 20.4,
+  "indexWater": true,
+  "indexLos": true,
+  "removalCost": "$2,000",
+  "indexObjects": 4,
+  "lcc": {
+   "money": 49415,
+   "version": "31.2",
+   "date": "2022-06-13"
+  },
+  "twoMP": {
+   "count": 86,
+   "complete": true,
+   "entities": [
+    "Adora",
+    "Aircraft Carrier",
+    "Apache Dartship",
+    "Apache Prime",
+    "Archmage",
+    "Arctic Knight",
+    "Artillery Battery",
+    "Avatar Of Wrath",
+    "Avenger",
+    "Base Super",
+    "Bloon Area Denial System",
+    "Bloon Exclusion Zone",
+    "Blooncineration",
+    "Bomb Blitz",
+    "Bouncing Bullet",
+    "Carrier Flagship",
+    "Churchill",
+    "Comanche Commander",
+    "Comanche Defense",
+    "Corvus",
+    "Cripple Moab",
+    "Crossbow Master",
+    "Dark Champion",
+    "Dark Knight",
+    "Elite Defender",
+    "Elite Sniper",
+    "Farwind Seer",
+    "Flying Fortress",
+    "Full Auto Rifle",
+    "Geraldo",
+    "Giant Condor",
+    "Giganotosaurus",
+    "Glaive Lord",
+    "Golden Justice",
+    "Grandmaster Ninja",
+    "Great White",
+    "Ground Zero",
+    "Hydra Rocket Pods",
+    "Icicle Impale",
+    "Inferno Ring",
+    "Lord Of The Abyss",
+    "M.a.d",
+    "Megalodon",
+    "Moab Domination",
+    "Monarch Of Storms",
+    "Neva-Miss Targeting",
+    "Operation: Dart Storm",
+    "Orca",
+    "Overdrive",
+    "Perma Charge",
+    "Perma-Spike",
+    "Pirate Lord",
+    "Plasma Accelerator",
+    "Pop And Awe",
+    "Popseidon",
+    "Pouākai",
+    "Pre-Emptive Strike",
+    "Prince Of Darkness",
+    "Quincy",
+    "Ray Of Doom",
+    "Robo Monkey",
+    "Rocket Storm",
+    "Rosalia",
+    "Sauda",
+    "Sentry Champion",
+    "Sky Shredder",
+    "Special Poperations",
+    "Spectre",
+    "Spirit Of The Forest",
+    "Sub Commander",
+    "Sun Avatar",
+    "Sun Temple",
+    "Super Maelstrom",
+    "Supply Drop",
+    "Tech Terror",
+    "The Anti-Bloon",
+    "The Biggest One",
+    "The Blazing Sun",
+    "The Desert Phantom",
+    "The Tack Zone",
+    "Tsar Bomba",
+    "Turbo Charge",
+    "Tyrannosaurus Rex",
+    "Ultra-Juggernaut",
+    "Velociraptor",
+    "Wizard Lord Phoenix"
+   ]
+  }
+ },
+ {
+  "id": "bloonarius-prime",
+  "name": "Bloonarius Prime",
+  "difficulty": "Intermediate",
+  "addedVersion": "27.0",
+  "water": "little",
+  "losBlockers": "some",
+  "removables": [],
+  "paths": 2,
+  "trackLength": 17.3,
+  "trackClass": "medium",
+  "rbsHard": [
+   21.4,
+   17.3
+  ],
+  "special": "One entrance, two exits; prime-numbered rounds use the shorter lane; bosses get their own path; green river for water towers.",
+  "easiness": 1,
+  "chimpsFriendly": false,
+  "medals": true,
+  "notes": "Among the hardest Intermediate maps. Wiki: a clump of trees/rocks in the middle blocks LoS; prime rounds use the 17.4 lane, others the 21.5 lane.",
+  "unverified": [],
+  "rbs": {
+   "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
+   "avg": 19.3,
+   "lanes": [
+    {
+     "lane": "Composite Path",
+     "rbs": 21.4
+    },
+    {
+     "lane": "Prime Path",
+     "rbs": 17.3
+    }
+   ],
+   "notes": "Composite Path: 21.4; Prime Path: 17.3"
+  },
+  "entrances": 1,
+  "exits": 2,
+  "indexLength": 19.3,
+  "indexWater": true,
+  "indexLos": true,
+  "removalCost": null,
+  "indexObjects": 0,
+  "lcc": {
+   "money": 30825,
+   "version": "49.3",
+   "date": "2025-07-22"
+  },
+  "twoMP": {
+   "count": 109,
+   "complete": false,
+   "entities": [
+    "Adora",
+    "Aircraft Carrier",
+    "Apache Dartship",
+    "Apache Prime",
+    "Arcane Spike",
+    "Archmage",
+    "Arctic Knight",
+    "Artillery Battery",
+    "Avatar Of Wrath",
+    "Avenger",
+    "Base Dart",
+    "Base Super",
+    "Bloon Area Denial System",
+    "Bloon Crush",
+    "Bloon Exclusion Zone",
+    "Blooncineration",
+    "Bloonjitsu",
+    "Bomb Blitz",
+    "Bouncing Bullet",
+    "Carrier Flagship",
+    "Churchill",
+    "Comanche Commander",
+    "Comanche Defense",
+    "Corvus",
+    "Cripple Moab",
+    "Crossbow Master",
+    "Dark Champion",
+    "Dark Knight",
+    "Destroyer",
+    "Dragon's Breath",
+    "Druid Of Wrath",
+    "Elite Defender",
+    "Elite Sniper",
+    "Farwind Seer",
+    "Flying Fortress",
+    "Full Auto Rifle",
+    "Geraldo",
+    "Giant Condor",
+    "Giganotosaurus",
+    "Glaive Lord",
+    "Golden Justice",
+    "Grandmaster Ninja",
+    "Great White",
+    "Ground Zero",
+    "Gwen",
+    "Hydra Rocket Pods",
+    "Icicle Impale",
+    "Inferno Ring",
+    "Juggernaut",
+    "Lord Of The Abyss",
+    "M.a.d",
+    "Master Bomber",
+    "Megalodon",
+    "Moab Domination",
+    "Moab Eliminator",
+    "Monarch Of Storms",
+    "Monkey Pirates",
+    "Neva-Miss Targeting",
+    "Operation: Dart Storm",
+    "Orca",
+    "Overdrive",
+    "Perma Charge",
+    "Perma-Spike",
+    "Pirate Lord",
+    "Plasma Accelerator",
+    "Plasma Monkey Fan Club",
+    "Pop And Awe",
+    "Poplust",
+    "Popseidon",
+    "Pouākai",
+    "Pre-Emptive Strike",
+    "Primary Expertise",
+    "Prince Of Darkness",
+    "Quincy",
+    "Ray Of Doom",
+    "Recursive Cluster",
+    "Robo Monkey",
+    "Rocket Storm",
+    "Rosalia",
+    "Sauda",
+    "Semi Automatic",
+    "Sentry Champion",
+    "Sky Shredder",
+    "Special Poperations",
+    "Spectre",
+    "Spike-O-Pult",
+    "Spirit Of The Forest",
+    "Sub Commander",
+    "Summon Phoenix",
+    "Sun Avatar",
+    "Sun Temple",
+    "Super Maelstrom",
+    "Super Monkey Fan Club",
+    "Supply Drop",
+    "Symphonic Resonance",
+    "Tech Terror",
+    "The Anti-Bloon",
+    "The Biggest One",
+    "The Blazing Sun",
+    "The Bloon Solver"
+   ]
+  }
+ },
+ {
+  "id": "chutes",
+  "name": "Chutes",
+  "difficulty": "Intermediate",
+  "addedVersion": "1.0",
+  "water": "little",
+  "losBlockers": "some",
+  "removables": [
+   {
+    "name": "Statue (removes a chute)",
+    "cost": 350,
+    "count": 2,
+    "note": "each removes one LoS-blocking chute"
+   }
+  ],
+  "paths": 2,
+  "trackLength": 16.0,
+  "trackClass": "medium",
+  "rbsHard": [
+   16.0,
+   16.1
+  ],
+  "special": "Two very short alternating lanes; chutes block LoS; two pools.",
+  "easiness": 1,
+  "chimpsFriendly": false,
+  "medals": true,
+  "notes": "Among the hardest Intermediate maps, harder than some Advanced ones.",
+  "unverified": [],
+  "rbs": {
+   "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
+   "avg": 16.0,
+   "lanes": [
+    {
+     "lane": "Right Path",
+     "rbs": 16.0
+    },
+    {
+     "lane": "Left Path",
+     "rbs": 16.1
+    }
+   ],
+   "notes": "Right Path: 16.0; Left Path: 16.1"
+  },
+  "entrances": 2,
+  "exits": 2,
+  "indexLength": 16.0,
+  "indexWater": true,
+  "indexLos": true,
+  "removalCost": "$700",
+  "indexObjects": 2,
+  "lcc": {
+   "money": 57625,
+   "version": "31.2",
+   "date": "2022-05-17"
+  },
+  "twoMP": {
+   "count": 90,
+   "complete": true,
+   "entities": [
+    "Adora",
+    "Aircraft Carrier",
+    "Apache Dartship",
+    "Apache Prime",
+    "Arcane Spike",
+    "Archmage",
+    "Arctic Knight",
+    "Artillery Battery",
+    "Avatar Of Wrath",
+    "Avenger",
+    "Base Super",
+    "Bloon Area Denial System",
+    "Bloon Crush",
+    "Bloon Exclusion Zone",
+    "Bloonjitsu",
+    "Bomb Blitz",
+    "Bouncing Bullet",
+    "Carrier Flagship",
+    "Churchill",
+    "Comanche Commander",
+    "Comanche Defense",
+    "Corvus",
+    "Cripple Moab",
+    "Crossbow Master",
+    "Dark Champion",
+    "Dark Knight",
+    "Destroyer",
+    "Elite Defender",
+    "Elite Sniper",
+    "Farwind Seer",
+    "Flying Fortress",
+    "Full Auto Rifle",
+    "Geraldo",
+    "Giant Condor",
+    "Giganotosaurus",
+    "Glaive Lord",
+    "Golden Justice",
+    "Grandmaster Ninja",
+    "Great White",
+    "Icicle Impale",
+    "Inferno Ring",
+    "Lord Of The Abyss",
+    "M.a.d",
+    "Master Bomber",
+    "Megalodon",
+    "Moab Domination",
+    "Monarch Of Storms",
+    "Monkey Pirates",
+    "Neva-Miss Targeting",
+    "Operation: Dart Storm",
+    "Orca",
+    "Overdrive",
+    "Perma Charge",
+    "Perma-Spike",
+    "Pirate Lord",
+    "Plasma Accelerator",
+    "Pop And Awe",
+    "Popseidon",
+    "Pouākai",
+    "Pre-Emptive Strike",
+    "Prince Of Darkness",
+    "Quincy",
+    "Ray Of Doom",
+    "Robo Monkey",
+    "Rocket Storm",
+    "Rosalia",
+    "Sauda",
+    "Sentry Champion",
+    "Sky Shredder",
+    "Special Poperations",
+    "Spectre",
+    "Spirit Of The Forest",
+    "Sub Commander",
+    "Summon Phoenix",
+    "Sun Avatar",
+    "Sun Temple",
+    "Super Maelstrom",
+    "Super Monkey Fan Club",
+    "Supply Drop",
+    "Tech Terror",
+    "The Anti-Bloon",
+    "The Biggest One",
+    "The Blazing Sun",
+    "The Desert Phantom",
+    "The Tack Zone",
+    "Tsar Bomba",
+    "Turbo Charge",
+    "Tyrannosaurus Rex",
+    "Velociraptor",
+    "Wizard Lord Phoenix"
+   ]
+  }
+ },
+ {
+  "id": "covered-garden",
+  "name": "Covered Garden",
+  "difficulty": "Intermediate",
+  "addedVersion": "33.0",
+  "water": "little",
+  "losBlockers": "some",
+  "removables": [],
+  "paths": 1,
+  "trackLength": 19.5,
+  "trackClass": "medium",
+  "rbsHard": [
+   19.5
+  ],
+  "special": "Glass covers the garden; only one quarter is open and it rotates 90 degrees every round.",
+  "easiness": 2,
+  "chimpsFriendly": false,
+  "medals": true,
+  "notes": "Wiki: the glass does not block LoS; only the 3 flower plantations do.",
+  "unverified": [
+   "easiness"
+  ],
+  "rbs": {
+   "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
+   "avg": 19.5,
+   "lanes": [
+    {
+     "lane": "single lane",
+     "rbs": 19.5
+    }
+   ],
+   "notes": null
+  },
+  "entrances": 1,
+  "exits": 1,
+  "indexLength": 19.5,
+  "indexWater": true,
+  "indexLos": true,
+  "removalCost": null,
+  "indexObjects": 0,
+  "lcc": {
+   "money": 50495,
+   "version": "34.2",
+   "date": "2022-12-13"
+  },
+  "twoMP": {
+   "count": 91,
+   "complete": true,
+   "entities": [
+    "Adora",
+    "Aircraft Carrier",
+    "Apache Dartship",
+    "Apache Prime",
+    "Arcane Spike",
+    "Archmage",
+    "Arctic Knight",
+    "Artillery Battery",
+    "Avatar Of Wrath",
+    "Avenger",
+    "Bloon Area Denial System",
+    "Bloon Exclusion Zone",
+    "Blooncineration",
+    "Bloonjitsu",
+    "Bomb Blitz",
+    "Carpet Of Spikes",
+    "Carrier Flagship",
+    "Churchill",
+    "Comanche Commander",
+    "Comanche Defense",
+    "Corvus",
+    "Cripple Moab",
+    "Crossbow Master",
+    "Dark Champion",
+    "Dark Knight",
+    "Druid Of Wrath",
+    "Elite Defender",
+    "Elite Sniper",
+    "Farwind Seer",
+    "Flying Fortress",
+    "Full Auto Rifle",
+    "Geraldo",
+    "Giant Condor",
+    "Giganotosaurus",
+    "Glaive Lord",
+    "Golden Justice",
+    "Grandmaster Ninja",
+    "Ground Zero",
+    "Hydra Rocket Pods",
+    "Icicle Impale",
+    "Inferno Ring",
+    "Lord Of The Abyss",
+    "M.a.d",
+    "M.o.a.r Glaives",
+    "Master Bomber",
+    "Megalodon",
+    "Moab Domination",
+    "Monarch Of Storms",
+    "Neva-Miss Targeting",
+    "Operation: Dart Storm",
+    "Orca",
+    "Perma Charge",
+    "Perma-Spike",
+    "Pirate Lord",
+    "Plasma Accelerator",
+    "Pop And Awe",
+    "Poplust",
+    "Popseidon",
+    "Pouākai",
+    "Pre-Emptive Strike",
+    "Prince Of Darkness",
+    "Quincy",
+    "Ray Of Doom",
+    "Recursive Cluster",
+    "Robo Monkey",
+    "Rocket Storm",
+    "Rosalia",
+    "Sauda",
+    "Sentry Champion",
+    "Sky Shredder",
+    "Special Poperations",
+    "Spectre",
+    "Spirit Of The Forest",
+    "Sticky Bomb",
+    "Sub Commander",
+    "Summon Phoenix",
+    "Sun Avatar",
+    "Super Maelstrom",
+    "Tech Terror",
+    "The Anti-Bloon",
+    "The Big One",
+    "The Biggest One",
+    "The Blazing Sun",
+    "The Desert Phantom",
+    "The Tack Zone",
+    "Tsar Bomba",
+    "Turbo Charge",
+    "Tyrannosaurus Rex",
+    "Ultra-Juggernaut",
+    "Velociraptor",
+    "Wizard Lord Phoenix"
+   ]
+  }
+ },
+ {
+  "id": "cracked",
+  "name": "Cracked",
+  "difficulty": "Intermediate",
+  "addedVersion": "1.0",
+  "water": "little",
+  "losBlockers": "some",
+  "removables": [
+   {
+    "name": "Central rock",
+    "cost": 1000,
+    "count": 1,
+    "note": "reveals water"
+   }
+  ],
+  "paths": 1,
+  "trackLength": 33.2,
+  "trackClass": "long",
+  "rbsHard": [
+   33.2
+  ],
+  "special": "Central rock blocks LoS.",
+  "easiness": 5,
+  "chimpsFriendly": true,
+  "medals": true,
+  "notes": "One of the easiest Intermediate maps. Water only after removing the rock.",
+  "unverified": [],
+  "rbs": {
+   "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
+   "avg": 33.2,
+   "lanes": [
+    {
+     "lane": "single lane",
+     "rbs": 33.2
+    }
+   ],
+   "notes": null
+  },
+  "entrances": 1,
+  "exits": 1,
+  "indexLength": 33.2,
+  "indexWater": true,
+  "indexLos": true,
+  "removalCost": "$1,000",
+  "indexObjects": 1,
+  "lcc": {
+   "money": 26540,
+   "version": "49.3",
+   "date": "2025-08-04"
+  },
+  "twoMP": {
+   "count": 189,
+   "complete": false,
+   "entities": []
+  }
+ },
+ {
+  "id": "downstream",
+  "name": "Downstream",
+  "difficulty": "Intermediate",
+  "addedVersion": "4.0",
+  "water": "lots",
+  "losBlockers": "none",
+  "removables": [
+   {
+    "name": "Rock",
+    "cost": 350,
+    "count": 2,
+    "note": "one inside each loop"
+   }
+  ],
+  "paths": 1,
+  "trackLength": 26.4,
+  "trackClass": "medium",
+  "rbsHard": [
+   26.4
+  ],
+  "special": "Stream runs down the map.",
+  "easiness": 3,
+  "chimpsFriendly": false,
+  "medals": true,
+  "notes": "",
+  "unverified": [
+   "water amount"
+  ],
+  "rbs": {
+   "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
+   "avg": 26.4,
+   "lanes": [
+    {
+     "lane": "single lane",
+     "rbs": 26.4
+    }
+   ],
+   "notes": null
+  },
+  "entrances": 1,
+  "exits": 1,
+  "indexLength": 26.4,
+  "indexWater": true,
+  "indexLos": false,
+  "removalCost": "$700",
+  "indexObjects": 2,
+  "lcc": {
+   "money": 34750,
+   "version": "31.2",
+   "date": "2022-06-21"
+  },
+  "twoMP": {
+   "count": 166,
+   "complete": false,
+   "entities": []
+  },
+  "conflicts": [
+   {
+    "field": "losBlockers",
+    "index": false,
+    "other": "some (bloonswiki: trees top-left, top-right and bottom-left block LoS \"slightly\" (group-2))",
+    "source": "Index haslos is a yes/no flag; \"slight\" blockers may be counted as no",
+    "kept": "index"
+   }
+  ]
+ },
+ {
+  "id": "encrypted",
+  "name": "Encrypted",
+  "difficulty": "Intermediate",
+  "addedVersion": "21.0",
+  "water": "little",
+  "losBlockers": "heavy",
+  "removables": [
+   {
+    "name": "Rock-covered category pad",
+    "cost": 250,
+    "count": 4,
+    "note": "Magic top-left, Support top-right, Military bottom-right, Primary bottom-left (bloonswiki)"
+   }
+  ],
+  "paths": 2,
+  "trackLength": 28.8,
+  "trackClass": "medium",
+  "rbsHard": [
+   28.8,
+   28.8
+  ],
+  "special": "One entrance splits to two exits; a wall encloses the track; some rock-covered pads only accept one tower category.",
+  "easiness": 3,
+  "chimpsFriendly": false,
+  "medals": true,
+  "notes": "Wiki: the wall around the crypt blocks most towers from reaching inside.",
+  "unverified": [
+   "water location"
+  ],
+  "rbs": {
+   "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
+   "avg": 28.8,
+   "lanes": [
+    {
+     "lane": "left exit",
+     "rbs": 28.8
+    },
+    {
+     "lane": "right exit",
+     "rbs": 28.8
+    }
+   ],
+   "notes": "left and right 28.8"
+  },
+  "entrances": 1,
+  "exits": 2,
+  "indexLength": 28.8,
+  "indexWater": true,
+  "indexLos": true,
+  "removalCost": "$1,000",
+  "indexObjects": 4,
+  "lcc": {
+   "money": 43685,
+   "version": "36.1",
+   "date": "2023-04-12"
+  },
+  "twoMP": {
+   "count": 94,
+   "complete": false,
+   "entities": []
+  }
+ },
+ {
+  "id": "firing-range",
+  "name": "Firing Range",
+  "difficulty": "Intermediate",
+  "addedVersion": "2.0",
+  "water": "little",
+  "losBlockers": "some",
+  "removables": [
+   {
+    "name": "Watchtower",
+    "cost": 1000,
+    "count": 1
+   }
+  ],
+  "paths": 2,
+  "trackLength": 29.6,
+  "trackClass": "medium",
+  "rbsHard": [
+   29.7,
+   29.6
+  ],
+  "special": "Two crossing lanes; benches only fit small towers.",
+  "easiness": 3,
+  "chimpsFriendly": false,
+  "medals": true,
+  "notes": "",
+  "unverified": [],
+  "rbs": {
+   "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
+   "avg": 29.7,
+   "lanes": [
+    {
+     "lane": "Left Entrance",
+     "rbs": 29.7
+    },
+    {
+     "lane": "Right Entrance",
+     "rbs": 29.6
+    }
+   ],
+   "notes": "Left Entrance: 29.7; Right Entrance: 29.6"
+  },
+  "entrances": 2,
+  "exits": 2,
+  "indexLength": 29.7,
+  "indexWater": true,
+  "indexLos": true,
+  "removalCost": "$1,000",
+  "indexObjects": 1,
+  "lcc": {
+   "money": 41795,
+   "version": "31.2",
+   "date": "2022-05-29"
+  },
+  "twoMP": {
+   "count": 175,
+   "complete": false,
+   "entities": []
+  }
+ },
+ {
+  "id": "haunted",
+  "name": "Haunted",
+  "difficulty": "Intermediate",
+  "addedVersion": "5.0",
+  "water": "little",
+  "losBlockers": "some",
+  "removables": [
+   {
+    "name": "Tree",
+    "cost": 500,
+    "count": 2
+   }
+  ],
+  "paths": 2,
+  "trackLength": 18.6,
+  "trackClass": "medium",
+  "rbsHard": [
+   18.6,
+   18.6
+  ],
+  "special": "Two lanes; central pond with good coverage.",
+  "easiness": 3,
+  "chimpsFriendly": false,
+  "medals": true,
+  "notes": "",
+  "unverified": [],
+  "rbs": {
+   "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
+   "avg": 18.6,
+   "lanes": [
+    {
+     "lane": "Left Entrance",
+     "rbs": 18.6
+    },
+    {
+     "lane": "Right Entrance",
+     "rbs": 18.6
+    }
+   ],
+   "notes": "Left Entrance: 18.6; Right Entrance: 18.6"
+  },
+  "entrances": 2,
+  "exits": 2,
+  "indexLength": 18.6,
+  "indexWater": true,
+  "indexLos": true,
+  "removalCost": "$1,000",
+  "indexObjects": 2,
+  "lcc": {
+   "money": 49035,
+   "version": "33.1",
+   "date": "2022-10-21"
+  },
+  "twoMP": {
+   "count": 101,
+   "complete": false,
+   "entities": []
+  }
+ },
+ {
+  "id": "kartsndarts",
+  "name": "KartsNDarts",
+  "difficulty": "Intermediate",
+  "addedVersion": "8.0",
+  "water": "none",
+  "losBlockers": "none",
+  "removables": [
+   {
+    "name": "Tire loops",
+    "cost": 500,
+    "count": 2,
+    "note": "one per loop interior"
+   }
+  ],
+  "paths": 1,
+  "trackLength": 32.7,
+  "trackClass": "long",
+  "rbsHard": [
+   32.7
+  ],
+  "special": "Race track; ordinary bloons in the tunnel cannot be hit (MOAB-class can).",
+  "easiness": 5,
+  "chimpsFriendly": true,
+  "medals": true,
+  "notes": "Second-easiest Intermediate map.",
+  "unverified": [],
+  "rbs": {
+   "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
+   "avg": 32.7,
+   "lanes": [
+    {
+     "lane": "single lane",
+     "rbs": 32.7
+    }
+   ],
+   "notes": null
+  },
+  "entrances": 1,
+  "exits": 1,
+  "indexLength": 32.7,
+  "indexWater": false,
+  "indexLos": false,
+  "removalCost": "$1,000",
+  "indexObjects": 2,
+  "lcc": {
+   "money": 26540,
+   "version": "49.3",
+   "date": "2025-08-03"
+  },
+  "twoMP": {
+   "count": 161,
+   "complete": false,
+   "entities": []
+  }
+ },
+ {
+  "id": "lost-crevasse",
+  "name": "Lost Crevasse",
+  "difficulty": "Intermediate",
+  "addedVersion": "50.0",
+  "water": "little",
+  "losBlockers": "some",
+  "removables": [],
+  "paths": 2,
+  "trackLength": 16.6,
+  "trackClass": "medium",
+  "rbsHard": [
+   25.2,
+   16.6,
+   17.4
+  ],
+  "special": "Two entrances and two exits (Index v57.4 + bloonswiki); three lanes run at once (25.2 / 17.4 / 16.6 RBS Hard); crystal column blocks LoS; lake on the right.",
+  "easiness": 3,
+  "chimpsFriendly": false,
+  "medals": true,
+  "notes": "Was among the hardest Intermediate maps. A \"v57.0 lane rework\" claimed in chapter 4 is on neither the wiki page nor the v57 store notes (unverified); the Index lane lengths match the wiki.",
+  "unverified": [
+   "v57 rework (not on the wiki page or store notes)"
+  ],
+  "rbs": {
+   "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
+   "avg": 19.7,
+   "lanes": [
+    {
+     "lane": "center lane",
+     "rbs": 25.2
+    },
+    {
+     "lane": "right lane",
+     "rbs": 16.6
+    },
+    {
+     "lane": "left lane",
+     "rbs": 17.4
+    }
+   ],
+   "notes": "center lane 25.2; right lane 16.6; left lane 17.4"
+  },
+  "entrances": 2,
+  "exits": 2,
+  "indexLength": 19.7,
+  "indexWater": true,
+  "indexLos": true,
+  "removalCost": null,
+  "indexObjects": 0,
+  "lcc": null,
+  "twoMP": {
+   "count": 84,
+   "complete": true,
+   "entities": [
+    "Adora",
+    "Aircraft Carrier",
+    "Apache Dartship",
+    "Apache Prime",
+    "Arcane Spike",
+    "Archmage",
+    "Arctic Knight",
+    "Artillery Battery",
+    "Avatar Of Wrath",
+    "Avenger",
+    "Base Super",
+    "Bloon Area Denial System",
+    "Bloon Crush",
+    "Bloon Exclusion Zone",
+    "Blooncineration",
+    "Bomb Blitz",
+    "Carrier Flagship",
+    "Churchill",
+    "Comanche Commander",
+    "Corvus",
+    "Cripple Moab",
+    "Crossbow Master",
+    "Dark Champion",
+    "Dark Knight",
+    "Elite Defender",
+    "Elite Sniper",
+    "Farwind Seer",
+    "Flying Fortress",
+    "Full Auto Rifle",
+    "Geraldo",
+    "Giant Condor",
+    "Giganotosaurus",
+    "Glaive Lord",
+    "Golden Justice",
+    "Grandmaster Ninja",
+    "Ground Zero",
+    "Icicle Impale",
+    "Inferno Ring",
+    "Lord Of The Abyss",
+    "M.a.d",
+    "Master Bomber",
+    "Megalodon",
+    "Moab Domination",
+    "Monarch Of Storms",
+    "Orca",
+    "Perma Charge",
+    "Perma-Spike",
+    "Pirate Lord",
+    "Plasma Accelerator",
+    "Plasma Monkey Fan Club",
+    "Pop And Awe",
+    "Popseidon",
+    "Pouākai",
+    "Pre-Emptive Strike",
+    "Primary Expertise",
+    "Quincy",
+    "Ray Of Doom",
+    "Recursive Cluster",
+    "Robo Monkey",
+    "Rocket Storm",
+    "Rosalia",
+    "Sauda",
+    "Sentry Champion",
+    "Sky Shredder",
+    "Special Poperations",
+    "Spectre",
+    "Spirit Of The Forest",
+    "Sub Commander",
+    "Summon Phoenix",
+    "Sun Avatar",
+    "Super Maelstrom",
+    "Tech Terror",
+    "The Anti-Bloon",
+    "The Biggest One",
+    "The Blazing Sun",
+    "The Bloon Solver",
+    "The Desert Phantom",
+    "The Tack Zone",
+    "Transforming Tonic",
+    "Tsar Bomba",
+    "Turbo Charge",
+    "Tyrannosaurus Rex",
+    "Ultra-Juggernaut",
+    "Wizard Lord Phoenix"
+   ]
+  },
+  "conflicts": [
+   {
+    "field": "paths",
+    "index": 2,
+    "other": "bloonswiki: 2 entrances, 2 exits, 3 lanes all active (lanes = 3)",
+    "source": "kept Index count; the 3 lanes are listed in rbs.lanes",
+    "kept": "index"
+   }
+  ]
+ },
+ {
+  "id": "luminous-cove",
+  "name": "Luminous Cove",
+  "difficulty": "Intermediate",
+  "addedVersion": "44.0",
+  "water": "lots",
+  "losBlockers": "heavy",
+  "removables": [],
+  "paths": 2,
+  "trackLength": 27.8,
+  "trackClass": "medium",
+  "rbsHard": [
+   27.8,
+   27.8
+  ],
+  "special": "Two alternating lanes with a central loop; stretches before the waterfall are elevated and hard to reach.",
+  "easiness": 3,
+  "chimpsFriendly": false,
+  "medals": true,
+  "notes": " Wiki: the raised upper (pre-waterfall) sections are blocked by LoS from most of the map; Heli and Carrier Flagship reach them.",
+  "unverified": [],
+  "rbs": {
+   "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
+   "avg": 27.8,
+   "lanes": [
+    {
+     "lane": "Left",
+     "rbs": 27.8
+    },
+    {
+     "lane": "Right",
+     "rbs": 27.8
+    }
+   ],
+   "notes": "Left 27.8; Right 27.8"
+  },
+  "entrances": 2,
+  "exits": 2,
+  "indexLength": 27.8,
+  "indexWater": true,
+  "indexLos": true,
+  "removalCost": null,
+  "indexObjects": 0,
+  "lcc": {
+   "money": 41145,
+   "version": "44.1",
+   "date": "2024-09-02"
+  },
+  "twoMP": {
+   "count": 129,
+   "complete": false,
+   "entities": []
+  }
+ },
+ {
+  "id": "moon-landing",
+  "name": "Moon Landing",
+  "difficulty": "Intermediate",
+  "addedVersion": "6.0",
+  "water": "none",
+  "losBlockers": "some",
+  "removables": [],
+  "paths": 1,
+  "trackLength": 35.5,
+  "trackClass": "long",
+  "rbsHard": [
+   35.5
+  ],
+  "special": "Three walled craters.",
+  "easiness": 4,
+  "chimpsFriendly": true,
+  "medals": true,
+  "notes": "Second-longest Intermediate map.",
+  "unverified": [],
+  "rbs": {
+   "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
+   "avg": 35.5,
+   "lanes": [
+    {
+     "lane": "single lane",
+     "rbs": 35.5
+    }
+   ],
+   "notes": null
+  },
+  "entrances": 1,
+  "exits": 1,
+  "indexLength": 35.5,
+  "indexWater": false,
+  "indexLos": true,
+  "removalCost": null,
+  "indexObjects": 0,
+  "lcc": {
+   "money": 16895,
+   "version": "50.2",
+   "date": "2025-10-11"
+  },
+  "twoMP": {
+   "count": 159,
+   "complete": false,
+   "entities": []
+  }
+ },
+ {
+  "id": "polyphemus",
+  "name": "Polyphemus",
+  "difficulty": "Intermediate",
+  "addedVersion": "36.0",
+  "water": "lots",
+  "losBlockers": "some",
+  "removables": [
+   {
+    "name": "Wall",
+    "cost": 500,
+    "count": 8
+   }
+  ],
+  "paths": 2,
+  "trackLength": 26.9,
+  "trackClass": "medium",
+  "rbsHard": [
+   26.9,
+   26.9
+  ],
+  "special": "Lanes around an island surrounded by water; the central eye closes on a cycle; paying to keep it open buffs towers on it (~$26,000 total to R100).",
+  "easiness": 3,
+  "chimpsFriendly": false,
+  "medals": true,
+  "notes": "Average difficulty.",
+  "unverified": [],
+  "rbs": {
+   "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
+   "avg": 26.9,
+   "lanes": [
+    {
+     "lane": "Top Path",
+     "rbs": 26.9
+    },
+    {
+     "lane": "Bottom Path",
+     "rbs": 26.9
+    }
+   ],
+   "notes": "Top Path: 26.9; Bottom Path: 26.9"
+  },
+  "entrances": 2,
+  "exits": 2,
+  "indexLength": 26.9,
+  "indexWater": true,
+  "indexLos": true,
+  "removalCost": "$4000 - $inf",
+  "indexObjects": 9,
+  "lcc": {
+   "money": 34835,
+   "version": "49.3",
+   "date": "2025-07-19"
+  },
+  "twoMP": {
+   "count": 104,
+   "complete": false,
+   "entities": []
+  }
+ },
+ {
+  "id": "protect-the-yacht",
+  "name": "Protect The Yacht",
+  "difficulty": "Intermediate",
+  "addedVersion": "42.3",
+  "water": "lots",
+  "losBlockers": "some",
+  "removables": [],
+  "paths": 2,
+  "trackLength": 18.7,
+  "trackClass": "medium",
+  "rbsHard": [
+   18.7,
+   18.7
+  ],
+  "special": "Special: only reachable via its Quest, then usable in Challenge Editor, Odyssey Editor and Boss Challenge. No medals.",
+  "easiness": 1,
+  "chimpsFriendly": false,
+  "medals": false,
+  "notes": "Harder than every other Intermediate map. Not a medal map.",
+  "unverified": [],
+  "rbs": {
+   "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
+   "avg": 18.7,
+   "lanes": [
+    {
+     "lane": "Left Path",
+     "rbs": 18.7
+    },
+    {
+     "lane": "Right Path",
+     "rbs": 18.7
+    }
+   ],
+   "notes": "Left Path: 18.7; Right Path: 18.7"
+  },
+  "entrances": 2,
+  "exits": 2,
+  "indexLength": 18.7,
+  "indexWater": true,
+  "indexLos": true,
+  "removalCost": "$0",
+  "indexObjects": 0,
+  "lcc": {
+   "money": 119055,
+   "version": "44.1",
+   "date": "2024-09-16"
+  },
+  "twoMP": {
+   "count": 35,
+   "complete": true,
+   "entities": [
+    "Aircraft Carrier",
+    "Apache Prime",
+    "Archmage",
+    "Bloon Area Denial System",
+    "Bloon Exclusion Zone",
+    "Bomb Blitz",
+    "Carrier Flagship",
+    "Comanche Commander",
+    "Corvus",
+    "Elite Defender",
+    "Flying Fortress",
+    "Geraldo",
+    "Glaive Lord",
+    "Golden Justice",
+    "Grandmaster Ninja",
+    "Lord Of The Abyss",
+    "Orca",
+    "Perma Charge",
+    "Perma-Spike",
+    "Pirate Lord",
+    "Popseidon",
+    "Pouākai",
+    "Robo Monkey",
+    "Sentry Champion",
+    "Sky Shredder",
+    "Spectre",
+    "Sub Commander",
+    "Sun Avatar",
+    "Super Maelstrom",
+    "Tech Terror",
+    "The Anti-Bloon",
+    "The Desert Phantom",
+    "The Tack Zone",
+    "Tyrannosaurus Rex",
+    "Wizard Lord Phoenix"
+   ]
+  },
+  "conflicts": [
+   {
+    "field": "paths",
+    "index": 2,
+    "other": "fandom: a single entrance and route",
+    "source": "kept Index (2 entrances, 2 exits, 18.7 RBS each)",
+    "kept": "index"
+   }
+  ]
+ },
+ {
+  "id": "quarry",
+  "name": "Quarry",
+  "difficulty": "Intermediate",
+  "addedVersion": "32.0",
+  "water": "little",
+  "losBlockers": "some",
+  "removables": [],
+  "paths": 2,
+  "trackLength": 31.2,
+  "trackClass": "long",
+  "rbsHard": [
+   36.5,
+   31.2
+  ],
+  "special": "Bloon lane + MOAB lane; elevation tiers block LoS; a dump truck moves off the MOAB lane after R39.",
+  "easiness": 5,
+  "chimpsFriendly": true,
+  "medals": true,
+  "notes": "One of the easiest Intermediate maps.",
+  "unverified": [],
+  "rbs": {
+   "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
+   "avg": 33.9,
+   "lanes": [
+    {
+     "lane": "Normal Path",
+     "rbs": 36.5
+    },
+    {
+     "lane": "Moab Path",
+     "rbs": 31.2
+    }
+   ],
+   "notes": "Normal Path: 36.5; Moab Path: 31.2"
+  },
+  "entrances": 2,
+  "exits": 1,
+  "indexLength": 33.9,
+  "indexWater": true,
+  "indexLos": true,
+  "removalCost": null,
+  "indexObjects": 0,
+  "lcc": {
+   "money": 38550,
+   "version": "34.2",
+   "date": "2022-12-13"
+  },
+  "twoMP": {
+   "count": 147,
+   "complete": false,
+   "entities": []
+  }
+ },
+ {
+  "id": "quiet-street",
+  "name": "Quiet Street",
+  "difficulty": "Intermediate",
+  "addedVersion": "29.0",
+  "water": "little",
+  "losBlockers": "some",
+  "removables": [
+   {
+    "name": "Frozen pond (melt)",
+    "cost": 500,
+    "count": 2
+   },
+   {
+    "name": "Car",
+    "cost": 250,
+    "count": 5,
+    "note": "cars block LoS"
+   }
+  ],
+  "paths": 3,
+  "trackLength": 24.9,
+  "trackClass": "medium",
+  "rbsHard": [
+   25.1,
+   25.0,
+   24.9
+  ],
+  "special": "Three entrances and three exits: two bloon lanes (top-left and bottom-left, 25.1 / 25.0 RBS) and a MOAB lane (24.9) per the Index; 5 cars block LoS; 2 frozen ponds melt into water.",
+  "easiness": 3,
+  "chimpsFriendly": false,
+  "medals": true,
+  "notes": "",
+  "unverified": [],
+  "rbs": {
+   "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
+   "avg": 25.0,
+   "lanes": [
+    {
+     "lane": "Top Entrance",
+     "rbs": 25.1
+    },
+    {
+     "lane": "Bottom Entrance",
+     "rbs": 25.0
+    },
+    {
+     "lane": "Moab Path",
+     "rbs": 24.9
+    }
+   ],
+   "notes": "Top Entrance: 25.1; Bottom Entrance: 25.0; Moab Path: 24.9"
+  },
+  "entrances": 3,
+  "exits": 3,
+  "indexLength": 25.0,
+  "indexWater": true,
+  "indexLos": true,
+  "removalCost": "$2,250",
+  "indexObjects": 7,
+  "lcc": {
+   "money": 47050,
+   "version": "31.2",
+   "date": "2022-05-16"
+  },
+  "twoMP": {
+   "count": 107,
+   "complete": false,
+   "entities": []
+  }
+ },
+ {
+  "id": "rake",
+  "name": "Rake",
+  "difficulty": "Intermediate",
+  "addedVersion": "1.0",
+  "water": "little",
+  "losBlockers": "some",
+  "removables": [
+   {
+    "name": "Statue/rock (fandom: monkey-head totem)",
+    "cost": 1000,
+    "count": 1
+   }
+  ],
+  "paths": 2,
+  "trackLength": 15.6,
+  "trackClass": "medium",
+  "rbsHard": [
+   15.6,
+   16.0
+  ],
+  "special": "Two short lanes active at the same time; confuses First targeting.",
+  "easiness": 1,
+  "chimpsFriendly": false,
+  "medals": true,
+  "notes": "Among the hardest Intermediate maps.",
+  "unverified": [],
+  "rbs": {
+   "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
+   "avg": 15.8,
+   "lanes": [
+    {
+     "lane": "Left Entrance",
+     "rbs": 15.6
+    },
+    {
+     "lane": "Top Entrance",
+     "rbs": 16.0
+    }
+   ],
+   "notes": "Left Entrance: 15.6; Top Entrance: 16.0"
+  },
+  "entrances": 2,
+  "exits": 2,
+  "indexLength": 15.8,
+  "indexWater": true,
+  "indexLos": true,
+  "removalCost": "$1,000",
+  "indexObjects": 1,
+  "lcc": {
+   "money": 68845,
+   "version": "43.3",
+   "date": "2024-07-27"
+  },
+  "twoMP": {
+   "count": 89,
+   "complete": true,
+   "entities": [
+    "Adora",
+    "Aircraft Carrier",
+    "Apache Dartship",
+    "Apache Prime",
+    "Arcane Spike",
+    "Archmage",
+    "Arctic Knight",
+    "Artillery Battery",
+    "Avatar Of Wrath",
+    "Avenger",
+    "Base Super",
+    "Bloon Area Denial System",
+    "Bloon Exclusion Zone",
+    "Blooncineration",
+    "Bloonjitsu",
+    "Bomb Blitz",
+    "Carpet Of Spikes",
+    "Carrier Flagship",
+    "Churchill",
+    "Comanche Commander",
+    "Corvus",
+    "Cripple Moab",
+    "Crossbow Master",
+    "Dark Champion",
+    "Dark Knight",
+    "Destroyer",
+    "Elite Defender",
+    "Elite Sniper",
+    "Farwind Seer",
+    "Flying Fortress",
+    "Full Auto Rifle",
+    "Geraldo",
+    "Giant Condor",
+    "Giganotosaurus",
+    "Glaive Lord",
+    "Golden Justice",
+    "Grandmaster Ninja",
+    "Great White",
+    "Hydra Rocket Pods",
+    "Icicle Impale",
+    "Inferno Ring",
+    "Lord Of The Abyss",
+    "M.a.d",
+    "Master Bomber",
+    "Megalodon",
+    "Moab Domination",
+    "Monarch Of Storms",
+    "Monkey Pirates",
+    "Neva-Miss Targeting",
+    "Operation: Dart Storm",
+    "Orca",
+    "Overdrive",
+    "Perma Charge",
+    "Perma-Spike",
+    "Pirate Lord",
+    "Plasma Accelerator",
+    "Pop And Awe",
+    "Popseidon",
+    "Pouākai",
+    "Pre-Emptive Strike",
+    "Prince Of Darkness",
+    "Quincy",
+    "Ray Of Doom",
+    "Robo Monkey",
+    "Rocket Storm",
+    "Rosalia",
+    "Sauda",
+    "Sentry Champion",
+    "Sky Shredder",
+    "Special Poperations",
+    "Spectre",
+    "Spirit Of The Forest",
+    "Sub Commander",
+    "Summon Phoenix",
+    "Sun Avatar",
+    "Sun Temple",
+    "Super Maelstrom",
+    "Tech Terror",
+    "The Anti-Bloon",
+    "The Biggest One",
+    "The Blazing Sun",
+    "The Bloon Solver",
+    "The Desert Phantom",
+    "The Tack Zone",
+    "Tsar Bomba",
+    "Turbo Charge",
+    "Tyrannosaurus Rex",
+    "Velociraptor",
+    "Wizard Lord Phoenix"
+   ]
+  }
+ },
+ {
+  "id": "spice-islands",
+  "name": "Spice Islands",
+  "difficulty": "Intermediate",
+  "addedVersion": "1.0",
+  "water": "lots",
+  "losBlockers": "some",
+  "removables": [
+   {
+    "name": "Coconut tree",
+    "cost": 1000
+   }
+  ],
+  "paths": 1,
+  "trackLength": 23.8,
+  "trackClass": "medium",
+  "rbsHard": [
+   23.8
+  ],
+  "special": "Mostly water, little land.",
+  "easiness": 3,
+  "chimpsFriendly": false,
+  "medals": true,
+  "notes": "",
+  "unverified": [],
+  "rbs": {
+   "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
+   "avg": 23.8,
+   "lanes": [
+    {
+     "lane": "single lane",
+     "rbs": 23.8
+    }
+   ],
+   "notes": null
+  },
+  "entrances": 1,
+  "exits": 1,
+  "indexLength": 23.8,
+  "indexWater": true,
+  "indexLos": true,
+  "removalCost": "$1,000",
+  "indexObjects": 1,
+  "lcc": {
+   "money": 41145,
+   "version": "44.1",
+   "date": "2024-09-02"
+  },
+  "twoMP": {
+   "count": 118,
+   "complete": false,
+   "entities": []
+  }
+ },
+ {
+  "id": "spring-spring",
+  "name": "Spring Spring",
+  "difficulty": "Intermediate",
+  "addedVersion": "10.0",
+  "water": "lots",
+  "losBlockers": "none",
+  "removables": [],
+  "paths": 2,
+  "trackLength": 24.6,
+  "trackClass": "medium",
+  "rbsHard": [
+   24.7,
+   24.6
+  ],
+  "special": "Two separate lanes around islands; corner land.",
+  "easiness": 3,
+  "chimpsFriendly": false,
+  "medals": true,
+  "notes": "",
+  "unverified": [],
+  "rbs": {
+   "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
+   "avg": 24.7,
+   "lanes": [
+    {
+     "lane": "Top Path",
+     "rbs": 24.7
+    },
+    {
+     "lane": "Bottom Path",
+     "rbs": 24.6
+    }
+   ],
+   "notes": "Top Path: 24.7, Bottom Path: 24.6"
+  },
+  "entrances": 2,
+  "exits": 2,
+  "indexLength": 24.7,
+  "indexWater": true,
+  "indexLos": false,
+  "removalCost": null,
+  "indexObjects": 0,
+  "lcc": {
+   "money": 47810,
+   "version": "34.3",
+   "date": "2023-01-07"
+  },
+  "twoMP": {
+   "count": 99,
+   "complete": true,
+   "entities": [
+    "Adora",
+    "Aircraft Carrier",
+    "Apache Dartship",
+    "Apache Prime",
+    "Arcane Spike",
+    "Archmage",
+    "Arctic Knight",
+    "Armor Piercing Darts",
+    "Artillery Battery",
+    "Avatar Of Wrath",
+    "Avenger",
+    "Base Super",
+    "Bloon Area Denial System",
+    "Bloon Crush",
+    "Bloon Exclusion Zone",
+    "Blooncineration",
+    "Bloonjitsu",
+    "Bomb Blitz",
+    "Bouncing Bullet",
+    "Brickell",
+    "Carpet Of Spikes",
+    "Carrier Flagship",
+    "Churchill",
+    "Comanche Commander",
+    "Comanche Defense",
+    "Corvus",
+    "Cripple Moab",
+    "Crossbow Master",
+    "Dark Champion",
+    "Dark Knight",
+    "Destroyer",
+    "Elite Defender",
+    "Elite Sniper",
+    "Etienne",
+    "Farwind Seer",
+    "First Strike Capability",
+    "Flying Fortress",
+    "Full Auto Rifle",
+    "Geraldo",
+    "Giant Condor",
+    "Giganotosaurus",
+    "Glaive Lord",
+    "Golden Justice",
+    "Grandmaster Ninja",
+    "Great White",
+    "Hydra Rocket Pods",
+    "Icicle Impale",
+    "Inferno Ring",
+    "Lord Of The Abyss",
+    "M.a.d",
+    "Master Bomber",
+    "Megalodon",
+    "Moab Domination",
+    "Monarch Of Storms",
+    "Monkey Pirates",
+    "Neva-Miss Targeting",
+    "Operation: Dart Storm",
+    "Orca",
+    "Overdrive",
+    "Perma Charge",
+    "Perma-Spike",
+    "Pirate Lord",
+    "Plasma Accelerator",
+    "Plasma Monkey Fan Club",
+    "Pop And Awe",
+    "Popseidon",
+    "Pouākai",
+    "Pre-Emptive Strike",
+    "Primary Expertise",
+    "Prince Of Darkness",
+    "Quincy",
+    "Ray Of Doom",
+    "Robo Monkey",
+    "Rocket Storm",
+    "Rosalia",
+    "Sauda",
+    "Sentry Champion",
+    "Sky Shredder",
+    "Special Poperations",
+    "Spectre",
+    "Spirit Of The Forest",
+    "Sub Commander",
+    "Summon Phoenix",
+    "Sun Avatar",
+    "Sun Temple",
+    "Super Maelstrom",
+    "Supply Drop",
+    "Tech Terror",
+    "The Anti-Bloon",
+    "The Biggest One",
+    "The Blazing Sun",
+    "The Bloon Solver",
+    "The Desert Phantom",
+    "The Tack Zone",
+    "Tsar Bomba",
+    "Turbo Charge",
+    "Tyrannosaurus Rex",
+    "Velociraptor",
+    "Wizard Lord Phoenix"
+   ]
+  }
+ },
+ {
+  "id": "streambed",
+  "name": "Streambed",
+  "difficulty": "Intermediate",
+  "addedVersion": "1.0",
+  "water": "little",
+  "losBlockers": "some",
+  "removables": [
+   {
+    "name": "Dinosaur skull",
+    "cost": 1000,
+    "count": 1
+   }
+  ],
+  "paths": 1,
+  "trackLength": 27.1,
+  "trackClass": "medium",
+  "rbsHard": [
+   27.1
+  ],
+  "special": "Compact single lane with a pool.",
+  "easiness": 4,
+  "chimpsFriendly": true,
+  "medals": true,
+  "notes": "Among the easiest Intermediate maps.",
+  "unverified": [],
+  "rbs": {
+   "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
+   "avg": 27.1,
+   "lanes": [
+    {
+     "lane": "single lane",
+     "rbs": 27.1
+    }
+   ],
+   "notes": null
+  },
+  "entrances": 1,
+  "exits": 1,
+  "indexLength": 27.1,
+  "indexWater": true,
+  "indexLos": true,
+  "removalCost": "$1,000",
+  "indexObjects": 1,
+  "lcc": {
+   "money": 26540,
+   "version": "49.3",
+   "date": "2025-08-05"
+  },
+  "twoMP": {
+   "count": 169,
+   "complete": false,
+   "entities": []
+  }
+ },
+ {
+  "id": "sulfur-springs",
+  "name": "Sulfur Springs",
+  "difficulty": "Intermediate",
+  "addedVersion": "41.0",
+  "water": "little",
+  "losBlockers": "some",
+  "removables": [],
+  "paths": 1,
+  "trackLength": 32.2,
+  "trackClass": "long",
+  "rbsHard": [
+   32.2
+  ],
+  "special": "Single lane with 1.5 loops around three circles; hot-spring water.",
+  "easiness": 5,
+  "chimpsFriendly": true,
+  "medals": true,
+  "notes": "Easiest Intermediate map by consensus.",
+  "unverified": [],
+  "rbs": {
+   "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
+   "avg": 32.2,
+   "lanes": [
+    {
+     "lane": "single lane",
+     "rbs": 32.2
+    }
+   ],
+   "notes": null
+  },
+  "entrances": 1,
+  "exits": 1,
+  "indexLength": 32.2,
+  "indexWater": true,
+  "indexLos": true,
+  "removalCost": "$0",
+  "indexObjects": 0,
+  "lcc": {
+   "money": 13225,
+   "version": "51.2",
+   "date": "2025-11-07"
+  },
+  "twoMP": {
+   "count": 168,
+   "complete": false,
+   "entities": []
+  }
+ },
+ {
+  "id": "water-park",
+  "name": "Water Park",
+  "difficulty": "Intermediate",
+  "addedVersion": "38.0",
+  "water": "little",
+  "losBlockers": "some",
+  "removables": [],
+  "paths": 2,
+  "trackLength": 18.1,
+  "trackClass": "medium",
+  "rbsHard": [
+   26.4,
+   18.1
+  ],
+  "special": "Two alternating lanes; the waterslide is elevated so only a few spots can hit it.",
+  "easiness": 1,
+  "chimpsFriendly": false,
+  "medals": true,
+  "notes": "One of the hardest Intermediate maps.",
+  "unverified": [
+   "water amount"
+  ],
+  "rbs": {
+   "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
+   "avg": 22.3,
+   "lanes": [
+    {
+     "lane": "Water Slide",
+     "rbs": 26.4
+    },
+    {
+     "lane": "Lazy River",
+     "rbs": 18.1
+    }
+   ],
+   "notes": "Water Slide: 26.4; Lazy River: 18.1"
+  },
+  "entrances": 2,
+  "exits": 2,
+  "indexLength": 22.3,
+  "indexWater": true,
+  "indexLos": true,
+  "removalCost": null,
+  "indexObjects": 0,
+  "lcc": {
+   "money": 49785,
+   "version": "39.2",
+   "date": "2023-11-17"
+  },
+  "twoMP": {
+   "count": 91,
+   "complete": true,
+   "entities": [
+    "Abyssal Warrior",
+    "Adora",
+    "Aircraft Carrier",
+    "Apache Dartship",
+    "Apache Prime",
+    "Arcane Spike",
+    "Archmage",
+    "Arctic Knight",
+    "Artillery Battery",
+    "Avatar Of Wrath",
+    "Avenger",
+    "Base Super",
+    "Bloon Area Denial System",
+    "Bloon Exclusion Zone",
+    "Blooncineration",
+    "Bomb Blitz",
+    "Carrier Flagship",
+    "Churchill",
+    "Comanche Commander",
+    "Comanche Defense",
+    "Corvus",
+    "Cripple Moab",
+    "Crossbow Master",
+    "Dark Champion",
+    "Dark Knight",
+    "Elite Defender",
+    "Elite Sniper",
+    "Farwind Seer",
+    "Flying Fortress",
+    "Full Auto Rifle",
+    "Geraldo",
+    "Giant Condor",
+    "Giganotosaurus",
+    "Glaive Lord",
+    "Golden Justice",
+    "Grandmaster Ninja",
+    "Great White",
+    "Ground Zero",
+    "Hydra Rocket Pods",
+    "Icicle Impale",
+    "Inferno Ring",
+    "Lord Of The Abyss",
+    "M.a.d",
+    "Megalodon",
+    "Moab Domination",
+    "Monarch Of Storms",
+    "Neva-Miss Targeting",
+    "Operation: Dart Storm",
+    "Orca",
+    "Perma Charge",
+    "Perma-Spike",
+    "Pirate Lord",
+    "Plasma Accelerator",
+    "Pop And Awe",
+    "Popseidon",
+    "Pouākai",
+    "Pre-Emptive Strike",
+    "Primary Expertise",
+    "Prince Of Darkness",
+    "Quincy",
+    "Ray Of Doom",
+    "Recursive Cluster",
+    "Robo Monkey",
+    "Rocket Storm",
+    "Rosalia",
+    "Sauda",
+    "Semi Automatic",
+    "Sentry Champion",
+    "Sentry Expert",
+    "Sky Shredder",
+    "Special Poperations",
+    "Spectre",
+    "Spirit Of The Forest",
+    "Sub Commander",
+    "Summon Phoenix",
+    "Sun Avatar",
+    "Super Maelstrom",
+    "Super Monkey Fan Club",
+    "Tech Terror",
+    "The Anti-Bloon",
+    "The Biggest One",
+    "The Blazing Sun",
+    "The Bloon Solver",
+    "The Desert Phantom",
+    "The Tack Zone",
+    "Tsar Bomba",
+    "Turbo Charge",
+    "Tyrannosaurus Rex",
+    "Ultra-Juggernaut",
+    "Velociraptor",
+    "Wizard Lord Phoenix"
+   ]
+  }
+ },
+ {
+  "id": "another-brick",
+  "name": "Another Brick",
+  "difficulty": "Advanced",
+  "addedVersion": "1.0",
+  "water": "little",
+  "losBlockers": "heavy",
+  "removables": [
+   {
+    "name": "Brick pallet",
+    "cost": 1000,
+    "count": 2
+   }
+  ],
+  "paths": 1,
+  "trackLength": 19.6,
+  "trackClass": "medium",
+  "rbsHard": [
+   19.6
+  ],
+  "special": "Walls intrude heavily on LoS; two flooded potholes for water.",
+  "easiness": 5,
+  "chimpsFriendly": true,
+  "medals": true,
+  "notes": "One of the easiest Advanced maps.",
+  "unverified": [],
+  "rbs": {
+   "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
+   "avg": 19.6,
+   "lanes": [
+    {
+     "lane": "single lane",
+     "rbs": 19.6
+    }
+   ],
+   "notes": null
+  },
+  "entrances": 1,
+  "exits": 1,
+  "indexLength": 19.6,
+  "indexWater": true,
+  "indexLos": true,
+  "removalCost": "$2,000",
+  "indexObjects": 2,
+  "lcc": {
+   "money": 44705,
+   "version": "44.1",
+   "date": "2024-09-06"
+  },
+  "twoMP": {
+   "count": 122,
+   "complete": false,
+   "entities": [
+    "Abyssal Warrior",
+    "Adora",
+    "Aircraft Carrier",
+    "Apache Dartship",
+    "Apache Prime",
+    "Arcane Mastery",
+    "Arcane Spike",
+    "Archmage",
+    "Arctic Knight",
+    "Armor Piercing Darts",
+    "Artillery Battery",
+    "Avatar Of Wrath",
+    "Avenger",
+    "Ballistic Missile",
+    "Base Super",
+    "Bloon Area Denial System",
+    "Bloon Exclusion Zone",
+    "Blooncineration",
+    "Bloonjitsu",
+    "Bomb Blitz",
+    "Bouncing Bullet",
+    "Brickell",
+    "Carpet Of Spikes",
+    "Carrier Flagship",
+    "Churchill",
+    "Comanche Commander",
+    "Comanche Defense",
+    "Corvus",
+    "Cripple Moab",
+    "Crossbow Master",
+    "Dark Champion",
+    "Dark Knight",
+    "Destroyer",
+    "Double Shot",
+    "Dragon's Breath",
+    "Druid Of Wrath",
+    "Elite Defender",
+    "Elite Sniper",
+    "Etienne",
+    "Farwind Seer",
+    "First Strike Capability",
+    "Flying Fortress",
+    "Full Auto Rifle",
+    "Geraldo",
+    "Giant Condor",
+    "Giganotosaurus",
+    "Glaive Lord",
+    "Golden Justice",
+    "Grandmaster Ninja",
+    "Great White",
+    "Ground Zero",
+    "Gwen",
+    "Hydra Rocket Pods",
+    "Icicle Impale",
+    "Inferno Ring",
+    "Lord Of The Abyss",
+    "M.a.d",
+    "Master Bomber",
+    "Megalodon",
+    "Moab Domination",
+    "Moab Eliminator",
+    "Moab Press",
+    "Monarch Of Storms",
+    "Monkey Pirates",
+    "Neva-Miss Targeting",
+    "Obyn",
+    "Operation: Dart Storm",
+    "Orca",
+    "Overdrive",
+    "Perma Charge",
+    "Perma-Spike",
+    "Pirate Lord",
+    "Plasma Accelerator",
+    "Plasma Monkey Fan Club",
+    "Pop And Awe",
+    "Poplust",
+    "Popseidon",
+    "Pouākai",
+    "Pre-Emptive Strike",
+    "Primary Expertise",
+    "Prince Of Darkness",
+    "Quincy",
+    "Ray Of Doom",
+    "Recursive Cluster",
+    "Robo Monkey",
+    "Rocket Storm",
+    "Rosalia",
+    "Sauda",
+    "Semi Automatic",
+    "Sentry Champion",
+    "Silas",
+    "Sky Shredder",
+    "Special Poperations",
+    "Spectre",
+    "Spike Storm",
+    "Spiked Mines",
+    "Spirit Of The Forest",
+    "Sticky Bomb",
+    "Sub Commander",
+    "Summon Phoenix"
+   ]
+  }
+ },
+ {
+  "id": "ascent",
+  "name": "Ascent",
+  "difficulty": "Advanced",
+  "addedVersion": "56.0",
+  "water": "little",
+  "losBlockers": "some",
+  "removables": [],
+  "paths": 2,
+  "trackLength": 20.8,
+  "trackClass": "medium",
+  "rbsHard": [
+   20.8,
+   29.5
+  ],
+  "special": "Two paths used in the same round.",
+  "easiness": 4,
+  "chimpsFriendly": true,
+  "medals": true,
+  "notes": "One of the easiest Advanced maps.",
+  "unverified": [
+   "water amount"
+  ],
+  "rbs": {
+   "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
+   "avg": null,
+   "lanes": [],
+   "notes": "Index has no measurement (length 0 = unmeasured)"
+  },
+  "entrances": 2,
+  "exits": 2,
+  "indexLength": null,
+  "indexWater": true,
+  "indexLos": true,
+  "removalCost": "$0",
+  "indexObjects": 0,
+  "lcc": {
+   "money": 38255,
+   "version": "57.3",
+   "date": "2026-10-21"
+  },
+  "twoMP": {
+   "count": 106,
+   "complete": false,
+   "entities": [
+    "Adora",
+    "Aircraft Carrier",
+    "Apache Dartship",
+    "Apache Prime",
+    "Arcane Spike",
+    "Archmage",
+    "Arctic Knight",
+    "Armor Piercing Darts",
+    "Artillery Battery",
+    "Avatar Of Wrath",
+    "Avenger",
+    "Base Super",
+    "Bloon Area Denial System",
+    "Bloon Crush",
+    "Bloon Exclusion Zone",
+    "Blooncineration",
+    "Bloonjitsu",
+    "Bomb Blitz",
+    "Brickell",
+    "Carpet Of Spikes",
+    "Carrier Flagship",
+    "Churchill",
+    "Comanche Commander",
+    "Corvus",
+    "Cripple Moab",
+    "Crossbow Master",
+    "Dark Champion",
+    "Dark Knight",
+    "Destroyer",
+    "Dragon's Breath",
+    "Elite Defender",
+    "Elite Sniper",
+    "Etienne",
+    "Farwind Seer",
+    "Flying Fortress",
+    "Frozen Verdict",
+    "Full Auto Rifle",
+    "Geraldo",
+    "Giganotosaurus",
+    "Glaive Lord",
+    "Golden Justice",
+    "Grandmaster Ninja",
+    "Ground Zero",
+    "Hydra Rocket Pods",
+    "Icicle Impale",
+    "Inferno Ring",
+    "Lord Of The Abyss",
+    "M.a.d",
+    "Master Bomber",
+    "Megalodon",
+    "Moab Domination",
+    "Moab Eliminator",
+    "Monarch Of Storms",
+    "Monkey Pirates",
+    "Neva-Miss Targeting",
+    "Operation: Dart Storm",
+    "Orca",
+    "Perma Charge",
+    "Perma-Spike",
+    "Pirate Lord",
+    "Plasma Accelerator",
+    "Plasma Monkey Fan Club",
+    "Pop And Awe",
+    "Popseidon",
+    "Pouākai",
+    "Pre-Emptive Strike",
+    "Primary Expertise",
+    "Prince Of Darkness",
+    "Quincy",
+    "Ray Of Doom",
+    "Recursive Cluster",
+    "Robo Monkey",
+    "Rocket Storm",
+    "Rosalia",
+    "Sauda",
+    "Semi Automatic",
+    "Sentry Champion",
+    "Sky Shredder",
+    "Special Poperations",
+    "Spectre",
+    "Spirit Of The Forest",
+    "Stormwrath Archon",
+    "Sub Commander",
+    "Summon Phoenix",
+    "Sun Avatar",
+    "Sun Temple",
+    "Super Glue",
+    "Super Maelstrom",
+    "Super Monkey Fan Club",
+    "Tech Terror",
+    "The Anti-Bloon",
+    "The Big One",
+    "The Biggest One",
+    "The Blazing Sun",
+    "The Bloon Solver",
+    "The Desert Phantom",
+    "The Tack Zone",
+    "Transforming Tonic",
+    "Triple Shot",
+    "Tsar Bomba"
+   ]
+  },
+  "trackLengthNote": "Index has no measurement for this map yet; wiki value kept."
+ },
+ {
+  "id": "cargo",
+  "name": "Cargo",
+  "difficulty": "Advanced",
+  "addedVersion": "11.0",
+  "water": "lots",
+  "losBlockers": "some",
+  "removables": [
+   {
+    "name": "Truck",
+    "cost": 500,
+    "count": 2,
+    "note": "top-left and bottom-right; removable only after the middle trucks move at R39"
+   }
+  ],
+  "paths": 2,
+  "trackLength": 10.7,
+  "trackClass": "short",
+  "rbsHard": [
+   13.9,
+   10.7
+  ],
+  "special": "Bloon lane + MOAB lane; dock surrounded by water.",
+  "easiness": 3,
+  "chimpsFriendly": false,
+  "medals": true,
+  "notes": "Hard mid-game, easier early and late.",
+  "unverified": [],
+  "rbs": {
+   "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
+   "avg": 12.3,
+   "lanes": [
+    {
+     "lane": "Normal Path",
+     "rbs": 13.9
+    },
+    {
+     "lane": "Moab Path",
+     "rbs": 10.7
+    }
+   ],
+   "notes": "Normal Path: 13.9; Moab Path: 10.7"
+  },
+  "entrances": 2,
+  "exits": 2,
+  "indexLength": 12.3,
+  "indexWater": true,
+  "indexLos": true,
+  "removalCost": "$1,000",
+  "indexObjects": 2,
+  "lcc": {
+   "money": 66185,
+   "version": "36.2",
+   "date": "2023-04-16"
+  },
+  "twoMP": {
+   "count": 88,
+   "complete": true,
+   "entities": [
+    "Adora",
+    "Aircraft Carrier",
+    "Apache Dartship",
+    "Apache Prime",
+    "Archmage",
+    "Arctic Knight",
+    "Armor Piercing Darts",
+    "Artillery Battery",
+    "Avatar Of Wrath",
+    "Avenger",
+    "Base Super",
+    "Bloon Area Denial System",
+    "Bloon Exclusion Zone",
+    "Blooncineration",
+    "Bloonjitsu",
+    "Bomb Blitz",
+    "Bouncing Bullet",
+    "Carrier Flagship",
+    "Churchill",
+    "Comanche Commander",
+    "Corvus",
+    "Cripple Moab",
+    "Crossbow Master",
+    "Dark Champion",
+    "Dark Knight",
+    "Double Shot",
+    "Elite Defender",
+    "Elite Sniper",
+    "Farwind Seer",
+    "Flying Fortress",
+    "Full Auto Rifle",
+    "Geraldo",
+    "Giant Condor",
+    "Giganotosaurus",
+    "Glaive Lord",
+    "Golden Justice",
+    "Grandmaster Ninja",
+    "Great White",
+    "Hydra Rocket Pods",
+    "Icicle Impale",
+    "Inferno Ring",
+    "Lord Of The Abyss",
+    "M.a.d",
+    "Master Bomber",
+    "Megalodon",
+    "Moab Domination",
+    "Operation: Dart Storm",
+    "Orca",
+    "Overdrive",
+    "Perma Charge",
+    "Perma-Spike",
+    "Pirate Lord",
+    "Plasma Accelerator",
+    "Pop And Awe",
+    "Popseidon",
+    "Pouākai",
+    "Pre-Emptive Strike",
+    "Prince Of Darkness",
+    "Quincy",
+    "Ray Of Doom",
+    "Recursive Cluster",
+    "Robo Monkey",
+    "Rocket Storm",
+    "Rosalia",
+    "Sauda",
+    "Sentry Champion",
+    "Sky Shredder",
+    "Special Poperations",
+    "Spectre",
+    "Spirit Of The Forest",
+    "Sticky Bomb",
+    "Sub Commander",
+    "Summon Phoenix",
+    "Sun Avatar",
+    "Sun Temple",
+    "Super Maelstrom",
+    "Supply Drop",
+    "Tech Terror",
+    "The Anti-Bloon",
+    "The Biggest One",
+    "The Blazing Sun",
+    "The Desert Phantom",
+    "The Tack Zone",
+    "Tsar Bomba",
+    "Turbo Charge",
+    "Tyrannosaurus Rex",
+    "Velociraptor",
+    "Wizard Lord Phoenix"
+   ]
+  }
+ },
+ {
+  "id": "castle-revenge",
+  "name": "Castle Revenge",
+  "difficulty": "Advanced",
+  "addedVersion": "42.0",
+  "water": "little",
+  "losBlockers": "some",
+  "removables": [
+   {
+    "name": "Pressure valve",
+    "cost": 500,
+    "count": 1,
+    "gimmick": true,
+    "note": "reusable gizmo (knockback, 75 s cooldown), not a one-time clearance (bloonswiki); the Index counts it as 1 object, $500"
+   }
+  ],
+  "paths": 4,
+  "trackLength": 14.5,
+  "trackClass": "short",
+  "rbsHard": [
+   16.8,
+   15.0,
+   14.5,
+   16.5,
+   16.1,
+   15.7
+  ],
+  "special": "Four entrances (wheel and water spawns, top and bottom) and two exits; six path variants 14.5-16.8 RBS (Index); bloons cannot be damaged until they pass the wheels; the $500 pressure valve is a reusable gizmo.",
+  "easiness": 1,
+  "chimpsFriendly": false,
+  "medals": true,
+  "notes": "Only Erosion and X Factor are rated harder among Advanced maps.",
+  "unverified": [],
+  "sourceNotes": [
+   "water: none -> little (xcheck 2026-11-05: btd6index.win map data + bloons.fandom.com; Index haswater=true; fandom: \"The upper-left corner features a water area for aquatic towers\"). Amount 'little' is an estimate."
+  ],
+  "rbs": {
+   "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
+   "avg": 15.8,
+   "lanes": [
+    {
+     "lane": "Top Path Water Spawn",
+     "rbs": 16.8
+    },
+    {
+     "lane": "Top Path Wheel Spawn",
+     "rbs": 15.0
+    },
+    {
+     "lane": "Bottom Path Wheel Spawn",
+     "rbs": 14.5
+    },
+    {
+     "lane": "Bottom Path Water Spawn",
+     "rbs": 16.5
+    },
+    {
+     "lane": "Top Moab Path",
+     "rbs": 16.1
+    },
+    {
+     "lane": "Bottom Moab Path",
+     "rbs": 15.7
+    }
+   ],
+   "notes": "Top Path Water Spawn: 16.8; Top Path Wheel Spawn: 15.0; Bottom Path Wheel Spawn: 14.5; Bottom Path Water Spawn: 16.5; Top Moab Path: 16.1; Bottom Moab Path: 15.7"
+  },
+  "entrances": 4,
+  "exits": 2,
+  "indexLength": 15.8,
+  "indexWater": true,
+  "indexLos": true,
+  "removalCost": "$500",
+  "indexObjects": 1,
+  "lcc": {
+   "money": 84070,
+   "version": "57.2",
+   "date": "2026-10-18"
+  },
+  "twoMP": {
+   "count": 41,
+   "complete": true,
+   "entities": [
+    "Adora",
+    "Apache Dartship",
+    "Apache Prime",
+    "Archmage",
+    "Arctic Knight",
+    "Bloon Area Denial System",
+    "Bloon Exclusion Zone",
+    "Bomb Blitz",
+    "Carrier Flagship",
+    "Churchill",
+    "Comanche Commander",
+    "Corvus",
+    "Dark Champion",
+    "Elite Defender",
+    "Flying Fortress",
+    "Geraldo",
+    "Giganotosaurus",
+    "Glaive Lord",
+    "Golden Justice",
+    "Grandmaster Ninja",
+    "Hydra Rocket Pods",
+    "Perma Charge",
+    "Perma-Spike",
+    "Pirate Lord",
+    "Pop And Awe",
+    "Popseidon",
+    "Pouākai",
+    "Robo Monkey",
+    "Rocket Storm",
+    "Rosalia",
+    "Sentry Champion",
+    "Sky Shredder",
+    "Spectre",
+    "Sun Avatar",
+    "Tech Terror",
+    "The Biggest One",
+    "The Blazing Sun",
+    "The Desert Phantom",
+    "Tyrannosaurus Rex",
+    "Ultra-Juggernaut",
+    "Wizard Lord Phoenix"
+   ]
+  }
+ },
+ {
+  "id": "cornfield",
+  "name": "Cornfield",
+  "difficulty": "Advanced",
+  "addedVersion": "1.0",
+  "water": "none",
+  "losBlockers": "heavy",
+  "removables": [
+   {
+    "name": "Corn patch",
+    "cost": 350,
+    "count": 13,
+    "note": "$350-$1,500 each"
+   }
+  ],
+  "paths": 1,
+  "trackLength": 24.1,
+  "trackClass": "medium",
+  "rbsHard": [
+   24.1
+  ],
+  "special": "Thirteen corn patches block LoS.",
+  "easiness": 5,
+  "chimpsFriendly": true,
+  "medals": true,
+  "notes": "Usually seen as the easiest Advanced map. Clearing all 13 patches costs $9,300 (Index).",
+  "unverified": [],
+  "rbs": {
+   "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
+   "avg": 24.1,
+   "lanes": [
+    {
+     "lane": "single lane",
+     "rbs": 24.1
+    }
+   ],
+   "notes": null
+  },
+  "entrances": 1,
+  "exits": 1,
+  "indexLength": 24.1,
+  "indexWater": false,
+  "indexLos": true,
+  "removalCost": "$9,300",
+  "indexObjects": 13,
+  "lcc": {
+   "money": 25910,
+   "version": "52.2",
+   "date": "2025-12-19"
+  },
+  "twoMP": {
+   "count": 116,
+   "complete": false,
+   "entities": [
+    "Abyssal Warrior",
+    "Adora",
+    "Apache Dartship",
+    "Apache Prime",
+    "Arcane Spike",
+    "Archmage",
+    "Arctic Knight",
+    "Artillery Battery",
+    "Avatar Of Wrath",
+    "Avenger",
+    "Base Super",
+    "Blade Maelstrom",
+    "Bloon Area Denial System",
+    "Bloon Crush",
+    "Bloon Exclusion Zone",
+    "Blooncineration",
+    "Bloonjitsu",
+    "Bomb Blitz",
+    "Bouncing Bullet",
+    "Carpet Of Spikes",
+    "Carrier Flagship",
+    "Churchill",
+    "Comanche Commander",
+    "Comanche Defense",
+    "Corvus",
+    "Cripple Moab",
+    "Crossbow Master",
+    "Dan",
+    "Dark Champion",
+    "Dark Knight",
+    "Double Shot",
+    "Dragon's Breath",
+    "Druid Of The Jungle",
+    "Druid Of Wrath",
+    "Elite Defender",
+    "Elite Sniper",
+    "Etienne",
+    "Farwind Seer",
+    "Flying Fortress",
+    "Full Auto Rifle",
+    "Geraldo",
+    "Giant Condor",
+    "Giganotosaurus",
+    "Glaive Lord",
+    "Golden Justice",
+    "Grandmaster Ninja",
+    "Ground Zero",
+    "Gwen",
+    "Hydra Rocket Pods",
+    "Icicle Impale",
+    "Inferno Ring",
+    "Jungle's Bounty",
+    "Laser Cannon",
+    "Lord Of The Abyss",
+    "M.a.d",
+    "Master Bomber",
+    "Moab Domination",
+    "Moab Eliminator",
+    "Moab Press",
+    "Monarch Of Storms",
+    "Neva-Miss Targeting",
+    "Operation: Dart Storm",
+    "Orca",
+    "Overdrive",
+    "Perma Charge",
+    "Perma-Spike",
+    "Plasma Accelerator",
+    "Plasma Monkey Fan Club",
+    "Pop And Awe",
+    "Poplust",
+    "Popseidon",
+    "Pouākai",
+    "Primary Expertise",
+    "Prince Of Darkness",
+    "Quincy",
+    "Ray Of Doom",
+    "Recursive Cluster",
+    "Ring Of Fire",
+    "Robo Monkey",
+    "Rocket Storm",
+    "Rosalia",
+    "Sauda",
+    "Semi Automatic",
+    "Sentry Champion",
+    "Sentry Expert",
+    "Silas",
+    "Sky Shredder",
+    "Special Poperations",
+    "Spectre",
+    "Spiked Mines",
+    "Spirit Of The Forest",
+    "Sticky Bomb",
+    "Summon Phoenix",
+    "Sun Avatar",
+    "Sun Temple",
+    "Super Brittle",
+    "Super Maelstrom",
+    "Super Monkey Fan Club",
+    "Supply Drop",
+    "Symphonic Resonance"
+   ]
+  }
+ },
+ {
+  "id": "dark-path",
+  "name": "Dark Path",
+  "difficulty": "Advanced",
+  "addedVersion": "39.0",
+  "water": "none",
+  "losBlockers": "some",
+  "removables": [
+   {
+    "name": "Cave wall",
+    "cost": 250,
+    "count": 2
+   },
+   {
+    "name": "Cave wall",
+    "cost": 500,
+    "count": 2
+   },
+   {
+    "name": "Cave wall",
+    "cost": 1000,
+    "count": 4,
+    "note": "bloonswiki: 8 walls, 4 per cave (top-left and bottom-right caves), $250/$500/$1,000/$1,000 each cave; full clearance $5,500 (calc: 2x250 + 2x500 + 4x1,000)"
+   }
+  ],
+  "paths": 1,
+  "trackLength": 18.8,
+  "trackClass": "medium",
+  "rbsHard": [
+   18.8
+  ],
+  "special": "Inverted Park Path; 8 cave walls (4 per cave) knock down for $250/$500/$1,000/$1,000 per cave, $5,500 for all (calc).",
+  "easiness": 4,
+  "chimpsFriendly": true,
+  "medals": true,
+  "notes": "Easy tier, about equal to Another Brick and Off The Coast.",
+  "unverified": [],
+  "rbs": {
+   "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
+   "avg": 18.8,
+   "lanes": [
+    {
+     "lane": "single lane",
+     "rbs": 18.8
+    }
+   ],
+   "notes": null
+  },
+  "entrances": 1,
+  "exits": 1,
+  "indexLength": 18.8,
+  "indexWater": false,
+  "indexLos": true,
+  "removalCost": "$0",
+  "indexObjects": 0,
+  "lcc": {
+   "money": 41585,
+   "version": "39.0",
+   "date": "2023-10-12"
+  },
+  "twoMP": {
+   "count": 129,
+   "complete": false,
+   "entities": [
+    "Abyssal Warrior",
+    "Adora",
+    "Apache Dartship",
+    "Apache Prime",
+    "Arcane Spike",
+    "Archmage",
+    "Arctic Knight",
+    "Artillery Battery",
+    "Avatar Of Wrath",
+    "Avenger",
+    "Ball Lightning",
+    "Base Ninja",
+    "Base Super",
+    "Blade Maelstrom",
+    "Bloon Area Denial System",
+    "Bloon Crush",
+    "Bloon Exclusion Zone",
+    "Bloon Impact",
+    "Blooncineration",
+    "Bloonjitsu",
+    "Bomb Blitz",
+    "Bouncing Bullet",
+    "Bounty Hunter",
+    "Carpet Of Spikes",
+    "Carrier Flagship",
+    "Churchill",
+    "Cluster Bombs",
+    "Comanche Commander",
+    "Comanche Defense",
+    "Corvus",
+    "Cripple Moab",
+    "Crossbow Master",
+    "Dan",
+    "Dark Champion",
+    "Dark Knight",
+    "Double Shot",
+    "Dragon's Breath",
+    "Druid Of The Jungle",
+    "Druid Of Wrath",
+    "Elite Defender",
+    "Elite Sniper",
+    "Etienne",
+    "Farwind Seer",
+    "Flash Bomb",
+    "Flying Fortress",
+    "Frozen Verdict",
+    "Full Auto Rifle",
+    "Geraldo",
+    "Giant Condor",
+    "Giganotosaurus",
+    "Glaive Lord",
+    "Golden Justice",
+    "Grand Saboteur",
+    "Grandmaster Ninja",
+    "Great White",
+    "Ground Zero",
+    "Gwen",
+    "Hydra Rocket Pods",
+    "Icicle Impale",
+    "Icicles",
+    "Inferno Ring",
+    "Jones",
+    "Jungle's Bounty",
+    "Lord Of The Abyss",
+    "M.a.d",
+    "Master Bomber",
+    "Megalodon",
+    "Moab Assassin",
+    "Moab Domination",
+    "Moab Eliminator",
+    "Moab Press",
+    "Monarch Of Storms",
+    "Neva-Miss Targeting",
+    "Operation: Dart Storm",
+    "Orca",
+    "Overdrive",
+    "Perma Charge",
+    "Perma-Spike",
+    "Plasma Accelerator",
+    "Plasma Monkey Fan Club",
+    "Pop And Awe",
+    "Poplust",
+    "Popseidon",
+    "Pouākai",
+    "Primary Expertise",
+    "Prince Of Darkness",
+    "Quincy",
+    "Ray Of Doom",
+    "Really Big Bombs",
+    "Recursive Cluster",
+    "Ring Of Fire",
+    "Robo Monkey",
+    "Rocket Storm",
+    "Rosalia",
+    "Sauda",
+    "Semi Automatic",
+    "Sentry Champion",
+    "Shinobi Tactics",
+    "Silas",
+    "Sky Shredder"
+   ]
+  },
+  "conflicts": [
+   {
+    "field": "removables",
+    "index": "0 objects, $0",
+    "other": "bloonswiki: 8 cave walls, $5,500 total (calc)",
+    "source": "kept the wiki wall list: the Index object count evidently excludes the cave walls; removal cost unknown in-game (see 09)",
+    "kept": "wiki"
+   }
+  ]
+ },
+ {
+  "id": "enchanted-glade",
+  "name": "Enchanted Glade",
+  "difficulty": "Advanced",
+  "addedVersion": "47.0",
+  "water": "little",
+  "losBlockers": "heavy",
+  "removables": [],
+  "paths": 2,
+  "trackLength": 14.2,
+  "trackClass": "short",
+  "rbsHard": [
+   14.2,
+   16.8
+  ],
+  "special": "Two alternating lanes that meet at a central portal; water only around one island. Abundant LoS blockers (bloonswiki; Index LoS yes).",
+  "easiness": 4,
+  "chimpsFriendly": false,
+  "medals": true,
+  "notes": "One of the easier Advanced maps.",
+  "unverified": [],
+  "rbs": {
+   "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
+   "avg": 15.5,
+   "lanes": [
+    {
+     "lane": "Left todd",
+     "rbs": 14.2
+    },
+    {
+     "lane": "right steven",
+     "rbs": 16.8
+    }
+   ],
+   "notes": "Left (todd):14.2; right(steven):16.8"
+  },
+  "entrances": 2,
+  "exits": 1,
+  "indexLength": 15.5,
+  "indexWater": true,
+  "indexLos": true,
+  "removalCost": "$0",
+  "indexObjects": 0,
+  "lcc": {
+   "money": 59245,
+   "version": "53.2",
+   "date": "2026-04-09"
+  },
+  "twoMP": {
+   "count": 94,
+   "complete": true,
+   "entities": [
+    "Abyssal Warrior",
+    "Adora",
+    "Aircraft Carrier",
+    "Apache Dartship",
+    "Apache Prime",
+    "Arcane Spike",
+    "Archmage",
+    "Arctic Knight",
+    "Artillery Battery",
+    "Avatar Of Wrath",
+    "Avenger",
+    "Blade Maelstrom",
+    "Bloon Area Denial System",
+    "Bloon Crush",
+    "Bloon Exclusion Zone",
+    "Blooncineration",
+    "Bomb Blitz",
+    "Brickell",
+    "Carrier Flagship",
+    "Churchill",
+    "Comanche Commander",
+    "Corvus",
+    "Cripple Moab",
+    "Crossbow Master",
+    "Dark Champion",
+    "Dark Knight",
+    "Elite Defender",
+    "Elite Sniper",
+    "Etienne",
+    "Farwind Seer",
+    "Flying Fortress",
+    "Full Auto Rifle",
+    "Geraldo",
+    "Giant Condor",
+    "Giganotosaurus",
+    "Glaive Lord",
+    "Golden Justice",
+    "Grandmaster Ninja",
+    "Great White",
+    "Ground Zero",
+    "Icicle Impale",
+    "Inferno Ring",
+    "Lord Of The Abyss",
+    "M.a.d",
+    "Master Bomber",
+    "Megalodon",
+    "Moab Domination",
+    "Moab Eliminator",
+    "Monarch Of Storms",
+    "Operation: Dart Storm",
+    "Orca",
+    "Perma Charge",
+    "Perma-Spike",
+    "Pirate Lord",
+    "Plasma Accelerator",
+    "Plasma Monkey Fan Club",
+    "Pop And Awe",
+    "Popseidon",
+    "Pouākai",
+    "Pre-Emptive Strike",
+    "Primary Expertise",
+    "Prince Of Darkness",
+    "Quincy",
+    "Ray Of Doom",
+    "Recursive Cluster",
+    "Robo Monkey",
+    "Rocket Storm",
+    "Rosalia",
+    "Sauda",
+    "Sentry Champion",
+    "Sky Shredder",
+    "Special Poperations",
+    "Spectre",
+    "Spirit Of The Forest",
+    "Sub Commander",
+    "Summon Phoenix",
+    "Sun Avatar",
+    "Super Maelstrom",
+    "Super Monkey Fan Club",
+    "Tech Terror",
+    "The Anti-Bloon",
+    "The Big One",
+    "The Biggest One",
+    "The Blazing Sun",
+    "The Bloon Solver",
+    "The Desert Phantom",
+    "The Tack Zone",
+    "Tsar Bomba",
+    "Turbo Charge",
+    "Tyrannosaurus Rex",
+    "Ultra-Juggernaut",
+    "Velociraptor",
+    "Wizard Lord Phoenix",
+    "Xxxl Trap"
+   ]
+  }
+ },
+ {
+  "id": "erosion",
+  "name": "Erosion",
+  "difficulty": "Advanced",
+  "addedVersion": "37.0",
+  "water": "little",
+  "losBlockers": "none",
+  "removables": [],
+  "paths": 6,
+  "trackLength": 5.2,
+  "trackClass": "short",
+  "rbsHard": [
+   7.2,
+   9.1,
+   11.9,
+   11.1,
+   7.9,
+   5.2
+  ],
+  "special": "Six very short lanes, one active at a time; after R17 and every 18 rounds the land collapses and sells most land towers on it.",
+  "easiness": 1,
+  "chimpsFriendly": false,
+  "medals": true,
+  "notes": "Brutal in CHIMPS because the forced sale returns $0 there. rbs = shortest and longest lane.",
+  "unverified": [],
+  "rbs": {
+   "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
+   "avg": 8.7,
+   "lanes": [
+    {
+     "lane": "Rounds 1-17",
+     "rbs": 7.2
+    },
+    {
+     "lane": "Rounds 18-35",
+     "rbs": 9.1
+    },
+    {
+     "lane": "Rounds 36-53",
+     "rbs": 11.9
+    },
+    {
+     "lane": "Rounds 54-71",
+     "rbs": 11.1
+    },
+    {
+     "lane": "Rounds 72-89",
+     "rbs": 7.9
+    },
+    {
+     "lane": "Rounds 90+",
+     "rbs": 5.2
+    }
+   ],
+   "notes": "Rounds 1-17: 7.2; Rounds 18-35: 9.1; Rounds 36-53: 11.9; Rounds 54-71: 11.1; Rounds 72-89: 7.9; Rounds 90+: 5.2"
+  },
+  "entrances": 6,
+  "exits": 6,
+  "indexLength": 8.7,
+  "indexWater": true,
+  "indexLos": false,
+  "removalCost": null,
+  "indexObjects": 0,
+  "lcc": {
+   "money": 72125,
+   "version": "44.1",
+   "date": "2024-10-04"
+  },
+  "twoMP": {
+   "count": 67,
+   "complete": true,
+   "entities": [
+    "Adora",
+    "Apache Dartship",
+    "Apache Prime",
+    "Archmage",
+    "Avenger",
+    "Bloon Area Denial System",
+    "Bloon Exclusion Zone",
+    "Blooncineration",
+    "Bomb Blitz",
+    "Brickell",
+    "Carrier Flagship",
+    "Churchill",
+    "Comanche Commander",
+    "Corvus",
+    "Crossbow Master",
+    "Dark Champion",
+    "Elite Defender",
+    "Elite Sniper",
+    "Farwind Seer",
+    "Flying Fortress",
+    "Full Auto Rifle",
+    "Geraldo",
+    "Giganotosaurus",
+    "Glaive Lord",
+    "Golden Justice",
+    "Grandmaster Ninja",
+    "Great White",
+    "Ground Zero",
+    "Hydra Rocket Pods",
+    "Icicle Impale",
+    "Inferno Ring",
+    "Lord Of The Abyss",
+    "M.a.d",
+    "Megalodon",
+    "Monkey Pirates",
+    "Orca",
+    "Perma Charge",
+    "Perma-Spike",
+    "Pirate Lord",
+    "Plasma Accelerator",
+    "Pop And Awe",
+    "Popseidon",
+    "Pouākai",
+    "Pre-Emptive Strike",
+    "Prince Of Darkness",
+    "Quincy",
+    "Ray Of Doom",
+    "Robo Monkey",
+    "Rocket Storm",
+    "Rosalia",
+    "Sauda",
+    "Sentry Champion",
+    "Sky Shredder",
+    "Special Poperations",
+    "Spectre",
+    "Spirit Of The Forest",
+    "Sub Commander",
+    "Sun Avatar",
+    "Super Maelstrom",
+    "Tech Terror",
+    "The Anti-Bloon",
+    "The Blazing Sun",
+    "The Desert Phantom",
+    "The Tack Zone",
+    "Turbo Charge",
+    "Tyrannosaurus Rex",
+    "Wizard Lord Phoenix"
+   ]
+  }
+ },
+ {
+  "id": "geared",
+  "name": "Geared",
+  "difficulty": "Advanced",
+  "addedVersion": "16.0",
+  "water": "none",
+  "losBlockers": "none",
+  "removables": [],
+  "paths": 1,
+  "trackLength": 13.9,
+  "trackClass": "short",
+  "rbsHard": [
+   13.9
+  ],
+  "special": "Two gear platforms rotate every round, carrying your towers.",
+  "easiness": 1,
+  "chimpsFriendly": false,
+  "medals": true,
+  "notes": "Harder than several Expert maps, mostly because of the early game.",
+  "unverified": [],
+  "rbs": {
+   "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
+   "avg": 13.9,
+   "lanes": [
+    {
+     "lane": "single lane",
+     "rbs": 13.9
+    }
+   ],
+   "notes": null
+  },
+  "entrances": 1,
+  "exits": 1,
+  "indexLength": 13.9,
+  "indexWater": false,
+  "indexLos": false,
+  "removalCost": null,
+  "indexObjects": 0,
+  "lcc": {
+   "money": 69940,
+   "version": "38.3",
+   "date": "2023-09-07"
+  },
+  "twoMP": {
+   "count": 48,
+   "complete": true,
+   "entities": [
+    "Adora",
+    "Apache Dartship",
+    "Apache Prime",
+    "Archmage",
+    "Artillery Battery",
+    "Avenger",
+    "Bloon Area Denial System",
+    "Bloon Exclusion Zone",
+    "Blooncineration",
+    "Bomb Blitz",
+    "Comanche Commander",
+    "Comanche Defense",
+    "Corvus",
+    "Cripple Moab",
+    "Dark Champion",
+    "Dark Knight",
+    "Elite Defender",
+    "Elite Sniper",
+    "Farwind Seer",
+    "Flying Fortress",
+    "Full Auto Rifle",
+    "Geraldo",
+    "Giganotosaurus",
+    "M.a.d",
+    "Perma Charge",
+    "Perma-Spike",
+    "Plasma Accelerator",
+    "Pop And Awe",
+    "Popseidon",
+    "Pouākai",
+    "Ray Of Doom",
+    "Robo Monkey",
+    "Rocket Storm",
+    "Rosalia",
+    "Sentry Champion",
+    "Sky Shredder",
+    "Special Poperations",
+    "Spectre",
+    "Sun Avatar",
+    "Super Maelstrom",
+    "Tech Terror",
+    "The Biggest One",
+    "The Desert Phantom",
+    "The Tack Zone",
+    "Tsar Bomba",
+    "Tyrannosaurus Rex",
+    "Velociraptor",
+    "Wizard Lord Phoenix"
+   ]
+  }
+ },
+ {
+  "id": "high-finance",
+  "name": "High Finance",
+  "difficulty": "Advanced",
+  "addedVersion": "3.0",
+  "water": "little",
+  "losBlockers": "some",
+  "removables": [
+   {
+    "name": "Plot",
+    "cost": 350,
+    "count": 15,
+    "note": "$350-$1,500 each"
+   }
+  ],
+  "paths": 2,
+  "trackLength": 15.5,
+  "trackClass": "medium",
+  "rbsHard": [
+   15.5,
+   27.4
+  ],
+  "special": "Two alternating lanes; pond split by a bridge.",
+  "easiness": 3,
+  "chimpsFriendly": false,
+  "medals": true,
+  "notes": "Average. Clearing all 15 plots costs $12,550 (Index).",
+  "unverified": [],
+  "rbs": {
+   "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
+   "avg": 21.5,
+   "lanes": [
+    {
+     "lane": "U Shape Path",
+     "rbs": 15.5
+    },
+    {
+     "lane": "S Shape Path",
+     "rbs": 27.4
+    }
+   ],
+   "notes": "U Shape Path: 15.5; S Shape Path: 27.4"
+  },
+  "entrances": 2,
+  "exits": 2,
+  "indexLength": 21.5,
+  "indexWater": true,
+  "indexLos": true,
+  "removalCost": "$12,550",
+  "indexObjects": 15,
+  "lcc": {
+   "money": 42100,
+   "version": "49.3",
+   "date": "2025-07-16"
+  },
+  "twoMP": {
+   "count": 91,
+   "complete": true,
+   "entities": [
+    "Adora",
+    "Aircraft Carrier",
+    "Apache Dartship",
+    "Apache Prime",
+    "Arcane Spike",
+    "Archmage",
+    "Arctic Knight",
+    "Artillery Battery",
+    "Avatar Of Wrath",
+    "Avenger",
+    "Base Super",
+    "Bloon Area Denial System",
+    "Bloon Exclusion Zone",
+    "Blooncineration",
+    "Bomb Blitz",
+    "Bouncing Bullet",
+    "Brickell",
+    "Carrier Flagship",
+    "Churchill",
+    "Comanche Commander",
+    "Comanche Defense",
+    "Corvus",
+    "Cripple Moab",
+    "Crossbow Master",
+    "Dark Champion",
+    "Dark Knight",
+    "Destroyer",
+    "Elite Defender",
+    "Elite Sniper",
+    "Farwind Seer",
+    "Flying Fortress",
+    "Full Auto Rifle",
+    "Geraldo",
+    "Giant Condor",
+    "Giganotosaurus",
+    "Glaive Lord",
+    "Golden Justice",
+    "Grandmaster Ninja",
+    "Great White",
+    "Ground Zero",
+    "Hydra Rocket Pods",
+    "Icicle Impale",
+    "Inferno Ring",
+    "Lord Of The Abyss",
+    "M.a.d",
+    "Megalodon",
+    "Moab Domination",
+    "Monarch Of Storms",
+    "Monkey Pirates",
+    "Neva-Miss Targeting",
+    "Operation: Dart Storm",
+    "Orca",
+    "Perma Charge",
+    "Perma-Spike",
+    "Pirate Lord",
+    "Plasma Accelerator",
+    "Pop And Awe",
+    "Popseidon",
+    "Pouākai",
+    "Pre-Emptive Strike",
+    "Prince Of Darkness",
+    "Quincy",
+    "Ray Of Doom",
+    "Robo Monkey",
+    "Rocket Storm",
+    "Rosalia",
+    "Sauda",
+    "Sentry Champion",
+    "Sky Shredder",
+    "Special Poperations",
+    "Spectre",
+    "Spirit Of The Forest",
+    "Sub Commander",
+    "Summon Phoenix",
+    "Sun Avatar",
+    "Sun Temple",
+    "Super Maelstrom",
+    "Supply Drop",
+    "Tech Terror",
+    "The Anti-Bloon",
+    "The Biggest One",
+    "The Blazing Sun",
+    "The Bloon Solver",
+    "The Desert Phantom",
+    "The Tack Zone",
+    "Tsar Bomba",
+    "Turbo Charge",
+    "Tyrannosaurus Rex",
+    "Ultra-Juggernaut",
+    "Velociraptor",
+    "Wizard Lord Phoenix"
+   ]
+  }
+ },
+ {
+  "id": "last-resort",
+  "name": "Last Resort",
+  "difficulty": "Advanced",
+  "addedVersion": "46.0",
+  "water": "little",
+  "losBlockers": "some",
+  "removables": [
+   {
+    "name": "Frozen pond",
+    "cost": 1000,
+    "count": 1
+   }
+  ],
+  "paths": 4,
+  "trackLength": 9.5,
+  "trackClass": "short",
+  "rbsHard": [
+   9.5,
+   12.1,
+   15.2,
+   18.5
+  ],
+  "special": "One entrance; bloons take one of four loops depending on the round and move faster on longer loops.",
+  "easiness": 2,
+  "chimpsFriendly": false,
+  "medals": true,
+  "notes": "Moderately hard. rbs = shortest and longest loop.",
+  "unverified": [],
+  "rbs": {
+   "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
+   "avg": 13.8,
+   "lanes": [
+    {
+     "lane": "line rounds",
+     "rbs": 9.5
+    },
+    {
+     "lane": "small loop",
+     "rbs": 12.1
+    },
+    {
+     "lane": "medium loop",
+     "rbs": 15.2
+    },
+    {
+     "lane": "big loop",
+     "rbs": 18.5
+    }
+   ],
+   "notes": "line rounds=9.5; small loop = 12.1; medium loop = 15.2; big loop = 18.5"
+  },
+  "entrances": 4,
+  "exits": 4,
+  "indexLength": 13.8,
+  "indexWater": true,
+  "indexLos": true,
+  "removalCost": "$1,000",
+  "indexObjects": 1,
+  "lcc": {
+   "money": 63210,
+   "version": "48.2",
+   "date": "2025-06-07"
+  },
+  "twoMP": {
+   "count": 65,
+   "complete": true,
+   "entities": [
+    "Adora",
+    "Apache Dartship",
+    "Apache Prime",
+    "Archmage",
+    "Arctic Knight",
+    "Avenger",
+    "Bloon Area Denial System",
+    "Bloon Exclusion Zone",
+    "Blooncineration",
+    "Bomb Blitz",
+    "Carrier Flagship",
+    "Churchill",
+    "Comanche Commander",
+    "Corvus",
+    "Cripple Moab",
+    "Crossbow Master",
+    "Dark Champion",
+    "Elite Defender",
+    "Farwind Seer",
+    "Flying Fortress",
+    "Full Auto Rifle",
+    "Geraldo",
+    "Giant Condor",
+    "Giganotosaurus",
+    "Glaive Lord",
+    "Golden Justice",
+    "Icicle Impale",
+    "Inferno Ring",
+    "Lord Of The Abyss",
+    "M.a.d",
+    "Megalodon",
+    "Moab Domination",
+    "Monarch Of Storms",
+    "Orca",
+    "Perma Charge",
+    "Perma-Spike",
+    "Pirate Lord",
+    "Pop And Awe",
+    "Popseidon",
+    "Pouākai",
+    "Pre-Emptive Strike",
+    "Prince Of Darkness",
+    "Quincy",
+    "Ray Of Doom",
+    "Robo Monkey",
+    "Rocket Storm",
+    "Rosalia",
+    "Sauda",
+    "Sentry Champion",
+    "Sky Shredder",
+    "Special Poperations",
+    "Spectre",
+    "Spirit Of The Forest",
+    "Sub Commander",
+    "Sun Avatar",
+    "Super Maelstrom",
+    "Super Monkey Fan Club",
+    "Tech Terror",
+    "The Anti-Bloon",
+    "The Biggest One",
+    "The Desert Phantom",
+    "The Tack Zone",
+    "Triple Shot",
+    "Tyrannosaurus Rex",
+    "Wizard Lord Phoenix"
+   ]
+  }
+ },
+ {
+  "id": "mesa",
+  "name": "Mesa",
+  "difficulty": "Advanced",
+  "addedVersion": "20.0",
+  "water": "none",
+  "losBlockers": "heavy",
+  "removables": [
+   {
+    "name": "Hoodoo",
+    "cost": 500,
+    "count": 3
+   }
+  ],
+  "paths": 2,
+  "trackLength": 11.0,
+  "trackClass": "short",
+  "rbsHard": [
+   14.4,
+   11.0
+  ],
+  "special": "Two lanes active together.",
+  "easiness": 2,
+  "chimpsFriendly": false,
+  "medals": true,
+  "notes": "One of the most difficult Advanced maps.",
+  "unverified": [],
+  "rbs": {
+   "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
+   "avg": 12.7,
+   "lanes": [
+    {
+     "lane": "Top Path",
+     "rbs": 14.4
+    },
+    {
+     "lane": "Bottom Path",
+     "rbs": 11.0
+    }
+   ],
+   "notes": "Top Path: 14.4; Bottom Path: 11.0"
+  },
+  "entrances": 2,
+  "exits": 2,
+  "indexLength": 12.7,
+  "indexWater": false,
+  "indexLos": true,
+  "removalCost": "$1,500",
+  "indexObjects": 3,
+  "lcc": {
+   "money": 71025,
+   "version": "44.1",
+   "date": "2024-08-09"
+  },
+  "twoMP": {
+   "count": 56,
+   "complete": true,
+   "entities": [
+    "Adora",
+    "Apache Dartship",
+    "Apache Prime",
+    "Archmage",
+    "Arctic Knight",
+    "Avatar Of Wrath",
+    "Avenger",
+    "Bloon Area Denial System",
+    "Bloon Exclusion Zone",
+    "Bloonjitsu",
+    "Bomb Blitz",
+    "Churchill",
+    "Comanche Commander",
+    "Corvus",
+    "Cripple Moab",
+    "Crossbow Master",
+    "Dark Champion",
+    "Dark Knight",
+    "Elite Defender",
+    "Farwind Seer",
+    "Flying Fortress",
+    "Full Auto Rifle",
+    "Geraldo",
+    "Glaive Lord",
+    "Golden Justice",
+    "Grandmaster Ninja",
+    "Inferno Ring",
+    "Lord Of The Abyss",
+    "Moab Domination",
+    "Perma Charge",
+    "Perma-Spike",
+    "Plasma Accelerator",
+    "Pop And Awe",
+    "Popseidon",
+    "Pouākai",
+    "Robo Monkey",
+    "Rocket Storm",
+    "Rosalia",
+    "Sauda",
+    "Sentry Champion",
+    "Sky Shredder",
+    "Special Poperations",
+    "Spectre",
+    "Spirit Of The Forest",
+    "Sun Avatar",
+    "Sun Temple",
+    "Super Maelstrom",
+    "Tech Terror",
+    "The Anti-Bloon",
+    "The Biggest One",
+    "The Desert Phantom",
+    "The Tack Zone",
+    "Turbo Charge",
+    "Tyrannosaurus Rex",
+    "Ultra-Juggernaut",
+    "Wizard Lord Phoenix"
+   ]
+  }
+ },
+ {
+  "id": "midnight-mansion",
+  "name": "Midnight Mansion",
+  "difficulty": "Advanced",
+  "addedVersion": "33.0",
+  "water": "none",
+  "losBlockers": "some",
+  "removables": [
+   {
+    "name": "Drawer",
+    "cost": 250,
+    "count": 2
+   }
+  ],
+  "paths": 2,
+  "trackLength": 17.3,
+  "trackClass": "medium",
+  "rbsHard": [
+   17.3,
+   17.3
+  ],
+  "special": "Two overlapping lanes; rotating flames block LoS.",
+  "easiness": 3,
+  "chimpsFriendly": false,
+  "medals": true,
+  "notes": "Hardest map for Freeplay (no farm space).",
+  "unverified": [],
+  "rbs": {
+   "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
+   "avg": 17.3,
+   "lanes": [
+    {
+     "lane": "Left Entrance",
+     "rbs": 17.3
+    },
+    {
+     "lane": "Right Entrance",
+     "rbs": 17.3
+    }
+   ],
+   "notes": "Left Entrance: 17.3; Right Entrance: 17.3"
+  },
+  "entrances": 2,
+  "exits": 2,
+  "indexLength": 17.3,
+  "indexWater": false,
+  "indexLos": true,
+  "removalCost": "$500",
+  "indexObjects": 2,
+  "lcc": {
+   "money": 55050,
+   "version": "39.1",
+   "date": "2023-10-26"
+  },
+  "twoMP": {
+   "count": 41,
+   "complete": true,
+   "entities": [
+    "Adora",
+    "Archmage",
+    "Avatar Of Wrath",
+    "Avenger",
+    "Bloon Exclusion Zone",
+    "Bomb Blitz",
+    "Corvus",
+    "Crossbow Master",
+    "Elite Defender",
+    "Elite Sniper",
+    "Farwind Seer",
+    "Flying Fortress",
+    "Geraldo",
+    "Giganotosaurus",
+    "Glaive Lord",
+    "Golden Justice",
+    "Overdrive",
+    "Perma Charge",
+    "Perma-Spike",
+    "Pop And Awe",
+    "Popseidon",
+    "Pouākai",
+    "Robo Monkey",
+    "Rosalia",
+    "Sauda",
+    "Sentry Champion",
+    "Sky Shredder",
+    "Spectre",
+    "Spirit Of The Forest",
+    "Summon Phoenix",
+    "Sun Avatar",
+    "Super Maelstrom",
+    "Super Monkey Fan Club",
+    "Tech Terror",
+    "The Desert Phantom",
+    "The Tack Zone",
+    "Triple Shot",
+    "Tsar Bomba",
+    "Tyrannosaurus Rex",
+    "Velociraptor",
+    "Wizard Lord Phoenix"
+   ]
+  }
+ },
+ {
+  "id": "mushroom-grotto",
+  "name": "Mushroom Grotto",
+  "difficulty": "Advanced",
+  "addedVersion": "54.0",
+  "water": "none",
+  "losBlockers": "heavy",
+  "removables": [
+   {
+    "name": "Mushroom patch (light)",
+    "cost": 250,
+    "count": 4
+   },
+   {
+    "name": "Large mushroom",
+    "cost": 400,
+    "count": 1
+   }
+  ],
+  "paths": 2,
+  "trackLength": 18.6,
+  "trackClass": "medium",
+  "rbsHard": [
+   18.6,
+   18.8
+  ],
+  "special": "Darkness: towers cannot see into or be placed in the dark until you light mushroom patches.",
+  "easiness": 2,
+  "chimpsFriendly": false,
+  "medals": true,
+  "notes": "Hardest in the early game.",
+  "unverified": [],
+  "rbs": {
+   "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
+   "avg": 18.7,
+   "lanes": [
+    {
+     "lane": "Left",
+     "rbs": 18.6
+    },
+    {
+     "lane": "Right",
+     "rbs": 18.8
+    }
+   ],
+   "notes": "18.6 Left; 18.8 Right"
+  },
+  "entrances": 2,
+  "exits": 2,
+  "indexLength": 18.7,
+  "indexWater": false,
+  "indexLos": true,
+  "removalCost": "$1,400",
+  "indexObjects": 5,
+  "lcc": null,
+  "twoMP": {
+   "count": 42,
+   "complete": true,
+   "entities": [
+    "Adora",
+    "Apache Prime",
+    "Archmage",
+    "Avatar Of Wrath",
+    "Avenger",
+    "Bloon Area Denial System",
+    "Bloon Exclusion Zone",
+    "Bomb Blitz",
+    "Churchill",
+    "Comanche Commander",
+    "Corvus",
+    "Crossbow Master",
+    "Dark Champion",
+    "Elite Defender",
+    "Flying Fortress",
+    "Geraldo",
+    "Giganotosaurus",
+    "Glaive Lord",
+    "Golden Justice",
+    "Grandmaster Ninja",
+    "Inferno Ring",
+    "Lord Of The Abyss",
+    "Monarch Of Storms",
+    "Perma Charge",
+    "Perma-Spike",
+    "Plasma Accelerator",
+    "Popseidon",
+    "Pouākai",
+    "Ray Of Doom",
+    "Robo Monkey",
+    "Rocket Storm",
+    "Sentry Champion",
+    "Sky Shredder",
+    "Spectre",
+    "Sun Avatar",
+    "Super Maelstrom",
+    "Tech Terror",
+    "The Anti-Bloon",
+    "The Desert Phantom",
+    "Tsar Bomba",
+    "Tyrannosaurus Rex",
+    "Wizard Lord Phoenix"
+   ]
+  }
+ },
+ {
+  "id": "off-the-coast",
+  "name": "Off The Coast",
+  "difficulty": "Advanced",
+  "addedVersion": "1.0",
+  "water": "lots",
+  "losBlockers": "none",
+  "removables": [],
+  "paths": 1,
+  "trackLength": 19.3,
+  "trackClass": "medium",
+  "rbsHard": [
+   19.3
+  ],
+  "special": "Beach and ocean; the crane slightly blocks LoS.",
+  "easiness": 5,
+  "chimpsFriendly": true,
+  "medals": true,
+  "notes": "One of the easiest Advanced maps; good CHIMPS.",
+  "unverified": [],
+  "rbs": {
+   "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
+   "avg": 19.3,
+   "lanes": [
+    {
+     "lane": "single lane",
+     "rbs": 19.3
+    }
+   ],
+   "notes": null
+  },
+  "entrances": 1,
+  "exits": 1,
+  "indexLength": 19.3,
+  "indexWater": true,
+  "indexLos": false,
+  "removalCost": null,
+  "indexObjects": 0,
+  "lcc": {
+   "money": 44490,
+   "version": "44.1",
+   "date": "2024-09-09"
+  },
+  "twoMP": {
+   "count": 114,
+   "complete": false,
+   "entities": [
+    "Abyssal Warrior",
+    "Adora",
+    "Aircraft Carrier",
+    "Apache Dartship",
+    "Apache Prime",
+    "Arcane Spike",
+    "Archmage",
+    "Arctic Knight",
+    "Armor Piercing Darts",
+    "Artillery Battery",
+    "Avatar Of Wrath",
+    "Avenger",
+    "Base Super",
+    "Blade Maelstrom",
+    "Bloon Area Denial System",
+    "Bloon Crush",
+    "Bloon Exclusion Zone",
+    "Blooncineration",
+    "Bloonjitsu",
+    "Bomb Blitz",
+    "Bouncing Bullet",
+    "Brickell",
+    "Carpet Of Spikes",
+    "Carrier Flagship",
+    "Churchill",
+    "Comanche Commander",
+    "Comanche Defense",
+    "Corvus",
+    "Cripple Moab",
+    "Crossbow Master",
+    "Dark Champion",
+    "Dark Knight",
+    "Destroyer",
+    "Double Shot",
+    "Druid Of Wrath",
+    "Elite Defender",
+    "Elite Sniper",
+    "Etienne",
+    "Farwind Seer",
+    "First Strike Capability",
+    "Flying Fortress",
+    "Full Auto Rifle",
+    "Geraldo",
+    "Giant Condor",
+    "Giganotosaurus",
+    "Glaive Lord",
+    "Golden Justice",
+    "Grandmaster Ninja",
+    "Great White",
+    "Ground Zero",
+    "Hydra Rocket Pods",
+    "Icicle Impale",
+    "Inferno Ring",
+    "Laser Cannon",
+    "Lord Of The Abyss",
+    "M.a.d",
+    "Master Bomber",
+    "Megalodon",
+    "Moab Domination",
+    "Moab Eliminator",
+    "Monarch Of Storms",
+    "Monkey Pirates",
+    "Neva-Miss Targeting",
+    "Operation: Dart Storm",
+    "Orca",
+    "Overdrive",
+    "Perma Charge",
+    "Perma-Spike",
+    "Pirate Lord",
+    "Plasma Accelerator",
+    "Pop And Awe",
+    "Poplust",
+    "Popseidon",
+    "Pouākai",
+    "Pre-Emptive Strike",
+    "Primary Expertise",
+    "Prince Of Darkness",
+    "Quincy",
+    "Ray Of Doom",
+    "Recursive Cluster",
+    "Robo Monkey",
+    "Rocket Storm",
+    "Rosalia",
+    "Sauda",
+    "Semi Automatic",
+    "Sentry Champion",
+    "Silas",
+    "Sky Shredder",
+    "Special Poperations",
+    "Spectre",
+    "Spirit Of The Forest",
+    "Sub Commander",
+    "Summon Phoenix",
+    "Sun Avatar",
+    "Sun Temple",
+    "Super Glue",
+    "Super Maelstrom",
+    "Super Monkey Fan Club",
+    "Supply Drop",
+    "Tech Terror"
+   ]
+  },
+  "conflicts": [
+   {
+    "field": "losBlockers",
+    "index": false,
+    "other": "some (bloonswiki: the crane and two cliffs at the top slightly block LoS (group-3))",
+    "source": "Index haslos is a yes/no flag; \"slight\" blockers may be counted as no",
+    "kept": "index"
+   }
+  ]
+ },
+ {
+  "id": "party-parade",
+  "name": "Party Parade",
+  "difficulty": "Advanced",
+  "addedVersion": "53.0",
+  "water": "none",
+  "losBlockers": "heavy",
+  "removables": [],
+  "paths": 2,
+  "trackLength": 11.3,
+  "trackClass": "short",
+  "rbsHard": [
+   11.3,
+   11.3
+  ],
+  "special": "Two fully separated lanes; a wide central wall blocks placement and LoS, so no single range circle covers both lanes.",
+  "easiness": 2,
+  "chimpsFriendly": false,
+  "medals": true,
+  "notes": "One of the harder Advanced maps, \"debatably a casual Expert\".",
+  "unverified": [],
+  "rbs": {
+   "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
+   "avg": 11.3,
+   "lanes": [
+    {
+     "lane": "Left",
+     "rbs": 11.3
+    },
+    {
+     "lane": "Right",
+     "rbs": 11.3
+    }
+   ],
+   "notes": "Left: 11.3; Right: 11.3"
+  },
+  "entrances": 2,
+  "exits": 2,
+  "indexLength": 11.3,
+  "indexWater": false,
+  "indexLos": true,
+  "removalCost": "$0",
+  "indexObjects": 0,
+  "lcc": {
+   "money": 86870,
+   "version": "57.3",
+   "date": "2026-10-21"
+  },
+  "twoMP": {
+   "count": 24,
+   "complete": true,
+   "entities": [
+    "Adora",
+    "Apache Dartship",
+    "Apache Prime",
+    "Archmage",
+    "Bloon Exclusion Zone",
+    "Comanche Commander",
+    "Corvus",
+    "Elite Defender",
+    "Flying Fortress",
+    "Geraldo",
+    "Glaive Lord",
+    "Perma-Spike",
+    "Pop And Awe",
+    "Pouākai",
+    "Robo Monkey",
+    "Rosalia",
+    "Sky Shredder",
+    "Spectre",
+    "Sun Avatar",
+    "Tech Terror",
+    "The Desert Phantom",
+    "Tsar Bomba",
+    "Tyrannosaurus Rex",
+    "Wizard Lord Phoenix"
+   ]
+  }
+ },
+ {
+  "id": "pats-pond",
+  "name": "Pat's Pond",
+  "difficulty": "Advanced",
+  "addedVersion": "9.0",
+  "water": "lots",
+  "losBlockers": "some",
+  "removables": [
+   {
+    "name": "Tree or rock",
+    "cost": 500,
+    "count": 4
+   }
+  ],
+  "paths": 2,
+  "trackLength": 13.7,
+  "trackClass": "short",
+  "rbsHard": [
+   13.7,
+   14.4
+  ],
+  "special": "Two lanes that split far apart in the middle; large pond.",
+  "easiness": 3,
+  "chimpsFriendly": false,
+  "medals": true,
+  "notes": "",
+  "unverified": [],
+  "rbs": {
+   "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
+   "avg": 14.1,
+   "lanes": [
+    {
+     "lane": "Top Path",
+     "rbs": 13.7
+    },
+    {
+     "lane": "Bottom Path",
+     "rbs": 14.4
+    }
+   ],
+   "notes": "Top Path: 13.7; Bottom Path: 14.4"
+  },
+  "entrances": 2,
+  "exits": 2,
+  "indexLength": 14.1,
+  "indexWater": true,
+  "indexLos": true,
+  "removalCost": "$2,000",
+  "indexObjects": 4,
+  "lcc": {
+   "money": 72635,
+   "version": "49.3",
+   "date": "2025-07-05"
+  },
+  "twoMP": {
+   "count": 61,
+   "complete": true,
+   "entities": [
+    "Adora",
+    "Aircraft Carrier",
+    "Apache Dartship",
+    "Apache Prime",
+    "Archmage",
+    "Arctic Knight",
+    "Avatar Of Wrath",
+    "Avenger",
+    "Bloon Area Denial System",
+    "Bloon Exclusion Zone",
+    "Bloonjitsu",
+    "Bomb Blitz",
+    "Carrier Flagship",
+    "Churchill",
+    "Comanche Commander",
+    "Corvus",
+    "Cripple Moab",
+    "Crossbow Master",
+    "Dark Champion",
+    "Dark Knight",
+    "Elite Defender",
+    "Geraldo",
+    "Giganotosaurus",
+    "Glaive Lord",
+    "Golden Justice",
+    "Grandmaster Ninja",
+    "Great White",
+    "Inferno Ring",
+    "Lord Of The Abyss",
+    "Megalodon",
+    "Moab Domination",
+    "Orca",
+    "Overdrive",
+    "Perma Charge",
+    "Perma-Spike",
+    "Pirate Lord",
+    "Plasma Accelerator",
+    "Pop And Awe",
+    "Popseidon",
+    "Pouākai",
+    "Pre-Emptive Strike",
+    "Robo Monkey",
+    "Rosalia",
+    "Sauda",
+    "Sentry Champion",
+    "Sky Shredder",
+    "Spectre",
+    "Spirit Of The Forest",
+    "Sub Commander",
+    "Summon Phoenix",
+    "Sun Avatar",
+    "Sun Temple",
+    "Super Maelstrom",
+    "Tech Terror",
+    "The Anti-Bloon",
+    "The Desert Phantom",
+    "The Tack Zone",
+    "Turbo Charge",
+    "Tyrannosaurus Rex",
+    "Velociraptor",
+    "Wizard Lord Phoenix"
+   ]
+  }
+ },
+ {
+  "id": "peninsula",
+  "name": "Peninsula",
+  "difficulty": "Advanced",
+  "addedVersion": "7.0",
+  "water": "lots",
+  "losBlockers": "heavy",
+  "removables": [
+   {
+    "name": "Seaweed plot",
+    "cost": 500,
+    "count": 3
+   }
+  ],
+  "paths": 1,
+  "trackLength": 14.2,
+  "trackClass": "short",
+  "rbsHard": [
+   14.2
+  ],
+  "special": "Over 80% of placeable space is water-only; the mountain blocks LoS.",
+  "easiness": 2,
+  "chimpsFriendly": false,
+  "medals": true,
+  "notes": "Moderately hard. Wiki: the central mountain \"blocks line-of-sight severely\".",
+  "unverified": [],
+  "rbs": {
+   "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
+   "avg": 14.2,
+   "lanes": [
+    {
+     "lane": "single lane",
+     "rbs": 14.2
+    }
+   ],
+   "notes": null
+  },
+  "entrances": 1,
+  "exits": 1,
+  "indexLength": 14.2,
+  "indexWater": true,
+  "indexLos": true,
+  "removalCost": "$1,500",
+  "indexObjects": 3,
+  "lcc": {
+   "money": 50945,
+   "version": "31.1",
+   "date": "2022-05-04"
+  },
+  "twoMP": {
+   "count": 92,
+   "complete": true,
+   "entities": [
+    "Adora",
+    "Aircraft Carrier",
+    "Apache Dartship",
+    "Apache Prime",
+    "Arcane Spike",
+    "Archmage",
+    "Arctic Knight",
+    "Armor Piercing Darts",
+    "Artillery Battery",
+    "Avatar Of Wrath",
+    "Avenger",
+    "Base Super",
+    "Bloon Area Denial System",
+    "Bloon Exclusion Zone",
+    "Blooncineration",
+    "Bloonjitsu",
+    "Bomb Blitz",
+    "Bouncing Bullet",
+    "Brickell",
+    "Carpet Of Spikes",
+    "Carrier Flagship",
+    "Churchill",
+    "Comanche Commander",
+    "Comanche Defense",
+    "Corvus",
+    "Cripple Moab",
+    "Crossbow Master",
+    "Dark Champion",
+    "Dark Knight",
+    "Elite Defender",
+    "Elite Sniper",
+    "Farwind Seer",
+    "First Strike Capability",
+    "Flying Fortress",
+    "Full Auto Rifle",
+    "Geraldo",
+    "Giganotosaurus",
+    "Glaive Lord",
+    "Golden Justice",
+    "Grandmaster Ninja",
+    "Great White",
+    "Ground Zero",
+    "Hydra Rocket Pods",
+    "Icicle Impale",
+    "Inferno Ring",
+    "Lord Of The Abyss",
+    "M.a.d",
+    "Megalodon",
+    "Moab Domination",
+    "Monarch Of Storms",
+    "Monkey Pirates",
+    "Neva-Miss Targeting",
+    "Operation: Dart Storm",
+    "Orca",
+    "Perma Charge",
+    "Perma-Spike",
+    "Pirate Lord",
+    "Plasma Accelerator",
+    "Pop And Awe",
+    "Popseidon",
+    "Pouākai",
+    "Pre-Emptive Strike",
+    "Prince Of Darkness",
+    "Quincy",
+    "Ray Of Doom",
+    "Recursive Cluster",
+    "Robo Monkey",
+    "Rocket Storm",
+    "Rosalia",
+    "Sauda",
+    "Sentry Champion",
+    "Sky Shredder",
+    "Special Poperations",
+    "Spectre",
+    "Spirit Of The Forest",
+    "Sub Commander",
+    "Sun Avatar",
+    "Sun Temple",
+    "Super Maelstrom",
+    "Supply Drop",
+    "Tech Terror",
+    "The Anti-Bloon",
+    "The Biggest One",
+    "The Blazing Sun",
+    "The Bloon Solver",
+    "The Desert Phantom",
+    "The Tack Zone",
+    "Tsar Bomba",
+    "Turbo Charge",
+    "Tyrannosaurus Rex",
+    "Velociraptor",
+    "Wizard Lord Phoenix"
+   ]
+  }
+ },
+ {
+  "id": "ship-capture",
+  "name": "Ship Capture",
+  "difficulty": "Advanced",
+  "addedVersion": "57.0",
+  "water": "little",
+  "losBlockers": "some",
+  "removables": [
+   {
+    "name": "Hatch",
+    "cost": 1000,
+    "count": 1,
+    "note": "reveals water"
+   }
+  ],
+  "paths": 4,
+  "trackLength": 8.2,
+  "trackClass": "short",
+  "rbsHard": [
+   8.2,
+   10.6
+  ],
+  "special": "Pirate ships drop planks onto four short lanes that merge into two exits; left and right ships alternate every 5 rounds; both attack from R45. Crow's nest holds 5 small towers.",
+  "easiness": 3,
+  "chimpsFriendly": false,
+  "medals": true,
+  "notes": "Tier settled: Advanced (official v57 store notes: \"New Advanced map Ship Capture\"; also the wiki). The older \"Intermediate\" reading of the patch text is not supported. rbs = shortest and longest lane.",
+  "unverified": [
+   "water amount"
+  ],
+  "rbs": {
+   "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
+   "avg": null,
+   "lanes": [],
+   "notes": "Index has no measurement (length 0 = unmeasured)"
+  },
+  "entrances": 4,
+  "exits": 2,
+  "indexLength": null,
+  "indexWater": true,
+  "indexLos": true,
+  "removalCost": "$0",
+  "indexObjects": 0,
+  "lcc": null,
+  "twoMP": {
+   "count": 43,
+   "complete": true,
+   "entities": [
+    "Apache Dartship",
+    "Apache Prime",
+    "Archmage",
+    "Avenger",
+    "Bloon Area Denial System",
+    "Bloon Exclusion Zone",
+    "Bomb Blitz",
+    "Carrier Flagship",
+    "Churchill",
+    "Comanche Commander",
+    "Crossbow Master",
+    "Dark Champion",
+    "Elite Defender",
+    "Flying Fortress",
+    "Geraldo",
+    "Glaive Lord",
+    "Grandmaster Ninja",
+    "Inferno Ring",
+    "Lord Of The Abyss",
+    "M.a.d",
+    "Master Bomber",
+    "Moab Domination",
+    "Monarch Of Storms",
+    "Perma Charge",
+    "Perma-Spike",
+    "Pirate Lord",
+    "Popseidon",
+    "Pouākai",
+    "Ray Of Doom",
+    "Robo Monkey",
+    "Rocket Storm",
+    "Rosalia",
+    "Sentry Champion",
+    "Sky Shredder",
+    "Spectre",
+    "Sub Commander",
+    "Sun Avatar",
+    "Tech Terror",
+    "The Anti-Bloon",
+    "The Desert Phantom",
+    "The Tack Zone",
+    "Tyrannosaurus Rex",
+    "Wizard Lord Phoenix"
+   ]
+  },
+  "trackLengthNote": "Index has no measurement for this map yet; wiki value kept.",
+  "conflicts": [
+   {
+    "field": "removables",
+    "index": "0 objects, $0 (Index length is also 0 = unmeasured)",
+    "other": "ch04/ch06b: $1,000 hatch that reveals water",
+    "source": "kept ours: the Index entry for this v57 map looks unfilled",
+    "kept": "ours"
+   }
+  ]
+ },
+ {
+  "id": "spillway",
+  "name": "Spillway",
+  "difficulty": "Advanced",
+  "addedVersion": "12.0",
+  "water": "little",
+  "losBlockers": "some",
+  "removables": [
+   {
+    "name": "Valve",
+    "cost": 2000,
+    "count": 4
+   }
+  ],
+  "paths": 4,
+  "trackLength": 22.3,
+  "trackClass": "medium",
+  "rbsHard": [
+   22.3,
+   23.5,
+   23.5,
+   22.4
+  ],
+  "special": "Four lanes active together meeting at a central loop; one central barrel water spot.",
+  "easiness": 3,
+  "chimpsFriendly": false,
+  "medals": true,
+  "notes": "Not especially hard.",
+  "unverified": [],
+  "rbs": {
+   "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
+   "avg": 22.9,
+   "lanes": [
+    {
+     "lane": "Top Left Entrance",
+     "rbs": 22.3
+    },
+    {
+     "lane": "Top Right Entrance",
+     "rbs": 23.5
+    },
+    {
+     "lane": "Bottom Left Entrance",
+     "rbs": 23.5
+    },
+    {
+     "lane": "Bottom Right Entrance",
+     "rbs": 22.4
+    }
+   ],
+   "notes": "Top Left Entrance: 22.3; Top Right Entrance: 23.5; Bottom Left Entrance: 23.5; Bottom Right Entrance: 22.4"
+  },
+  "entrances": 4,
+  "exits": 4,
+  "indexLength": 22.9,
+  "indexWater": true,
+  "indexLos": true,
+  "removalCost": "$8,000",
+  "indexObjects": 4,
+  "lcc": {
+   "money": 44820,
+   "version": "44.0",
+   "date": "2024-08-04"
+  },
+  "twoMP": {
+   "count": 80,
+   "complete": true,
+   "entities": [
+    "Adora",
+    "Aircraft Carrier",
+    "Apache Dartship",
+    "Apache Prime",
+    "Archmage",
+    "Arctic Knight",
+    "Artillery Battery",
+    "Avatar Of Wrath",
+    "Avenger",
+    "Bloon Area Denial System",
+    "Bloon Exclusion Zone",
+    "Blooncineration",
+    "Bomb Blitz",
+    "Carrier Flagship",
+    "Churchill",
+    "Comanche Commander",
+    "Corvus",
+    "Cripple Moab",
+    "Crossbow Master",
+    "Dark Champion",
+    "Dark Knight",
+    "Elite Defender",
+    "Elite Sniper",
+    "Farwind Seer",
+    "Flying Fortress",
+    "Geraldo",
+    "Giant Condor",
+    "Giganotosaurus",
+    "Glaive Lord",
+    "Golden Justice",
+    "Grandmaster Ninja",
+    "Great White",
+    "Ground Zero",
+    "Icicle Impale",
+    "Inferno Ring",
+    "Lord Of The Abyss",
+    "M.a.d",
+    "Master Bomber",
+    "Megalodon",
+    "Monarch Of Storms",
+    "Monkey Pirates",
+    "Operation: Dart Storm",
+    "Orca",
+    "Perma Charge",
+    "Perma-Spike",
+    "Pirate Lord",
+    "Plasma Accelerator",
+    "Pop And Awe",
+    "Popseidon",
+    "Pouākai",
+    "Pre-Emptive Strike",
+    "Prince Of Darkness",
+    "Quincy",
+    "Ray Of Doom",
+    "Robo Monkey",
+    "Rocket Storm",
+    "Rosalia",
+    "Sauda",
+    "Sentry Champion",
+    "Sky Shredder",
+    "Special Poperations",
+    "Spectre",
+    "Spirit Of The Forest",
+    "Sub Commander",
+    "Sun Avatar",
+    "Sun Temple",
+    "Super Maelstrom",
+    "Tech Terror",
+    "The Anti-Bloon",
+    "The Biggest One",
+    "The Blazing Sun",
+    "The Bloon Solver",
+    "The Desert Phantom",
+    "The Tack Zone",
+    "Tsar Bomba",
+    "Turbo Charge",
+    "Tyrannosaurus Rex",
+    "Ultra-Juggernaut",
+    "Velociraptor",
+    "Wizard Lord Phoenix"
+   ]
+  }
+ },
+ {
+  "id": "sunken-columns",
+  "name": "Sunken Columns",
+  "difficulty": "Advanced",
+  "addedVersion": "30.0",
+  "water": "little",
+  "losBlockers": "some",
+  "removables": [
+   {
+    "name": "Pond (drain)",
+    "cost": 1000,
+    "count": 2,
+    "note": "one per central basin"
+   }
+  ],
+  "paths": 2,
+  "trackLength": 18.8,
+  "trackClass": "medium",
+  "rbsHard": [
+   18.8,
+   18.8
+  ],
+  "special": "Two lanes cross at big bends; sunken basins block LoS.",
+  "easiness": 4,
+  "chimpsFriendly": false,
+  "medals": true,
+  "notes": "Slightly easier than average.",
+  "unverified": [],
+  "rbs": {
+   "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
+   "avg": 18.8,
+   "lanes": [
+    {
+     "lane": "Left Entrance",
+     "rbs": 18.8
+    },
+    {
+     "lane": "Right Entrance",
+     "rbs": 18.8
+    }
+   ],
+   "notes": "Left Entrance: 18.8; Right Entrance: 18.8"
+  },
+  "entrances": 2,
+  "exits": 2,
+  "indexLength": 18.8,
+  "indexWater": true,
+  "indexLos": true,
+  "removalCost": "$2,000",
+  "indexObjects": 2,
+  "lcc": {
+   "money": 48065,
+   "version": "31.2",
+   "date": "2022-05-08"
+  },
+  "twoMP": {
+   "count": 84,
+   "complete": true,
+   "entities": [
+    "Adora",
+    "Aircraft Carrier",
+    "Apache Dartship",
+    "Apache Prime",
+    "Arcane Spike",
+    "Archmage",
+    "Arctic Knight",
+    "Artillery Battery",
+    "Avatar Of Wrath",
+    "Avenger",
+    "Bloon Area Denial System",
+    "Bloon Exclusion Zone",
+    "Blooncineration",
+    "Bloonjitsu",
+    "Bomb Blitz",
+    "Bouncing Bullet",
+    "Carpet Of Spikes",
+    "Carrier Flagship",
+    "Churchill",
+    "Comanche Commander",
+    "Corvus",
+    "Cripple Moab",
+    "Crossbow Master",
+    "Dark Champion",
+    "Dark Knight",
+    "Elite Defender",
+    "Elite Sniper",
+    "Farwind Seer",
+    "Flying Fortress",
+    "Full Auto Rifle",
+    "Geraldo",
+    "Giant Condor",
+    "Giganotosaurus",
+    "Glaive Lord",
+    "Golden Justice",
+    "Grandmaster Ninja",
+    "Ground Zero",
+    "Hydra Rocket Pods",
+    "Icicle Impale",
+    "Inferno Ring",
+    "Lord Of The Abyss",
+    "M.a.d",
+    "Master Bomber",
+    "Moab Domination",
+    "Monarch Of Storms",
+    "Neva-Miss Targeting",
+    "Operation: Dart Storm",
+    "Orca",
+    "Overdrive",
+    "Perma Charge",
+    "Perma-Spike",
+    "Pirate Lord",
+    "Plasma Accelerator",
+    "Pop And Awe",
+    "Popseidon",
+    "Pouākai",
+    "Prince Of Darkness",
+    "Quincy",
+    "Ray Of Doom",
+    "Robo Monkey",
+    "Rocket Storm",
+    "Rosalia",
+    "Sauda",
+    "Sentry Champion",
+    "Sky Shredder",
+    "Special Poperations",
+    "Spectre",
+    "Spirit Of The Forest",
+    "Sub Commander",
+    "Sun Avatar",
+    "Sun Temple",
+    "Super Maelstrom",
+    "Supply Drop",
+    "Tech Terror",
+    "The Anti-Bloon",
+    "The Biggest One",
+    "The Desert Phantom",
+    "The Tack Zone",
+    "Tsar Bomba",
+    "Turbo Charge",
+    "Tyrannosaurus Rex",
+    "Ultra-Juggernaut",
+    "Velociraptor",
+    "Wizard Lord Phoenix"
+   ]
+  }
+ },
+ {
+  "id": "sunset-gulch",
+  "name": "Sunset Gulch",
+  "difficulty": "Advanced",
+  "addedVersion": "49.0",
+  "water": "none",
+  "losBlockers": "none",
+  "removables": [],
+  "paths": 2,
+  "trackLength": 10.9,
+  "trackClass": "short",
+  "rbsHard": [
+   10.9,
+   19.5
+  ],
+  "special": "Bloon path + short MOAB path; cliffs and cacti.",
+  "easiness": 3,
+  "chimpsFriendly": false,
+  "medals": true,
+  "notes": "Middle of the tier.",
+  "unverified": [],
+  "rbs": {
+   "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
+   "avg": 15.2,
+   "lanes": [
+    {
+     "lane": "Moab Path",
+     "rbs": 10.9
+    },
+    {
+     "lane": "Bloon Path",
+     "rbs": 19.5
+    }
+   ],
+   "notes": "Moab Path: 10.9; Bloon Path: 19.5"
+  },
+  "entrances": 2,
+  "exits": 2,
+  "indexLength": 15.2,
+  "indexWater": false,
+  "indexLos": false,
+  "removalCost": "$0",
+  "indexObjects": 0,
+  "lcc": {
+   "money": 64120,
+   "version": "52.2",
+   "date": "2026-02-07"
+  },
+  "twoMP": {
+   "count": 84,
+   "complete": true,
+   "entities": [
+    "Adora",
+    "Apache Dartship",
+    "Apache Prime",
+    "Arcane Spike",
+    "Archmage",
+    "Arctic Knight",
+    "Artillery Battery",
+    "Avatar Of Wrath",
+    "Avenger",
+    "Bloon Area Denial System",
+    "Bloon Crush",
+    "Bloon Exclusion Zone",
+    "Blooncineration",
+    "Bloonjitsu",
+    "Bomb Blitz",
+    "Carrier Flagship",
+    "Churchill",
+    "Comanche Commander",
+    "Corvus",
+    "Cripple Moab",
+    "Crossbow Master",
+    "Dark Champion",
+    "Dark Knight",
+    "Elite Defender",
+    "Elite Sniper",
+    "Etienne",
+    "Farwind Seer",
+    "Flying Fortress",
+    "Full Auto Rifle",
+    "Geraldo",
+    "Giant Condor",
+    "Giganotosaurus",
+    "Glaive Lord",
+    "Golden Justice",
+    "Grandmaster Ninja",
+    "Ground Zero",
+    "Gwen",
+    "Hydra Rocket Pods",
+    "Icicle Impale",
+    "Inferno Ring",
+    "Lord Of The Abyss",
+    "M.a.d",
+    "Master Bomber",
+    "Moab Domination",
+    "Monarch Of Storms",
+    "Operation: Dart Storm",
+    "Perma Charge",
+    "Perma-Spike",
+    "Plasma Accelerator",
+    "Plasma Monkey Fan Club",
+    "Pop And Awe",
+    "Popseidon",
+    "Pouākai",
+    "Prince Of Darkness",
+    "Quincy",
+    "Ray Of Doom",
+    "Recursive Cluster",
+    "Robo Monkey",
+    "Rocket Storm",
+    "Rosalia",
+    "Sauda",
+    "Sentry Champion",
+    "Sky Shredder",
+    "Special Poperations",
+    "Spectre",
+    "Spirit Of The Forest",
+    "Sticky Bomb",
+    "Sub Commander",
+    "Summon Phoenix",
+    "Sun Avatar",
+    "Super Maelstrom",
+    "Super Monkey Fan Club",
+    "Tech Terror",
+    "The Anti-Bloon",
+    "The Biggest One",
+    "The Blazing Sun",
+    "The Desert Phantom",
+    "The Tack Zone",
+    "Triple Shot",
+    "Tsar Bomba",
+    "Turbo Charge",
+    "Tyrannosaurus Rex",
+    "Wizard Lord Phoenix",
+    "Xxxl Trap"
+   ]
+  },
+  "conflicts": [
+   {
+    "field": "losBlockers",
+    "index": false,
+    "other": "some (ch04/ch06b: cliffs and cacti)",
+    "source": "Index haslos is a yes/no flag; \"slight\" blockers may be counted as no",
+    "kept": "index"
+   }
+  ]
+ },
+ {
+  "id": "underground",
+  "name": "Underground",
+  "difficulty": "Advanced",
+  "addedVersion": "1.0",
+  "water": "none",
+  "losBlockers": "none",
+  "removables": [],
+  "paths": 2,
+  "trackLength": 12.9,
+  "trackClass": "short",
+  "rbsHard": [
+   13.1,
+   12.9
+  ],
+  "special": "Two short lanes; cave walls slightly block LoS; many spots cover both lanes.",
+  "easiness": 3,
+  "chimpsFriendly": false,
+  "medals": true,
+  "notes": "Near average.",
+  "unverified": [],
+  "rbs": {
+   "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
+   "avg": 13.0,
+   "lanes": [
+    {
+     "lane": "Bottom Path",
+     "rbs": 13.1
+    },
+    {
+     "lane": "Top Path",
+     "rbs": 12.9
+    }
+   ],
+   "notes": "Bottom Path: 13.1; Top Path: 12.9"
+  },
+  "entrances": 2,
+  "exits": 2,
+  "indexLength": 13.0,
+  "indexWater": false,
+  "indexLos": false,
+  "removalCost": null,
+  "indexObjects": 0,
+  "lcc": {
+   "money": 46025,
+   "version": "31.2",
+   "date": "2022-07-14"
+  },
+  "twoMP": {
+   "count": 75,
+   "complete": true,
+   "entities": [
+    "Adora",
+    "Apache Dartship",
+    "Apache Prime",
+    "Archmage",
+    "Arctic Knight",
+    "Avatar Of Wrath",
+    "Avenger",
+    "Base Super",
+    "Blade Maelstrom",
+    "Bloon Area Denial System",
+    "Bloon Crush",
+    "Bloon Exclusion Zone",
+    "Bloonjitsu",
+    "Bomb Blitz",
+    "Churchill",
+    "Comanche Commander",
+    "Corvus",
+    "Cripple Moab",
+    "Crossbow Master",
+    "Dark Champion",
+    "Dark Knight",
+    "Double Shot",
+    "Druid Of Wrath",
+    "Elite Defender",
+    "Elite Sniper",
+    "Farwind Seer",
+    "Flying Fortress",
+    "Full Auto Rifle",
+    "Geraldo",
+    "Giganotosaurus",
+    "Glaive Lord",
+    "Golden Justice",
+    "Grandmaster Ninja",
+    "Icicle Impale",
+    "Inferno Ring",
+    "Lord Of The Abyss",
+    "M.a.d",
+    "Master Bomber",
+    "Moab Domination",
+    "Monarch Of Storms",
+    "Overdrive",
+    "Perma Charge",
+    "Perma-Spike",
+    "Plasma Accelerator",
+    "Pop And Awe",
+    "Poplust",
+    "Popseidon",
+    "Pouākai",
+    "Prince Of Darkness",
+    "Quincy",
+    "Robo Monkey",
+    "Rocket Storm",
+    "Rosalia",
+    "Sauda",
+    "Sentry Champion",
+    "Sky Shredder",
+    "Special Poperations",
+    "Spectre",
+    "Spirit Of The Forest",
+    "Sticky Bomb",
+    "Sun Avatar",
+    "Sun Temple",
+    "Super Maelstrom",
+    "Super Monkey Fan Club",
+    "Tech Terror",
+    "The Anti-Bloon",
+    "The Biggest One",
+    "The Desert Phantom",
+    "The Tack Zone",
+    "Triple Shot",
+    "Tsar Bomba",
+    "Turbo Charge",
+    "Tyrannosaurus Rex",
+    "Velociraptor",
+    "Wizard Lord Phoenix"
+   ]
+  },
+  "conflicts": [
+   {
+    "field": "losBlockers",
+    "index": false,
+    "other": "some (ch04/ch06b: cave walls slightly block LoS)",
+    "source": "Index haslos is a yes/no flag; \"slight\" blockers may be counted as no",
+    "kept": "index"
+   }
+  ]
+ },
+ {
+  "id": "x-factor",
+  "name": "X Factor",
+  "difficulty": "Advanced",
+  "addedVersion": "22.0",
+  "water": "none",
+  "losBlockers": "none",
+  "removables": [
+   {
+    "name": "Central barracks",
+    "cost": 2000,
+    "count": 1
+   }
+  ],
+  "paths": 4,
+  "trackLength": 14.5,
+  "trackClass": "short",
+  "rbsHard": [
+   14.5,
+   20.9,
+   15.8,
+   21.0
+  ],
+  "special": "Four entrances and four exits (Index v57.4); each entrance feeds both paths, so 8 routes (14.5-21.0 RBS Hard); the spawn corners rotate.",
+  "easiness": 1,
+  "chimpsFriendly": false,
+  "medals": true,
+  "notes": "Hardest Advanced map by consensus.",
+  "unverified": [],
+  "sourceNotes": [
+   "losBlockers: some -> none (xcheck 2026-11-05: btd6index.win map data + bloons.fandom.com; Index haslos=false; fandom: central tunnel \"doesn't block the line of sights otherwise\")."
+  ],
+  "rbs": {
+   "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
+   "avg": 18.0,
+   "lanes": [
+    {
+     "lane": "Top Right Entrance -> Both Paths",
+     "rbs": 14.5
+    },
+    {
+     "lane": "Bottom Right Entrance -> Both Paths",
+     "rbs": 20.9
+    },
+    {
+     "lane": "Bottom Left Entrance -> Both Paths",
+     "rbs": 15.8
+    },
+    {
+     "lane": "Top Left Entrance -> Both Paths",
+     "rbs": 21.0
+    }
+   ],
+   "notes": "Top Right Entrance -> Both Paths: 14.5; Bottom Right Entrance -> Both Paths: 20.9; Bottom Left Entrance -> Both Paths: 15.8; Top Left Entrance -> Both Paths: 21.0"
+  },
+  "entrances": 4,
+  "exits": 4,
+  "indexLength": 18.0,
+  "indexWater": false,
+  "indexLos": false,
+  "removalCost": "$2,000",
+  "indexObjects": 1,
+  "lcc": {
+   "money": 77310,
+   "version": "31.2",
+   "date": "2022-06-10"
+  },
+  "twoMP": {
+   "count": 30,
+   "complete": true,
+   "entities": [
+    "Adora",
+    "Apache Dartship",
+    "Apache Prime",
+    "Archmage",
+    "Avenger",
+    "Bloon Exclusion Zone",
+    "Comanche Commander",
+    "Corvus",
+    "Cripple Moab",
+    "Dark Champion",
+    "Elite Defender",
+    "Flying Fortress",
+    "Geraldo",
+    "Glaive Lord",
+    "Grandmaster Ninja",
+    "Perma Charge",
+    "Perma-Spike",
+    "Pop And Awe",
+    "Popseidon",
+    "Pouākai",
+    "Robo Monkey",
+    "Sentry Champion",
+    "Sky Shredder",
+    "Spectre",
+    "Sun Avatar",
+    "Tech Terror",
+    "The Desert Phantom",
+    "The Tack Zone",
+    "Tyrannosaurus Rex",
+    "Wizard Lord Phoenix"
+   ]
+  },
+  "conflicts": [
+   {
+    "field": "paths",
+    "index": 4,
+    "other": "our earlier 8 = routes (4 entrances x both paths)",
+    "source": "definition difference, not an error",
+    "kept": "index"
+   }
+  ]
+ },
+ {
+  "id": "ouch",
+  "name": "#Ouch",
+  "difficulty": "Expert",
+  "addedVersion": "1.0",
+  "water": "little",
+  "losBlockers": "none",
+  "removables": [
+   {
+    "name": "Central pond (drain)",
+    "cost": 1000,
+    "count": 1
+   }
+  ],
+  "paths": 4,
+  "trackLength": 8.0,
+  "trackClass": "short",
+  "rbsHard": [
+   8.0,
+   8.0,
+   10.2,
+   10.2
+  ],
+  "special": "Four very short lanes active together.",
+  "easiness": 2,
+  "chimpsFriendly": false,
+  "medals": true,
+  "notes": "\"True Expert\" (4th hardest).",
+  "unverified": [],
+  "rbs": {
+   "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
+   "avg": 9.1,
+   "lanes": [
+    {
+     "lane": "Left Path",
+     "rbs": 8.0
+    },
+    {
+     "lane": "Right Path",
+     "rbs": 8.0
+    },
+    {
+     "lane": "Top Path",
+     "rbs": 10.2
+    },
+    {
+     "lane": "Bottom Path",
+     "rbs": 10.2
+    }
+   ],
+   "notes": "Left Path: 8.0, Right Path: 8.0, Top Path: 10.2, Bottom Path: 10.2"
+  },
+  "entrances": 4,
+  "exits": 4,
+  "indexLength": 9.1,
+  "indexWater": true,
+  "indexLos": false,
+  "removalCost": "$1,000",
+  "indexObjects": 1,
+  "lcc": {
+   "money": 63505,
+   "version": "57.4",
+   "date": "2026-10-25"
+  },
+  "twoMP": {
+   "count": 34,
+   "complete": true,
+   "entities": [
+    "Adora",
+    "Apache Dartship",
+    "Apache Prime",
+    "Archmage",
+    "Bloon Area Denial System",
+    "Bloon Exclusion Zone",
+    "Bomb Blitz",
+    "Carrier Flagship",
+    "Comanche Commander",
+    "Corvus",
+    "Dark Champion",
+    "Dark Knight",
+    "Elite Defender",
+    "Geraldo",
+    "Glaive Lord",
+    "Grandmaster Ninja",
+    "Inferno Ring",
+    "Lord Of The Abyss",
+    "Perma Charge",
+    "Perma-Spike",
+    "Pirate Lord",
+    "Pouākai",
+    "Robo Monkey",
+    "Sentry Champion",
+    "Sky Shredder",
+    "Special Poperations",
+    "Spectre",
+    "Sub Commander",
+    "Sun Avatar",
+    "Super Maelstrom",
+    "Tech Terror",
+    "The Desert Phantom",
+    "The Tack Zone",
+    "Tyrannosaurus Rex"
+   ]
+  }
+ },
+ {
+  "id": "blons",
+  "name": "Blons",
+  "difficulty": "Expert",
+  "addedVersion": "24.0",
+  "water": "little",
+  "losBlockers": "none",
+  "removables": [],
+  "paths": 1,
+  "trackLength": 3.7,
+  "trackClass": "short",
+  "rbsHard": [
+   3.7
+  ],
+  "special": "Shortest map in the game with huge empty space. Hidden: unlocked by completing a challenge on it.",
+  "easiness": 1,
+  "chimpsFriendly": false,
+  "medals": false,
+  "notes": "No medals, no rewards. Index v57.4: water yes (small pond bottom-right), no LoS blockers, 3.7 RBS.",
+  "unverified": [],
+  "sourceNotes": [
+   "water: none -> little (xcheck 2026-11-05: btd6index.win map data + bloons.fandom.com; Index haswater=true; fandom: \"There is a small pond near the bottom-right\" usable by water towers). Amount 'little' is an estimate."
+  ],
+  "rbs": {
+   "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
+   "avg": 3.7,
+   "lanes": [
+    {
+     "lane": "single lane",
+     "rbs": 3.7
+    }
+   ],
+   "notes": null
+  },
+  "entrances": 1,
+  "exits": 1,
+  "indexLength": 3.7,
+  "indexWater": true,
+  "indexLos": false,
+  "removalCost": null,
+  "indexObjects": 0,
+  "lcc": {
+   "money": 60940,
+   "version": "51.2",
+   "date": "2025-11-08"
+  },
+  "twoMP": {
+   "count": 54,
+   "complete": true,
+   "entities": [
+    "Adora",
+    "Apache Dartship",
+    "Apache Prime",
+    "Archmage",
+    "Avatar Of Wrath",
+    "Avenger",
+    "Bloon Crush",
+    "Bloon Exclusion Zone",
+    "Bloonjitsu",
+    "Bomb Blitz",
+    "Churchill",
+    "Comanche Commander",
+    "Corvus",
+    "Cripple Moab",
+    "Crossbow Master",
+    "Dark Champion",
+    "Dark Knight",
+    "Druid Of Wrath",
+    "Elite Defender",
+    "Farwind Seer",
+    "Geraldo",
+    "Giganotosaurus",
+    "Glaive Lord",
+    "Golden Justice",
+    "Grandmaster Ninja",
+    "Icicle Impale",
+    "Inferno Ring",
+    "Lord Of The Abyss",
+    "Master Bomber",
+    "Moab Domination",
+    "Overdrive",
+    "Perma Charge",
+    "Perma-Spike",
+    "Pirate Lord",
+    "Pop And Awe",
+    "Poplust",
+    "Popseidon",
+    "Pouākai",
+    "Prince Of Darkness",
+    "Robo Monkey",
+    "Sauda",
+    "Sentry Champion",
+    "Sky Shredder",
+    "Special Poperations",
+    "Spectre",
+    "Spirit Of The Forest",
+    "Sun Avatar",
+    "Super Maelstrom",
+    "Tech Terror",
+    "The Anti-Bloon",
+    "The Desert Phantom",
+    "The Tack Zone",
+    "Tyrannosaurus Rex",
+    "Wizard Lord Phoenix"
+   ]
+  }
+ },
+ {
+  "id": "bloody-puddles",
+  "name": "Bloody Puddles",
+  "difficulty": "Expert",
+  "addedVersion": "13.0",
+  "water": "little",
+  "losBlockers": "some",
+  "removables": [
+   {
+    "name": "Jeep",
+    "cost": 1000,
+    "count": 1
+   },
+   {
+    "name": "Jeep and rocks",
+    "cost": 500,
+    "count": 1
+   }
+  ],
+  "paths": 6,
+  "trackLength": 9.0,
+  "trackClass": "short",
+  "rbsHard": [
+   9.0,
+   9.0,
+   9.0,
+   9.0,
+   9.0
+  ],
+  "special": "Five paths, six entrances; the spawn point moves every round.",
+  "easiness": 1,
+  "chimpsFriendly": false,
+  "medals": true,
+  "notes": "Hardest map in BTD6 by consensus. Removable costs unverified. Wiki: the jeep blocks LoS; removing it drops a chinook that blocks more. Infobox $1,000 vs text $500 for the removal (conflict on the page).",
+  "unverified": [],
+  "rbs": {
+   "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
+   "avg": 9.0,
+   "lanes": [
+    {
+     "lane": "Left Path",
+     "rbs": 9.0
+    },
+    {
+     "lane": "Left Middle Path",
+     "rbs": 9.0
+    },
+    {
+     "lane": "Middle Path",
+     "rbs": 9.0
+    },
+    {
+     "lane": "Right Middle Path",
+     "rbs": 9.0
+    },
+    {
+     "lane": "Right Path",
+     "rbs": 9.0
+    }
+   ],
+   "notes": "Left Path: 9.0; Left Middle Path: 9.0; Middle Path: 9.0; Right Middle Path: 9.0; Right Path: 9.0"
+  },
+  "entrances": 6,
+  "exits": 6,
+  "indexLength": 9.0,
+  "indexWater": true,
+  "indexLos": true,
+  "removalCost": "$1,500",
+  "indexObjects": 2,
+  "lcc": {
+   "money": 68865,
+   "version": "53.2",
+   "date": "2026-03-28"
+  },
+  "twoMP": {
+   "count": 28,
+   "complete": true,
+   "entities": [
+    "Adora",
+    "Apache Dartship",
+    "Apache Prime",
+    "Archmage",
+    "Bloon Area Denial System",
+    "Bloon Exclusion Zone",
+    "Carrier Flagship",
+    "Comanche Commander",
+    "Corvus",
+    "Dark Champion",
+    "Dark Knight",
+    "Elite Defender",
+    "Farwind Seer",
+    "Geraldo",
+    "Great White",
+    "Orca",
+    "Perma-Spike",
+    "Pop And Awe",
+    "Pouākai",
+    "Robo Monkey",
+    "Sky Shredder",
+    "Special Poperations",
+    "Spectre",
+    "Sub Commander",
+    "Sun Avatar",
+    "Super Maelstrom",
+    "Tech Terror",
+    "Tyrannosaurus Rex"
+   ]
+  },
+  "conflicts": [
+   {
+    "field": "paths",
+    "index": 6,
+    "other": "Index lane notes list only 5 lane lengths; ch04 says five paths and six entrances",
+    "source": "kept Index entrance count",
+    "kept": "index"
+   }
+  ]
+ },
+ {
+  "id": "dark-castle",
+  "name": "Dark Castle",
+  "difficulty": "Expert",
+  "addedVersion": "5.0",
+  "water": "little",
+  "losBlockers": "some",
+  "removables": [
+   {
+    "name": "Tree over entrance",
+    "cost": 1000,
+    "count": 4
+   }
+  ],
+  "paths": 4,
+  "trackLength": 6.9,
+  "trackClass": "short",
+  "rbsHard": [
+   7.2,
+   6.9,
+   6.9,
+   7.1
+  ],
+  "special": "Four entrances merge into one exit; bloons under the entrance trees are immune until removed; open space; great for Spike Factories.",
+  "easiness": 4,
+  "chimpsFriendly": true,
+  "medals": true,
+  "notes": "Second-easiest Expert map; classic Expert XP/Deflation farm. Reverse makes it harder. Index lanes: 6.9-7.2 RBS with the trees in place (start state), 9.1-10.2 after removing them.",
+  "unverified": [],
+  "rbs": {
+   "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
+   "avg": 8.3,
+   "lanes": [
+    {
+     "lane": "Top Path /w Trees",
+     "rbs": 7.2
+    },
+    {
+     "lane": "Top Middle Path /w Trees",
+     "rbs": 6.9
+    },
+    {
+     "lane": "Bottom Middle Path /w Trees",
+     "rbs": 6.9
+    },
+    {
+     "lane": "Bottom Path /w Trees",
+     "rbs": 7.1
+    },
+    {
+     "lane": "Top Path",
+     "rbs": 10.2
+    },
+    {
+     "lane": "Top Middle Path",
+     "rbs": 9.1
+    },
+    {
+     "lane": "Bottm Middle Path",
+     "rbs": 9.1
+    },
+    {
+     "lane": "Bottom Path",
+     "rbs": 10.1
+    }
+   ],
+   "notes": "Top Path /w Trees: 7.2; Top Middle Path /w Trees: 6.9; Bottom Middle Path /w Trees: 6.9; Bottom Path /w Trees: 7.1; Top Path: 10.2; Top Middle Path: 9.1; Bottm Middle Path: 9.1; Bottom Path: 10.1"
+  },
+  "entrances": 4,
+  "exits": 1,
+  "indexLength": 8.3,
+  "indexWater": true,
+  "indexLos": true,
+  "removalCost": "$4,000",
+  "indexObjects": 4,
+  "lcc": {
+   "money": 54850,
+   "version": "40.2",
+   "date": "2025-07-09"
+  },
+  "twoMP": {
+   "count": 100,
+   "complete": true,
+   "entities": [
+    "Adora",
+    "Aircraft Carrier",
+    "Apache Dartship",
+    "Apache Prime",
+    "Archmage",
+    "Arctic Knight",
+    "Armor Piercing Darts",
+    "Artillery Battery",
+    "Avatar Of Wrath",
+    "Avenger",
+    "Base Ninja",
+    "Base Super",
+    "Bloon Area Denial System",
+    "Bloon Crush",
+    "Bloon Exclusion Zone",
+    "Bloonjitsu",
+    "Bomb Blitz",
+    "Bouncing Bullet",
+    "Brickell",
+    "Carpet Of Spikes",
+    "Carrier Flagship",
+    "Churchill",
+    "Comanche Commander",
+    "Corvus",
+    "Cripple Moab",
+    "Crossbow Master",
+    "Dark Champion",
+    "Dark Knight",
+    "Destroyer",
+    "Double Shot",
+    "Druid Of Wrath",
+    "Elite Defender",
+    "Elite Sniper",
+    "Farwind Seer",
+    "First Strike Capability",
+    "Flash Bomb",
+    "Flying Fortress",
+    "Full Auto Rifle",
+    "Geraldo",
+    "Giant Condor",
+    "Giganotosaurus",
+    "Glaive Lord",
+    "Golden Justice",
+    "Grandmaster Ninja",
+    "Great White",
+    "Ground Zero",
+    "Hydra Rocket Pods",
+    "Icicle Impale",
+    "Inferno Ring",
+    "Lord Of The Abyss",
+    "M.a.d",
+    "Master Bomber",
+    "Megalodon",
+    "Moab Domination",
+    "Monarch Of Storms",
+    "Operation: Dart Storm",
+    "Orca",
+    "Overdrive",
+    "Perma Charge",
+    "Perma-Spike",
+    "Pirate Lord",
+    "Plasma Accelerator",
+    "Pop And Awe",
+    "Poplust",
+    "Popseidon",
+    "Pouākai",
+    "Pre-Emptive Strike",
+    "Prince Of Darkness",
+    "Quincy",
+    "Ray Of Doom",
+    "Robo Monkey",
+    "Rocket Storm",
+    "Rosalia",
+    "Sauda",
+    "Sentry Champion",
+    "Sky Shredder",
+    "Special Poperations",
+    "Spectre",
+    "Spirit Of The Forest",
+    "Sticky Bomb",
+    "Sub Commander",
+    "Summon Phoenix",
+    "Sun Avatar",
+    "Sun Temple",
+    "Super Maelstrom",
+    "Super Monkey Fan Club",
+    "Tech Terror",
+    "The Anti-Bloon",
+    "The Biggest One",
+    "The Blazing Sun",
+    "The Bloon Solver",
+    "The Desert Phantom",
+    "The Tack Zone",
+    "Triple Shot",
+    "Tsar Bomba",
+    "Turbo Charge",
+    "Tyrannosaurus Rex",
+    "Ultra-Juggernaut",
+    "Velociraptor",
+    "Wizard Lord Phoenix"
+   ]
+  }
+ },
+ {
+  "id": "dark-dungeons",
+  "name": "Dark Dungeons",
+  "difficulty": "Expert",
+  "addedVersion": "35.0",
+  "water": "little",
+  "losBlockers": "heavy",
+  "removables": [
+   {
+    "name": "Statue (activate/upgrade)",
+    "cost": 30000,
+    "note": "$30k, $50k, $100k tiers - a buff, not a clearance"
+   }
+  ],
+  "paths": 4,
+  "trackLength": 9.7,
+  "trackClass": "short",
+  "rbsHard": [
+   11.4,
+   9.7,
+   10.2,
+   13.7
+  ],
+  "special": "Four lanes (two bloon, one MOAB, one both) through walled rooms.",
+  "easiness": 2,
+  "chimpsFriendly": false,
+  "medals": true,
+  "notes": "Fifth-hardest map. Chapter 6b lists water capacity (Sub 6, Buccaneer 4, Mermonkey 9), so water is set to little (location unverified).",
+  "unverified": [],
+  "rbs": {
+   "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
+   "avg": 11.3,
+   "lanes": [
+    {
+     "lane": "Left Path",
+     "rbs": 11.4
+    },
+    {
+     "lane": "Middle Path",
+     "rbs": 9.7
+    },
+    {
+     "lane": "Right Path",
+     "rbs": 10.2
+    },
+    {
+     "lane": "Moab Path",
+     "rbs": 13.7
+    }
+   ],
+   "notes": "Left Path: 11.4, Middle Path: 9.7, Right Path: 10.2, Moab Path: 13.7"
+  },
+  "entrances": 4,
+  "exits": 4,
+  "indexLength": 11.3,
+  "indexWater": true,
+  "indexLos": true,
+  "removalCost": "$50K - $300K",
+  "indexObjects": 1,
+  "lcc": {
+   "money": 49445,
+   "version": "51.2",
+   "date": "2025-11-09"
+  },
+  "twoMP": {
+   "count": 18,
+   "complete": true,
+   "entities": [
+    "Adora",
+    "Apache Dartship",
+    "Apache Prime",
+    "Archmage",
+    "Carrier Flagship",
+    "Comanche Commander",
+    "Corvus",
+    "Elite Defender",
+    "Flying Fortress",
+    "Geraldo",
+    "Glaive Lord",
+    "Perma-Spike",
+    "Pop And Awe",
+    "Pouākai",
+    "Sky Shredder",
+    "Spectre",
+    "Super Maelstrom",
+    "Tyrannosaurus Rex"
+   ]
+  }
+ },
+ {
+  "id": "flooded-valley",
+  "name": "Flooded Valley",
+  "difficulty": "Expert",
+  "addedVersion": "18.0",
+  "water": "lots",
+  "losBlockers": "heavy",
+  "removables": [
+   {
+    "name": "Secret removable",
+    "cost": 5000,
+    "count": 1
+   }
+  ],
+  "paths": 2,
+  "trackLength": 8.9,
+  "trackClass": "short",
+  "rbsHard": [
+   8.9,
+   8.9
+  ],
+  "special": "Two fully overlapping lanes on a dam; land towers mostly LoS-blocked so the early game is water-heavy.",
+  "easiness": 3,
+  "chimpsFriendly": false,
+  "medals": true,
+  "notes": "",
+  "unverified": [],
+  "rbs": {
+   "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
+   "avg": 8.9,
+   "lanes": [
+    {
+     "lane": "Top Entrance",
+     "rbs": 8.9
+    },
+    {
+     "lane": "Bottom Entrance",
+     "rbs": 8.9
+    }
+   ],
+   "notes": "Top Entrance: 8.9; Bottom Entrance: 8.9"
+  },
+  "entrances": 2,
+  "exits": 2,
+  "indexLength": 8.9,
+  "indexWater": true,
+  "indexLos": true,
+  "removalCost": "$5,000",
+  "indexObjects": 1,
+  "lcc": {
+   "money": 59415,
+   "version": "51.2",
+   "date": "2025-11-06"
+  },
+  "twoMP": {
+   "count": 43,
+   "complete": true,
+   "entities": [
+    "Adora",
+    "Apache Dartship",
+    "Apache Prime",
+    "Archmage",
+    "Avenger",
+    "Bloon Exclusion Zone",
+    "Bomb Blitz",
+    "Carrier Flagship",
+    "Churchill",
+    "Comanche Commander",
+    "Corvus",
+    "Cripple Moab",
+    "Dark Champion",
+    "Dark Knight",
+    "Elite Defender",
+    "Elite Sniper",
+    "Geraldo",
+    "Glaive Lord",
+    "Golden Justice",
+    "Grandmaster Ninja",
+    "Great White",
+    "Lord Of The Abyss",
+    "Megalodon",
+    "Orca",
+    "Perma Charge",
+    "Perma-Spike",
+    "Pirate Lord",
+    "Pop And Awe",
+    "Popseidon",
+    "Pouākai",
+    "Robo Monkey",
+    "Rosalia",
+    "Sentry Champion",
+    "Sky Shredder",
+    "Special Poperations",
+    "Spectre",
+    "Sub Commander",
+    "Sun Avatar",
+    "Tech Terror",
+    "The Desert Phantom",
+    "The Tack Zone",
+    "Tyrannosaurus Rex",
+    "Wizard Lord Phoenix"
+   ]
+  }
+ },
+ {
+  "id": "glacial-trail",
+  "name": "Glacial Trail",
+  "difficulty": "Expert",
+  "addedVersion": "40.0",
+  "water": "little",
+  "losBlockers": "some",
+  "removables": [],
+  "paths": 1,
+  "trackLength": 17.7,
+  "trackClass": "medium",
+  "rbsHard": [
+   17.7
+  ],
+  "special": "Each tower freezes on a 10-round cycle counted from when you placed it: stagger placements. Water sits too low for most water towers.",
+  "easiness": 3,
+  "chimpsFriendly": false,
+  "medals": true,
+  "notes": "",
+  "unverified": [],
+  "rbs": {
+   "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
+   "avg": 17.7,
+   "lanes": [
+    {
+     "lane": "single lane",
+     "rbs": 17.7
+    }
+   ],
+   "notes": null
+  },
+  "entrances": 1,
+  "exits": 1,
+  "indexLength": 17.7,
+  "indexWater": true,
+  "indexLos": true,
+  "removalCost": null,
+  "indexObjects": 0,
+  "lcc": {
+   "money": 142535,
+   "version": "56.2",
+   "date": "2026-08-27"
+  },
+  "twoMP": {
+   "count": 29,
+   "complete": true,
+   "entities": [
+    "Apache Prime",
+    "Archmage",
+    "Arctic Knight",
+    "Artillery Battery",
+    "Carrier Flagship",
+    "Comanche Commander",
+    "Corvus",
+    "Dan",
+    "Elite Defender",
+    "Geraldo",
+    "Giganotosaurus",
+    "Glaive Lord",
+    "Icicle Impale",
+    "Icicles",
+    "Inferno Ring",
+    "Perma Charge",
+    "Perma-Spike",
+    "Popseidon",
+    "Pouākai",
+    "Sentry Champion",
+    "Sky Shredder",
+    "Spectre",
+    "Spirit Of The Forest",
+    "Super Brittle",
+    "Super Maelstrom",
+    "Symphonic Resonance",
+    "The Desert Phantom",
+    "The Tack Zone",
+    "Wizard Lord Phoenix"
+   ]
+  }
+ },
+ {
+  "id": "infernal",
+  "name": "Infernal",
+  "difficulty": "Expert",
+  "addedVersion": "15.0",
+  "water": "little",
+  "losBlockers": "none",
+  "removables": [],
+  "paths": 2,
+  "trackLength": 19.3,
+  "trackClass": "medium",
+  "rbsHard": [
+   19.3,
+   19.3
+  ],
+  "special": "Two alternating lanes (odd rounds top, even bottom), 19.3 RBS each (Index v57.4): the longest of any Expert map (next: Glacial Trail 17.7); little space; farms only fit on the side islands.",
+  "easiness": 5,
+  "chimpsFriendly": true,
+  "medals": true,
+  "notes": "Easiest Expert map, especially for CHIMPS. Index v57.4: no LoS blockers, water yes (wiki: 6 floating islands, 4 land + 2 water pools of 3 water towers each). Elite Sniper and Elite Defender both have Index 2MP (solo CHIMPS) completions here.",
+  "unverified": [],
+  "rbs": {
+   "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
+   "avg": 19.3,
+   "lanes": [
+    {
+     "lane": "Bottom Path",
+     "rbs": 19.3
+    },
+    {
+     "lane": "Top Path",
+     "rbs": 19.3
+    }
+   ],
+   "notes": "Bottom Path: 19.3; Top Path: 19.3"
+  },
+  "entrances": 2,
+  "exits": 2,
+  "indexLength": 19.3,
+  "indexWater": true,
+  "indexLos": false,
+  "removalCost": null,
+  "indexObjects": 0,
+  "lcc": {
+   "money": 58995,
+   "version": "51.2",
+   "date": "2025-11-15"
+  },
+  "twoMP": {
+   "count": 88,
+   "complete": true,
+   "entities": [
+    "Adora",
+    "Aircraft Carrier",
+    "Apache Dartship",
+    "Apache Prime",
+    "Archmage",
+    "Arctic Knight",
+    "Artillery Battery",
+    "Avatar Of Wrath",
+    "Avenger",
+    "Base Super",
+    "Bloon Area Denial System",
+    "Bloon Exclusion Zone",
+    "Blooncineration",
+    "Bomb Blitz",
+    "Bouncing Bullet",
+    "Carrier Flagship",
+    "Churchill",
+    "Comanche Commander",
+    "Comanche Defense",
+    "Corvus",
+    "Cripple Moab",
+    "Crossbow Master",
+    "Dark Champion",
+    "Dark Knight",
+    "Elite Defender",
+    "Elite Sniper",
+    "Etienne",
+    "Farwind Seer",
+    "Flying Fortress",
+    "Full Auto Rifle",
+    "Geraldo",
+    "Giganotosaurus",
+    "Glaive Lord",
+    "Golden Justice",
+    "Grandmaster Ninja",
+    "Great White",
+    "Ground Zero",
+    "Hydra Rocket Pods",
+    "Icicle Impale",
+    "Inferno Ring",
+    "Lord Of The Abyss",
+    "M.a.d",
+    "Master Bomber",
+    "Megalodon",
+    "Moab Domination",
+    "Monarch Of Storms",
+    "Neva-Miss Targeting",
+    "Operation: Dart Storm",
+    "Orca",
+    "Perma Charge",
+    "Perma-Spike",
+    "Pirate Lord",
+    "Plasma Accelerator",
+    "Pop And Awe",
+    "Popseidon",
+    "Pouākai",
+    "Pre-Emptive Strike",
+    "Primary Expertise",
+    "Prince Of Darkness",
+    "Quincy",
+    "Ray Of Doom",
+    "Robo Monkey",
+    "Rocket Storm",
+    "Rosalia",
+    "Semi Automatic",
+    "Sentry Champion",
+    "Sky Shredder",
+    "Special Poperations",
+    "Spectre",
+    "Spirit Of The Forest",
+    "Sub Commander",
+    "Summon Phoenix",
+    "Sun Avatar",
+    "Sun Temple",
+    "Super Maelstrom",
+    "Supply Drop",
+    "Tech Terror",
+    "The Anti-Bloon",
+    "The Biggest One",
+    "The Blazing Sun",
+    "The Bloon Solver",
+    "The Desert Phantom",
+    "The Tack Zone",
+    "Tsar Bomba",
+    "Turbo Charge",
+    "Tyrannosaurus Rex",
+    "Velociraptor",
+    "Wizard Lord Phoenix"
+   ]
+  }
+ },
+ {
+  "id": "muddy-puddles",
+  "name": "Muddy Puddles",
+  "difficulty": "Expert",
+  "addedVersion": "1.0",
+  "water": "little",
+  "losBlockers": "none",
+  "removables": [],
+  "paths": 4,
+  "trackLength": 9.6,
+  "trackClass": "short",
+  "rbsHard": [
+   9.6,
+   9.7,
+   9.6,
+   9.6
+  ],
+  "special": "Four alternating lanes; the spawn sweeps left to right and back; three puddles.",
+  "easiness": 2,
+  "chimpsFriendly": false,
+  "medals": true,
+  "notes": "Very hard early game.",
+  "unverified": [],
+  "rbs": {
+   "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
+   "avg": 9.6,
+   "lanes": [
+    {
+     "lane": "Left Path",
+     "rbs": 9.6
+    },
+    {
+     "lane": "Middle Left Path",
+     "rbs": 9.7
+    },
+    {
+     "lane": "Middle Right Path",
+     "rbs": 9.6
+    },
+    {
+     "lane": "Right Path",
+     "rbs": 9.6
+    }
+   ],
+   "notes": "Left Path: 9.6; Middle Left Path: 9.7; Middle Right Path: 9.6; Right Path: 9.6"
+  },
+  "entrances": 4,
+  "exits": 4,
+  "indexLength": 9.6,
+  "indexWater": true,
+  "indexLos": false,
+  "removalCost": null,
+  "indexObjects": 0,
+  "lcc": {
+   "money": 60160,
+   "version": "49.3",
+   "date": "2025-07-16"
+  },
+  "twoMP": {
+   "count": 62,
+   "complete": true,
+   "entities": [
+    "Adora",
+    "Apache Dartship",
+    "Apache Prime",
+    "Archmage",
+    "Artillery Battery",
+    "Avenger",
+    "Bloon Area Denial System",
+    "Bloon Exclusion Zone",
+    "Blooncineration",
+    "Bomb Blitz",
+    "Bounty Hunter",
+    "Carrier Flagship",
+    "Churchill",
+    "Comanche Commander",
+    "Corvus",
+    "Cripple Moab",
+    "Crossbow Master",
+    "Dark Champion",
+    "Dark Knight",
+    "Elite Defender",
+    "Elite Sniper",
+    "Farwind Seer",
+    "Flying Fortress",
+    "Full Auto Rifle",
+    "Geraldo",
+    "Giganotosaurus",
+    "Glaive Lord",
+    "Golden Justice",
+    "Great White",
+    "Ground Zero",
+    "Hydra Rocket Pods",
+    "M.a.d",
+    "Megalodon",
+    "Operation: Dart Storm",
+    "Orca",
+    "Perma Charge",
+    "Pirate Lord",
+    "Plasma Accelerator",
+    "Pop And Awe",
+    "Popseidon",
+    "Pouākai",
+    "Ray Of Doom",
+    "Robo Monkey",
+    "Rocket Storm",
+    "Rosalia",
+    "Sauda",
+    "Sentry Champion",
+    "Sky Shredder",
+    "Special Poperations",
+    "Spectre",
+    "Sub Commander",
+    "Sun Avatar",
+    "Super Maelstrom",
+    "Tech Terror",
+    "The Anti-Bloon",
+    "The Biggest One",
+    "The Desert Phantom",
+    "The Tack Zone",
+    "Tsar Bomba",
+    "Tyrannosaurus Rex",
+    "Velociraptor",
+    "Wizard Lord Phoenix"
+   ]
+  }
+ },
+ {
+  "id": "quad",
+  "name": "Quad",
+  "difficulty": "Expert",
+  "addedVersion": "6.0",
+  "water": "little",
+  "losBlockers": "some",
+  "removables": [
+   {
+    "name": "Truss/overhang",
+    "cost": 1500,
+    "count": 4
+   }
+  ],
+  "paths": 4,
+  "trackLength": 8.8,
+  "trackClass": "short",
+  "rbsHard": [
+   9.3,
+   9.6,
+   8.8,
+   8.8
+  ],
+  "special": "Four overlapping lanes active together; trusses make bloons under them immune.",
+  "easiness": 1,
+  "chimpsFriendly": false,
+  "medals": true,
+  "notes": "True Expert, 3rd hardest. Wiki: central pond for water towers; 4 trusses block LoS and make bloons (blimps too) immune underneath.",
+  "unverified": [],
+  "rbs": {
+   "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
+   "avg": 11.8,
+   "lanes": [
+    {
+     "lane": "base path Left",
+     "rbs": 9.3
+    },
+    {
+     "lane": "Right",
+     "rbs": 9.6
+    },
+    {
+     "lane": "Bottom",
+     "rbs": 8.8
+    },
+    {
+     "lane": "Top",
+     "rbs": 8.8
+    }
+   ],
+   "notes": "Base paths: Left 9.3, Right 9.6, Bottom 8.8, Top 8.8; variants without overhangs listed in source"
+  },
+  "entrances": 4,
+  "exits": 4,
+  "indexLength": 11.8,
+  "indexWater": true,
+  "indexLos": true,
+  "removalCost": "$6,000",
+  "indexObjects": 4,
+  "lcc": {
+   "money": 76655,
+   "version": "52.2",
+   "date": "2026-01-13"
+  },
+  "twoMP": {
+   "count": 28,
+   "complete": true,
+   "entities": [
+    "Adora",
+    "Apache Dartship",
+    "Apache Prime",
+    "Archmage",
+    "Bloon Exclusion Zone",
+    "Bomb Blitz",
+    "Carrier Flagship",
+    "Comanche Commander",
+    "Corvus",
+    "Dark Knight",
+    "Elite Defender",
+    "Geraldo",
+    "Glaive Lord",
+    "Lord Of The Abyss",
+    "Perma-Spike",
+    "Pirate Lord",
+    "Pop And Awe",
+    "Pouākai",
+    "Robo Monkey",
+    "Sky Shredder",
+    "Special Poperations",
+    "Spectre",
+    "Sub Commander",
+    "Sun Avatar",
+    "Super Maelstrom",
+    "Tech Terror",
+    "The Blazing Sun",
+    "Tyrannosaurus Rex"
+   ]
+  }
+ },
+ {
+  "id": "ravine",
+  "name": "Ravine",
+  "difficulty": "Expert",
+  "addedVersion": "23.0",
+  "water": "little",
+  "losBlockers": "heavy",
+  "removables": [],
+  "paths": 4,
+  "trackLength": 8.1,
+  "trackClass": "short",
+  "rbsHard": [
+   9.0,
+   8.1,
+   12.1,
+   13.6
+  ],
+  "special": "Two alternating entrances split into four exits; bridges and walls block LoS; low water blocks water towers.",
+  "easiness": 1,
+  "chimpsFriendly": false,
+  "medals": true,
+  "notes": "Second-hardest map (Corvus has made it easier). Wiki: 3 bridges with 6 walls plus trees \"significantly\" block LoS; low water blocks water towers that cannot shoot over walls.",
+  "unverified": [],
+  "rbs": {
+   "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
+   "avg": 10.7,
+   "lanes": [
+    {
+     "lane": "Left Entrance -> Right Path",
+     "rbs": 9.0
+    },
+    {
+     "lane": "Left Entrance -> Left Path",
+     "rbs": 8.1
+    },
+    {
+     "lane": "Right Entrance -> Left Path",
+     "rbs": 12.1
+    },
+    {
+     "lane": "Right Entrance -> Right Path",
+     "rbs": 13.6
+    }
+   ],
+   "notes": "Left Entrance -> Right Path: 9.0; Left Entrance -> Left Path: 8.1; Right Entrance -> Left Path: 12.1; Right Entrance -> Right Path: 13.6"
+  },
+  "entrances": 2,
+  "exits": 4,
+  "indexLength": 10.7,
+  "indexWater": true,
+  "indexLos": true,
+  "removalCost": null,
+  "indexObjects": 0,
+  "lcc": {
+   "money": 67250,
+   "version": "48.2",
+   "date": "2025-05-12"
+  },
+  "twoMP": {
+   "count": 38,
+   "complete": true,
+   "entities": [
+    "Adora",
+    "Apache Dartship",
+    "Apache Prime",
+    "Archmage",
+    "Avenger",
+    "Bloon Exclusion Zone",
+    "Bomb Blitz",
+    "Carrier Flagship",
+    "Churchill",
+    "Comanche Commander",
+    "Corvus",
+    "Cripple Moab",
+    "Dark Champion",
+    "Dark Knight",
+    "Elite Defender",
+    "Flying Fortress",
+    "Geraldo",
+    "Giganotosaurus",
+    "Glaive Lord",
+    "Grandmaster Ninja",
+    "Perma-Spike",
+    "Pop And Awe",
+    "Popseidon",
+    "Pouākai",
+    "Robo Monkey",
+    "Rosalia",
+    "Sentry Champion",
+    "Sky Shredder",
+    "Special Poperations",
+    "Spectre",
+    "Sun Avatar",
+    "Tech Terror",
+    "The Biggest One",
+    "The Desert Phantom",
+    "The Tack Zone",
+    "Tsar Bomba",
+    "Tyrannosaurus Rex",
+    "Wizard Lord Phoenix"
+   ]
+  }
+ },
+ {
+  "id": "sanctuary",
+  "name": "Sanctuary",
+  "difficulty": "Expert",
+  "addedVersion": "26.0",
+  "water": "little",
+  "losBlockers": "none",
+  "removables": [],
+  "paths": 4,
+  "trackLength": 10.9,
+  "trackClass": "short",
+  "rbsHard": [
+   12.8,
+   10.9,
+   10.9,
+   12.8
+  ],
+  "special": "Two entrances, four exits; six moving platforms carry towers on a 24-round cycle.",
+  "easiness": 4,
+  "chimpsFriendly": false,
+  "medals": true,
+  "notes": "A \"casual\" Expert, about as hard as Workshop. Wiki infobox: water yes (location not described).",
+  "unverified": [
+   "water amount"
+  ],
+  "rbs": {
+   "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
+   "avg": 11.9,
+   "lanes": [
+    {
+     "lane": "Left Entrance -> Exit 4",
+     "rbs": 12.8
+    },
+    {
+     "lane": "Left Entrance -> Exit 3",
+     "rbs": 10.9
+    },
+    {
+     "lane": "Right Entrance -> Exit 2",
+     "rbs": 10.9
+    },
+    {
+     "lane": "Right Entrance -> Exit 1",
+     "rbs": 12.8
+    }
+   ],
+   "notes": "Left Entrance -> Exit 4: 12.8; Left Entrance -> Exit 3: 10.9; Right Entrance -> Exit 2: 10.9; Right Entrance -> Exit 1: 12.8"
+  },
+  "entrances": 2,
+  "exits": 4,
+  "indexLength": 11.9,
+  "indexWater": true,
+  "indexLos": false,
+  "removalCost": null,
+  "indexObjects": 0,
+  "lcc": {
+   "money": 61375,
+   "version": "40.2",
+   "date": "2024-02-11"
+  },
+  "twoMP": {
+   "count": 44,
+   "complete": true,
+   "entities": [
+    "Adora",
+    "Apache Dartship",
+    "Apache Prime",
+    "Archmage",
+    "Avenger",
+    "Bloon Area Denial System",
+    "Bloon Exclusion Zone",
+    "Bomb Blitz",
+    "Carrier Flagship",
+    "Churchill",
+    "Comanche Commander",
+    "Corvus",
+    "Dark Champion",
+    "Elite Defender",
+    "Elite Sniper",
+    "Full Auto Rifle",
+    "Geraldo",
+    "Giganotosaurus",
+    "Glaive Lord",
+    "Golden Justice",
+    "M.a.d",
+    "Orca",
+    "Perma Charge",
+    "Perma-Spike",
+    "Pirate Lord",
+    "Pop And Awe",
+    "Popseidon",
+    "Pouākai",
+    "Robo Monkey",
+    "Rosalia",
+    "Sentry Champion",
+    "Sky Shredder",
+    "Special Poperations",
+    "Spectre",
+    "Sub Commander",
+    "Sun Avatar",
+    "Super Maelstrom",
+    "Tech Terror",
+    "The Biggest One",
+    "The Desert Phantom",
+    "The Tack Zone",
+    "Tsar Bomba",
+    "Tyrannosaurus Rex",
+    "Wizard Lord Phoenix"
+   ]
+  }
+ },
+ {
+  "id": "tricky-tracks",
+  "name": "Tricky Tracks",
+  "difficulty": "Expert",
+  "addedVersion": "52.0",
+  "water": "none",
+  "losBlockers": "some",
+  "removables": [],
+  "paths": 6,
+  "trackLength": 6.1,
+  "trackClass": "short",
+  "rbsHard": [
+   6.1,
+   6.2,
+   6.6,
+   6.7,
+   6.2,
+   6.1
+  ],
+  "special": "Six very short paths on three train tracks; bloons rush to the middle, pause, then rush out. Stop-light train gimmick: $2,500, price escalates (bloonswiki; the Index counts it as 1 object, $2,500).",
+  "easiness": 4,
+  "chimpsFriendly": false,
+  "medals": true,
+  "notes": "One of the less mechanically annoying Expert maps.",
+  "unverified": [],
+  "rbs": {
+   "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
+   "avg": 6.3,
+   "lanes": [
+    {
+     "lane": "top right",
+     "rbs": 6.1
+    },
+    {
+     "lane": "top left",
+     "rbs": 6.2
+    },
+    {
+     "lane": "middle right",
+     "rbs": 6.6
+    },
+    {
+     "lane": "middle left",
+     "rbs": 6.7
+    },
+    {
+     "lane": "bottom right",
+     "rbs": 6.2
+    },
+    {
+     "lane": "bottom left",
+     "rbs": 6.1
+    }
+   ],
+   "notes": "top right 6.1, top left 6.2, middle right 6.6, middle left 6.7, bottom right 6.2, bottom left 6.1"
+  },
+  "entrances": 6,
+  "exits": 6,
+  "indexLength": 6.3,
+  "indexWater": false,
+  "indexLos": true,
+  "removalCost": "$2,500",
+  "indexObjects": 1,
+  "lcc": {
+   "money": 97510,
+   "version": "56.1",
+   "date": "2026-08-17"
+  },
+  "twoMP": {
+   "count": 34,
+   "complete": true,
+   "entities": [
+    "Adora",
+    "Apache Prime",
+    "Archmage",
+    "Avenger",
+    "Bloon Exclusion Zone",
+    "Bomb Blitz",
+    "Churchill",
+    "Comanche Commander",
+    "Corvus",
+    "Crossbow Master",
+    "Elite Defender",
+    "Flying Fortress",
+    "Geraldo",
+    "Glaive Lord",
+    "Lord Of The Abyss",
+    "Perma Charge",
+    "Perma-Spike",
+    "Pop And Awe",
+    "Popseidon",
+    "Pouākai",
+    "Ray Of Doom",
+    "Robo Monkey",
+    "Sentry Champion",
+    "Sky Shredder",
+    "Spectre",
+    "Sun Avatar",
+    "Super Maelstrom",
+    "Tech Terror",
+    "The Biggest One",
+    "The Desert Phantom",
+    "The Tack Zone",
+    "Tsar Bomba",
+    "Tyrannosaurus Rex",
+    "Wizard Lord Phoenix"
+   ]
+  }
+ },
+ {
+  "id": "workshop",
+  "name": "Workshop",
+  "difficulty": "Expert",
+  "addedVersion": "12.0",
+  "water": "none",
+  "losBlockers": "heavy",
+  "removables": [
+   {
+    "name": "Track Extension gizmo",
+    "cost": 0
+   },
+   {
+    "name": "Reverse Motor gizmo",
+    "cost": 0
+   }
+  ],
+  "paths": 2,
+  "trackLength": 6.8,
+  "trackClass": "short",
+  "rbsHard": [
+   6.8,
+   18.4,
+   5.7,
+   11.6
+  ],
+  "special": "Bloon lane + MOAB lane; bloons move 50% faster; free gizmos: Track Extension adds loops, Reverse Motor slows bloons.",
+  "easiness": 4,
+  "chimpsFriendly": false,
+  "medals": true,
+  "notes": "A \"casual\" Expert; Spike Factories excel. Reverse makes it harder. Hard RBS: bloon lane 6.8 (18.4 with Track Extensions), MOAB lane 5.7 (11.6). Gizmo first uses free, then +$50 (Reverse Motor) / +$150 (Track Extensions) per use.",
+  "unverified": [],
+  "rbs": {
+   "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
+   "avg": 11.7,
+   "lanes": [],
+   "notes": "Path lengths vary by route (Normal or Moab) and by number of track extensions"
+  },
+  "entrances": 2,
+  "exits": 1,
+  "indexLength": 11.7,
+  "indexWater": false,
+  "indexLos": true,
+  "removalCost": "$0 - $inf",
+  "indexObjects": 2,
+  "lcc": {
+   "money": 58630,
+   "version": "40.2",
+   "date": "2025-07-08"
+  },
+  "twoMP": {
+   "count": 40,
+   "complete": true,
+   "entities": [
+    "Adora",
+    "Apache Dartship",
+    "Apache Prime",
+    "Archmage",
+    "Avenger",
+    "Bloon Area Denial System",
+    "Bloon Exclusion Zone",
+    "Bomb Blitz",
+    "Churchill",
+    "Comanche Commander",
+    "Corvus",
+    "Crossbow Master",
+    "Dark Champion",
+    "Dark Knight",
+    "Elite Defender",
+    "Farwind Seer",
+    "Geraldo",
+    "Giganotosaurus",
+    "Glaive Lord",
+    "Golden Justice",
+    "Grandmaster Ninja",
+    "Lord Of The Abyss",
+    "Perma Charge",
+    "Perma-Spike",
+    "Pop And Awe",
+    "Popseidon",
+    "Pouākai",
+    "Robo Monkey",
+    "Rosalia",
+    "Sauda",
+    "Sentry Champion",
+    "Sky Shredder",
+    "Spectre",
+    "Summon Phoenix",
+    "Sun Avatar",
+    "Tech Terror",
+    "The Desert Phantom",
+    "The Tack Zone",
+    "Tyrannosaurus Rex",
+    "Wizard Lord Phoenix"
+   ]
+  },
+  "trackLengthNote": "Index gives only an average (11.7) because lengths vary by route and track extensions; our 6.8 shortest is kept (not comparable)."
+ }
+]

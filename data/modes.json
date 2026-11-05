@@ -1,0 +1,767 @@
+[
+ {
+  "id": "easy",
+  "name": "Easy Standard",
+  "base": "easy",
+  "startCash": 650,
+  "startCashWithMoreCashMK": 850,
+  "lives": 200,
+  "startRound": 1,
+  "endRound": 40,
+  "costMult": 0.85,
+  "cashMult": 1,
+  "bloonSpeedMult": 1.0,
+  "roundSet": "standard",
+  "allowedClasses": null,
+  "rules": {
+   "noIncomeTowers": false,
+   "noSelling": false,
+   "noContinues": false,
+   "noHearts": false,
+   "noMK": false,
+   "noPowers": false,
+   "noInsta": false,
+   "bloonMods": "R40 MOAB at 2/3 HP"
+  },
+  "rewardMM": {
+   "Beginner": 75,
+   "Intermediate": 150,
+   "Advanced": 225,
+   "Expert": 300
+  },
+  "rewardMMRepeat": {
+   "Beginner": 15,
+   "Intermediate": 30,
+   "Advanced": 45,
+   "Expert": 60
+  },
+  "medal": "Easy (bronze)",
+  "unlockReq": "None (Beginner maps unlock after the tutorial; map tier gates apply).",
+  "xpBaseTotal": 21400,
+  "totalCashNoIncome": 17366,
+  "notes": "Rounds 1-40. R40 MOAB has 2/3 HP (133 HP, 549 RBE). Bloon speed is the baseline (Medium is x1.1). Unlocks Primary Only and Easy Sandbox.",
+  "inferred": [
+   "rewardMM Expert row confirmed on fandom Infernal page (300/500/800/1200, repeat 60/100/160/240); Advanced Easy confirmed on fandom Cargo (225/45); other Advanced cells x3 of Beginner (calc). Checked 2026-11-05"
+  ],
+  "totalCashNote": "Start cash + pop cash + end-of-round bonus for every round played, EXCEPT the final round's bonus (the game is over), x cashMult. Same convention as ch.08 / econ_calc.py. For cash in hand after winning, add the final round's bonus (100 + endRound) x cashMult."
+ },
+ {
+  "id": "primary-only",
+  "name": "Primary Only",
+  "base": "easy",
+  "startCash": 650,
+  "startCashWithMoreCashMK": 850,
+  "lives": 200,
+  "startRound": 1,
+  "endRound": 40,
+  "costMult": 0.85,
+  "cashMult": 1,
+  "bloonSpeedMult": 1.0,
+  "roundSet": "standard",
+  "allowedClasses": [
+   "Primary"
+  ],
+  "rules": {
+   "noIncomeTowers": false,
+   "noSelling": false,
+   "noContinues": false,
+   "noHearts": false,
+   "noMK": false,
+   "noPowers": false,
+   "noInsta": false,
+   "bloonMods": "As Easy (R40 MOAB 2/3 HP)",
+   "towers": "Dart, Boomerang, Bomb, Tack, Ice, Glue, Desperado + Hero"
+  },
+  "rewardMM": {
+   "Beginner": 75,
+   "Intermediate": 150,
+   "Advanced": 225,
+   "Expert": 300
+  },
+  "rewardMMRepeat": {
+   "Beginner": 15,
+   "Intermediate": 30,
+   "Advanced": 45,
+   "Expert": 60
+  },
+  "medal": "Primary Only (Easy medal)",
+  "unlockReq": "Beat Easy Standard on the map.",
+  "xpBaseTotal": 21400,
+  "totalCashNoIncome": 17366,
+  "notes": "Only Primary towers + Heroes. Round-100 Instas earned here are always Primary towers. Unlocks Deflation.",
+  "inferred": [
+   "rewardMM assumed = Easy row (sub-mode payout not stated on any reachable source)"
+  ],
+  "totalCashNote": "Start cash + pop cash + end-of-round bonus for every round played, EXCEPT the final round's bonus (the game is over), x cashMult. Same convention as ch.08 / econ_calc.py. For cash in hand after winning, add the final round's bonus (100 + endRound) x cashMult."
+ },
+ {
+  "id": "deflation",
+  "name": "Deflation",
+  "base": "easy",
+  "startCash": 20000,
+  "startCashWithMoreCashMK": 20200,
+  "lives": 200,
+  "startRound": 31,
+  "endRound": 60,
+  "costMult": 0.85,
+  "cashMult": 1,
+  "bloonSpeedMult": 1.0,
+  "roundSet": "standard",
+  "allowedClasses": null,
+  "rules": {
+   "noIncomeTowers": false,
+   "noSelling": false,
+   "noContinues": true,
+   "noHearts": false,
+   "noMK": false,
+   "noPowers": false,
+   "noInsta": false,
+   "noIncome": true,
+   "noPopCash": true,
+   "noEndOfRoundCash": true,
+   "noFastTrack": true,
+   "bloonMods": "Uses standard rounds 31-60 at Easy speed"
+  },
+  "rewardMM": {
+   "Beginner": 75,
+   "Intermediate": 150,
+   "Advanced": 225,
+   "Expert": 300
+  },
+  "rewardMMRepeat": {
+   "Beginner": 15,
+   "Intermediate": 30,
+   "Advanced": 45,
+   "Expert": 60
+  },
+  "medal": "Deflation (Easy medal)",
+  "unlockReq": "Beat Primary Only on the map.",
+  "xpBaseTotal": 45950,
+  "totalCashNoIncome": null,
+  "notes": "Starts at R31 with $20,000 and NO income: pop cash and end-of-round cash are both off; selling still works (70%). Ends after R60. Continues, Perks and Fast Track disabled. Exceptions that still pay: Three Mines 'Round crystals; v57 made Bloon Traps and Obyn Wall of Trees generate cash here. Top XP-farm mode: 45,950 base XP in 30 rounds (59,735 on Expert).",
+  "inferred": [
+   "rewardMM assumed = Easy row",
+   "lives assumed 200 (Easy)"
+  ]
+ },
+ {
+  "id": "sandbox-easy",
+  "name": "Sandbox (Easy)",
+  "base": "easy",
+  "startCash": 9999999,
+  "startCashWithMoreCashMK": null,
+  "lives": 999999,
+  "startRound": null,
+  "endRound": null,
+  "costMult": 0.85,
+  "cashMult": 1,
+  "bloonSpeedMult": 1.0,
+  "roundSet": "standard",
+  "allowedClasses": null,
+  "rules": {
+   "noIncomeTowers": false,
+   "noSelling": false,
+   "noContinues": false,
+   "noHearts": false,
+   "noMK": false,
+   "noPowers": false,
+   "noInsta": false,
+   "noRewards": true
+  },
+  "rewardMM": null,
+  "rewardMMRepeat": null,
+  "medal": null,
+  "unlockReq": "Beat Easy Standard.",
+  "xpBaseTotal": 0,
+  "totalCashNoIncome": null,
+  "notes": "Test mode, no rewards and no XP (XP absence is community knowledge, unverified). $9,999,999 cash and 999,999 lives, choose round, send any bloon, reset cooldowns. Paragons/VTSG only if already built in a real game. No Co-op.",
+  "inferred": [
+   "xpBaseTotal not meaningful: Sandbox gives no XP"
+  ]
+ },
+ {
+  "id": "medium",
+  "name": "Medium Standard",
+  "base": "medium",
+  "startCash": 650,
+  "startCashWithMoreCashMK": 850,
+  "lives": 150,
+  "startRound": 1,
+  "endRound": 60,
+  "costMult": 1.0,
+  "cashMult": 1,
+  "bloonSpeedMult": 1.1,
+  "roundSet": "standard",
+  "allowedClasses": null,
+  "rules": {
+   "noIncomeTowers": false,
+   "noSelling": false,
+   "noContinues": false,
+   "noHearts": false,
+   "noMK": false,
+   "noPowers": false,
+   "noInsta": false
+  },
+  "rewardMM": {
+   "Beginner": 125,
+   "Intermediate": 250,
+   "Advanced": 375,
+   "Expert": 500
+  },
+  "rewardMMRepeat": {
+   "Beginner": 25,
+   "Intermediate": 50,
+   "Advanced": 75,
+   "Expert": 100
+  },
+  "medal": "Medium (silver)",
+  "unlockReq": "None.",
+  "xpBaseTotal": 56950,
+  "totalCashNoIncome": 54974.0,
+  "notes": "Rounds 1-60, 150 lives, base prices. Bloons x1.1 speed vs Easy. Unlocks Military Only and Reverse.",
+  "inferred": [],
+  "totalCashNote": "Start cash + pop cash + end-of-round bonus for every round played, EXCEPT the final round's bonus (the game is over), x cashMult. Same convention as ch.08 / econ_calc.py. For cash in hand after winning, add the final round's bonus (100 + endRound) x cashMult."
+ },
+ {
+  "id": "military-only",
+  "name": "Military Only",
+  "base": "medium",
+  "startCash": 650,
+  "startCashWithMoreCashMK": 850,
+  "lives": 150,
+  "startRound": 1,
+  "endRound": 60,
+  "costMult": 1.0,
+  "cashMult": 1,
+  "bloonSpeedMult": 1.1,
+  "roundSet": "standard",
+  "allowedClasses": [
+   "Military"
+  ],
+  "rules": {
+   "noIncomeTowers": false,
+   "noSelling": false,
+   "noContinues": false,
+   "noHearts": false,
+   "noMK": false,
+   "noPowers": false,
+   "noInsta": false,
+   "towers": "Sniper, Sub, Buccaneer, Ace, Heli, Mortar, Dartling + Hero"
+  },
+  "rewardMM": {
+   "Beginner": 125,
+   "Intermediate": 250,
+   "Advanced": 375,
+   "Expert": 500
+  },
+  "rewardMMRepeat": {
+   "Beginner": 25,
+   "Intermediate": 50,
+   "Advanced": 75,
+   "Expert": 100
+  },
+  "medal": "Military Only (Medium medal)",
+  "unlockReq": "Beat Medium Standard.",
+  "xpBaseTotal": 56950,
+  "totalCashNoIncome": 54974.0,
+  "notes": "Only Military towers + Heroes. Unlocks Apopalypse.",
+  "inferred": [
+   "rewardMM assumed = Medium row"
+  ],
+  "totalCashNote": "Start cash + pop cash + end-of-round bonus for every round played, EXCEPT the final round's bonus (the game is over), x cashMult. Same convention as ch.08 / econ_calc.py. For cash in hand after winning, add the final round's bonus (100 + endRound) x cashMult."
+ },
+ {
+  "id": "apopalypse",
+  "name": "Apopalypse",
+  "base": "medium",
+  "startCash": 650,
+  "startCashWithMoreCashMK": 850,
+  "lives": 150,
+  "startRound": 1,
+  "endRound": 70,
+  "costMult": 1.0,
+  "cashMult": 1,
+  "bloonSpeedMult": 1.1,
+  "roundSet": "random",
+  "allowedClasses": null,
+  "rules": {
+   "noIncomeTowers": false,
+   "noSelling": false,
+   "noContinues": false,
+   "noHearts": false,
+   "noMK": false,
+   "noPowers": false,
+   "noInsta": false,
+   "bloonMods": "Random rounds, continuous spawning"
+  },
+  "rewardMM": {
+   "Beginner": 125,
+   "Intermediate": 250,
+   "Advanced": 375,
+   "Expert": 500
+  },
+  "rewardMMRepeat": {
+   "Beginner": 25,
+   "Intermediate": 50,
+   "Advanced": 75,
+   "Expert": 100
+  },
+  "medal": "Apopalypse (Medium medal)",
+  "unlockReq": "Beat Military Only.",
+  "xpBaseTotal": 87100,
+  "totalCashNoIncome": null,
+  "notes": "Randomly generated rounds (500+ bloon groups) with NO break between rounds: the next round spawns once the previous one finishes spawning. Ground objects (spikes) persist. Leads from R20, Camo from R19, Ceramics from R33, MOABs from R41, BFBs 51, ZOMGs 61, DDTs 81. End-of-round cash exists (added in a later update). Events/odyssey use fixed seeds. Leaving and re-entering lowers difficulty. Win round DISPUTED: bloonswiki's (undated, unversioned) update-history line says \"Completing round 70 now counts as beating the mode\"; the fandom Apopalypse (BTD6) article says victory is \"popping all bloons spawned from Round 1 to Round 60\", and a 2022 guide says 60 rounds. Unresolved 2026-11-05.",
+  "inferred": [
+   "endRound 70 from bloonswiki version-history line (undated); fandom article and a 2022 guide say 60 - UNRESOLVED, see endRoundAlt",
+   "startCash 650: fandom More Cash page says $650 'on most game modes' (only Half Cash $325 and Deflation $20,000 differ); no page names this mode explicitly",
+   "totalCashNoIncome not computable (random rounds)",
+   "rewardMM assumed = Medium row",
+   "xpBaseTotal assumes rounds 1-70 at the standard XP formula (calc)"
+  ],
+  "endRoundAlt": 60
+ },
+ {
+  "id": "reverse",
+  "name": "Reverse",
+  "base": "medium",
+  "startCash": 650,
+  "startCashWithMoreCashMK": 850,
+  "lives": 150,
+  "startRound": 1,
+  "endRound": 60,
+  "costMult": 1.0,
+  "cashMult": 1,
+  "bloonSpeedMult": 1.1,
+  "roundSet": "standard",
+  "allowedClasses": null,
+  "rules": {
+   "noIncomeTowers": false,
+   "noSelling": false,
+   "noContinues": false,
+   "noHearts": false,
+   "noMK": false,
+   "noPowers": false,
+   "noInsta": false,
+   "bloonMods": "Track reversed, group order reversed"
+  },
+  "rewardMM": {
+   "Beginner": 125,
+   "Intermediate": 250,
+   "Advanced": 375,
+   "Expert": 500
+  },
+  "rewardMMRepeat": {
+   "Beginner": 25,
+   "Intermediate": 50,
+   "Advanced": 75,
+   "Expert": 100
+  },
+  "medal": "Reverse (Medium medal)",
+  "unlockReq": "Beat Medium Standard.",
+  "xpBaseTotal": 56950,
+  "totalCashNoIncome": 54974.0,
+  "notes": "Bloons enter at the exits and leave at the entrances, and each round's group order is reversed. Barely changes most maps; makes Dark Castle and Workshop harder. Unlocks Medium Sandbox.",
+  "inferred": [
+   "rewardMM assumed = Medium row"
+  ],
+  "totalCashNote": "Start cash + pop cash + end-of-round bonus for every round played, EXCEPT the final round's bonus (the game is over), x cashMult. Same convention as ch.08 / econ_calc.py. For cash in hand after winning, add the final round's bonus (100 + endRound) x cashMult."
+ },
+ {
+  "id": "sandbox-medium",
+  "name": "Sandbox (Medium)",
+  "base": "medium",
+  "startCash": 9999999,
+  "startCashWithMoreCashMK": null,
+  "lives": 999999,
+  "startRound": null,
+  "endRound": null,
+  "costMult": 1.0,
+  "cashMult": 1,
+  "bloonSpeedMult": 1.1,
+  "roundSet": "standard",
+  "allowedClasses": null,
+  "rules": {
+   "noIncomeTowers": false,
+   "noSelling": false,
+   "noContinues": false,
+   "noHearts": false,
+   "noMK": false,
+   "noPowers": false,
+   "noInsta": false,
+   "noRewards": true
+  },
+  "rewardMM": null,
+  "rewardMMRepeat": null,
+  "medal": null,
+  "unlockReq": "Beat Reverse.",
+  "xpBaseTotal": 0,
+  "totalCashNoIncome": null,
+  "notes": "As Easy Sandbox but with Medium prices/speed.",
+  "inferred": []
+ },
+ {
+  "id": "hard",
+  "name": "Hard Standard",
+  "base": "hard",
+  "startCash": 650,
+  "startCashWithMoreCashMK": 850,
+  "lives": 100,
+  "startRound": 3,
+  "endRound": 80,
+  "costMult": 1.08,
+  "cashMult": 1,
+  "bloonSpeedMult": 1.25,
+  "roundSet": "standard",
+  "allowedClasses": null,
+  "rules": {
+   "noIncomeTowers": false,
+   "noSelling": false,
+   "noContinues": false,
+   "noHearts": false,
+   "noMK": false,
+   "noPowers": false,
+   "noInsta": false
+  },
+  "rewardMM": {
+   "Beginner": 200,
+   "Intermediate": 400,
+   "Advanced": 600,
+   "Expert": 800
+  },
+  "rewardMMRepeat": {
+   "Beginner": 40,
+   "Intermediate": 80,
+   "Advanced": 120,
+   "Expert": 160
+  },
+  "medal": "Hard (gold)",
+  "unlockReq": "None.",
+  "xpBaseTotal": 126150,
+  "totalCashNoIncome": 97815.6,
+  "notes": "Rounds 3-80 (R1-2 skipped, so their cash is never received), 100 lives, x1.08 prices, bloons x1.25 speed vs Easy. Unlocks Magic Monkeys Only, Alternate Bloons Rounds and Hard Sandbox.",
+  "inferred": [],
+  "totalCashNote": "Start cash + pop cash + end-of-round bonus for every round played, EXCEPT the final round's bonus (the game is over), x cashMult. Same convention as ch.08 / econ_calc.py. For cash in hand after winning, add the final round's bonus (100 + endRound) x cashMult."
+ },
+ {
+  "id": "magic-monkeys-only",
+  "name": "Magic Monkeys Only",
+  "base": "hard",
+  "startCash": 650,
+  "startCashWithMoreCashMK": 850,
+  "lives": 100,
+  "startRound": 3,
+  "endRound": 80,
+  "costMult": 1.08,
+  "cashMult": 1,
+  "bloonSpeedMult": 1.25,
+  "roundSet": "standard",
+  "allowedClasses": [
+   "Magic"
+  ],
+  "rules": {
+   "noIncomeTowers": false,
+   "noSelling": false,
+   "noContinues": false,
+   "noHearts": false,
+   "noMK": false,
+   "noPowers": false,
+   "noInsta": false,
+   "towers": "Wizard, Super Monkey, Ninja, Alchemist, Druid, Mermonkey, Skywarden + Hero"
+  },
+  "rewardMM": {
+   "Beginner": 200,
+   "Intermediate": 400,
+   "Advanced": 600,
+   "Expert": 800
+  },
+  "rewardMMRepeat": {
+   "Beginner": 40,
+   "Intermediate": 80,
+   "Advanced": 120,
+   "Expert": 160
+  },
+  "medal": "Magic Monkeys Only (Hard medal)",
+  "unlockReq": "Beat Hard Standard.",
+  "xpBaseTotal": 126150,
+  "totalCashNoIncome": 97815.6,
+  "notes": "Only Magic towers + Heroes. Unlocks Double HP MOABs.",
+  "inferred": [
+   "rewardMM assumed = Hard row"
+  ],
+  "totalCashNote": "Start cash + pop cash + end-of-round bonus for every round played, EXCEPT the final round's bonus (the game is over), x cashMult. Same convention as ch.08 / econ_calc.py. For cash in hand after winning, add the final round's bonus (100 + endRound) x cashMult."
+ },
+ {
+  "id": "double-hp-moabs",
+  "name": "Double HP MOABs",
+  "base": "hard",
+  "startCash": 650,
+  "startCashWithMoreCashMK": 850,
+  "lives": 100,
+  "startRound": 3,
+  "endRound": 80,
+  "costMult": 1.08,
+  "cashMult": 1,
+  "bloonSpeedMult": 1.25,
+  "roundSet": "standard",
+  "allowedClasses": null,
+  "rules": {
+   "noIncomeTowers": false,
+   "noSelling": false,
+   "noContinues": false,
+   "noHearts": false,
+   "noMK": false,
+   "noPowers": false,
+   "noInsta": false,
+   "bloonMods": "MOAB-class HP x2"
+  },
+  "rewardMM": {
+   "Beginner": 200,
+   "Intermediate": 400,
+   "Advanced": 600,
+   "Expert": 800
+  },
+  "rewardMMRepeat": {
+   "Beginner": 40,
+   "Intermediate": 80,
+   "Advanced": 120,
+   "Expert": 160
+  },
+  "medal": "Double HP MOABs (Hard medal)",
+  "unlockReq": "Beat Magic Monkeys Only.",
+  "xpBaseTotal": 126150,
+  "totalCashNoIncome": 97815.6,
+  "notes": "All MOAB-class bloons have double HP (stacks with fortified and the R81+ ramp). Only slightly harder than Hard Standard overall, but the R40 MOAB (400 HP) becomes a real wall. RBE in rounds.json is NOT doubled. Unlocks Half Cash.",
+  "inferred": [
+   "rewardMM assumed = Hard row"
+  ],
+  "totalCashNote": "Start cash + pop cash + end-of-round bonus for every round played, EXCEPT the final round's bonus (the game is over), x cashMult. Same convention as ch.08 / econ_calc.py. For cash in hand after winning, add the final round's bonus (100 + endRound) x cashMult."
+ },
+ {
+  "id": "half-cash",
+  "name": "Half Cash",
+  "base": "hard",
+  "startCash": 325,
+  "startCashWithMoreCashMK": 425,
+  "lives": 100,
+  "startRound": 3,
+  "endRound": 80,
+  "costMult": 1.08,
+  "cashMult": 0.5,
+  "bloonSpeedMult": 1.25,
+  "roundSet": "standard",
+  "allowedClasses": null,
+  "rules": {
+   "noIncomeTowers": false,
+   "noSelling": false,
+   "noContinues": false,
+   "noHearts": false,
+   "noMK": false,
+   "noPowers": false,
+   "noInsta": false,
+   "bloonMods": "none (economy only)",
+   "incomeHalved": true
+  },
+  "rewardMM": {
+   "Beginner": 200,
+   "Intermediate": 400,
+   "Advanced": 600,
+   "Expert": 800
+  },
+  "rewardMMRepeat": {
+   "Beginner": 40,
+   "Intermediate": 80,
+   "Advanced": 120,
+   "Expert": 160
+  },
+  "medal": "Half Cash (Hard medal)",
+  "unlockReq": "Beat Double HP MOABs.",
+  "xpBaseTotal": 126150,
+  "totalCashNoIncome": 48907.8,
+  "notes": "Starting cash, pop cash, end-of-round cash, continue cash and tower income are all halved. Exceptions (not halved): Monkey Bank interest, Geraldo's Rare Quincy Action Figure, Corvus's Nourishment, Three Mines 'Round crystals. Often called the most frustrating mode. Halve the rounds.json cumulative figures.",
+  "inferred": [
+   "More Cash +$100 in Half Cash confirmed by fandom More Cash page ('$325 to $425')",
+   "rewardMM assumed = Hard row"
+  ],
+  "totalCashNote": "Start cash + pop cash + end-of-round bonus for every round played, EXCEPT the final round's bonus (the game is over), x cashMult. Same convention as ch.08 / econ_calc.py. For cash in hand after winning, add the final round's bonus (100 + endRound) x cashMult."
+ },
+ {
+  "id": "abr",
+  "name": "Alternate Bloons Rounds",
+  "base": "hard",
+  "startCash": 650,
+  "startCashWithMoreCashMK": 850,
+  "lives": 100,
+  "startRound": 3,
+  "endRound": 80,
+  "costMult": 1.08,
+  "cashMult": 1,
+  "bloonSpeedMult": 1.25,
+  "roundSet": "abr",
+  "allowedClasses": null,
+  "rules": {
+   "noIncomeTowers": false,
+   "noSelling": false,
+   "noContinues": false,
+   "noHearts": false,
+   "noMK": false,
+   "noPowers": false,
+   "noInsta": false,
+   "bloonMods": "ABR round set"
+  },
+  "rewardMM": {
+   "Beginner": 200,
+   "Intermediate": 400,
+   "Advanced": 600,
+   "Expert": 800
+  },
+  "rewardMMRepeat": {
+   "Beginner": 40,
+   "Intermediate": 80,
+   "Advanced": 120,
+   "Expert": 160
+  },
+  "medal": "ABR (Hard medal)",
+  "unlockReq": "Beat Hard Standard.",
+  "xpBaseTotal": 126150,
+  "totalCashNoIncome": 100813.1,
+  "notes": "Uses the redesigned ABR round set (rounds.json \"abr\"): camo from R5, leads from R10, purples R15, Fortified MOAB at R40, first BFB R54, first ZOMG R79, R80 = 2 ZOMGs. Rounds 3-80 on Hard. Unlocks Impoppable.",
+  "inferred": [
+   "rewardMM assumed = Hard row"
+  ],
+  "totalCashNote": "Start cash + pop cash + end-of-round bonus for every round played, EXCEPT the final round's bonus (the game is over), x cashMult. Same convention as ch.08 / econ_calc.py. For cash in hand after winning, add the final round's bonus (100 + endRound) x cashMult."
+ },
+ {
+  "id": "impoppable",
+  "name": "Impoppable",
+  "base": "hard",
+  "startCash": 650,
+  "startCashWithMoreCashMK": 850,
+  "lives": 1,
+  "startRound": 6,
+  "endRound": 100,
+  "costMult": 1.2,
+  "cashMult": 1,
+  "bloonSpeedMult": 1.25,
+  "roundSet": "standard",
+  "allowedClasses": null,
+  "rules": {
+   "noIncomeTowers": false,
+   "noSelling": false,
+   "noContinues": false,
+   "noHearts": false,
+   "noMK": false,
+   "noPowers": false,
+   "noInsta": false,
+   "noLifeGain": true,
+   "noManaShield": true,
+   "bloonMods": "Standard rounds; Hard bloon speed (Difficulty page: Impoppable overrides everything except bloon speed and the R40 MOAB)"
+  },
+  "rewardMM": {
+   "Beginner": 300,
+   "Intermediate": 600,
+   "Advanced": 900,
+   "Expert": 1200
+  },
+  "rewardMMRepeat": {
+   "Beginner": 60,
+   "Intermediate": 120,
+   "Advanced": 180,
+   "Expert": 240
+  },
+  "medal": "Impoppable (Hard-tier medal)",
+  "unlockReq": "Beat ABR on the map.",
+  "xpBaseTotal": 231150,
+  "totalCashNoIncome": 178709.4,
+  "notes": "Rounds 6-100 of the STANDARD round set, 1 life, x1.2 prices vs Medium (~11.1% above Hard). Cannot gain lives; Mana Shield is disabled. MK, Powers, Insta Monkeys, income and Continues are all allowed. R81+ freeplay-style modifiers (Super Ceramics, ramps) apply as in every mode that reaches R81. Unlocks CHIMPS.",
+  "inferred": [
+   "startCash 650: fandom More Cash page says $650 'on most game modes' (only Half Cash $325 and Deflation $20,000 differ); no page names this mode explicitly"
+  ],
+  "totalCashNote": "Start cash + pop cash + end-of-round bonus for every round played, EXCEPT the final round's bonus (the game is over), x cashMult. Same convention as ch.08 / econ_calc.py. For cash in hand after winning, add the final round's bonus (100 + endRound) x cashMult."
+ },
+ {
+  "id": "chimps",
+  "name": "CHIMPS",
+  "base": "hard",
+  "startCash": 650,
+  "startCashWithMoreCashMK": null,
+  "lives": 1,
+  "startRound": 6,
+  "endRound": 100,
+  "costMult": 1.08,
+  "cashMult": 1,
+  "bloonSpeedMult": 1.25,
+  "roundSet": "standard",
+  "allowedClasses": null,
+  "rules": {
+   "noIncomeTowers": true,
+   "noSelling": true,
+   "noContinues": true,
+   "noHearts": true,
+   "noMK": true,
+   "noPowers": true,
+   "noInsta": true,
+   "noLifeGain": true,
+   "noDoubleCash": true,
+   "noFastTrack": true,
+   "noHeroBoosters": true,
+   "retryLastRound": true,
+   "bloonMods": "None beyond Hard speed and the standard R81+ freeplay modifiers"
+  },
+  "rewardMM": {
+   "Beginner": 300,
+   "Intermediate": 600,
+   "Advanced": 900,
+   "Expert": 1200
+  },
+  "rewardMMRepeat": {
+   "Beginner": 60,
+   "Intermediate": 120,
+   "Advanced": 180,
+   "Expert": 240
+  },
+  "medal": "CHIMPS: red (any win, Retry Last Round allowed) and black (one session, no exit, no Retry)",
+  "unlockReq": "Beat Impoppable on the map.",
+  "xpBaseTotal": 231150,
+  "totalCashNoIncome": 178709.4,
+  "notes": "No Continues, Hearts lost, Income, Monkey Knowledge, Powers or Selling. Rounds 6-100 standard set, 1 life, Hard prices (x1.08). Income = starting cash + pop cash + end-of-round cash only: Banana Farms disabled, Double Cash off, Bloon Traps / XXXL Trap / Wall of Trees pay only what the bloons would have paid; cash-paying map gimmicks (Three Mines crystals) still work. Continues replaced by Retry Last Round. Sellable exceptions: Champion/Paragon Sentries, Geraldo L18+ Creepy Idol, Special Poperations Marine; indirect sells (e.g. Chinook moving a tower) refund $0; sacrifices are not selling. Hero Boosters, Fast Track and Perks disabled. Monkey Teams/Odyssey keep their own rules.",
+  "inferred": [
+   "costMult 1.08 (Hard prices) VERIFIED 2026-11-05: bloonswiki Strategy:CHIMPS prices Monkey Town at $10,800 (= 10,000 x 1.08; x1.2 would be $12,000); Steam thread 3187992458109422177 'CHIMPS uses regular HARD prices'; kosgames 'Hard mode starting at Round 6'. Ch05 previously said x1.2 (fixed)",
+   "startCash 650: fandom More Cash page says $650 'on most game modes' (only Half Cash $325 and Deflation $20,000 differ); no page names this mode explicitly",
+   "rewardMM assumed = Impoppable row (one Steam post quotes 1,200 MM first-time for 'Impoppable/CHIMPS' on Expert; no wiki table lists CHIMPS separately)"
+  ],
+  "totalCashNote": "Start cash + pop cash + end-of-round bonus for every round played, EXCEPT the final round's bonus (the game is over), x cashMult. Same convention as ch.08 / econ_calc.py. For cash in hand after winning, add the final round's bonus (100 + endRound) x cashMult."
+ },
+ {
+  "id": "sandbox-hard",
+  "name": "Sandbox (Hard)",
+  "base": "hard",
+  "startCash": 9999999,
+  "startCashWithMoreCashMK": null,
+  "lives": 999999,
+  "startRound": null,
+  "endRound": null,
+  "costMult": 1.08,
+  "cashMult": 1,
+  "bloonSpeedMult": 1.25,
+  "roundSet": "standard",
+  "allowedClasses": null,
+  "rules": {
+   "noIncomeTowers": false,
+   "noSelling": false,
+   "noContinues": false,
+   "noHearts": false,
+   "noMK": false,
+   "noPowers": false,
+   "noInsta": false,
+   "noRewards": true
+  },
+  "rewardMM": null,
+  "rewardMMRepeat": null,
+  "medal": null,
+  "unlockReq": "Beat Hard Standard.",
+  "xpBaseTotal": 0,
+  "totalCashNoIncome": null,
+  "notes": "As Easy Sandbox but with Hard prices/speed.",
+  "inferred": []
+ }
+]

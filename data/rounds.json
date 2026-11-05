@@ -1,0 +1,7058 @@
+{
+ "_meta": {
+  "gameVersion": "57.4",
+  "generated": "2026-11-05",
+  "cashDefinition": "cash = cashPop + cashBonus for that round, with no income towers, no Monkey Knowledge, no Double Cash. Pop cash is the same on every difficulty (Easy/Medium/Hard/Impoppable/CHIMPS); only Half Cash halves it (and the bonus).",
+  "cashBonusFormula": "100 + round (paid at the end of each round)",
+  "popCashMultipliers": {
+   "1-50": 1.0,
+   "51-60": 0.5,
+   "61-85": 0.2,
+   "86-100": 0.1,
+   "101-120": 0.08,
+   "121-140": 0.05,
+   "141+": 0.02
+  },
+  "popCashMultiplierNote": "101-120 = 8% and 121-140 = 5% per the v53.0 patch notes (\"5% -> 8%\", \"2% -> 5%\"; 'final freeplay income cut pushed back 20 rounds') and the bloonswiki Freeplay page (re-checked 2026-11-05). The bloonswiki Rounds/ABR tables still compute 101-140 at 5%/4%; their figures are kept as cashPopWikiTable for rounds 101-140. Rounds 1-100 cash columns follow the bloonswiki Rounds (BTD6) table exactly.",
+  "cumulativeFields": {
+   "cumCash": "Sum of cash for rounds 1..r (Easy/Medium/Primary/Military/Reverse start at R1). Excludes starting cash.",
+   "cumCashFromR3": "Sum for rounds 3..r: Hard Standard, Magic Monkeys Only, Double HP MOABs, Half Cash (halve it), ABR (use the abr array).",
+   "cumCashFromR6": "Sum for rounds 6..r: Impoppable and CHIMPS."
+  },
+  "startingCashByMode": "Cash in hand after finishing round r = startingCash + cumulative field for that mode. Starting cash $650 for every mode except Deflation ($20,000 at R31, and no income at all, so cumulative cash does not apply) and Half Cash ($325, and halve every cumulative figure). More Cash MK adds $200 except in CHIMPS. Examples (calc): Medium after R40 = 650 + 16,856 = $17,506; Hard after R80 = 650 + 97,345.6 = $97,995.6; CHIMPS after R99 (what you have going into R100) = 650 + cumCashFromR6[99] = $650 + 176,724.8 = $177,374.8.",
+  "freeplayModifiers": "From R81: Super Ceramics (60 HP, 1 child per layer), MOAB-class HP ramp (+2%/round 81-100, +5% 101-124, +15% 125-150) and speed ramp. These are already included in rbe for rounds 81-140.",
+  "easyRound40": "On Easy the R40 MOAB has 2/3 HP (133), so its RBE is 549 not 616.",
+  "xpFormula": "20r+20 (r<=20); 40(r-20)+420 (21-50); 90(r-50)+1620 (51+). Base, before map multiplier (x1/1.1/1.2/1.3) or Monkey Education. Freeplay rounds pay 30% (to R100) / 10% (R101+).",
+  "danger": "0-3 heuristic: 3 = community-listed killer/milestone rounds, 2 = notable property or MOAB-class check, 1 = moderate, 0 = trivial. Rounds 81-140 not hand-rated default to 2, or 3 if RBE >= 400k, a BAD, or 20+ Fortified DDTs. Opinion, not game data.",
+  "validation": "Every composition was checked against its RBE and pop cash with an independent bloon model (HP, children, fortified, R81+ super ceramics and MOAB ramp): all 140 Standard and 140 ABR rounds reproduce the wiki RBE and pop cash exactly.",
+  "abrCumulative": "In the abr array use cumCashFromR3 (ABR starts at R3); cumCash (from R1) only applies to custom challenges.",
+  "abrNote": "ABR is played on Hard from R3; normal win at R80, R81-140 are optional freeplay. Impoppable and CHIMPS use the STANDARD rounds, not ABR. ABR R1-2 exist only in custom challenges.",
+  "sources": [
+   "https://www.bloonswiki.com/Rounds_(BTD6)",
+   "https://www.bloonswiki.com/ABR",
+   "https://www.bloonswiki.com/Update_history:Bloons_TD_6/Version_53.0",
+   "https://www.bloonswiki.com/Talk:Freeplay"
+  ],
+  "verification2": "2026-11-05 adversarial check (VERIFY-2-economy.md): cash = cashPop + cashBonus, cashBonus = 100 + r, cumCash / cumCashFromR3 / cumCashFromR6 and xp recomputed programmatically for all 140 standard + 140 ABR rounds: 0 mismatches. 20 standard rounds (1,10,27,38,40,45,49,50,51,60,63,65,76,78,79,85,90,95,98,100) spot-checked against the live bloonswiki round table for RBE and pop cash: 20/20 match. XP formula confirmed by sarahs-btd6-site; freeplay XP 30% (to R100) / 10% (R101+) confirmed by bloonswiki Freeplay. Mode totals: modes.json totalCashNoIncome = startCash + (sum of cash start..end minus the final round's bonus) x cashMult, matching ch.08."
+ },
+ "standard": [
+  {
+   "round": 1,
+   "xp": 40,
+   "cash": 121,
+   "cashPop": 20,
+   "cashBonus": 101,
+   "cumCash": 121.0,
+   "cumCashFromR3": null,
+   "cumCashFromR6": null,
+   "rbe": 20,
+   "popCashMult": 1,
+   "threats": [],
+   "composition": "20 Red",
+   "groups": [
+    "20 Red"
+   ],
+   "danger": 0,
+   "notes": "Easy and Medium start here."
+  },
+  {
+   "round": 2,
+   "xp": 60,
+   "cash": 137,
+   "cashPop": 35,
+   "cashBonus": 102,
+   "cumCash": 258.0,
+   "cumCashFromR3": null,
+   "cumCashFromR6": null,
+   "rbe": 35,
+   "popCashMult": 1,
+   "threats": [],
+   "composition": "35 Red",
+   "groups": [
+    "35 Red"
+   ],
+   "danger": 0,
+   "notes": ""
+  },
+  {
+   "round": 3,
+   "xp": 80,
+   "cash": 138,
+   "cashPop": 35,
+   "cashBonus": 103,
+   "cumCash": 396.0,
+   "cumCashFromR3": 138.0,
+   "cumCashFromR6": null,
+   "rbe": 35,
+   "popCashMult": 1,
+   "threats": [],
+   "composition": "25 Red, 5 Blue",
+   "groups": [
+    "10 Red",
+    "5 Blue",
+    "15 Red"
+   ],
+   "danger": 0,
+   "notes": "Hard, Magic Monkeys Only, Double HP MOABs, Half Cash and ABR start here (cash from R1-2 is not received)."
+  },
+  {
+   "round": 4,
+   "xp": 100,
+   "cash": 175,
+   "cashPop": 71,
+   "cashBonus": 104,
+   "cumCash": 571.0,
+   "cumCashFromR3": 313.0,
+   "cumCashFromR6": null,
+   "rbe": 71,
+   "popCashMult": 1,
+   "threats": [],
+   "composition": "35 Red, 18 Blue",
+   "groups": [
+    "25 Red",
+    "18 Blue",
+    "10 Red"
+   ],
+   "danger": 0,
+   "notes": ""
+  },
+  {
+   "round": 5,
+   "xp": 120,
+   "cash": 164,
+   "cashPop": 59,
+   "cashBonus": 105,
+   "cumCash": 735.0,
+   "cumCashFromR3": 477.0,
+   "cumCashFromR6": null,
+   "rbe": 59,
+   "popCashMult": 1,
+   "threats": [],
+   "composition": "27 Blue, 5 Red",
+   "groups": [
+    "12 Blue",
+    "5 Red",
+    "15 Blue"
+   ],
+   "danger": 0,
+   "notes": ""
+  },
+  {
+   "round": 6,
+   "xp": 140,
+   "cash": 163,
+   "cashPop": 57,
+   "cashBonus": 106,
+   "cumCash": 898.0,
+   "cumCashFromR3": 640.0,
+   "cumCashFromR6": 163.0,
+   "rbe": 57,
+   "popCashMult": 1,
+   "threats": [],
+   "composition": "4 Green, 15 Red, 15 Blue",
+   "groups": [
+    "4 Green",
+    "15 Red",
+    "15 Blue"
+   ],
+   "danger": 0,
+   "notes": "Impoppable and CHIMPS start here."
+  },
+  {
+   "round": 7,
+   "xp": 160,
+   "cash": 182,
+   "cashPop": 75,
+   "cashBonus": 107,
+   "cumCash": 1080.0,
+   "cumCashFromR3": 822.0,
+   "cumCashFromR6": 345.0,
+   "rbe": 75,
+   "popCashMult": 1,
+   "threats": [],
+   "composition": "20 Blue, 5 Green, 20 Red",
+   "groups": [
+    "10 Blue",
+    "5 Green",
+    "20 Red",
+    "10 Blue"
+   ],
+   "danger": 0,
+   "notes": ""
+  },
+  {
+   "round": 8,
+   "xp": 180,
+   "cash": 200,
+   "cashPop": 92,
+   "cashBonus": 108,
+   "cumCash": 1280.0,
+   "cumCashFromR3": 1022.0,
+   "cumCashFromR6": 545.0,
+   "rbe": 92,
+   "popCashMult": 1,
+   "threats": [],
+   "composition": "20 Blue, 14 Green, 10 Red",
+   "groups": [
+    "20 Blue",
+    "2 Green",
+    "10 Red",
+    "12 Green"
+   ],
+   "danger": 0,
+   "notes": ""
+  },
+  {
+   "round": 9,
+   "xp": 200,
+   "cash": 199,
+   "cashPop": 90,
+   "cashBonus": 109,
+   "cumCash": 1479.0,
+   "cumCashFromR3": 1221.0,
+   "cumCashFromR6": 744.0,
+   "rbe": 90,
+   "popCashMult": 1,
+   "threats": [],
+   "composition": "30 Green",
+   "groups": [
+    "30 Green"
+   ],
+   "danger": 0,
+   "notes": ""
+  },
+  {
+   "round": 10,
+   "xp": 220,
+   "cash": 314,
+   "cashPop": 204,
+   "cashBonus": 110,
+   "cumCash": 1793.0,
+   "cumCashFromR3": 1535.0,
+   "cumCashFromR6": 1058.0,
+   "rbe": 204,
+   "popCashMult": 1,
+   "threats": [],
+   "composition": "102 Blue",
+   "groups": [
+    "60 Blue",
+    "20 Blue",
+    "22 Blue"
+   ],
+   "danger": 0,
+   "notes": ""
+  },
+  {
+   "round": 11,
+   "xp": 240,
+   "cash": 189,
+   "cashPop": 78,
+   "cashBonus": 111,
+   "cumCash": 1982.0,
+   "cumCashFromR3": 1724.0,
+   "cumCashFromR6": 1247.0,
+   "rbe": 78,
+   "popCashMult": 1,
+   "threats": [],
+   "composition": "3 Yellow, 12 Green, 10 Blue, 10 Red",
+   "groups": [
+    "3 Yellow",
+    "12 Green",
+    "10 Blue",
+    "10 Red"
+   ],
+   "danger": 0,
+   "notes": ""
+  },
+  {
+   "round": 12,
+   "xp": 260,
+   "cash": 192,
+   "cashPop": 80,
+   "cashBonus": 112,
+   "cumCash": 2174.0,
+   "cumCashFromR3": 1916.0,
+   "cumCashFromR6": 1439.0,
+   "rbe": 80,
+   "popCashMult": 1,
+   "threats": [],
+   "composition": "10 Green, 15 Blue, 5 Yellow",
+   "groups": [
+    "10 Green",
+    "15 Blue",
+    "5 Yellow"
+   ],
+   "danger": 0,
+   "notes": ""
+  },
+  {
+   "round": 13,
+   "xp": 280,
+   "cash": 282,
+   "cashPop": 169,
+   "cashBonus": 113,
+   "cumCash": 2456.0,
+   "cumCashFromR3": 2198.0,
+   "cumCashFromR6": 1721.0,
+   "rbe": 169,
+   "popCashMult": 1,
+   "threats": [],
+   "composition": "50 Blue, 23 Green",
+   "groups": [
+    "50 Blue",
+    "23 Green"
+   ],
+   "danger": 0,
+   "notes": ""
+  },
+  {
+   "round": 14,
+   "xp": 300,
+   "cash": 259,
+   "cashPop": 145,
+   "cashBonus": 114,
+   "cumCash": 2715.0,
+   "cumCashFromR3": 2457.0,
+   "cumCashFromR6": 1980.0,
+   "rbe": 145,
+   "popCashMult": 1,
+   "threats": [],
+   "composition": "49 Red, 15 Blue, 10 Green, 9 Yellow",
+   "groups": [
+    "18 Red",
+    "5 Blue",
+    "5 Green",
+    "4 Yellow",
+    "31 Red",
+    "10 Blue",
+    "5 Green",
+    "5 Yellow"
+   ],
+   "danger": 0,
+   "notes": ""
+  },
+  {
+   "round": 15,
+   "xp": 320,
+   "cash": 266,
+   "cashPop": 151,
+   "cashBonus": 115,
+   "cumCash": 2981.0,
+   "cumCashFromR3": 2723.0,
+   "cumCashFromR6": 2246.0,
+   "rbe": 151,
+   "popCashMult": 1,
+   "threats": [],
+   "composition": "20 Red, 15 Blue, 12 Green, 10 Yellow, 5 Pink",
+   "groups": [
+    "20 Red",
+    "15 Blue",
+    "12 Green",
+    "10 Yellow",
+    "5 Pink"
+   ],
+   "danger": 0,
+   "notes": ""
+  },
+  {
+   "round": 16,
+   "xp": 340,
+   "cash": 268,
+   "cashPop": 152,
+   "cashBonus": 116,
+   "cumCash": 3249.0,
+   "cumCashFromR3": 2991.0,
+   "cumCashFromR6": 2514.0,
+   "rbe": 152,
+   "popCashMult": 1,
+   "threats": [],
+   "composition": "40 Green, 8 Yellow",
+   "groups": [
+    "20 Green",
+    "20 Green",
+    "8 Yellow"
+   ],
+   "danger": 0,
+   "notes": ""
+  },
+  {
+   "round": 17,
+   "xp": 360,
+   "cash": 165,
+   "cashPop": 48,
+   "cashBonus": 117,
+   "cumCash": 3414.0,
+   "cumCashFromR3": 3156.0,
+   "cumCashFromR6": 2679.0,
+   "rbe": 48,
+   "popCashMult": 1,
+   "threats": [
+    "regrow"
+   ],
+   "composition": "12 Regrow Yellow",
+   "groups": [
+    "12 Regrow Yellow"
+   ],
+   "danger": 0,
+   "notes": "First in this round set: regrow."
+  },
+  {
+   "round": 18,
+   "xp": 380,
+   "cash": 358,
+   "cashPop": 240,
+   "cashBonus": 118,
+   "cumCash": 3772.0,
+   "cumCashFromR3": 3514.0,
+   "cumCashFromR6": 3037.0,
+   "rbe": 240,
+   "popCashMult": 1,
+   "threats": [],
+   "composition": "80 Green",
+   "groups": [
+    "60 Green",
+    "20 Green"
+   ],
+   "danger": 0,
+   "notes": ""
+  },
+  {
+   "round": 19,
+   "xp": 400,
+   "cash": 260,
+   "cashPop": 141,
+   "cashBonus": 119,
+   "cumCash": 4032.0,
+   "cumCashFromR3": 3774.0,
+   "cumCashFromR6": 3297.0,
+   "rbe": 141,
+   "popCashMult": 1,
+   "threats": [
+    "regrow"
+   ],
+   "composition": "10 Green, 5 Regrow Yellow, 15 Pink, 4 Yellow",
+   "groups": [
+    "10 Green",
+    "5 Regrow Yellow",
+    "15 Pink",
+    "4 Yellow"
+   ],
+   "danger": 0,
+   "notes": ""
+  },
+  {
+   "round": 20,
+   "xp": 420,
+   "cash": 186,
+   "cashPop": 66,
+   "cashBonus": 120,
+   "cumCash": 4218.0,
+   "cumCashFromR3": 3960.0,
+   "cumCashFromR6": 3483.0,
+   "rbe": 66,
+   "popCashMult": 1,
+   "threats": [],
+   "composition": "6 Black",
+   "groups": [
+    "6 Black"
+   ],
+   "danger": 1,
+   "notes": "Black bloons: explosion-immune. A bomb-only start cannot pop them."
+  },
+  {
+   "round": 21,
+   "xp": 460,
+   "cash": 351,
+   "cashPop": 230,
+   "cashBonus": 121,
+   "cumCash": 4569.0,
+   "cumCashFromR3": 4311.0,
+   "cumCashFromR6": 3834.0,
+   "rbe": 230,
+   "popCashMult": 1,
+   "threats": [],
+   "composition": "40 Yellow, 14 Pink",
+   "groups": [
+    "40 Yellow",
+    "10 Pink",
+    "4 Pink"
+   ],
+   "danger": 0,
+   "notes": ""
+  },
+  {
+   "round": 22,
+   "xp": 500,
+   "cash": 298,
+   "cashPop": 176,
+   "cashBonus": 122,
+   "cumCash": 4867.0,
+   "cumCashFromR3": 4609.0,
+   "cumCashFromR6": 4132.0,
+   "rbe": 176,
+   "popCashMult": 1,
+   "threats": [],
+   "composition": "16 White",
+   "groups": [
+    "16 White"
+   ],
+   "danger": 1,
+   "notes": "16 Whites: freeze-immune. An ice-only defence cannot pop them."
+  },
+  {
+   "round": 23,
+   "xp": 540,
+   "cash": 277,
+   "cashPop": 154,
+   "cashBonus": 123,
+   "cumCash": 5144.0,
+   "cumCashFromR3": 4886.0,
+   "cumCashFromR6": 4409.0,
+   "rbe": 154,
+   "popCashMult": 1,
+   "threats": [],
+   "composition": "7 Black, 7 White",
+   "groups": [
+    "7 Black",
+    "7 White"
+   ],
+   "danger": 0,
+   "notes": ""
+  },
+  {
+   "round": 24,
+   "xp": 580,
+   "cash": 167,
+   "cashPop": 43,
+   "cashBonus": 124,
+   "cumCash": 5311.0,
+   "cumCashFromR3": 5053.0,
+   "cumCashFromR6": 4576.0,
+   "rbe": 43,
+   "popCashMult": 1,
+   "threats": [
+    "camo"
+   ],
+   "composition": "1 Camo Green, 20 Blue",
+   "groups": [
+    "1 Camo Green",
+    "20 Blue"
+   ],
+   "danger": 2,
+   "notes": "First in this round set: camo. FIRST CAMO (1 Camo Green). Need detection or a track/area hitter (spikes, mortar)."
+  },
+  {
+   "round": 25,
+   "xp": 620,
+   "cash": 335,
+   "cashPop": 210,
+   "cashBonus": 125,
+   "cumCash": 5646.0,
+   "cumCashFromR3": 5388.0,
+   "cumCashFromR6": 4911.0,
+   "rbe": 210,
+   "popCashMult": 1,
+   "threats": [
+    "purple",
+    "regrow"
+   ],
+   "composition": "25 Regrow Yellow, 10 Purple",
+   "groups": [
+    "25 Regrow Yellow",
+    "10 Purple"
+   ],
+   "danger": 1,
+   "notes": "First in this round set: purple. First Purple (immune to energy/fire/plasma, most magic)."
+  },
+  {
+   "round": 26,
+   "xp": 660,
+   "cash": 333,
+   "cashPop": 207,
+   "cashBonus": 126,
+   "cumCash": 5979.0,
+   "cumCashFromR3": 5721.0,
+   "cumCashFromR6": 5244.0,
+   "rbe": 207,
+   "popCashMult": 1,
+   "threats": [],
+   "composition": "23 Pink, 4 Zebra",
+   "groups": [
+    "23 Pink",
+    "4 Zebra"
+   ],
+   "danger": 1,
+   "notes": "First Zebra (immune to explosions AND freezing)."
+  },
+  {
+   "round": 27,
+   "xp": 700,
+   "cash": 662,
+   "cashPop": 535,
+   "cashBonus": 127,
+   "cumCash": 6641.0,
+   "cumCashFromR3": 6383.0,
+   "cumCashFromR6": 5906.0,
+   "rbe": 535,
+   "popCashMult": 1,
+   "threats": [],
+   "composition": "100 Red, 60 Blue, 45 Green, 45 Yellow",
+   "groups": [
+    "100 Red",
+    "60 Blue",
+    "45 Green",
+    "45 Yellow"
+   ],
+   "danger": 1,
+   "notes": ""
+  },
+  {
+   "round": 28,
+   "xp": 740,
+   "cash": 266,
+   "cashPop": 138,
+   "cashBonus": 128,
+   "cumCash": 6907.0,
+   "cumCashFromR3": 6649.0,
+   "cumCashFromR6": 6172.0,
+   "rbe": 138,
+   "popCashMult": 1,
+   "threats": [
+    "lead"
+   ],
+   "composition": "6 Lead",
+   "groups": [
+    "6 Lead"
+   ],
+   "danger": 2,
+   "notes": "First in this round set: lead. FIRST LEAD (6 Leads). Sharp attacks cannot pop lead."
+  },
+  {
+   "round": 29,
+   "xp": 780,
+   "cash": 389,
+   "cashPop": 260,
+   "cashBonus": 129,
+   "cumCash": 7296.0,
+   "cumCashFromR3": 7038.0,
+   "cumCashFromR6": 6561.0,
+   "rbe": 260,
+   "popCashMult": 1,
+   "threats": [
+    "regrow"
+   ],
+   "composition": "50 Yellow, 15 Regrow Yellow",
+   "groups": [
+    "50 Yellow",
+    "15 Regrow Yellow"
+   ],
+   "danger": 0,
+   "notes": ""
+  },
+  {
+   "round": 30,
+   "xp": 820,
+   "cash": 337,
+   "cashPop": 207,
+   "cashBonus": 130,
+   "cumCash": 7633.0,
+   "cumCashFromR3": 7375.0,
+   "cumCashFromR6": 6898.0,
+   "rbe": 207,
+   "popCashMult": 1,
+   "threats": [
+    "lead"
+   ],
+   "composition": "9 Lead",
+   "groups": [
+    "9 Lead"
+   ],
+   "danger": 1,
+   "notes": ""
+  },
+  {
+   "round": 31,
+   "xp": 860,
+   "cash": 537,
+   "cashPop": 406,
+   "cashBonus": 131,
+   "cumCash": 8170.0,
+   "cumCashFromR3": 7912.0,
+   "cumCashFromR6": 7435.0,
+   "rbe": 406,
+   "popCashMult": 1,
+   "threats": [
+    "regrow"
+   ],
+   "composition": "8 Black, 8 White, 8 Zebra, 2 Regrow Zebra",
+   "groups": [
+    "8 Black",
+    "8 White",
+    "8 Zebra",
+    "2 Regrow Zebra"
+   ],
+   "danger": 1,
+   "notes": "Deflation starts here with $20,000 and no income."
+  },
+  {
+   "round": 32,
+   "xp": 900,
+   "cash": 627,
+   "cashPop": 495,
+   "cashBonus": 132,
+   "cumCash": 8797.0,
+   "cumCashFromR3": 8539.0,
+   "cumCashFromR6": 8062.0,
+   "rbe": 495,
+   "popCashMult": 1,
+   "threats": [
+    "purple"
+   ],
+   "composition": "15 Black, 20 White, 10 Purple",
+   "groups": [
+    "15 Black",
+    "20 White",
+    "10 Purple"
+   ],
+   "danger": 1,
+   "notes": ""
+  },
+  {
+   "round": 33,
+   "xp": 940,
+   "cash": 205,
+   "cashPop": 72,
+   "cashBonus": 133,
+   "cumCash": 9002.0,
+   "cumCashFromR3": 8744.0,
+   "cumCashFromR6": 8267.0,
+   "rbe": 72,
+   "popCashMult": 1,
+   "threats": [
+    "camo"
+   ],
+   "composition": "20 Camo Red, 13 Camo Yellow",
+   "groups": [
+    "20 Camo Red",
+    "13 Camo Yellow"
+   ],
+   "danger": 2,
+   "notes": "Bigger camo test: 20 Camo Reds + 13 Camo Yellows."
+  },
+  {
+   "round": 34,
+   "xp": 980,
+   "cash": 912,
+   "cashPop": 778,
+   "cashBonus": 134,
+   "cumCash": 9914.0,
+   "cumCashFromR3": 9656.0,
+   "cumCashFromR6": 9179.0,
+   "rbe": 778,
+   "popCashMult": 1,
+   "threats": [],
+   "composition": "160 Yellow, 6 Zebra",
+   "groups": [
+    "160 Yellow",
+    "6 Zebra"
+   ],
+   "danger": 1,
+   "notes": ""
+  },
+  {
+   "round": 35,
+   "xp": 1020,
+   "cash": 1150,
+   "cashPop": 1015,
+   "cashBonus": 135,
+   "cumCash": 11064.0,
+   "cumCashFromR3": 10806.0,
+   "cumCashFromR6": 10329.0,
+   "rbe": 1015,
+   "popCashMult": 1,
+   "threats": [],
+   "composition": "25 White, 5 Rainbow, 35 Pink, 30 Black",
+   "groups": [
+    "25 White",
+    "5 Rainbow",
+    "35 Pink",
+    "30 Black"
+   ],
+   "danger": 1,
+   "notes": "First Rainbow."
+  },
+  {
+   "round": 36,
+   "xp": 1060,
+   "cash": 896,
+   "cashPop": 760,
+   "cashBonus": 136,
+   "cumCash": 11960.0,
+   "cumCashFromR3": 11702.0,
+   "cumCashFromR6": 11225.0,
+   "rbe": 760,
+   "popCashMult": 1,
+   "threats": [
+    "camo",
+    "regrow"
+   ],
+   "composition": "140 Pink, 20 Camo Regrow Green",
+   "groups": [
+    "40 Pink",
+    "10 Camo Regrow Green",
+    "40 Pink",
+    "10 Camo Regrow Green",
+    "60 Pink"
+   ],
+   "danger": 2,
+   "notes": "Dense Pink waves plus Camo Regrow Greens."
+  },
+  {
+   "round": 37,
+   "xp": 1100,
+   "cash": 1339,
+   "cashPop": 1202,
+   "cashBonus": 137,
+   "cumCash": 13299.0,
+   "cumCashFromR3": 13041.0,
+   "cumCashFromR6": 12564.0,
+   "rbe": 1202,
+   "popCashMult": 1,
+   "threats": [
+    "camo",
+    "lead"
+   ],
+   "composition": "25 Black, 25 White, 15 Lead, 10 Zebra, 7 Camo White",
+   "groups": [
+    "25 Black",
+    "25 White",
+    "15 Lead",
+    "10 Zebra",
+    "7 Camo White"
+   ],
+   "danger": 1,
+   "notes": ""
+  },
+  {
+   "round": 38,
+   "xp": 1140,
+   "cash": 1277,
+   "cashPop": 1139,
+   "cashBonus": 138,
+   "cumCash": 14576.0,
+   "cumCashFromR3": 14318.0,
+   "cumCashFromR6": 13841.0,
+   "rbe": 1157,
+   "popCashMult": 1,
+   "threats": [
+    "lead",
+    "ceramic"
+   ],
+   "composition": "17 White, 42 Pink, 14 Lead, 10 Zebra, 2 Ceramic",
+   "groups": [
+    "17 White",
+    "42 Pink",
+    "14 Lead",
+    "10 Zebra",
+    "2 Ceramic"
+   ],
+   "danger": 2,
+   "notes": "First in this round set: ceramic. First Ceramics, mixed with Leads."
+  },
+  {
+   "round": 39,
+   "xp": 1180,
+   "cash": 1759,
+   "cashPop": 1620,
+   "cashBonus": 139,
+   "cumCash": 16335.0,
+   "cumCashFromR3": 16077.0,
+   "cumCashFromR6": 15600.0,
+   "rbe": 1620,
+   "popCashMult": 1,
+   "threats": [
+    "regrow"
+   ],
+   "composition": "10 Black, 10 White, 20 Zebra, 18 Rainbow, 2 Regrow Rainbow",
+   "groups": [
+    "10 Black",
+    "10 White",
+    "20 Zebra",
+    "18 Rainbow",
+    "2 Regrow Rainbow"
+   ],
+   "danger": 1,
+   "notes": ""
+  },
+  {
+   "round": 40,
+   "xp": 1220,
+   "cash": 521,
+   "cashPop": 381,
+   "cashBonus": 140,
+   "cumCash": 16856.0,
+   "cumCashFromR3": 16598.0,
+   "cumCashFromR6": 16121.0,
+   "rbe": 616,
+   "popCashMult": 1,
+   "threats": [
+    "moab"
+   ],
+   "composition": "1 MOAB",
+   "groups": [
+    "1 MOAB"
+   ],
+   "danger": 3,
+   "notes": "First in this round set: moab. FIRST MOAB (200 HP; 616 RBE). Easy's final round: MOAB has 2/3 HP on Easy (RBE 549). Classic early wall."
+  },
+  {
+   "round": 41,
+   "xp": 1260,
+   "cash": 2181,
+   "cashPop": 2040,
+   "cashBonus": 141,
+   "cumCash": 19037.0,
+   "cumCashFromR3": 18779.0,
+   "cumCashFromR6": 18302.0,
+   "rbe": 2040,
+   "popCashMult": 1,
+   "threats": [],
+   "composition": "60 Black, 60 Zebra",
+   "groups": [
+    "60 Black",
+    "60 Zebra"
+   ],
+   "danger": 1,
+   "notes": ""
+  },
+  {
+   "round": 42,
+   "xp": 1300,
+   "cash": 659,
+   "cashPop": 517,
+   "cashBonus": 142,
+   "cumCash": 19696.0,
+   "cumCashFromR3": 19438.0,
+   "cumCashFromR6": 18961.0,
+   "rbe": 517,
+   "popCashMult": 1,
+   "threats": [
+    "camo",
+    "regrow"
+   ],
+   "composition": "6 Regrow Rainbow, 5 Camo Rainbow",
+   "groups": [
+    "6 Regrow Rainbow",
+    "5 Camo Rainbow"
+   ],
+   "danger": 1,
+   "notes": ""
+  },
+  {
+   "round": 43,
+   "xp": 1340,
+   "cash": 1278,
+   "cashPop": 1135,
+   "cashBonus": 143,
+   "cumCash": 20974.0,
+   "cumCashFromR3": 20716.0,
+   "cumCashFromR6": 20239.0,
+   "rbe": 1198,
+   "popCashMult": 1,
+   "threats": [
+    "ceramic"
+   ],
+   "composition": "10 Rainbow, 7 Ceramic",
+   "groups": [
+    "10 Rainbow",
+    "7 Ceramic"
+   ],
+   "danger": 1,
+   "notes": ""
+  },
+  {
+   "round": 44,
+   "xp": 1380,
+   "cash": 1294,
+   "cashPop": 1150,
+   "cashBonus": 144,
+   "cumCash": 22268.0,
+   "cumCashFromR3": 22010.0,
+   "cumCashFromR6": 21533.0,
+   "rbe": 1150,
+   "popCashMult": 1,
+   "threats": [],
+   "composition": "50 Zebra",
+   "groups": [
+    "10 Zebra",
+    "10 Zebra",
+    "10 Zebra",
+    "10 Zebra",
+    "10 Zebra"
+   ],
+   "danger": 1,
+   "notes": ""
+  },
+  {
+   "round": 45,
+   "xp": 1420,
+   "cash": 2422,
+   "cashPop": 2277,
+   "cashBonus": 145,
+   "cumCash": 24690.0,
+   "cumCashFromR3": 24432.0,
+   "cumCashFromR6": 23955.0,
+   "rbe": 2289,
+   "popCashMult": 1,
+   "threats": [
+    "camo",
+    "lead",
+    "purple",
+    "fortified"
+   ],
+   "composition": "25 Rainbow, 10 Camo Purple, 180 Pink, 4 Fortified Lead",
+   "groups": [
+    "25 Rainbow",
+    "10 Camo Purple",
+    "180 Pink",
+    "4 Fortified Lead"
+   ],
+   "danger": 2,
+   "notes": "First in this round set: fortified. First Camo Purples and first Fortified bloons (Fortified Leads)."
+  },
+  {
+   "round": 46,
+   "xp": 1460,
+   "cash": 716,
+   "cashPop": 570,
+   "cashBonus": 146,
+   "cumCash": 25406.0,
+   "cumCashFromR3": 25148.0,
+   "cumCashFromR6": 24671.0,
+   "rbe": 684,
+   "popCashMult": 1,
+   "threats": [
+    "fortified",
+    "ceramic"
+   ],
+   "composition": "6 Fortified Ceramic",
+   "groups": [
+    "6 Fortified Ceramic"
+   ],
+   "danger": 2,
+   "notes": "6 Fortified Ceramics (20 HP each): single-target DPS check."
+  },
+  {
+   "round": 47,
+   "xp": 1500,
+   "cash": 1637,
+   "cashPop": 1490,
+   "cashBonus": 147,
+   "cumCash": 27043.0,
+   "cumCashFromR3": 26785.0,
+   "cumCashFromR6": 26308.0,
+   "rbe": 1598,
+   "popCashMult": 1,
+   "threats": [
+    "camo",
+    "ceramic"
+   ],
+   "composition": "12 Ceramic, 70 Camo Pink",
+   "groups": [
+    "12 Ceramic",
+    "70 Camo Pink"
+   ],
+   "danger": 1,
+   "notes": ""
+  },
+  {
+   "round": 48,
+   "xp": 1540,
+   "cash": 2843,
+   "cashPop": 2695,
+   "cashBonus": 148,
+   "cumCash": 29886.0,
+   "cumCashFromR3": 29628.0,
+   "cumCashFromR6": 29151.0,
+   "rbe": 2752,
+   "popCashMult": 1,
+   "threats": [
+    "camo",
+    "purple",
+    "regrow",
+    "fortified",
+    "ceramic"
+   ],
+   "composition": "40 Regrow Pink, 30 Camo Regrow Purple, 40 Rainbow, 3 Fortified Ceramic",
+   "groups": [
+    "40 Regrow Pink",
+    "30 Camo Regrow Purple",
+    "40 Rainbow",
+    "3 Fortified Ceramic"
+   ],
+   "danger": 1,
+   "notes": ""
+  },
+  {
+   "round": 49,
+   "xp": 1580,
+   "cash": 4758,
+   "cashPop": 4609,
+   "cashBonus": 149,
+   "cumCash": 34644.0,
+   "cumCashFromR3": 34386.0,
+   "cumCashFromR6": 33909.0,
+   "rbe": 4771,
+   "popCashMult": 1,
+   "threats": [
+    "regrow",
+    "ceramic"
+   ],
+   "composition": "343 Green, 20 Rainbow, 18 Ceramic, 20 Zebra, 10 Regrow Rainbow",
+   "groups": [
+    "343 Green",
+    "10 Rainbow",
+    "18 Ceramic",
+    "20 Zebra",
+    "10 Rainbow",
+    "10 Regrow Rainbow"
+   ],
+   "danger": 2,
+   "notes": "Very high bloon count (343 Greens plus ceramics): pierce/AoE check."
+  },
+  {
+   "round": 50,
+   "xp": 1620,
+   "cash": 3016,
+   "cashPop": 2866,
+   "cashBonus": 150,
+   "cumCash": 37660.0,
+   "cumCashFromR3": 37402.0,
+   "cumCashFromR6": 36925.0,
+   "rbe": 3540,
+   "popCashMult": 1,
+   "threats": [
+    "lead",
+    "fortified",
+    "ceramic",
+    "moab"
+   ],
+   "composition": "2 MOAB, 8 Fortified Lead, 20 Red, 20 Ceramic",
+   "groups": [
+    "1 MOAB",
+    "8 Fortified Lead",
+    "20 Red",
+    "20 Ceramic",
+    "1 MOAB"
+   ],
+   "danger": 2,
+   "notes": "Two MOABs. Last round at full (100%) pop cash."
+  },
+  {
+   "round": 51,
+   "xp": 1710,
+   "cash": 1098.5,
+   "cashPop": 947.5,
+   "cashBonus": 151,
+   "cumCash": 38758.5,
+   "cumCashFromR3": 38500.5,
+   "cumCashFromR6": 38023.5,
+   "rbe": 2030,
+   "popCashMult": 0.5,
+   "threats": [
+    "camo",
+    "regrow",
+    "ceramic"
+   ],
+   "composition": "15 Camo Ceramic, 10 Regrow Rainbow",
+   "groups": [
+    "15 Camo Ceramic",
+    "10 Regrow Rainbow"
+   ],
+   "danger": 1,
+   "notes": "Pop cash halves (50%) from here."
+  },
+  {
+   "round": 52,
+   "xp": 1800,
+   "cash": 1595.5,
+   "cashPop": 1443.5,
+   "cashBonus": 152,
+   "cumCash": 40354.0,
+   "cumCashFromR3": 40096.0,
+   "cumCashFromR6": 39619.0,
+   "rbe": 3447,
+   "popCashMult": 0.5,
+   "threats": [
+    "ceramic",
+    "moab"
+   ],
+   "composition": "25 Rainbow, 2 MOAB, 10 Ceramic",
+   "groups": [
+    "25 Rainbow",
+    "1 MOAB",
+    "5 Ceramic",
+    "1 MOAB",
+    "5 Ceramic"
+   ],
+   "danger": 1,
+   "notes": ""
+  },
+  {
+   "round": 53,
+   "xp": 1890,
+   "cash": 924.5,
+   "cashPop": 771.5,
+   "cashBonus": 153,
+   "cumCash": 41278.5,
+   "cumCashFromR3": 41020.5,
+   "cumCashFromR6": 40543.5,
+   "rbe": 2248,
+   "popCashMult": 0.5,
+   "threats": [
+    "camo",
+    "moab"
+   ],
+   "composition": "80 Camo Pink, 3 MOAB",
+   "groups": [
+    "80 Camo Pink",
+    "1 MOAB",
+    "1 MOAB",
+    "1 MOAB"
+   ],
+   "danger": 1,
+   "notes": ""
+  },
+  {
+   "round": 54,
+   "xp": 1980,
+   "cash": 2197.5,
+   "cashPop": 2043.5,
+   "cashBonus": 154,
+   "cumCash": 43476.0,
+   "cumCashFromR3": 43218.0,
+   "cumCashFromR6": 42741.0,
+   "rbe": 4872,
+   "popCashMult": 0.5,
+   "threats": [
+    "ceramic",
+    "moab"
+   ],
+   "composition": "35 Ceramic, 2 MOAB",
+   "groups": [
+    "35 Ceramic",
+    "1 MOAB",
+    "1 MOAB"
+   ],
+   "danger": 1,
+   "notes": ""
+  },
+  {
+   "round": 55,
+   "xp": 2070,
+   "cash": 2483.0,
+   "cashPop": 2328.0,
+   "cashBonus": 155,
+   "cumCash": 45959.0,
+   "cumCashFromR3": 45701.0,
+   "cumCashFromR6": 45224.0,
+   "rbe": 5296,
+   "popCashMult": 0.5,
+   "threats": [
+    "ceramic",
+    "moab"
+   ],
+   "composition": "45 Ceramic, 1 MOAB",
+   "groups": [
+    "10 Ceramic",
+    "10 Ceramic",
+    "10 Ceramic",
+    "15 Ceramic",
+    "1 MOAB"
+   ],
+   "danger": 2,
+   "notes": "45 Ceramics in four clustered waves plus a MOAB (community 'hard round')."
+  },
+  {
+   "round": 56,
+   "xp": 2160,
+   "cash": 1286.5,
+   "cashPop": 1130.5,
+   "cashBonus": 156,
+   "cumCash": 47245.5,
+   "cumCashFromR3": 46987.5,
+   "cumCashFromR6": 46510.5,
+   "rbe": 2496,
+   "popCashMult": 0.5,
+   "threats": [
+    "camo",
+    "moab"
+   ],
+   "composition": "40 Camo Rainbow, 1 MOAB",
+   "groups": [
+    "40 Camo Rainbow",
+    "1 MOAB"
+   ],
+   "danger": 1,
+   "notes": ""
+  },
+  {
+   "round": 57,
+   "xp": 2250,
+   "cash": 1859.0,
+   "cashPop": 1702.0,
+   "cashBonus": 157,
+   "cumCash": 49104.5,
+   "cumCashFromR3": 48846.5,
+   "cumCashFromR6": 48369.5,
+   "rbe": 4344,
+   "popCashMult": 0.5,
+   "threats": [
+    "moab"
+   ],
+   "composition": "4 MOAB, 40 Rainbow",
+   "groups": [
+    "2 MOAB",
+    "40 Rainbow",
+    "2 MOAB"
+   ],
+   "danger": 1,
+   "notes": ""
+  },
+  {
+   "round": 58,
+   "xp": 2340,
+   "cash": 2298.0,
+   "cashPop": 2140.0,
+   "cashBonus": 158,
+   "cumCash": 51402.5,
+   "cumCashFromR3": 51144.5,
+   "cumCashFromR6": 50667.5,
+   "rbe": 5780,
+   "popCashMult": 0.5,
+   "threats": [
+    "fortified",
+    "ceramic",
+    "moab"
+   ],
+   "composition": "5 MOAB, 15 Ceramic, 10 Fortified Ceramic",
+   "groups": [
+    "5 MOAB",
+    "15 Ceramic",
+    "10 Fortified Ceramic"
+   ],
+   "danger": 1,
+   "notes": ""
+  },
+  {
+   "round": 59,
+   "xp": 2430,
+   "cash": 2159.0,
+   "cashPop": 2000.0,
+   "cashBonus": 159,
+   "cumCash": 53561.5,
+   "cumCashFromR3": 53303.5,
+   "cumCashFromR6": 52826.5,
+   "rbe": 4270,
+   "popCashMult": 0.5,
+   "threats": [
+    "camo",
+    "lead",
+    "regrow",
+    "ceramic"
+   ],
+   "composition": "20 Ceramic, 50 Camo Lead, 10 Regrow Ceramic",
+   "groups": [
+    "20 Ceramic",
+    "50 Camo Lead",
+    "10 Regrow Ceramic"
+   ],
+   "danger": 2,
+   "notes": "First Camo Leads."
+  },
+  {
+   "round": 60,
+   "xp": 2520,
+   "cash": 922.5,
+   "cashPop": 762.5,
+   "cashBonus": 160,
+   "cumCash": 54484.0,
+   "cumCashFromR3": 54226.0,
+   "cumCashFromR6": 53749.0,
+   "rbe": 3164,
+   "popCashMult": 0.5,
+   "threats": [
+    "bfb"
+   ],
+   "composition": "1 BFB",
+   "groups": [
+    "1 BFB"
+   ],
+   "danger": 2,
+   "notes": "First in this round set: bfb. FIRST BFB. Medium's final round (Medium Standard, Military Only, Reverse)."
+  },
+  {
+   "round": 61,
+   "xp": 2610,
+   "cash": 1232.0,
+   "cashPop": 1071.0,
+   "cashBonus": 161,
+   "cumCash": 55716.0,
+   "cumCashFromR3": 55458.0,
+   "cumCashFromR6": 54981.0,
+   "rbe": 6530,
+   "popCashMult": 0.2,
+   "threats": [
+    "regrow",
+    "moab"
+   ],
+   "composition": "150 Regrow Zebra, 5 MOAB",
+   "groups": [
+    "150 Regrow Zebra",
+    "5 MOAB"
+   ],
+   "danger": 1,
+   "notes": "Pop cash drops to 20% from here."
+  },
+  {
+   "round": 62,
+   "xp": 2700,
+   "cash": 1386.4,
+   "cashPop": 1224.4,
+   "cashBonus": 162,
+   "cumCash": 57102.4,
+   "cumCashFromR3": 56844.4,
+   "cumCashFromR6": 56367.4,
+   "rbe": 8247,
+   "popCashMult": 0.2,
+   "threats": [
+    "camo",
+    "purple",
+    "regrow",
+    "fortified",
+    "moab"
+   ],
+   "composition": "250 Purple, 5 MOAB, 2 Fortified MOAB, 15 Camo Regrow Rainbow",
+   "groups": [
+    "250 Purple",
+    "5 MOAB",
+    "2 Fortified MOAB",
+    "15 Camo Regrow Rainbow"
+   ],
+   "danger": 1,
+   "notes": "First Fortified MOABs."
+  },
+  {
+   "round": 63,
+   "xp": 2790,
+   "cash": 2826.0,
+   "cashPop": 2663.0,
+   "cashBonus": 163,
+   "cumCash": 59928.4,
+   "cumCashFromR3": 59670.4,
+   "cumCashFromR6": 59193.4,
+   "rbe": 14413,
+   "popCashMult": 0.2,
+   "threats": [
+    "lead",
+    "ceramic"
+   ],
+   "composition": "75 Lead, 122 Ceramic",
+   "groups": [
+    "75 Lead",
+    "40 Ceramic",
+    "40 Ceramic",
+    "42 Ceramic"
+   ],
+   "danger": 3,
+   "notes": "CERAMIC RUSH: 75 Leads + 122 Ceramics in 3 packed waves. Top mid-game killer; one ability will not cover all three waves."
+  },
+  {
+   "round": 64,
+   "xp": 2880,
+   "cash": 849.8,
+   "cashPop": 685.8,
+   "cashBonus": 164,
+   "cumCash": 60778.2,
+   "cumCashFromR3": 60520.2,
+   "cumCashFromR6": 60043.2,
+   "rbe": 6264,
+   "popCashMult": 0.2,
+   "threats": [
+    "fortified",
+    "moab"
+   ],
+   "composition": "6 MOAB, 3 Fortified MOAB",
+   "groups": [
+    "6 MOAB",
+    "3 Fortified MOAB"
+   ],
+   "danger": 2,
+   "notes": "6 MOABs + 3 Fortified MOABs."
+  },
+  {
+   "round": 65,
+   "xp": 2970,
+   "cash": 3071.6,
+   "cashPop": 2906.6,
+   "cashBonus": 165,
+   "cumCash": 63849.8,
+   "cumCashFromR3": 63591.8,
+   "cumCashFromR6": 63114.8,
+   "rbe": 18966,
+   "popCashMult": 0.2,
+   "threats": [
+    "ceramic",
+    "moab",
+    "bfb"
+   ],
+   "composition": "100 Zebra, 70 Rainbow, 50 Ceramic, 3 MOAB, 2 BFB",
+   "groups": [
+    "100 Zebra",
+    "70 Rainbow",
+    "50 Ceramic",
+    "3 MOAB",
+    "2 BFB"
+   ],
+   "danger": 1,
+   "notes": ""
+  },
+  {
+   "round": 66,
+   "xp": 3060,
+   "cash": 1004.2,
+   "cashPop": 838.2,
+   "cashBonus": 166,
+   "cumCash": 64854.0,
+   "cumCashFromR3": 64596.0,
+   "cumCashFromR6": 64119.0,
+   "rbe": 7496,
+   "popCashMult": 0.2,
+   "threats": [
+    "fortified",
+    "moab"
+   ],
+   "composition": "8 MOAB, 3 Fortified MOAB",
+   "groups": [
+    "2 MOAB",
+    "2 MOAB",
+    "4 MOAB",
+    "3 Fortified MOAB"
+   ],
+   "danger": 1,
+   "notes": ""
+  },
+  {
+   "round": 67,
+   "xp": 3150,
+   "cash": 1023.6,
+   "cashPop": 856.6,
+   "cashBonus": 167,
+   "cumCash": 65877.6,
+   "cumCashFromR3": 65619.6,
+   "cumCashFromR6": 65142.6,
+   "rbe": 6410,
+   "popCashMult": 0.2,
+   "threats": [
+    "camo",
+    "regrow",
+    "fortified",
+    "ceramic",
+    "moab"
+   ],
+   "composition": "8 MOAB, 13 Fortified Camo Regrow Ceramic",
+   "groups": [
+    "4 MOAB",
+    "13 Fortified Camo Regrow Ceramic",
+    "4 MOAB"
+   ],
+   "danger": 1,
+   "notes": "First Fortified Camo Regrow Ceramics."
+  },
+  {
+   "round": 68,
+   "xp": 3240,
+   "cash": 777.8,
+   "cashPop": 609.8,
+   "cashBonus": 168,
+   "cumCash": 66655.4,
+   "cumCashFromR3": 66397.4,
+   "cumCashFromR6": 65920.4,
+   "rbe": 5628,
+   "popCashMult": 0.2,
+   "threats": [
+    "moab",
+    "bfb"
+   ],
+   "composition": "4 MOAB, 1 BFB",
+   "groups": [
+    "4 MOAB",
+    "1 BFB"
+   ],
+   "danger": 1,
+   "notes": ""
+  },
+  {
+   "round": 69,
+   "xp": 3330,
+   "cash": 1391.0,
+   "cashPop": 1222.0,
+   "cashBonus": 169,
+   "cumCash": 68046.4,
+   "cumCashFromR3": 67788.4,
+   "cumCashFromR6": 67311.4,
+   "rbe": 6680,
+   "popCashMult": 0.2,
+   "threats": [
+    "lead",
+    "regrow",
+    "fortified",
+    "ceramic"
+   ],
+   "composition": "40 Fortified Lead, 40 Regrow Black, 50 Ceramic",
+   "groups": [
+    "40 Fortified Lead",
+    "40 Regrow Black",
+    "50 Ceramic"
+   ],
+   "danger": 1,
+   "notes": ""
+  },
+  {
+   "round": 70,
+   "xp": 3420,
+   "cash": 2618.8,
+   "cashPop": 2448.8,
+   "cashBonus": 170,
+   "cumCash": 70665.2,
+   "cumCashFromR3": 70407.2,
+   "cumCashFromR6": 69930.2,
+   "rbe": 13184,
+   "popCashMult": 0.2,
+   "threats": [
+    "camo",
+    "regrow",
+    "moab"
+   ],
+   "composition": "200 Rainbow, 120 Camo Regrow White, 4 MOAB",
+   "groups": [
+    "200 Rainbow",
+    "120 Camo Regrow White",
+    "4 MOAB"
+   ],
+   "danger": 1,
+   "notes": ""
+  },
+  {
+   "round": 71,
+   "xp": 3510,
+   "cash": 1503.0,
+   "cashPop": 1332.0,
+   "cashBonus": 171,
+   "cumCash": 72168.2,
+   "cumCashFromR3": 71910.2,
+   "cumCashFromR6": 71433.2,
+   "rbe": 9280,
+   "popCashMult": 0.2,
+   "threats": [
+    "ceramic",
+    "moab"
+   ],
+   "composition": "30 Ceramic, 10 MOAB",
+   "groups": [
+    "30 Ceramic",
+    "10 MOAB"
+   ],
+   "danger": 1,
+   "notes": ""
+  },
+  {
+   "round": 72,
+   "xp": 3600,
+   "cash": 1504.0,
+   "cashPop": 1332.0,
+   "cashBonus": 172,
+   "cumCash": 73672.2,
+   "cumCashFromR3": 73414.2,
+   "cumCashFromR6": 72937.2,
+   "rbe": 10280,
+   "popCashMult": 0.2,
+   "threats": [
+    "regrow",
+    "ceramic",
+    "bfb"
+   ],
+   "composition": "38 Regrow Ceramic, 2 BFB",
+   "groups": [
+    "38 Regrow Ceramic",
+    "1 BFB",
+    "1 BFB"
+   ],
+   "danger": 1,
+   "notes": ""
+  },
+  {
+   "round": 73,
+   "xp": 3690,
+   "cash": 1392.6,
+   "cashPop": 1219.6,
+   "cashBonus": 173,
+   "cumCash": 75064.8,
+   "cumCashFromR3": 74806.8,
+   "cumCashFromR6": 74329.8,
+   "rbe": 11256,
+   "popCashMult": 0.2,
+   "threats": [
+    "moab",
+    "bfb"
+   ],
+   "composition": "8 MOAB, 2 BFB",
+   "groups": [
+    "7 MOAB",
+    "2 BFB",
+    "1 MOAB"
+   ],
+   "danger": 1,
+   "notes": ""
+  },
+  {
+   "round": 74,
+   "xp": 3780,
+   "cash": 3044.0,
+   "cashPop": 2870.0,
+   "cashBonus": 174,
+   "cumCash": 78108.8,
+   "cumCashFromR3": 77850.8,
+   "cumCashFromR6": 77373.8,
+   "rbe": 18054,
+   "popCashMult": 0.2,
+   "threats": [
+    "camo",
+    "regrow",
+    "fortified",
+    "ceramic",
+    "bfb"
+   ],
+   "composition": "50 Ceramic, 25 Fortified Camo Regrow Ceramic, 1 BFB, 60 Fortified Ceramic",
+   "groups": [
+    "50 Ceramic",
+    "25 Fortified Camo Regrow Ceramic",
+    "1 BFB",
+    "60 Fortified Ceramic"
+   ],
+   "danger": 1,
+   "notes": ""
+  },
+  {
+   "round": 75,
+   "xp": 3870,
+   "cash": 2667.4,
+   "cashPop": 2492.4,
+   "cashBonus": 175,
+   "cumCash": 80776.2,
+   "cumCashFromR3": 80518.2,
+   "cumCashFromR6": 80041.2,
+   "rbe": 25402,
+   "popCashMult": 0.2,
+   "threats": [
+    "lead",
+    "fortified",
+    "moab",
+    "bfb"
+   ],
+   "composition": "7 BFB, 14 Lead, 3 Fortified MOAB, 14 Fortified Lead",
+   "groups": [
+    "1 BFB",
+    "14 Lead",
+    "1 Fortified MOAB",
+    "3 BFB",
+    "14 Fortified Lead",
+    "2 Fortified MOAB",
+    "3 BFB"
+   ],
+   "danger": 3,
+   "notes": "Leads screen 7 BFBs and Fortified MOABs (community 'hard round'). Save abilities."
+  },
+  {
+   "round": 76,
+   "xp": 3960,
+   "cash": 1316.0,
+   "cashPop": 1140.0,
+   "cashBonus": 176,
+   "cumCash": 82092.2,
+   "cumCashFromR3": 81834.2,
+   "cumCashFromR6": 81357.2,
+   "rbe": 6240,
+   "popCashMult": 0.2,
+   "threats": [
+    "regrow",
+    "ceramic"
+   ],
+   "composition": "60 Regrow Ceramic",
+   "groups": [
+    "60 Regrow Ceramic"
+   ],
+   "danger": 2,
+   "notes": "60 tightly packed Regrow Ceramics: burst AoE; Grow Blocker helps."
+  },
+  {
+   "round": 77,
+   "xp": 4050,
+   "cash": 2540.2,
+   "cashPop": 2363.2,
+   "cashBonus": 177,
+   "cumCash": 84632.4,
+   "cumCashFromR3": 84374.4,
+   "cumCashFromR6": 83897.4,
+   "rbe": 22596,
+   "popCashMult": 0.2,
+   "threats": [
+    "moab",
+    "bfb"
+   ],
+   "composition": "11 MOAB, 5 BFB",
+   "groups": [
+    "11 MOAB",
+    "5 BFB"
+   ],
+   "danger": 1,
+   "notes": ""
+  },
+  {
+   "round": 78,
+   "xp": 4140,
+   "cash": 4862.0,
+   "cashPop": 4684.0,
+   "cashBonus": 178,
+   "cumCash": 89494.4,
+   "cumCashFromR3": 89236.4,
+   "cumCashFromR6": 88759.4,
+   "rbe": 26382,
+   "popCashMult": 0.2,
+   "threats": [
+    "camo",
+    "purple",
+    "ceramic",
+    "bfb"
+   ],
+   "composition": "150 Rainbow, 75 Ceramic, 1 BFB, 80 Purple, 72 Camo Ceramic",
+   "groups": [
+    "150 Rainbow",
+    "75 Ceramic",
+    "1 BFB",
+    "80 Purple",
+    "72 Camo Ceramic"
+   ],
+   "danger": 3,
+   "notes": "CAMO CERAMIC WAVE (72 Camo Ceramics) + 80 Purples + 150 Rainbows + BFB, ~90 s long."
+  },
+  {
+   "round": 79,
+   "xp": 4230,
+   "cash": 6709.0,
+   "cashPop": 6530.0,
+   "cashBonus": 179,
+   "cumCash": 96203.4,
+   "cumCashFromR3": 95945.4,
+   "cumCashFromR6": 95468.4,
+   "rbe": 45804,
+   "popCashMult": 0.2,
+   "threats": [
+    "regrow",
+    "fortified",
+    "bfb"
+   ],
+   "composition": "500 Regrow Rainbow, 4 BFB, 2 Fortified BFB",
+   "groups": [
+    "500 Regrow Rainbow",
+    "4 BFB",
+    "2 Fortified BFB"
+   ],
+   "danger": 2,
+   "notes": "500 Regrow Rainbows + 6 BFBs (2 Fortified). Highest RBE before R80."
+  },
+  {
+   "round": 80,
+   "xp": 4320,
+   "cash": 1400.2,
+   "cashPop": 1220.2,
+   "cashBonus": 180,
+   "cumCash": 97603.6,
+   "cumCashFromR3": 97345.6,
+   "cumCashFromR6": 96868.6,
+   "rbe": 16656,
+   "popCashMult": 0.2,
+   "threats": [
+    "zomg"
+   ],
+   "composition": "1 ZOMG",
+   "groups": [
+    "1 ZOMG"
+   ],
+   "danger": 2,
+   "notes": "First in this round set: zomg. FIRST ZOMG. Hard's final round (Hard, MMO, Double HP MOABs, Half Cash; ABR ends on its own R80)."
+  },
+  {
+   "round": 81,
+   "xp": 4410,
+   "cash": 5366.0,
+   "cashPop": 5185.0,
+   "cashBonus": 181,
+   "cumCash": 102969.6,
+   "cumCashFromR3": 102711.6,
+   "cumCashFromR6": 102234.6,
+   "rbe": 44506,
+   "popCashMult": 0.2,
+   "threats": [
+    "bfb"
+   ],
+   "composition": "17 BFB",
+   "groups": [
+    "9 BFB",
+    "8 BFB"
+   ],
+   "danger": 2,
+   "notes": "Super Ceramics (60 HP, single child) and MOAB HP/speed ramp (+2%/round) begin. 17 BFBs."
+  },
+  {
+   "round": 82,
+   "xp": 4500,
+   "cash": 4757.0,
+   "cashPop": 4575.0,
+   "cashBonus": 182,
+   "cumCash": 107726.6,
+   "cumCashFromR3": 107468.6,
+   "cumCashFromR6": 106991.6,
+   "rbe": 52320,
+   "popCashMult": 0.2,
+   "threats": [
+    "fortified",
+    "bfb"
+   ],
+   "composition": "10 BFB, 5 Fortified BFB",
+   "groups": [
+    "10 BFB",
+    "5 Fortified BFB"
+   ],
+   "danger": 1,
+   "notes": ""
+  },
+  {
+   "round": 83,
+   "xp": 4590,
+   "cash": 4749.0,
+   "cashPop": 4566.0,
+   "cashBonus": 183,
+   "cumCash": 112475.6,
+   "cumCashFromR3": 112217.6,
+   "cumCashFromR6": 111740.6,
+   "rbe": 25080,
+   "popCashMult": 0.2,
+   "threats": [
+    "regrow",
+    "fortified",
+    "ceramic",
+    "moab"
+   ],
+   "composition": "40 Ceramic, 40 Regrow Ceramic, 40 Fortified Ceramic, 30 MOAB",
+   "groups": [
+    "40 Ceramic",
+    "40 Regrow Ceramic",
+    "40 Fortified Ceramic",
+    "30 MOAB"
+   ],
+   "danger": 1,
+   "notes": ""
+  },
+  {
+   "round": 84,
+   "xp": 4680,
+   "cash": 7044.0,
+   "cashPop": 6860.0,
+   "cashBonus": 184,
+   "cumCash": 119519.6,
+   "cumCashFromR3": 119261.6,
+   "cumCashFromR6": 118784.6,
+   "rbe": 51480,
+   "popCashMult": 0.2,
+   "threats": [
+    "moab",
+    "bfb"
+   ],
+   "composition": "50 MOAB, 10 BFB",
+   "groups": [
+    "50 MOAB",
+    "10 BFB"
+   ],
+   "danger": 1,
+   "notes": ""
+  },
+  {
+   "round": 85,
+   "xp": 4770,
+   "cash": 2625.4,
+   "cashPop": 2440.4,
+   "cashBonus": 185,
+   "cumCash": 122145.0,
+   "cumCashFromR3": 121887.0,
+   "cumCashFromR6": 121410.0,
+   "rbe": 30704,
+   "popCashMult": 0.2,
+   "threats": [
+    "zomg"
+   ],
+   "composition": "2 ZOMG",
+   "groups": [
+    "2 ZOMG"
+   ],
+   "danger": 1,
+   "notes": "Last round at 20% pop cash."
+  },
+  {
+   "round": 86,
+   "xp": 4860,
+   "cash": 948.5,
+   "cashPop": 762.5,
+   "cashBonus": 186,
+   "cumCash": 123093.5,
+   "cumCashFromR3": 122835.5,
+   "cumCashFromR6": 122358.5,
+   "rbe": 27040,
+   "popCashMult": 0.1,
+   "threats": [
+    "fortified",
+    "bfb"
+   ],
+   "composition": "5 Fortified BFB",
+   "groups": [
+    "5 Fortified BFB"
+   ],
+   "danger": 1,
+   "notes": "Pop cash drops to 10% from here."
+  },
+  {
+   "round": 87,
+   "xp": 4950,
+   "cash": 2627.4,
+   "cashPop": 2440.4,
+   "cashBonus": 187,
+   "cumCash": 125720.9,
+   "cumCashFromR3": 125462.9,
+   "cumCashFromR6": 124985.9,
+   "rbe": 63008,
+   "popCashMult": 0.1,
+   "threats": [
+    "zomg"
+   ],
+   "composition": "4 ZOMG",
+   "groups": [
+    "4 ZOMG"
+   ],
+   "danger": 1,
+   "notes": ""
+  },
+  {
+   "round": 88,
+   "xp": 5040,
+   "cash": 3314.0,
+   "cashPop": 3126.0,
+   "cashBonus": 188,
+   "cumCash": 129034.9,
+   "cumCashFromR3": 128776.9,
+   "cumCashFromR6": 128299.9,
+   "rbe": 63600,
+   "popCashMult": 0.1,
+   "threats": [
+    "moab",
+    "bfb",
+    "zomg"
+   ],
+   "composition": "8 BFB, 18 MOAB, 2 ZOMG",
+   "groups": [
+    "8 BFB",
+    "18 MOAB",
+    "2 ZOMG"
+   ],
+   "danger": 1,
+   "notes": ""
+  },
+  {
+   "round": 89,
+   "xp": 5130,
+   "cash": 2171.0,
+   "cashPop": 1982.0,
+   "cashBonus": 189,
+   "cumCash": 131205.9,
+   "cumCashFromR3": 130947.9,
+   "cumCashFromR6": 130470.9,
+   "rbe": 64384,
+   "popCashMult": 0.1,
+   "threats": [
+    "fortified",
+    "moab",
+    "bfb"
+   ],
+   "composition": "20 Fortified MOAB, 8 Fortified BFB",
+   "groups": [
+    "20 Fortified MOAB",
+    "8 Fortified BFB"
+   ],
+   "danger": 2,
+   "notes": "20 Fortified MOABs + 8 Fortified BFBs (community 'hard round')."
+  },
+  {
+   "round": 90,
+   "xp": 5220,
+   "cash": 339.3,
+   "cashPop": 149.3,
+   "cashBonus": 190,
+   "cumCash": 131545.2,
+   "cumCashFromR3": 131287.2,
+   "cumCashFromR6": 130810.2,
+   "rbe": 2756,
+   "popCashMult": 0.1,
+   "threats": [
+    "camo",
+    "lead",
+    "regrow",
+    "fortified",
+    "ddt"
+   ],
+   "composition": "50 Fortified Camo Regrow Lead, 3 DDT",
+   "groups": [
+    "50 Fortified Camo Regrow Lead",
+    "3 DDT"
+   ],
+   "danger": 2,
+   "notes": "First in this round set: ddt. FIRST DDTs (3) behind 50 Fortified Camo Regrow Leads. DDT = camo + lead + black properties, fast."
+  },
+  {
+   "round": 91,
+   "xp": 5310,
+   "cash": 4191.0,
+   "cashPop": 4000.0,
+   "cashBonus": 191,
+   "cumCash": 135736.2,
+   "cumCashFromR3": 135478.2,
+   "cumCashFromR6": 135001.2,
+   "rbe": 71160,
+   "popCashMult": 0.1,
+   "threats": [
+    "fortified",
+    "ceramic",
+    "bfb"
+   ],
+   "composition": "100 Fortified Ceramic, 20 BFB",
+   "groups": [
+    "100 Fortified Ceramic",
+    "20 BFB"
+   ],
+   "danger": 2,
+   "notes": "100 Fortified Ceramics + 20 BFBs."
+  },
+  {
+   "round": 92,
+   "xp": 5400,
+   "cash": 4537.4,
+   "cashPop": 4345.4,
+   "cashBonus": 192,
+   "cumCash": 140273.6,
+   "cumCashFromR3": 140015.6,
+   "cumCashFromR6": 139538.6,
+   "rbe": 117408,
+   "popCashMult": 0.1,
+   "threats": [
+    "fortified",
+    "moab",
+    "zomg"
+   ],
+   "composition": "50 Fortified MOAB, 4 ZOMG",
+   "groups": [
+    "50 Fortified MOAB",
+    "4 ZOMG"
+   ],
+   "danger": 1,
+   "notes": ""
+  },
+  {
+   "round": 93,
+   "xp": 5490,
+   "cash": 1946.6,
+   "cashPop": 1753.6,
+   "cashBonus": 193,
+   "cumCash": 142220.2,
+   "cumCashFromR3": 141962.2,
+   "cumCashFromR6": 141485.2,
+   "rbe": 62936,
+   "popCashMult": 0.1,
+   "threats": [
+    "camo",
+    "lead",
+    "fortified",
+    "bfb",
+    "ddt"
+   ],
+   "composition": "10 Fortified BFB, 6 DDT",
+   "groups": [
+    "10 Fortified BFB",
+    "6 DDT"
+   ],
+   "danger": 2,
+   "notes": "10 Fortified BFBs + 6 DDTs."
+  },
+  {
+   "round": 94,
+   "xp": 5580,
+   "cash": 7667.1,
+   "cashPop": 7473.1,
+   "cashBonus": 194,
+   "cumCash": 149887.3,
+   "cumCashFromR3": 149629.3,
+   "cumCashFromR6": 149152.3,
+   "rbe": 178112,
+   "popCashMult": 0.1,
+   "threats": [
+    "bfb",
+    "zomg"
+   ],
+   "composition": "25 BFB, 6 ZOMG",
+   "groups": [
+    "25 BFB",
+    "6 ZOMG"
+   ],
+   "danger": 2,
+   "notes": "25 BFBs + 6 ZOMGs (high RBE)."
+  },
+  {
+   "round": 95,
+   "xp": 5670,
+   "cash": 3718.0,
+   "cashPop": 3523.0,
+   "cashBonus": 195,
+   "cumCash": 153605.3,
+   "cumCashFromR3": 153347.3,
+   "cumCashFromR6": 152870.3,
+   "rbe": 80860,
+   "popCashMult": 0.1,
+   "threats": [
+    "camo",
+    "lead",
+    "purple",
+    "regrow",
+    "fortified",
+    "moab",
+    "ddt"
+   ],
+   "composition": "500 Camo Regrow Purple, 250 Fortified Camo Regrow Lead, 50 Fortified MOAB, 30 DDT",
+   "groups": [
+    "500 Camo Regrow Purple",
+    "250 Fortified Camo Regrow Lead",
+    "50 Fortified MOAB",
+    "30 DDT"
+   ],
+   "danger": 3,
+   "notes": "30 DDTs hidden behind 50 Fortified MOABs that eat pierce, plus 500 Camo Regrow Purples. No magic-only defence."
+  },
+  {
+   "round": 96,
+   "xp": 5760,
+   "cash": 9955.6,
+   "cashPop": 9759.6,
+   "cashBonus": 196,
+   "cumCash": 163560.9,
+   "cumCashFromR3": 163302.9,
+   "cumCashFromR6": 162825.9,
+   "rbe": 238952,
+   "popCashMult": 0.1,
+   "threats": [
+    "fortified",
+    "moab",
+    "bfb",
+    "zomg"
+   ],
+   "composition": "30 BFB, 40 Fortified MOAB, 6 ZOMG",
+   "groups": [
+    "10 BFB",
+    "20 Fortified MOAB",
+    "10 BFB",
+    "20 Fortified MOAB",
+    "10 BFB",
+    "6 ZOMG"
+   ],
+   "danger": 2,
+   "notes": "40 Fortified MOABs, 30 BFBs, 6 ZOMGs (community 'hard round')."
+  },
+  {
+   "round": 97,
+   "xp": 5850,
+   "cash": 1417.2,
+   "cashPop": 1220.2,
+   "cashBonus": 197,
+   "cumCash": 164978.1,
+   "cumCashFromR3": 164720.1,
+   "cumCashFromR6": 164243.1,
+   "rbe": 69984,
+   "popCashMult": 0.1,
+   "threats": [
+    "fortified",
+    "zomg"
+   ],
+   "composition": "2 Fortified ZOMG",
+   "groups": [
+    "2 Fortified ZOMG"
+   ],
+   "danger": 2,
+   "notes": "2 Fortified ZOMGs."
+  },
+  {
+   "round": 98,
+   "xp": 5940,
+   "cash": 9653.8,
+   "cashPop": 9455.8,
+   "cashBonus": 198,
+   "cumCash": 174631.9,
+   "cumCashFromR3": 174373.9,
+   "cumCashFromR6": 173896.9,
+   "rbe": 327456,
+   "popCashMult": 0.1,
+   "threats": [
+    "fortified",
+    "bfb",
+    "zomg"
+   ],
+   "composition": "30 Fortified BFB, 8 ZOMG",
+   "groups": [
+    "30 Fortified BFB",
+    "8 ZOMG"
+   ],
+   "danger": 3,
+   "notes": "Highest-RBE round before freeplay (327,456 RBE): 30 Fortified BFBs + 8 ZOMGs."
+  },
+  {
+   "round": 99,
+   "xp": 6030,
+   "cash": 2827.9,
+   "cashPop": 2628.9,
+   "cashBonus": 199,
+   "cumCash": 177459.8,
+   "cumCashFromR3": 177201.8,
+   "cumCashFromR6": 176724.8,
+   "rbe": 47424,
+   "popCashMult": 0.1,
+   "threats": [
+    "camo",
+    "lead",
+    "fortified",
+    "moab",
+    "ddt"
+   ],
+   "composition": "60 MOAB, 9 Fortified DDT",
+   "groups": [
+    "60 MOAB",
+    "9 Fortified DDT"
+   ],
+   "danger": 3,
+   "notes": "9 Fortified DDTs arrive while abilities are on cooldown from R98. Keep one ability back."
+  },
+  {
+   "round": 100,
+   "xp": 6120,
+   "cash": 1534.6,
+   "cashPop": 1334.6,
+   "cashBonus": 200,
+   "cumCash": 178994.4,
+   "cumCashFromR3": 178736.4,
+   "cumCashFromR6": 178259.4,
+   "rbe": 67200,
+   "popCashMult": 0.1,
+   "threats": [
+    "bad"
+   ],
+   "composition": "1 BAD",
+   "groups": [
+    "1 BAD"
+   ],
+   "danger": 3,
+   "notes": "First in this round set: bad. BAD (28,000 HP outer layer at R100 ramp x1.4). Immune to slows/stuns/knockback. Impoppable/CHIMPS final round."
+  },
+  {
+   "round": 101,
+   "xp": 6210,
+   "cash": 1101.8,
+   "cashPop": 900.8,
+   "cashBonus": 201,
+   "cumCash": 180096.2,
+   "cumCashFromR3": 179838.2,
+   "cumCashFromR6": 179361.2,
+   "rbe": 20020,
+   "popCashMult": 0.08,
+   "threats": [
+    "purple",
+    "fortified",
+    "ceramic",
+    "moab"
+   ],
+   "composition": "450 Purple, 10 Fortified MOAB, 50 Fortified Ceramic",
+   "groups": [
+    "250 Purple",
+    "10 Fortified MOAB",
+    "50 Fortified Ceramic",
+    "200 Purple"
+   ],
+   "danger": 2,
+   "notes": "Freeplay from here on Standard rounds (XP cut by 90% in freeplay after 100). Pop cash 8% (v53+).",
+   "cashPopWikiTable": 563.0
+  },
+  {
+   "round": 102,
+   "xp": 6300,
+   "cash": 3800.72,
+   "cashPop": 3598.72,
+   "cashBonus": 202,
+   "cumCash": 183896.92,
+   "cumCashFromR3": 183638.92,
+   "cumCashFromR6": 183161.92,
+   "rbe": 199826,
+   "popCashMult": 0.08,
+   "threats": [
+    "camo",
+    "lead",
+    "fortified",
+    "bfb",
+    "zomg",
+    "ddt"
+   ],
+   "composition": "1 ZOMG, 3 Fortified ZOMG, 18 DDT, 3 BFB, 12 Fortified DDT, 3 Fortified BFB",
+   "groups": [
+    "1 ZOMG",
+    "1 Fortified ZOMG",
+    "18 DDT",
+    "3 BFB",
+    "2 Fortified ZOMG",
+    "12 Fortified DDT",
+    "3 Fortified BFB"
+   ],
+   "danger": 2,
+   "notes": "",
+   "cashPopWikiTable": 2249.2
+  },
+  {
+   "round": 103,
+   "xp": 6390,
+   "cash": 9750.84,
+   "cashPop": 9547.84,
+   "cashBonus": 203,
+   "cumCash": 193647.76,
+   "cumCashFromR3": 193389.76,
+   "cumCashFromR6": 192912.76,
+   "rbe": 507908,
+   "popCashMult": 0.08,
+   "threats": [
+    "purple",
+    "fortified",
+    "moab",
+    "zomg"
+   ],
+   "composition": "10 Fortified ZOMG, 100 MOAB, 198 Purple, 50 Fortified MOAB",
+   "groups": [
+    "10 Fortified ZOMG",
+    "100 MOAB",
+    "64 Purple",
+    "50 Fortified MOAB",
+    "66 Purple",
+    "68 Purple"
+   ],
+   "danger": 3,
+   "notes": "",
+   "cashPopWikiTable": 5967.4
+  },
+  {
+   "round": 104,
+   "xp": 6480,
+   "cash": 12024.0,
+   "cashPop": 11820.0,
+   "cashBonus": 204,
+   "cumCash": 205671.76,
+   "cumCashFromR3": 205413.76,
+   "cumCashFromR6": 204936.76,
+   "rbe": 387472,
+   "popCashMult": 0.08,
+   "threats": [
+    "lead",
+    "purple",
+    "fortified",
+    "ceramic",
+    "moab",
+    "bfb"
+   ],
+   "composition": "150 Fortified MOAB, 25 BFB, 200 Fortified Lead, 200 Purple, 200 Ceramic, 14 Fortified BFB, 25 MOAB",
+   "groups": [
+    "150 Fortified MOAB",
+    "10 BFB",
+    "100 Fortified Lead",
+    "8 BFB",
+    "100 Purple",
+    "7 BFB",
+    "100 Ceramic",
+    "5 Fortified BFB",
+    "100 Fortified Lead",
+    "4 Fortified BFB",
+    "100 Purple",
+    "5 Fortified BFB",
+    "100 Ceramic",
+    "25 MOAB"
+   ],
+   "danger": 2,
+   "notes": "",
+   "cashPopWikiTable": 7387.5
+  },
+  {
+   "round": 105,
+   "xp": 6570,
+   "cash": 6919.0,
+   "cashPop": 6714.0,
+   "cashBonus": 205,
+   "cumCash": 212590.76,
+   "cumCashFromR3": 212332.76,
+   "cumCashFromR6": 211855.76,
+   "rbe": 152340,
+   "popCashMult": 0.08,
+   "threats": [
+    "lead",
+    "fortified",
+    "ceramic",
+    "bfb"
+   ],
+   "composition": "100 Ceramic, 25 Fortified Lead, 30 BFB, 300 Fortified Ceramic",
+   "groups": [
+    "100 Ceramic",
+    "25 Fortified Lead",
+    "30 BFB",
+    "300 Fortified Ceramic"
+   ],
+   "danger": 2,
+   "notes": "",
+   "cashPopWikiTable": 4196.25
+  },
+  {
+   "round": 106,
+   "xp": 6660,
+   "cash": 3040.64,
+   "cashPop": 2834.64,
+   "cashBonus": 206,
+   "cumCash": 215631.4,
+   "cumCashFromR3": 215373.4,
+   "cumCashFromR6": 214896.4,
+   "rbe": 113376,
+   "popCashMult": 0.08,
+   "threats": [
+    "camo",
+    "lead",
+    "fortified",
+    "ddt"
+   ],
+   "composition": "66 DDT, 27 Fortified DDT",
+   "groups": [
+    "21 DDT",
+    "18 DDT",
+    "15 DDT",
+    "12 Fortified DDT",
+    "9 Fortified DDT",
+    "6 Fortified DDT",
+    "12 DDT"
+   ],
+   "danger": 3,
+   "notes": "",
+   "cashPopWikiTable": 1771.65
+  },
+  {
+   "round": 107,
+   "xp": 6750,
+   "cash": 6060.92,
+   "cashPop": 5853.92,
+   "cashBonus": 207,
+   "cumCash": 221692.32,
+   "cumCashFromR3": 221434.32,
+   "cumCashFromR6": 220957.32,
+   "rbe": 447384,
+   "popCashMult": 0.08,
+   "threats": [
+    "camo",
+    "purple",
+    "fortified",
+    "ceramic",
+    "zomg"
+   ],
+   "composition": "100 Fortified Ceramic, 444 Camo Purple, 10 Fortified ZOMG",
+   "groups": [
+    "100 Fortified Ceramic",
+    "444 Camo Purple",
+    "10 Fortified ZOMG"
+   ],
+   "danger": 3,
+   "notes": "",
+   "cashPopWikiTable": 3658.7
+  },
+  {
+   "round": 108,
+   "xp": 6840,
+   "cash": 9481.52,
+   "cashPop": 9273.52,
+   "cashBonus": 208,
+   "cumCash": 231173.84,
+   "cumCashFromR3": 230915.84,
+   "cumCashFromR6": 230438.84,
+   "rbe": 643088,
+   "popCashMult": 0.08,
+   "threats": [
+    "fortified",
+    "zomg"
+   ],
+   "composition": "9 ZOMG, 10 Fortified ZOMG",
+   "groups": [
+    "9 ZOMG",
+    "10 Fortified ZOMG"
+   ],
+   "danger": 3,
+   "notes": "",
+   "cashPopWikiTable": 5795.95
+  },
+  {
+   "round": 109,
+   "xp": 6930,
+   "cash": 12111.8,
+   "cashPop": 11902.8,
+   "cashBonus": 209,
+   "cumCash": 243285.64,
+   "cumCashFromR3": 243027.64,
+   "cumCashFromR6": 242550.64,
+   "rbe": 552345,
+   "popCashMult": 0.08,
+   "threats": [
+    "purple",
+    "fortified",
+    "moab",
+    "bfb",
+    "zomg"
+   ],
+   "composition": "15 ZOMG, 15 Purple, 15 BFB, 30 Fortified MOAB, 15 Fortified BFB",
+   "groups": [
+    "15 ZOMG",
+    "15 Purple",
+    "15 BFB",
+    "15 Fortified MOAB",
+    "15 Fortified BFB",
+    "15 Fortified MOAB"
+   ],
+   "danger": 3,
+   "notes": "",
+   "cashPopWikiTable": 7439.25
+  },
+  {
+   "round": 110,
+   "xp": 7020,
+   "cash": 4174.4,
+   "cashPop": 3964.4,
+   "cashBonus": 210,
+   "cumCash": 247460.04,
+   "cumCashFromR3": 247202.04,
+   "cumCashFromR6": 246725.04,
+   "rbe": 141410,
+   "popCashMult": 0.08,
+   "threats": [
+    "camo",
+    "lead",
+    "fortified",
+    "bfb",
+    "ddt"
+   ],
+   "composition": "25 BFB, 18 DDT, 12 Fortified DDT",
+   "groups": [
+    "25 BFB",
+    "9 DDT",
+    "9 DDT",
+    "6 Fortified DDT",
+    "6 Fortified DDT"
+   ],
+   "danger": 2,
+   "notes": "",
+   "cashPopWikiTable": 2477.75
+  },
+  {
+   "round": 111,
+   "xp": 7110,
+   "cash": 15341.48,
+   "cashPop": 15130.48,
+   "cashBonus": 211,
+   "cumCash": 262801.52,
+   "cumCashFromR3": 262543.52,
+   "cumCashFromR6": 262066.52,
+   "rbe": 949472,
+   "popCashMult": 0.08,
+   "threats": [
+    "fortified",
+    "zomg"
+   ],
+   "composition": "22 ZOMG, 9 Fortified ZOMG",
+   "groups": [
+    "17 ZOMG",
+    "9 Fortified ZOMG",
+    "5 ZOMG"
+   ],
+   "danger": 3,
+   "notes": "",
+   "cashPopWikiTable": 9456.55
+  },
+  {
+   "round": 112,
+   "xp": 7200,
+   "cash": 4146.08,
+   "cashPop": 3934.08,
+   "cashBonus": 212,
+   "cumCash": 266947.6,
+   "cumCashFromR3": 266689.6,
+   "cumCashFromR6": 266212.6,
+   "rbe": 261648,
+   "popCashMult": 0.08,
+   "threats": [
+    "camo",
+    "lead",
+    "fortified",
+    "bfb",
+    "ddt"
+   ],
+   "composition": "27 Fortified BFB, 21 Fortified DDT",
+   "groups": [
+    "27 Fortified BFB",
+    "21 Fortified DDT"
+   ],
+   "danger": 3,
+   "notes": "",
+   "cashPopWikiTable": 2458.8
+  },
+  {
+   "round": 113,
+   "xp": 7290,
+   "cash": 4967.4,
+   "cashPop": 4754.4,
+   "cashBonus": 213,
+   "cumCash": 271915.0,
+   "cumCashFromR3": 271657.0,
+   "cumCashFromR6": 271180.0,
+   "rbe": 231102,
+   "popCashMult": 0.08,
+   "threats": [
+    "camo",
+    "fortified",
+    "ceramic",
+    "moab",
+    "bfb"
+   ],
+   "composition": "75 Fortified MOAB, 15 Fortified BFB, 42 Camo Ceramic, 42 Fortified Ceramic",
+   "groups": [
+    "75 Fortified MOAB",
+    "15 Fortified BFB",
+    "42 Camo Ceramic",
+    "42 Fortified Ceramic"
+   ],
+   "danger": 2,
+   "notes": "",
+   "cashPopWikiTable": 2971.5
+  },
+  {
+   "round": 114,
+   "xp": 7380,
+   "cash": 8844.64,
+   "cashPop": 8630.64,
+   "cashBonus": 214,
+   "cumCash": 280759.64,
+   "cumCashFromR3": 280501.64,
+   "cumCashFromR6": 280024.64,
+   "rbe": 483416,
+   "popCashMult": 0.08,
+   "threats": [
+    "camo",
+    "lead",
+    "fortified",
+    "moab",
+    "bfb",
+    "zomg",
+    "ddt"
+   ],
+   "composition": "9 DDT, 36 Fortified MOAB, 6 Fortified DDT, 24 MOAB, 12 BFB, 8 Fortified BFB, 5 ZOMG, 3 Fortified ZOMG",
+   "groups": [
+    "9 DDT",
+    "36 Fortified MOAB",
+    "6 Fortified DDT",
+    "24 MOAB",
+    "12 BFB",
+    "8 Fortified BFB",
+    "5 ZOMG",
+    "3 Fortified ZOMG"
+   ],
+   "danger": 3,
+   "notes": "",
+   "cashPopWikiTable": 5394.15
+  },
+  {
+   "round": 115,
+   "xp": 7470,
+   "cash": 8845.64,
+   "cashPop": 8630.64,
+   "cashBonus": 215,
+   "cumCash": 289605.28,
+   "cumCashFromR3": 289347.28,
+   "cumCashFromR6": 288870.28,
+   "rbe": 492396,
+   "popCashMult": 0.08,
+   "threats": [
+    "camo",
+    "lead",
+    "fortified",
+    "moab",
+    "bfb",
+    "zomg",
+    "ddt"
+   ],
+   "composition": "9 DDT, 3 Fortified ZOMG, 6 Fortified DDT, 8 Fortified BFB, 5 ZOMG, 12 BFB, 24 MOAB, 36 Fortified MOAB",
+   "groups": [
+    "9 DDT",
+    "3 Fortified ZOMG",
+    "6 Fortified DDT",
+    "8 Fortified BFB",
+    "5 ZOMG",
+    "12 BFB",
+    "24 MOAB",
+    "36 Fortified MOAB"
+   ],
+   "danger": 3,
+   "notes": "",
+   "cashPopWikiTable": 5394.15
+  },
+  {
+   "round": 116,
+   "xp": 7560,
+   "cash": 6508.64,
+   "cashPop": 6292.64,
+   "cashBonus": 216,
+   "cumCash": 296113.92,
+   "cumCashFromR3": 295855.92,
+   "cumCashFromR6": 295378.92,
+   "rbe": 575600,
+   "popCashMult": 0.08,
+   "threats": [
+    "purple",
+    "fortified",
+    "bfb",
+    "zomg"
+   ],
+   "composition": "8 Fortified ZOMG, 18 Fortified BFB, 400 Purple",
+   "groups": [
+    "8 Fortified ZOMG",
+    "18 Fortified BFB",
+    "100 Purple",
+    "100 Purple",
+    "200 Purple"
+   ],
+   "danger": 3,
+   "notes": "",
+   "cashPopWikiTable": 3932.9
+  },
+  {
+   "round": 117,
+   "xp": 7650,
+   "cash": 1728.6,
+   "cashPop": 1511.6,
+   "cashBonus": 217,
+   "cumCash": 297842.52,
+   "cumCashFromR3": 297584.52,
+   "cumCashFromR6": 297107.52,
+   "rbe": 75010,
+   "popCashMult": 0.08,
+   "threats": [
+    "camo",
+    "lead",
+    "fortified",
+    "ddt"
+   ],
+   "composition": "250 Lead, 27 DDT, 18 Fortified DDT",
+   "groups": [
+    "250 Lead",
+    "27 DDT",
+    "18 Fortified DDT"
+   ],
+   "danger": 2,
+   "notes": "",
+   "cashPopWikiTable": 944.75
+  },
+  {
+   "round": 118,
+   "xp": 7740,
+   "cash": 6989.36,
+   "cashPop": 6771.36,
+   "cashBonus": 218,
+   "cumCash": 304831.88,
+   "cumCashFromR3": 304573.88,
+   "cumCashFromR6": 304096.88,
+   "rbe": 398784,
+   "popCashMult": 0.08,
+   "threats": [
+    "camo",
+    "lead",
+    "fortified",
+    "zomg",
+    "ddt"
+   ],
+   "composition": "12 ZOMG, 30 Fortified DDT",
+   "groups": [
+    "12 ZOMG",
+    "30 Fortified DDT"
+   ],
+   "danger": 3,
+   "notes": "",
+   "cashPopWikiTable": 4232.1
+  },
+  {
+   "round": 119,
+   "xp": 7830,
+   "cash": 3422.04,
+   "cashPop": 3203.04,
+   "cashBonus": 219,
+   "cumCash": 308253.92,
+   "cumCashFromR3": 307995.92,
+   "cumCashFromR6": 307518.92,
+   "rbe": 319020,
+   "popCashMult": 0.08,
+   "threats": [
+    "bad"
+   ],
+   "composition": "3 BAD",
+   "groups": [
+    "2 BAD",
+    "1 BAD"
+   ],
+   "danger": 3,
+   "notes": "",
+   "cashPopWikiTable": 2001.9
+  },
+  {
+   "round": 120,
+   "xp": 7920,
+   "cash": 8272.48,
+   "cashPop": 8052.48,
+   "cashBonus": 220,
+   "cumCash": 316526.4,
+   "cumCashFromR3": 316268.4,
+   "cumCashFromR6": 315791.4,
+   "rbe": 431808,
+   "popCashMult": 0.08,
+   "threats": [
+    "fortified",
+    "moab",
+    "bfb",
+    "zomg"
+   ],
+   "composition": "12 ZOMG, 12 BFB, 24 Fortified MOAB",
+   "groups": [
+    "12 ZOMG",
+    "12 BFB",
+    "24 Fortified MOAB"
+   ],
+   "danger": 3,
+   "notes": "",
+   "cashPopWikiTable": 5032.8
+  },
+  {
+   "round": 121,
+   "xp": 8010,
+   "cash": 3652.2,
+   "cashPop": 3431.2,
+   "cashBonus": 221,
+   "cumCash": 320178.6,
+   "cumCashFromR3": 319920.6,
+   "cumCashFromR6": 319443.6,
+   "rbe": 516500,
+   "popCashMult": 0.05,
+   "threats": [
+    "fortified",
+    "moab",
+    "bfb",
+    "zomg"
+   ],
+   "composition": "14 Fortified BFB, 28 Fortified MOAB, 6 Fortified ZOMG",
+   "groups": [
+    "14 Fortified BFB",
+    "28 Fortified MOAB",
+    "6 Fortified ZOMG"
+   ],
+   "danger": 3,
+   "notes": "Pop cash 5% (v53+).",
+   "cashPopWikiTable": 2744.96
+  },
+  {
+   "round": 122,
+   "xp": 8100,
+   "cash": 4875.75,
+   "cashPop": 4653.75,
+   "cashBonus": 222,
+   "cumCash": 325054.35,
+   "cumCashFromR3": 324796.35,
+   "cumCashFromR6": 324319.35,
+   "rbe": 386730,
+   "popCashMult": 0.05,
+   "threats": [
+    "lead",
+    "fortified",
+    "bfb"
+   ],
+   "composition": "40 BFB, 20 Fortified BFB, 225 Fortified Lead",
+   "groups": [
+    "40 BFB",
+    "20 Fortified BFB",
+    "75 Fortified Lead",
+    "75 Fortified Lead",
+    "75 Fortified Lead"
+   ],
+   "danger": 2,
+   "notes": "",
+   "cashPopWikiTable": 3723.0
+  },
+  {
+   "round": 123,
+   "xp": 8190,
+   "cash": 6473.4,
+   "cashPop": 6250.4,
+   "cashBonus": 223,
+   "cumCash": 331527.75,
+   "cumCashFromR3": 331269.75,
+   "cumCashFromR6": 330792.75,
+   "rbe": 629936,
+   "popCashMult": 0.05,
+   "threats": [
+    "fortified",
+    "moab",
+    "zomg"
+   ],
+   "composition": "8 Fortified ZOMG, 200 MOAB",
+   "groups": [
+    "8 Fortified ZOMG",
+    "200 MOAB"
+   ],
+   "danger": 3,
+   "notes": "",
+   "cashPopWikiTable": 5000.32
+  },
+  {
+   "round": 124,
+   "xp": 8280,
+   "cash": 5942.75,
+   "cashPop": 5718.75,
+   "cashBonus": 224,
+   "cumCash": 337470.5,
+   "cumCashFromR3": 337212.5,
+   "cumCashFromR6": 336735.5,
+   "rbe": 738600,
+   "popCashMult": 0.05,
+   "threats": [
+    "fortified",
+    "bfb"
+   ],
+   "composition": "75 Fortified BFB",
+   "groups": [
+    "75 Fortified BFB"
+   ],
+   "danger": 3,
+   "notes": "",
+   "cashPopWikiTable": 4575.0
+  },
+  {
+   "round": 125,
+   "xp": 8370,
+   "cash": 11033.7,
+   "cashPop": 10808.7,
+   "cashBonus": 225,
+   "cumCash": 348504.2,
+   "cumCashFromR3": 348246.2,
+   "cumCashFromR6": 347769.2,
+   "rbe": 939624,
+   "popCashMult": 0.05,
+   "threats": [
+    "moab",
+    "bfb",
+    "zomg"
+   ],
+   "composition": "21 ZOMG, 42 BFB, 63 MOAB",
+   "groups": [
+    "6 ZOMG",
+    "5 ZOMG",
+    "12 BFB",
+    "10 BFB",
+    "4 ZOMG",
+    "8 BFB",
+    "18 MOAB",
+    "3 ZOMG",
+    "6 BFB",
+    "15 MOAB",
+    "2 ZOMG",
+    "4 BFB",
+    "12 MOAB",
+    "1 ZOMG",
+    "2 BFB",
+    "9 MOAB",
+    "6 MOAB",
+    "3 MOAB"
+   ],
+   "danger": 3,
+   "notes": "",
+   "cashPopWikiTable": 8646.96
+  },
+  {
+   "round": 126,
+   "xp": 8460,
+   "cash": 2112.3,
+   "cashPop": 1886.3,
+   "cashBonus": 226,
+   "cumCash": 350616.5,
+   "cumCashFromR3": 350358.5,
+   "cumCashFromR6": 349881.5,
+   "rbe": 141778,
+   "popCashMult": 0.05,
+   "threats": [
+    "camo",
+    "lead",
+    "regrow",
+    "fortified",
+    "ddt"
+   ],
+   "composition": "1 Fortified Camo Regrow Lead, 99 DDT",
+   "groups": [
+    "1 Fortified Camo Regrow Lead",
+    "99 DDT"
+   ],
+   "danger": 2,
+   "notes": "",
+   "cashPopWikiTable": 1509.04
+  },
+  {
+   "round": 127,
+   "xp": 8550,
+   "cash": 2971.4,
+   "cashPop": 2744.4,
+   "cashBonus": 227,
+   "cumCash": 353587.9,
+   "cumCashFromR3": 353329.9,
+   "cumCashFromR6": 352852.9,
+   "rbe": 178248,
+   "popCashMult": 0.05,
+   "threats": [
+    "moab",
+    "bfb"
+   ],
+   "composition": "48 MOAB, 24 BFB",
+   "groups": [
+    "48 MOAB",
+    "24 BFB"
+   ],
+   "danger": 2,
+   "notes": "",
+   "cashPopWikiTable": 2195.52
+  },
+  {
+   "round": 128,
+   "xp": 8640,
+   "cash": 4208.45,
+   "cashPop": 3980.45,
+   "cashBonus": 228,
+   "cumCash": 357796.35,
+   "cumCashFromR3": 357538.35,
+   "cumCashFromR6": 357061.35,
+   "rbe": 322048,
+   "popCashMult": 0.05,
+   "threats": [
+    "camo",
+    "lead",
+    "fortified",
+    "ceramic",
+    "bfb",
+    "ddt"
+   ],
+   "composition": "39 Fortified DDT, 200 Fortified Camo Ceramic, 30 BFB",
+   "groups": [
+    "39 Fortified DDT",
+    "200 Fortified Camo Ceramic",
+    "30 BFB"
+   ],
+   "danger": 3,
+   "notes": "",
+   "cashPopWikiTable": 3184.36
+  },
+  {
+   "round": 129,
+   "xp": 8730,
+   "cash": 5258.4,
+   "cashPop": 5029.4,
+   "cashBonus": 229,
+   "cumCash": 363054.75,
+   "cumCashFromR3": 362796.75,
+   "cumCashFromR6": 362319.75,
+   "rbe": 826792,
+   "popCashMult": 0.05,
+   "threats": [
+    "camo",
+    "lead",
+    "purple",
+    "fortified",
+    "ceramic",
+    "zomg",
+    "ddt"
+   ],
+   "composition": "7 Fortified ZOMG, 77 Fortified Camo Lead, 77 Camo Purple, 77 Camo Ceramic, 7 ZOMG, 18 DDT",
+   "groups": [
+    "7 Fortified ZOMG",
+    "77 Fortified Camo Lead",
+    "77 Camo Purple",
+    "77 Camo Ceramic",
+    "7 ZOMG",
+    "9 DDT",
+    "3 DDT",
+    "3 DDT",
+    "3 DDT"
+   ],
+   "danger": 3,
+   "notes": "",
+   "cashPopWikiTable": 4023.52
+  },
+  {
+   "round": 130,
+   "xp": 8820,
+   "cash": 4116.2,
+   "cashPop": 3886.2,
+   "cashBonus": 230,
+   "cumCash": 367170.95,
+   "cumCashFromR3": 366912.95,
+   "cumCashFromR6": 366435.95,
+   "rbe": 307968,
+   "popCashMult": 0.05,
+   "threats": [
+    "camo",
+    "lead",
+    "fortified",
+    "moab",
+    "ddt"
+   ],
+   "composition": "84 MOAB, 48 DDT, 66 Fortified MOAB, 6 Fortified DDT",
+   "groups": [
+    "12 MOAB",
+    "27 DDT",
+    "9 Fortified MOAB",
+    "12 MOAB",
+    "9 Fortified MOAB",
+    "12 MOAB",
+    "9 DDT",
+    "48 MOAB",
+    "3 Fortified DDT",
+    "6 DDT",
+    "3 Fortified DDT",
+    "6 DDT",
+    "48 Fortified MOAB"
+   ],
+   "danger": 2,
+   "notes": "",
+   "cashPopWikiTable": 3108.96
+  },
+  {
+   "round": 131,
+   "xp": 8910,
+   "cash": 5721.9,
+   "cashPop": 5490.9,
+   "cashBonus": 231,
+   "cumCash": 372892.85,
+   "cumCashFromR3": 372634.85,
+   "cumCashFromR6": 372157.85,
+   "rbe": 1461456,
+   "popCashMult": 0.05,
+   "threats": [
+    "fortified",
+    "zomg"
+   ],
+   "composition": "18 Fortified ZOMG",
+   "groups": [
+    "18 Fortified ZOMG"
+   ],
+   "danger": 3,
+   "notes": "",
+   "cashPopWikiTable": 4392.72
+  },
+  {
+   "round": 132,
+   "xp": 9000,
+   "cash": 7613.2,
+   "cashPop": 7381.2,
+   "cashBonus": 232,
+   "cumCash": 380506.05,
+   "cumCashFromR3": 380248.05,
+   "cumCashFromR6": 379771.05,
+   "rbe": 1268688,
+   "popCashMult": 0.05,
+   "threats": [
+    "camo",
+    "purple",
+    "fortified",
+    "zomg"
+   ],
+   "composition": "18 ZOMG, 6 Fortified ZOMG, 200 Camo Purple",
+   "groups": [
+    "5 ZOMG",
+    "4 ZOMG",
+    "3 Fortified ZOMG",
+    "100 Camo Purple",
+    "5 ZOMG",
+    "4 ZOMG",
+    "3 Fortified ZOMG",
+    "100 Camo Purple"
+   ],
+   "danger": 3,
+   "notes": "",
+   "cashPopWikiTable": 5904.96
+  },
+  {
+   "round": 133,
+   "xp": 9090,
+   "cash": 7915.35,
+   "cashPop": 7682.35,
+   "cashBonus": 233,
+   "cumCash": 388421.4,
+   "cumCashFromR3": 388163.4,
+   "cumCashFromR6": 387686.4,
+   "rbe": 1153341,
+   "popCashMult": 0.05,
+   "threats": [
+    "fortified",
+    "moab",
+    "bfb",
+    "zomg"
+   ],
+   "composition": "12 Fortified MOAB, 12 Fortified BFB, 4 Fortified ZOMG, 27 MOAB, 27 BFB, 9 ZOMG",
+   "groups": [
+    "6 Fortified MOAB",
+    "6 Fortified BFB",
+    "2 Fortified ZOMG",
+    "6 Fortified MOAB",
+    "6 Fortified BFB",
+    "2 Fortified ZOMG",
+    "9 MOAB",
+    "9 BFB",
+    "3 ZOMG",
+    "9 MOAB",
+    "9 BFB",
+    "3 ZOMG",
+    "9 MOAB",
+    "9 BFB",
+    "3 ZOMG"
+   ],
+   "danger": 3,
+   "notes": "",
+   "cashPopWikiTable": 6145.88
+  },
+  {
+   "round": 134,
+   "xp": 9180,
+   "cash": 3284.0,
+   "cashPop": 3050.0,
+   "cashBonus": 234,
+   "cumCash": 391705.4,
+   "cumCashFromR3": 391447.4,
+   "cumCashFromR6": 390970.4,
+   "rbe": 374840,
+   "popCashMult": 0.05,
+   "threats": [
+    "fortified",
+    "bfb"
+   ],
+   "composition": "12 Fortified BFB, 28 BFB",
+   "groups": [
+    "12 Fortified BFB",
+    "10 BFB",
+    "8 BFB",
+    "6 BFB",
+    "4 BFB"
+   ],
+   "danger": 2,
+   "notes": "",
+   "cashPopWikiTable": 2440.0
+  },
+  {
+   "round": 135,
+   "xp": 9270,
+   "cash": 4905.75,
+   "cashPop": 4670.75,
+   "cashBonus": 235,
+   "cumCash": 396611.15,
+   "cumCashFromR3": 396353.15,
+   "cumCashFromR6": 395876.15,
+   "rbe": 1386840,
+   "popCashMult": 0.05,
+   "threats": [
+    "camo",
+    "lead",
+    "fortified",
+    "zomg",
+    "ddt"
+   ],
+   "composition": "14 Fortified ZOMG, 21 Fortified DDT",
+   "groups": [
+    "7 Fortified ZOMG",
+    "7 Fortified ZOMG",
+    "7 Fortified DDT",
+    "7 Fortified DDT",
+    "7 Fortified DDT"
+   ],
+   "danger": 3,
+   "notes": "",
+   "cashPopWikiTable": 3736.6
+  },
+  {
+   "round": 136,
+   "xp": 9360,
+   "cash": 3894.8,
+   "cashPop": 3658.8,
+   "cashBonus": 236,
+   "cumCash": 400505.95,
+   "cumCashFromR3": 400247.95,
+   "cumCashFromR6": 399770.95,
+   "rbe": 402624,
+   "popCashMult": 0.05,
+   "threats": [
+    "fortified",
+    "moab",
+    "bfb"
+   ],
+   "composition": "96 Fortified MOAB, 24 BFB",
+   "groups": [
+    "96 Fortified MOAB",
+    "24 BFB"
+   ],
+   "danger": 3,
+   "notes": "",
+   "cashPopWikiTable": 2927.04
+  },
+  {
+   "round": 137,
+   "xp": 9450,
+   "cash": 8472.3,
+   "cashPop": 8235.3,
+   "cashBonus": 237,
+   "cumCash": 408978.25,
+   "cumCashFromR3": 408720.25,
+   "cumCashFromR6": 408243.25,
+   "rbe": 1143984,
+   "popCashMult": 0.05,
+   "threats": [
+    "moab",
+    "bfb",
+    "zomg"
+   ],
+   "composition": "18 ZOMG, 24 BFB, 48 MOAB",
+   "groups": [
+    "18 ZOMG",
+    "24 BFB",
+    "48 MOAB"
+   ],
+   "danger": 3,
+   "notes": "",
+   "cashPopWikiTable": 6588.24
+  },
+  {
+   "round": 138,
+   "xp": 9540,
+   "cash": 2638.3,
+   "cashPop": 2400.3,
+   "cashBonus": 238,
+   "cumCash": 411616.55,
+   "cumCashFromR3": 411358.55,
+   "cumCashFromR6": 410881.55,
+   "rbe": 442872,
+   "popCashMult": 0.05,
+   "threats": [
+    "camo",
+    "lead",
+    "fortified",
+    "ddt"
+   ],
+   "composition": "81 Fortified DDT, 45 DDT",
+   "groups": [
+    "33 Fortified DDT",
+    "27 Fortified DDT",
+    "21 Fortified DDT",
+    "18 DDT",
+    "15 DDT",
+    "12 DDT"
+   ],
+   "danger": 3,
+   "notes": "",
+   "cashPopWikiTable": 1920.24
+  },
+  {
+   "round": 139,
+   "xp": 9630,
+   "cash": 5058.65,
+   "cashPop": 4819.65,
+   "cashBonus": 239,
+   "cumCash": 416675.2,
+   "cumCashFromR3": 416417.2,
+   "cumCashFromR6": 415940.2,
+   "rbe": 401346,
+   "popCashMult": 0.05,
+   "threats": [
+    "fortified",
+    "moab"
+   ],
+   "composition": "181 MOAB, 72 Fortified MOAB",
+   "groups": [
+    "109 MOAB",
+    "18 MOAB",
+    "18 Fortified MOAB",
+    "18 MOAB",
+    "18 Fortified MOAB",
+    "18 MOAB",
+    "18 Fortified MOAB",
+    "18 MOAB",
+    "18 Fortified MOAB"
+   ],
+   "danger": 3,
+   "notes": "",
+   "cashPopWikiTable": 3855.72
+  },
+  {
+   "round": 140,
+   "xp": 9720,
+   "cash": 1574.6,
+   "cashPop": 1334.6,
+   "cashBonus": 240,
+   "cumCash": 418249.8,
+   "cumCashFromR3": 417991.8,
+   "cumCashFromR6": 417514.8,
+   "rbe": 645440,
+   "popCashMult": 0.05,
+   "threats": [
+    "fortified",
+    "bad"
+   ],
+   "composition": "1 Fortified BAD, 1 BAD",
+   "groups": [
+    "1 Fortified BAD",
+    "1 BAD"
+   ],
+   "danger": 3,
+   "notes": "Fortified BAD (200,000 HP outer at ramp x5.0) + BAD. Last preset round; rounds 141+ are randomly generated (except 163, 200, 263).",
+   "cashPopWikiTable": 1067.68
+  }
+ ],
+ "abr": [
+  {
+   "round": 1,
+   "xp": 40,
+   "cash": 121,
+   "cashPop": 20,
+   "cashBonus": 101,
+   "cumCash": 121.0,
+   "cumCashFromR3": null,
+   "rbe": 20,
+   "popCashMult": 1,
+   "threats": [],
+   "composition": "10 Blue",
+   "groups": [
+    "10 Blue"
+   ],
+   "danger": 0,
+   "notes": ""
+  },
+  {
+   "round": 2,
+   "xp": 60,
+   "cash": 157,
+   "cashPop": 55,
+   "cashBonus": 102,
+   "cumCash": 278.0,
+   "cumCashFromR3": null,
+   "rbe": 55,
+   "popCashMult": 1,
+   "threats": [],
+   "composition": "55 Red",
+   "groups": [
+    "35 Red",
+    "20 Red"
+   ],
+   "danger": 0,
+   "notes": ""
+  },
+  {
+   "round": 3,
+   "xp": 80,
+   "cash": 140,
+   "cashPop": 37,
+   "cashBonus": 103,
+   "cumCash": 418.0,
+   "cumCashFromR3": 140.0,
+   "rbe": 37,
+   "popCashMult": 1,
+   "threats": [
+    "regrow"
+   ],
+   "composition": "6 Blue, 5 Regrow Blue, 15 Red",
+   "groups": [
+    "6 Blue",
+    "5 Regrow Blue",
+    "15 Red"
+   ],
+   "danger": 0,
+   "notes": "First in this round set: regrow. ABR (Hard) starts here."
+  },
+  {
+   "round": 4,
+   "xp": 100,
+   "cash": 180,
+   "cashPop": 76,
+   "cashBonus": 104,
+   "cumCash": 598.0,
+   "cumCashFromR3": 320.0,
+   "rbe": 76,
+   "popCashMult": 1,
+   "threats": [],
+   "composition": "33 Blue, 10 Red",
+   "groups": [
+    "15 Blue",
+    "18 Blue",
+    "10 Red"
+   ],
+   "danger": 0,
+   "notes": ""
+  },
+  {
+   "round": 5,
+   "xp": 120,
+   "cash": 157,
+   "cashPop": 52,
+   "cashBonus": 105,
+   "cumCash": 755.0,
+   "cumCashFromR3": 477.0,
+   "rbe": 52,
+   "popCashMult": 1,
+   "threats": [
+    "camo",
+    "regrow"
+   ],
+   "composition": "12 Camo Red, 3 Green, 15 Regrow Blue, 1 Camo Regrow Red",
+   "groups": [
+    "12 Camo Red",
+    "3 Green",
+    "15 Regrow Blue",
+    "1 Camo Regrow Red"
+   ],
+   "danger": 2,
+   "notes": "First in this round set: camo. FIRST CAMO already (12 Camo Reds + Camo Regrow Red). Need detection from the start."
+  },
+  {
+   "round": 6,
+   "xp": 140,
+   "cash": 165,
+   "cashPop": 59,
+   "cashBonus": 106,
+   "cumCash": 920.0,
+   "cumCashFromR3": 642.0,
+   "rbe": 59,
+   "popCashMult": 1,
+   "threats": [
+    "regrow"
+   ],
+   "composition": "8 Green, 10 Blue, 5 Regrow Green",
+   "groups": [
+    "8 Green",
+    "10 Blue",
+    "5 Regrow Green"
+   ],
+   "danger": 0,
+   "notes": "Impoppable/CHIMPS round 6 equivalent (note: Impoppable/CHIMPS use STANDARD rounds, not ABR)."
+  },
+  {
+   "round": 7,
+   "xp": 160,
+   "cash": 197,
+   "cashPop": 90,
+   "cashBonus": 107,
+   "cumCash": 1117.0,
+   "cumCashFromR3": 839.0,
+   "rbe": 90,
+   "popCashMult": 1,
+   "threats": [
+    "camo",
+    "regrow"
+   ],
+   "composition": "2 Black, 6 Green, 15 Camo Blue, 10 Regrow Blue",
+   "groups": [
+    "2 Black",
+    "6 Green",
+    "15 Camo Blue",
+    "10 Regrow Blue"
+   ],
+   "danger": 1,
+   "notes": "Camo Blues and first Blacks."
+  },
+  {
+   "round": 8,
+   "xp": 180,
+   "cash": 193,
+   "cashPop": 85,
+   "cashBonus": 108,
+   "cumCash": 1310.0,
+   "cumCashFromR3": 1032.0,
+   "rbe": 85,
+   "popCashMult": 1,
+   "threats": [
+    "regrow"
+   ],
+   "composition": "10 Yellow, 3 Regrow Green, 12 Green",
+   "groups": [
+    "10 Yellow",
+    "3 Regrow Green",
+    "12 Green"
+   ],
+   "danger": 0,
+   "notes": ""
+  },
+  {
+   "round": 9,
+   "xp": 200,
+   "cash": 199,
+   "cashPop": 90,
+   "cashBonus": 109,
+   "cumCash": 1509.0,
+   "cumCashFromR3": 1231.0,
+   "rbe": 90,
+   "popCashMult": 1,
+   "threats": [
+    "regrow"
+   ],
+   "composition": "30 Regrow Green",
+   "groups": [
+    "30 Regrow Green"
+   ],
+   "danger": 0,
+   "notes": ""
+  },
+  {
+   "round": 10,
+   "xp": 220,
+   "cash": 320,
+   "cashPop": 210,
+   "cashBonus": 110,
+   "cumCash": 1829.0,
+   "cumCashFromR3": 1551.0,
+   "rbe": 210,
+   "popCashMult": 1,
+   "threats": [
+    "lead"
+   ],
+   "composition": "40 Green, 2 Lead, 22 Blue",
+   "groups": [
+    "40 Green",
+    "2 Lead",
+    "22 Blue"
+   ],
+   "danger": 2,
+   "notes": "First in this round set: lead. First Leads (2) screen 22 Blues: lead soaks sharp shots."
+  },
+  {
+   "round": 11,
+   "xp": 240,
+   "cash": 220,
+   "cashPop": 109,
+   "cashBonus": 111,
+   "cumCash": 2049.0,
+   "cumCashFromR3": 1771.0,
+   "rbe": 109,
+   "popCashMult": 1,
+   "threats": [
+    "camo",
+    "regrow"
+   ],
+   "composition": "3 Camo Green, 20 Green, 10 Blue, 10 Regrow Blue",
+   "groups": [
+    "3 Camo Green",
+    "20 Green",
+    "10 Blue",
+    "10 Regrow Blue"
+   ],
+   "danger": 0,
+   "notes": ""
+  },
+  {
+   "round": 12,
+   "xp": 260,
+   "cash": 185,
+   "cashPop": 73,
+   "cashBonus": 112,
+   "cumCash": 2234.0,
+   "cumCashFromR3": 1956.0,
+   "rbe": 73,
+   "popCashMult": 1,
+   "threats": [
+    "regrow"
+   ],
+   "composition": "6 Regrow Green, 20 Blue, 3 Pink",
+   "groups": [
+    "6 Regrow Green",
+    "20 Blue",
+    "3 Pink"
+   ],
+   "danger": 0,
+   "notes": ""
+  },
+  {
+   "round": 13,
+   "xp": 280,
+   "cash": 285,
+   "cashPop": 172,
+   "cashBonus": 113,
+   "cumCash": 2519.0,
+   "cumCashFromR3": 2241.0,
+   "rbe": 172,
+   "popCashMult": 1,
+   "threats": [],
+   "composition": "50 Blue, 18 Yellow",
+   "groups": [
+    "50 Blue",
+    "18 Yellow"
+   ],
+   "danger": 0,
+   "notes": ""
+  },
+  {
+   "round": 14,
+   "xp": 300,
+   "cash": 258,
+   "cashPop": 144,
+   "cashBonus": 114,
+   "cumCash": 2777.0,
+   "cumCashFromR3": 2499.0,
+   "rbe": 144,
+   "popCashMult": 1,
+   "threats": [
+    "camo",
+    "regrow"
+   ],
+   "composition": "49 Red, 3 Black, 1 White, 4 Regrow Yellow, 10 Regrow Blue, 5 Camo Regrow Green",
+   "groups": [
+    "18 Red",
+    "1 Black",
+    "1 White",
+    "4 Regrow Yellow",
+    "31 Red",
+    "10 Regrow Blue",
+    "5 Camo Regrow Green",
+    "2 Black"
+   ],
+   "danger": 1,
+   "notes": "First Whites; Camo Regrow Greens."
+  },
+  {
+   "round": 15,
+   "xp": 320,
+   "cash": 331,
+   "cashPop": 216,
+   "cashBonus": 115,
+   "cumCash": 3108.0,
+   "cumCashFromR3": 2830.0,
+   "rbe": 216,
+   "popCashMult": 1,
+   "threats": [
+    "purple"
+   ],
+   "composition": "20 Blue, 15 Green, 12 Yellow, 10 Pink, 3 Purple",
+   "groups": [
+    "20 Blue",
+    "15 Green",
+    "12 Yellow",
+    "10 Pink",
+    "3 Purple"
+   ],
+   "danger": 1,
+   "notes": "First in this round set: purple. First Purples (3)."
+  },
+  {
+   "round": 16,
+   "xp": 340,
+   "cash": 281,
+   "cashPop": 165,
+   "cashBonus": 116,
+   "cumCash": 3389.0,
+   "cumCashFromR3": 3111.0,
+   "rbe": 165,
+   "popCashMult": 1,
+   "threats": [
+    "camo",
+    "regrow"
+   ],
+   "composition": "20 Regrow Green, 20 Camo Green, 15 Green",
+   "groups": [
+    "20 Regrow Green",
+    "20 Camo Green",
+    "15 Green"
+   ],
+   "danger": 1,
+   "notes": ""
+  },
+  {
+   "round": 17,
+   "xp": 360,
+   "cash": 177,
+   "cashPop": 60,
+   "cashBonus": 117,
+   "cumCash": 3566.0,
+   "cumCashFromR3": 3288.0,
+   "rbe": 60,
+   "popCashMult": 1,
+   "threats": [],
+   "composition": "12 Pink",
+   "groups": [
+    "12 Pink"
+   ],
+   "danger": 0,
+   "notes": ""
+  },
+  {
+   "round": 18,
+   "xp": 380,
+   "cash": 448,
+   "cashPop": 330,
+   "cashBonus": 118,
+   "cumCash": 4014.0,
+   "cumCashFromR3": 3736.0,
+   "rbe": 330,
+   "popCashMult": 1,
+   "threats": [],
+   "composition": "60 Yellow, 30 Green",
+   "groups": [
+    "60 Yellow",
+    "30 Green"
+   ],
+   "danger": 0,
+   "notes": ""
+  },
+  {
+   "round": 19,
+   "xp": 400,
+   "cash": 251,
+   "cashPop": 132,
+   "cashBonus": 119,
+   "cumCash": 4265.0,
+   "cumCashFromR3": 3987.0,
+   "rbe": 132,
+   "popCashMult": 1,
+   "threats": [
+    "regrow"
+   ],
+   "composition": "10 Blue, 5 Regrow Green, 15 Pink, 2 Black",
+   "groups": [
+    "10 Blue",
+    "5 Regrow Green",
+    "15 Pink",
+    "2 Black"
+   ],
+   "danger": 0,
+   "notes": ""
+  },
+  {
+   "round": 20,
+   "xp": 420,
+   "cash": 186,
+   "cashPop": 66,
+   "cashBonus": 120,
+   "cumCash": 4451.0,
+   "cumCashFromR3": 4173.0,
+   "rbe": 66,
+   "popCashMult": 1,
+   "threats": [
+    "regrow"
+   ],
+   "composition": "6 Regrow Black",
+   "groups": [
+    "6 Regrow Black"
+   ],
+   "danger": 0,
+   "notes": ""
+  },
+  {
+   "round": 21,
+   "xp": 460,
+   "cash": 179,
+   "cashPop": 58,
+   "cashBonus": 121,
+   "cumCash": 4630.0,
+   "cumCashFromR3": 4352.0,
+   "rbe": 58,
+   "popCashMult": 1,
+   "threats": [],
+   "composition": "50 Red, 4 Blue",
+   "groups": [
+    "40 Red",
+    "10 Red",
+    "4 Blue"
+   ],
+   "danger": 0,
+   "notes": ""
+  },
+  {
+   "round": 22,
+   "xp": 500,
+   "cash": 298,
+   "cashPop": 176,
+   "cashBonus": 122,
+   "cumCash": 4928.0,
+   "cumCashFromR3": 4650.0,
+   "rbe": 176,
+   "popCashMult": 1,
+   "threats": [
+    "purple"
+   ],
+   "composition": "16 Purple",
+   "groups": [
+    "16 Purple"
+   ],
+   "danger": 1,
+   "notes": "16 Purples."
+  },
+  {
+   "round": 23,
+   "xp": 540,
+   "cash": 358,
+   "cashPop": 235,
+   "cashBonus": 123,
+   "cumCash": 5286.0,
+   "cumCashFromR3": 5008.0,
+   "rbe": 235,
+   "popCashMult": 1,
+   "threats": [
+    "lead"
+   ],
+   "composition": "7 Black, 6 White, 4 Lead",
+   "groups": [
+    "7 Black",
+    "6 White",
+    "4 Lead"
+   ],
+   "danger": 1,
+   "notes": ""
+  },
+  {
+   "round": 24,
+   "xp": 580,
+   "cash": 147,
+   "cashPop": 23,
+   "cashBonus": 124,
+   "cumCash": 5433.0,
+   "cumCashFromR3": 5155.0,
+   "rbe": 23,
+   "popCashMult": 1,
+   "threats": [
+    "camo",
+    "lead"
+   ],
+   "composition": "1 Camo Lead",
+   "groups": [
+    "1 Camo Lead"
+   ],
+   "danger": 2,
+   "notes": "1 Camo Lead (first camo lead)."
+  },
+  {
+   "round": 25,
+   "xp": 620,
+   "cash": 345,
+   "cashPop": 220,
+   "cashBonus": 125,
+   "cumCash": 5778.0,
+   "cumCashFromR3": 5500.0,
+   "rbe": 220,
+   "popCashMult": 1,
+   "threats": [
+    "purple",
+    "regrow"
+   ],
+   "composition": "22 Regrow Pink, 10 Regrow Purple",
+   "groups": [
+    "22 Regrow Pink",
+    "10 Regrow Purple"
+   ],
+   "danger": 1,
+   "notes": ""
+  },
+  {
+   "round": 26,
+   "xp": 660,
+   "cash": 454,
+   "cashPop": 328,
+   "cashBonus": 126,
+   "cumCash": 6232.0,
+   "cumCashFromR3": 5954.0,
+   "rbe": 328,
+   "popCashMult": 1,
+   "threats": [],
+   "composition": "15 Black, 3 Zebra, 2 Rainbow",
+   "groups": [
+    "15 Black",
+    "3 Zebra",
+    "2 Rainbow"
+   ],
+   "danger": 0,
+   "notes": ""
+  },
+  {
+   "round": 27,
+   "xp": 700,
+   "cash": 662,
+   "cashPop": 535,
+   "cashBonus": 127,
+   "cumCash": 6894.0,
+   "cumCashFromR3": 6616.0,
+   "rbe": 535,
+   "popCashMult": 1,
+   "threats": [
+    "camo"
+   ],
+   "composition": "100 Camo Red, 60 Camo Blue, 45 Camo Green, 45 Camo Yellow",
+   "groups": [
+    "100 Camo Red",
+    "60 Camo Blue",
+    "45 Camo Green",
+    "45 Camo Yellow"
+   ],
+   "danger": 3,
+   "notes": "MASSIVE CAMO RUSH: 250 camo bloons (100 Camo Red, 60 Blue, 45 Green, 45 Yellow)."
+  },
+  {
+   "round": 28,
+   "xp": 740,
+   "cash": 266,
+   "cashPop": 138,
+   "cashBonus": 128,
+   "cumCash": 7160.0,
+   "cumCashFromR3": 6882.0,
+   "rbe": 138,
+   "popCashMult": 1,
+   "threats": [
+    "lead",
+    "regrow"
+   ],
+   "composition": "6 Regrow Lead",
+   "groups": [
+    "6 Regrow Lead"
+   ],
+   "danger": 1,
+   "notes": "6 Regrow Leads."
+  },
+  {
+   "round": 29,
+   "xp": 780,
+   "cash": 467,
+   "cashPop": 338,
+   "cashBonus": 129,
+   "cumCash": 7627.0,
+   "cumCashFromR3": 7349.0,
+   "rbe": 338,
+   "popCashMult": 1,
+   "threats": [
+    "regrow"
+   ],
+   "composition": "50 Regrow Pink, 8 White",
+   "groups": [
+    "50 Regrow Pink",
+    "8 White"
+   ],
+   "danger": 0,
+   "notes": ""
+  },
+  {
+   "round": 30,
+   "xp": 820,
+   "cash": 337,
+   "cashPop": 207,
+   "cashBonus": 130,
+   "cumCash": 7964.0,
+   "cumCashFromR3": 7686.0,
+   "rbe": 207,
+   "popCashMult": 1,
+   "threats": [
+    "camo",
+    "lead"
+   ],
+   "composition": "9 Camo Lead",
+   "groups": [
+    "9 Camo Lead"
+   ],
+   "danger": 2,
+   "notes": "9 Camo Leads: need camo + lead together."
+  },
+  {
+   "round": 31,
+   "xp": 860,
+   "cash": 606,
+   "cashPop": 475,
+   "cashBonus": 131,
+   "cumCash": 8570.0,
+   "cumCashFromR3": 8292.0,
+   "rbe": 475,
+   "popCashMult": 1,
+   "threats": [
+    "camo",
+    "regrow"
+   ],
+   "composition": "8 Regrow Black, 8 Camo White, 10 Zebra, 3 Regrow Zebra",
+   "groups": [
+    "8 Regrow Black",
+    "8 Camo White",
+    "10 Zebra",
+    "3 Regrow Zebra"
+   ],
+   "danger": 1,
+   "notes": ""
+  },
+  {
+   "round": 32,
+   "xp": 900,
+   "cash": 762,
+   "cashPop": 630,
+   "cashBonus": 132,
+   "cumCash": 9332.0,
+   "cumCashFromR3": 9054.0,
+   "rbe": 657,
+   "popCashMult": 1,
+   "threats": [
+    "purple",
+    "ceramic"
+   ],
+   "composition": "5 Rainbow, 3 Ceramic, 10 Purple",
+   "groups": [
+    "5 Rainbow",
+    "3 Ceramic",
+    "10 Purple"
+   ],
+   "danger": 1,
+   "notes": "First in this round set: ceramic. First Ceramics (3)."
+  },
+  {
+   "round": 33,
+   "xp": 940,
+   "cash": 179,
+   "cashPop": 46,
+   "cashBonus": 133,
+   "cumCash": 9511.0,
+   "cumCashFromR3": 9233.0,
+   "rbe": 46,
+   "popCashMult": 1,
+   "threats": [
+    "camo"
+   ],
+   "composition": "20 Camo Red, 13 Camo Blue",
+   "groups": [
+    "20 Camo Red",
+    "13 Camo Blue"
+   ],
+   "danger": 1,
+   "notes": ""
+  },
+  {
+   "round": 34,
+   "xp": 980,
+   "cash": 1016,
+   "cashPop": 882,
+   "cashBonus": 134,
+   "cumCash": 10527.0,
+   "cumCashFromR3": 10249.0,
+   "rbe": 882,
+   "popCashMult": 1,
+   "threats": [],
+   "composition": "200 Green, 6 Rainbow",
+   "groups": [
+    "200 Green",
+    "6 Rainbow"
+   ],
+   "danger": 0,
+   "notes": ""
+  },
+  {
+   "round": 35,
+   "xp": 1020,
+   "cash": 1300,
+   "cashPop": 1165,
+   "cashBonus": 135,
+   "cumCash": 11827.0,
+   "cumCashFromR3": 11549.0,
+   "rbe": 1192,
+   "popCashMult": 1,
+   "threats": [
+    "camo",
+    "purple",
+    "regrow",
+    "ceramic"
+   ],
+   "composition": "25 Regrow White, 3 Ceramic, 25 Purple, 30 Camo Black",
+   "groups": [
+    "25 Regrow White",
+    "3 Ceramic",
+    "25 Purple",
+    "30 Camo Black"
+   ],
+   "danger": 1,
+   "notes": ""
+  },
+  {
+   "round": 36,
+   "xp": 1060,
+   "cash": 756,
+   "cashPop": 620,
+   "cashBonus": 136,
+   "cumCash": 12583.0,
+   "cumCashFromR3": 12305.0,
+   "rbe": 638,
+   "popCashMult": 1,
+   "threats": [
+    "camo",
+    "regrow",
+    "ceramic"
+   ],
+   "composition": "80 Camo Regrow Yellow, 10 Black, 2 Ceramic",
+   "groups": [
+    "40 Camo Regrow Yellow",
+    "5 Black",
+    "40 Camo Regrow Yellow",
+    "5 Black",
+    "2 Ceramic"
+   ],
+   "danger": 1,
+   "notes": ""
+  },
+  {
+   "round": 37,
+   "xp": 1100,
+   "cash": 1408,
+   "cashPop": 1271,
+   "cashBonus": 137,
+   "cumCash": 13991.0,
+   "cumCashFromR3": 13713.0,
+   "rbe": 1271,
+   "popCashMult": 1,
+   "threats": [
+    "lead",
+    "regrow"
+   ],
+   "composition": "25 Regrow White, 25 White, 18 Lead, 10 Zebra, 7 Regrow Black",
+   "groups": [
+    "25 Regrow White",
+    "25 White",
+    "18 Lead",
+    "10 Zebra",
+    "7 Regrow Black"
+   ],
+   "danger": 1,
+   "notes": ""
+  },
+  {
+   "round": 38,
+   "xp": 1140,
+   "cash": 1533,
+   "cashPop": 1395,
+   "cashBonus": 138,
+   "cumCash": 15524.0,
+   "cumCashFromR3": 15246.0,
+   "rbe": 1404,
+   "popCashMult": 1,
+   "threats": [
+    "lead",
+    "purple",
+    "regrow",
+    "ceramic"
+   ],
+   "composition": "17 Black, 42 Purple, 14 Lead, 7 Rainbow, 1 Regrow Ceramic",
+   "groups": [
+    "17 Black",
+    "42 Purple",
+    "14 Lead",
+    "7 Rainbow",
+    "1 Regrow Ceramic"
+   ],
+   "danger": 1,
+   "notes": ""
+  },
+  {
+   "round": 39,
+   "xp": 1180,
+   "cash": 1508,
+   "cashPop": 1369,
+   "cashBonus": 139,
+   "cumCash": 17032.0,
+   "cumCashFromR3": 16754.0,
+   "rbe": 1369,
+   "popCashMult": 1,
+   "threats": [
+    "camo",
+    "regrow"
+   ],
+   "composition": "10 Camo Regrow White, 20 Zebra, 15 Rainbow, 2 Camo Rainbow",
+   "groups": [
+    "10 Camo Regrow White",
+    "5 Zebra",
+    "15 Zebra",
+    "15 Rainbow",
+    "2 Camo Rainbow"
+   ],
+   "danger": 1,
+   "notes": ""
+  },
+  {
+   "round": 40,
+   "xp": 1220,
+   "cash": 521,
+   "cashPop": 381,
+   "cashBonus": 140,
+   "cumCash": 17553.0,
+   "cumCashFromR3": 17275.0,
+   "rbe": 856,
+   "popCashMult": 1,
+   "threats": [
+    "fortified",
+    "moab"
+   ],
+   "composition": "1 Fortified MOAB",
+   "groups": [
+    "1 Fortified MOAB"
+   ],
+   "danger": 3,
+   "notes": "First in this round set: fortified, moab. FORTIFIED MOAB (400 HP, 856 RBE) instead of a normal MOAB."
+  },
+  {
+   "round": 41,
+   "xp": 1260,
+   "cash": 2411,
+   "cashPop": 2270,
+   "cashBonus": 141,
+   "cumCash": 19964.0,
+   "cumCashFromR3": 19686.0,
+   "rbe": 2270,
+   "popCashMult": 1,
+   "threats": [],
+   "composition": "60 Black, 70 Zebra",
+   "groups": [
+    "60 Black",
+    "70 Zebra"
+   ],
+   "danger": 1,
+   "notes": ""
+  },
+  {
+   "round": 42,
+   "xp": 1300,
+   "cash": 659,
+   "cashPop": 517,
+   "cashBonus": 142,
+   "cumCash": 20623.0,
+   "cumCashFromR3": 20345.0,
+   "rbe": 517,
+   "popCashMult": 1,
+   "threats": [
+    "camo",
+    "regrow"
+   ],
+   "composition": "11 Camo Regrow Rainbow",
+   "groups": [
+    "6 Camo Regrow Rainbow",
+    "5 Camo Regrow Rainbow"
+   ],
+   "danger": 1,
+   "notes": ""
+  },
+  {
+   "round": 43,
+   "xp": 1340,
+   "cash": 1375,
+   "cashPop": 1232,
+   "cashBonus": 143,
+   "cumCash": 21998.0,
+   "cumCashFromR3": 21720.0,
+   "rbe": 1702,
+   "popCashMult": 1,
+   "threats": [
+    "moab"
+   ],
+   "composition": "10 Rainbow, 2 MOAB",
+   "groups": [
+    "10 Rainbow",
+    "2 MOAB"
+   ],
+   "danger": 1,
+   "notes": "2 MOABs already."
+  },
+  {
+   "round": 44,
+   "xp": 1380,
+   "cash": 1294,
+   "cashPop": 1150,
+   "cashBonus": 144,
+   "cumCash": 23292.0,
+   "cumCashFromR3": 23014.0,
+   "rbe": 1180,
+   "popCashMult": 1,
+   "threats": [
+    "lead",
+    "fortified"
+   ],
+   "composition": "40 Zebra, 10 Fortified Lead",
+   "groups": [
+    "10 Zebra",
+    "10 Fortified Lead",
+    "10 Zebra",
+    "10 Zebra",
+    "10 Zebra"
+   ],
+   "danger": 1,
+   "notes": "Fortified Leads."
+  },
+  {
+   "round": 45,
+   "xp": 1420,
+   "cash": 1897,
+   "cashPop": 1752,
+   "cashBonus": 145,
+   "cumCash": 25189.0,
+   "cumCashFromR3": 24911.0,
+   "rbe": 1854,
+   "popCashMult": 1,
+   "threats": [
+    "camo",
+    "lead",
+    "purple",
+    "fortified",
+    "ceramic"
+   ],
+   "composition": "10 Ceramic, 10 Camo Purple, 120 Pink, 4 Fortified Lead",
+   "groups": [
+    "10 Ceramic",
+    "10 Camo Purple",
+    "120 Pink",
+    "4 Fortified Lead"
+   ],
+   "danger": 2,
+   "notes": "First Camo Purples."
+  },
+  {
+   "round": 46,
+   "xp": 1460,
+   "cash": 906,
+   "cashPop": 760,
+   "cashBonus": 146,
+   "cumCash": 26095.0,
+   "cumCashFromR3": 25817.0,
+   "rbe": 912,
+   "popCashMult": 1,
+   "threats": [
+    "fortified",
+    "ceramic"
+   ],
+   "composition": "8 Fortified Ceramic",
+   "groups": [
+    "8 Fortified Ceramic"
+   ],
+   "danger": 2,
+   "notes": "8 Fortified Ceramics."
+  },
+  {
+   "round": 47,
+   "xp": 1500,
+   "cash": 1640,
+   "cashPop": 1493,
+   "cashBonus": 147,
+   "cumCash": 27735.0,
+   "cumCashFromR3": 27457.0,
+   "rbe": 2198,
+   "popCashMult": 1,
+   "threats": [
+    "camo",
+    "regrow",
+    "moab"
+   ],
+   "composition": "3 MOAB, 70 Camo Regrow Pink",
+   "groups": [
+    "3 MOAB",
+    "70 Camo Regrow Pink"
+   ],
+   "danger": 2,
+   "notes": "3 MOABs + 70 Camo Regrow Pinks."
+  },
+  {
+   "round": 48,
+   "xp": 1540,
+   "cash": 1988,
+   "cashPop": 1840,
+   "cashBonus": 148,
+   "cumCash": 29723.0,
+   "cumCashFromR3": 29445.0,
+   "rbe": 1942,
+   "popCashMult": 1,
+   "threats": [
+    "camo",
+    "lead",
+    "purple",
+    "regrow",
+    "fortified",
+    "ceramic"
+   ],
+   "composition": "15 Fortified Regrow Lead, 30 Camo Regrow Purple, 80 Regrow Black, 3 Fortified Ceramic",
+   "groups": [
+    "15 Fortified Regrow Lead",
+    "30 Camo Regrow Purple",
+    "80 Regrow Black",
+    "3 Fortified Ceramic"
+   ],
+   "danger": 1,
+   "notes": ""
+  },
+  {
+   "round": 49,
+   "xp": 1580,
+   "cash": 3849,
+   "cashPop": 3700,
+   "cashBonus": 149,
+   "cumCash": 33572.0,
+   "cumCashFromR3": 33294.0,
+   "rbe": 3826,
+   "popCashMult": 1,
+   "threats": [
+    "camo",
+    "regrow",
+    "ceramic"
+   ],
+   "composition": "300 Regrow Yellow, 10 Camo Rainbow, 14 Regrow Ceramic, 10 Camo Zebra, 10 Regrow Rainbow",
+   "groups": [
+    "300 Regrow Yellow",
+    "10 Camo Rainbow",
+    "14 Regrow Ceramic",
+    "10 Camo Zebra",
+    "10 Regrow Rainbow"
+   ],
+   "danger": 1,
+   "notes": ""
+  },
+  {
+   "round": 50,
+   "xp": 1620,
+   "cash": 2620,
+   "cashPop": 2470,
+   "cashBonus": 150,
+   "cumCash": 36192.0,
+   "cumCashFromR3": 35914.0,
+   "rbe": 4384,
+   "popCashMult": 1,
+   "threats": [
+    "lead",
+    "regrow",
+    "fortified",
+    "moab"
+   ],
+   "composition": "2 Fortified MOAB, 8 Fortified Regrow Lead, 4 MOAB",
+   "groups": [
+    "2 Fortified MOAB",
+    "8 Fortified Regrow Lead",
+    "4 MOAB"
+   ],
+   "danger": 3,
+   "notes": "2 Fortified MOABs + 4 MOABs + Fortified Regrow Leads."
+  },
+  {
+   "round": 51,
+   "xp": 1710,
+   "cash": 1596.0,
+   "cashPop": 1445.0,
+   "cashBonus": 151,
+   "cumCash": 37788.0,
+   "cumCashFromR3": 37510.0,
+   "rbe": 3422,
+   "popCashMult": 0.5,
+   "threats": [
+    "camo",
+    "fortified",
+    "ceramic"
+   ],
+   "composition": "28 Fortified Camo Ceramic, 10 Zebra",
+   "groups": [
+    "28 Fortified Camo Ceramic",
+    "10 Zebra"
+   ],
+   "danger": 2,
+   "notes": "28 Fortified Camo Ceramics."
+  },
+  {
+   "round": 52,
+   "xp": 1800,
+   "cash": 1830.5,
+   "cashPop": 1678.5,
+   "cashBonus": 152,
+   "cumCash": 39618.5,
+   "cumCashFromR3": 39340.5,
+   "rbe": 4207,
+   "popCashMult": 0.5,
+   "threats": [
+    "regrow",
+    "fortified",
+    "ceramic",
+    "moab"
+   ],
+   "composition": "35 Rainbow, 1 Fortified MOAB, 5 Fortified Ceramic, 1 MOAB, 5 Regrow Ceramic",
+   "groups": [
+    "35 Rainbow",
+    "1 Fortified MOAB",
+    "5 Fortified Ceramic",
+    "1 MOAB",
+    "5 Regrow Ceramic"
+   ],
+   "danger": 1,
+   "notes": ""
+  },
+  {
+   "round": 53,
+   "xp": 1890,
+   "cash": 1024.5,
+   "cashPop": 871.5,
+   "cashBonus": 153,
+   "cumCash": 40643.0,
+   "cumCashFromR3": 40365.0,
+   "rbe": 3168,
+   "popCashMult": 0.5,
+   "threats": [
+    "camo",
+    "fortified",
+    "moab"
+   ],
+   "composition": "120 Camo Pink, 3 Fortified MOAB",
+   "groups": [
+    "120 Camo Pink",
+    "1 Fortified MOAB",
+    "1 Fortified MOAB",
+    "1 Fortified MOAB"
+   ],
+   "danger": 1,
+   "notes": ""
+  },
+  {
+   "round": 54,
+   "xp": 1980,
+   "cash": 1299.5,
+   "cashPop": 1145.5,
+   "cashBonus": 154,
+   "cumCash": 41942.5,
+   "cumCashFromR3": 41664.5,
+   "rbe": 4165,
+   "popCashMult": 0.5,
+   "threats": [
+    "regrow",
+    "moab",
+    "bfb"
+   ],
+   "composition": "35 Regrow Black, 1 MOAB, 1 BFB",
+   "groups": [
+    "35 Regrow Black",
+    "1 MOAB",
+    "1 BFB"
+   ],
+   "danger": 2,
+   "notes": "First in this round set: bfb. FIRST BFB."
+  },
+  {
+   "round": 55,
+   "xp": 2070,
+   "cash": 2483.0,
+   "cashPop": 2328.0,
+   "cashBonus": 155,
+   "cumCash": 44425.5,
+   "cumCashFromR3": 44147.5,
+   "rbe": 5536,
+   "popCashMult": 0.5,
+   "threats": [
+    "camo",
+    "fortified",
+    "ceramic",
+    "moab"
+   ],
+   "composition": "20 Ceramic, 25 Camo Ceramic, 1 Fortified MOAB",
+   "groups": [
+    "10 Ceramic",
+    "10 Camo Ceramic",
+    "10 Ceramic",
+    "15 Camo Ceramic",
+    "1 Fortified MOAB"
+   ],
+   "danger": 2,
+   "notes": "Camo Ceramic waves + Fortified MOAB."
+  },
+  {
+   "round": 56,
+   "xp": 2160,
+   "cash": 1328.5,
+   "cashPop": 1172.5,
+   "cashBonus": 156,
+   "cumCash": 45754.0,
+   "cumCashFromR3": 45476.0,
+   "rbe": 3520,
+   "popCashMult": 0.5,
+   "threats": [
+    "camo",
+    "purple",
+    "regrow",
+    "moab"
+   ],
+   "composition": "40 Camo Regrow Purple, 5 MOAB",
+   "groups": [
+    "40 Camo Regrow Purple",
+    "5 MOAB"
+   ],
+   "danger": 1,
+   "notes": ""
+  },
+  {
+   "round": 57,
+   "xp": 2250,
+   "cash": 2488.0,
+   "cashPop": 2331.0,
+   "cashBonus": 157,
+   "cumCash": 48242.0,
+   "cumCashFromR3": 47964.0,
+   "rbe": 7476,
+   "popCashMult": 0.5,
+   "threats": [
+    "fortified",
+    "ceramic",
+    "moab",
+    "bfb"
+   ],
+   "composition": "2 Fortified MOAB, 25 Ceramic, 1 BFB",
+   "groups": [
+    "2 Fortified MOAB",
+    "25 Ceramic",
+    "1 BFB"
+   ],
+   "danger": 2,
+   "notes": "BFB + 2 Fortified MOABs."
+  },
+  {
+   "round": 58,
+   "xp": 2340,
+   "cash": 3250.5,
+   "cashPop": 3092.5,
+   "cashBonus": 158,
+   "cumCash": 51492.5,
+   "cumCashFromR3": 51214.5,
+   "rbe": 8860,
+   "popCashMult": 0.5,
+   "threats": [
+    "regrow",
+    "fortified",
+    "ceramic",
+    "moab"
+   ],
+   "composition": "10 MOAB, 15 Ceramic, 10 Fortified Regrow Ceramic",
+   "groups": [
+    "10 MOAB",
+    "15 Ceramic",
+    "10 Fortified Regrow Ceramic"
+   ],
+   "danger": 2,
+   "notes": "10 MOABs."
+  },
+  {
+   "round": 59,
+   "xp": 2430,
+   "cash": 2271.5,
+   "cashPop": 2112.5,
+   "cashBonus": 159,
+   "cumCash": 53764.0,
+   "cumCashFromR3": 53486.0,
+   "rbe": 4605,
+   "popCashMult": 0.5,
+   "threats": [
+    "camo",
+    "lead",
+    "regrow",
+    "fortified",
+    "ceramic"
+   ],
+   "composition": "20 Fortified Camo Ceramic, 50 Camo Regrow Lead, 25 Rainbow",
+   "groups": [
+    "20 Fortified Camo Ceramic",
+    "50 Camo Regrow Lead",
+    "25 Rainbow"
+   ],
+   "danger": 1,
+   "notes": ""
+  },
+  {
+   "round": 60,
+   "xp": 2520,
+   "cash": 922.5,
+   "cashPop": 762.5,
+   "cashBonus": 160,
+   "cumCash": 54686.5,
+   "cumCashFromR3": 54408.5,
+   "rbe": 4824,
+   "popCashMult": 0.5,
+   "threats": [
+    "fortified",
+    "bfb"
+   ],
+   "composition": "1 Fortified BFB",
+   "groups": [
+    "1 Fortified BFB"
+   ],
+   "danger": 2,
+   "notes": "Fortified BFB."
+  },
+  {
+   "round": 61,
+   "xp": 2610,
+   "cash": 1603.0,
+   "cashPop": 1442.0,
+   "cashBonus": 161,
+   "cumCash": 56289.5,
+   "cumCashFromR3": 56011.5,
+   "rbe": 10780,
+   "popCashMult": 0.2,
+   "threats": [
+    "lead",
+    "regrow",
+    "fortified",
+    "moab"
+   ],
+   "composition": "50 Regrow Zebra, 15 MOAB, 15 Fortified Lead",
+   "groups": [
+    "50 Regrow Zebra",
+    "15 MOAB",
+    "15 Fortified Lead"
+   ],
+   "danger": 1,
+   "notes": ""
+  },
+  {
+   "round": 62,
+   "xp": 2700,
+   "cash": 1772.0,
+   "cashPop": 1610.0,
+   "cashBonus": 162,
+   "cumCash": 58061.5,
+   "cumCashFromR3": 57783.5,
+   "rbe": 13748,
+   "popCashMult": 0.2,
+   "threats": [
+    "camo",
+    "lead",
+    "purple",
+    "regrow",
+    "fortified",
+    "moab",
+    "bfb"
+   ],
+   "composition": "250 Purple, 5 Fortified MOAB, 2 BFB, 15 Fortified Camo Regrow Lead",
+   "groups": [
+    "250 Purple",
+    "5 Fortified MOAB",
+    "2 BFB",
+    "15 Fortified Camo Regrow Lead"
+   ],
+   "danger": 2,
+   "notes": "250 Purples + Fortified MOABs + 2 BFBs + Fortified Camo Regrow Leads."
+  },
+  {
+   "round": 63,
+   "xp": 2790,
+   "cash": 2634.0,
+   "cashPop": 2471.0,
+   "cashBonus": 163,
+   "cumCash": 60695.5,
+   "cumCashFromR3": 60417.5,
+   "rbe": 14820,
+   "popCashMult": 0.2,
+   "threats": [
+    "camo",
+    "fortified",
+    "ceramic",
+    "moab"
+   ],
+   "composition": "30 Fortified Ceramic, 40 Ceramic, 40 Camo Ceramic, 5 MOAB",
+   "groups": [
+    "30 Fortified Ceramic",
+    "40 Ceramic",
+    "40 Camo Ceramic",
+    "5 MOAB"
+   ],
+   "danger": 3,
+   "notes": "30 Fortified Ceramics + 40 Ceramics + 40 Camo Ceramics + 5 MOABs."
+  },
+  {
+   "round": 64,
+   "xp": 2880,
+   "cash": 1231.2,
+   "cashPop": 1067.2,
+   "cashBonus": 164,
+   "cumCash": 61926.7,
+   "cumCashFromR3": 61648.7,
+   "rbe": 11464,
+   "popCashMult": 0.2,
+   "threats": [
+    "fortified",
+    "moab",
+    "bfb"
+   ],
+   "composition": "6 Fortified MOAB, 2 BFB",
+   "groups": [
+    "6 Fortified MOAB",
+    "2 BFB"
+   ],
+   "danger": 1,
+   "notes": ""
+  },
+  {
+   "round": 65,
+   "xp": 2970,
+   "cash": 2916.6,
+   "cashPop": 2751.6,
+   "cashBonus": 165,
+   "cumCash": 64843.3,
+   "cumCashFromR3": 64565.3,
+   "rbe": 21050,
+   "popCashMult": 0.2,
+   "threats": [
+    "fortified",
+    "ceramic",
+    "moab",
+    "bfb"
+   ],
+   "composition": "3 BFB, 70 Rainbow, 50 Fortified Ceramic, 3 Fortified MOAB",
+   "groups": [
+    "3 BFB",
+    "70 Rainbow",
+    "50 Fortified Ceramic",
+    "3 Fortified MOAB"
+   ],
+   "danger": 2,
+   "notes": "3 BFBs + 50 Fortified Ceramics + 3 Fortified MOABs."
+  },
+  {
+   "round": 66,
+   "xp": 3060,
+   "cash": 1538.2,
+   "cashPop": 1372.2,
+   "cashBonus": 166,
+   "cumCash": 66381.5,
+   "cumCashFromR3": 66103.5,
+   "rbe": 13188,
+   "popCashMult": 0.2,
+   "threats": [
+    "moab",
+    "bfb"
+   ],
+   "composition": "3 BFB, 6 MOAB",
+   "groups": [
+    "1 BFB",
+    "2 MOAB",
+    "4 MOAB",
+    "2 BFB"
+   ],
+   "danger": 1,
+   "notes": ""
+  },
+  {
+   "round": 67,
+   "xp": 3150,
+   "cash": 1309.0,
+   "cashPop": 1142.0,
+   "cashBonus": 167,
+   "cumCash": 67690.5,
+   "cumCashFromR3": 67412.5,
+   "rbe": 9400,
+   "popCashMult": 0.2,
+   "threats": [
+    "camo",
+    "regrow",
+    "fortified",
+    "ceramic",
+    "moab"
+   ],
+   "composition": "4 Fortified MOAB, 20 Fortified Camo Regrow Ceramic, 6 MOAB",
+   "groups": [
+    "4 Fortified MOAB",
+    "20 Fortified Camo Regrow Ceramic",
+    "6 MOAB"
+   ],
+   "danger": 2,
+   "notes": "20 Fortified Camo Regrow Ceramics."
+  },
+  {
+   "round": 68,
+   "xp": 3240,
+   "cash": 777.8,
+   "cashPop": 609.8,
+   "cashBonus": 168,
+   "cumCash": 68468.3,
+   "cumCashFromR3": 68190.3,
+   "rbe": 7288,
+   "popCashMult": 0.2,
+   "threats": [
+    "fortified",
+    "moab",
+    "bfb"
+   ],
+   "composition": "4 MOAB, 1 Fortified BFB",
+   "groups": [
+    "4 MOAB",
+    "1 Fortified BFB"
+   ],
+   "danger": 1,
+   "notes": ""
+  },
+  {
+   "round": 69,
+   "xp": 3330,
+   "cash": 1295.0,
+   "cashPop": 1126.0,
+   "cashBonus": 169,
+   "cumCash": 69763.3,
+   "cumCashFromR3": 69485.3,
+   "rbe": 6080,
+   "popCashMult": 0.2,
+   "threats": [
+    "camo",
+    "purple",
+    "regrow",
+    "ceramic"
+   ],
+   "composition": "40 Camo Regrow Purple, 40 Camo Regrow Black, 50 Camo Ceramic",
+   "groups": [
+    "40 Camo Regrow Purple",
+    "40 Camo Regrow Black",
+    "50 Camo Ceramic"
+   ],
+   "danger": 2,
+   "notes": "All-camo round: Camo Regrow Purples/Blacks + 50 Camo Ceramics."
+  },
+  {
+   "round": 70,
+   "xp": 3420,
+   "cash": 2507.2,
+   "cashPop": 2337.2,
+   "cashBonus": 170,
+   "cumCash": 72270.5,
+   "cumCashFromR3": 71992.5,
+   "rbe": 14536,
+   "popCashMult": 0.2,
+   "threats": [
+    "fortified",
+    "moab"
+   ],
+   "composition": "200 Rainbow, 6 Fortified MOAB",
+   "groups": [
+    "200 Rainbow",
+    "6 Fortified MOAB"
+   ],
+   "danger": 1,
+   "notes": ""
+  },
+  {
+   "round": 71,
+   "xp": 3510,
+   "cash": 1503.0,
+   "cashPop": 1332.0,
+   "cashBonus": 171,
+   "cumCash": 73773.5,
+   "cumCashFromR3": 73495.5,
+   "rbe": 11980,
+   "popCashMult": 0.2,
+   "threats": [
+    "regrow",
+    "fortified",
+    "ceramic",
+    "moab"
+   ],
+   "composition": "30 Fortified Regrow Ceramic, 10 Fortified MOAB",
+   "groups": [
+    "30 Fortified Regrow Ceramic",
+    "10 Fortified MOAB"
+   ],
+   "danger": 1,
+   "notes": ""
+  },
+  {
+   "round": 72,
+   "xp": 3600,
+   "cash": 1504.0,
+   "cashPop": 1332.0,
+   "cashBonus": 172,
+   "cumCash": 75277.5,
+   "cumCashFromR3": 74999.5,
+   "rbe": 12320,
+   "popCashMult": 0.2,
+   "threats": [
+    "fortified",
+    "ceramic",
+    "bfb"
+   ],
+   "composition": "38 Fortified Ceramic, 1 BFB, 1 Fortified BFB",
+   "groups": [
+    "38 Fortified Ceramic",
+    "1 BFB",
+    "1 Fortified BFB"
+   ],
+   "danger": 1,
+   "notes": ""
+  },
+  {
+   "round": 73,
+   "xp": 3690,
+   "cash": 1392.6,
+   "cashPop": 1219.6,
+   "cashBonus": 173,
+   "cumCash": 76670.1,
+   "cumCashFromR3": 76392.1,
+   "rbe": 16496,
+   "popCashMult": 0.2,
+   "threats": [
+    "fortified",
+    "moab",
+    "bfb"
+   ],
+   "composition": "8 Fortified MOAB, 2 Fortified BFB",
+   "groups": [
+    "7 Fortified MOAB",
+    "2 Fortified BFB",
+    "1 Fortified MOAB"
+   ],
+   "danger": 1,
+   "notes": ""
+  },
+  {
+   "round": 74,
+   "xp": 3780,
+   "cash": 1174.0,
+   "cashPop": 1000.0,
+   "cashBonus": 174,
+   "cumCash": 77844.1,
+   "cumCashFromR3": 77566.1,
+   "rbe": 8774,
+   "popCashMult": 0.2,
+   "threats": [
+    "camo",
+    "regrow",
+    "fortified",
+    "ceramic",
+    "bfb"
+   ],
+   "composition": "100 Regrow Black, 25 Fortified Camo Regrow Ceramic, 1 Fortified BFB",
+   "groups": [
+    "100 Regrow Black",
+    "25 Fortified Camo Regrow Ceramic",
+    "1 Fortified BFB"
+   ],
+   "danger": 1,
+   "notes": ""
+  },
+  {
+   "round": 75,
+   "xp": 3870,
+   "cash": 3214.2,
+   "cashPop": 3039.2,
+   "cashBonus": 175,
+   "cumCash": 81058.3,
+   "cumCashFromR3": 80780.3,
+   "rbe": 33570,
+   "popCashMult": 0.2,
+   "threats": [
+    "lead",
+    "fortified",
+    "moab",
+    "bfb"
+   ],
+   "composition": "6 BFB, 50 Lead, 14 Fortified Lead, 4 Fortified MOAB, 2 Fortified BFB",
+   "groups": [
+    "1 BFB",
+    "50 Lead",
+    "5 BFB",
+    "14 Fortified Lead",
+    "4 Fortified MOAB",
+    "2 Fortified BFB"
+   ],
+   "danger": 3,
+   "notes": "Bloonswiki calls it the hardest round before freeplay: 6 BFBs, 2 Fortified BFBs, 4 Fortified MOABs screened by 64 Leads."
+  },
+  {
+   "round": 76,
+   "xp": 3960,
+   "cash": 3226.0,
+   "cashPop": 3050.0,
+   "cashBonus": 176,
+   "cumCash": 84284.3,
+   "cumCashFromR3": 84006.3,
+   "rbe": 31640,
+   "popCashMult": 0.2,
+   "threats": [
+    "bfb"
+   ],
+   "composition": "10 BFB",
+   "groups": [
+    "10 BFB"
+   ],
+   "danger": 2,
+   "notes": "10 BFBs."
+  },
+  {
+   "round": 77,
+   "xp": 4050,
+   "cash": 2540.2,
+   "cashPop": 2363.2,
+   "cashBonus": 177,
+   "cumCash": 86824.5,
+   "cumCashFromR3": 86546.5,
+   "rbe": 33536,
+   "popCashMult": 0.2,
+   "threats": [
+    "fortified",
+    "moab",
+    "bfb"
+   ],
+   "composition": "11 Fortified MOAB, 5 Fortified BFB",
+   "groups": [
+    "11 Fortified MOAB",
+    "5 Fortified BFB"
+   ],
+   "danger": 1,
+   "notes": ""
+  },
+  {
+   "round": 78,
+   "xp": 4140,
+   "cash": 3857.0,
+   "cashPop": 3679.0,
+   "cashBonus": 178,
+   "cumCash": 90681.5,
+   "cumCashFromR3": 90403.5,
+   "rbe": 23482,
+   "popCashMult": 0.2,
+   "threats": [
+    "camo",
+    "purple",
+    "fortified",
+    "ceramic",
+    "bfb"
+   ],
+   "composition": "150 Zebra, 60 Fortified Ceramic, 1 Fortified BFB, 80 Purple, 72 Camo Ceramic",
+   "groups": [
+    "150 Zebra",
+    "60 Fortified Ceramic",
+    "1 Fortified BFB",
+    "80 Purple",
+    "72 Camo Ceramic"
+   ],
+   "danger": 2,
+   "notes": "Fortified Ceramics + 72 Camo Ceramics + Fortified BFB."
+  },
+  {
+   "round": 79,
+   "xp": 4230,
+   "cash": 7319.2,
+   "cashPop": 7140.2,
+   "cashBonus": 179,
+   "cumCash": 98000.7,
+   "cumCashFromR3": 97722.7,
+   "rbe": 59452,
+   "popCashMult": 0.2,
+   "threats": [
+    "camo",
+    "fortified",
+    "bfb",
+    "zomg"
+   ],
+   "composition": "500 Camo Rainbow, 4 Fortified BFB, 1 ZOMG",
+   "groups": [
+    "500 Camo Rainbow",
+    "4 Fortified BFB",
+    "1 ZOMG"
+   ],
+   "danger": 3,
+   "notes": "First in this round set: zomg. FIRST ZOMG + 4 Fortified BFBs + 500 Camo Rainbows."
+  },
+  {
+   "round": 80,
+   "xp": 4320,
+   "cash": 2620.4,
+   "cashPop": 2440.4,
+   "cashBonus": 180,
+   "cumCash": 100621.1,
+   "cumCashFromR3": 100343.1,
+   "rbe": 33312,
+   "popCashMult": 0.2,
+   "threats": [
+    "zomg"
+   ],
+   "composition": "2 ZOMG",
+   "groups": [
+    "2 ZOMG"
+   ],
+   "danger": 2,
+   "notes": "2 ZOMGs. ABR's final round (win)."
+  },
+  {
+   "round": 81,
+   "xp": 4410,
+   "cash": 6280.0,
+   "cashPop": 6099.0,
+   "cashBonus": 181,
+   "cumCash": 106901.1,
+   "cumCashFromR3": 106623.1,
+   "rbe": 57670,
+   "popCashMult": 0.2,
+   "threats": [
+    "fortified",
+    "moab",
+    "bfb"
+   ],
+   "composition": "15 BFB, 20 Fortified MOAB",
+   "groups": [
+    "15 BFB",
+    "20 Fortified MOAB"
+   ],
+   "danger": 2,
+   "notes": "Optional freeplay from here (Super Ceramics + blimp ramp)."
+  },
+  {
+   "round": 82,
+   "xp": 4500,
+   "cash": 8417.2,
+   "cashPop": 8235.2,
+   "cashBonus": 182,
+   "cumCash": 115318.3,
+   "cumCashFromR3": 115040.3,
+   "rbe": 95816,
+   "popCashMult": 0.2,
+   "threats": [
+    "fortified",
+    "bfb",
+    "zomg"
+   ],
+   "composition": "15 BFB, 8 Fortified BFB, 1 ZOMG",
+   "groups": [
+    "15 BFB",
+    "8 Fortified BFB",
+    "1 ZOMG"
+   ],
+   "danger": 2,
+   "notes": ""
+  },
+  {
+   "round": 83,
+   "xp": 4590,
+   "cash": 3987.0,
+   "cashPop": 3804.0,
+   "cashBonus": 183,
+   "cumCash": 119305.3,
+   "cumCashFromR3": 119027.3,
+   "rbe": 29280,
+   "popCashMult": 0.2,
+   "threats": [
+    "camo",
+    "regrow",
+    "fortified",
+    "ceramic",
+    "moab"
+   ],
+   "composition": "40 Camo Ceramic, 40 Regrow Ceramic, 40 Fortified Camo Regrow Ceramic, 20 Fortified MOAB",
+   "groups": [
+    "40 Camo Ceramic",
+    "40 Regrow Ceramic",
+    "40 Fortified Camo Regrow Ceramic",
+    "20 Fortified MOAB"
+   ],
+   "danger": 2,
+   "notes": ""
+  },
+  {
+   "round": 84,
+   "xp": 4680,
+   "cash": 8569.0,
+   "cashPop": 8385.0,
+   "cashBonus": 184,
+   "cumCash": 127874.3,
+   "cumCashFromR3": 127596.3,
+   "rbe": 103720,
+   "popCashMult": 0.2,
+   "threats": [
+    "fortified",
+    "moab",
+    "bfb"
+   ],
+   "composition": "50 MOAB, 15 Fortified BFB",
+   "groups": [
+    "50 MOAB",
+    "15 Fortified BFB"
+   ],
+   "danger": 2,
+   "notes": ""
+  },
+  {
+   "round": 85,
+   "xp": 4770,
+   "cash": 3845.6,
+   "cashPop": 3660.6,
+   "cashBonus": 185,
+   "cumCash": 131719.9,
+   "cumCashFromR3": 131441.9,
+   "rbe": 46056,
+   "popCashMult": 0.2,
+   "threats": [
+    "zomg"
+   ],
+   "composition": "3 ZOMG",
+   "groups": [
+    "3 ZOMG"
+   ],
+   "danger": 2,
+   "notes": ""
+  },
+  {
+   "round": 86,
+   "xp": 4860,
+   "cash": 1406.0,
+   "cashPop": 1220.0,
+   "cashBonus": 186,
+   "cumCash": 133125.9,
+   "cumCashFromR3": 132847.9,
+   "rbe": 43264,
+   "popCashMult": 0.1,
+   "threats": [
+    "fortified",
+    "bfb"
+   ],
+   "composition": "8 Fortified BFB",
+   "groups": [
+    "8 Fortified BFB"
+   ],
+   "danger": 2,
+   "notes": ""
+  },
+  {
+   "round": 87,
+   "xp": 4950,
+   "cash": 3237.5,
+   "cashPop": 3050.5,
+   "cashBonus": 187,
+   "cumCash": 136363.4,
+   "cumCashFromR3": 136085.4,
+   "rbe": 78760,
+   "popCashMult": 0.1,
+   "threats": [
+    "zomg"
+   ],
+   "composition": "5 ZOMG",
+   "groups": [
+    "5 ZOMG"
+   ],
+   "danger": 2,
+   "notes": ""
+  },
+  {
+   "round": 88,
+   "xp": 5040,
+   "cash": 2703.8,
+   "cashPop": 2515.8,
+   "cashBonus": 188,
+   "cumCash": 139067.2,
+   "cumCashFromR3": 138789.2,
+   "rbe": 50784,
+   "popCashMult": 0.1,
+   "threats": [
+    "camo",
+    "lead",
+    "fortified",
+    "moab",
+    "bfb",
+    "ddt"
+   ],
+   "composition": "12 BFB, 15 Fortified MOAB, 3 DDT",
+   "groups": [
+    "12 BFB",
+    "15 Fortified MOAB",
+    "3 DDT"
+   ],
+   "danger": 2,
+   "notes": "First in this round set: ddt. First DDTs (3)."
+  },
+  {
+   "round": 89,
+   "xp": 5130,
+   "cash": 2590.5,
+   "cashPop": 2401.5,
+   "cashBonus": 189,
+   "cumCash": 141657.7,
+   "cumCashFromR3": 141379.7,
+   "rbe": 81816,
+   "popCashMult": 0.1,
+   "threats": [
+    "fortified",
+    "moab",
+    "bfb"
+   ],
+   "composition": "15 Fortified MOAB, 12 Fortified BFB",
+   "groups": [
+    "15 Fortified MOAB",
+    "12 Fortified BFB"
+   ],
+   "danger": 2,
+   "notes": ""
+  },
+  {
+   "round": 90,
+   "xp": 5220,
+   "cash": 817.4,
+   "cashPop": 627.4,
+   "cashBonus": 190,
+   "cumCash": 142475.1,
+   "cumCashFromR3": 142197.1,
+   "rbe": 9408,
+   "popCashMult": 0.1,
+   "threats": [
+    "camo",
+    "lead",
+    "regrow",
+    "fortified",
+    "ceramic",
+    "ddt"
+   ],
+   "composition": "50 Fortified Regrow Ceramic, 4 DDT",
+   "groups": [
+    "50 Fortified Regrow Ceramic",
+    "4 DDT"
+   ],
+   "danger": 2,
+   "notes": ""
+  },
+  {
+   "round": 91,
+   "xp": 5310,
+   "cash": 3428.5,
+   "cashPop": 3237.5,
+   "cashBonus": 191,
+   "cumCash": 145903.6,
+   "cumCashFromR3": 145625.6,
+   "rbe": 98420,
+   "popCashMult": 0.1,
+   "threats": [
+    "fortified",
+    "ceramic",
+    "bfb"
+   ],
+   "composition": "100 Fortified Ceramic, 15 Fortified BFB",
+   "groups": [
+    "100 Fortified Ceramic",
+    "15 Fortified BFB"
+   ],
+   "danger": 2,
+   "notes": ""
+  },
+  {
+   "round": 92,
+   "xp": 5400,
+   "cash": 4689.8,
+   "cashPop": 4497.8,
+   "cashBonus": 192,
+   "cumCash": 150593.4,
+   "cumCashFromR3": 150315.4,
+   "rbe": 120480,
+   "popCashMult": 0.1,
+   "threats": [
+    "camo",
+    "lead",
+    "fortified",
+    "moab",
+    "zomg",
+    "ddt"
+   ],
+   "composition": "50 Fortified MOAB, 4 ZOMG, 4 DDT",
+   "groups": [
+    "50 Fortified MOAB",
+    "4 ZOMG",
+    "4 DDT"
+   ],
+   "danger": 2,
+   "notes": ""
+  },
+  {
+   "round": 93,
+   "xp": 5490,
+   "cash": 3052.2,
+   "cashPop": 2859.2,
+   "cashBonus": 193,
+   "cumCash": 153645.6,
+   "cumCashFromR3": 153367.6,
+   "rbe": 109716,
+   "popCashMult": 0.1,
+   "threats": [
+    "camo",
+    "lead",
+    "fortified",
+    "bfb",
+    "ddt"
+   ],
+   "composition": "17 Fortified BFB, 7 Fortified DDT",
+   "groups": [
+    "17 Fortified BFB",
+    "7 Fortified DDT"
+   ],
+   "danger": 2,
+   "notes": ""
+  },
+  {
+   "round": 94,
+   "xp": 5580,
+   "cash": 8887.3,
+   "cashPop": 8693.3,
+   "cashBonus": 194,
+   "cumCash": 162532.9,
+   "cumCashFromR3": 162254.9,
+   "rbe": 212416,
+   "popCashMult": 0.1,
+   "threats": [
+    "bfb",
+    "zomg"
+   ],
+   "composition": "25 BFB, 8 ZOMG",
+   "groups": [
+    "25 BFB",
+    "8 ZOMG"
+   ],
+   "danger": 2,
+   "notes": ""
+  },
+  {
+   "round": 95,
+   "xp": 5670,
+   "cash": 2781.0,
+   "cashPop": 2586.0,
+   "cashBonus": 195,
+   "cumCash": 165313.9,
+   "cumCashFromR3": 165035.9,
+   "rbe": 57720,
+   "popCashMult": 0.1,
+   "threats": [
+    "camo",
+    "lead",
+    "purple",
+    "regrow",
+    "fortified",
+    "moab",
+    "ddt"
+   ],
+   "composition": "500 Camo Regrow Purple, 30 DDT, 30 Fortified MOAB",
+   "groups": [
+    "500 Camo Regrow Purple",
+    "30 DDT",
+    "30 Fortified MOAB"
+   ],
+   "danger": 2,
+   "notes": ""
+  },
+  {
+   "round": 96,
+   "xp": 5760,
+   "cash": 11100.1,
+   "cashPop": 10904.1,
+   "cashBonus": 196,
+   "cumCash": 176414.0,
+   "cumCashFromR3": 176136.0,
+   "rbe": 342032,
+   "popCashMult": 0.1,
+   "threats": [
+    "camo",
+    "lead",
+    "fortified",
+    "moab",
+    "bfb",
+    "zomg",
+    "ddt"
+   ],
+   "composition": "20 Fortified BFB, 20 Fortified MOAB, 11 ZOMG, 10 DDT",
+   "groups": [
+    "10 Fortified BFB",
+    "20 Fortified MOAB",
+    "5 ZOMG",
+    "10 DDT",
+    "10 Fortified BFB",
+    "6 ZOMG"
+   ],
+   "danger": 2,
+   "notes": ""
+  },
+  {
+   "round": 97,
+   "xp": 5850,
+   "cash": 1722.0,
+   "cashPop": 1525.0,
+   "cashBonus": 197,
+   "cumCash": 178136.0,
+   "cumCashFromR3": 177858.0,
+   "rbe": 82656,
+   "popCashMult": 0.1,
+   "threats": [
+    "camo",
+    "lead",
+    "fortified",
+    "zomg",
+    "ddt"
+   ],
+   "composition": "2 Fortified ZOMG, 8 Fortified DDT",
+   "groups": [
+    "2 Fortified ZOMG",
+    "8 Fortified DDT"
+   ],
+   "danger": 2,
+   "notes": ""
+  },
+  {
+   "round": 98,
+   "xp": 5940,
+   "cash": 9959.1,
+   "cashPop": 9761.1,
+   "cashBonus": 198,
+   "cumCash": 188095.1,
+   "cumCashFromR3": 187817.1,
+   "rbe": 320032,
+   "popCashMult": 0.1,
+   "threats": [
+    "fortified",
+    "bfb",
+    "zomg"
+   ],
+   "composition": "20 Fortified BFB, 11 ZOMG",
+   "groups": [
+    "20 Fortified BFB",
+    "11 ZOMG"
+   ],
+   "danger": 2,
+   "notes": ""
+  },
+  {
+   "round": 99,
+   "xp": 6030,
+   "cash": 3019.5,
+   "cashPop": 2820.5,
+   "cashBonus": 199,
+   "cumCash": 191114.6,
+   "cumCashFromR3": 190836.6,
+   "rbe": 97360,
+   "popCashMult": 0.1,
+   "threats": [
+    "camo",
+    "lead",
+    "fortified",
+    "moab",
+    "ddt",
+    "bad"
+   ],
+   "composition": "30 MOAB, 9 Fortified DDT, 1 BAD",
+   "groups": [
+    "30 MOAB",
+    "9 Fortified DDT",
+    "1 BAD"
+   ],
+   "danger": 3,
+   "notes": "First in this round set: bad. Includes a BAD."
+  },
+  {
+   "round": 100,
+   "xp": 6120,
+   "cash": 1534.6,
+   "cashPop": 1334.6,
+   "cashBonus": 200,
+   "cumCash": 192649.2,
+   "cumCashFromR3": 192371.2,
+   "rbe": 133280,
+   "popCashMult": 0.1,
+   "threats": [
+    "fortified",
+    "bad"
+   ],
+   "composition": "1 Fortified BAD",
+   "groups": [
+    "1 Fortified BAD"
+   ],
+   "danger": 3,
+   "notes": "Fortified BAD."
+  },
+  {
+   "round": 101,
+   "xp": 6210,
+   "cash": 2035.0,
+   "cashPop": 1834.0,
+   "cashBonus": 201,
+   "cumCash": 194684.2,
+   "cumCashFromR3": 194406.2,
+   "rbe": 73980,
+   "popCashMult": 0.08,
+   "threats": [
+    "camo",
+    "lead",
+    "purple",
+    "fortified",
+    "ceramic",
+    "bfb"
+   ],
+   "composition": "225 Camo Purple, 225 Fortified Lead, 10 Fortified BFB, 50 Fortified Ceramic",
+   "groups": [
+    "125 Camo Purple",
+    "125 Fortified Lead",
+    "10 Fortified BFB",
+    "50 Fortified Ceramic",
+    "100 Camo Purple",
+    "100 Fortified Lead"
+   ],
+   "danger": 2,
+   "notes": "",
+   "cashPopWikiTable": 1146.25
+  },
+  {
+   "round": 102,
+   "xp": 6300,
+   "cash": 5997.2,
+   "cashPop": 5795.2,
+   "cashBonus": 202,
+   "cumCash": 200681.4,
+   "cumCashFromR3": 200403.4,
+   "rbe": 219680,
+   "popCashMult": 0.08,
+   "threats": [
+    "camo",
+    "lead",
+    "zomg",
+    "ddt"
+   ],
+   "composition": "10 ZOMG, 30 DDT",
+   "groups": [
+    "1 ZOMG",
+    "1 ZOMG",
+    "18 DDT",
+    "3 ZOMG",
+    "2 ZOMG",
+    "12 DDT",
+    "3 ZOMG"
+   ],
+   "danger": 2,
+   "notes": "",
+   "cashPopWikiTable": 3622.0
+  },
+  {
+   "round": 103,
+   "xp": 6390,
+   "cash": 10204.44,
+   "cashPop": 10001.44,
+   "cashBonus": 203,
+   "cumCash": 210885.84,
+   "cumCashFromR3": 210607.84,
+   "rbe": 538256,
+   "popCashMult": 0.08,
+   "threats": [
+    "camo",
+    "lead",
+    "fortified",
+    "moab",
+    "zomg",
+    "ddt"
+   ],
+   "composition": "10 Fortified ZOMG, 100 MOAB, 18 Fortified DDT, 50 Fortified MOAB",
+   "groups": [
+    "10 Fortified ZOMG",
+    "100 MOAB",
+    "6 Fortified DDT",
+    "50 Fortified MOAB",
+    "6 Fortified DDT",
+    "6 Fortified DDT"
+   ],
+   "danger": 3,
+   "notes": "",
+   "cashPopWikiTable": 6250.9
+  },
+  {
+   "round": 104,
+   "xp": 6480,
+   "cash": 13632.0,
+   "cashPop": 13428.0,
+   "cashBonus": 204,
+   "cumCash": 224517.84,
+   "cumCashFromR3": 224239.84,
+   "rbe": 447744,
+   "popCashMult": 0.08,
+   "threats": [
+    "lead",
+    "purple",
+    "fortified",
+    "ceramic",
+    "moab",
+    "bfb"
+   ],
+   "composition": "75 MOAB, 50 BFB, 100 Fortified Lead, 100 Purple, 100 Ceramic, 28 Fortified BFB, 25 Fortified MOAB",
+   "groups": [
+    "75 MOAB",
+    "20 BFB",
+    "50 Fortified Lead",
+    "16 BFB",
+    "50 Purple",
+    "14 BFB",
+    "50 Ceramic",
+    "10 Fortified BFB",
+    "50 Fortified Lead",
+    "8 Fortified BFB",
+    "50 Purple",
+    "10 Fortified BFB",
+    "50 Ceramic",
+    "25 Fortified MOAB"
+   ],
+   "danger": 3,
+   "notes": "",
+   "cashPopWikiTable": 8392.5
+  },
+  {
+   "round": 105,
+   "xp": 6570,
+   "cash": 5943.0,
+   "cashPop": 5738.0,
+   "cashBonus": 205,
+   "cumCash": 230460.84,
+   "cumCashFromR3": 230182.84,
+   "rbe": 199406,
+   "popCashMult": 0.08,
+   "threats": [
+    "lead",
+    "fortified",
+    "ceramic",
+    "bfb"
+   ],
+   "composition": "100 Ceramic, 25 Fortified Lead, 22 Fortified BFB, 300 Fortified Ceramic",
+   "groups": [
+    "100 Ceramic",
+    "25 Fortified Lead",
+    "22 Fortified BFB",
+    "300 Fortified Ceramic"
+   ],
+   "danger": 2,
+   "notes": "",
+   "cashPopWikiTable": 3586.25
+  },
+  {
+   "round": 106,
+   "xp": 6660,
+   "cash": 4108.32,
+   "cashPop": 3902.32,
+   "cashBonus": 206,
+   "cumCash": 234569.16,
+   "cumCashFromR3": 234291.16,
+   "rbe": 179136,
+   "popCashMult": 0.08,
+   "threats": [
+    "camo",
+    "lead",
+    "fortified",
+    "ddt",
+    "bad"
+   ],
+   "composition": "81 DDT, 1 BAD, 12 Fortified DDT",
+   "groups": [
+    "21 DDT",
+    "1 BAD",
+    "18 DDT",
+    "15 DDT",
+    "12 DDT",
+    "9 DDT",
+    "6 DDT",
+    "12 Fortified DDT"
+   ],
+   "danger": 3,
+   "notes": "",
+   "cashPopWikiTable": 2438.95
+  },
+  {
+   "round": 107,
+   "xp": 6750,
+   "cash": 5903.08,
+   "cashPop": 5696.08,
+   "cashBonus": 207,
+   "cumCash": 240472.24,
+   "cumCashFromR3": 240194.24,
+   "rbe": 480386,
+   "popCashMult": 0.08,
+   "threats": [
+    "camo",
+    "lead",
+    "purple",
+    "fortified",
+    "zomg",
+    "ddt"
+   ],
+   "composition": "25 Fortified DDT, 111 Camo Purple, 10 Fortified ZOMG",
+   "groups": [
+    "25 Fortified DDT",
+    "111 Camo Purple",
+    "10 Fortified ZOMG"
+   ],
+   "danger": 3,
+   "notes": "",
+   "cashPopWikiTable": 3560.05
+  },
+  {
+   "round": 108,
+   "xp": 6840,
+   "cash": 12410.0,
+   "cashPop": 12202.0,
+   "cashBonus": 208,
+   "cumCash": 252882.24,
+   "cumCashFromR3": 252604.24,
+   "rbe": 820880,
+   "popCashMult": 0.08,
+   "threats": [
+    "fortified",
+    "zomg"
+   ],
+   "composition": "13 ZOMG, 12 Fortified ZOMG",
+   "groups": [
+    "13 ZOMG",
+    "12 Fortified ZOMG"
+   ],
+   "danger": 3,
+   "notes": "",
+   "cashPopWikiTable": 7626.25
+  },
+  {
+   "round": 109,
+   "xp": 6930,
+   "cash": 17603.0,
+   "cashPop": 17394.0,
+   "cashBonus": 209,
+   "cumCash": 270485.24,
+   "cumCashFromR3": 270207.24,
+   "rbe": 833580,
+   "popCashMult": 0.08,
+   "threats": [
+    "camo",
+    "lead",
+    "purple",
+    "fortified",
+    "moab",
+    "bfb",
+    "zomg",
+    "ddt"
+   ],
+   "composition": "30 ZOMG, 15 Purple, 15 Fortified BFB, 15 DDT, 15 Fortified MOAB",
+   "groups": [
+    "15 ZOMG",
+    "15 Purple",
+    "15 Fortified BFB",
+    "15 DDT",
+    "15 ZOMG",
+    "15 Fortified MOAB"
+   ],
+   "danger": 3,
+   "notes": "",
+   "cashPopWikiTable": 10871.25
+  },
+  {
+   "round": 110,
+   "xp": 7020,
+   "cash": 6370.16,
+   "cashPop": 6160.16,
+   "cashBonus": 210,
+   "cumCash": 276855.4,
+   "cumCashFromR3": 276577.4,
+   "rbe": 242864,
+   "popCashMult": 0.08,
+   "threats": [
+    "camo",
+    "lead",
+    "fortified",
+    "bfb",
+    "ddt"
+   ],
+   "composition": "40 BFB, 42 Fortified DDT",
+   "groups": [
+    "40 BFB",
+    "12 Fortified DDT",
+    "12 Fortified DDT",
+    "9 Fortified DDT",
+    "9 Fortified DDT"
+   ],
+   "danger": 3,
+   "notes": "",
+   "cashPopWikiTable": 3850.1
+  },
+  {
+   "round": 111,
+   "xp": 7110,
+   "cash": 15859.24,
+   "cashPop": 15648.24,
+   "cashBonus": 211,
+   "cumCash": 292714.64,
+   "cumCashFromR3": 292436.64,
+   "rbe": 960336,
+   "popCashMult": 0.08,
+   "threats": [
+    "camo",
+    "lead",
+    "fortified",
+    "zomg",
+    "ddt"
+   ],
+   "composition": "21 ZOMG, 9 Fortified ZOMG, 33 DDT",
+   "groups": [
+    "21 ZOMG",
+    "9 Fortified ZOMG",
+    "33 DDT"
+   ],
+   "danger": 3,
+   "notes": "",
+   "cashPopWikiTable": 9780.15
+  },
+  {
+   "round": 112,
+   "xp": 7200,
+   "cash": 3383.76,
+   "cashPop": 3171.76,
+   "cashBonus": 212,
+   "cumCash": 296098.4,
+   "cumCashFromR3": 295820.4,
+   "rbe": 232848,
+   "popCashMult": 0.08,
+   "threats": [
+    "camo",
+    "lead",
+    "fortified",
+    "bfb",
+    "ddt",
+    "bad"
+   ],
+   "composition": "12 Fortified BFB, 21 Fortified DDT, 1 BAD",
+   "groups": [
+    "12 Fortified BFB",
+    "21 Fortified DDT",
+    "1 BAD"
+   ],
+   "danger": 3,
+   "notes": "",
+   "cashPopWikiTable": 1982.35
+  },
+  {
+   "round": 113,
+   "xp": 7290,
+   "cash": 4815.4,
+   "cashPop": 4602.4,
+   "cashBonus": 213,
+   "cumCash": 300913.8,
+   "cumCashFromR3": 300635.8,
+   "rbe": 238792,
+   "popCashMult": 0.08,
+   "threats": [
+    "camo",
+    "fortified",
+    "ceramic",
+    "moab",
+    "bfb"
+   ],
+   "composition": "50 Fortified MOAB, 20 Fortified BFB, 42 Camo Ceramic, 42 Fortified Ceramic",
+   "groups": [
+    "50 Fortified MOAB",
+    "20 Fortified BFB",
+    "42 Camo Ceramic",
+    "42 Fortified Ceramic"
+   ],
+   "danger": 2,
+   "notes": "",
+   "cashPopWikiTable": 2876.5
+  },
+  {
+   "round": 114,
+   "xp": 7380,
+   "cash": 8844.64,
+   "cashPop": 8630.64,
+   "cashBonus": 214,
+   "cumCash": 309758.44,
+   "cumCashFromR3": 309480.44,
+   "rbe": 682496,
+   "popCashMult": 0.08,
+   "threats": [
+    "camo",
+    "lead",
+    "fortified",
+    "moab",
+    "bfb",
+    "zomg",
+    "ddt"
+   ],
+   "composition": "15 Fortified DDT, 60 Fortified MOAB, 20 Fortified BFB, 8 Fortified ZOMG",
+   "groups": [
+    "9 Fortified DDT",
+    "36 Fortified MOAB",
+    "6 Fortified DDT",
+    "24 Fortified MOAB",
+    "12 Fortified BFB",
+    "8 Fortified BFB",
+    "5 Fortified ZOMG",
+    "3 Fortified ZOMG"
+   ],
+   "danger": 3,
+   "notes": "",
+   "cashPopWikiTable": 5394.15
+  },
+  {
+   "round": 115,
+   "xp": 7470,
+   "cash": 15341.88,
+   "cashPop": 15126.88,
+   "cashBonus": 215,
+   "cumCash": 325100.32,
+   "cumCashFromR3": 324822.32,
+   "rbe": 640162,
+   "popCashMult": 0.08,
+   "threats": [
+    "camo",
+    "lead",
+    "moab",
+    "bfb",
+    "zomg",
+    "ddt"
+   ],
+   "composition": "30 DDT, 16 ZOMG, 30 BFB, 90 MOAB",
+   "groups": [
+    "18 DDT",
+    "6 ZOMG",
+    "12 DDT",
+    "12 BFB",
+    "10 ZOMG",
+    "18 BFB",
+    "36 MOAB",
+    "54 MOAB"
+   ],
+   "danger": 3,
+   "notes": "",
+   "cashPopWikiTable": 9454.3
+  },
+  {
+   "round": 116,
+   "xp": 7560,
+   "cash": 10413.28,
+   "cashPop": 10197.28,
+   "cashBonus": 216,
+   "cumCash": 335513.6,
+   "cumCashFromR3": 335235.6,
+   "rbe": 503016,
+   "popCashMult": 0.08,
+   "threats": [
+    "camo",
+    "purple",
+    "bfb",
+    "zomg"
+   ],
+   "composition": "16 ZOMG, 18 BFB, 400 Camo Purple",
+   "groups": [
+    "16 ZOMG",
+    "18 BFB",
+    "100 Camo Purple",
+    "100 Camo Purple",
+    "200 Camo Purple"
+   ],
+   "danger": 3,
+   "notes": "",
+   "cashPopWikiTable": 6373.3
+  },
+  {
+   "round": 117,
+   "xp": 7650,
+   "cash": 3488.6,
+   "cashPop": 3271.6,
+   "cashBonus": 217,
+   "cumCash": 339002.2,
+   "cumCashFromR3": 338724.2,
+   "rbe": 105260,
+   "popCashMult": 0.08,
+   "threats": [
+    "camo",
+    "lead",
+    "fortified",
+    "ceramic",
+    "ddt"
+   ],
+   "composition": "250 Fortified Camo Ceramic, 27 DDT, 18 Fortified DDT",
+   "groups": [
+    "250 Fortified Camo Ceramic",
+    "27 DDT",
+    "18 Fortified DDT"
+   ],
+   "danger": 2,
+   "notes": "",
+   "cashPopWikiTable": 2044.75
+  },
+  {
+   "round": 118,
+   "xp": 7740,
+   "cash": 8057.04,
+   "cashPop": 7839.04,
+   "cashBonus": 218,
+   "cumCash": 347059.24,
+   "cumCashFromR3": 346781.24,
+   "rbe": 776544,
+   "popCashMult": 0.08,
+   "threats": [
+    "fortified",
+    "moab",
+    "zomg",
+    "bad"
+   ],
+   "composition": "12 Fortified ZOMG, 30 MOAB, 1 BAD",
+   "groups": [
+    "12 Fortified ZOMG",
+    "30 MOAB",
+    "1 BAD"
+   ],
+   "danger": 3,
+   "notes": "",
+   "cashPopWikiTable": 4899.4
+  },
+  {
+   "round": 119,
+   "xp": 7830,
+   "cash": 8271.48,
+   "cashPop": 8052.48,
+   "cashBonus": 219,
+   "cumCash": 355330.72,
+   "cumCashFromR3": 355052.72,
+   "rbe": 806328,
+   "popCashMult": 0.08,
+   "threats": [
+    "fortified",
+    "moab",
+    "bfb",
+    "zomg"
+   ],
+   "composition": "12 Fortified ZOMG, 12 Fortified BFB, 24 Fortified MOAB",
+   "groups": [
+    "12 Fortified ZOMG",
+    "12 Fortified BFB",
+    "24 Fortified MOAB"
+   ],
+   "danger": 3,
+   "notes": "",
+   "cashPopWikiTable": 5032.8
+  },
+  {
+   "round": 120,
+   "xp": 7920,
+   "cash": 3423.04,
+   "cashPop": 3203.04,
+   "cashBonus": 220,
+   "cumCash": 358753.76,
+   "cumCashFromR3": 358475.76,
+   "rbe": 432480,
+   "popCashMult": 0.08,
+   "threats": [
+    "fortified",
+    "bad"
+   ],
+   "composition": "2 BAD, 1 Fortified BAD",
+   "groups": [
+    "2 BAD",
+    "1 Fortified BAD"
+   ],
+   "danger": 3,
+   "notes": "",
+   "cashPopWikiTable": 2001.9
+  },
+  {
+   "round": 121,
+   "xp": 8010,
+   "cash": 5367.8,
+   "cashPop": 5146.8,
+   "cashBonus": 221,
+   "cumCash": 364121.56,
+   "cumCashFromR3": 363843.56,
+   "rbe": 391695,
+   "popCashMult": 0.05,
+   "threats": [
+    "moab",
+    "bfb",
+    "zomg"
+   ],
+   "composition": "21 BFB, 42 MOAB, 9 ZOMG",
+   "groups": [
+    "21 BFB",
+    "42 MOAB",
+    "9 ZOMG"
+   ],
+   "danger": 2,
+   "notes": "",
+   "cashPopWikiTable": 4117.44
+  },
+  {
+   "round": 122,
+   "xp": 8100,
+   "cash": 6780.75,
+   "cashPop": 6558.75,
+   "cashBonus": 222,
+   "cumCash": 370902.31,
+   "cumCashFromR3": 370624.31,
+   "rbe": 369730,
+   "popCashMult": 0.05,
+   "threats": [
+    "camo",
+    "lead",
+    "fortified",
+    "moab",
+    "bfb"
+   ],
+   "composition": "60 BFB, 100 MOAB, 225 Fortified Camo Lead",
+   "groups": [
+    "60 BFB",
+    "100 MOAB",
+    "75 Fortified Camo Lead",
+    "75 Fortified Camo Lead",
+    "75 Fortified Camo Lead"
+   ],
+   "danger": 2,
+   "notes": "",
+   "cashPopWikiTable": 5247.0
+  },
+  {
+   "round": 123,
+   "xp": 8190,
+   "cash": 5938.0,
+   "cashPop": 5715.0,
+   "cashBonus": 223,
+   "cumCash": 376840.31,
+   "cumCashFromR3": 376562.31,
+   "rbe": 561600,
+   "popCashMult": 0.05,
+   "threats": [
+    "camo",
+    "lead",
+    "fortified",
+    "moab",
+    "ddt"
+   ],
+   "composition": "100 Fortified DDT, 200 Fortified MOAB",
+   "groups": [
+    "100 Fortified DDT",
+    "200 Fortified MOAB"
+   ],
+   "danger": 3,
+   "notes": "",
+   "cashPopWikiTable": 4572.0
+  },
+  {
+   "round": 124,
+   "xp": 8280,
+   "cash": 6935.1,
+   "cashPop": 6711.1,
+   "cashBonus": 224,
+   "cumCash": 383775.41,
+   "cumCashFromR3": 383497.41,
+   "rbe": 667744,
+   "popCashMult": 0.05,
+   "threats": [
+    "zomg"
+   ],
+   "composition": "22 ZOMG",
+   "groups": [
+    "22 ZOMG"
+   ],
+   "danger": 3,
+   "notes": "",
+   "cashPopWikiTable": 5368.88
+  },
+  {
+   "round": 125,
+   "xp": 8370,
+   "cash": 8000.7,
+   "cashPop": 7775.7,
+   "cashBonus": 225,
+   "cumCash": 391776.11,
+   "cumCashFromR3": 391498.11,
+   "rbe": 981096,
+   "popCashMult": 0.05,
+   "threats": [
+    "camo",
+    "lead",
+    "fortified",
+    "moab",
+    "bfb",
+    "ddt"
+   ],
+   "composition": "63 Fortified DDT, 66 Fortified BFB, 81 Fortified MOAB",
+   "groups": [
+    "18 Fortified DDT",
+    "15 Fortified DDT",
+    "16 Fortified BFB",
+    "14 Fortified BFB",
+    "12 Fortified DDT",
+    "12 Fortified BFB",
+    "21 Fortified MOAB",
+    "9 Fortified DDT",
+    "10 Fortified BFB",
+    "18 Fortified MOAB",
+    "6 Fortified DDT",
+    "8 Fortified BFB",
+    "15 Fortified MOAB",
+    "3 Fortified DDT",
+    "6 Fortified BFB",
+    "12 Fortified MOAB",
+    "9 Fortified MOAB",
+    "6 Fortified MOAB"
+   ],
+   "danger": 3,
+   "notes": "",
+   "cashPopWikiTable": 6220.56
+  },
+  {
+   "round": 126,
+   "xp": 8460,
+   "cash": 4012.15,
+   "cashPop": 3786.15,
+   "cashBonus": 226,
+   "cumCash": 395788.26,
+   "cumCashFromR3": 395510.26,
+   "rbe": 283920,
+   "popCashMult": 0.05,
+   "threats": [
+    "camo",
+    "lead",
+    "regrow",
+    "fortified",
+    "ceramic",
+    "ddt"
+   ],
+   "composition": "3 Fortified Camo Regrow Ceramic, 198 DDT",
+   "groups": [
+    "1 Fortified Camo Regrow Ceramic",
+    "99 DDT",
+    "1 Fortified Camo Regrow Ceramic",
+    "66 DDT",
+    "1 Fortified Camo Regrow Ceramic",
+    "33 DDT"
+   ],
+   "danger": 2,
+   "notes": "",
+   "cashPopWikiTable": 3028.92
+  },
+  {
+   "round": 127,
+   "xp": 8550,
+   "cash": 2513.9,
+   "cashPop": 2286.9,
+   "cashBonus": 227,
+   "cumCash": 398302.16,
+   "cumCashFromR3": 398024.16,
+   "rbe": 243900,
+   "popCashMult": 0.05,
+   "threats": [
+    "fortified",
+    "moab",
+    "bfb"
+   ],
+   "composition": "48 MOAB, 18 Fortified BFB",
+   "groups": [
+    "48 MOAB",
+    "18 Fortified BFB"
+   ],
+   "danger": 2,
+   "notes": "",
+   "cashPopWikiTable": 1829.52
+  },
+  {
+   "round": 128,
+   "xp": 8640,
+   "cash": 5340.95,
+   "cashPop": 5112.95,
+   "cashBonus": 228,
+   "cumCash": 403643.11,
+   "cumCashFromR3": 403365.11,
+   "rbe": 505408,
+   "popCashMult": 0.05,
+   "threats": [
+    "camo",
+    "bfb",
+    "zomg"
+   ],
+   "composition": "9 ZOMG, 200 Camo Rainbow, 30 BFB",
+   "groups": [
+    "9 ZOMG",
+    "200 Camo Rainbow",
+    "30 BFB"
+   ],
+   "danger": 3,
+   "notes": "",
+   "cashPopWikiTable": 4090.36
+  },
+  {
+   "round": 129,
+   "xp": 8730,
+   "cash": 5585.55,
+   "cashPop": 5356.55,
+   "cashBonus": 229,
+   "cumCash": 409228.66,
+   "cumCashFromR3": 408950.66,
+   "rbe": 897412,
+   "popCashMult": 0.05,
+   "threats": [
+    "camo",
+    "lead",
+    "fortified",
+    "zomg",
+    "ddt"
+   ],
+   "composition": "7 Fortified ZOMG, 48 DDT, 9 Fortified DDT, 7 ZOMG",
+   "groups": [
+    "7 Fortified ZOMG",
+    "9 DDT",
+    "9 DDT",
+    "9 Fortified DDT",
+    "7 ZOMG",
+    "30 DDT"
+   ],
+   "danger": 3,
+   "notes": "",
+   "cashPopWikiTable": 4285.24
+  },
+  {
+   "round": 130,
+   "xp": 8820,
+   "cash": 4688.9,
+   "cashPop": 4458.9,
+   "cashBonus": 230,
+   "cumCash": 413917.56,
+   "cumCashFromR3": 413639.56,
+   "rbe": 414888,
+   "popCashMult": 0.05,
+   "threats": [
+    "camo",
+    "lead",
+    "fortified",
+    "moab",
+    "bfb",
+    "ddt"
+   ],
+   "composition": "36 MOAB, 27 Fortified DDT, 54 Fortified MOAB, 21 DDT, 24 BFB",
+   "groups": [
+    "12 MOAB",
+    "21 Fortified DDT",
+    "9 Fortified MOAB",
+    "12 MOAB",
+    "9 Fortified MOAB",
+    "12 MOAB",
+    "9 DDT",
+    "36 Fortified MOAB",
+    "3 Fortified DDT",
+    "6 DDT",
+    "3 Fortified DDT",
+    "6 DDT",
+    "24 BFB"
+   ],
+   "danger": 3,
+   "notes": "",
+   "cashPopWikiTable": 3567.12
+  },
+  {
+   "round": 131,
+   "xp": 8910,
+   "cash": 2232.9,
+   "cashPop": 2001.9,
+   "cashBonus": 231,
+   "cumCash": 416150.46,
+   "cumCashFromR3": 415872.46,
+   "rbe": 479700,
+   "popCashMult": 0.05,
+   "threats": [
+    "bad"
+   ],
+   "composition": "3 BAD",
+   "groups": [
+    "3 BAD"
+   ],
+   "danger": 3,
+   "notes": "",
+   "cashPopWikiTable": 1601.52
+  },
+  {
+   "round": 132,
+   "xp": 9000,
+   "cash": 8581.9,
+   "cashPop": 8349.9,
+   "cashBonus": 232,
+   "cumCash": 424732.36,
+   "cumCashFromR3": 424454.36,
+   "rbe": 1364256,
+   "popCashMult": 0.05,
+   "threats": [
+    "camo",
+    "lead",
+    "fortified",
+    "zomg",
+    "ddt"
+   ],
+   "composition": "18 ZOMG, 6 Fortified ZOMG, 54 DDT",
+   "groups": [
+    "5 ZOMG",
+    "4 ZOMG",
+    "3 Fortified ZOMG",
+    "27 DDT",
+    "5 ZOMG",
+    "4 ZOMG",
+    "3 Fortified ZOMG",
+    "27 DDT"
+   ],
+   "danger": 3,
+   "notes": "",
+   "cashPopWikiTable": 6679.92
+  },
+  {
+   "round": 133,
+   "xp": 9090,
+   "cash": 8258.25,
+   "cashPop": 8025.25,
+   "cashBonus": 233,
+   "cumCash": 432990.61,
+   "cumCashFromR3": 432712.61,
+   "rbe": 1190997,
+   "popCashMult": 0.05,
+   "threats": [
+    "fortified",
+    "moab",
+    "bfb",
+    "zomg"
+   ],
+   "composition": "30 Fortified MOAB, 12 Fortified BFB, 4 Fortified ZOMG, 27 MOAB, 27 BFB, 9 ZOMG",
+   "groups": [
+    "6 Fortified MOAB",
+    "6 Fortified BFB",
+    "2 Fortified ZOMG",
+    "18 Fortified MOAB",
+    "6 Fortified MOAB",
+    "6 Fortified BFB",
+    "2 Fortified ZOMG",
+    "9 MOAB",
+    "9 BFB",
+    "3 ZOMG",
+    "9 MOAB",
+    "9 BFB",
+    "3 ZOMG",
+    "9 MOAB",
+    "9 BFB",
+    "3 ZOMG"
+   ],
+   "danger": 3,
+   "notes": "",
+   "cashPopWikiTable": 6420.2
+  },
+  {
+   "round": 134,
+   "xp": 9180,
+   "cash": 3741.5,
+   "cashPop": 3507.5,
+   "cashBonus": 234,
+   "cumCash": 436732.11,
+   "cumCashFromR3": 436454.11,
+   "rbe": 517808,
+   "popCashMult": 0.05,
+   "threats": [
+    "fortified",
+    "bfb"
+   ],
+   "composition": "26 Fortified BFB, 20 BFB",
+   "groups": [
+    "12 Fortified BFB",
+    "10 BFB",
+    "8 Fortified BFB",
+    "6 BFB",
+    "4 Fortified BFB",
+    "3 BFB",
+    "2 Fortified BFB",
+    "1 BFB"
+   ],
+   "danger": 3,
+   "notes": "",
+   "cashPopWikiTable": 2806.0
+  },
+  {
+   "round": 135,
+   "xp": 9270,
+   "cash": 6240.25,
+   "cashPop": 6005.25,
+   "cashBonus": 235,
+   "cumCash": 442972.36,
+   "cumCashFromR3": 442694.36,
+   "rbe": 1783080,
+   "popCashMult": 0.05,
+   "threats": [
+    "camo",
+    "lead",
+    "fortified",
+    "zomg",
+    "ddt"
+   ],
+   "composition": "18 Fortified ZOMG, 27 Fortified DDT",
+   "groups": [
+    "9 Fortified ZOMG",
+    "9 Fortified ZOMG",
+    "9 Fortified DDT",
+    "9 Fortified DDT",
+    "9 Fortified DDT"
+   ],
+   "danger": 3,
+   "notes": "",
+   "cashPopWikiTable": 4804.2
+  },
+  {
+   "round": 136,
+   "xp": 9360,
+   "cash": 3894.8,
+   "cashPop": 3658.8,
+   "cashBonus": 236,
+   "cumCash": 446867.16,
+   "cumCashFromR3": 446589.16,
+   "rbe": 476544,
+   "popCashMult": 0.05,
+   "threats": [
+    "fortified",
+    "moab",
+    "bfb"
+   ],
+   "composition": "96 MOAB, 24 Fortified BFB",
+   "groups": [
+    "96 MOAB",
+    "24 Fortified BFB"
+   ],
+   "danger": 3,
+   "notes": "",
+   "cashPopWikiTable": 2927.04
+  },
+  {
+   "round": 137,
+   "xp": 9450,
+   "cash": 5021.95,
+   "cashPop": 4784.95,
+   "cashBonus": 237,
+   "cumCash": 451889.11,
+   "cumCashFromR3": 451611.11,
+   "rbe": 1334052,
+   "popCashMult": 0.05,
+   "threats": [
+    "fortified",
+    "moab",
+    "bfb",
+    "zomg",
+    "bad"
+   ],
+   "composition": "9 Fortified ZOMG, 1 BAD, 12 Fortified BFB, 24 Fortified MOAB",
+   "groups": [
+    "9 Fortified ZOMG",
+    "1 BAD",
+    "12 Fortified BFB",
+    "24 Fortified MOAB"
+   ],
+   "danger": 3,
+   "notes": "",
+   "cashPopWikiTable": 3827.96
+  },
+  {
+   "round": 138,
+   "xp": 9540,
+   "cash": 3534.2,
+   "cashPop": 3296.2,
+   "cashBonus": 238,
+   "cumCash": 455423.31,
+   "cumCashFromR3": 455145.31,
+   "rbe": 792696,
+   "popCashMult": 0.05,
+   "threats": [
+    "camo",
+    "lead",
+    "fortified",
+    "ddt",
+    "bad"
+   ],
+   "composition": "138 Fortified DDT, 1 BAD",
+   "groups": [
+    "33 Fortified DDT",
+    "1 BAD",
+    "27 Fortified DDT",
+    "21 Fortified DDT",
+    "18 Fortified DDT",
+    "18 Fortified DDT",
+    "21 Fortified DDT"
+   ],
+   "danger": 3,
+   "notes": "",
+   "cashPopWikiTable": 2636.96
+  },
+  {
+   "round": 139,
+   "xp": 9630,
+   "cash": 19530.25,
+   "cashPop": 19291.25,
+   "cashBonus": 239,
+   "cumCash": 474953.56,
+   "cumCashFromR3": 474675.56,
+   "rbe": 2708759,
+   "popCashMult": 0.05,
+   "threats": [
+    "fortified",
+    "bfb"
+   ],
+   "composition": "181 BFB, 72 Fortified BFB",
+   "groups": [
+    "109 BFB",
+    "18 BFB",
+    "18 Fortified BFB",
+    "18 BFB",
+    "18 Fortified BFB",
+    "18 BFB",
+    "18 Fortified BFB",
+    "18 BFB",
+    "18 Fortified BFB"
+   ],
+   "danger": 3,
+   "notes": "",
+   "cashPopWikiTable": 15433.0
+  },
+  {
+   "round": 140,
+   "xp": 9720,
+   "cash": 3576.5,
+   "cashPop": 3336.5,
+   "cashBonus": 240,
+   "cumCash": 478530.06,
+   "cumCashFromR3": 478252.06,
+   "rbe": 1935200,
+   "popCashMult": 0.05,
+   "threats": [
+    "fortified",
+    "bad"
+   ],
+   "composition": "4 Fortified BAD, 1 BAD",
+   "groups": [
+    "1 Fortified BAD",
+    "1 BAD",
+    "2 Fortified BAD",
+    "1 Fortified BAD"
+   ],
+   "danger": 3,
+   "notes": "5 BADs, 4 of them Fortified. Last preset ABR round.",
+   "cashPopWikiTable": 2669.2
+  }
+ ]
+}
