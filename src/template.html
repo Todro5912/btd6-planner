@@ -107,7 +107,7 @@
 .planner .stp-ctl { display: grid; grid-template-columns: 22px minmax(0, 1fr) 22px; align-items: center; border: 2px solid var(--pl-ink); border-radius: var(--pl-r); background: var(--pl-panel); overflow: hidden; }
 .planner .stp-ctl button { border: 0; background: none; height: 26px; cursor: pointer; font-weight: 700; color: var(--pl-text); padding: 0; }
 .planner .stp-ctl button:hover { background: var(--pl-banana); color: var(--pl-ink); }
-.planner .stp-ctl b { text-align: center; font-family: var(--pl-mono); font-size: 14px; }
+.planner .stp-ctl b { text-align: center; font-size: 14px; font-variant-numeric: tabular-nums; }
 .planner .stp.p0 b { color: var(--path-1); } .planner .stp.p1 b { color: var(--path-2); } .planner .stp.p2 b { color: var(--path-3); }
 .planner .pips { display: flex; gap: 2px; justify-content: center; }
 .planner .pips i { width: 6px; height: 6px; border: 1.5px solid var(--pl-ink); background: var(--pl-panel); }
@@ -353,6 +353,14 @@ __LOGIC__
 
   function clone(o) { return JSON.parse(JSON.stringify(o)); }
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+  /* {calc} / {unverified} tokens in the data become small outlined badges (dropped inside tag attributes) */
+  var BADGE = { calc: ['badge-calc', 'calculated', 'Worked out from the numbers on this site, not tested in a game'], unverified: ['badge-unverified', 'unverified', 'Not confirmed yet'] };
+  function badges(html) {
+    return html.replace(/(<[^>]*>)|\s*\{(calc|unverified)\}/g, function (m, tag, k) {
+      if (tag) return tag.replace(/\s*\{(?:calc|unverified)\}/g, '');
+      var b = BADGE[k]; return ' <span class="badge ' + b[0] + '" title="' + b[2] + '">' + b[1] + '</span>';
+    });
+  }
   function $(id) { return document.getElementById(id); }
   function mapById(id) { return D.maps.find(function (m) { return m.id === id; }) || null; }
   function modeById(id) { return D.modes.find(function (m) { return m.id === id; }) || null; }
@@ -570,7 +578,7 @@ __LOGIC__
     var listTxt = !ev.twoMP ? 'no data' : ev.twoMP.count + ' solo-CHIMPS wins' + (ev.listState === 'complete' ? ' (full list)' : ev.listState === 'partial' ? ' (first ' + ev.twoMP.shown + ' names)' : ' (names not captured)');
     var h = '<div class="ixev" aria-label="Index evidence"><div class="ixev-h"><span class="lbl">Index evidence</span><span class="subtle">btd6index.win, v57.4 data, fetched 2026-11-05</span></div>';
     h += '<div class="facts">' +
-      '<div class="fact" style="grid-column:span 2"><span>Lane RBS</span><b class="mono">' + esc(lanes) + '</b></div>' +
+      '<div class="fact" style="grid-column:span 2"><span>Lane RBS</span><b>' + esc(lanes) + '</b></div>' +
       '<div class="fact"><span>Entrances / exits</span><b>' + esc(ev.entrances == null ? '?' : ev.entrances) + ' / ' + esc(ev.exits == null ? '?' : ev.exits) + '</b></div>' +
       '<div class="fact"><span>Water (Index)</span><b>' + yn(ev.water) + '</b></div>' +
       '<div class="fact"><span>LoS (Index)</span><b>' + yn(ev.los) + '</b></div>' +
@@ -584,7 +592,7 @@ __LOGIC__
       h += '<ul class="ixrows">' + rows.map(function (r) {
         var chip = r.proven ? '<span class="ixchip ok">✓ solo-CHIMPS proven on this map</span>' : '<span class="ixchip no" title="No 2MP entry found">—</span>';
         var detail = r.proven ? esc(r.entities.slice(0, 4).join(', ') + (r.entities.length > 4 ? ' +' + (r.entities.length - 4) + ' more' : ''))
-          : (r.listState === 'complete' ? 'no single-tower CHIMPS with it here' + (r.kind === 'tower' ? ' (support towers rarely solo)' : '') : r.listState === 'partial' ? 'not in the names captured (list incomplete)' : 'list not captured for this map');
+          : (r.listState === 'complete' ? 'no single-tower CHIMPS with it here' + (r.kind === 'tower' ? ' (support towers rarely solo)' : '') : r.listState === 'partial' ? 'not in the listed names (list incomplete)' : 'list not captured for this map');
         return '<li><b>' + esc(r.name) + '</b>' + chip + '<span class="subtle">' + detail + '</span></li>';
       }).join('') + '</ul>';
     } else h += '<p class="subtle">Pick towers to see whether each has soloed CHIMPS here.</p>';
@@ -641,7 +649,7 @@ __LOGIC__
     html += '<div class="facts">' +
       '<div class="fact"><span>Tier</span><b>' + esc(map.difficulty) + '</b></div>' +
       '<div class="fact"><span>Water</span><b>' + esc(map.water) + '</b></div>' +
-      '<div class="fact"><span>LoS blockers</span><b>' + esc(map.losBlockers) + ((map.unverified || []).indexOf('losBlockers') >= 0 ? ' (unverified)' : '') + '</b></div>' +
+      '<div class="fact"><span>LoS blockers</span><b>' + esc(map.losBlockers) + ((map.unverified || []).indexOf('losBlockers') >= 0 ? ' {unverified}' : '') + '</b></div>' +
       '<div class="fact"><span>Lanes</span><b>' + esc(map.paths) + '</b></div>' +
       '<div class="fact"><span>Track</span><b>' + esc(map.trackClass || '') + (map.trackLength ? ' · ' + map.trackLength : '') + '</b></div>' +
       '<div class="fact"><span>CHIMPS friendly</span><b>' + (map.chimpsFriendly ? 'yes' : 'no') + '</b></div>' +
@@ -769,10 +777,10 @@ __LOGIC__
     });
     html += '</div></section>';
 
-    $('results').innerHTML = html;
+    $('results').innerHTML = badges(html);
     var meta = D.meta || {};
     $('sub').textContent = 'BTD6 v' + (meta.version || '?') + ' build, cash and tower-XP planner';
-    $('foot').textContent = 'Planner ' + APP_VERSION + '. Data researched ' + (meta.researched || '?') + ' for v' + (meta.version || '?') + '. Prices are Medium × mode multiplier, rounded to the nearest $5. Grants, roles and strategy text are the dataset’s reading of wiki pages, not a game export.';
+    $('foot').textContent = 'Planner ' + APP_VERSION + '. Data updated ' + (meta.researched || '?') + ' for v' + (meta.version || '?') + '. Prices are Medium × mode multiplier, rounded to the nearest $5. Grants, roles and strategy text are the dataset’s reading of wiki pages, not a game export.';
   }
 
   function renderAll() { renderControls(); renderResults(); save(); }

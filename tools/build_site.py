@@ -66,6 +66,19 @@ INDEX_BASE = {'dart': 'dart', 'boomerang': 'boomer', 'bomb': 'bomb', 'tack': 'ta
               'mermonkey': 'merm', 'desperado': 'desperado', 'village': 'village', 'farm': 'farm'}
 HERO_ALIAS = {'gwendolin': ['gwen'], 'striker': ['jones']}
 HERO_SKIP = {'captain', 'admiral', 'the'}
+TOWER_ALIAS = {'beast': ['T-Rex'], 'spike': ['Spike Factories']}
+
+# "About this data": who each fact on a page comes from. Rendered collapsed at the foot of the page.
+SOURCES = {
+    'wiki': ('Bloons Wiki', 'https://www.bloonswiki.com/', 'stats, prices, XP and map facts (CC BY-SA)'),
+    'fandom': ('BTD6 Fandom wiki', 'https://bloons.fandom.com/', 'second source used to cross-check prices and XP'),
+    'index': ('BTD6 Index', 'https://btd6index.win/', 'lane lengths, water and line-of-sight flags, least-cost CHIMPS and solo-CHIMPS (2MP) records'),
+    'cq': ('Cyber Quincy', 'https://github.com/hemisemidemipresent/cyberquincy', 'cross-check for costs and rounds'),
+    'nk': ('Ninja Kiwi patch notes', None, 'balance changes up to v57.4'),
+    'community': ('Community strategy guides', None, 'crosspath picks, tier 5 rankings, roles and beginner tiers: opinions, not game data'),
+}
+PRICE_RULE = ('Prices on Easy, Hard and Impoppable are worked out from the Medium price (x0.85, x1.08, x1.2), '
+              'rounded to the nearest $5 per purchase. An Easy price can be $5 off where the game rounds a half down.')
 
 WARNINGS = []
 
@@ -131,6 +144,29 @@ def tidy(s):
     s = re.sub(r'(;\s*)?alt: \$[\d,]+(?: fandom)?(;\s*)?', '', s)
     s = re.sub(r'\s*\(\s*\)', '', s).replace('( ', '(')
     return s.strip()
+
+
+BADGES = {'calc': ('badge-calc', 'calculated', 'Worked out from the numbers on this site, not tested in a game'),
+          'unverified': ('badge-unverified', 'unverified', 'Not confirmed yet')}
+TOKEN = re.compile(r'\s*\{(calc|unverified)\}')
+
+
+def badge(kind):
+    cls, label, title = BADGES[kind]
+    return f'<span class="badge {cls}" title="{title}">{label}</span>'
+
+
+def rich(s):
+    """Escape a data string and turn its {calc}/{unverified} tokens into badges."""
+    if not s:
+        return Markup('')
+    out = htmlmod.escape(tidy(str(s)), quote=False)
+    return Markup(TOKEN.sub(lambda m: ' ' + badge(m.group(1)), out))
+
+
+def plain(s):
+    """A data string with its badge tokens dropped (for attributes and summaries)."""
+    return TOKEN.sub('', tidy(str(s or ''))).strip()
 
 
 def parse_code(s):
@@ -240,6 +276,8 @@ def build_model():
             'url': f"heroes/{h['id']}/",
         })
     c.hm_by = {hm['id']: hm for hm in c.hero_models}
+    for hm in c.hero_models:
+        hm['good_with'] = good_with(c, hm['h'])
 
     # ---- maps
     c.map_models = [map_model(c, m, ent_owner) for m in c.maps]
@@ -257,6 +295,13 @@ def build_model():
                     txt += ')' * (txt.count('(') - txt.count(')'))
                     c.changes.append({'tower': t, 'upgrade': u, 'text': txt,
                                       'url': f"monkeys/{t['id']}/#u-{pi + 1}-{u['tier']}"})
+    # home strip: towers with the most v57 changes first
+    groups = {}
+    for x in c.changes:
+        groups.setdefault(x['tower']['id'], []).append(x)
+    order = [t['id'] for t in c.towers]
+    ranked = sorted(groups.items(), key=lambda kv: (-len(kv[1]), order.index(kv[0])))
+    c.change_groups = [{'tower': c.tower_by[k], 'url': f'monkeys/{k}/', 'changes': v} for k, v in ranked]
     return c
 
 
@@ -369,13 +414,13 @@ BUILD_B = re.compile(r'^R(\d+) (.+?) \(\+\$([\d,]+), total \$([\d,]+)\)\.?$')
 def parse_chimps(text):
     """Split a CHIMPS plan into its summary, a build-order table and a closing note."""
     text = tidy(text or '')
-    m = re.search(r'Build(?: \(([^)]*)\))?:\s*', text)
+    m = re.search(r'Build(?: \(([^)]*)\))?( \{calc\})?:\s*', text)
     if not m:
-        return {'summary': text, 'rows': [], 'basis': None, 'tail': None}
+        return {'summary': text, 'rows': [], 'basis': None, 'tail': None, 'calc': False}
     summary = text[:m.start()].strip()
     rest = text[m.end():]
     tail = None
-    tm = re.search(r'\.\s*(Spare at R\d+: [^.]*\.?)\s*$', rest)
+    tm = re.search(r'\.\s*(Spare at R\d+: [^.]*\.?(?: \{calc\}\.?)?)\s*$', rest)
     if tm:
         tail = tm.group(1).strip()
         rest = rest[:tm.start()]
@@ -390,8 +435,8 @@ def parse_chimps(text):
         elif b:
             rows.append({'round': int(b.group(1)), 'step': b.group(2), 'cost': b.group(3), 'total': b.group(4)})
         else:
-            return {'summary': text, 'rows': [], 'basis': None, 'tail': None}
-    return {'summary': summary, 'rows': rows, 'basis': m.group(1) or 'Hard prices', 'tail': tail}
+            return {'summary': text, 'rows': [], 'basis': None, 'tail': None, 'calc': False}
+    return {'summary': summary, 'rows': rows, 'basis': m.group(1) or 'Hard prices', 'tail': tail, 'calc': bool(m.group(2))}
 
 
 def map_model(c, m, ent_owner):
@@ -432,6 +477,63 @@ def map_model(c, m, ent_owner):
         'lane_max': max(lane_vals) if lane_vals else None, 'list_state': list_state,
         'two_mp_count': tm.get('count'), 'removables': [dict(r, prices=c.prices([r.get('cost')])) for r in m.get('removables') or []],
     }
+
+
+def about(c, keys, notes=None):
+    return {'sources': [SOURCES[k] for k in keys], 'notes': [n for n in (notes or []) if n],
+            'checked': c.meta.get('researched')}
+
+
+def about_tower(c, tm):
+    t = tm['t']
+    notes = [PRICE_RULE]
+    missing = [x.split(': ', 1)[1] for x in c.missing_xp if x.startswith(t['name'] + ': ')]
+    if missing:
+        notes.append('Unlock XP is unknown for ' + ', '.join(missing) + '; it is shown as "XP ?".')
+    if tm['g'].get('farm'):
+        notes.append('XP farm numbers are worked out with the Deflation XP formula (Expert map x1.3, Monkey Education on), '
+                     'split by each tower\'s share of the money spent. They are not play-tested.')
+    notes += t.get('about') or []
+    return about(c, ['wiki', 'fandom', 'nk', 'index', 'community'], notes)
+
+
+def about_map(c, mm):
+    m = mm['m']
+    notes = ['Strategies and build orders are worked out from the numbers on this site, not play-tested. '
+             'Build-order prices are Hard (x1.08), which is also what CHIMPS charges.']
+    yn = {True: 'yes', False: 'no'}
+    label = {'losBlockers': 'Line of sight', 'paths': 'Lanes', 'removables': 'Removables'}
+    for x in m.get('conflicts') or []:
+        idx = yn.get(x.get('index'), x.get('index'))
+        kept = {'index': 'the BTD6 Index value'}.get(x.get('kept'), x.get('kept'))
+        notes.append(f"{label.get(x.get('field'), x.get('field'))}: the BTD6 Index says {idx}; other sources say {x.get('other')}. "
+                     f"This page uses {kept}.")
+    if m.get('trackLengthNote'):
+        notes.append('Track length: ' + m['trackLengthNote'])
+    notes += m.get('about') or []
+    return about(c, ['wiki', 'fandom', 'index'], notes)
+
+
+def about_hero(c, hm):
+    return about(c, ['wiki', 'fandom', 'index', 'community'],
+                 [PRICE_RULE, '"Recommended on" lists the maps whose strategy on this site names this hero.'])
+
+
+def good_with(c, h):
+    """Towers a hero's own text names (tower names, short names, tier 3+ upgrade names)."""
+    text = ' '.join(plain(h.get(k)) for k in ('bestFor', 'camo', 'lead'))
+    found = []
+    for t in c.towers:
+        names = {t['name']}
+        short = re.sub(r'^Monkey |(?: Monkey| Shooter| Gunner| Pilot)$', '', t['name'])
+        if short not in ('Ice', 'Super', 'Farm', 'Spike'):
+            names.add(short)
+        names |= {u['name'].split(':')[0] for p in t['paths'] for u in p if (u.get('tier') or 0) >= 3}
+        names |= set(TOWER_ALIAS.get(t['id'], []))
+        pos = [m.start() for n in names for m in re.finditer(r'(?<![\w-])' + re.escape(n) + r's?(?![\w-])', text)]
+        if pos:
+            found.append((min(pos), c.tm_by[t['id']]))
+    return [tm for _, tm in sorted(found, key=lambda x: x[0])]
 
 
 # ---------------------------------------------------------------- guides
@@ -648,6 +750,8 @@ def main():
     env.filters['money'] = money
     env.filters['num'] = num
     env.filters['tidy'] = tidy
+    env.filters['rich'] = rich
+    env.filters['plain'] = plain
     env.globals.update(site=site, meta=c.meta, DIFFS=DIFFS, TIERS=TIERS, TIER_XP=TIER_XP, CLASSES=CLASSES,
                        THREAT_LABEL=THREAT_LABEL, mult=c.mult, ctx=c, year=datetime.date.today().year)
 
@@ -661,7 +765,11 @@ def main():
         return Markup(out)
     env.globals['link_maps'] = link_maps
 
+    generic_about = about(c, ['wiki', 'fandom', 'index', 'cq', 'nk'])
+
     def page(path, template, title, description, section=None, crumbs=None, **kw):
+        if 'about' not in kw:
+            kw['about'] = None if template in ('404.html', 'redirect.html', 'guide.html') else generic_about
         if path == '404.html':
             root = base
         else:
@@ -709,7 +817,9 @@ def main():
          section='monkeys', crumbs=[('Monkeys', 'monkeys/'), ('Heroes', None)], tab='heroes')
     page('monkeys/paragons/', 'paragons.html', f"Paragons and XP farms · {site['name']}",
          f"Every BTD6 paragon with its price, XP from zero and the best Deflation farm to get there (v{v}).",
-         section='monkeys', crumbs=[('Monkeys', 'monkeys/'), ('Paragons', None)], tab='paragons')
+         section='monkeys', crumbs=[('Monkeys', 'monkeys/'), ('Paragons', None)], tab='paragons',
+         about=about(c, ['wiki', 'fandom', 'community'], ['Farm XP and runs are worked out with the Deflation XP formula '
+                     '(Expert map x1.3, Monkey Education on), split by each tower\'s share of the money spent. They are not play-tested.']))
     page('heroes/', 'redirect.html', f"Heroes · {site['name']}", 'Moved to the Monkeys page, Heroes tab.',
          section='monkeys', target='monkeys/heroes/')
     for tm in c.tower_models:
@@ -717,12 +827,13 @@ def main():
         page(tm['url'], 'tower.html', f"{t['name']} · {site['name']}",
              f"{t['name']} (BTD6 v{v}): all 15 upgrades with prices on every difficulty, XP to unlock, best crosspaths, what it pops and CHIMPS proof.",
              section='monkeys', crumbs=[('Monkeys', 'monkeys/'), (t.get('class'), 'monkeys/#' + slugify(t.get('class'))), (t['name'], None)],
-             tm=tm)
+             tm=tm, about=about_tower(c, tm))
     for hm in c.hero_models:
         h = hm['h']
         page(hm['url'], 'hero.html', f"{h['name']} · {site['name']}",
              f"{h['name']} (BTD6 v{v}): price, unlock, camo and lead, best maps and solo-CHIMPS proof.",
-             section='monkeys', crumbs=[('Monkeys', 'monkeys/'), ('Heroes', 'monkeys/heroes/'), (h['name'], None)], hm=hm)
+             section='monkeys', crumbs=[('Monkeys', 'monkeys/'), ('Heroes', 'monkeys/heroes/'), (h['name'], None)], hm=hm,
+             about=about_hero(c, hm))
 
     # ---- maps
     page('maps/', 'maps.html', f"Maps · {site['name']}",
@@ -732,7 +843,8 @@ def main():
         m = mm['m']
         page(mm['url'], 'map.html', f"{m['name']} · {site['name']}",
              f"{m['name']} ({m['difficulty']}) in BTD6 v{v}: map facts, BTD6 Index records and strategies for Easy, Hard and CHIMPS.",
-             section='maps', crumbs=[('Maps', 'maps/'), (m['difficulty'], 'maps/#' + m['difficulty'].lower()), (m['name'], None)], mm=mm)
+             section='maps', crumbs=[('Maps', 'maps/'), (m['difficulty'], 'maps/#' + m['difficulty'].lower()), (m['name'], None)], mm=mm,
+             about=about_map(c, mm))
 
     # ---- guides
     for g in guides:
@@ -793,12 +905,16 @@ def main():
          'Every BTD6 round 1–140 for standard and Alternate Bloons Rounds: Bloons, RBE, cash, XP and danger rounds.',
          section='guides', crumbs=[('Guides', 'guides/'), ('Reference', 'guides/#reference'), ('Rounds', None)],
          intro=Markup(rounds_intro) if rounds_intro else None, g=rounds_entry,
-         related=related_links(rounds_entry['related'], '../../'))
+         related=related_links(rounds_entry['related'], '../../'),
+         about=about(c, ['wiki', 'cq', 'nk'], ['Cash is pop cash plus the end-of-round bonus (100 + the round number), with no '
+                     'income towers, Monkey Knowledge or Double Cash.', 'Freeplay pop-cash rates for rounds 101-140 (8% and 5%) '
+                     'follow the v53.0 patch notes.']))
 
     # ---- records
     page('records/', 'records.html', f"Records · {site['name']}",
          'BTD6 Index records for all 90 maps: solo-CHIMPS (2MP) counts, least-cost CHIMPS, lane lengths, entrances and exits.',
-         section='records', crumbs=[('Records', None)])
+         section='records', crumbs=[('Records', None)],
+         about=about(c, ['index'], ['Map metadata and records from the BTD6 Index, v57.4 data.']))
 
     # ---- search index + A-Z
     entries = []

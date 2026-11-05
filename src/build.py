@@ -27,6 +27,18 @@ def pick(d, keys):
     return {k: d.get(k) for k in keys if isinstance(d, dict) and k in d}
 
 
+# research notes kept in the data files but never shipped: originals of rewritten text, method notes, citations
+PRIVATE = {'_src', 'notes_internal', 'source', 'about'}
+
+
+def strip_private(o):
+    if isinstance(o, dict):
+        return {k: strip_private(v) for k, v in o.items() if k not in PRIVATE}
+    if isinstance(o, list):
+        return [strip_private(v) for v in o]
+    return o
+
+
 def build_data():
     towers = load('towers.json', {}) or {}
     maps = load('maps.json', []) or []
@@ -57,7 +69,6 @@ def build_data():
             'version': towers.get('version'),
             'researched': towers.get('researched'),
             'costMultipliers': towers.get('costMultipliers'),
-            'costRounding': towers.get('costRounding'),
             'missingXp': towers.get('missingXp', []),
         },
         'towers': tower_list,
@@ -68,7 +79,7 @@ def build_data():
                           'unverified',
                           # round 3: btd6index.win (v57.4) evidence
                           'rbs', 'entrances', 'exits', 'indexLength', 'indexWater', 'indexLos',
-                          'removalCost', 'indexObjects', 'lcc', 'twoMP', 'conflicts', 'trackLengthNote']) for m in maps],
+                          'removalCost', 'indexObjects', 'lcc', 'twoMP']) for m in maps],
         'modes': [pick(m, ['id', 'name', 'base', 'startCash', 'lives', 'startRound', 'endRound', 'costMult',
                            'cashMult', 'roundSet', 'allowedClasses', 'rules', 'rewardMM', 'medal',
                            'xpBaseTotal', 'notes']) for m in modes],
@@ -86,7 +97,7 @@ def build_data():
             'priceRule': econ.get('priceRule'),
         },
     }
-    return data
+    return strip_private(data)
 
 
 def main():

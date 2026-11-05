@@ -7,7 +7,7 @@
 </div>
 {% include '_subtabs.html' %}
 <div class="toolbar">
-  <p class="lede">{{ ctx.heroes|length }} heroes. Tier is the dataset's beginner rating (S best).</p>
+  <p class="lede">{{ ctx.heroes|length }} heroes. Tier is how beginner-friendly a hero is (S is best).</p>
   {{ ui.diff_toggle() }}
 </div>
 <div class="table-wrap">
@@ -20,7 +20,7 @@
     <td class="n">{{ ui.price(hm.prices) }}</td>
     <td class="n">{% if hm.h.unlockLevel %}Lv {{ hm.h.unlockLevel }}{% else %}Start{% endif %}</td>
     <td class="c">{% if hm.h.beginnerTier %}<span class="counter tier-{{ hm.h.beginnerTier|lower }}">{{ hm.h.beginnerTier }}</span>{% else %}–{% endif %}</td>
-    <td class="wrapcell">{{ hm.h.bestFor|tidy }}</td>
+    <td class="wrapcell">{{ hm.h.bestFor|rich }}</td>
   </tr>
   {% endfor %}
   </tbody>

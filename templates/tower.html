@@ -16,7 +16,7 @@
   </dl>
   <a class="btn btn-grass" href="{{ root }}planner/#tower={{ t.id }}">Open in Planner</a>
 </div>
-{% if g.summary %}<p class="lede">{{ g.summary|tidy }}</p>{% endif %}
+{% if g.lead %}<p class="lede">{{ g.lead }}</p>{% endif %}
 
 <div class="toolbar sticky-toolbar">
   <span class="toolbar-l">Prices for</span>
@@ -37,7 +37,7 @@
           <span class="up-name">{{ x.u.name }}</span>
           <span class="up-meta"><span class="up-cost">{{ ui.price(x.prices) }}</span> <span class="up-xp" title="XP to unlock">{% if x.u.xp is none %}XP ?{% elif x.u.xp == 0 %}free{% else %}{{ x.u.xp|num }} XP{% endif %}</span></span>
           <code class="xcode up-code">{{ x.code }}</code>
-          {% if x.u.effect %}<span class="up-eff">{{ x.u.effect|tidy }}</span>{% endif %}
+          {% if x.u.effect %}<span class="up-eff">{{ x.u.effect|rich }}</span>{% endif %}
           {% set gr = x.u.grants|reject('equalto', 'buff')|list %}
           {% if gr %}<span class="up-grants">{% for k in gr %}<span class="gtag">{{ THREAT_LABEL.get(k) or k|capitalize }}</span>{% endfor %}</span>{% endif %}
         </li>
@@ -46,7 +46,7 @@
     </div>
     {% endfor %}
   </div>
-  <p class="panel-b note">Path XP total {{ tm.path_xp|num }}{% if tm.xp_all and tm.xp_all != tm.path_xp %} (guide total {{ tm.xp_all|num }}, which fills the unknown values){% endif %}. Upgrade prices are single purchases, rounded to $5 per difficulty.</p>
+  <p class="panel-b note">Path XP total {{ tm.path_xp|num }}{% if tm.xp_all and tm.xp_all != tm.path_xp %} (about {{ tm.xp_all|num }} with the unknown values estimated){% endif %}. Upgrade prices are single purchases, rounded to $5 per difficulty.</p>
 </section>
 
 <div class="split-2">
@@ -70,7 +70,7 @@
     {% for u in tm.utility %}<li><b>{{ u.label }}:</b> {% for f in u.from %}<a href="#{{ f.anchor }}">{{ f.name }}</a>{{ ', ' if not loop.last }}{% endfor %}</li>{% endfor %}
   </ul>
   {% endif %}
-  {% if t.notes %}<p class="panel-b note">{{ t.notes|tidy }}</p>{% endif %}
+  {% if t.notes %}<p class="panel-b note">{{ t.notes|rich }}</p>{% endif %}
 </section>
 
 <section class="panel" aria-labelledby="t5">
@@ -79,7 +79,7 @@
   <ol class="rank">
     {% for x in tm.t5 %}<li><span class="counter">{{ loop.index }}</span>{% if x.anchor %}<a href="#{{ x.anchor }}">{{ x.name }}</a> <code class="xcode">{{ x.code }}</code>{% else %}{{ x.name }}{% endif %}</li>{% endfor %}
   </ol>
-  {% else %}<p class="panel-b muted">No ranking in the dataset.</p>{% endif %}
+  {% else %}<p class="panel-b muted">No ranking yet.</p>{% endif %}
   {% if tm.paragon %}
   <div class="paragon" id="paragon">
     <h3 class="h3">Paragon: {{ tm.paragon.name }}</h3>
@@ -105,7 +105,7 @@
     <tr{% if not x.popular %} class="dim"{% endif %}>
       <td class="nowrap">{{ ui.xgrid(x.cross) }}<code class="xcode">{{ x.code }}</code></td>
       <td>{{ x.name or '–' }}{% if x.pick %} <span class="tag tag-banana">pick</span>{% endif %}</td>
-      <td class="wrapcell">{{ (x.use or '')|tidy }}</td>
+      <td class="wrapcell">{{ x.use|rich }}</td>
       <td class="n"><b>{{ ui.price(x.prices) }}</b></td>
     </tr>
     {% endfor %}
@@ -128,21 +128,21 @@
   <div class="split-2 panel-b">
     <div>
       <h3 class="h3">Setup</h3>
-      <p>{{ f.setup }}</p>
-      {% if f.helpers %}<p class="muted">{{ f.helpers }}</p>{% endif %}
-      {% if g.buyTiming %}<h3 class="h3">When to buy</h3><p>{{ g.buyTiming|tidy }}</p>{% endif %}
+      <p>{{ f.setup|rich }}</p>
+      {% if f.helpers %}<p class="muted">{{ f.helpers|rich }}</p>{% endif %}
+      {% if g.buyTiming %}<h3 class="h3">When to buy</h3><p>{{ g.buyTiming|rich }}</p>{% endif %}
     </div>
     {% if g.unlockOrder %}
     <div>
       <h3 class="h3">Unlock order</h3>
-      <ol class="steps">{% for s in g.unlockOrder %}<li>{{ s }}</li>{% endfor %}</ol>
+      <ol class="steps">{% for s in g.unlockOrder %}<li>{{ s|rich }}</li>{% endfor %}</ol>
     </div>
     {% endif %}
   </div>
   {% if g.synergies or g.lacks %}
   <div class="split-2 panel-b">
-    {% if g.synergies %}<div><h3 class="h3">Works with</h3><ul class="plain">{% for s in g.synergies %}<li>{{ s|tidy }}</li>{% endfor %}</ul></div>{% endif %}
-    {% if g.lacks %}<div><h3 class="h3">Lacks</h3><ul class="plain">{% for s in g.lacks %}<li>{{ s|tidy }}</li>{% endfor %}</ul></div>{% endif %}
+    {% if g.synergies %}<div><h3 class="h3">Works with</h3><ul class="plain">{% for s in g.synergies %}<li>{{ s|rich }}</li>{% endfor %}</ul></div>{% endif %}
+    {% if g.lacks %}<div><h3 class="h3">Lacks</h3><ul class="plain">{% for s in g.lacks %}<li>{{ s|rich }}</li>{% endfor %}</ul></div>{% endif %}
   </div>
   {% endif %}
 </section>
@@ -151,14 +151,14 @@
 <section class="panel" aria-labelledby="proof">
   <h2 class="panel-h" id="proof">Solo-CHIMPS proof <small>BTD6 Index 2MP</small></h2>
   {% if tm.proven %}
-  <p class="panel-b">{{ t.name }} has a recorded single-tower CHIMPS win on <b>{{ tm.proven|length }}</b> of the {{ ctx.maps_with_names }} maps whose 2MP names were captured.</p>
+  <p class="panel-b">{{ t.name }} has a recorded single-tower CHIMPS win on <b>{{ tm.proven|length }}</b> of the {{ ctx.maps_with_names }} maps with a named list.</p>
   <ul class="maplist-inline">
     {% for x in tm.proven %}
     <li><a href="{{ root }}maps/{{ x.map.id }}/">{{ ui.tier_dot(x.map.difficulty) }}{{ x.map.name }}</a> <small class="muted">{{ x.entities|join(', ') }}</small></li>
     {% endfor %}
   </ul>
   {% else %}
-  <p class="panel-b muted">No 2MP entry for {{ t.name }} in the {{ ctx.maps_with_names }} maps whose names were captured.</p>
+  <p class="panel-b muted">No 2MP entry for {{ t.name }} on the {{ ctx.maps_with_names }} maps with a named list.</p>
   {% endif %}
   {% if tm.strong or tm.avoid %}
   <div class="split-2 panel-b">

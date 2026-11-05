@@ -36,14 +36,24 @@
   </a>
 </nav>
 
+{% macro change_rows(groups) -%}
+<ul class="change-list">
+  {% for g in groups %}
+  <li><a class="change-who" href="{{ root }}{{ g.url }}">{{ g.tower.name }}</a><span class="change-items">{% for x in g.changes %}<span><a href="{{ root }}{{ x.url }}">{{ x.upgrade.name }}</a> <span class="change-what">{{ x.text|rich }}</span></span>{% endfor %}</span></li>
+  {% endfor %}
+</ul>
+{%- endmacro %}
 <section class="panel changes" aria-labelledby="ch">
-  <h2 class="panel-h" id="ch">What's in {{ meta.version }}</h2>
-  <ul class="change-list">
-    {% for tname, items in ctx.changes|groupby('tower.name', default='') %}
-    <li><span class="change-who">{{ tname }}</span><span class="change-items">{% for x in items %}<span><a href="{{ root }}{{ x.url }}">{{ x.upgrade.name }}</a><span class="change-what">{{ x.text }}</span></span>{% endfor %}</span></li>
-    {% endfor %}
-  </ul>
-  <p class="panel-b note">Balance changes recorded in the dataset for v57.x. Each one links to the upgrade on its tower page.</p>
+  <h2 class="panel-h" id="ch">What's in {{ meta.version }} <small>biggest changes first</small></h2>
+  {{ change_rows(ctx.change_groups[:4]) }}
+  {% if ctx.change_groups|length > 4 %}
+  {% set rest = ctx.change_groups[4:] %}
+  <details class="more panel-b">
+    <summary class="more-btn">All 57.x changes <span class="more-n">+{{ rest|length }} towers</span></summary>
+    {{ change_rows(rest) }}
+  </details>
+  {% endif %}
+  <p class="panel-b note">Balance changes from v57.0 to v{{ meta.version }}. Each one links to the upgrade on its tower page.</p>
 </section>
 
 <section class="home-facts" aria-labelledby="hf">
@@ -56,5 +66,5 @@
   </dl>
 </section>
 
-<p class="version-stamp">Data for BTD6 <b>v{{ meta.version }}</b>{% if meta.researched %}, checked {{ meta.researched }}{% endif %} · {{ site.name }} {{ site.version }} · prices are Medium unless a page says otherwise</p>
+<p class="version-stamp">Data for BTD6 <b>v{{ meta.version }}</b>{% if meta.researched %}, updated {{ meta.researched }}{% endif %} · {{ site.name }} {{ site.version }} · prices are Medium unless a page says otherwise</p>
 {% endblock %}

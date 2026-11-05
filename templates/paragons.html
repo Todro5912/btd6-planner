@@ -7,7 +7,7 @@
 </div>
 {% include '_subtabs.html' %}
 <div class="toolbar">
-  <p class="lede">A paragon needs every upgrade of its tower unlocked, then its own XP. Farms are the dataset's best Expert run per tower, with Monkey Education.</p>
+  <p class="lede">A paragon needs every upgrade of its tower unlocked, then its own XP. Farms are the best Expert Deflation run per tower, with Monkey Education.</p>
   {{ ui.diff_toggle() }}
 </div>
 <h2 class="h2" id="paragons">Paragons</h2>
@@ -39,7 +39,7 @@
   <tr>
     <th scope="row"><a href="{{ root }}{{ tm.url }}#farm">{{ tm.t.name }}</a></th>
     <td class="wrapcell">{{ link_maps(f.map, root) }}<br><small class="muted">{{ f.mode }}</small></td>
-    <td class="wrapcell">{{ f.setup }}</td>
+    <td class="wrapcell">{{ f.setup|rich }}</td>
     <td class="n">{{ f.xpPerRun|num }}</td>
     <td class="n">{{ f.runsToT5 if f.runsToT5 is not none else '–' }}</td>
     <td class="n">{{ f.runsToParagon if f.runsToParagon is not none else '–' }}</td>

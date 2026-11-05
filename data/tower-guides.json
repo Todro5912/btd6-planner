@@ -59,7 +59,7 @@
   ],
   "buyTiming": "Base/0-0-2 on R1-R24 for camo; Juggernaut by R28-R38 for lead; Sharp Shooter R40s; Ultra-Jugg R50-R60; PMFC late CHIMPS only.",
   "synergies": [
-   "Alchemist Berserker Brew (Jugg/UJ; Brew hurts Sharp Shooter per ch01)",
+   "Alchemist Berserker Brew (Jugg/UJ; Brew hurts Sharp Shooter)",
    "Primary Training/Mentoring Village (Primary pierce/range)",
    "Jungle Drums",
    "Overclock on Ultra-Jugg",
@@ -77,7 +77,17 @@
    "boss events (Apex)",
    "eco/farming (cheap XP target)"
   ],
-  "summary": "Best first Paragon target: ~$245k Apex, 622,300 XP total, mono-Deflation capable once Juggernaut is unlocked."
+  "summary": "Best first Paragon target: ~$245k Apex, 622,300 XP total, mono-Deflation capable once Juggernaut is unlocked.",
+  "_src": {
+   "synergies": [
+    "Alchemist Berserker Brew (Jugg/UJ; Brew hurts Sharp Shooter per ch01)",
+    "Primary Training/Mentoring Village (Primary pierce/range)",
+    "Jungle Drums",
+    "Overclock on Ultra-Jugg",
+    "Gwendolin Heat It Up"
+   ]
+  },
+  "lead": "A cheap, reliable early-game popper. Upgrades add camo, then Juggernaut for Lead and Ceramics, and it's the cheapest tower to take to a Paragon."
  },
  {
   "towerId": "boomerang",
@@ -155,7 +165,8 @@
    "freeplay (knockback)",
    "CHIMPS (0-2-2 early)"
   ],
-  "summary": "Needs a camo helper for Deflation (~8% XP share); Glaive Dominus is the 3rd-cheapest Paragon by XP (634k)."
+  "summary": "Needs a camo helper for Deflation (~8% XP share); Glaive Dominus is the 3rd-cheapest Paragon by XP (634k).",
+  "lead": "An early-game popper whose rangs bounce through crowds and Ceramics, and pop Lead from x-x-2. It never sees camo, so bring a helper."
  },
  {
   "towerId": "bomb",
@@ -231,7 +242,8 @@
    "CHIMPS (MOAB Assassin)",
    "boss events (Eliminator, B.O.M.B.)"
   ],
-  "summary": "Cheap MOAB answer; farm with a 3-0-0 Sub helper (~7% share). 888k XP to B.O.M.B."
+  "summary": "Cheap MOAB answer; farm with a 3-0-0 Sub helper (~7% share). 888k XP to B.O.M.B.",
+  "lead": "Splash damage for crowds and Lead, and later a strong MOAB killer. Explosions can't pop Black or Zebra, and it has no camo upgrade."
  },
  {
   "towerId": "tack",
@@ -305,7 +317,8 @@
    "races (Maelstrom)",
    "boss events (Crucible)"
   ],
-  "summary": "Second-cheapest Paragon (Crucible $200k, 623k XP). Needs one cheap decamo helper in Deflation."
+  "summary": "Second-cheapest Paragon (Crucible $200k, 623k XP). Needs one cheap decamo helper in Deflation.",
+  "lead": "A short-range crowd popper for tight corners: put it right next to the track. It needs help with camo."
  },
  {
   "towerId": "ice",
@@ -375,7 +388,8 @@
    "CHIMPS (support)",
    "freeplay (Herald/Super Brittle)"
   ],
-  "summary": "Lowest all-upgrade XP of any Paragon tower (118k) but the Herald unlock is 750k. Farm with Silas; share in normal games is low."
+  "summary": "Lowest all-upgrade XP of any Paragon tower (118k) but the Herald unlock is 750k. Farm with Silas; share in normal games is low.",
+  "lead": "A support tower that freezes and slows Bloons to buy time. Embrittlement makes Bloons take extra damage from every tower."
  },
  {
   "towerId": "glue",
@@ -394,7 +408,12 @@
    "runsToT5Base": 3,
    "runsToParagonBase": null,
    "monoDeflation": "no",
-   "caveat": "Round 3: the Mortar 0-0-3 Signal Flare decamo has the same flaw as the rejected Sniper plan: one fixed reticle covers only one of Infernal's two alternating lanes (odd top, even bottom). Glue cannot target camo, so camo rounds on the other lane leak. Use a Village 0-2-0 Radar ($2,930 Easy) within reach of the Glues instead, or run it on a single-lane Expert map. Untested (calc)."
+   "_src": {
+    "caveat": "Round 3: the Mortar 0-0-3 Signal Flare decamo has the same flaw as the rejected Sniper plan: one fixed reticle covers only one of Infernal's two alternating lanes (odd top, even bottom). Glue cannot target camo, so camo rounds on the other lane leak. Use a Village 0-2-0 Radar ($2,930 Easy) within reach of the Glues instead, or run it on a single-lane Expert map. Untested (calc)."
+   },
+   "notes_internal": {
+    "caveat": "Round 3: the Mortar 0-0-3 Signal Flare decamo has the same flaw as the rejected Sniper plan: one fixed reticle covers only one of Infernal's two alternating lanes (odd top, even bottom). Glue cannot target camo, so camo rounds on the other lane leak. Use a Village 0-2-0 Radar ($2,930 Easy) within reach of the Glues instead, or run it on a single-lane Expert map. Untested {calc}."
+   }
   },
   "unlockOrder": [
    "2-0-0 Corrosive (700)",
@@ -450,7 +469,8 @@
    "freeplay (Super Glue)",
    "low-cost"
   ],
-  "summary": "No Paragon; low priority XP. Most realistic farm is Deflation with a decamo Mortar and Sauda."
+  "summary": "No Paragon; low priority XP. Most realistic farm is Deflation with a decamo Mortar and Sauda.",
+  "lead": "A cheap slowing tower that holds Bloons in place for your damage dealers. It does no damage at base and can't target camo."
  },
  {
   "towerId": "desperado",
@@ -521,7 +541,11 @@
    "low-cost",
    "boss events (Blazing Sun)"
   ],
-  "summary": "Mono-farmable from tier 3. Note: Desperado is Primary (bloonswiki), so no Elite Military bonus."
+  "summary": "Mono-farmable from tier 3. Note: Desperado is Primary, so no Elite Military bonus.",
+  "_src": {
+   "summary": "Mono-farmable from tier 3. Note: Desperado is Primary (bloonswiki), so no Elite Military bonus."
+  },
+  "lead": "An early-game gunslinger with strong single-target damage and camo upgrades. A solid CHIMPS starter."
  },
  {
   "towerId": "sniper",
@@ -544,13 +568,15 @@
    "runsToParagonNoMK": 18,
    "runsToT5Base": 3,
    "runsToParagonBase": 15,
-   "calc": "share 16,480/19,410 = 0.849; no MK 59,735 x 0.849 = 50,718; MK 67,739 x 0.849 = 57,514; T5 ceil(144,200/57,514) = 3 (no MK ceil(145,200/50,718) = 3); Paragon ceil(894,200/57,514) = 16 (no MK ceil(895,200/50,718) = 18). XP totals from towers.json (145,200 + 750,000), EMT -1,000 with MK",
-   "rank2": "Etienne ($555 Easy) instead of Quincy; once Etienne shows level 8 (UAV camo, ~end of R48, unverified) sell the Village (~$2,050) and add a 3rd Sniper 1-0-2 ($1,355): ~55,496 XP/run no MK (62,933 MK) -> 3 runs to T5, 17 (15 MK) to Paragon",
-   "rejected": "Mortar 0-0-3 Signal Flare decamo plan fails on Infernal: one fixed reticle, lanes alternate (odd top / even bottom); R56 full leak 1,880 lives vs 200",
-   "alternative100pct": "1x 4-2-0 + 2x 2-3-0 + Sauda ($18,220 Easy, 100% share, 67,739 XP/run MK, 14 runs to Paragon) - covers camo/lead in-tower but has no attack-speed upgrades; DPS untested",
-   "verified": "VERIFY-3 section 3 ranking; untested in game",
    "monoDeflation": "yes",
-   "indexEvidence": "Index v57.4 (btd6index.win, fetched 2026-11-05): Infernal lanes 19.3 RBS each (longest Expert; Glacial Trail next at 17.7), no LoS blockers, water yes; Elite Sniper and Elite Defender both have 2MP (solo CHIMPS) completions on Infernal."
+   "notes_internal": {
+    "rank2": "Etienne ($555 Easy) instead of Quincy; once Etienne shows level 8 (UAV camo, ~end of R48, unverified) sell the Village (~$2,050) and add a 3rd Sniper 1-0-2 ($1,355): ~55,496 XP/run no MK (62,933 MK) -> 3 runs to T5, 17 (15 MK) to Paragon",
+    "verified": "VERIFY-3 section 3 ranking; untested in game",
+    "indexEvidence": "Index v57.4 (btd6index.win, fetched 2026-11-05): Infernal lanes 19.3 RBS each (longest Expert; Glacial Trail next at 17.7), no LoS blockers, water yes; Elite Sniper and Elite Defender both have 2MP (solo CHIMPS) completions on Infernal.",
+    "calc": "share 16,480/19,410 = 0.849; no MK 59,735 x 0.849 = 50,718; MK 67,739 x 0.849 = 57,514; T5 ceil(144,200/57,514) = 3 (no MK ceil(145,200/50,718) = 3); Paragon ceil(894,200/57,514) = 16 (no MK ceil(895,200/50,718) = 18). XP totals from towers.json (145,200 + 750,000), EMT -1,000 with MK",
+    "rejected": "Mortar 0-0-3 Signal Flare decamo plan fails on Infernal: one fixed reticle, lanes alternate (odd top / even bottom); R56 full leak 1,880 lives vs 200",
+    "alternative100pct": "1x 4-2-0 + 2x 2-3-0 + Sauda ($18,220 Easy, 100% share, 67,739 XP/run MK, 14 runs to Paragon) - covers camo/lead in-tower but has no attack-speed upgrades; DPS untested"
+   }
   },
   "unlockOrder": [
    "1-0-0 FMJ (120) and 0-1-0 NVG (200)",
@@ -609,7 +635,8 @@
    "safe/beginner",
    "eco (Supply Drop, non-CHIMPS)"
   ],
-  "summary": "Military (+5% XP, +1,000 one-off). Mono-farmable; S.P.I.D.E.R. needs 895,200 XP (894,200 after the EMT +1,000)."
+  "summary": "Military (+5% XP, +1,000 one-off). Mono-farmable; S.P.I.D.E.R. needs 895,200 XP (894,200 after the EMT +1,000).",
+  "lead": "Hits any Bloon it can see, anywhere on the map, as long as nothing blocks its line of sight. Use it for camo, Lead and MOAB answers, or Supply Drop cash outside CHIMPS."
  },
  {
   "towerId": "sub",
@@ -686,7 +713,8 @@
    "CHIMPS (water maps)",
    "boss events (Nautic Siege Core)"
   ],
-  "summary": "Water-locked but mono-farmable on Dark Castle. Biggest XP walls: First Strike 20k, Pre-emptive 45k, Paragon 1M."
+  "summary": "Water-locked but mono-farmable on Dark Castle. Biggest XP walls: First Strike 20k, Pre-emptive 45k, Paragon 1M.",
+  "lead": "A water-only tower that is strong early and grows into a MOAB killer. Only usable on maps with water."
  },
  {
   "towerId": "buccaneer",
@@ -763,7 +791,8 @@
    "boss events/freeplay (Navarch)",
    "safe/beginner (water)"
   ],
-  "summary": "Navarch is the easiest high-Degree Paragon because Merchantman income feeds power. Mono-farmable on Dark Castle."
+  "summary": "Navarch is the easiest high-Degree Paragon because Merchantman income feeds power. Mono-farmable on Dark Castle.",
+  "lead": "A water-only tower that makes money (Merchantman, Trade Empire) and handles MOABs. Only usable on maps with water."
  },
  {
   "towerId": "ace",
@@ -810,7 +839,10 @@
    {
     "code": "2-0-3",
     "cost": 5400,
-    "use": "Neva-Miss (bloonswiki Deflation pick)"
+    "use": "Neva-Miss (a good Deflation pick)",
+    "_src": {
+     "use": "Neva-Miss (bloonswiki Deflation pick)"
+    }
    },
    {
     "code": "2-3-0",
@@ -841,7 +873,8 @@
    "eco games (AFK)",
    "races (Bomber+)"
   ],
-  "summary": "Strongest Paragon (Doomship) and the best-known AFK Deflation farm; 1.16M XP to Paragon (1.16M minus 1,000 EMT)."
+  "summary": "Strongest Paragon (Doomship) and the best-known AFK Deflation farm; 1.16M XP to Paragon (1.16M minus 1,000 EMT).",
+  "lead": "A late-game MOAB and boss killer. Weak early on, but its Paragon is the strongest in the game."
  },
  {
   "towerId": "heli",
@@ -911,7 +944,8 @@
    "CHIMPS (MOAB Shove)",
    "safe/beginner (Pursuit)"
   ],
-  "summary": "No Paragon; heavy T5 XP (Apache Prime 55k, Comanche Commander 50k). Mono-farmable."
+  "summary": "No Paragon; heavy T5 XP (Apache Prime 55k, Comanche Commander 50k). Mono-farmable.",
+  "lead": "A mobile flying tower that ignores obstacles. Best for late-game MOAB damage and pushing blimps back."
  },
  {
   "towerId": "mortar",
@@ -986,7 +1020,8 @@
    "safe/beginner (no placement skill)",
    "boss events"
   ],
-  "summary": "Mono-farmable and nearly AFK. Also the best land decamo helper (0-0-3 Signal Flare) for other towers' farms."
+  "summary": "Mono-farmable and nearly AFK. Also the best land decamo helper (0-0-3 Signal Flare) for other towers' farms.",
+  "lead": "Fires explosive shells at a spot you choose, so placement barely matters. Good for crowds and Lead."
  },
  {
   "towerId": "dartling",
@@ -1056,7 +1091,8 @@
    "freeplay",
    "CHIMPS (BADS)"
   ],
-  "summary": "No Paragon and the highest Military T5 XP (Ray of Doom 75k, M.A.D 60k)."
+  "summary": "No Paragon and the highest Military T5 XP (Ray of Doom 75k, M.A.D 60k).",
+  "lead": "A rapid-fire gun that shoots where you aim it. Weak early, but strong against MOABs and bosses late."
  },
  {
   "towerId": "wizard",
@@ -1133,7 +1169,8 @@
    "boss events (Magus)",
    "safe/beginner"
   ],
-  "summary": "~1.14M XP to Magus Perfectus (143,290 for all 15 incl. an estimated 150 for Intense Magic, + 1,000,000); third-highest Paragon total after Ace and Sub. Deflation-farmable: Necromancer undead cover Purple in-tower; Ezili is insurance."
+  "summary": "~1.14M XP to Magus Perfectus (143,290 for all 15 incl. an estimated 150 for Intense Magic, + 1,000,000); third-highest Paragon total after Ace and Sub. Deflation-farmable: Necromancer undead cover Purple in-tower; Ezili is insurance.",
+  "lead": "A flexible Magic tower that pops Lead, sees and strips camo with upgrades, and handles DDTs. Prince of Darkness is a CHIMPS favourite."
  },
  {
   "towerId": "super",
@@ -1206,7 +1243,8 @@
    "boss events",
    "eco/farming (late)"
   ],
-  "summary": "Most XP-expensive tower (493,850 XP for all 15; T5s alone 335k) and no Paragon. Level it last unless you love Sun Temples."
+  "summary": "Most XP-expensive tower (493,850 XP for all 15; T5s alone 335k) and no Paragon. Level it last unless you love Sun Temples.",
+  "lead": "The big late-game damage dealer. Expensive early, but its tier 5s carry freeplay and boss events."
  },
  {
   "towerId": "ninja",
@@ -1283,7 +1321,8 @@
    "safe/beginner",
    "low-cost"
   ],
-  "summary": "Fourth-cheapest Paragon by XP (677k). Mono-farmable; Ascended Shadow is a freeplay staple."
+  "summary": "Fourth-cheapest Paragon by XP (677k). Mono-farmable; Ascended Shadow is a freeplay staple.",
+  "lead": "A cheap early tower that sees camo from the start. Upgrades add camo removal and slowing; shurikens can't pop Lead."
  },
  {
   "towerId": "alchemist",
@@ -1361,7 +1400,8 @@
    "boss events",
    "eco (Rubber to Gold)"
   ],
-  "summary": "Highest value per dollar but low XP share as a helper. Use the Alchemist+Ninja split farm to level both at once."
+  "summary": "Highest value per dollar but low XP share as a helper. Use the Alchemist+Ninja split farm to level both at once.",
+  "lead": "A support tower that buffs nearby towers (Berserker Brew) and pops Lead. It never sees camo and does little damage alone."
  },
  {
   "towerId": "druid",
@@ -1439,7 +1479,8 @@
    "boss events (Root of all Nature)",
    "safe/beginner"
   ],
-  "summary": "Mono-farmable with Obyn; Root of all Nature needs 903,510 XP total."
+  "summary": "Mono-farmable with Obyn; Root of all Nature needs 903,510 XP total.",
+  "lead": "An early popper that can earn passive cash with Jungle's Bounty (not in CHIMPS). It needs upgrades for Lead and camo."
  },
  {
   "towerId": "mermonkey",
@@ -1502,7 +1543,8 @@
    "CHIMPS (Lord of the Abyss)",
    "low-cost"
   ],
-  "summary": "No Paragon but huge T5 XP (190k total in T5s). Mono-farmable from tier 3."
+  "summary": "No Paragon but huge T5 XP (190k total in T5s). Mono-farmable from tier 3.",
+  "lead": "An early-game Magic tower that can sit on land or water, with slowing and support paths. Its range is shorter on land."
  },
  {
   "towerId": "skywarden",
@@ -1569,9 +1611,17 @@
   "playstyles": [
    "safe/beginner",
    "low-cost",
-   "CHIMPS (unverified)"
+   "CHIMPS {unverified}"
   ],
-  "summary": "No Paragon; ~150.7k XP for all upgrades. Mono-farmable on paper; recheck after each patch."
+  "summary": "No Paragon; ~150.7k XP for all upgrades. Mono-farmable on paper; recheck after each patch.",
+  "_src": {
+   "playstyles": [
+    "safe/beginner",
+    "low-cost",
+    "CHIMPS (unverified)"
+   ]
+  },
+  "lead": "The newest Magic tower: an early support pick that buffs nearby towers' range and gets camo with upgrades. Expect balance patches."
  },
  {
   "towerId": "farm",
@@ -1646,7 +1696,8 @@
    "freeplay",
    "boss events (non-CHIMPS)"
   ],
-  "summary": "Level it inside normal Hard/Impoppable eco games; Deflation only as a share sponge."
+  "summary": "Level it inside normal Hard/Impoppable eco games; Deflation only as a share sponge.",
+  "lead": "Makes money every round so you can afford bigger towers later. It does no damage and is banned in CHIMPS."
  },
  {
   "towerId": "spike",
@@ -1717,7 +1768,8 @@
    "boss events (Carpet, MMMF)",
    "freeplay"
   ],
-  "summary": "One of the easiest mono-farms (Dark Castle). 1.14M XP to MMMF."
+  "summary": "One of the easiest mono-farms (Dark Castle). 1.14M XP to MMMF.",
+  "lead": "Lays spikes on the track to catch whatever gets past your defence. It sees camo and makes a strong backstop near the exit."
  },
  {
   "towerId": "village",
@@ -1793,7 +1845,8 @@
    "eco (Monkey City)",
    "freeplay"
   ],
-  "summary": "Highest utility per XP in the game; level it via split farms and normal games."
+  "summary": "Highest utility per XP in the game; level it via split farms and normal games.",
+  "lead": "Buffs every tower in its radius: attack speed, range, camo detection and discounts. It does no damage itself."
  },
  {
   "towerId": "engineer",
@@ -1870,7 +1923,8 @@
    "eco (Bloon Trap)",
    "freeplay"
   ],
-  "summary": "Overclock is one of the most valuable T4s in the game. The all-Engineer Deflation farm covers every Bloon type but lacks a blimp answer inside $20k (Bloon Trap can't catch MOAB-class), so bring a blimp helper."
+  "summary": "Overclock is one of the most valuable T4s in the game. The all-Engineer Deflation farm covers every Bloon type but lacks a blimp answer inside $20k (Bloon Trap can't catch MOAB-class), so bring a blimp helper.",
+  "lead": "A cheap early tower that becomes a top support pick: Overclock speeds up another tower. Sentries and Bloon Traps add damage and cash."
  },
  {
   "towerId": "beast",
@@ -1931,6 +1985,7 @@
    "CHIMPS (T-Rex)",
    "boss events (T5s)"
   ],
-  "summary": "Cheap tiers 1-4 (21,050 XP) but brutal T5 XP (300k). Farm tiers 3-4 early, T5s last."
+  "summary": "Cheap tiers 1-4 (21,050 XP) but brutal T5 XP (300k). Farm tiers 3-4 early, T5s last.",
+  "lead": "Raises fish, dinosaurs and birds that grab, drag and stomp Bloons, up to blimps. Short range, and Alchemist buffs don't affect it."
  }
 ]

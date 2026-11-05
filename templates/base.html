@@ -33,14 +33,15 @@
 <main id="main" class="wrap{% block mainclass %}{% endblock %}">
 {{ ui.crumbs(crumbs, root) }}
 {% block main %}{% endblock %}
+{% if about %}{{ ui.about_data(about) }}{% endif %}
 </main>
 <footer class="foot">
   <div class="foot-in">
     <p class="disclaimer"><b>Unofficial fan site.</b> Not affiliated with or endorsed by Ninja Kiwi. Bloons and Bloons TD 6 are their trademarks. No game art is used here.</p>
     <dl class="foot-facts">
-      <div><dt>Data</dt><dd>BTD6 v{{ meta.version }}{% if meta.researched %}, checked {{ meta.researched }}{% endif %}</dd></div>
+      <div><dt>Data</dt><dd>BTD6 v{{ meta.version }}{% if meta.researched %}, updated {{ meta.researched }}{% endif %}</dd></div>
       <div><dt>Site</dt><dd>{{ site.name }} {{ site.version }}</dd></div>
-      <div><dt>Credits</dt><dd><a href="https://www.bloonswiki.com/" rel="noopener">Bloons Wiki</a> (CC BY-SA), <a href="https://btd6index.win/" rel="noopener">BTD6 Index</a>, <a href="https://github.com/hemisemidemipresent/cyberquincy" rel="noopener">Cyber Quincy</a>, Ninja Kiwi patch notes. Made by <a href="{{ site.authorUrl }}" rel="noopener">{{ site.author }}</a>.</dd></div>
+      <div class="credits"><dt>Credits</dt><dd><a href="https://www.bloonswiki.com/" rel="noopener">Bloons Wiki</a> (CC BY-SA), <a href="https://btd6index.win/" rel="noopener">BTD6 Index</a>, <a href="https://github.com/hemisemidemipresent/cyberquincy" rel="noopener">Cyber Quincy</a>, Ninja Kiwi patch notes. Made by <a href="{{ site.authorUrl }}" rel="noopener">{{ site.author }}</a>.</dd></div>
     </dl>
     <div class="foot-row">
       <a href="{{ root }}a-z/">A–Z index</a>

@@ -215,7 +215,10 @@
    "incomePerRound": 140,
    "payback": 8.6,
    "chimpsLegal": false,
-   "notes": "L1 $90, L2-7 $140, L8-10 $250, L11-14 $1,000, L15-16 $2,500, L17-20 $5,000 (fandom + biligame wikis; an older fan site lists 100/150/250/300/500/800)"
+   "notes": "L1 $90, L2-7 $140, L8-10 $250, L11-14 $1,000, L15-16 $2,500, L17-20 $5,000",
+   "_src": {
+    "notes": "L1 $90, L2-7 $140, L8-10 $250, L11-14 $1,000, L15-16 $2,500, L17-20 $5,000 (fandom + biligame wikis; an older fan site lists 100/150/250/300/500/800)"
+   }
   },
   {
    "id": "merchantman",
@@ -245,7 +248,10 @@
    "incomePerRound": 500,
    "payback": 63.7,
    "chimpsLegal": false,
-   "notes": "own base income unverified (>= $500 assumed); +$20 per Favored Trades and +$10 per Merchantman on the map (max 20 boats)"
+   "notes": "own base income {unverified}, at least $500 assumed; +$20 per Favored Trades and +$10 per Merchantman on the map (max 20 boats)",
+   "_src": {
+    "notes": "own base income unverified (>= $500 assumed); +$20 per Favored Trades and +$10 per Merchantman on the map (max 20 boats)"
+   }
   },
   {
    "id": "supply-drop",
@@ -255,7 +261,10 @@
    "incomePerRound": 550,
    "payback": 19.5,
    "chimpsLegal": false,
-   "notes": "$1,100 crate per 90s ability; income/round assumes ~1 crate every 2 rounds (unverified)"
+   "notes": "$1,100 crate per 90s ability; income per round assumes ~1 crate every 2 rounds {unverified}",
+   "_src": {
+    "notes": "$1,100 crate per 90s ability; income/round assumes ~1 crate every 2 rounds (unverified)"
+   }
   },
   {
    "id": "lead-to-gold",
@@ -265,7 +274,10 @@
    "incomePerRound": 0,
    "payback": null,
    "chimpsLegal": false,
-   "notes": "+$50 per Lead it pops (not cut by per-pop reduction); round-dependent (e.g. R28 $300, R59 $2,500); CHIMPS after 57.1: conflicting, verify in game (assume none)"
+   "notes": "+$50 per Lead it pops (not cut by per-pop reduction); round-dependent (e.g. R28 $300, R59 $2,500); in CHIMPS after 57.1 {unverified}, counted as none",
+   "_src": {
+    "notes": "+$50 per Lead it pops (not cut by per-pop reduction); round-dependent (e.g. R28 $300, R59 $2,500); CHIMPS after 57.1: conflicting, verify in game (assume none)"
+   }
   },
   {
    "id": "rubber-to-gold",
@@ -325,7 +337,10 @@
    "incomePerRound": 1200,
    "payback": null,
    "chimpsLegal": false,
-   "notes": "cost is $5,000 PER Banana Farm absorbed (on top of a $15,200 0-0-4 City); min $1,200/round (10 crates); crate value scales with absorbed farm value (formula unverified); payback not meaningful because it replaces the farms' income"
+   "notes": "cost is $5,000 PER Banana Farm absorbed (on top of a $15,200 0-0-4 City); min $1,200/round (10 crates); crate value scales with absorbed farm value , formula {unverified}; payback not meaningful because it replaces the farms' income",
+   "_src": {
+    "notes": "cost is $5,000 PER Banana Farm absorbed (on top of a $15,200 0-0-4 City); min $1,200/round (10 crates); crate value scales with absorbed farm value (formula unverified); payback not meaningful because it replaces the farms' income"
+   }
   }
  ],
  "noIncome": [
@@ -404,7 +419,10 @@
    "dpsVsMoab": 32.7,
    "dpsPerK": 9.6,
    "source": "BW:Sharp_Shooter (v55.1 stats)",
-   "caveat": "crit averaged; v57 crit 60 (unverified) would add ~10%"
+   "caveat": "crit averaged; v57 crit 60 {unverified} would add ~10%",
+   "_src": {
+    "caveat": "crit averaged; v57 crit 60 (unverified) would add ~10%"
+   }
   },
   {
    "build": "Super Monkey (base) 0-0-0",
@@ -459,7 +477,10 @@
    "dpsVsMoab": 21.9,
    "dpsPerK": 6.34,
    "source": "BW:Sharp_Shooter (v55.1 stats)",
-   "caveat": "crit 50 every 10th shot averaged; v57 crit 60 (ch.07, unverified) would add ~10%"
+   "caveat": "crit 50 every 10th shot averaged; v57 crit 60 {unverified} would add ~10%",
+   "_src": {
+    "caveat": "crit 50 every 10th shot averaged; v57 crit 60 (ch.07, unverified) would add ~10%"
+   }
   },
   {
    "build": "Plasma Accelerator 4-2-0",
@@ -503,7 +524,10 @@
    "dpsVsMoab": 140.8,
    "dpsPerK": 5.65,
    "source": "BW:Crossbow_Master (v55.1 stats)",
-   "caveat": "crit 80 every 5th shot. v57 change (2 parallel bolts at half attack speed per ch.07/towers.json) roughly cancels out on one target: not applied (unverified)"
+   "caveat": "crit 80 every 5th shot. The v57 change (2 parallel bolts at half attack speed) roughly cancels out on one target, so it isn't applied {unverified}",
+   "_src": {
+    "caveat": "crit 80 every 5th shot. v57 change (2 parallel bolts at half attack speed per ch.07/towers.json) roughly cancels out on one target: not applied (unverified)"
+   }
   },
   {
    "build": "Dart Monkey (base) 0-0-0",
@@ -525,7 +549,10 @@
    "dpsVsMoab": 333.3,
    "dpsPerK": 4.61,
    "source": "BW:Dark_Champion; BW:Dark_Knight",
-   "caveat": "'+100% attack speed' applied to the 2-0-3 cooldown (calc)"
+   "caveat": "'+100% attack speed' applied to the 2-0-3 cooldown {calc}",
+   "_src": {
+    "caveat": "'+100% attack speed' applied to the 2-0-3 cooldown (calc)"
+   }
   },
   {
    "build": "Arcane Spike 4-0-2",

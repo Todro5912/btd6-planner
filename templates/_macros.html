@@ -53,7 +53,7 @@
 {%- endmacro %}
 
 {% macro stamp(version=None, updated=None) -%}
-<span class="stamp"><b>v{{ version or meta.version }}</b>{% if updated %} · checked {{ updated }}{% endif %}</span>
+<span class="stamp"><b>v{{ version or meta.version }}</b>{% if updated %} · updated {{ updated }}{% endif %}</span>
 {%- endmacro %}
 
 {% macro diff_toggle() -%}
@@ -62,6 +62,23 @@
 <button type="button" role="radio" data-diff="{{ k }}" aria-checked="{{ 'true' if k == 'medium' else 'false' }}">{{ label }} <small>×{{ mult[k] }}</small></button>
 {% endfor %}
 </div>
+{%- endmacro %}
+
+{% macro about_data(a) -%}
+<details class="about-data">
+  <summary>About this data</summary>
+  <div class="about-b">
+    <h2 class="about-h">Sources</h2>
+    <ul class="about-list">
+      {% for name, url, what in a.sources %}<li>{% if url %}<a href="{{ url }}" rel="noopener">{{ name }}</a>{% else %}<b>{{ name }}</b>{% endif %}: {{ what }}</li>{% endfor %}
+    </ul>
+    {% if a.notes %}
+    <h2 class="about-h">How the numbers were made</h2>
+    <ul class="about-list">{% for n in a.notes %}<li>{{ n }}</li>{% endfor %}</ul>
+    {% endif %}
+    {% if a.checked %}<p>Checked against these sources on {{ a.checked }}, game version {{ meta.version }}.</p>{% endif %}
+  </div>
+</details>
 {%- endmacro %}
 
 {% macro tower_link(tm, root) -%}<a href="{{ root }}{{ tm.url }}">{{ tm.t.name }}</a>{%- endmacro %}

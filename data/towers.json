@@ -666,7 +666,13 @@
     "Bloon Crush",
     "Bomb Blitz"
    ],
-   "notes": "Explosions can't pop Black/Zebra and there is no camo upgrade. Base cost history $600->$525->$375 (fandom still shows $525). Striker Jones lets explosives pop Black."
+   "notes": "Explosions can't pop Black/Zebra and there is no camo upgrade. Base cost history $600->$525->$375. Striker Jones lets explosives pop Black.",
+   "_src": {
+    "notes": "Explosions can't pop Black/Zebra and there is no camo upgrade. Base cost history $600->$525->$375 (fandom still shows $525). Striker Jones lets explosives pop Black."
+   },
+   "about": [
+    "Some older wiki pages still show the $525 base price."
+   ]
   },
   {
    "id": "tack",
@@ -700,7 +706,10 @@
       "cost": 220,
       "xp": 550,
       "grants": [],
-      "effect": "Attack speed up again (v56: $300->$220; alt: $300 on pre-v56 wiki stats)"
+      "effect": "Attack speed up again (v56: $300->$220)",
+      "_src": {
+       "effect": "Attack speed up again (v56: $300->$220; alt: $300 on pre-v56 wiki stats)"
+      }
      },
      {
       "tier": 3,
@@ -783,7 +792,10 @@
       "cost": 150,
       "xp": 150,
       "grants": [],
-      "effect": "10 tacks per volley (v56: $110->$150; alt: $110)"
+      "effect": "10 tacks per volley (v56: $110->$150)",
+      "_src": {
+       "effect": "10 tacks per volley (v56: $110->$150; alt: $110)"
+      }
      },
      {
       "tier": 2,
@@ -791,7 +803,10 @@
       "cost": 150,
       "xp": 490,
       "grants": [],
-      "effect": "12 tacks per volley (v56: $110->$150; alt: $110)"
+      "effect": "12 tacks per volley (v56: $110->$150)",
+      "_src": {
+       "effect": "12 tacks per volley (v56: $110->$150; alt: $110)"
+      }
      },
      {
       "tier": 3,
@@ -926,7 +941,10 @@
        "buff",
        "decamo"
       ],
-      "effect": "Brittle Bloons take extra damage from all towers; can affect MOAB-class. Projectile and its ice shards remove Camo from Bloons they damage; brittle Bloons lose Lead immunity for 2s (bloonswiki Embrittlement page)."
+      "effect": "Brittle Bloons take extra damage from all towers; can affect MOAB-class. Projectile and its ice shards remove Camo from Bloons they damage; brittle Bloons lose Lead immunity for 2s.",
+      "_src": {
+       "effect": "Brittle Bloons take extra damage from all towers; can affect MOAB-class. Projectile and its ice shards remove Camo from Bloons they damage; brittle Bloons lose Lead immunity for 2s (bloonswiki Embrittlement page)."
+      }
      },
      {
       "tier": 5,
@@ -977,7 +995,10 @@
        "white",
        "moab"
       ],
-      "effect": "Ability: freezes everything incl. White/Zebra and briefly MOABs (v56: $4,000->$4,750; alt: $4,000)"
+      "effect": "Ability: freezes everything incl. White/Zebra and briefly MOABs (v56: $4,000->$4,750)",
+      "_src": {
+       "effect": "Ability: freezes everything incl. White/Zebra and briefly MOABs (v56: $4,000->$4,750; alt: $4,000)"
+      }
      },
      {
       "tier": 5,
@@ -1056,8 +1077,11 @@
     {
      "code": "5-2-0",
      "name": "Super Brittle w/ Deep Freeze",
-     "use": "Best all-round damage + support (wiki)",
-     "popular": true
+     "use": "Best all-round damage + support",
+     "popular": true,
+     "_src": {
+      "use": "Best all-round damage + support (wiki)"
+     }
     },
     {
      "code": "0-2-5",
@@ -1165,7 +1189,10 @@
       "cost": 650,
       "xp": 900,
       "grants": [],
-      "effect": "Glue splatters to many Bloons (v57: $970->$650; alt: $970)"
+      "effect": "Glue splatters to many Bloons (v57: $970->$650)",
+      "_src": {
+       "effect": "Glue splatters to many Bloons (v57: $970->$650; alt: $970)"
+      }
      },
      {
       "tier": 3,
@@ -1183,7 +1210,10 @@
       "grants": [
        "buff"
       ],
-      "effect": "Ability: glues every Bloon on screen; glued Bloons take more damage (v57: $4,000->$4,500; alt: $4,000)"
+      "effect": "Ability: glues every Bloon on screen; glued Bloons take more damage (v57: $4,000->$4,500)",
+      "_src": {
+       "effect": "Ability: glues every Bloon on screen; glued Bloons take more damage (v57: $4,000->$4,500; alt: $4,000)"
+      }
      },
      {
       "tier": 5,
@@ -1247,7 +1277,10 @@
        "moab",
        "slow"
       ],
-      "effect": "Strongly slows/holds MOAB-class (wiki: 18s)"
+      "effect": "Strongly slows/holds MOAB-class (18s)",
+      "_src": {
+       "effect": "Strongly slows/holds MOAB-class (wiki: 18s)"
+      }
      }
     ]
    ],
@@ -1288,7 +1321,13 @@
     "The Bloon Solver",
     "Glue Storm"
    ],
-   "notes": "Base glue does no damage; it slows. Innate flags here mean glue can affect that type (unverified for Lead). Can't target Camo or MOAB-class until MOAB Glue."
+   "notes": "Base glue does no damage; it slows. A tick for a Bloon type means glue can stick to it; for Lead that is {unverified}. Can't target Camo or MOAB-class until MOAB Glue.",
+   "_src": {
+    "notes": "Base glue does no damage; it slows. Innate flags here mean glue can affect that type (unverified for Lead). Can't target Camo or MOAB-class until MOAB Glue."
+   },
+   "about": [
+    "The v57 prices for Glue Splatter ($650) and Glue Strike ($4,500) could not be re-checked; the Bloons Wiki pages still showed $970 and $4,000."
+   ]
   },
   {
    "id": "desperado",
@@ -1436,7 +1475,10 @@
        "moab",
        "slow"
       ],
-      "effect": "Knocks back MOABs (wiki $9,500; v51 notes had $8,500, later raised)"
+      "effect": "Knocks back MOABs ($9,500; it was $8,500 in v51 and raised later)",
+      "_src": {
+       "effect": "Knocks back MOABs (wiki $9,500; v51 notes had $8,500, later raised)"
+      }
      },
      {
       "tier": 5,
@@ -1475,7 +1517,13 @@
     "Golden Justice",
     "The Desert Phantom"
    ],
-   "notes": "Primary class, added v49.0 per bloonswiki (chapter 02 wrongly says Military). Best crosspaths are not documented by the wiki (unverified)."
+   "notes": "Primary class, added in v49.0. Best crosspaths {unverified}.",
+   "_src": {
+    "notes": "Primary class, added v49.0 per bloonswiki (chapter 02 wrongly says Military). Best crosspaths are not documented by the wiki (unverified)."
+   },
+   "about": [
+    "Primary class and v49.0 release from the Bloons Wiki. The Bloons Wiki has no recommended crosspaths for it yet."
+   ]
   },
   {
    "id": "sniper",
@@ -1520,7 +1568,10 @@
       "cost": 2200,
       "xp": 3500,
       "grants": [],
-      "effect": "Big damage, bonus vs Ceramics (alt: $3,000 fandom)"
+      "effect": "Big damage, bonus vs Ceramics",
+      "_src": {
+       "effect": "Big damage, bonus vs Ceramics (alt: $3,000 fandom)"
+      }
      },
      {
       "tier": 4,
@@ -1531,7 +1582,10 @@
        "moab",
        "stun"
       ],
-      "effect": "Stuns MOAB-class Bloons (alt: $5,650 fandom)"
+      "effect": "Stuns MOAB-class Bloons",
+      "_src": {
+       "effect": "Stuns MOAB-class Bloons (alt: $5,650 fandom)"
+      }
      },
      {
       "tier": 5,
@@ -1570,7 +1624,10 @@
       "cost": 2100,
       "xp": 2500,
       "grants": [],
-      "effect": "Bullets bounce to several Bloons (alt: $2,400 fandom)"
+      "effect": "Bullets bounce to several Bloons",
+      "_src": {
+       "effect": "Bullets bounce to several Bloons (alt: $2,400 fandom)"
+      }
      },
      {
       "tier": 4,
@@ -1591,7 +1648,10 @@
        "income",
        "buff"
       ],
-      "effect": "All Snipers attack faster; bigger drops (alt: $14,500 fandom)"
+      "effect": "All Snipers attack faster; bigger drops",
+      "_src": {
+       "effect": "All Snipers attack faster; bigger drops (alt: $14,500 fandom)"
+      }
      }
     ],
     [
@@ -1617,7 +1677,10 @@
       "cost": 2700,
       "xp": 2750,
       "grants": [],
-      "effect": "Attacks 3x as fast (alt: $2,900 fandom; v57 pierce set to 1)"
+      "effect": "Attacks 3x as fast (v57 pierce set to 1)",
+      "_src": {
+       "effect": "Attacks 3x as fast (alt: $2,900 fandom; v57 pierce set to 1)"
+      }
      },
      {
       "tier": 4,
@@ -1637,7 +1700,10 @@
       "grants": [
        "moab"
       ],
-      "effect": "Faster as Bloons advance and lives are lost (alt: $14,700 fandom)"
+      "effect": "Faster as Bloons advance and lives are lost",
+      "_src": {
+       "effect": "Faster as Bloons advance and lives are lost (alt: $14,700 fandom)"
+      }
      }
     ]
    ],
@@ -1658,8 +1724,11 @@
     {
      "code": "0-4-2",
      "name": "Supply Drop w/ Even Faster Firing",
-     "use": "Income outside CHIMPS; wiki-preferred general crosspath",
-     "popular": true
+     "use": "Income outside CHIMPS; a common all-round crosspath",
+     "popular": true,
+     "_src": {
+      "use": "Income outside CHIMPS; wiki-preferred general crosspath"
+     }
     },
     {
      "code": "2-5-0",
@@ -1697,7 +1766,15 @@
     "Elite Defender",
     "Cripple MOAB"
    ],
-   "notes": "Infinite range but needs line of sight: obstacles block it (bloonswiki Line of sight page and Strategy:Sniper Monkey, checked 2026-11-05). Elevated spots help. Per-upgrade costs derived from bloonswiki's cumulative Medium table and its update history; fandom's per-upgrade list is stale (values kept as alt)."
+   "notes": "Infinite range, but it needs line of sight: obstacles block its shots. Elevated spots help.",
+   "_src": {
+    "notes": "Infinite range but needs line of sight: obstacles block it (bloonswiki Line of sight page and Strategy:Sniper Monkey, checked 2026-11-05). Elevated spots help. Per-upgrade costs derived from bloonswiki's cumulative Medium table and its update history; fandom's per-upgrade list is stale (values kept as alt)."
+   },
+   "about": [
+    "Line of sight: Bloons Wiki \"Line of sight\" page and \"Strategy:Sniper Monkey\", checked 2026-11-05.",
+    "Upgrade prices are worked out from the Bloons Wiki's cumulative Medium price table and update history. Fandom's per-upgrade list is out of date; its older prices are kept in the data files.",
+    "Whether S.P.I.D.E.R. Monkey ignores line of sight could not be confirmed."
+   ]
   },
   {
    "id": "sub",
@@ -1749,7 +1826,10 @@
       "cost": 2400,
       "xp": 11000,
       "grants": [],
-      "effect": "Strong radioactive pulse (alt: $2,300 fandom)"
+      "effect": "Strong radioactive pulse",
+      "_src": {
+       "effect": "Strong radioactive pulse (alt: $2,300 fandom)"
+      }
      },
      {
       "tier": 5,
@@ -1759,7 +1839,10 @@
       "grants": [
        "buff"
       ],
-      "effect": "Buffs heroes (XP/cooldowns) and nearby towers' abilities (alt: $29,000/$31,000 fandom)"
+      "effect": "Buffs heroes (XP/cooldowns) and nearby towers' abilities",
+      "_src": {
+       "effect": "Buffs heroes (XP/cooldowns) and nearby towers' abilities (alt: $29,000/$31,000 fandom)"
+      }
      }
     ],
     [
@@ -1847,7 +1930,10 @@
        "moab",
        "fortified"
       ],
-      "effect": "Bonus damage vs MOAB-class and Fortified (alt: $3,000 fandom)"
+      "effect": "Bonus damage vs MOAB-class and Fortified",
+      "_src": {
+       "effect": "Bonus damage vs MOAB-class and Fortified (alt: $3,000 fandom)"
+      }
      },
      {
       "tier": 5,
@@ -1909,7 +1995,13 @@
     "Pre-emptive Strike",
     "Sub Commander"
    ],
-   "notes": "Water only. Advanced Intel needs a camo-seeing tower nearby to hit camo. Fandom costs for Bloontonium, Energizer and AP Darts are older values; bloonswiki update history shows later changes."
+   "notes": "Water only. Advanced Intel needs a camo-seeing tower nearby to hit camo.",
+   "_src": {
+    "notes": "Water only. Advanced Intel needs a camo-seeing tower nearby to hit camo. Fandom costs for Bloontonium, Energizer and AP Darts are older values; bloonswiki update history shows later changes."
+   },
+   "about": [
+    "Bloontonium, Energizer and Armor Piercing Darts prices follow the Bloons Wiki update history; Fandom shows older values."
+   ]
   },
   {
    "id": "buccaneer",
@@ -2020,7 +2112,10 @@
        "moab",
        "income"
       ],
-      "effect": "Hooks several blimps, plunders cash (v56: $27,000->$29,000; alt: $27,000)"
+      "effect": "Hooks several blimps, plunders cash (v56: $27,000->$29,000)",
+      "_src": {
+       "effect": "Hooks several blimps, plunders cash (v56: $27,000->$29,000; alt: $27,000)"
+      }
      }
     ],
     [
@@ -2193,7 +2288,10 @@
       "grants": [
        "lead"
       ],
-      "effect": "Drops explosive pineapples (explosions pop Lead; unverified)"
+      "effect": "Drops explosive pineapples; the explosions pop Lead {unverified}",
+      "_src": {
+       "effect": "Drops explosive pineapples (explosions pop Lead; unverified)"
+      }
      },
      {
       "tier": 2,
@@ -2520,7 +2618,13 @@
     "Comanche Commander",
     "Special Poperations"
    ],
-   "notes": "Base $1,500 per bloonswiki (fandom still $1,600). Mobile flying tower; ignores obstacles."
+   "notes": "Mobile flying tower; ignores obstacles.",
+   "_src": {
+    "notes": "Base $1,500 per bloonswiki (fandom still $1,600). Mobile flying tower; ignores obstacles."
+   },
+   "about": [
+    "Base price $1,500 from the Bloons Wiki; Fandom still lists $1,600."
+   ]
   },
   {
    "id": "mortar",
@@ -2824,7 +2928,10 @@
        "black",
        "ddt"
       ],
-      "effect": "Rockets; can damage all Bloon types (wiki)"
+      "effect": "Rockets; can damage all Bloon types",
+      "_src": {
+       "effect": "Rockets; can damage all Bloon types (wiki)"
+      }
      },
      {
       "tier": 4,
@@ -2904,20 +3011,29 @@
     {
      "code": "2-5-0",
      "name": "M.A.D w/ Laser Shock",
-     "use": "Blimp killer (unverified preferred crosspath)",
-     "popular": false
+     "use": "Blimp killer {unverified}",
+     "popular": false,
+     "_src": {
+      "use": "Blimp killer (unverified preferred crosspath)"
+     }
     },
     {
      "code": "0-4-2",
      "name": "Rocket Storm w/ Powerful Darts",
-     "use": "Strong vs rushes (unverified)",
-     "popular": false
+     "use": "Strong vs rushes {unverified}",
+     "popular": false,
+     "_src": {
+      "use": "Strong vs rushes (unverified)"
+     }
     },
     {
      "code": "5-2-0",
      "name": "Ray of Doom w/ Faster Barrel Spin",
-     "use": "Line damage (unverified)",
-     "popular": false
+     "use": "Line damage {unverified}",
+     "popular": false,
+     "_src": {
+      "use": "Line damage (unverified)"
+     }
     }
    ],
    "tier5Rank": [
@@ -3149,7 +3265,13 @@
     "Archmage",
     "Wizard Lord Phoenix"
    ],
-   "notes": "Magic damage: no Lead or Purple at base. Main tower page could not be read; tier 1-2 costs/XP from individual bloonswiki upgrade pages and update history, cross-checked with fandom crosspath totals. Intense Magic XP not confirmed."
+   "notes": "Magic damage: no Lead or Purple at base. Intense Magic XP {unverified}.",
+   "_src": {
+    "notes": "Magic damage: no Lead or Purple at base. Main tower page could not be read; tier 1-2 costs/XP from individual bloonswiki upgrade pages and update history, cross-checked with fandom crosspath totals. Intense Magic XP not confirmed."
+   },
+   "about": [
+    "The main tower page could not be read: tier 1-2 prices and XP come from the individual Bloons Wiki upgrade pages and update history, cross-checked with Fandom crosspath totals."
+   ]
   },
   {
    "id": "super",
@@ -3293,7 +3415,10 @@
       "grants": [
        "moab"
       ],
-      "effect": "Dark blades with MOAB bonus. Blades are Sharp (pop Purple, not Lead); 1-0-3 makes them Sharp+Energy and 2-0-3 Energy+Plasma (pop Lead, not Purple) (bloonswiki Dark Knight page)."
+      "effect": "Dark blades with MOAB bonus. Blades are Sharp (pop Purple, not Lead); 1-0-3 makes them Sharp+Energy and 2-0-3 Energy+Plasma (pop Lead, not Purple).",
+      "_src": {
+       "effect": "Dark blades with MOAB bonus. Blades are Sharp (pop Purple, not Lead); 1-0-3 makes them Sharp+Energy and 2-0-3 Energy+Plasma (pop Lead, not Purple) (bloonswiki Dark Knight page)."
+      }
      },
      {
       "tier": 4,
@@ -3503,7 +3628,10 @@
        "lead",
        "frozen"
       ],
-      "effect": "Bombs that stun groups. The flash bomb's explosion is Normal damage that can damage every Bloon type, so it pops Lead (bloonswiki Flash Bomb page)."
+      "effect": "Bombs that stun groups. The flash bomb's explosion is Normal damage that can damage every Bloon type, so it pops Lead.",
+      "_src": {
+       "effect": "Bombs that stun groups. The flash bomb's explosion is Normal damage that can damage every Bloon type, so it pops Lead (bloonswiki Flash Bomb page)."
+      }
      },
      {
       "tier": 4,
@@ -3715,7 +3843,10 @@
       "grants": [
        "income"
       ],
-      "effect": "Popping Lead gives bonus cash (+$50 per Lead; CHIMPS after 57.1: conflicting, verify in game)"
+      "effect": "Popping Lead gives bonus cash (+$50 per Lead); in CHIMPS after 57.1 {unverified}",
+      "_src": {
+       "effect": "Popping Lead gives bonus cash (+$50 per Lead; CHIMPS after 57.1: conflicting, verify in game)"
+      }
      },
      {
       "tier": 4,
@@ -3978,8 +4109,11 @@
     {
      "code": "3-2-0",
      "name": "Druid of the Storm w/ Heart of Oak",
-     "use": "Blowback stall (unverified preferred)",
-     "popular": false
+     "use": "Blowback stall {unverified}",
+     "popular": false,
+     "_src": {
+      "use": "Blowback stall (unverified preferred)"
+     }
     }
    ],
    "tier5Rank": [
@@ -4164,8 +4298,11 @@
     {
      "code": "0-3-2",
      "name": "Riptide Champion w/ Echosense Network",
-     "use": "Long-range Ceramic stall spam (wiki)",
-     "popular": true
+     "use": "Long-range Ceramic stall spam",
+     "popular": true,
+     "_src": {
+      "use": "Long-range Ceramic stall spam (wiki)"
+     }
     },
     {
      "code": "5-0-0",
@@ -4213,7 +4350,10 @@
       "grants": [
        "buff"
       ],
-      "effect": "Range buff to nearby towers up to one tier above the Skywarden (v57: $110->$140; alt: $110)"
+      "effect": "Range buff to nearby towers up to one tier above the Skywarden (v57: $110->$140)",
+      "_src": {
+       "effect": "Range buff to nearby towers up to one tier above the Skywarden (v57: $110->$140; alt: $110)"
+      }
      },
      {
       "tier": 2,
@@ -4223,7 +4363,10 @@
       "grants": [
        "camo"
       ],
-      "effect": "Camo detection, long-range stance toggle (v57: $215->$175; alt: $215)"
+      "effect": "Camo detection, long-range stance toggle (v57: $215->$175)",
+      "_src": {
+       "effect": "Camo detection, long-range stance toggle (v57: $215->$175; alt: $215)"
+      }
      },
      {
       "tier": 3,
@@ -4231,7 +4374,10 @@
       "cost": 1200,
       "xp": 2750,
       "grants": [],
-      "effect": "Wind combo mark (v57: $1,650->$1,200; alt: $1,650)"
+      "effect": "Wind combo mark (v57: $1,650->$1,200)",
+      "_src": {
+       "effect": "Wind combo mark (v57: $1,650->$1,200; alt: $1,650)"
+      }
      },
      {
       "tier": 4,
@@ -4241,7 +4387,10 @@
       "grants": [
        "decamo"
       ],
-      "effect": "Disables Camo inside its radius (not permanent) (v57: $3,300->$3,000; alt: $3,300)"
+      "effect": "Disables Camo inside its radius (not permanent) (v57: $3,300->$3,000)",
+      "_src": {
+       "effect": "Disables Camo inside its radius (not permanent) (v57: $3,300->$3,000; alt: $3,300)"
+      }
      },
      {
       "tier": 5,
@@ -4279,7 +4428,10 @@
       "grants": [
        "moab"
       ],
-      "effect": "+3 damage to MOAB, Ceramic and Lead (v57: $1,800->$2,500; alt: $1,800)"
+      "effect": "+3 damage to MOAB, Ceramic and Lead (v57: $1,800->$2,500)",
+      "_src": {
+       "effect": "+3 damage to MOAB, Ceramic and Lead (v57: $1,800->$2,500; alt: $1,800)"
+      }
      },
      {
       "tier": 4,
@@ -4289,7 +4441,10 @@
       "grants": [
        "stun"
       ],
-      "effect": "Thunder combo stuns, up to ZOMGs (v57: $2,000->$3,500, ability 15s->9s; alt: $2,000)"
+      "effect": "Thunder combo stuns, up to ZOMGs (v57: $2,000->$3,500, ability 15s->9s)",
+      "_src": {
+       "effect": "Thunder combo stuns, up to ZOMGs (v57: $2,000->$3,500, ability 15s->9s; alt: $2,000)"
+      }
      },
      {
       "tier": 5,
@@ -4300,7 +4455,10 @@
        "moab",
        "stun"
       ],
-      "effect": "Bonus rises to +9 (v57: $35,000->$32,000; alt: $35,000)"
+      "effect": "Bonus rises to +9 (v57: $35,000->$32,000)",
+      "_src": {
+       "effect": "Bonus rises to +9 (v57: $35,000->$32,000; alt: $35,000)"
+      }
      }
     ],
     [
@@ -4368,8 +4526,11 @@
     {
      "code": "2-x-x",
      "name": "Zephyr Sense crosspath",
-     "use": "Camo for the thunder or ice path (unverified)",
-     "popular": false
+     "use": "Camo for the thunder or ice path {unverified}",
+     "popular": false,
+     "_src": {
+      "use": "Camo for the thunder or ice path (unverified)"
+     }
     }
    ],
    "tier5Rank": [
@@ -4377,7 +4538,13 @@
     "Winter's Mercy",
     "Stormwrath Archon"
    ],
-   "notes": "New in v56.0 (Aug 2026), reworked in v57.0/57.2. Gift Box unlock at 3,500,000 pops. Arrows are sharp-like: no Lead/Frozen/Camo at base. Tier 3-5 values from chapter 02 (bloonswiki); tier 1-2 XP not found. Tier 5 ranking is by price only."
+   "notes": "New in v56.0 (Aug 2026), reworked in v57.0/57.2. Unlocks from the Gift Box at 3,500,000 pops. Arrows are sharp-like: no Lead/Frozen/Camo at base. Tier 1-2 XP is unknown. Tier 5 ranking is by price only.",
+   "_src": {
+    "notes": "New in v56.0 (Aug 2026), reworked in v57.0/57.2. Gift Box unlock at 3,500,000 pops. Arrows are sharp-like: no Lead/Frozen/Camo at base. Tier 3-5 values from chapter 02 (bloonswiki); tier 1-2 XP not found. Tier 5 ranking is by price only."
+   },
+   "about": [
+    "Tier 3-5 prices and XP from the Bloons Wiki; the tier 1-2 pages could not be read."
+   ]
   },
   {
    "id": "farm",
@@ -4590,7 +4757,13 @@
     "Monkey Wall Street",
     "Monkey-Nomics"
    ],
-   "notes": "No attack. Banned in CHIMPS. Fandom page is stale (e.g. Central $100,000, Wall Street $60,000); bloonswiki update history confirms the values used. Banana Salvage XP not found."
+   "notes": "No attack. Banned in CHIMPS. Banana Salvage XP is unknown.",
+   "_src": {
+    "notes": "No attack. Banned in CHIMPS. Fandom page is stale (e.g. Central $100,000, Wall Street $60,000); bloonswiki update history confirms the values used. Banana Salvage XP not found."
+   },
+   "about": [
+    "Prices follow the Bloons Wiki update history; Fandom is out of date (e.g. Central $100,000, Wall Street $60,000)."
+   ]
   },
   {
    "id": "spike",
@@ -4966,7 +5139,10 @@
        "income",
        "buff"
       ],
-      "effect": "+20% income towers in range, free Dart each round (fandom XP: 15,000)"
+      "effect": "+20% income towers in range, free Dart each round",
+      "_src": {
+       "effect": "+20% income towers in range, free Dart each round (fandom XP: 15,000)"
+      }
      },
      {
       "tier": 5,
@@ -4976,7 +5152,10 @@
       "grants": [
        "income"
       ],
-      "effect": "Absorbs Banana Farms into income; real cost $5,000 + $5,000 per absorbed Farm (wiki text)"
+      "effect": "Absorbs Banana Farms into income; real cost $5,000 + $5,000 per absorbed Farm",
+      "_src": {
+       "effect": "Absorbs Banana Farms into income; real cost $5,000 + $5,000 per absorbed Farm (wiki text)"
+      }
      }
     ]
    ],
@@ -5018,7 +5197,13 @@
     "Primary Expertise",
     "Monkeyopolis"
    ],
-   "notes": "No attack: grants tokens describe buffs given to towers in range. Stats page last updated v46.2; prices cross-checked with fandom (match)."
+   "notes": "No attack: the ticks show what it gives towers in range.",
+   "_src": {
+    "notes": "No attack: grants tokens describe buffs given to towers in range. Stats page last updated v46.2; prices cross-checked with fandom (match)."
+   },
+   "about": [
+    "Stats page dated v46.2; prices match Fandom. Monkey City XP is 15,500 on the Bloons Wiki and 15,000 on Fandom."
+   ]
   },
   {
    "id": "engineer",
@@ -5172,7 +5357,10 @@
       "grants": [
        "income"
       ],
-      "effect": "Trap collects Bloons for cash (v57: pop cash now immediate). Traps do not affect MOAB-class Bloons (bloonswiki)."
+      "effect": "Trap collects Bloons for cash (v57: pop cash now immediate). Traps do not affect MOAB-class Bloons.",
+      "_src": {
+       "effect": "Trap collects Bloons for cash (v57: pop cash now immediate). Traps do not affect MOAB-class Bloons (bloonswiki)."
+      }
      },
      {
       "tier": 5,
@@ -5183,7 +5371,10 @@
        "income",
        "moab"
       ],
-      "effect": "Traps larger Bloons incl. some blimps (alt: $48,000 fandom)"
+      "effect": "Traps larger Bloons incl. some blimps",
+      "_src": {
+       "effect": "Traps larger Bloons incl. some blimps (alt: $48,000 fandom)"
+      }
      }
     ]
    ],
@@ -5202,8 +5393,11 @@
     {
      "code": "4-0-2",
      "name": "Sentry Expert w/ Pin",
-     "use": "Wiki-preferred sentry build",
-     "popular": true
+     "use": "Go-to sentry build",
+     "popular": true,
+     "_src": {
+      "use": "Wiki-preferred sentry build"
+     }
     },
     {
      "code": "0-3-2",
@@ -5235,7 +5429,13 @@
     "XXXL Trap",
     "Sentry Champion"
    ],
-   "notes": "Main bloonswiki page could not be read; costs from chapter 02 + bloonswiki update history, XP from fandom (tier 3-5 XP match chapter 02). Master Builder $600k since v55 (fandom still $650k)."
+   "notes": "Master Builder costs $600k since v55.",
+   "_src": {
+    "notes": "Main bloonswiki page could not be read; costs from chapter 02 + bloonswiki update history, XP from fandom (tier 3-5 XP match chapter 02). Master Builder $600k since v55 (fandom still $650k)."
+   },
+   "about": [
+    "The main Bloons Wiki page could not be read: prices come from its update history and XP from Fandom. Fandom still lists Master Builder at $650k."
+   ]
   },
   {
    "id": "beast",
@@ -5458,14 +5658,17 @@
    "xpCurve": 1.0,
    "added": null,
    "camo": "no on main attack; her abilities (L3 Cocktail of Fire, L10 Firestorm) hit Camo",
-   "lead": "own fire attack: unverified; L4 Heat It Up gives nearby towers Lead+Frozen popping (+1 pierce)",
+   "lead": "L4 Heat It Up gives nearby towers Lead+Frozen popping (+1 pierce); her own fire attack vs Lead {unverified}",
    "roles": [
     "support",
     "lead",
     "buff"
    ],
    "bestFor": "Lead/DDT support and fire towers (Dragon's Breath, Ring of Fire, Signal Flare); abilities help R63/R76/R78.",
-   "beginnerTier": "B"
+   "beginnerTier": "B",
+   "_src": {
+    "lead": "own fire attack: unverified; L4 Heat It Up gives nearby towers Lead+Frozen popping (+1 pierce)"
+   }
   },
   {
    "id": "striker",
@@ -5476,14 +5679,17 @@
    "xpCurve": 1.0,
    "added": null,
    "camo": "no",
-   "lead": "explosive (Lead OK, unverified); Black: 50% from L5, 100% from L19 for explosive towers",
+   "lead": "explosive, so Lead is fine {unverified}; Black: 50% from L5, 100% from L19 for explosive towers",
    "roles": [
     "support",
     "buff",
     "explosive"
    ],
    "bestFor": "Bomb Shooter and Mortar builds; L8 pierce/range buff also helps Spike Factories.",
-   "beginnerTier": "C"
+   "beginnerTier": "C",
+   "_src": {
+    "lead": "explosive (Lead OK, unverified); Black: 50% from L5, 100% from L19 for explosive towers"
+   }
   },
   {
    "id": "obyn",
@@ -5493,15 +5699,19 @@
    "unlockLevel": 28,
    "xpCurve": 1.0,
    "added": null,
-   "camo": "no on his own wolves; L3 Brambles hit Camo (fandom: 'Level 3+'); L8 gives Camo detection to nearby Druids, and since v56 also to Skywardens",
-   "lead": "yes (wolves pop all visible Bloons except Purple, per wiki)",
+   "camo": "no on his own wolves; L3 Brambles hit Camo; L8 gives Camo detection to nearby Druids, and since v56 also to Skywardens",
+   "lead": "yes (wolves pop all visible Bloons except Purple)",
    "roles": [
     "support",
     "magic",
     "income"
    ],
    "bestFor": "Druid, Skywarden and other Magic builds; Jungle's Bounty income. Often called the best free hero.",
-   "beginnerTier": "A"
+   "beginnerTier": "A",
+   "_src": {
+    "camo": "no on his own wolves; L3 Brambles hit Camo (fandom: 'Level 3+'); L8 gives Camo detection to nearby Druids, and since v56 also to Skywardens",
+    "lead": "yes (wolves pop all visible Bloons except Purple, per wiki)"
+   }
   },
   {
    "id": "churchill",
@@ -5512,13 +5722,16 @@
    "xpCurve": 1.71,
    "added": null,
    "camo": "level 6",
-   "lead": "shells are explosive (Lead OK, unverified); L3 Armor Piercing Shells pop Black",
+   "lead": "shells are explosive, so Lead is fine {unverified}; L3 Armor Piercing Shells pop Black",
    "roles": [
     "dps",
     "moab"
    ],
    "bestFor": "Early-mid carry on long straight maps; you must save up to place him. Slowest leveler.",
-   "beginnerTier": "C"
+   "beginnerTier": "C",
+   "_src": {
+    "lead": "shells are explosive (Lead OK, unverified); L3 Armor Piercing Shells pop Black"
+   }
   },
   {
    "id": "benjamin",
@@ -5528,7 +5741,7 @@
    "unlockLevel": 15,
    "xpCurve": 1.5,
    "added": null,
-   "camo": "n/a (no attack); L10 Syphon Funding can affect Camo Bloons (fandom Camo strategies table)",
+   "camo": "n/a (no attack); L10 Syphon Funding can affect Camo Bloons",
    "lead": "n/a (no attack)",
    "roles": [
     "income",
@@ -5536,7 +5749,10 @@
     "support"
    ],
    "bestFor": "Standard/casual games and MM farming: cash and lives every round. No income in CHIMPS or Deflation.",
-   "beginnerTier": "A"
+   "beginnerTier": "A",
+   "_src": {
+    "camo": "n/a (no attack); L10 Syphon Funding can affect Camo Bloons (fandom Camo strategies table)"
+   }
   },
   {
    "id": "ezili",
@@ -5565,14 +5781,17 @@
    "xpCurve": 1.425,
    "added": null,
    "camo": "no",
-   "lead": "yes (damages every non-Camo type, per wiki)",
+   "lead": "yes (damages every non-Camo type)",
    "roles": [
     "stun",
     "buff",
     "support"
    ],
    "bestFor": "Maps where he reaches every lane; Rallying Roar for many-projectile towers; T-Rex synergy.",
-   "beginnerTier": "B"
+   "beginnerTier": "B",
+   "_src": {
+    "lead": "yes (damages every non-Camo type, per wiki)"
+   }
   },
   {
    "id": "adora",
@@ -5601,13 +5820,16 @@
    "xpCurve": 1.425,
    "added": null,
    "camo": "level 7 (Naval Tactics gives Camo to affected towers from L8)",
-   "lead": "pistol is Sharp (no); mines: unverified",
+   "lead": "pistol is Sharp (no); mines {unverified}",
    "roles": [
     "water",
     "buff"
    ],
    "bestFor": "Water maps with Sub/Buccaneer armies; must be placed on water. Reworked in v57 (weaker early, stronger late).",
-   "beginnerTier": "C"
+   "beginnerTier": "C",
+   "_src": {
+    "lead": "pistol is Sharp (no); mines: unverified"
+   }
   },
   {
    "id": "etienne",
@@ -5618,13 +5840,16 @@
    "xpCurve": 1.0,
    "added": null,
    "camo": "level 5 (own drones); level 8 UAV = global Camo for every tower",
-   "lead": "no via drone darts (Sharp); later attacks unverified",
+   "lead": "no via drone darts (Sharp); later attacks {unverified}",
    "roles": [
     "camo",
     "support"
    ],
    "bestFor": "Replacing Radar Scanners with the L8 global-camo UAV; weak before L10.",
-   "beginnerTier": "B"
+   "beginnerTier": "B",
+   "_src": {
+    "lead": "no via drone darts (Sharp); later attacks unverified"
+   }
   },
   {
    "id": "sauda",
@@ -5669,7 +5894,7 @@
    "unlockLevel": 35,
    "xpCurve": 1.0,
    "added": null,
-   "camo": "no on his own attack; the L1 shop item Stack of Old Nails hits Camo (fandom Camo strategies table: 'Level 1+')",
+   "camo": "no on his own attack; the L1 shop item Stack of Old Nails hits Camo",
    "lead": "from level 8 via the Gerry's Fire shop item; main attack can't",
    "roles": [
     "utility",
@@ -5677,7 +5902,10 @@
     "paragon"
    ],
    "bestFor": "Flexible shop items; Boss events; Paragon Power Totems (L20). Beginners tend to overspend.",
-   "beginnerTier": "A"
+   "beginnerTier": "A",
+   "_src": {
+    "camo": "no on his own attack; the L1 shop item Stack of Old Nails hits Camo (fandom Camo strategies table: 'Level 1+')"
+   }
   },
   {
    "id": "corvus",
@@ -5705,14 +5933,17 @@
    "unlockLevel": 25,
    "xpCurve": 1.425,
    "added": "43.0",
-   "camo": "none listed by default (unverified)",
+   "camo": "none by default {unverified}",
    "lead": "yes (lasers pop Lead)",
    "roles": [
     "carry",
     "ace-heli"
    ],
    "bestFor": "Maps with one active entrance per round; Ace/Heli builds (L6 discount); strong early-mid.",
-   "beginnerTier": "A"
+   "beginnerTier": "A",
+   "_src": {
+    "camo": "none listed by default (unverified)"
+   }
   },
   {
    "id": "silas",
@@ -5723,14 +5954,17 @@
    "xpCurve": 1.5,
    "added": "50.0",
    "camo": "level 1",
-   "lead": "unverified (rime explosion can't hit Lead); White: 50% from L5, 100% from L13",
+   "lead": "rime explosion can't hit Lead; other attacks {unverified}. White: 50% from L5, 100% from L13",
    "roles": [
     "ice",
     "control",
     "support"
    ],
    "bestFor": "Ice Monkey and Coldchain Skywarden builds; Flooded Valley, #Ouch. Hard early game.",
-   "beginnerTier": "B"
+   "beginnerTier": "B",
+   "_src": {
+    "lead": "unverified (rime explosion can't hit Lead); White: 50% from L5, 100% from L13"
+   }
   },
   {
    "id": "dan",
@@ -5741,14 +5975,17 @@
    "xpCurve": 1.425,
    "added": "55.0",
    "camo": "Masqued Macaque form only (innate); base Dan none",
-   "lead": "Masqued Macaque form (Normal damage); base Dan unverified",
+   "lead": "Masqued Macaque form (Normal damage); base Dan {unverified}",
    "roles": [
     "support",
     "lives",
     "reposition"
    ],
    "bestFor": "Leak insurance, mid-game Reposition (free Chinook-style move), Macaque form for ABR.",
-   "beginnerTier": "A"
+   "beginnerTier": "A",
+   "_src": {
+    "lead": "Masqued Macaque form (Normal damage); base Dan unverified"
+   }
   }
  ],
  "uncertain": [

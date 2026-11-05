@@ -174,10 +174,13 @@
   "unlockReq": "Beat Easy Standard.",
   "xpBaseTotal": 0,
   "totalCashNoIncome": null,
-  "notes": "Test mode, no rewards and no XP (XP absence is community knowledge, unverified). $9,999,999 cash and 999,999 lives, choose round, send any bloon, reset cooldowns. Paragons/VTSG only if already built in a real game. No Co-op.",
+  "notes": "Test mode: no rewards, and no XP {unverified}. $9,999,999 cash and 999,999 lives, choose round, send any bloon, reset cooldowns. Paragons/VTSG only if already built in a real game. No Co-op.",
   "inferred": [
    "xpBaseTotal not meaningful: Sandbox gives no XP"
-  ]
+  ],
+  "_src": {
+   "notes": "Test mode, no rewards and no XP (XP absence is community knowledge, unverified). $9,999,999 cash and 999,999 lives, choose round, send any bloon, reset cooldowns. Paragons/VTSG only if already built in a real game. No Co-op."
+  }
  },
  {
   "id": "medium",
@@ -310,7 +313,7 @@
   "unlockReq": "Beat Military Only.",
   "xpBaseTotal": 87100,
   "totalCashNoIncome": null,
-  "notes": "Randomly generated rounds (500+ bloon groups) with NO break between rounds: the next round spawns once the previous one finishes spawning. Ground objects (spikes) persist. Leads from R20, Camo from R19, Ceramics from R33, MOABs from R41, BFBs 51, ZOMGs 61, DDTs 81. End-of-round cash exists (added in a later update). Events/odyssey use fixed seeds. Leaving and re-entering lowers difficulty. Win round DISPUTED: bloonswiki's (undated, unversioned) update-history line says \"Completing round 70 now counts as beating the mode\"; the fandom Apopalypse (BTD6) article says victory is \"popping all bloons spawned from Round 1 to Round 60\", and a 2022 guide says 60 rounds. Unresolved 2026-11-05.",
+  "notes": "Randomly generated rounds (500+ bloon groups) with NO break between rounds: the next round spawns once the previous one finishes spawning. Ground objects (spikes) persist. Leads from R20, Camo from R19, Ceramics from R33, MOABs from R41, BFBs 51, ZOMGs 61, DDTs 81. End-of-round cash exists (added in a later update). Events/odyssey use fixed seeds. Leaving and re-entering lowers difficulty. The win round is round 70 or round 60 {unverified}.",
   "inferred": [
    "endRound 70 from bloonswiki version-history line (undated); fandom article and a 2022 guide say 60 - UNRESOLVED, see endRoundAlt",
    "startCash 650: fandom More Cash page says $650 'on most game modes' (only Half Cash $325 and Deflation $20,000 differ); no page names this mode explicitly",
@@ -318,7 +321,10 @@
    "rewardMM assumed = Medium row",
    "xpBaseTotal assumes rounds 1-70 at the standard XP formula (calc)"
   ],
-  "endRoundAlt": 60
+  "endRoundAlt": 60,
+  "_src": {
+   "notes": "Randomly generated rounds (500+ bloon groups) with NO break between rounds: the next round spawns once the previous one finishes spawning. Ground objects (spikes) persist. Leads from R20, Camo from R19, Ceramics from R33, MOABs from R41, BFBs 51, ZOMGs 61, DDTs 81. End-of-round cash exists (added in a later update). Events/odyssey use fixed seeds. Leaving and re-entering lowers difficulty. Win round DISPUTED: bloonswiki's (undated, unversioned) update-history line says \"Completing round 70 now counts as beating the mode\"; the fandom Apopalypse (BTD6) article says victory is \"popping all bloons spawned from Round 1 to Round 60\", and a 2022 guide says 60 rounds. Unresolved 2026-11-05."
+  }
  },
  {
   "id": "reverse",

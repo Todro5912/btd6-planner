@@ -66,7 +66,7 @@
   "easiness": 5,
   "chimpsFriendly": true,
   "medals": true,
-  "notes": "One of the easiest maps in the game; good first CHIMPS. Wiki: chocolate river takes water towers.",
+  "notes": "One of the easiest maps in the game; good first CHIMPS. Chocolate river takes water towers.",
   "unverified": [],
   "rbs": {
    "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
@@ -95,6 +95,9 @@
    "count": 217,
    "complete": false,
    "entities": []
+  },
+  "_src": {
+   "notes": "One of the easiest maps in the game; good first CHIMPS. Wiki: chocolate river takes water towers."
   }
  },
  {
@@ -149,9 +152,12 @@
    {
     "field": "losBlockers",
     "index": false,
-    "other": "some (ch04/ch06a: trees by the entrance and exit block LoS)",
+    "other": "some (trees by the entrance and exit block LoS)",
     "source": "Index haslos is a yes/no flag; \"slight\" blockers may be counted as no",
-    "kept": "index"
+    "kept": "index",
+    "_src": {
+     "other": "some (ch04/ch06a: trees by the entrance and exit block LoS)"
+    }
    }
   ]
  },
@@ -256,9 +262,12 @@
    {
     "field": "losBlockers",
     "index": false,
-    "other": "some (ch06a: buildings/props listed as LoS blockers)",
+    "other": "some (buildings and props block LoS)",
     "source": "Index haslos is a yes/no flag; \"slight\" blockers may be counted as no",
-    "kept": "index"
+    "kept": "index",
+    "_src": {
+     "other": "some (ch06a: buildings/props listed as LoS blockers)"
+    }
    }
   ]
  },
@@ -461,9 +470,12 @@
    {
     "field": "losBlockers",
     "index": false,
-    "other": "some (ch06a: props listed as LoS blockers)",
+    "other": "some (props block LoS)",
     "source": "Index haslos is a yes/no flag; \"slight\" blockers may be counted as no",
-    "kept": "index"
+    "kept": "index",
+    "_src": {
+     "other": "some (ch06a: props listed as LoS blockers)"
+    }
    }
   ]
  },
@@ -669,10 +681,16 @@
    {
     "field": "losBlockers",
     "index": false,
-    "other": "some (bloonswiki: corner bushes (not bottom-left) block LoS slightly (group-1); fandom: no LoS blockers)",
+    "other": "some (corner bushes, not bottom-left, block LoS slightly); Fandom says none",
     "source": "Index haslos is a yes/no flag; \"slight\" blockers may be counted as no",
-    "kept": "index"
+    "kept": "index",
+    "_src": {
+     "other": "some (bloonswiki: corner bushes (not bottom-left) block LoS slightly (group-1); fandom: no LoS blockers)"
+    }
    }
+  ],
+  "about": [
+   "The known CHIMPS route is the \"Monkey Meadow CHIMPS\" guide on sarahs-btd6-site."
   ]
  },
  {
@@ -689,7 +707,7 @@
   "rbsHard": [
    38.6
   ],
-  "special": "Fences and trees block LoS; the trees on the tiles disappear later; a map gimmick buffs towers (details unverified).",
+  "special": "Fences and trees block LoS; the trees on the tiles disappear later; a map gimmick buffs towers {unverified}.",
   "easiness": 3,
   "chimpsFriendly": true,
   "medals": true,
@@ -726,6 +744,9 @@
    "count": 180,
    "complete": false,
    "entities": []
+  },
+  "_src": {
+   "special": "Fences and trees block LoS; the trees on the tiles disappear later; a map gimmick buffs towers (details unverified)."
   }
  },
  {
@@ -780,9 +801,12 @@
    {
     "field": "losBlockers",
     "index": false,
-    "other": "some (ch04/ch06a: trees block LoS)",
+    "other": "some (trees block LoS)",
     "source": "Index haslos is a yes/no flag; \"slight\" blockers may be counted as no",
-    "kept": "index"
+    "kept": "index",
+    "_src": {
+     "other": "some (ch04/ch06a: trees block LoS)"
+    }
    }
   ]
  },
@@ -804,7 +828,7 @@
   "easiness": 5,
   "chimpsFriendly": true,
   "medals": true,
-  "notes": "Second-easiest map by consensus; second-best freeplay map. Wiki: the two umbrellas and the bottom-left palm slightly block LoS.",
+  "notes": "Second-easiest map by consensus; second-best freeplay map. The two umbrellas and the bottom-left palm slightly block LoS.",
   "unverified": [],
   "rbs": {
    "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
@@ -833,7 +857,13 @@
    "count": 226,
    "complete": false,
    "entities": []
-  }
+  },
+  "_src": {
+   "notes": "Second-easiest map by consensus; second-best freeplay map. Wiki: the two umbrellas and the bottom-left palm slightly block LoS."
+  },
+  "about": [
+   "1TC (one-tower CHIMPS) completions from the BTD6 Index."
+  ]
  },
  {
   "id": "scrapyard",
@@ -960,7 +990,7 @@
   "easiness": 4,
   "chimpsFriendly": true,
   "medals": true,
-  "notes": "On the easier side of Beginner. Wiki lists two RBS values for its single lane. Index: 36.3 RBS is the whole lane; 33.5 is the part outside the skull (not a second lane).",
+  "notes": "On the easier side of Beginner. Its single lane is 36.3 RBS in total; 33.5 RBS of that is outside the skull (it is not a second lane).",
   "unverified": [],
   "rbs": {
    "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
@@ -993,6 +1023,9 @@
    "count": 149,
    "complete": false,
    "entities": []
+  },
+  "_src": {
+   "notes": "On the easier side of Beginner. Wiki lists two RBS values for its single lane. Index: 36.3 RBS is the whole lane; 33.5 is the part outside the skull (not a second lane)."
   }
  },
  {
@@ -1013,7 +1046,7 @@
   "easiness": 5,
   "chimpsFriendly": true,
   "medals": true,
-  "notes": "Among the easiest maps. Wiki: the five caves block LoS; hot springs take water towers.",
+  "notes": "Among the easiest maps. The five caves block LoS; hot springs take water towers.",
   "unverified": [],
   "rbs": {
    "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
@@ -1042,7 +1075,13 @@
    "count": 246,
    "complete": false,
    "entities": []
-  }
+  },
+  "_src": {
+   "notes": "Among the easiest maps. Wiki: the five caves block LoS; hot springs take water towers."
+  },
+  "about": [
+   "The known CHIMPS route is bloon.games' \"Spa Pits CHIMPS Easy-Quick\"; it gives no round numbers, so the timings here are worked out."
+  ]
  },
  {
   "id": "the-cabin",
@@ -1111,7 +1150,10 @@
     "name": "Bananite crystal",
     "cost": 435,
     "count": 6,
-    "note": "six crystals at $435 / $3,000 / $10,000 / $25,000 / $50,000 / $100,000 (Index total $188,435); each PAYS OUT after 10 rounds (20 for the $100k one): $870 / $4.6k / $15k / $37k / $72k / $160k (bloonswiki), even in Deflation and CHIMPS"
+    "note": "six crystals at $435 / $3,000 / $10,000 / $25,000 / $50,000 / $100,000 ($188,435 in total); each PAYS OUT after 10 rounds (20 for the $100k one): $870 / $4.6k / $15k / $37k / $72k / $160k, even in Deflation and CHIMPS",
+    "_src": {
+     "note": "six crystals at $435 / $3,000 / $10,000 / $25,000 / $50,000 / $100,000 (Index total $188,435); each PAYS OUT after 10 rounds (20 for the $100k one): $870 / $4.6k / $15k / $37k / $72k / $160k (bloonswiki), even in Deflation and CHIMPS"
+    }
    }
   ],
   "paths": 1,
@@ -1124,7 +1166,7 @@
   "easiness": 5,
   "chimpsFriendly": true,
   "medals": true,
-  "notes": "Among the easiest Beginner maps. Wiki: crystal rocks and the tent block LoS; crystal payouts work in CHIMPS, Deflation and Half Cash.",
+  "notes": "Among the easiest Beginner maps. Crystal rocks and the tent block LoS; crystal payouts work in CHIMPS, Deflation and Half Cash.",
   "unverified": [],
   "rbs": {
    "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
@@ -1149,7 +1191,13 @@
    "count": 258,
    "complete": false,
    "entities": []
-  }
+  },
+  "_src": {
+   "notes": "Among the easiest Beginner maps. Wiki: crystal rocks and the tent block LoS; crystal payouts work in CHIMPS, Deflation and Half Cash."
+  },
+  "about": [
+   "The known CHIMPS route is bloon.games' \"Three Mines 'Round Easy CHIMPS\"; it gives no round numbers, so the timings here are worked out."
+  ]
  },
  {
   "id": "tinkerton",
@@ -1318,7 +1366,7 @@
   "easiness": 4,
   "chimpsFriendly": true,
   "medals": true,
-  "notes": "Good first CHIMPS. Wiki: the map-edge barrier only marginally blocks LoS.",
+  "notes": "Good first CHIMPS. The map-edge barrier only marginally blocks LoS.",
   "unverified": [],
   "rbs": {
    "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
@@ -1347,6 +1395,9 @@
    "count": 171,
    "complete": false,
    "entities": []
+  },
+  "_src": {
+   "notes": "Good first CHIMPS. Wiki: the map-edge barrier only marginally blocks LoS."
   }
  },
  {
@@ -1987,7 +2038,7 @@
   "easiness": 1,
   "chimpsFriendly": false,
   "medals": true,
-  "notes": "Among the hardest Intermediate maps. Wiki: a clump of trees/rocks in the middle blocks LoS; prime rounds use the 17.4 lane, others the 21.5 lane.",
+  "notes": "Among the hardest Intermediate maps. A clump of trees/rocks in the middle blocks LoS; prime rounds use the 17.4 lane, others the 21.5 lane.",
   "unverified": [],
   "rbs": {
    "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
@@ -2121,6 +2172,9 @@
     "The Blazing Sun",
     "The Bloon Solver"
    ]
+  },
+  "_src": {
+   "notes": "Among the hardest Intermediate maps. Wiki: a clump of trees/rocks in the middle blocks LoS; prime rounds use the 17.4 lane, others the 21.5 lane."
   }
  },
  {
@@ -2293,7 +2347,7 @@
   "easiness": 2,
   "chimpsFriendly": false,
   "medals": true,
-  "notes": "Wiki: the glass does not block LoS; only the 3 flower plantations do.",
+  "notes": "The glass does not block LoS; only the 3 flower plantations do.",
   "unverified": [
    "easiness"
   ],
@@ -2416,6 +2470,9 @@
     "Velociraptor",
     "Wizard Lord Phoenix"
    ]
+  },
+  "_src": {
+   "notes": "Wiki: the glass does not block LoS; only the 3 flower plantations do."
   }
  },
  {
@@ -2472,7 +2529,10 @@
    "count": 189,
    "complete": false,
    "entities": []
-  }
+  },
+  "about": [
+   "The known CHIMPS route is bloon.games' \"Cracked CHIMPS Quicky\"."
+  ]
  },
  {
   "id": "downstream",
@@ -2535,9 +2595,12 @@
    {
     "field": "losBlockers",
     "index": false,
-    "other": "some (bloonswiki: trees top-left, top-right and bottom-left block LoS \"slightly\" (group-2))",
+    "other": "some (trees top-left, top-right and bottom-left block LoS slightly)",
     "source": "Index haslos is a yes/no flag; \"slight\" blockers may be counted as no",
-    "kept": "index"
+    "kept": "index",
+    "_src": {
+     "other": "some (bloonswiki: trees top-left, top-right and bottom-left block LoS \"slightly\" (group-2))"
+    }
    }
   ]
  },
@@ -2553,7 +2616,10 @@
     "name": "Rock-covered category pad",
     "cost": 250,
     "count": 4,
-    "note": "Magic top-left, Support top-right, Military bottom-right, Primary bottom-left (bloonswiki)"
+    "note": "Magic top-left, Support top-right, Military bottom-right, Primary bottom-left",
+    "_src": {
+     "note": "Magic top-left, Support top-right, Military bottom-right, Primary bottom-left (bloonswiki)"
+    }
    }
   ],
   "paths": 2,
@@ -2567,7 +2633,7 @@
   "easiness": 3,
   "chimpsFriendly": false,
   "medals": true,
-  "notes": "Wiki: the wall around the crypt blocks most towers from reaching inside.",
+  "notes": "The wall around the crypt blocks most towers from reaching inside.",
   "unverified": [
    "water location"
   ],
@@ -2602,6 +2668,9 @@
    "count": 94,
    "complete": false,
    "entities": []
+  },
+  "_src": {
+   "notes": "Wiki: the wall around the crypt blocks most towers from reaching inside."
   }
  },
  {
@@ -2796,13 +2865,13 @@
    16.6,
    17.4
   ],
-  "special": "Two entrances and two exits (Index v57.4 + bloonswiki); three lanes run at once (25.2 / 17.4 / 16.6 RBS Hard); crystal column blocks LoS; lake on the right.",
+  "special": "Two entrances and two exits; three lanes run at once (25.2 / 17.4 / 16.6 RBS Hard); crystal column blocks LoS; lake on the right.",
   "easiness": 3,
   "chimpsFriendly": false,
   "medals": true,
-  "notes": "Was among the hardest Intermediate maps. A \"v57.0 lane rework\" claimed in chapter 4 is on neither the wiki page nor the v57 store notes (unverified); the Index lane lengths match the wiki.",
+  "notes": "Was among the hardest Intermediate maps. A v57.0 lane rework has been reported but isn't in the v57 patch notes {unverified}; the measured lane lengths match the older layout.",
   "unverified": [
-   "v57 rework (not on the wiki page or store notes)"
+   "v57 lane rework"
   ],
   "rbs": {
    "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
@@ -2925,10 +2994,23 @@
    {
     "field": "paths",
     "index": 2,
-    "other": "bloonswiki: 2 entrances, 2 exits, 3 lanes all active (lanes = 3)",
+    "other": "2 entrances, 2 exits, 3 lanes all active",
     "source": "kept Index count; the 3 lanes are listed in rbs.lanes",
-    "kept": "index"
+    "kept": "index",
+    "_src": {
+     "other": "bloonswiki: 2 entrances, 2 exits, 3 lanes all active (lanes = 3)"
+    }
    }
+  ],
+  "_src": {
+   "special": "Two entrances and two exits (Index v57.4 + bloonswiki); three lanes run at once (25.2 / 17.4 / 16.6 RBS Hard); crystal column blocks LoS; lake on the right.",
+   "notes": "Was among the hardest Intermediate maps. A \"v57.0 lane rework\" claimed in chapter 4 is on neither the wiki page nor the v57 store notes (unverified); the Index lane lengths match the wiki.",
+   "unverified": [
+    "v57 rework (not on the wiki page or store notes)"
+   ]
+  },
+  "about": [
+   "The reported v57.0 lane rework appears in neither the Bloons Wiki page nor the v57 store patch notes."
   ]
  },
  {
@@ -2950,7 +3032,7 @@
   "easiness": 3,
   "chimpsFriendly": false,
   "medals": true,
-  "notes": " Wiki: the raised upper (pre-waterfall) sections are blocked by LoS from most of the map; Heli and Carrier Flagship reach them.",
+  "notes": "The raised upper (pre-waterfall) sections are blocked by LoS from most of the map; Heli and Carrier Flagship reach them.",
   "unverified": [],
   "rbs": {
    "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
@@ -2983,6 +3065,9 @@
    "count": 129,
    "complete": false,
    "entities": []
+  },
+  "_src": {
+   "notes": " Wiki: the raised upper (pre-waterfall) sections are blocked by LoS from most of the map; Heli and Carrier Flagship reach them."
   }
  },
  {
@@ -3187,9 +3272,12 @@
    {
     "field": "paths",
     "index": 2,
-    "other": "fandom: a single entrance and route",
+    "other": "a single entrance and route",
     "source": "kept Index (2 entrances, 2 exits, 18.7 RBS each)",
-    "kept": "index"
+    "kept": "index",
+    "_src": {
+     "other": "fandom: a single entrance and route"
+    }
    }
   ]
  },
@@ -3275,7 +3363,7 @@
    25.0,
    24.9
   ],
-  "special": "Three entrances and three exits: two bloon lanes (top-left and bottom-left, 25.1 / 25.0 RBS) and a MOAB lane (24.9) per the Index; 5 cars block LoS; 2 frozen ponds melt into water.",
+  "special": "Three entrances and three exits: two bloon lanes (top-left and bottom-left, 25.1 / 25.0 RBS) and a MOAB lane (24.9); 5 cars block LoS; 2 frozen ponds melt into water.",
   "easiness": 3,
   "chimpsFriendly": false,
   "medals": true,
@@ -3316,6 +3404,9 @@
    "count": 107,
    "complete": false,
    "entities": []
+  },
+  "_src": {
+   "special": "Three entrances and three exits: two bloon lanes (top-left and bottom-left, 25.1 / 25.0 RBS) and a MOAB lane (24.9) per the Index; 5 cars block LoS; 2 frozen ponds melt into water."
   }
  },
  {
@@ -3327,9 +3418,12 @@
   "losBlockers": "some",
   "removables": [
    {
-    "name": "Statue/rock (fandom: monkey-head totem)",
+    "name": "Statue/rock (monkey-head totem)",
     "cost": 1000,
-    "count": 1
+    "count": 1,
+    "_src": {
+     "name": "Statue/rock (fandom: monkey-head totem)"
+    }
    }
   ],
   "paths": 2,
@@ -4111,7 +4205,10 @@
    "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
    "avg": null,
    "lanes": [],
-   "notes": "Index has no measurement (length 0 = unmeasured)"
+   "notes": "Not measured yet",
+   "_src": {
+    "notes": "Index has no measurement (length 0 = unmeasured)"
+   }
   },
   "entrances": 2,
   "exits": 2,
@@ -4231,7 +4328,10 @@
     "Tsar Bomba"
    ]
   },
-  "trackLengthNote": "Index has no measurement for this map yet; wiki value kept."
+  "trackLengthNote": "Not yet measured on the BTD6 Index; the Bloons Wiki value is shown.",
+  "_src": {
+   "trackLengthNote": "Index has no measurement for this map yet; wiki value kept."
+  }
  },
  {
   "id": "cargo",
@@ -4396,7 +4496,10 @@
     "cost": 500,
     "count": 1,
     "gimmick": true,
-    "note": "reusable gizmo (knockback, 75 s cooldown), not a one-time clearance (bloonswiki); the Index counts it as 1 object, $500"
+    "note": "reusable gizmo (knockback, 75 s cooldown), not a one-time clearance",
+    "_src": {
+     "note": "reusable gizmo (knockback, 75 s cooldown), not a one-time clearance (bloonswiki); the Index counts it as 1 object, $500"
+    }
    }
   ],
   "paths": 4,
@@ -4410,7 +4513,7 @@
    16.1,
    15.7
   ],
-  "special": "Four entrances (wheel and water spawns, top and bottom) and two exits; six path variants 14.5-16.8 RBS (Index); bloons cannot be damaged until they pass the wheels; the $500 pressure valve is a reusable gizmo.",
+  "special": "Four entrances (wheel and water spawns, top and bottom) and two exits; six path variants 14.5-16.8 RBS; bloons cannot be damaged until they pass the wheels; the $500 pressure valve is a reusable gizmo.",
   "easiness": 1,
   "chimpsFriendly": false,
   "medals": true,
@@ -4508,6 +4611,9 @@
     "Ultra-Juggernaut",
     "Wizard Lord Phoenix"
    ]
+  },
+  "_src": {
+   "special": "Four entrances (wheel and water spawns, top and bottom) and two exits; six path variants 14.5-16.8 RBS (Index); bloons cannot be damaged until they pass the wheels; the $500 pressure valve is a reusable gizmo."
   }
  },
  {
@@ -4535,7 +4641,7 @@
   "easiness": 5,
   "chimpsFriendly": true,
   "medals": true,
-  "notes": "Usually seen as the easiest Advanced map. Clearing all 13 patches costs $9,300 (Index).",
+  "notes": "Usually seen as the easiest Advanced map. Clearing all 13 patches costs $9,300.",
   "unverified": [],
   "rbs": {
    "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
@@ -4665,6 +4771,9 @@
     "Supply Drop",
     "Symphonic Resonance"
    ]
+  },
+  "_src": {
+   "notes": "Usually seen as the easiest Advanced map. Clearing all 13 patches costs $9,300 (Index)."
   }
  },
  {
@@ -4689,7 +4798,10 @@
     "name": "Cave wall",
     "cost": 1000,
     "count": 4,
-    "note": "bloonswiki: 8 walls, 4 per cave (top-left and bottom-right caves), $250/$500/$1,000/$1,000 each cave; full clearance $5,500 (calc: 2x250 + 2x500 + 4x1,000)"
+    "note": "8 walls, 4 per cave (top-left and bottom-right caves), $250/$500/$1,000/$1,000 each cave; full clearance $5,500 {calc}",
+    "_src": {
+     "note": "bloonswiki: 8 walls, 4 per cave (top-left and bottom-right caves), $250/$500/$1,000/$1,000 each cave; full clearance $5,500 (calc: 2x250 + 2x500 + 4x1,000)"
+    }
    }
   ],
   "paths": 1,
@@ -4698,7 +4810,7 @@
   "rbsHard": [
    18.8
   ],
-  "special": "Inverted Park Path; 8 cave walls (4 per cave) knock down for $250/$500/$1,000/$1,000 per cave, $5,500 for all (calc).",
+  "special": "Inverted Park Path; 8 cave walls (4 per cave) knock down for $250/$500/$1,000/$1,000 per cave, $5,500 for all {calc}.",
   "easiness": 4,
   "chimpsFriendly": true,
   "medals": true,
@@ -4837,10 +4949,20 @@
    {
     "field": "removables",
     "index": "0 objects, $0",
-    "other": "bloonswiki: 8 cave walls, $5,500 total (calc)",
+    "other": "8 cave walls, $5,500 in total",
     "source": "kept the wiki wall list: the Index object count evidently excludes the cave walls; removal cost unknown in-game (see 09)",
-    "kept": "wiki"
+    "kept": "Bloons Wiki",
+    "_src": {
+     "other": "bloonswiki: 8 cave walls, $5,500 total (calc)",
+     "kept": "wiki"
+    }
    }
+  ],
+  "_src": {
+   "special": "Inverted Park Path; 8 cave walls (4 per cave) knock down for $250/$500/$1,000/$1,000 per cave, $5,500 for all (calc)."
+  },
+  "about": [
+   "Full clearance cost worked out as 2 x $250 + 2 x $500 + 4 x $1,000."
   ]
  },
  {
@@ -4858,7 +4980,7 @@
    14.2,
    16.8
   ],
-  "special": "Two alternating lanes that meet at a central portal; water only around one island. Abundant LoS blockers (bloonswiki; Index LoS yes).",
+  "special": "Two alternating lanes that meet at a central portal; water only around one island. Lots of LoS blockers.",
   "easiness": 4,
   "chimpsFriendly": false,
   "medals": true,
@@ -4990,6 +5112,9 @@
     "Wizard Lord Phoenix",
     "Xxxl Trap"
    ]
+  },
+  "_src": {
+   "special": "Two alternating lanes that meet at a central portal; water only around one island. Abundant LoS blockers (bloonswiki; Index LoS yes)."
   }
  },
  {
@@ -5258,7 +5383,7 @@
   "easiness": 3,
   "chimpsFriendly": false,
   "medals": true,
-  "notes": "Average. Clearing all 15 plots costs $12,550 (Index).",
+  "notes": "Average. Clearing all 15 plots costs $12,550.",
   "unverified": [],
   "rbs": {
    "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
@@ -5383,6 +5508,9 @@
     "Velociraptor",
     "Wizard Lord Phoenix"
    ]
+  },
+  "_src": {
+   "notes": "Average. Clearing all 15 plots costs $12,550 (Index)."
   }
  },
  {
@@ -5997,9 +6125,12 @@
    {
     "field": "losBlockers",
     "index": false,
-    "other": "some (bloonswiki: the crane and two cliffs at the top slightly block LoS (group-3))",
+    "other": "some (the crane and two cliffs at the top slightly block LoS)",
     "source": "Index haslos is a yes/no flag; \"slight\" blockers may be counted as no",
-    "kept": "index"
+    "kept": "index",
+    "_src": {
+     "other": "some (bloonswiki: the crane and two cliffs at the top slightly block LoS (group-3))"
+    }
    }
   ]
  },
@@ -6228,7 +6359,7 @@
   "easiness": 2,
   "chimpsFriendly": false,
   "medals": true,
-  "notes": "Moderately hard. Wiki: the central mountain \"blocks line-of-sight severely\".",
+  "notes": "Moderately hard. The central mountain \"blocks line-of-sight severely\".",
   "unverified": [],
   "rbs": {
    "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
@@ -6350,6 +6481,9 @@
     "Velociraptor",
     "Wizard Lord Phoenix"
    ]
+  },
+  "_src": {
+   "notes": "Moderately hard. Wiki: the central mountain \"blocks line-of-sight severely\"."
   }
  },
  {
@@ -6378,7 +6512,7 @@
   "easiness": 3,
   "chimpsFriendly": false,
   "medals": true,
-  "notes": "Tier settled: Advanced (official v57 store notes: \"New Advanced map Ship Capture\"; also the wiki). The older \"Intermediate\" reading of the patch text is not supported. rbs = shortest and longest lane.",
+  "notes": "Advanced map, new in v57. The lane lengths shown are the shortest and the longest lane.",
   "unverified": [
    "water amount"
   ],
@@ -6386,7 +6520,10 @@
    "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
    "avg": null,
    "lanes": [],
-   "notes": "Index has no measurement (length 0 = unmeasured)"
+   "notes": "Not measured yet",
+   "_src": {
+    "notes": "Index has no measurement (length 0 = unmeasured)"
+   }
   },
   "entrances": 4,
   "exits": 2,
@@ -6445,16 +6582,23 @@
     "Wizard Lord Phoenix"
    ]
   },
-  "trackLengthNote": "Index has no measurement for this map yet; wiki value kept.",
+  "trackLengthNote": "Not yet measured on the BTD6 Index; the Bloons Wiki value is shown.",
   "conflicts": [
    {
     "field": "removables",
     "index": "0 objects, $0 (Index length is also 0 = unmeasured)",
-    "other": "ch04/ch06b: $1,000 hatch that reveals water",
+    "other": "a $1,000 hatch that reveals water",
     "source": "kept ours: the Index entry for this v57 map looks unfilled",
-    "kept": "ours"
+    "kept": "ours",
+    "_src": {
+     "other": "ch04/ch06b: $1,000 hatch that reveals water"
+    }
    }
-  ]
+  ],
+  "_src": {
+   "notes": "Tier settled: Advanced (official v57 store notes: \"New Advanced map Ship Capture\"; also the wiki). The older \"Intermediate\" reading of the patch text is not supported. rbs = shortest and longest lane.",
+   "trackLengthNote": "Index has no measurement for this map yet; wiki value kept."
+  }
  },
  {
   "id": "spillway",
@@ -6895,9 +7039,12 @@
    {
     "field": "losBlockers",
     "index": false,
-    "other": "some (ch04/ch06b: cliffs and cacti)",
+    "other": "some (cliffs and cacti)",
     "source": "Index haslos is a yes/no flag; \"slight\" blockers may be counted as no",
-    "kept": "index"
+    "kept": "index",
+    "_src": {
+     "other": "some (ch04/ch06b: cliffs and cacti)"
+    }
    }
   ]
  },
@@ -7034,9 +7181,12 @@
    {
     "field": "losBlockers",
     "index": false,
-    "other": "some (ch04/ch06b: cave walls slightly block LoS)",
+    "other": "some (cave walls slightly block LoS)",
     "source": "Index haslos is a yes/no flag; \"slight\" blockers may be counted as no",
-    "kept": "index"
+    "kept": "index",
+    "_src": {
+     "other": "some (ch04/ch06b: cave walls slightly block LoS)"
+    }
    }
   ]
  },
@@ -7063,7 +7213,7 @@
    15.8,
    21.0
   ],
-  "special": "Four entrances and four exits (Index v57.4); each entrance feeds both paths, so 8 routes (14.5-21.0 RBS Hard); the spawn corners rotate.",
+  "special": "Four entrances and four exits; each entrance feeds both paths, so 8 routes (14.5-21.0 RBS Hard); the spawn corners rotate.",
   "easiness": 1,
   "chimpsFriendly": false,
   "medals": true,
@@ -7151,7 +7301,10 @@
     "source": "definition difference, not an error",
     "kept": "index"
    }
-  ]
+  ],
+  "_src": {
+   "special": "Four entrances and four exits (Index v57.4); each entrance feeds both paths, so 8 routes (14.5-21.0 RBS Hard); the spawn corners rotate."
+  }
  },
  {
   "id": "ouch",
@@ -7276,7 +7429,7 @@
   "easiness": 1,
   "chimpsFriendly": false,
   "medals": false,
-  "notes": "No medals, no rewards. Index v57.4: water yes (small pond bottom-right), no LoS blockers, 3.7 RBS.",
+  "notes": "No medals, no rewards. A small pond bottom-right takes water towers; no LoS blockers; 3.7 RBS.",
   "unverified": [],
   "sourceNotes": [
    "water: none -> little (xcheck 2026-11-05: btd6index.win map data + bloons.fandom.com; Index haswater=true; fandom: \"There is a small pond near the bottom-right\" usable by water towers). Amount 'little' is an estimate."
@@ -7363,6 +7516,9 @@
     "Tyrannosaurus Rex",
     "Wizard Lord Phoenix"
    ]
+  },
+  "_src": {
+   "notes": "No medals, no rewards. Index v57.4: water yes (small pond bottom-right), no LoS blockers, 3.7 RBS."
   }
  },
  {
@@ -7398,7 +7554,7 @@
   "easiness": 1,
   "chimpsFriendly": false,
   "medals": true,
-  "notes": "Hardest map in BTD6 by consensus. Removable costs unverified. Wiki: the jeep blocks LoS; removing it drops a chinook that blocks more. Infobox $1,000 vs text $500 for the removal (conflict on the page).",
+  "notes": "Hardest map in BTD6 by consensus. The jeep blocks LoS; removing it drops a chinook that blocks more. The jeep costs $500 or $1,000 to remove {unverified}.",
   "unverified": [],
   "rbs": {
    "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
@@ -7477,10 +7633,19 @@
    {
     "field": "paths",
     "index": 6,
-    "other": "Index lane notes list only 5 lane lengths; ch04 says five paths and six entrances",
+    "other": "five paths and six entrances (the Index lists only 5 lane lengths)",
     "source": "kept Index entrance count",
-    "kept": "index"
+    "kept": "index",
+    "_src": {
+     "other": "Index lane notes list only 5 lane lengths; ch04 says five paths and six entrances"
+    }
    }
+  ],
+  "_src": {
+   "notes": "Hardest map in BTD6 by consensus. Removable costs unverified. Wiki: the jeep blocks LoS; removing it drops a chinook that blocks more. Infobox $1,000 vs text $500 for the removal (conflict on the page)."
+  },
+  "about": [
+   "The Bloons Wiki infobox gives $1,000 for the jeep and its text gives $500."
   ]
  },
  {
@@ -7510,7 +7675,7 @@
   "easiness": 4,
   "chimpsFriendly": true,
   "medals": true,
-  "notes": "Second-easiest Expert map; classic Expert XP/Deflation farm. Reverse makes it harder. Index lanes: 6.9-7.2 RBS with the trees in place (start state), 9.1-10.2 after removing them.",
+  "notes": "Second-easiest Expert map; classic Expert XP/Deflation farm. Reverse makes it harder. Lanes: 6.9-7.2 RBS with the trees in place (start state), 9.1-10.2 after removing them.",
   "unverified": [],
   "rbs": {
    "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
@@ -7668,6 +7833,9 @@
     "Velociraptor",
     "Wizard Lord Phoenix"
    ]
+  },
+  "_src": {
+   "notes": "Second-easiest Expert map; classic Expert XP/Deflation farm. Reverse makes it harder. Index lanes: 6.9-7.2 RBS with the trees in place (start state), 9.1-10.2 after removing them."
   }
  },
  {
@@ -7697,7 +7865,7 @@
   "easiness": 2,
   "chimpsFriendly": false,
   "medals": true,
-  "notes": "Fifth-hardest map. Chapter 6b lists water capacity (Sub 6, Buccaneer 4, Mermonkey 9), so water is set to little (location unverified).",
+  "notes": "Fifth-hardest map. A little water: room for 6 Subs, 4 Buccaneers or 9 Mermonkeys; where it is {unverified}.",
   "unverified": [],
   "rbs": {
    "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
@@ -7757,6 +7925,9 @@
     "Super Maelstrom",
     "Tyrannosaurus Rex"
    ]
+  },
+  "_src": {
+   "notes": "Fifth-hardest map. Chapter 6b lists water capacity (Sub 6, Buccaneer 4, Mermonkey 9), so water is set to little (location unverified)."
   }
  },
  {
@@ -7861,7 +8032,10 @@
     "Tyrannosaurus Rex",
     "Wizard Lord Phoenix"
    ]
-  }
+  },
+  "about": [
+   "The Subs -> Silas -> Mermonkey route is from a CHIMPS guide on bloon.games."
+  ]
  },
  {
   "id": "glacial-trail",
@@ -7957,11 +8131,11 @@
    19.3,
    19.3
   ],
-  "special": "Two alternating lanes (odd rounds top, even bottom), 19.3 RBS each (Index v57.4): the longest of any Expert map (next: Glacial Trail 17.7); little space; farms only fit on the side islands.",
+  "special": "Two alternating lanes (odd rounds top, even bottom), 19.3 RBS each: the longest of any Expert map (next: Glacial Trail 17.7); little space; farms only fit on the side islands.",
   "easiness": 5,
   "chimpsFriendly": true,
   "medals": true,
-  "notes": "Easiest Expert map, especially for CHIMPS. Index v57.4: no LoS blockers, water yes (wiki: 6 floating islands, 4 land + 2 water pools of 3 water towers each). Elite Sniper and Elite Defender both have Index 2MP (solo CHIMPS) completions here.",
+  "notes": "Easiest Expert map, especially for CHIMPS. No LoS blockers. Six floating islands: 4 land and 2 water pools that fit 3 water towers each. Elite Sniper and Elite Defender have both soloed CHIMPS here.",
   "unverified": [],
   "rbs": {
    "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
@@ -8083,7 +8257,14 @@
     "Velociraptor",
     "Wizard Lord Phoenix"
    ]
-  }
+  },
+  "_src": {
+   "special": "Two alternating lanes (odd rounds top, even bottom), 19.3 RBS each (Index v57.4): the longest of any Expert map (next: Glacial Trail 17.7); little space; farms only fit on the side islands.",
+   "notes": "Easiest Expert map, especially for CHIMPS. Index v57.4: no LoS blockers, water yes (wiki: 6 floating islands, 4 land + 2 water pools of 3 water towers each). Elite Sniper and Elite Defender both have Index 2MP (solo CHIMPS) completions here."
+  },
+  "about": [
+   "Lane lengths, water and line of sight from the BTD6 Index (v57.4 data). Island layout from the Bloons Wiki."
+  ]
  },
  {
   "id": "muddy-puddles",
@@ -8239,7 +8420,7 @@
   "easiness": 1,
   "chimpsFriendly": false,
   "medals": true,
-  "notes": "True Expert, 3rd hardest. Wiki: central pond for water towers; 4 trusses block LoS and make bloons (blimps too) immune underneath.",
+  "notes": "True Expert, 3rd hardest. Central pond for water towers; 4 trusses block LoS and make bloons (blimps too) immune underneath.",
   "unverified": [],
   "rbs": {
    "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
@@ -8262,7 +8443,10 @@
      "rbs": 8.8
     }
    ],
-   "notes": "Base paths: Left 9.3, Right 9.6, Bottom 8.8, Top 8.8; variants without overhangs listed in source"
+   "notes": "Base paths: Left 9.3, Right 9.6, Bottom 8.8, Top 8.8; variants without the overhangs not shown",
+   "_src": {
+    "notes": "Base paths: Left 9.3, Right 9.6, Bottom 8.8, Top 8.8; variants without overhangs listed in source"
+   }
   },
   "entrances": 4,
   "exits": 4,
@@ -8309,6 +8493,9 @@
     "The Blazing Sun",
     "Tyrannosaurus Rex"
    ]
+  },
+  "_src": {
+   "notes": "True Expert, 3rd hardest. Wiki: central pond for water towers; 4 trusses block LoS and make bloons (blimps too) immune underneath."
   }
  },
  {
@@ -8332,7 +8519,7 @@
   "easiness": 1,
   "chimpsFriendly": false,
   "medals": true,
-  "notes": "Second-hardest map (Corvus has made it easier). Wiki: 3 bridges with 6 walls plus trees \"significantly\" block LoS; low water blocks water towers that cannot shoot over walls.",
+  "notes": "Second-hardest map (Corvus has made it easier). 3 bridges with 6 walls plus trees \"significantly\" block LoS; low water blocks water towers that cannot shoot over walls.",
   "unverified": [],
   "rbs": {
    "source": "btd6index.win map metadata, v57.4 (fetched 2026-11-05)",
@@ -8412,6 +8599,9 @@
     "Tyrannosaurus Rex",
     "Wizard Lord Phoenix"
    ]
+  },
+  "_src": {
+   "notes": "Second-hardest map (Corvus has made it easier). Wiki: 3 bridges with 6 walls plus trees \"significantly\" block LoS; low water blocks water towers that cannot shoot over walls."
   }
  },
  {
@@ -8435,7 +8625,7 @@
   "easiness": 4,
   "chimpsFriendly": false,
   "medals": true,
-  "notes": "A \"casual\" Expert, about as hard as Workshop. Wiki infobox: water yes (location not described).",
+  "notes": "A \"casual\" Expert, about as hard as Workshop. It has water; where is {unverified}.",
   "unverified": [
    "water amount"
   ],
@@ -8523,6 +8713,9 @@
     "Tyrannosaurus Rex",
     "Wizard Lord Phoenix"
    ]
+  },
+  "_src": {
+   "notes": "A \"casual\" Expert, about as hard as Workshop. Wiki infobox: water yes (location not described)."
   }
  },
  {
@@ -8544,7 +8737,7 @@
    6.2,
    6.1
   ],
-  "special": "Six very short paths on three train tracks; bloons rush to the middle, pause, then rush out. Stop-light train gimmick: $2,500, price escalates (bloonswiki; the Index counts it as 1 object, $2,500).",
+  "special": "Six very short paths on three train tracks; bloons rush to the middle, pause, then rush out. Stop-light train gimmick: $2,500, and the price goes up with each use.",
   "easiness": 4,
   "chimpsFriendly": false,
   "medals": true,
@@ -8632,6 +8825,9 @@
     "Tyrannosaurus Rex",
     "Wizard Lord Phoenix"
    ]
+  },
+  "_src": {
+   "special": "Six very short paths on three train tracks; bloons rush to the middle, pause, then rush out. Stop-light train gimmick: $2,500, price escalates (bloonswiki; the Index counts it as 1 object, $2,500)."
   }
  },
  {

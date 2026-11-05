@@ -14,7 +14,7 @@
     <td class="n">{{ r.cash|money }}</td>
     <td class="n hide-s">{{ r.xp|num }}</td>
     <td class="hide-s">{% for k in r.threats or [] %}<span class="gtag">{{ THREAT_LABEL.get(k) or k|capitalize }}</span>{% endfor %}</td>
-    <td class="wrapcell notes-cell">{{ r.notes|tidy }}</td>
+    <td class="wrapcell notes-cell">{{ r.notes|rich }}</td>
   </tr>
   {% endfor %}
   </tbody>

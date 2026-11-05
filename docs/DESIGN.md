@@ -18,7 +18,7 @@ The site should feel like it belongs next to BTD6: chunky, tactile and bright. I
 - **Hard offset shadow:** `box-shadow: 0 4px 0 var(--ink)` on buttons and panels. When a button is pressed, translate it down 3px and shrink the shadow. That's the tactile BTD6 button.
 - **Radius:** small and consistent, 6px on panels and 999px only on round counters. Never mix in other values.
 - **Display type:** **Luckiest Guy** (Google Fonts), uppercase, with a 2px ink outline (`-webkit-text-stroke` plus `paint-order: stroke fill`) and a 3px hard ink shadow beneath. Use it for page titles, section heads and big numbers only.
-- **Body type:** **Rubik** at 400/500/700. Numbers use `font-variant-numeric: tabular-nums`. Use **JetBrains Mono** only for crosspath codes like `2-0-4`, and sparingly.
+- **Body type:** **Rubik** at 400/500/700. Numbers use `font-variant-numeric: tabular-nums`. Use **JetBrains Mono** only for crosspath codes like `2-0-4` and round numbers. Everything else, including descriptions and key hints, is Rubik.
 - **Palette (light):**
 
   | Token | Value |
@@ -37,6 +37,8 @@ The site should feel like it belongs next to BTD6: chunky, tactile and bright. I
 - **Header:** a grass-green band with a thick ink bottom border. The logo wordmark sits on the left in Luckiest Guy. The nav sits on the right as outlined tab buttons, with the active tab in banana. The search button shows its "/" keyboard hint.
 - **Path display:** upgrades are shown the way the game shows them: 3 path rows × 5 pips. A filled pip is wood or banana; an empty pip is outlined. Crosspath codes go in mono.
 - **Tables:** thick outer outline, zebra rows in a faint paper tint, a sticky header in wood with cream text, and tabular numbers.
+- **Data badges:** "unverified" and "calculated" are small outlined badges (2px ink border, 6px radius, uppercase 11px Rubik); "unverified" has a dashed border. Never write them as parenthetical text. Data marks them with `{unverified}` / `{calc}` tokens.
+- **About this data:** sources and method notes go in a collapsed `<details>` at the foot of the page, in small muted text, never in the body copy.
 - **Difficulty / medals:** a small round medal dot with an ink outline. Don't use text-only pills.
 - **Motion:** only button press feedback (80ms) and a 120ms search-panel open. Respect `prefers-reduced-motion`.
 - **Density:** generous but not airy. Sentences are short. Facts go in tables and stat blocks, not paragraphs.
