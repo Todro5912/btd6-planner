@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% import '_macros.html' as ui %}
+{% block bodyclass %}home{% endblock %}
+{% block main %}
+<h1 class="sr-only">{{ site.name }}: unofficial Bloons TD 6 hub</h1>
+<section class="home-search panel" aria-labelledby="hs">
+  <h2 class="panel-h" id="hs">Look anything up</h2>
+  <form class="panel-b home-search-form" action="{{ root }}a-z/" method="get" role="search">
+    <label class="sr-only" for="homeQ">Search the site</label>
+    <input id="homeQ" name="q" type="search" autocomplete="off" placeholder="Tower, upgrade, hero, map, round…" data-search-proxy>
+    <button class="btn btn-grass" type="submit">{{ ui.icon('search') }}<span>Search</span></button>
+  </form>
+  <p class="panel-b home-try">Try <a href="{{ root }}monkeys/boomerang/#u-1-5">Glaive Lord</a>, <a href="{{ root }}maps/infernal/">Infernal</a>, <a href="{{ root }}guides/rounds/#r63">round 63</a> or <a href="{{ root }}monkeys/sniper/">Sniper</a>. Press <kbd>/</kbd> from any page.</p>
+</section>
+
+<nav class="doors" aria-label="Start here">
+  <a class="door door-grass" href="{{ root }}planner/">
+    {{ ui.icon('plan', 'door-ico') }}
+    <span class="door-t">Plan a game</span>
+    <span class="door-s">Map + mode + towers → coverage, cash by round, XP per run</span>
+  </a>
+  <a class="door door-sky" href="{{ root }}monkeys/">
+    {{ ui.icon('monkey', 'door-ico') }}
+    <span class="door-t">Find a monkey</span>
+    <span class="door-s"><b>{{ counts.towers }}</b> towers · <b>{{ counts.heroes }}</b> heroes · <b>{{ counts.paragons }}</b> paragons</span>
+  </a>
+  <a class="door door-banana" href="{{ root }}maps/">
+    {{ ui.icon('map', 'door-ico') }}
+    <span class="door-t">Find a map</span>
+    <span class="door-s"><b>{{ counts.maps }}</b> maps, filter by water and line of sight</span>
+  </a>
+  <a class="door door-wood" href="{{ root }}{{ farm_guide.url if farm_guide else 'monkeys/paragons/' }}">
+    {{ ui.icon('xp', 'door-ico') }}
+    <span class="door-t">Farm XP</span>
+    <span class="door-s">Best Deflation farm per tower, runs to every paragon</span>
+  </a>
+</nav>
+
+<section class="panel changes" aria-labelledby="ch">
+  <h2 class="panel-h" id="ch">What's in {{ meta.version }}</h2>
+  <ul class="change-list">
+    {% for tname, items in ctx.changes|groupby('tower.name', default='') %}
+    <li><span class="change-who">{{ tname }}</span><span class="change-items">{% for x in items %}<span><a href="{{ root }}{{ x.url }}">{{ x.upgrade.name }}</a><span class="change-what">{{ x.text }}</span></span>{% endfor %}</span></li>
+    {% endfor %}
+  </ul>
+  <p class="panel-b note">Balance changes recorded in the dataset for v57.x. Each one links to the upgrade on its tower page.</p>
+</section>
+
+<section class="home-facts" aria-labelledby="hf">
+  <h2 class="h2" id="hf">Quick numbers</h2>
+  <dl class="stats">
+    <div class="stat"><dt>Maps with a full solo-CHIMPS list</dt><dd class="big">{{ ctx.maps_complete }}<small>/{{ counts.maps }}</small></dd></div>
+    <div class="stat"><dt>Cheapest CHIMPS record</dt>{% set cheapest = ctx.maps|selectattr('lcc')|sort(attribute='lcc.money')|first %}<dd class="big money">{{ cheapest.lcc.money|money }}</dd><dd class="stat-s"><a href="{{ root }}maps/{{ cheapest.id }}/">{{ cheapest.name }}</a>, v{{ cheapest.lcc.version }}</dd></div>
+    <div class="stat"><dt>Expert Deflation XP per run</dt><dd class="big">{{ ctx.defl_xp|num }}</dd><dd class="stat-s">{{ ctx.defl_base|num }} base × 1.3, no Monkey Knowledge</dd></div>
+    <div class="stat"><dt>Rounds that end runs</dt><dd class="big">{{ ctx.rounds.standard|selectattr('danger', 'equalto', 3)|list|length }}</dd><dd class="stat-s"><a href="{{ root }}guides/rounds/">see the danger rounds</a></dd></div>
+  </dl>
+</section>
+
+<p class="version-stamp">Data for BTD6 <b>v{{ meta.version }}</b>{% if meta.researched %}, checked {{ meta.researched }}{% endif %} · {{ site.name }} {{ site.version }} · prices are Medium unless a page says otherwise</p>
+{% endblock %}

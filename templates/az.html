@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% import '_macros.html' as ui %}
+{% block main %}
+<div class="title-row">
+  <h1 class="h1">A–Z</h1>
+  {{ ui.stamp() }}
+</div>
+<nav class="az-jump" aria-label="Letters">{% for letter, _ in az_groups %}<a href="#l-{{ 'num' if letter == '#' else letter|lower }}">{{ letter }}</a>{% endfor %}</nav>
+<div class="az">
+{% for letter, items in az_groups %}
+<section class="az-group" id="l-{{ 'num' if letter == '#' else letter|lower }}" aria-labelledby="h-{{ 'num' if letter == '#' else letter|lower }}">
+  <h2 class="az-letter" id="h-{{ 'num' if letter == '#' else letter|lower }}">{{ letter }}</h2>
+  <ul>{% for e in items %}<li><a href="{{ root }}{{ e.u }}">{{ e.t }}</a> <small class="muted">{{ e.k }}{% if e.k in ('Upgrade', 'Paragon') %} · {{ e.x|replace(' paragon', '') }}{% endif %}</small></li>{% endfor %}</ul>
+</section>
+{% endfor %}
+</div>
+{% endblock %}

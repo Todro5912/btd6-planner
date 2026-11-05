@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% import '_macros.html' as ui %}
+{% block main %}
+<div class="title-row">
+  <h1 class="h1">Heroes</h1>
+  {{ ui.stamp() }}
+</div>
+{% include '_subtabs.html' %}
+<div class="toolbar">
+  <p class="lede">{{ ctx.heroes|length }} heroes. Tier is the dataset's beginner rating (S best).</p>
+  {{ ui.diff_toggle() }}
+</div>
+<div class="table-wrap">
+<table class="tbl">
+  <thead><tr><th scope="col">Hero</th><th scope="col" class="n">Price</th><th scope="col" class="n">Unlock</th><th scope="col" class="c">Tier</th><th scope="col">Best for</th></tr></thead>
+  <tbody>
+  {% for hm in ctx.hero_models %}
+  <tr>
+    <th scope="row"><a href="{{ root }}{{ hm.url }}">{{ hm.h.name }}</a></th>
+    <td class="n">{{ ui.price(hm.prices) }}</td>
+    <td class="n">{% if hm.h.unlockLevel %}Lv {{ hm.h.unlockLevel }}{% else %}Start{% endif %}</td>
+    <td class="c">{% if hm.h.beginnerTier %}<span class="counter tier-{{ hm.h.beginnerTier|lower }}">{{ hm.h.beginnerTier }}</span>{% else %}–{% endif %}</td>
+    <td class="wrapcell">{{ hm.h.bestFor|tidy }}</td>
+  </tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div>
+{% endblock %}
+{% block scripts %}<script src="{{ root }}assets/prices.js?v={{ site.version }}" defer></script>{% endblock %}

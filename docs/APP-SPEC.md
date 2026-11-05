@@ -27,6 +27,10 @@ Rebuild: `python3 build.py && node test_logic.js --browser`.
 
 The page opens on the example setup (Infernal, Deflation, Sniper 2-0-4 ×2 + Mortar 0-0-3, levelling Sniper to the Paragon, Sauda, Monkey Education on), labelled "Example setup". Selections are saved in `localStorage` (`bloons-planner-v1`, every access in try/catch); "Load example" restores it.
 
+## Hash prefill (0.4.0)
+
+The hub's "Open in Planner" links pre-fill the planner through the URL hash: `#map=<id>`, `#mode=<id>`, `#tower=<id>` and `#hero=<id>`, combined with `&` (for example `planner/#map=infernal&mode=chimps&tower=sniper`). A tower replaces the picks with that tower at its guide's first crosspath, levelled toward its Paragon (or all tier 5s). Unknown ids and Sandbox modes are ignored. The hash is cleared after it is applied, so later edits survive a reload.
+
 ## Outputs (summary first)
 
 - **Verdict**: overall state (blockers / things to watch / good to go), rounds, start cash, total cash, build + hero cost, price multiplier. Legality notes: class-restricted modes, Banana Farm in CHIMPS, income upgrades that pay nothing (CHIMPS, Deflation), water-only towers on no-water or little-water maps, line-of-sight warnings on heavy-LoS maps, MK off in CHIMPS, Apopalypse's random rounds, Sandbox. Coverage chips for Camo, Lead, Purple, Fortified, MOAB, DDT and BAD: first round needing it in this mode's round set and range, which tower/crosspath/upgrade answers it, and a status (covered, late, partial, uncovered!, not in range).

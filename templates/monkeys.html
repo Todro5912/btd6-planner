@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% import '_macros.html' as ui %}
+{% block main %}
+<div class="title-row">
+  <h1 class="h1">Monkeys</h1>
+  {{ ui.stamp() }}
+</div>
+{% include '_subtabs.html' %}
+<p class="lede">{{ ctx.towers|length }} towers in four classes. Base price is Medium; the code is the most-used crosspath.</p>
+<div class="class-grid">
+{% for cl, tms in by_class %}
+<section class="panel class-panel" id="{{ cl|lower }}" aria-labelledby="cl-{{ cl|lower }}">
+  <h2 class="panel-h cls-{{ cl|lower }}" id="cl-{{ cl|lower }}">{{ cl }} <small>{{ tms|length }}</small></h2>
+  <ul class="roster">
+    {% for tm in tms %}
+    <li>
+      <a class="roster-name" href="{{ root }}{{ tm.url }}">{{ tm.t.name }}</a>
+      <span class="roster-cost num">{{ tm.t.baseCost|money }}</span>
+      <span class="roster-x">{% if tm.best %}{{ ui.xgrid(tm.best.cross) }}<code class="xcode">{{ tm.best.code }}</code>{% endif %}</span>
+      <span class="roster-tags">{% if tm.paragon %}<span class="tag tag-banana" title="Has a paragon: {{ tm.paragon.name }}">Paragon</span>{% endif %}{% if tm.t.waterOnly %}<span class="tag tag-sky">Water</span>{% endif %}</span>
+    </li>
+    {% endfor %}
+  </ul>
+</section>
+{% endfor %}
+</div>
+{% endblock %}

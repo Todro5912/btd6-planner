@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% import '_macros.html' as ui %}
+{% block main %}
+<div class="title-row">
+  <h1 class="h1">Maps</h1>
+  {{ ui.stamp() }}
+</div>
+<form class="filters panel" id="mapFilters" hidden aria-label="Filter maps">
+  <div class="filter filter-q">
+    <label for="mapQ">Name</label>
+    <input id="mapQ" type="search" autocomplete="off" placeholder="Type a map name">
+  </div>
+  <fieldset class="filter">
+    <legend>Difficulty</legend>
+    <div class="seg seg-wrap">
+      {% for tr in TIERS %}<label class="segcheck"><input type="checkbox" name="d" value="{{ tr }}" checked><span>{{ ui.tier_dot(tr) }}{{ tr }}</span></label>{% endfor %}
+    </div>
+  </fieldset>
+  <div class="filter">
+    <label for="mapW">Water</label>
+    <select id="mapW"><option value="">Any</option><option value="none">None</option><option value="little">Little</option><option value="lots">Lots</option></select>
+  </div>
+  <div class="filter">
+    <label for="mapL">Line of sight</label>
+    <select id="mapL"><option value="">Any</option><option value="none">Clear</option><option value="some">Some blockers</option><option value="heavy">Heavy blockers</option></select>
+  </div>
+  <p class="filter-count" id="mapCount" role="status" aria-live="polite"></p>
+</form>
+{% for tr in TIERS %}
+{% set ms = ctx.map_models|selectattr('m.difficulty', 'equalto', tr)|list %}
+<section class="map-group" id="{{ tr|lower }}" data-group="{{ tr }}" aria-labelledby="g-{{ tr|lower }}">
+  <h2 class="h2 group-h" id="g-{{ tr|lower }}">{{ ui.tier_dot(tr) }}{{ tr }} <small>{{ ms|length }} maps · ×{{ TIER_XP[tr] }} XP</small></h2>
+  <div class="table-wrap">
+  <table class="tbl tbl-maps">
+    <thead><tr><th scope="col">Map</th><th scope="col" class="n">Lanes</th><th scope="col" class="n">RBS</th><th scope="col">Water</th><th scope="col">Line of sight</th><th scope="col" class="n hide-s">2MP</th><th scope="col" class="n hide-s">LCC</th></tr></thead>
+    <tbody>
+    {% for mm in ms %}
+    {% set m = mm.m %}
+    <tr data-name="{{ m.name|lower }}" data-d="{{ m.difficulty }}" data-w="{{ m.water }}" data-l="{{ m.losBlockers }}">
+      <th scope="row"><a href="{{ root }}{{ mm.url }}">{{ m.name }}</a></th>
+      <td class="n">{{ m.paths }}</td>
+      <td class="n">{{ m.trackLength if m.trackLength is not none else '–' }}</td>
+      <td><span class="wl wl-{{ m.water }}">{{ m.water }}</span></td>
+      <td><span class="wl wl-{{ m.losBlockers }}">{{ 'clear' if m.losBlockers == 'none' else m.losBlockers }}</span></td>
+      <td class="n hide-s">{{ mm.two_mp_count if mm.two_mp_count is not none else '–' }}</td>
+      <td class="n hide-s">{{ m.lcc.money|money if m.lcc and m.lcc.money else '–' }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  </div>
+</section>
+{% endfor %}
+<p class="note">RBS = track length in red-Bloon seconds (BTD6 Index; for several lanes, the average). 2MP = number of single-tower CHIMPS wins. LCC = least-cost CHIMPS record. Full numbers on <a href="{{ root }}records/">Records</a>.</p>
+{% endblock %}
+{% block scripts %}<script src="{{ root }}assets/maps.js?v={{ site.version }}" defer></script>{% endblock %}

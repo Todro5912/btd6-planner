@@ -1,0 +1,5 @@
+<nav class="subtabs" aria-label="Monkeys">
+  {% for key, label, href in [('towers', 'Towers', 'monkeys/'), ('heroes', 'Heroes', 'monkeys/heroes/'), ('paragons', 'Paragons', 'monkeys/paragons/')] %}
+  <a class="subtab{% if tab == key %} on{% endif %}" href="{{ root }}{{ href }}"{% if tab == key %} aria-current="page"{% endif %}>{{ label }}</a>
+  {% endfor %}
+</nav>

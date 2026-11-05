@@ -1,0 +1,947 @@
+<!doctype html>
+<html lang="en" data-root="../">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Maps · Monkey Intel</title>
+<meta name="description" content="All 90 BTD6 maps: difficulty, water, line of sight, lane length, CHIMPS records. Filter and search.">
+<link rel="canonical" href="https://todro5912.github.io/btd6-planner/maps/">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#3E9B2F">
+<script>try{var t=localStorage.getItem('mi-theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Luckiest+Guy&family=Rubik:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="../assets/site.css?v=0.4.0">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 44'%3E%3Cellipse cx='20' cy='18' rx='14' ry='16' fill='%23E2412E' stroke='%231C1A17' stroke-width='3'/%3E%3Cpath d='M17 34h6l-3 4z' fill='%23E2412E' stroke='%231C1A17' stroke-width='2.5'/%3E%3C/svg%3E">
+</head>
+<body class="">
+<a class="skip" href="#main">Skip to content</a>
+<header class="top">
+  <div class="top-in">
+    <a class="brand" href="../"><svg class="brand-mark" viewBox="0 0 40 44" aria-hidden="true" focusable="false"><ellipse cx="20" cy="18" rx="14" ry="16" fill="#E2412E" stroke="#1C1A17" stroke-width="3"/><path d="M13 11c1.5-3 4-4.5 6-5" stroke="#FFF8E7" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M17 34h6l-3 4z" fill="#E2412E" stroke="#1C1A17" stroke-width="2.5" stroke-linejoin="round"/><path d="M20 38c-3 2 2 3 0 5" stroke="#1C1A17" stroke-width="2" fill="none"/></svg><span class="wordmark">Monkey Intel</span></a>
+    <nav class="tabs" aria-label="Main">
+      <a class="tab" href="../planner/">Planner</a>
+      <a class="tab" href="../monkeys/">Monkeys</a>
+      <a class="tab on" href="../maps/" aria-current="page">Maps</a>
+      <a class="tab" href="../guides/">Guides</a>
+      <a class="tab" href="../records/">Records</a>
+    </nav>
+    <a class="searchbtn" href="../a-z/" data-search-open aria-haspopup="dialog" aria-label="Search (press /)"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="10" cy="10" r="6.5" fill="none" stroke="currentColor" stroke-width="3"/><path d="M15 15l6 6" stroke="currentColor" stroke-width="3.4" stroke-linecap="square"/></svg><span class="sl">Search</span><kbd>/</kbd></a>
+  </div>
+</header>
+<main id="main" class="wrap">
+<nav class="crumbs" aria-label="Breadcrumb"><ol>
+<li><a href="../">Home</a></li>
+<li><span aria-current="page">Maps</span></li>
+</ol></nav>
+<div class="title-row">
+  <h1 class="h1">Maps</h1>
+  <span class="stamp"><b>v57.4</b></span>
+</div>
+<form class="filters panel" id="mapFilters" hidden aria-label="Filter maps">
+  <div class="filter filter-q">
+    <label for="mapQ">Name</label>
+    <input id="mapQ" type="search" autocomplete="off" placeholder="Type a map name">
+  </div>
+  <fieldset class="filter">
+    <legend>Difficulty</legend>
+    <div class="seg seg-wrap">
+<label class="segcheck"><input type="checkbox" name="d" value="Beginner" checked><span><span class="dot dot-beginner" aria-hidden="true"></span>Beginner</span></label><label class="segcheck"><input type="checkbox" name="d" value="Intermediate" checked><span><span class="dot dot-intermediate" aria-hidden="true"></span>Intermediate</span></label><label class="segcheck"><input type="checkbox" name="d" value="Advanced" checked><span><span class="dot dot-advanced" aria-hidden="true"></span>Advanced</span></label><label class="segcheck"><input type="checkbox" name="d" value="Expert" checked><span><span class="dot dot-expert" aria-hidden="true"></span>Expert</span></label>    </div>
+  </fieldset>
+  <div class="filter">
+    <label for="mapW">Water</label>
+    <select id="mapW"><option value="">Any</option><option value="none">None</option><option value="little">Little</option><option value="lots">Lots</option></select>
+  </div>
+  <div class="filter">
+    <label for="mapL">Line of sight</label>
+    <select id="mapL"><option value="">Any</option><option value="none">Clear</option><option value="some">Some blockers</option><option value="heavy">Heavy blockers</option></select>
+  </div>
+  <p class="filter-count" id="mapCount" role="status" aria-live="polite"></p>
+</form>
+<section class="map-group" id="beginner" data-group="Beginner" aria-labelledby="g-beginner">
+  <h2 class="h2 group-h" id="g-beginner"><span class="dot dot-beginner" aria-hidden="true"></span>Beginner <small>26 maps · ×1.0 XP</small></h2>
+  <div class="table-wrap">
+  <table class="tbl tbl-maps">
+    <thead><tr><th scope="col">Map</th><th scope="col" class="n">Lanes</th><th scope="col" class="n">RBS</th><th scope="col">Water</th><th scope="col">Line of sight</th><th scope="col" class="n hide-s">2MP</th><th scope="col" class="n hide-s">LCC</th></tr></thead>
+    <tbody>
+    <tr data-name="alpine run" data-d="Beginner" data-w="none" data-l="none">
+      <th scope="row"><a href="../maps/alpine-run/">Alpine Run</a></th>
+      <td class="n">1</td>
+      <td class="n">32.2</td>
+      <td><span class="wl wl-none">none</span></td>
+      <td><span class="wl wl-none">clear</span></td>
+      <td class="n hide-s">160</td>
+      <td class="n hide-s">$26,540</td>
+    </tr>
+    <tr data-name="candy falls" data-d="Beginner" data-w="little" data-l="none">
+      <th scope="row"><a href="../maps/candy-falls/">Candy Falls</a></th>
+      <td class="n">1</td>
+      <td class="n">42.2</td>
+      <td><span class="wl wl-little">little</span></td>
+      <td><span class="wl wl-none">clear</span></td>
+      <td class="n hide-s">217</td>
+      <td class="n hide-s">$24,655</td>
+    </tr>
+    <tr data-name="carved" data-d="Beginner" data-w="little" data-l="none">
+      <th scope="row"><a href="../maps/carved/">Carved</a></th>
+      <td class="n">1</td>
+      <td class="n">39.3</td>
+      <td><span class="wl wl-little">little</span></td>
+      <td><span class="wl wl-none">clear</span></td>
+      <td class="n hide-s">169</td>
+      <td class="n hide-s">$18,355</td>
+    </tr>
+    <tr data-name="cubism" data-d="Beginner" data-w="little" data-l="none">
+      <th scope="row"><a href="../maps/cubism/">Cubism</a></th>
+      <td class="n">1</td>
+      <td class="n">43.3</td>
+      <td><span class="wl wl-little">little</span></td>
+      <td><span class="wl wl-none">clear</span></td>
+      <td class="n hide-s">215</td>
+      <td class="n hide-s">$22,285</td>
+    </tr>
+    <tr data-name="end of the road" data-d="Beginner" data-w="little" data-l="none">
+      <th scope="row"><a href="../maps/end-of-the-road/">End Of The Road</a></th>
+      <td class="n">1</td>
+      <td class="n">26.4</td>
+      <td><span class="wl wl-little">little</span></td>
+      <td><span class="wl wl-none">clear</span></td>
+      <td class="n hide-s">170</td>
+      <td class="n hide-s">$31,665</td>
+    </tr>
+    <tr data-name="four circles" data-d="Beginner" data-w="little" data-l="none">
+      <th scope="row"><a href="../maps/four-circles/">Four Circles</a></th>
+      <td class="n">1</td>
+      <td class="n">36.4</td>
+      <td><span class="wl wl-little">little</span></td>
+      <td><span class="wl wl-none">clear</span></td>
+      <td class="n hide-s">216</td>
+      <td class="n hide-s">$26,540</td>
+    </tr>
+    <tr data-name="frozen over" data-d="Beginner" data-w="lots" data-l="none">
+      <th scope="row"><a href="../maps/frozen-over/">Frozen Over</a></th>
+      <td class="n">1</td>
+      <td class="n">35.5</td>
+      <td><span class="wl wl-lots">lots</span></td>
+      <td><span class="wl wl-none">clear</span></td>
+      <td class="n hide-s">206</td>
+      <td class="n hide-s">$26,540</td>
+    </tr>
+    <tr data-name="hedge" data-d="Beginner" data-w="none" data-l="some">
+      <th scope="row"><a href="../maps/hedge/">Hedge</a></th>
+      <td class="n">1</td>
+      <td class="n">38.5</td>
+      <td><span class="wl wl-none">none</span></td>
+      <td><span class="wl wl-some">some</span></td>
+      <td class="n hide-s">156</td>
+      <td class="n hide-s">$25,175</td>
+    </tr>
+    <tr data-name="in the loop" data-d="Beginner" data-w="little" data-l="none">
+      <th scope="row"><a href="../maps/in-the-loop/">In The Loop</a></th>
+      <td class="n">1</td>
+      <td class="n">39.0</td>
+      <td><span class="wl wl-little">little</span></td>
+      <td><span class="wl wl-none">clear</span></td>
+      <td class="n hide-s">190</td>
+      <td class="n hide-s">$26,540</td>
+    </tr>
+    <tr data-name="logs" data-d="Beginner" data-w="little" data-l="some">
+      <th scope="row"><a href="../maps/logs/">Logs</a></th>
+      <td class="n">1</td>
+      <td class="n">53.0</td>
+      <td><span class="wl wl-little">little</span></td>
+      <td><span class="wl wl-some">some</span></td>
+      <td class="n hide-s">231</td>
+      <td class="n hide-s">$5,615</td>
+    </tr>
+    <tr data-name="lotus island" data-d="Beginner" data-w="lots" data-l="some">
+      <th scope="row"><a href="../maps/lotus-island/">Lotus Island</a></th>
+      <td class="n">1</td>
+      <td class="n">32.3</td>
+      <td><span class="wl wl-lots">lots</span></td>
+      <td><span class="wl wl-some">some</span></td>
+      <td class="n hide-s">138</td>
+      <td class="n hide-s">$35,945</td>
+    </tr>
+    <tr data-name="middle of the road" data-d="Beginner" data-w="little" data-l="heavy">
+      <th scope="row"><a href="../maps/middle-of-the-road/">Middle of the Road</a></th>
+      <td class="n">1</td>
+      <td class="n">40.1</td>
+      <td><span class="wl wl-little">little</span></td>
+      <td><span class="wl wl-heavy">heavy</span></td>
+      <td class="n hide-s">168</td>
+      <td class="n hide-s">$26,540</td>
+    </tr>
+    <tr data-name="monkey meadow" data-d="Beginner" data-w="none" data-l="none">
+      <th scope="row"><a href="../maps/monkey-meadow/">Monkey Meadow</a></th>
+      <td class="n">1</td>
+      <td class="n">29.2</td>
+      <td><span class="wl wl-none">none</span></td>
+      <td><span class="wl wl-none">clear</span></td>
+      <td class="n hide-s">176</td>
+      <td class="n hide-s">$26,540</td>
+    </tr>
+    <tr data-name="one two tree" data-d="Beginner" data-w="little" data-l="some">
+      <th scope="row"><a href="../maps/one-two-tree/">One Two Tree</a></th>
+      <td class="n">1</td>
+      <td class="n">38.6</td>
+      <td><span class="wl wl-little">little</span></td>
+      <td><span class="wl wl-some">some</span></td>
+      <td class="n hide-s">180</td>
+      <td class="n hide-s">$35,355</td>
+    </tr>
+    <tr data-name="park path" data-d="Beginner" data-w="little" data-l="none">
+      <th scope="row"><a href="../maps/park-path/">Park Path</a></th>
+      <td class="n">1</td>
+      <td class="n">35.4</td>
+      <td><span class="wl wl-little">little</span></td>
+      <td><span class="wl wl-none">clear</span></td>
+      <td class="n hide-s">175</td>
+      <td class="n hide-s">$26,540</td>
+    </tr>
+    <tr data-name="resort" data-d="Beginner" data-w="little" data-l="some">
+      <th scope="row"><a href="../maps/resort/">Resort</a></th>
+      <td class="n">1</td>
+      <td class="n">47.8</td>
+      <td><span class="wl wl-little">little</span></td>
+      <td><span class="wl wl-some">some</span></td>
+      <td class="n hide-s">226</td>
+      <td class="n hide-s">$14,890</td>
+    </tr>
+    <tr data-name="scrapyard" data-d="Beginner" data-w="none" data-l="some">
+      <th scope="row"><a href="../maps/scrapyard/">Scrapyard</a></th>
+      <td class="n">1</td>
+      <td class="n">53.4</td>
+      <td><span class="wl wl-none">none</span></td>
+      <td><span class="wl wl-some">some</span></td>
+      <td class="n hide-s">135</td>
+      <td class="n hide-s">$14,575</td>
+    </tr>
+    <tr data-name="skates" data-d="Beginner" data-w="little" data-l="some">
+      <th scope="row"><a href="../maps/skates/">Skates</a></th>
+      <td class="n">1</td>
+      <td class="n">37.8</td>
+      <td><span class="wl wl-little">little</span></td>
+      <td><span class="wl wl-some">some</span></td>
+      <td class="n hide-s">171</td>
+      <td class="n hide-s">$26,540</td>
+    </tr>
+    <tr data-name="skull tweak" data-d="Beginner" data-w="little" data-l="some">
+      <th scope="row"><a href="../maps/skull-tweak/">Skull Tweak</a></th>
+      <td class="n">1</td>
+      <td class="n">36.3</td>
+      <td><span class="wl wl-little">little</span></td>
+      <td><span class="wl wl-some">some</span></td>
+      <td class="n hide-s">149</td>
+      <td class="n hide-s">$61,300</td>
+    </tr>
+    <tr data-name="spa pits" data-d="Beginner" data-w="little" data-l="some">
+      <th scope="row"><a href="../maps/spa-pits/">Spa Pits</a></th>
+      <td class="n">1</td>
+      <td class="n">48.7</td>
+      <td><span class="wl wl-little">little</span></td>
+      <td><span class="wl wl-some">some</span></td>
+      <td class="n hide-s">246</td>
+      <td class="n hide-s">$4,610</td>
+    </tr>
+    <tr data-name="the cabin" data-d="Beginner" data-w="little" data-l="some">
+      <th scope="row"><a href="../maps/the-cabin/">The Cabin</a></th>
+      <td class="n">1</td>
+      <td class="n">30.5</td>
+      <td><span class="wl wl-little">little</span></td>
+      <td><span class="wl wl-some">some</span></td>
+      <td class="n hide-s">158</td>
+      <td class="n hide-s">$40,095</td>
+    </tr>
+    <tr data-name="three mines &#39;round" data-d="Beginner" data-w="little" data-l="some">
+      <th scope="row"><a href="../maps/three-mines-round/">Three Mines &#39;Round</a></th>
+      <td class="n">1</td>
+      <td class="n">41.7</td>
+      <td><span class="wl wl-little">little</span></td>
+      <td><span class="wl wl-some">some</span></td>
+      <td class="n hide-s">258</td>
+      <td class="n hide-s">–</td>
+    </tr>
+    <tr data-name="tinkerton" data-d="Beginner" data-w="little" data-l="some">
+      <th scope="row"><a href="../maps/tinkerton/">Tinkerton</a></th>
+      <td class="n">1</td>
+      <td class="n">39.0</td>
+      <td><span class="wl wl-little">little</span></td>
+      <td><span class="wl wl-some">some</span></td>
+      <td class="n hide-s">161</td>
+      <td class="n hide-s">$26,540</td>
+    </tr>
+    <tr data-name="town center" data-d="Beginner" data-w="little" data-l="some">
+      <th scope="row"><a href="../maps/town-center/">Town Center</a></th>
+      <td class="n">1</td>
+      <td class="n">30.5</td>
+      <td><span class="wl wl-little">little</span></td>
+      <td><span class="wl wl-some">some</span></td>
+      <td class="n hide-s">160</td>
+      <td class="n hide-s">$26,540</td>
+    </tr>
+    <tr data-name="tree stump" data-d="Beginner" data-w="none" data-l="some">
+      <th scope="row"><a href="../maps/tree-stump/">Tree Stump</a></th>
+      <td class="n">1</td>
+      <td class="n">38.9</td>
+      <td><span class="wl wl-none">none</span></td>
+      <td><span class="wl wl-some">some</span></td>
+      <td class="n hide-s">168</td>
+      <td class="n hide-s">$26,540</td>
+    </tr>
+    <tr data-name="winter park" data-d="Beginner" data-w="little" data-l="none">
+      <th scope="row"><a href="../maps/winter-park/">Winter Park</a></th>
+      <td class="n">1</td>
+      <td class="n">36.1</td>
+      <td><span class="wl wl-little">little</span></td>
+      <td><span class="wl wl-none">clear</span></td>
+      <td class="n hide-s">171</td>
+      <td class="n hide-s">$26,540</td>
+    </tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+<section class="map-group" id="intermediate" data-group="Intermediate" aria-labelledby="g-intermediate">
+  <h2 class="h2 group-h" id="g-intermediate"><span class="dot dot-intermediate" aria-hidden="true"></span>Intermediate <small>26 maps · ×1.1 XP</small></h2>
+  <div class="table-wrap">
+  <table class="tbl tbl-maps">
+    <thead><tr><th scope="col">Map</th><th scope="col" class="n">Lanes</th><th scope="col" class="n">RBS</th><th scope="col">Water</th><th scope="col">Line of sight</th><th scope="col" class="n hide-s">2MP</th><th scope="col" class="n hide-s">LCC</th></tr></thead>
+    <tbody>
+    <tr data-name="adora&#39;s temple" data-d="Intermediate" data-w="little" data-l="some">
+      <th scope="row"><a href="../maps/adoras-temple/">Adora&#39;s Temple</a></th>
+      <td class="n">4</td>
+      <td class="n">27.8</td>
+      <td><span class="wl wl-little">little</span></td>
+      <td><span class="wl wl-some">some</span></td>
+      <td class="n hide-s">130</td>
+      <td class="n hide-s">$34,565</td>
+    </tr>
+    <tr data-name="ancient portal" data-d="Intermediate" data-w="little" data-l="some">
+      <th scope="row"><a href="../maps/ancient-portal/">Ancient Portal</a></th>
+      <td class="n">2</td>
+      <td class="n">15.7</td>
+      <td><span class="wl wl-little">little</span></td>
+      <td><span class="wl wl-some">some</span></td>
+      <td class="n hide-s">145</td>
+      <td class="n hide-s">$13,710</td>
+    </tr>
+    <tr data-name="balance" data-d="Intermediate" data-w="little" data-l="some">
+      <th scope="row"><a href="../maps/balance/">Balance</a></th>
+      <td class="n">2</td>
+      <td class="n">24.0</td>
+      <td><span class="wl wl-little">little</span></td>
+      <td><span class="wl wl-some">some</span></td>
+      <td class="n hide-s">127</td>
+      <td class="n hide-s">$33,470</td>
+    </tr>
+    <tr data-name="bazaar" data-d="Intermediate" data-w="little" data-l="some">
+      <th scope="row"><a href="../maps/bazaar/">Bazaar</a></th>
+      <td class="n">2</td>
+      <td class="n">20.4</td>
+      <td><span class="wl wl-little">little</span></td>
+      <td><span class="wl wl-some">some</span></td>
+      <td class="n hide-s">86</td>
+      <td class="n hide-s">$49,415</td>
+    </tr>
+    <tr data-name="bloonarius prime" data-d="Intermediate" data-w="little" data-l="some">
+      <th scope="row"><a href="../maps/bloonarius-prime/">Bloonarius Prime</a></th>
+      <td class="n">2</td>
+      <td class="n">17.3</td>
+      <td><span class="wl wl-little">little</span></td>
+      <td><span class="wl wl-some">some</span></td>
+      <td class="n hide-s">109</td>
+      <td class="n hide-s">$30,825</td>
+    </tr>
+    <tr data-name="chutes" data-d="Intermediate" data-w="little" data-l="some">
+      <th scope="row"><a href="../maps/chutes/">Chutes</a></th>
+      <td class="n">2</td>
+      <td class="n">16.0</td>
+      <td><span class="wl wl-little">little</span></td>
+      <td><span class="wl wl-some">some</span></td>
+      <td class="n hide-s">90</td>
+      <td class="n hide-s">$57,625</td>
+    </tr>
+    <tr data-name="covered garden" data-d="Intermediate" data-w="little" data-l="some">
+      <th scope="row"><a href="../maps/covered-garden/">Covered Garden</a></th>
+      <td class="n">1</td>
+      <td class="n">19.5</td>
+      <td><span class="wl wl-little">little</span></td>
+      <td><span class="wl wl-some">some</span></td>
+      <td class="n hide-s">91</td>
+      <td class="n hide-s">$50,495</td>
+    </tr>
+    <tr data-name="cracked" data-d="Intermediate" data-w="little" data-l="some">
+      <th scope="row"><a href="../maps/cracked/">Cracked</a></th>
+      <td class="n">1</td>
+      <td class="n">33.2</td>
+      <td><span class="wl wl-little">little</span></td>
+      <td><span class="wl wl-some">some</span></td>
+      <td class="n hide-s">189</td>
+      <td class="n hide-s">$26,540</td>
+    </tr>
+    <tr data-name="downstream" data-d="Intermediate" data-w="lots" data-l="none">
+      <th scope="row"><a href="../maps/downstream/">Downstream</a></th>
+      <td class="n">1</td>
+      <td class="n">26.4</td>
+      <td><span class="wl wl-lots">lots</span></td>
+      <td><span class="wl wl-none">clear</span></td>
+      <td class="n hide-s">166</td>
+      <td class="n hide-s">$34,750</td>
+    </tr>
+    <tr data-name="encrypted" data-d="Intermediate" data-w="little" data-l="heavy">
+      <th scope="row"><a href="../maps/encrypted/">Encrypted</a></th>
+      <td class="n">2</td>
+      <td class="n">28.8</td>
+      <td><span class="wl wl-little">little</span></td>
+      <td><span class="wl wl-heavy">heavy</span></td>
+      <td class="n hide-s">94</td>
+      <td class="n hide-s">$43,685</td>
+    </tr>
+    <tr data-name="firing range" data-d="Intermediate" data-w="little" data-l="some">
+      <th scope="row"><a href="../maps/firing-range/">Firing Range</a></th>
+      <td class="n">2</td>
+      <td class="n">29.6</td>
+      <td><span class="wl wl-little">little</span></td>
+      <td><span class="wl wl-some">some</span></td>
+      <td class="n hide-s">175</td>
+      <td class="n hide-s">$41,795</td>
+    </tr>
+    <tr data-name="haunted" data-d="Intermediate" data-w="little" data-l="some">
+      <th scope="row"><a href="../maps/haunted/">Haunted</a></th>
+      <td class="n">2</td>
+      <td class="n">18.6</td>
+      <td><span class="wl wl-little">little</span></td>
+      <td><span class="wl wl-some">some</span></td>
+      <td class="n hide-s">101</td>
+      <td class="n hide-s">$49,035</td>
+    </tr>
+    <tr data-name="kartsndarts" data-d="Intermediate" data-w="none" data-l="none">
+      <th scope="row"><a href="../maps/kartsndarts/">KartsNDarts</a></th>
+      <td class="n">1</td>
+      <td class="n">32.7</td>
+      <td><span class="wl wl-none">none</span></td>
+      <td><span class="wl wl-none">clear</span></td>
+      <td class="n hide-s">161</td>
+      <td class="n hide-s">$26,540</td>
+    </tr>
+    <tr data-name="lost crevasse" data-d="Intermediate" data-w="little" data-l="some">
+      <th scope="row"><a href="../maps/lost-crevasse/">Lost Crevasse</a></th>
+      <td class="n">2</td>
+      <td class="n">16.6</td>
+      <td><span class="wl wl-little">little</span></td>
+      <td><span class="wl wl-some">some</span></td>
+      <td class="n hide-s">84</td>
+      <td class="n hide-s">–</td>
+    </tr>
+    <tr data-name="luminous cove" data-d="Intermediate" data-w="lots" data-l="heavy">
+      <th scope="row"><a href="../maps/luminous-cove/">Luminous Cove</a></th>
+      <td class="n">2</td>
+      <td class="n">27.8</td>
+      <td><span class="wl wl-lots">lots</span></td>
+      <td><span class="wl wl-heavy">heavy</span></td>
+      <td class="n hide-s">129</td>
+      <td class="n hide-s">$41,145</td>
+    </tr>
+    <tr data-name="moon landing" data-d="Intermediate" data-w="none" data-l="some">
+      <th scope="row"><a href="../maps/moon-landing/">Moon Landing</a></th>
+      <td class="n">1</td>
+      <td class="n">35.5</td>
+      <td><span class="wl wl-none">none</span></td>
+      <td><span class="wl wl-some">some</span></td>
+      <td class="n hide-s">159</td>
+      <td class="n hide-s">$16,895</td>
+    </tr>
+    <tr data-name="polyphemus" data-d="Intermediate" data-w="lots" data-l="some">
+      <th scope="row"><a href="../maps/polyphemus/">Polyphemus</a></th>
+      <td class="n">2</td>
+      <td class="n">26.9</td>
+      <td><span class="wl wl-lots">lots</span></td>
+      <td><span class="wl wl-some">some</span></td>
+      <td class="n hide-s">104</td>
+      <td class="n hide-s">$34,835</td>
+    </tr>
+    <tr data-name="protect the yacht" data-d="Intermediate" data-w="lots" data-l="some">
+      <th scope="row"><a href="../maps/protect-the-yacht/">Protect The Yacht</a></th>
+      <td class="n">2</td>
+      <td class="n">18.7</td>
+      <td><span class="wl wl-lots">lots</span></td>
+      <td><span class="wl wl-some">some</span></td>
+      <td class="n hide-s">35</td>
+      <td class="n hide-s">$119,055</td>
+    </tr>
+    <tr data-name="quarry" data-d="Intermediate" data-w="little" data-l="some">
+      <th scope="row"><a href="../maps/quarry/">Quarry</a></th>
+      <td class="n">2</td>
+      <td class="n">31.2</td>
+      <td><span class="wl wl-little">little</span></td>
+      <td><span class="wl wl-some">some</span></td>
+      <td class="n hide-s">147</td>
+      <td class="n hide-s">$38,550</td>
+    </tr>
+    <tr data-name="quiet street" data-d="Intermediate" data-w="little" data-l="some">
+      <th scope="row"><a href="../maps/quiet-street/">Quiet Street</a></th>
+      <td class="n">3</td>
+      <td class="n">24.9</td>
+      <td><span class="wl wl-little">little</span></td>
+      <td><span class="wl wl-some">some</span></td>
+      <td class="n hide-s">107</td>
+      <td class="n hide-s">$47,050</td>
+    </tr>
+    <tr data-name="rake" data-d="Intermediate" data-w="little" data-l="some">
+      <th scope="row"><a href="../maps/rake/">Rake</a></th>
+      <td class="n">2</td>
+      <td class="n">15.6</td>
+      <td><span class="wl wl-little">little</span></td>
+      <td><span class="wl wl-some">some</span></td>
+      <td class="n hide-s">89</td>
+      <td class="n hide-s">$68,845</td>
+    </tr>
+    <tr data-name="spice islands" data-d="Intermediate" data-w="lots" data-l="some">
+      <th scope="row"><a href="../maps/spice-islands/">Spice Islands</a></th>
+      <td class="n">1</td>
+      <td class="n">23.8</td>
+      <td><span class="wl wl-lots">lots</span></td>
+      <td><span class="wl wl-some">some</span></td>
+      <td class="n hide-s">118</td>
+      <td class="n hide-s">$41,145</td>
+    </tr>
+    <tr data-name="spring spring" data-d="Intermediate" data-w="lots" data-l="none">
+      <th scope="row"><a href="../maps/spring-spring/">Spring Spring</a></th>
+      <td class="n">2</td>
+      <td class="n">24.6</td>
+      <td><span class="wl wl-lots">lots</span></td>
+      <td><span class="wl wl-none">clear</span></td>
+      <td class="n hide-s">99</td>
+      <td class="n hide-s">$47,810</td>
+    </tr>
+    <tr data-name="streambed" data-d="Intermediate" data-w="little" data-l="some">
+      <th scope="row"><a href="../maps/streambed/">Streambed</a></th>
+      <td class="n">1</td>
+      <td class="n">27.1</td>
+      <td><span class="wl wl-little">little</span></td>
+      <td><span class="wl wl-some">some</span></td>
+      <td class="n hide-s">169</td>
+      <td class="n hide-s">$26,540</td>
+    </tr>
+    <tr data-name="sulfur springs" data-d="Intermediate" data-w="little" data-l="some">
+      <th scope="row"><a href="../maps/sulfur-springs/">Sulfur Springs</a></th>
+      <td class="n">1</td>
+      <td class="n">32.2</td>
+      <td><span class="wl wl-little">little</span></td>
+      <td><span class="wl wl-some">some</span></td>
+      <td class="n hide-s">168</td>
+      <td class="n hide-s">$13,225</td>
+    </tr>
+    <tr data-name="water park" data-d="Intermediate" data-w="little" data-l="some">
+      <th scope="row"><a href="../maps/water-park/">Water Park</a></th>
+      <td class="n">2</td>
+      <td class="n">18.1</td>
+      <td><span class="wl wl-little">little</span></td>
+      <td><span class="wl wl-some">some</span></td>
+      <td class="n hide-s">91</td>
+      <td class="n hide-s">$49,785</td>
+    </tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+<section class="map-group" id="advanced" data-group="Advanced" aria-labelledby="g-advanced">
+  <h2 class="h2 group-h" id="g-advanced"><span class="dot dot-advanced" aria-hidden="true"></span>Advanced <small>24 maps · ×1.2 XP</small></h2>
+  <div class="table-wrap">
+  <table class="tbl tbl-maps">
+    <thead><tr><th scope="col">Map</th><th scope="col" class="n">Lanes</th><th scope="col" class="n">RBS</th><th scope="col">Water</th><th scope="col">Line of sight</th><th scope="col" class="n hide-s">2MP</th><th scope="col" class="n hide-s">LCC</th></tr></thead>
+    <tbody>
+    <tr data-name="another brick" data-d="Advanced" data-w="little" data-l="heavy">
+      <th scope="row"><a href="../maps/another-brick/">Another Brick</a></th>
+      <td class="n">1</td>
+      <td class="n">19.6</td>
+      <td><span class="wl wl-little">little</span></td>
+      <td><span class="wl wl-heavy">heavy</span></td>
+      <td class="n hide-s">122</td>
+      <td class="n hide-s">$44,705</td>
+    </tr>
+    <tr data-name="ascent" data-d="Advanced" data-w="little" data-l="some">
+      <th scope="row"><a href="../maps/ascent/">Ascent</a></th>
+      <td class="n">2</td>
+      <td class="n">20.8</td>
+      <td><span class="wl wl-little">little</span></td>
+      <td><span class="wl wl-some">some</span></td>
+      <td class="n hide-s">106</td>
+      <td class="n hide-s">$38,255</td>
+    </tr>
+    <tr data-name="cargo" data-d="Advanced" data-w="lots" data-l="some">
+      <th scope="row"><a href="../maps/cargo/">Cargo</a></th>
+      <td class="n">2</td>
+      <td class="n">10.7</td>
+      <td><span class="wl wl-lots">lots</span></td>
+      <td><span class="wl wl-some">some</span></td>
+      <td class="n hide-s">88</td>
+      <td class="n hide-s">$66,185</td>
+    </tr>
+    <tr data-name="castle revenge" data-d="Advanced" data-w="little" data-l="some">
+      <th scope="row"><a href="../maps/castle-revenge/">Castle Revenge</a></th>
+      <td class="n">4</td>
+      <td class="n">14.5</td>
+      <td><span class="wl wl-little">little</span></td>
+      <td><span class="wl wl-some">some</span></td>
+      <td class="n hide-s">41</td>
+      <td class="n hide-s">$84,070</td>
+    </tr>
+    <tr data-name="cornfield" data-d="Advanced" data-w="none" data-l="heavy">
+      <th scope="row"><a href="../maps/cornfield/">Cornfield</a></th>
+      <td class="n">1</td>
+      <td class="n">24.1</td>
+      <td><span class="wl wl-none">none</span></td>
+      <td><span class="wl wl-heavy">heavy</span></td>
+      <td class="n hide-s">116</td>
+      <td class="n hide-s">$25,910</td>
+    </tr>
+    <tr data-name="dark path" data-d="Advanced" data-w="none" data-l="some">
+      <th scope="row"><a href="../maps/dark-path/">Dark Path</a></th>
+      <td class="n">1</td>
+      <td class="n">18.8</td>
+      <td><span class="wl wl-none">none</span></td>
+      <td><span class="wl wl-some">some</span></td>
+      <td class="n hide-s">129</td>
+      <td class="n hide-s">$41,585</td>
+    </tr>
+    <tr data-name="enchanted glade" data-d="Advanced" data-w="little" data-l="heavy">
+      <th scope="row"><a href="../maps/enchanted-glade/">Enchanted Glade</a></th>
+      <td class="n">2</td>
+      <td class="n">14.2</td>
+      <td><span class="wl wl-little">little</span></td>
+      <td><span class="wl wl-heavy">heavy</span></td>
+      <td class="n hide-s">94</td>
+      <td class="n hide-s">$59,245</td>
+    </tr>
+    <tr data-name="erosion" data-d="Advanced" data-w="little" data-l="none">
+      <th scope="row"><a href="../maps/erosion/">Erosion</a></th>
+      <td class="n">6</td>
+      <td class="n">5.2</td>
+      <td><span class="wl wl-little">little</span></td>
+      <td><span class="wl wl-none">clear</span></td>
+      <td class="n hide-s">67</td>
+      <td class="n hide-s">$72,125</td>
+    </tr>
+    <tr data-name="geared" data-d="Advanced" data-w="none" data-l="none">
+      <th scope="row"><a href="../maps/geared/">Geared</a></th>
+      <td class="n">1</td>
+      <td class="n">13.9</td>
+      <td><span class="wl wl-none">none</span></td>
+      <td><span class="wl wl-none">clear</span></td>
+      <td class="n hide-s">48</td>
+      <td class="n hide-s">$69,940</td>
+    </tr>
+    <tr data-name="high finance" data-d="Advanced" data-w="little" data-l="some">
+      <th scope="row"><a href="../maps/high-finance/">High Finance</a></th>
+      <td class="n">2</td>
+      <td class="n">15.5</td>
+      <td><span class="wl wl-little">little</span></td>
+      <td><span class="wl wl-some">some</span></td>
+      <td class="n hide-s">91</td>
+      <td class="n hide-s">$42,100</td>
+    </tr>
+    <tr data-name="last resort" data-d="Advanced" data-w="little" data-l="some">
+      <th scope="row"><a href="../maps/last-resort/">Last Resort</a></th>
+      <td class="n">4</td>
+      <td class="n">9.5</td>
+      <td><span class="wl wl-little">little</span></td>
+      <td><span class="wl wl-some">some</span></td>
+      <td class="n hide-s">65</td>
+      <td class="n hide-s">$63,210</td>
+    </tr>
+    <tr data-name="mesa" data-d="Advanced" data-w="none" data-l="heavy">
+      <th scope="row"><a href="../maps/mesa/">Mesa</a></th>
+      <td class="n">2</td>
+      <td class="n">11.0</td>
+      <td><span class="wl wl-none">none</span></td>
+      <td><span class="wl wl-heavy">heavy</span></td>
+      <td class="n hide-s">56</td>
+      <td class="n hide-s">$71,025</td>
+    </tr>
+    <tr data-name="midnight mansion" data-d="Advanced" data-w="none" data-l="some">
+      <th scope="row"><a href="../maps/midnight-mansion/">Midnight Mansion</a></th>
+      <td class="n">2</td>
+      <td class="n">17.3</td>
+      <td><span class="wl wl-none">none</span></td>
+      <td><span class="wl wl-some">some</span></td>
+      <td class="n hide-s">41</td>
+      <td class="n hide-s">$55,050</td>
+    </tr>
+    <tr data-name="mushroom grotto" data-d="Advanced" data-w="none" data-l="heavy">
+      <th scope="row"><a href="../maps/mushroom-grotto/">Mushroom Grotto</a></th>
+      <td class="n">2</td>
+      <td class="n">18.6</td>
+      <td><span class="wl wl-none">none</span></td>
+      <td><span class="wl wl-heavy">heavy</span></td>
+      <td class="n hide-s">42</td>
+      <td class="n hide-s">–</td>
+    </tr>
+    <tr data-name="off the coast" data-d="Advanced" data-w="lots" data-l="none">
+      <th scope="row"><a href="../maps/off-the-coast/">Off The Coast</a></th>
+      <td class="n">1</td>
+      <td class="n">19.3</td>
+      <td><span class="wl wl-lots">lots</span></td>
+      <td><span class="wl wl-none">clear</span></td>
+      <td class="n hide-s">114</td>
+      <td class="n hide-s">$44,490</td>
+    </tr>
+    <tr data-name="party parade" data-d="Advanced" data-w="none" data-l="heavy">
+      <th scope="row"><a href="../maps/party-parade/">Party Parade</a></th>
+      <td class="n">2</td>
+      <td class="n">11.3</td>
+      <td><span class="wl wl-none">none</span></td>
+      <td><span class="wl wl-heavy">heavy</span></td>
+      <td class="n hide-s">24</td>
+      <td class="n hide-s">$86,870</td>
+    </tr>
+    <tr data-name="pat&#39;s pond" data-d="Advanced" data-w="lots" data-l="some">
+      <th scope="row"><a href="../maps/pats-pond/">Pat&#39;s Pond</a></th>
+      <td class="n">2</td>
+      <td class="n">13.7</td>
+      <td><span class="wl wl-lots">lots</span></td>
+      <td><span class="wl wl-some">some</span></td>
+      <td class="n hide-s">61</td>
+      <td class="n hide-s">$72,635</td>
+    </tr>
+    <tr data-name="peninsula" data-d="Advanced" data-w="lots" data-l="heavy">
+      <th scope="row"><a href="../maps/peninsula/">Peninsula</a></th>
+      <td class="n">1</td>
+      <td class="n">14.2</td>
+      <td><span class="wl wl-lots">lots</span></td>
+      <td><span class="wl wl-heavy">heavy</span></td>
+      <td class="n hide-s">92</td>
+      <td class="n hide-s">$50,945</td>
+    </tr>
+    <tr data-name="ship capture" data-d="Advanced" data-w="little" data-l="some">
+      <th scope="row"><a href="../maps/ship-capture/">Ship Capture</a></th>
+      <td class="n">4</td>
+      <td class="n">8.2</td>
+      <td><span class="wl wl-little">little</span></td>
+      <td><span class="wl wl-some">some</span></td>
+      <td class="n hide-s">43</td>
+      <td class="n hide-s">–</td>
+    </tr>
+    <tr data-name="spillway" data-d="Advanced" data-w="little" data-l="some">
+      <th scope="row"><a href="../maps/spillway/">Spillway</a></th>
+      <td class="n">4</td>
+      <td class="n">22.3</td>
+      <td><span class="wl wl-little">little</span></td>
+      <td><span class="wl wl-some">some</span></td>
+      <td class="n hide-s">80</td>
+      <td class="n hide-s">$44,820</td>
+    </tr>
+    <tr data-name="sunken columns" data-d="Advanced" data-w="little" data-l="some">
+      <th scope="row"><a href="../maps/sunken-columns/">Sunken Columns</a></th>
+      <td class="n">2</td>
+      <td class="n">18.8</td>
+      <td><span class="wl wl-little">little</span></td>
+      <td><span class="wl wl-some">some</span></td>
+      <td class="n hide-s">84</td>
+      <td class="n hide-s">$48,065</td>
+    </tr>
+    <tr data-name="sunset gulch" data-d="Advanced" data-w="none" data-l="none">
+      <th scope="row"><a href="../maps/sunset-gulch/">Sunset Gulch</a></th>
+      <td class="n">2</td>
+      <td class="n">10.9</td>
+      <td><span class="wl wl-none">none</span></td>
+      <td><span class="wl wl-none">clear</span></td>
+      <td class="n hide-s">84</td>
+      <td class="n hide-s">$64,120</td>
+    </tr>
+    <tr data-name="underground" data-d="Advanced" data-w="none" data-l="none">
+      <th scope="row"><a href="../maps/underground/">Underground</a></th>
+      <td class="n">2</td>
+      <td class="n">12.9</td>
+      <td><span class="wl wl-none">none</span></td>
+      <td><span class="wl wl-none">clear</span></td>
+      <td class="n hide-s">75</td>
+      <td class="n hide-s">$46,025</td>
+    </tr>
+    <tr data-name="x factor" data-d="Advanced" data-w="none" data-l="none">
+      <th scope="row"><a href="../maps/x-factor/">X Factor</a></th>
+      <td class="n">4</td>
+      <td class="n">14.5</td>
+      <td><span class="wl wl-none">none</span></td>
+      <td><span class="wl wl-none">clear</span></td>
+      <td class="n hide-s">30</td>
+      <td class="n hide-s">$77,310</td>
+    </tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+<section class="map-group" id="expert" data-group="Expert" aria-labelledby="g-expert">
+  <h2 class="h2 group-h" id="g-expert"><span class="dot dot-expert" aria-hidden="true"></span>Expert <small>14 maps · ×1.3 XP</small></h2>
+  <div class="table-wrap">
+  <table class="tbl tbl-maps">
+    <thead><tr><th scope="col">Map</th><th scope="col" class="n">Lanes</th><th scope="col" class="n">RBS</th><th scope="col">Water</th><th scope="col">Line of sight</th><th scope="col" class="n hide-s">2MP</th><th scope="col" class="n hide-s">LCC</th></tr></thead>
+    <tbody>
+    <tr data-name="#ouch" data-d="Expert" data-w="little" data-l="none">
+      <th scope="row"><a href="../maps/ouch/">#Ouch</a></th>
+      <td class="n">4</td>
+      <td class="n">8.0</td>
+      <td><span class="wl wl-little">little</span></td>
+      <td><span class="wl wl-none">clear</span></td>
+      <td class="n hide-s">34</td>
+      <td class="n hide-s">$63,505</td>
+    </tr>
+    <tr data-name="blons" data-d="Expert" data-w="little" data-l="none">
+      <th scope="row"><a href="../maps/blons/">Blons</a></th>
+      <td class="n">1</td>
+      <td class="n">3.7</td>
+      <td><span class="wl wl-little">little</span></td>
+      <td><span class="wl wl-none">clear</span></td>
+      <td class="n hide-s">54</td>
+      <td class="n hide-s">$60,940</td>
+    </tr>
+    <tr data-name="bloody puddles" data-d="Expert" data-w="little" data-l="some">
+      <th scope="row"><a href="../maps/bloody-puddles/">Bloody Puddles</a></th>
+      <td class="n">6</td>
+      <td class="n">9.0</td>
+      <td><span class="wl wl-little">little</span></td>
+      <td><span class="wl wl-some">some</span></td>
+      <td class="n hide-s">28</td>
+      <td class="n hide-s">$68,865</td>
+    </tr>
+    <tr data-name="dark castle" data-d="Expert" data-w="little" data-l="some">
+      <th scope="row"><a href="../maps/dark-castle/">Dark Castle</a></th>
+      <td class="n">4</td>
+      <td class="n">6.9</td>
+      <td><span class="wl wl-little">little</span></td>
+      <td><span class="wl wl-some">some</span></td>
+      <td class="n hide-s">100</td>
+      <td class="n hide-s">$54,850</td>
+    </tr>
+    <tr data-name="dark dungeons" data-d="Expert" data-w="little" data-l="heavy">
+      <th scope="row"><a href="../maps/dark-dungeons/">Dark Dungeons</a></th>
+      <td class="n">4</td>
+      <td class="n">9.7</td>
+      <td><span class="wl wl-little">little</span></td>
+      <td><span class="wl wl-heavy">heavy</span></td>
+      <td class="n hide-s">18</td>
+      <td class="n hide-s">$49,445</td>
+    </tr>
+    <tr data-name="flooded valley" data-d="Expert" data-w="lots" data-l="heavy">
+      <th scope="row"><a href="../maps/flooded-valley/">Flooded Valley</a></th>
+      <td class="n">2</td>
+      <td class="n">8.9</td>
+      <td><span class="wl wl-lots">lots</span></td>
+      <td><span class="wl wl-heavy">heavy</span></td>
+      <td class="n hide-s">43</td>
+      <td class="n hide-s">$59,415</td>
+    </tr>
+    <tr data-name="glacial trail" data-d="Expert" data-w="little" data-l="some">
+      <th scope="row"><a href="../maps/glacial-trail/">Glacial Trail</a></th>
+      <td class="n">1</td>
+      <td class="n">17.7</td>
+      <td><span class="wl wl-little">little</span></td>
+      <td><span class="wl wl-some">some</span></td>
+      <td class="n hide-s">29</td>
+      <td class="n hide-s">$142,535</td>
+    </tr>
+    <tr data-name="infernal" data-d="Expert" data-w="little" data-l="none">
+      <th scope="row"><a href="../maps/infernal/">Infernal</a></th>
+      <td class="n">2</td>
+      <td class="n">19.3</td>
+      <td><span class="wl wl-little">little</span></td>
+      <td><span class="wl wl-none">clear</span></td>
+      <td class="n hide-s">88</td>
+      <td class="n hide-s">$58,995</td>
+    </tr>
+    <tr data-name="muddy puddles" data-d="Expert" data-w="little" data-l="none">
+      <th scope="row"><a href="../maps/muddy-puddles/">Muddy Puddles</a></th>
+      <td class="n">4</td>
+      <td class="n">9.6</td>
+      <td><span class="wl wl-little">little</span></td>
+      <td><span class="wl wl-none">clear</span></td>
+      <td class="n hide-s">62</td>
+      <td class="n hide-s">$60,160</td>
+    </tr>
+    <tr data-name="quad" data-d="Expert" data-w="little" data-l="some">
+      <th scope="row"><a href="../maps/quad/">Quad</a></th>
+      <td class="n">4</td>
+      <td class="n">8.8</td>
+      <td><span class="wl wl-little">little</span></td>
+      <td><span class="wl wl-some">some</span></td>
+      <td class="n hide-s">28</td>
+      <td class="n hide-s">$76,655</td>
+    </tr>
+    <tr data-name="ravine" data-d="Expert" data-w="little" data-l="heavy">
+      <th scope="row"><a href="../maps/ravine/">Ravine</a></th>
+      <td class="n">4</td>
+      <td class="n">8.1</td>
+      <td><span class="wl wl-little">little</span></td>
+      <td><span class="wl wl-heavy">heavy</span></td>
+      <td class="n hide-s">38</td>
+      <td class="n hide-s">$67,250</td>
+    </tr>
+    <tr data-name="sanctuary" data-d="Expert" data-w="little" data-l="none">
+      <th scope="row"><a href="../maps/sanctuary/">Sanctuary</a></th>
+      <td class="n">4</td>
+      <td class="n">10.9</td>
+      <td><span class="wl wl-little">little</span></td>
+      <td><span class="wl wl-none">clear</span></td>
+      <td class="n hide-s">44</td>
+      <td class="n hide-s">$61,375</td>
+    </tr>
+    <tr data-name="tricky tracks" data-d="Expert" data-w="none" data-l="some">
+      <th scope="row"><a href="../maps/tricky-tracks/">Tricky Tracks</a></th>
+      <td class="n">6</td>
+      <td class="n">6.1</td>
+      <td><span class="wl wl-none">none</span></td>
+      <td><span class="wl wl-some">some</span></td>
+      <td class="n hide-s">34</td>
+      <td class="n hide-s">$97,510</td>
+    </tr>
+    <tr data-name="workshop" data-d="Expert" data-w="none" data-l="heavy">
+      <th scope="row"><a href="../maps/workshop/">Workshop</a></th>
+      <td class="n">2</td>
+      <td class="n">6.8</td>
+      <td><span class="wl wl-none">none</span></td>
+      <td><span class="wl wl-heavy">heavy</span></td>
+      <td class="n hide-s">40</td>
+      <td class="n hide-s">$58,630</td>
+    </tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+<p class="note">RBS = track length in red-Bloon seconds (BTD6 Index; for several lanes, the average). 2MP = number of single-tower CHIMPS wins. LCC = least-cost CHIMPS record. Full numbers on <a href="../records/">Records</a>.</p>
+</main>
+<footer class="foot">
+  <div class="foot-in">
+    <p class="disclaimer"><b>Unofficial fan site.</b> Not affiliated with or endorsed by Ninja Kiwi. Bloons and Bloons TD 6 are their trademarks. No game art is used here.</p>
+    <dl class="foot-facts">
+      <div><dt>Data</dt><dd>BTD6 v57.4, checked 2026-11-05</dd></div>
+      <div><dt>Site</dt><dd>Monkey Intel 0.4.0</dd></div>
+      <div><dt>Credits</dt><dd><a href="https://www.bloonswiki.com/" rel="noopener">Bloons Wiki</a> (CC BY-SA), <a href="https://btd6index.win/" rel="noopener">BTD6 Index</a>, <a href="https://github.com/hemisemidemipresent/cyberquincy" rel="noopener">Cyber Quincy</a>, Ninja Kiwi patch notes. Made by <a href="https://github.com/Todro5912" rel="noopener">Todro5912</a>.</dd></div>
+    </dl>
+    <div class="foot-row">
+      <a href="../a-z/">A–Z index</a>
+      <a href="https://github.com/Todro5912/btd6-planner" rel="noopener">GitHub</a>
+      <div class="seg theme-toggle" role="radiogroup" aria-label="Colour theme" hidden>
+        <button type="button" role="radio" data-theme-set="auto" aria-checked="true">Auto</button>
+        <button type="button" role="radio" data-theme-set="light" aria-checked="false">Light</button>
+        <button type="button" role="radio" data-theme-set="dark" aria-checked="false">Dark</button>
+      </div>
+    </div>
+  </div>
+</footer>
+<dialog class="search" id="search" aria-labelledby="searchLabel">
+  <form method="dialog" class="search-in" role="search">
+    <label id="searchLabel" for="searchInput">Search towers, upgrades, heroes, maps, guides and rounds</label>
+    <div class="search-row">
+      <svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="10" cy="10" r="6.5" fill="none" stroke="currentColor" stroke-width="3"/><path d="M15 15l6 6" stroke="currentColor" stroke-width="3.4" stroke-linecap="square"/></svg>
+      <input id="searchInput" type="search" autocomplete="off" spellcheck="false" placeholder="Try: glaive, infernal, r63" role="combobox" aria-expanded="false" aria-controls="searchList" aria-autocomplete="list">
+      <button type="button" class="btn btn-small" data-search-close>Esc</button>
+    </div>
+    <ul id="searchList" role="listbox" aria-label="Results"></ul>
+    <p class="search-hint" id="searchHint"><kbd>↑</kbd><kbd>↓</kbd> move · <kbd>Enter</kbd> open · <kbd>Esc</kbd> close</p>
+  </form>
+</dialog>
+<script src="../assets/site.js?v=0.4.0" defer></script>
+<script src="../assets/maps.js?v=0.4.0" defer></script></body>
+</html>

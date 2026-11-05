@@ -1,0 +1,11 @@
+{
+  "name": "Monkey Intel",
+  "tagline": "Unofficial Bloons TD 6 hub",
+  "version": "0.4.0",
+  "dataVersion": "57.4",
+  "base": "/btd6-planner/",
+  "siteUrl": "https://todro5912.github.io/btd6-planner/",
+  "github": "https://github.com/Todro5912/btd6-planner",
+  "author": "Todro5912",
+  "authorUrl": "https://github.com/Todro5912"
+}

@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% import '_macros.html' as ui %}
+{% block main %}
+<div class="title-row">
+  <h1 class="h1">Paragons and XP farms</h1>
+  {{ ui.stamp() }}
+</div>
+{% include '_subtabs.html' %}
+<div class="toolbar">
+  <p class="lede">A paragon needs every upgrade of its tower unlocked, then its own XP. Farms are the dataset's best Expert run per tower, with Monkey Education.</p>
+  {{ ui.diff_toggle() }}
+</div>
+<h2 class="h2" id="paragons">Paragons</h2>
+<div class="table-wrap">
+<table class="tbl">
+  <thead><tr><th scope="col">Paragon</th><th scope="col">Tower</th><th scope="col" class="n">Price</th><th scope="col" class="n">Paragon XP</th><th scope="col" class="n">XP from zero</th></tr></thead>
+  <tbody>
+  {% for tm in ctx.tower_models if tm.paragon %}
+  <tr>
+    <th scope="row"><a href="{{ root }}{{ tm.url }}#paragon">{{ tm.paragon.name }}</a></th>
+    <td><a href="{{ root }}{{ tm.url }}">{{ tm.t.name }}</a></td>
+    <td class="n">{{ ui.price(tm.paragon.prices) }}</td>
+    <td class="n">{{ tm.paragon.xp|num }}</td>
+    <td class="n"><b>{{ tm.paragon.total|num }}</b></td>
+  </tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div>
+<p class="note">No paragon in v{{ meta.version }}: {% for tm in ctx.tower_models if not tm.paragon %}<a href="{{ root }}{{ tm.url }}">{{ tm.t.name }}</a>{{ ', ' if not loop.last else '.' }}{% endfor %}</p>
+
+<h2 class="h2" id="farms">XP farm per tower</h2>
+<div class="table-wrap">
+<table class="tbl tbl-farm">
+  <thead><tr><th scope="col">Tower</th><th scope="col">Map · mode</th><th scope="col">Setup</th><th scope="col" class="n">XP / run</th><th scope="col" class="n">Runs to all T5</th><th scope="col" class="n">Runs to paragon</th></tr></thead>
+  <tbody>
+  {% for tm in ctx.tower_models if tm.g.farm %}
+  {% set f = tm.g.farm %}
+  <tr>
+    <th scope="row"><a href="{{ root }}{{ tm.url }}#farm">{{ tm.t.name }}</a></th>
+    <td class="wrapcell">{{ link_maps(f.map, root) }}<br><small class="muted">{{ f.mode }}</small></td>
+    <td class="wrapcell">{{ f.setup }}</td>
+    <td class="n">{{ f.xpPerRun|num }}</td>
+    <td class="n">{{ f.runsToT5 if f.runsToT5 is not none else '–' }}</td>
+    <td class="n">{{ f.runsToParagon if f.runsToParagon is not none else '–' }}</td>
+  </tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div>
+{% endblock %}
+{% block scripts %}<script src="{{ root }}assets/prices.js?v={{ site.version }}" defer></script>{% endblock %}

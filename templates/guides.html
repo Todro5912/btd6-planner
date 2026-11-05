@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% import '_macros.html' as ui %}
+{% block main %}
+<div class="title-row">
+  <h1 class="h1">Guides</h1>
+  {{ ui.stamp() }}
+</div>
+{% for name, items in groups %}
+<section class="guide-group" id="{{ name|lower }}" aria-labelledby="gg-{{ name|lower }}">
+  <h2 class="h2" id="gg-{{ name|lower }}">{{ name }}</h2>
+  {% if items %}
+  <ol class="guide-list">
+    {% for g in items %}
+    <li>
+      <a href="{{ root }}{{ g.url }}"><span class="gl-t">{{ g.title }}</span></a>
+      {% if g.summary %}<span class="gl-s">{{ g.summary }}</span>{% endif %}
+      <span class="gl-m">{% if g.gameVersion %}v{{ g.gameVersion }}{% endif %}{% if g.updated %} · {{ g.updated }}{% endif %}</span>
+    </li>
+    {% endfor %}
+  </ol>
+  {% else %}
+  <p class="muted">Nothing here yet.</p>
+  {% endif %}
+</section>
+{% endfor %}
+{% endblock %}

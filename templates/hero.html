@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% import '_macros.html' as ui %}
+{% block main %}
+{% set h = hm.h %}
+<div class="title-row">
+  <h1 class="h1">{{ h.name }}</h1>
+  {{ ui.stamp(None, meta.researched) }}
+</div>
+<div class="head-bar">
+  <dl class="chips-dl">
+    <div><dt>Hero</dt><dd>{% for r in h.roles or [] %}<span class="tag">{{ r }}</span>{% endfor %}</dd></div>
+    <div><dt>Unlock</dt><dd>{% if h.unlockLevel %}player level {{ h.unlockLevel }}{% else %}from the start{% endif %}</dd></div>
+    {% if h.added %}<div><dt>Added</dt><dd>v{{ h.added }}</dd></div>{% endif %}
+  </dl>
+  <a class="btn btn-grass" href="{{ root }}planner/#hero={{ h.id }}">Open in Planner</a>
+</div>
+{% if h.bestFor %}<p class="lede">{{ h.bestFor|tidy }}</p>{% endif %}
+<div class="toolbar"><span class="toolbar-l">Price for</span>{{ ui.diff_toggle() }}</div>
+<dl class="stats">
+  <div class="stat"><dt>Price</dt><dd class="big money">{{ ui.price(hm.prices) }}</dd></div>
+  <div class="stat"><dt>Beginner tier</dt><dd class="big">{{ h.beginnerTier or '–' }}</dd><dd class="stat-s">dataset rating, S best</dd></div>
+  <div class="stat"><dt>XP curve</dt><dd class="big">×{{ h.xpCurve if h.xpCurve is not none else '?' }}</dd><dd class="stat-s">level-up XP vs Quincy</dd></div>
+  <div class="stat"><dt>Monkey Money</dt><dd class="big">{{ h.mmUnlock|num if h.mmUnlock else '–' }}</dd><dd class="stat-s">to buy early</dd></div>
+</dl>
+<section class="panel" aria-labelledby="cl">
+  <h2 class="panel-h" id="cl">Camo and lead</h2>
+  <table class="hit-tbl">
+    <tbody>
+      <tr><th scope="row">Camo</th><td>{{ h.camo or '–' }}</td></tr>
+      <tr><th scope="row">Lead</th><td>{{ h.lead or '–' }}</td></tr>
+    </tbody>
+  </table>
+</section>
+<div class="split-2">
+<section class="panel" aria-labelledby="rec">
+  <h2 class="panel-h" id="rec">Recommended on</h2>
+  {% if hm.recommended %}
+  <p class="panel-b maps-csv">{% for m in hm.recommended %}<a href="{{ root }}maps/{{ m.id }}/">{{ ui.tier_dot(m.difficulty) }}{{ m.name }}</a>{{ ', ' if not loop.last }}{% endfor %}</p>
+  {% else %}<p class="panel-b muted">No map strategy names {{ h.name }}.</p>{% endif %}
+</section>
+<section class="panel" aria-labelledby="proof">
+  <h2 class="panel-h" id="proof">Solo-CHIMPS proof <small>2MP</small></h2>
+  {% if hm.proven %}
+  <p class="panel-b">{{ h.name }} alone has beaten CHIMPS on <b>{{ hm.proven|length }}</b> of the {{ ctx.maps_with_names }} maps with captured names.</p>
+  <p class="panel-b maps-csv">{% for x in hm.proven %}<a href="{{ root }}maps/{{ x.map.id }}/">{{ ui.tier_dot(x.map.difficulty) }}{{ x.map.name }}</a>{{ ', ' if not loop.last }}{% endfor %}</p>
+  {% else %}<p class="panel-b muted">No 2MP entry for {{ h.name }} in the captured lists.</p>{% endif %}
+</section>
+</div>
+<p class="note">Hero levels and ability numbers are not in this dataset yet.</p>
+{% endblock %}
+{% block scripts %}<script src="{{ root }}assets/prices.js?v={{ site.version }}" defer></script>{% endblock %}

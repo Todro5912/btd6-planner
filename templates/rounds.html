@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% import '_macros.html' as ui %}
+{% macro round_table(set, rows) -%}
+<div class="table-wrap">
+<table class="tbl tbl-rounds" data-set="{{ set }}">
+  <caption class="sr-only">{{ 'Standard' if set == 'standard' else 'Alternate Bloons Rounds' }}, rounds 1 to 140</caption>
+  <thead><tr><th scope="col" class="n">Round</th><th scope="col">Bloons</th><th scope="col" class="n">RBE</th><th scope="col" class="n">Cash</th><th scope="col" class="n hide-s">XP</th><th scope="col" class="hide-s">New threats</th><th scope="col">Notes</th></tr></thead>
+  <tbody>
+  {% for r in rows %}
+  <tr class="d{{ r.danger or 0 }}"{% if set == 'standard' %} id="r{{ r.round }}"{% else %} id="abr{{ r.round }}"{% endif %} data-danger="{{ r.danger or 0 }}">
+    <th scope="row" class="n"><span class="rnd">{{ r.round }}</span>{% if r.danger and r.danger >= 3 %}<span class="danger-flag" title="Run-ending round">!</span>{% elif r.danger == 2 %}<span class="danger-flag warn" title="Tough round">!</span>{% endif %}</th>
+    <td class="wrapcell">{{ r.composition }}</td>
+    <td class="n">{{ r.rbe|num }}</td>
+    <td class="n">{{ r.cash|money }}</td>
+    <td class="n hide-s">{{ r.xp|num }}</td>
+    <td class="hide-s">{% for k in r.threats or [] %}<span class="gtag">{{ THREAT_LABEL.get(k) or k|capitalize }}</span>{% endfor %}</td>
+    <td class="wrapcell notes-cell">{{ r.notes|tidy }}</td>
+  </tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div>
+{%- endmacro %}
+{% block main %}
+<div class="title-row">
+  <h1 class="h1">Rounds 1–140</h1>
+  {{ ui.stamp(g.gameVersion, g.updated) }}
+</div>
+{% if intro %}<div class="prose">{{ intro }}</div>{% else %}
+<p class="lede">Cash is pop cash plus the end-of-round bonus with no income towers or Monkey Knowledge. Half Cash halves it. Rows marked <span class="danger-flag">!</span> are the rounds most likely to end a run.</p>
+{% endif %}
+<div class="toolbar" id="roundTools" hidden>
+  <div class="seg" role="radiogroup" aria-label="Round set">
+    <button type="button" role="radio" data-set="standard" aria-checked="true">Standard</button>
+    <button type="button" role="radio" data-set="abr" aria-checked="false">ABR</button>
+  </div>
+  <label class="check"><input type="checkbox" id="dangerOnly"> Danger rounds only</label>
+  <p class="filter-count" id="roundCount" role="status" aria-live="polite"></p>
+</div>
+<section id="set-standard" aria-labelledby="h-std">
+  <h2 class="h2" id="h-std">Standard rounds</h2>
+  {{ round_table('standard', ctx.rounds.standard) }}
+</section>
+<section id="set-abr" aria-labelledby="h-abr">
+  <h2 class="h2" id="h-abr">Alternate Bloons Rounds (ABR)</h2>
+  {{ round_table('abr', ctx.rounds.abr) }}
+</section>
+<p class="note">Danger: <span class="key d3"><span class="danger-flag">!</span> run-ender</span> <span class="key d2"><span class="danger-flag warn">!</span> watch out</span>. RBE = red Bloon equivalent (total pops).</p>
+{% if related %}
+<section class="related" aria-labelledby="relH"><h2 class="h3" id="relH">Related</h2>
+<ul class="related-list">{% for label, href in related %}<li><a href="{{ root }}{{ href }}">{{ label }}</a></li>{% endfor %}</ul></section>
+{% endif %}
+{% endblock %}
+{% block scripts %}<script src="{{ root }}assets/rounds.js?v={{ site.version }}" defer></script>{% endblock %}

@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% import '_macros.html' as ui %}
+{% block main %}
+<div class="title-row">
+  <h1 class="h1">Records</h1>
+  {{ ui.stamp() }}
+</div>
+<p class="lede">BTD6 Index numbers for all {{ ctx.maps|length }} maps. 2MP = single-tower CHIMPS wins. LCC = the cheapest CHIMPS win on record. Click a column to sort.</p>
+<div class="table-wrap">
+<table class="tbl tbl-records sortable" id="records">
+  <thead><tr>
+    <th scope="col" aria-sort="none"><button type="button" data-key="name">Map</button></th>
+    <th scope="col" aria-sort="none"><button type="button" data-key="tier" data-type="num">Tier</button></th>
+    <th scope="col" class="n" aria-sort="descending"><button type="button" data-key="mp" data-type="num">2MP</button></th>
+    <th scope="col" class="n" aria-sort="none"><button type="button" data-key="lcc" data-type="num">LCC</button></th>
+    <th scope="col" class="n" aria-sort="none"><button type="button" data-key="ver" data-type="num">LCC ver.</button></th>
+    <th scope="col" class="n" aria-sort="none"><button type="button" data-key="avg" data-type="num">Avg RBS</button></th>
+    <th scope="col" class="n" aria-sort="none"><button type="button" data-key="min" data-type="num">Shortest</button></th>
+    <th scope="col" class="n" aria-sort="none"><button type="button" data-key="max" data-type="num">Longest</button></th>
+    <th scope="col" class="n" aria-sort="none"><button type="button" data-key="io" data-type="num">In / out</button></th>
+  </tr></thead>
+  <tbody>
+  {% for mm in ctx.map_models|sort(attribute='two_mp_count', reverse=true) %}
+  {% set m = mm.m %}
+  <tr data-name="{{ m.name|lower }}" data-tier="{{ TIERS.index(m.difficulty) }}" data-mp="{{ mm.two_mp_count if mm.two_mp_count is not none else -1 }}" data-lcc="{{ m.lcc.money if m.lcc and m.lcc.money else '' }}" data-ver="{{ m.lcc.version if m.lcc and m.lcc.version else '' }}" data-avg="{{ m.rbs.avg if m.rbs and m.rbs.avg is not none else '' }}" data-min="{{ mm.lane_min if mm.lane_min is not none else '' }}" data-max="{{ mm.lane_max if mm.lane_max is not none else '' }}" data-io="{{ (m.entrances or 0) * 10 + (m.exits or 0) }}">
+    <th scope="row"><a href="{{ root }}{{ mm.url }}">{{ m.name }}</a></th>
+    <td>{{ ui.tier_dot(m.difficulty) }}<span class="hide-s">{{ m.difficulty }}</span><span class="sr-only show-s">{{ m.difficulty }}</span></td>
+    <td class="n">{{ mm.two_mp_count if mm.two_mp_count is not none else '–' }}{% if mm.list_state == 'complete' %}<span class="sr-only"> (full list)</span>{% endif %}</td>
+    <td class="n">{{ m.lcc.money|money if m.lcc and m.lcc.money else '–' }}</td>
+    <td class="n">{{ m.lcc.version if m.lcc and m.lcc.version else '–' }}</td>
+    <td class="n">{{ m.rbs.avg if m.rbs and m.rbs.avg is not none else '–' }}</td>
+    <td class="n">{{ mm.lane_min if mm.lane_min is not none else '–' }}</td>
+    <td class="n">{{ mm.lane_max if mm.lane_max is not none else '–' }}</td>
+    <td class="n">{{ m.entrances }} / {{ m.exits }}</td>
+  </tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div>
+<p class="note">Source: btd6index.win map metadata and records, v57.4 data. Lane lengths in red-Bloon seconds. A 2MP count can include runs whose names were not captured here.</p>
+{% endblock %}
+{% block scripts %}<script src="{{ root }}assets/sort.js?v={{ site.version }}" defer></script>{% endblock %}

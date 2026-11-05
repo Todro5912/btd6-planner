@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% import '_macros.html' as ui %}
+{% block main %}
+<div class="title-row">
+  <h1 class="h1">{{ g.title }}</h1>
+  {{ ui.stamp(g.gameVersion or None, g.updated or None) }}
+</div>
+{% if g.summary %}<p class="lede">{{ g.summary }}</p>{% endif %}
+<div class="guide-layout">
+  {% if g.toc|length >= 3 %}
+  <nav class="toc panel" aria-labelledby="tocH">
+    <h2 class="panel-h" id="tocH">On this page</h2>
+    <ol>{% for t in g.toc %}<li><a href="#{{ t.id }}">{{ t.name }}</a></li>{% endfor %}</ol>
+  </nav>
+  {% endif %}
+  <article class="prose">
+    {{ g.html|safe }}
+  </article>
+</div>
+{% if related %}
+<section class="related" aria-labelledby="relH">
+  <h2 class="h3" id="relH">Related</h2>
+  <ul class="related-list">{% for label, href in related %}<li><a href="{{ root }}{{ href }}">{{ label }}</a></li>{% endfor %}</ul>
+</section>
+{% endif %}
+{% endblock %}
