@@ -1,0 +1,23 @@
+<link rel="stylesheet" href="{{BASE}}static/tools/tools.css">
+<div class="ti" id="dfn" data-tool="defence">
+  <div class="ti-head">
+    <div>
+      <h1 class="h1">Check my defence</h1>
+      <p class="ti-sub">Mid-game? Tap the towers you have. It tells you what will leak in the next 15 rounds and the cheapest fix.</p>
+    </div>
+  </div>
+  <noscript><p class="ti-note">This check needs JavaScript.</p></noscript>
+  <div id="dfn-root" class="ti" aria-live="polite"></div>
+  <details class="about-data">
+    <summary>About this data</summary>
+    <div class="about-b">
+      <p>Each tower's crosspath is checked against the pop model: what it can damage at all, plus support such as Village Radar, MIB and Alchemist acid (assumed in range). Fortified bloons only have more HP, so they are never flagged. A tower that <em>can</em> hit a bloon may still not do enough damage.</p>
+      <p>Fixes list your own towers' upgrades first, then new towers, then support, priced for the mode you picked.</p>
+    </div>
+  </details>
+</div>
+<script src="{{BASE}}static/tools/tools-data.js" defer></script>
+<script src="{{BASE}}static/tools/tools-core.js" defer></script>
+<script src="{{BASE}}static/tools/synergy.js" defer></script>
+<script src="{{BASE}}static/tools/tools-ui.js" defer></script>
+<script src="{{BASE}}static/tools/defence.js" defer></script>
