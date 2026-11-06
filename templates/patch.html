@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% import '_macros.html' as ui %}
+{% block main %}
+<div class="title-row">
+  <h1 class="h1">What's in {{ meta.version }}</h1>
+  {{ ui.stamp() }}
+</div>
+<p class="lede">Tower changes from v57.0 to v{{ meta.version }}, biggest first. Each one links to the upgrade.</p>
+<section class="panel changes" aria-labelledby="ch">
+  <h2 class="panel-h" id="ch">Changes by tower <small>{{ ctx.change_groups|length }} towers</small></h2>
+  <ul class="change-list">
+    {% for g in ctx.change_groups %}
+    <li><a class="change-who" href="{{ root }}{{ g.url }}">{{ g.tower.name }}</a><ul class="change-items">{% for x in g.changes %}<li><a href="{{ root }}{{ x.url }}">{{ x.upgrade.name }}</a> <span class="change-what">{{ x.text|rich }}</span></li>{% endfor %}</ul></li>
+    {% endfor %}
+  </ul>
+</section>
+{% endblock %}

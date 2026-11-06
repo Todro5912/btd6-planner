@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% import '_macros.html' as ui %}
+{% block head %}{% if head %}{{ head }}{% endif %}{% endblock %}
+{% block bodyclass %}is-tool tool-{{ tool.slug }}{% if legacy %} is-planner{% endif %}{% endblock %}
+{% block mainclass %} wrap-wide{% endblock %}
+{% block main %}
+{% if body is not none and body %}
+{{ body }}
+{% else %}
+<div class="title-row">
+  <h1 class="h1">{{ tool.name }}</h1>
+</div>
+<section class="panel soon">
+  <h2 class="panel-h">Coming soon</h2>
+  <p class="panel-b">{{ tool.desc }}</p>
+  <p class="panel-b">Until it lands:</p>
+  <ul class="bullets panel-b">
+    {% if tool.slug == 'xp' %}
+    <li><a href="{{ root }}guides/xp-farming/">XP farming guide</a>: the best farm for every tower.</li>
+    <li><a href="{{ root }}monkeys/paragons/">Paragons and XP farms</a>: runs to every paragon.</li>
+    {% else %}
+    <li><a href="{{ root }}">Quick answers</a>: what pops camo, lead, purple, MOABs and DDTs.</li>
+    <li><a href="{{ root }}tools/simulator/">Simulator</a>: its coverage check flags missing answers.</li>
+    {% endif %}
+  </ul>
+</section>
+{% endif %}
+{% endblock %}

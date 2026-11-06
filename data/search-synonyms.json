@@ -1,0 +1,416 @@
+{
+ "_doc": "Player words -> site pages (docs/CONTRACTS.md C4). Each entry's terms are matched exactly (best) or as a prefix by the site search. Targets are site paths without the base; a target that no page has is dropped by the build with a warning.",
+ "entries": [
+  {
+   "target": "quick/camo/",
+   "terms": [
+    "camo",
+    "camo bloon",
+    "camo bloons",
+    "see camo",
+    "camo detection",
+    "detect camo",
+    "detection",
+    "camouflage",
+    "invisible bloons",
+    "cant see bloons",
+    "towers not shooting",
+    "why wont my towers shoot"
+   ]
+  },
+  {
+   "target": "quick/lead/",
+   "terms": [
+    "lead",
+    "lead bloon",
+    "lead bloons",
+    "pops lead",
+    "pop lead",
+    "what pops lead",
+    "grey bloons",
+    "gray bloons",
+    "metal bloons",
+    "darts bounce off"
+   ]
+  },
+  {
+   "target": "quick/purple/",
+   "terms": [
+    "purple",
+    "purple bloon",
+    "purple bloons",
+    "pops purple",
+    "pop purple"
+   ]
+  },
+  {
+   "target": "quick/black-zebra/",
+   "terms": [
+    "black",
+    "black bloon",
+    "black bloons",
+    "zebra",
+    "zebra bloon",
+    "zebra bloons",
+    "pops black",
+    "pop black",
+    "pops zebra"
+   ]
+  },
+  {
+   "target": "quick/white-frozen/",
+   "terms": [
+    "white",
+    "white bloon",
+    "white bloons",
+    "frozen",
+    "frozen bloons",
+    "pops white",
+    "pops frozen"
+   ]
+  },
+  {
+   "target": "quick/fortified/",
+   "terms": [
+    "fortified",
+    "fortified bloons",
+    "armored bloons",
+    "armoured bloons",
+    "defortify",
+    "pops fortified"
+   ]
+  },
+  {
+   "target": "quick/moab/",
+   "terms": [
+    "moab",
+    "moabs",
+    "moab class",
+    "blimp",
+    "blimps",
+    "bfb",
+    "zomg",
+    "moab killer",
+    "cheapest moab",
+    "beat round 40",
+    "round 40 moab"
+   ]
+  },
+  {
+   "target": "quick/ddt/",
+   "terms": [
+    "ddt",
+    "ddts",
+    "dark dirigible titan",
+    "camo lead",
+    "camo lead black",
+    "beat ddts"
+   ]
+  },
+  {
+   "target": "rounds/24/",
+   "terms": [
+    "first camo"
+   ]
+  },
+  {
+   "target": "rounds/28/",
+   "terms": [
+    "first lead"
+   ]
+  },
+  {
+   "target": "rounds/40/",
+   "terms": [
+    "first moab",
+    "r40",
+    "round 40"
+   ]
+  },
+  {
+   "target": "rounds/63/",
+   "terms": [
+    "r63",
+    "round 63",
+    "ceramic rush",
+    "beat r63",
+    "beat round 63",
+    "63"
+   ]
+  },
+  {
+   "target": "rounds/90/",
+   "terms": [
+    "first ddt"
+   ]
+  },
+  {
+   "target": "rounds/95/",
+   "terms": [
+    "r95",
+    "round 95"
+   ]
+  },
+  {
+   "target": "rounds/98/",
+   "terms": [
+    "r98",
+    "round 98"
+   ]
+  },
+  {
+   "target": "rounds/100/",
+   "terms": [
+    "r100",
+    "round 100",
+    "bad",
+    "big airship of doom",
+    "beat the bad"
+   ]
+  },
+  {
+   "target": "rounds/",
+   "terms": [
+    "rounds",
+    "round list",
+    "all rounds",
+    "what round",
+    "rbe"
+   ]
+  },
+  {
+   "target": "guides/danger-rounds/",
+   "terms": [
+    "danger rounds",
+    "hard rounds",
+    "rounds that kill",
+    "where do i lose"
+   ]
+  },
+  {
+   "target": "guides/modes/",
+   "terms": [
+    "impoppable",
+    "impop",
+    "modes",
+    "game modes",
+    "deflation",
+    "apopalypse",
+    "half cash",
+    "abr",
+    "alternate bloons rounds",
+    "double hp moabs",
+    "reverse",
+    "primary only",
+    "military only",
+    "magic monkeys only",
+    "sandbox"
+   ]
+  },
+  {
+   "target": "guides/glossary/#g-bb-black-border",
+   "terms": [
+    "black border",
+    "bb",
+    "black bordering",
+    "black border a map"
+   ]
+  },
+  {
+   "target": "guides/chimps/",
+   "terms": [
+    "chimps",
+    "first chimps",
+    "how to chimps",
+    "black medal"
+   ]
+  },
+  {
+   "target": "guides/glossary/",
+   "terms": [
+    "glossary",
+    "slang",
+    "abbreviations",
+    "what does it mean"
+   ]
+  },
+  {
+   "target": "guides/boss-events/",
+   "terms": [
+    "boss",
+    "bosses",
+    "boss event",
+    "boss events",
+    "elite boss",
+    "boss tiers"
+   ]
+  },
+  {
+   "target": "tools/xp/",
+   "terms": [
+    "xp",
+    "xp calculator",
+    "xp calc",
+    "farm xp",
+    "xp farm",
+    "xp farming",
+    "tower xp",
+    "level up towers",
+    "unlock tier 5"
+   ]
+  },
+  {
+   "target": "guides/xp-farming/",
+   "terms": [
+    "best xp farm",
+    "xp guide"
+   ]
+  },
+  {
+   "target": "monkeys/paragons/",
+   "terms": [
+    "paragon",
+    "paragons",
+    "paragon xp",
+    "degree",
+    "paragon degree"
+   ]
+  },
+  {
+   "target": "guides/monkey-money/",
+   "terms": [
+    "monkey money",
+    "mm",
+    "what to buy",
+    "spend monkey money"
+   ]
+  },
+  {
+   "target": "guides/monkey-knowledge/",
+   "terms": [
+    "monkey knowledge",
+    "mk",
+    "knowledge points",
+    "mk order"
+   ]
+  },
+  {
+   "target": "guides/getting-started/",
+   "terms": [
+    "beginner",
+    "beginner guide",
+    "new player",
+    "how to play",
+    "start here",
+    "getting started",
+    "tips"
+   ]
+  },
+  {
+   "target": "guides/economy/",
+   "terms": [
+    "farms",
+    "banana farm income",
+    "eco",
+    "income",
+    "economy"
+   ]
+  },
+  {
+   "target": "tools/simulator/",
+   "terms": [
+    "planner",
+    "plan a game",
+    "simulator",
+    "cash by round",
+    "timeline"
+   ]
+  },
+  {
+   "target": "tools/defence/",
+   "terms": [
+    "check my defence",
+    "check my defense",
+    "coverage",
+    "am i covered",
+    "what am i missing"
+   ]
+  },
+  {
+   "target": "records/",
+   "terms": [
+    "records",
+    "lcc",
+    "least cash",
+    "least cost chimps",
+    "2mp",
+    "2tc",
+    "solo chimps",
+    "btd6 index"
+   ]
+  },
+  {
+   "target": "patch/",
+   "terms": [
+    "patch",
+    "patch notes",
+    "update",
+    "whats new",
+    "changes",
+    "nerf",
+    "buff"
+   ]
+  },
+  {
+   "target": "about/",
+   "terms": [
+    "about",
+    "credits",
+    "who made this",
+    "report a bug",
+    "report error",
+    "github",
+    "todro5912",
+    "solou"
+   ]
+  },
+  {
+   "target": "guides/known-issues/",
+   "terms": [
+    "known issues",
+    "unverified"
+   ]
+  },
+  {
+   "target": "maps/",
+   "terms": [
+    "maps",
+    "map list",
+    "water maps",
+    "line of sight",
+    "los",
+    "easy maps",
+    "beginner maps"
+   ]
+  },
+  {
+   "target": "monkeys/",
+   "terms": [
+    "towers",
+    "monkeys",
+    "tower list",
+    "best tower",
+    "tier list"
+   ]
+  },
+  {
+   "target": "monkeys/heroes/",
+   "terms": [
+    "heroes",
+    "hero",
+    "best hero",
+    "which hero"
+   ]
+  }
+ ]
+}

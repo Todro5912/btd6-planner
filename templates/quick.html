@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% import '_macros.html' as ui %}
+{% block bodyclass %}is-quick{% endblock %}
+{% block main %}
+<article class="qcard" aria-labelledby="qt">
+  <header class="qcard-h">
+    <h1 class="qcard-t" id="qt">{{ q.title }}</h1>
+    {% if q.first %}<span class="qcard-first">First on {{ ui.rchip(q.first, root) }}</span>{% endif %}
+  </header>
+  <p class="qcard-rule">{{ q.rule }}</p>
+  {% if q.sub %}<p class="qcard-sub">{{ q.sub }}</p>{% endif %}
+  <div class="qcard-bar">
+    <h2 class="qcard-h2">{{ 'Cheapest fixes' if q.mode == 'can' else 'Best cheap answers' }}</h2>
+    {{ ui.diff_toggle() }}
+  </div>
+  <ol class="fixes">
+    {% for x in q.top %}{{ ui.fix_row(x, root) }}{% endfor %}
+    {% for x in q.support_top %}{{ ui.fix_row(x, root) }}{% endfor %}
+  </ol>
+  {% if q.more or q.support_more or q.heroes %}
+  <details class="more qmore">
+    <summary class="more-btn">More options <span class="more-n">{{ q.more|length + q.support_more|length + q.heroes|length }}</span></summary>
+    {% if q.more %}<ol class="fixes fixes-small">{% for x in q.more %}{{ ui.fix_row(x, root) }}{% endfor %}</ol>{% endif %}
+    {% if q.support_more %}<h3 class="h3">Help from other towers</h3><ol class="fixes fixes-small">{% for x in q.support_more %}{{ ui.fix_row(x, root) }}{% endfor %}</ol>{% endif %}
+    {% if q.heroes %}
+    <h3 class="h3">Heroes</h3>
+    <ul class="hero-levels">{% for x in q.heroes %}<li><a href="{{ root }}{{ x.hm.url }}">{{ x.hm.h.name }}</a> <span class="muted">{{ 'from the start' if x.level <= 1 else 'from level ' ~ x.level }}</span></li>{% endfor %}</ul>
+    {% endif %}
+  </details>
+  {% endif %}
+</article>
+
+{% if q.bullets %}
+<section class="panel" aria-labelledby="gk">
+  <h2 class="panel-h" id="gk">Good to know</h2>
+  <ul class="bullets panel-b">{% for b in q.bullets %}<li>{{ lxb(b, root) }}</li>{% endfor %}</ul>
+</section>
+{% endif %}
+
+<nav class="qnav" aria-label="Other quick answers">
+  <span class="toolbar-l">Other answers</span>
+  <span class="qnav-list">{% for o in ctx.cards %}{% if o.slug != q.slug %}<a class="tt" href="{{ root }}{{ o.url }}">{{ o.tile }}</a>{% endif %}{% endfor %}</span>
+</nav>
+{% endblock %}
+{% block scripts %}<script src="{{ root }}assets/prices.js?v={{ site.version }}" defer></script>{% endblock %}

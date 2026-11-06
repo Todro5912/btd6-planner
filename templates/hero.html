@@ -9,52 +9,72 @@
 <div class="head-bar">
   <dl class="chips-dl">
     <div><dt>Type</dt><dd>Hero</dd></div>
-    {% if h.added %}<div><dt>Added</dt><dd>v{{ h.added }}</dd></div>{% endif %}
+    <div><dt>Cost</dt><dd class="num">{{ ui.price(hm.prices) }}</dd></div>
+    <div><dt>Unlock</dt><dd>{% if h.unlockLevel %}level {{ h.unlockLevel }}{% if h.mmUnlock %} or {{ h.mmUnlock|num }} MM{% endif %}{% else %}free{% endif %}</dd></div>
   </dl>
-  <a class="btn btn-grass" href="{{ root }}planner/#hero={{ h.id }}">Open in Planner</a>
+  <a class="btn btn-grass" href="{{ root }}tools/simulator/#hero={{ h.id }}">Open in Simulator</a>
 </div>
 {% if h.bestFor %}<p class="lede">{{ h.bestFor|rich }}</p>{% endif %}
 
-<section aria-labelledby="cost">
-  <h2 class="h2" id="cost">Cost to place</h2>
-  <dl class="stats stats-cost">
-    {% for k, label in DIFFS %}
-    <div class="stat"><dt>{{ label }} <small>×{{ mult[k] }}</small></dt><dd class="big money">{{ hm.prices[k]|money }}</dd></div>
+<div class="toolbar">
+  <span class="toolbar-l">Prices for</span>
+  {{ ui.diff_toggle() }}
+</div>
+
+<ul class="answers hero-answers" aria-label="Camo and Lead">
+  {% set camo_lv = hl.camoLevel if hl else none %}
+  {% set lead_lv = hl.leadLevel if hl else none %}
+  <li><span class="answer {{ 'a-up' if camo_lv else 'a-text' }}"><span class="answer-l">Camo</span><span class="answer-v">{% if camo_lv %}from level <b>{{ camo_lv }}</b>{% else %}{{ h.camo|rich if h.camo else '–' }}{% endif %}</span></span></li>
+  <li><span class="answer {{ 'a-up' if lead_lv else 'a-text' }}"><span class="answer-l">Lead</span><span class="answer-v">{% if lead_lv %}from level <b>{{ lead_lv }}</b>{% else %}{{ h.lead|rich if h.lead else '–' }}{% endif %}</span></span></li>
+</ul>
+
+{% if hl and (hl.levels or hl.abilities) %}
+<section class="panel" aria-labelledby="lv">
+  <h2 class="panel-h" id="lv">Level by level</h2>
+  {% if hl.abilities %}
+  <ul class="abilities panel-b">
+    {% for a in hl.abilities %}<li><span class="lv">L{{ a.level }}</span><b>{{ a.name }}</b>{% if a.cooldown %} <span class="muted">{{ a.cooldown }}s cooldown</span>{% endif %}</li>{% endfor %}
+  </ul>
+  {% endif %}
+  {% if hl.levels %}
+  <ol class="timeline panel-b">
+    {% for lvl in hl.levels.keys()|map('int')|sort %}
+    {% set txt = hl.levels[lvl|string] %}
+    <li class="{% if lvl == camo_lv %}tl-camo{% endif %}{% if lvl == lead_lv %} tl-lead{% endif %}"><span class="lv">L{{ lvl }}</span><span class="tl-t">{{ txt|rich }}</span></li>
     {% endfor %}
-  </dl>
+  </ol>
+  {% endif %}
+  {% if hl.notes %}<p class="panel-b note">{{ hl.notes|rich }}</p>{% endif %}
 </section>
+{% endif %}
 
 <section class="panel" aria-labelledby="glance">
   <h2 class="panel-h" id="glance">At a glance</h2>
   <dl class="stats panel-b hero-stats">
     <div class="stat"><dt>Beginner tier</dt><dd>{% if h.beginnerTier %}<span class="counter tier-{{ h.beginnerTier|lower }}">{{ h.beginnerTier }}</span>{% else %}–{% endif %}</dd><dd class="stat-s">S is the easiest to use well</dd></div>
-    <div class="stat"><dt>Unlock</dt><dd class="stat-v">{% if h.unlockLevel %}Level {{ h.unlockLevel }}{% else %}Free{% endif %}</dd><dd class="stat-s">{% if h.mmUnlock %}or {{ h.mmUnlock|num }} Monkey Money{% else %}no Monkey Money needed{% endif %}</dd></div>
     <div class="stat"><dt>Levelling speed</dt><dd class="stat-v">×{{ h.xpCurve if h.xpCurve is not none else '?' }}</dd><dd class="stat-s">XP to level up, vs Quincy</dd></div>
     <div class="stat"><dt>Roles</dt><dd class="stat-v">{{ (h.roles or [])|join(', ') or '–' }}</dd></div>
   </dl>
-  <table class="hit-tbl panel-b">
-    <tbody>
-      <tr><th scope="row">Camo</th><td>{{ h.camo|rich if h.camo else '–' }}</td></tr>
-      <tr><th scope="row">Lead</th><td>{{ h.lead|rich if h.lead else '–' }}</td></tr>
-      {% if hm.good_with %}<tr><th scope="row">Good with</th><td class="good-with">{% for tm in hm.good_with %}<a class="tt" href="{{ root }}{{ tm.url }}">{{ tm.t.name }}</a>{% endfor %}</td></tr>{% endif %}
-    </tbody>
-  </table>
+  {% if hm.good_with %}<div class="panel-b tlist"><span class="tlist-l">Good with</span>{% for tm in hm.good_with %}<a class="tt" href="{{ root }}{{ tm.url }}">{{ tm.t.name }}</a>{% endfor %}</div>{% endif %}
 </section>
 
 <div class="split-2">
 <section class="panel" aria-labelledby="rec">
   <h2 class="panel-h" id="rec">Recommended on</h2>
   {% if hm.recommended %}
-  <p class="panel-b maps-csv">{% for m in hm.recommended %}<a href="{{ root }}maps/{{ m.id }}/">{{ ui.tier_dot(m.difficulty) }}{{ m.name }}</a>{{ ', ' if not loop.last }}{% endfor %}</p>
+  <ul class="proof-row panel-b">{% for m in hm.recommended[:12] %}<li><a class="tt" href="{{ root }}maps/{{ m.id }}/">{{ ui.tier_dot(m.difficulty) }}{{ m.name }}</a></li>{% endfor %}</ul>
+  {% if hm.recommended|length > 12 %}<details class="more more-inline panel-b"><summary class="more-btn">{{ hm.recommended|length - 12 }} more maps</summary><ul class="proof-row">{% for m in hm.recommended[12:] %}<li><a class="tt" href="{{ root }}maps/{{ m.id }}/">{{ ui.tier_dot(m.difficulty) }}{{ m.name }}</a></li>{% endfor %}</ul></details>{% endif %}
   {% else %}<p class="panel-b muted">No map strategy names {{ h.name }} yet.</p>{% endif %}
 </section>
-<section class="panel" aria-labelledby="proof">
-  <h2 class="panel-h" id="proof">Solo-CHIMPS proof <small>2MP</small></h2>
+<details class="more proof-more" id="proof">
+  <summary class="more-btn">Solo CHIMPS <span class="count">{{ hm.proven|length }}</span> <span class="more-n">maps</span></summary>
+  <div class="more-b">
   {% if hm.proven %}
-  <p class="panel-b">{{ h.name }} alone has beaten CHIMPS on <b>{{ hm.proven|length }}</b> of the {{ ctx.maps_with_names }} maps with a named list.</p>
-  <p class="panel-b maps-csv">{% for x in hm.proven %}<a href="{{ root }}maps/{{ x.map.id }}/">{{ ui.tier_dot(x.map.difficulty) }}{{ x.map.name }}</a>{{ ', ' if not loop.last }}{% endfor %}</p>
-  {% else %}<p class="panel-b muted">No solo-CHIMPS win listed for {{ h.name }}.</p>{% endif %}
-</section>
+  <ul class="proof-row">{% for x in hm.proven %}<li><a class="tt" href="{{ root }}maps/{{ x.map.id }}/">{{ ui.tier_dot(x.map.difficulty) }}{{ x.map.name }}</a></li>{% endfor %}</ul>
+  {% else %}<p class="muted">No solo-CHIMPS win listed for {{ h.name }}.</p>{% endif %}
+  </div>
+</details>
 </div>
-<p class="note">Hero level and ability details are not on this site yet.</p>
+{% if not hl %}<p class="note">Level-by-level details for {{ h.name }} are coming.</p>{% endif %}
 {% endblock %}
+{% block scripts %}<script src="{{ root }}assets/prices.js?v={{ site.version }}" defer></script>{% endblock %}

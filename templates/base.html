@@ -9,6 +9,7 @@
 <link rel="canonical" href="{{ canonical }}">
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#3E9B2F">
+<meta name="author" content="{{ site.author }}">
 <script>try{var t=localStorage.getItem('mi-theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,15 +20,42 @@
 </head>
 <body class="{% block bodyclass %}{% endblock %}">
 <a class="skip" href="#main">Skip to content</a>
+<div class="credit-strip">
+  <div class="credit-in">
+    <span class="credit-what">Unofficial BTD6 fan project</span>
+    <a class="maker" href="{{ site.authorUrl }}" rel="noopener author">{{ ui.icon('code', 'maker-ico') }}<span>Made by <b>{{ site.author }}</b></span></a>
+  </div>
+</div>
 <header class="top">
   <div class="top-in">
-    <a class="brand" href="{{ root }}">{{ ui.icon('logo', 'brand-mark') }}<span class="wordmark">{{ site.name }}</span></a>
+    <a class="brand" href="{{ root }}" aria-label="{{ site.project or site.name }} by {{ site.brand }}, home">
+      {{ ui.icon('logo', 'brand-mark') }}
+      <span class="lockup"><span class="wordmark">{{ site.project or site.name }}</span><span class="byline">by {{ site.brand }}</span></span>
+    </a>
+    <form class="top-search" action="{{ root }}a-z/" method="get" role="search">
+      <label class="sr-only" for="topQ">Search</label>
+      {{ ui.icon('search') }}
+      <input id="topQ" name="q" type="search" autocomplete="off" placeholder="camo, r63, glaive…" data-search-proxy>
+      <kbd aria-hidden="true">/</kbd>
+    </form>
+    <a class="searchbtn" href="{{ root }}a-z/" data-search-open aria-haspopup="dialog" aria-label="Search (press /)">{{ ui.icon('search') }}</a>
+    <details class="menu more-menu" data-menu>
+      <summary class="menubtn" aria-label="More pages">{{ ui.icon('more') }}<span class="sl">More</span></summary>
+      <ul class="menu-list menu-right">
+        {% for label, href in MORE_LINKS %}<li><a href="{{ root }}{{ href }}"{% if path == href %} aria-current="page"{% endif %}>{{ label }}</a></li>{% endfor %}
+      </ul>
+    </details>
     <nav class="tabs" aria-label="Main">
-      {% for key, label, href in [('planner','Planner','planner/'),('monkeys','Monkeys','monkeys/'),('maps','Maps','maps/'),('guides','Guides','guides/'),('records','Records','records/')] %}
+      {% for key, label, href in [('home','Quick','') ,('monkeys','Monkeys','monkeys/'),('maps','Maps','maps/'),('guides','Guides','guides/')] %}
       <a class="tab{% if section == key %} on{% endif %}" href="{{ root }}{{ href }}"{% if section == key %} aria-current="{{ 'page' if path == href else 'true' }}"{% endif %}>{{ label }}</a>
       {% endfor %}
+      <details class="menu tools-menu" data-menu>
+        <summary class="tab{% if section == 'tools' %} on{% endif %}">Tools<span class="caret" aria-hidden="true"></span></summary>
+        <ul class="menu-list menu-right">
+          {% for t in TOOLS %}<li><a href="{{ root }}{{ t.url }}"{% if path == t.url %} aria-current="page"{% endif %}><b>{{ t.name }}</b>{% if t.desc %}<small>{{ t.desc }}</small>{% endif %}</a></li>{% endfor %}
+        </ul>
+      </details>
     </nav>
-    <a class="searchbtn" href="{{ root }}a-z/" data-search-open aria-haspopup="dialog" aria-label="Search (press /)">{{ ui.icon('search') }}<span class="sl">Search</span><kbd>/</kbd></a>
   </div>
 </header>
 <main id="main" class="wrap{% block mainclass %}{% endblock %}">
@@ -37,15 +65,26 @@
 </main>
 <footer class="foot">
   <div class="foot-in">
-    <p class="disclaimer"><b>Unofficial fan site.</b> Not affiliated with or endorsed by Ninja Kiwi. Bloons and Bloons TD 6 are their trademarks. No game art is used here.</p>
-    <dl class="foot-facts">
-      <div><dt>Data</dt><dd>BTD6 v{{ meta.version }}{% if meta.researched %}, updated {{ meta.researched }}{% endif %}</dd></div>
-      <div><dt>Site</dt><dd>{{ site.name }} {{ site.version }}</dd></div>
-      <div class="credits"><dt>Credits</dt><dd><a href="https://www.bloonswiki.com/" rel="noopener">Bloons Wiki</a> (CC BY-SA), <a href="https://btd6index.win/" rel="noopener">BTD6 Index</a>, <a href="https://github.com/hemisemidemipresent/cyberquincy" rel="noopener">Cyber Quincy</a>, Ninja Kiwi patch notes. Made by <a href="{{ site.authorUrl }}" rel="noopener">{{ site.author }}</a>.</dd></div>
-    </dl>
-    <div class="foot-row">
-      <a href="{{ root }}a-z/">A–Z index</a>
-      <a href="{{ site.github }}" rel="noopener">GitHub</a>
+    <div class="foot-credit">
+      <p class="foot-made">Made by <a href="{{ site.authorUrl }}" rel="noopener author">{{ site.author }}</a></p>
+      <p class="foot-for">{{ site.project or site.name }} is a fan project for {{ site.brand }}. Built with AI assistance, checked by a player.</p>
+      <p class="foot-btns">
+        <a class="btn btn-small btn-cream" href="{{ site.github }}" rel="noopener">{{ ui.icon('code') }}Source on GitHub</a>
+        <a class="btn btn-small btn-cream" href="{{ site.github }}/issues" rel="noopener">Report an error</a>
+        <a class="btn btn-small btn-cream" href="{{ root }}about/">About</a>
+      </p>
+    </div>
+    <nav class="foot-more" aria-labelledby="footMore">
+      <h2 class="foot-h" id="footMore">More</h2>
+      <ul>{% for label, href in MORE_LINKS %}<li><a href="{{ root }}{{ href }}">{{ label }}</a></li>{% endfor %}</ul>
+    </nav>
+    <nav class="foot-more" aria-labelledby="footTools">
+      <h2 class="foot-h" id="footTools">Tools</h2>
+      <ul>{% for t in TOOLS %}<li><a href="{{ root }}{{ t.url }}">{{ t.name }}</a></li>{% endfor %}</ul>
+    </nav>
+    <div class="foot-legal">
+      <p class="disclaimer"><b>Unofficial fan site.</b> Not affiliated with or endorsed by Ninja Kiwi. Bloons and Bloons TD 6 are their trademarks. No game art is used here.</p>
+      <p>Data: BTD6 v{{ meta.version }}{% if meta.researched %}, updated {{ meta.researched }}{% endif %} · Site {{ site.version }} · Sources: <a href="https://www.bloonswiki.com/" rel="noopener">Bloons Wiki</a> (CC BY-SA), <a href="https://btd6index.win/" rel="noopener">BTD6 Index</a>, <a href="https://github.com/hemisemidemipresent/cyberquincy" rel="noopener">Cyber Quincy</a>, Ninja Kiwi patch notes.</p>
       <div class="seg theme-toggle" role="radiogroup" aria-label="Colour theme" hidden>
         <button type="button" role="radio" data-theme-set="auto" aria-checked="true">Auto</button>
         <button type="button" role="radio" data-theme-set="light" aria-checked="false">Light</button>
@@ -56,16 +95,17 @@
 </footer>
 <dialog class="search" id="search" aria-labelledby="searchLabel">
   <form method="dialog" class="search-in" role="search">
-    <label id="searchLabel" for="searchInput">Search towers, upgrades, heroes, maps, guides and rounds</label>
+    <label id="searchLabel" for="searchInput">Search answers, towers, maps, rounds and guides</label>
     <div class="search-row">
       {{ ui.icon('search') }}
-      <input id="searchInput" type="search" autocomplete="off" spellcheck="false" placeholder="Try: glaive, infernal, r63" role="combobox" aria-expanded="false" aria-controls="searchList" aria-autocomplete="list">
+      <input id="searchInput" type="search" autocomplete="off" spellcheck="false" placeholder="Try: camo, r63, glaive" role="combobox" aria-expanded="false" aria-controls="searchList" aria-autocomplete="list">
       <button type="button" class="btn btn-small" data-search-close>Esc</button>
     </div>
     <ul id="searchList" role="listbox" aria-label="Results"></ul>
     <p class="search-hint" id="searchHint"><kbd>↑</kbd><kbd>↓</kbd> move · <kbd>Enter</kbd> open · <kbd>Esc</kbd> close</p>
   </form>
 </dialog>
+<script src="{{ root }}assets/search-core.js?v={{ site.version }}" defer></script>
 <script src="{{ root }}assets/site.js?v={{ site.version }}" defer></script>
 {% block scripts %}{% endblock %}
 </body>

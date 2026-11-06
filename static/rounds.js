@@ -3,6 +3,9 @@
   'use strict';
   var tools = document.getElementById('roundTools');
   if (!tools) return;
+  /* /rounds/?n=63 (the lookup form without JS on the way in) jumps to that row */
+  var asked = parseInt(new URLSearchParams(location.search).get('n'), 10);
+  if (asked >= 1 && asked <= 140 && !location.hash) history.replaceState(null, '', '#r' + asked);
   tools.hidden = false;
   var only = document.getElementById('dangerOnly'), count = document.getElementById('roundCount');
   var set = /^#abr\d+$/.test(location.hash) ? 'abr' : 'standard';

@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% import '_macros.html' as ui %}
+{% block main %}
+<div class="title-row">
+  <h1 class="h1">About</h1>
+  {{ ui.stamp() }}
+</div>
+<section class="about-hero panel">
+  <div class="panel-b about-who">
+    <p class="about-name">{{ site.project or site.name }} <span class="byline">by {{ site.brand }}</span></p>
+    <p class="lede">An unofficial Bloons TD 6 fan project, made by <a href="{{ site.authorUrl }}" rel="noopener author"><b>{{ site.author }}</b></a> for {{ site.brand }}.</p>
+    <p class="about-btns">
+      <a class="btn btn-grass" href="{{ site.github }}" rel="noopener">{{ ui.icon('code') }}Source on GitHub</a>
+      <a class="btn" href="{{ site.github }}/issues" rel="noopener">Report an error</a>
+    </p>
+  </div>
+</section>
+
+<div class="split-2">
+<section class="panel" aria-labelledby="what">
+  <h2 class="panel-h" id="what">What this is</h2>
+  <ul class="bullets panel-b">
+    <li>Fast answers for when you're in a game: what pops camo, lead, purple and MOABs, and the cheapest fix on your difficulty.</li>
+    <li>A page for every tower, hero, map and round 1–100.</li>
+    <li>Tools for between games: the simulator, XP calculator and defence check.</li>
+    <li><b>Unofficial.</b> Not made, checked or endorsed by Ninja Kiwi. No game art is used.</li>
+  </ul>
+</section>
+<section class="panel" aria-labelledby="how">
+  <h2 class="panel-h" id="how">How it's made</h2>
+  <ul class="bullets panel-b">
+    <li>{{ site.author }} is a BTD6 player and the developer. The site is <b>built with AI assistance</b>: research, code and copy are drafted with an AI model, then checked and edited by {{ site.author }}.</li>
+    <li>Numbers come from the sources below for game version <b>{{ meta.version }}</b>.</li>
+    <li>Anything worked out rather than read from a source carries a <span class="badge badge-calc">calculated</span> badge. Anything not yet confirmed carries <span class="badge badge-unverified">unverified</span>.</li>
+  </ul>
+</section>
+</div>
+
+<section class="panel" aria-labelledby="cred">
+  <h2 class="panel-h" id="cred">Credits</h2>
+  <ul class="bullets panel-b">
+    <li><b>Made by</b> <a href="{{ site.authorUrl }}" rel="noopener">{{ site.author }}</a>, for {{ site.brand }}.</li>
+    <li><a href="https://www.bloonswiki.com/" rel="noopener">Bloons Wiki</a>: stats, prices, XP and map facts (CC BY-SA).</li>
+    <li><a href="https://bloons.fandom.com/" rel="noopener">BTD6 Fandom wiki</a>: cross-checks.</li>
+    <li><a href="https://btd6index.win/" rel="noopener">BTD6 Index</a>: lane lengths, water and line-of-sight flags, CHIMPS records.</li>
+    <li><a href="https://github.com/hemisemidemipresent/cyberquincy" rel="noopener">Cyber Quincy</a>: cross-checks for costs and rounds.</li>
+    <li>Ninja Kiwi patch notes: balance changes.</li>
+    <li>Fonts: Luckiest Guy, Rubik and JetBrains Mono (Google Fonts, SIL Open Font License).</li>
+  </ul>
+</section>
+
+<section class="panel" aria-labelledby="err">
+  <h2 class="panel-h" id="err">Found a mistake?</h2>
+  <ol class="bullets panel-b">
+    <li>Open an <a href="{{ site.github }}/issues" rel="noopener">issue on GitHub</a>.</li>
+    <li>Say which page, what it says, and what the game shows.</li>
+    <li>A screenshot from Sandbox mode settles most questions fast.</li>
+  </ol>
+  <p class="panel-b note">Things we already know are shaky are on <a href="{{ root }}guides/known-issues/">Known issues</a>.</p>
+</section>
+{% endblock %}

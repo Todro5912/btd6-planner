@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% import '_macros.html' as ui %}
+{% block main %}
+<div class="title-row">
+  <h1 class="h1">Tools</h1>
+  {{ ui.stamp() }}
+</div>
+<ul class="tool-list">
+  {% for t in TOOLS %}
+  <li><a class="door {{ ['door-grass', 'door-wood', 'door-sky'][loop.index0 % 3] }}" href="{{ root }}{{ t.url }}">
+    {{ ui.icon(['plan', 'xp', 'monkey'][loop.index0 % 3], 'door-ico') }}
+    <span class="door-t">{{ t.name }}</span>
+    <span class="door-s">{{ t.desc }}</span>
+  </a></li>
+  {% endfor %}
+</ul>
+{% endblock %}

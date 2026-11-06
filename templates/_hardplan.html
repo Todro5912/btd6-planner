@@ -1,0 +1,12 @@
+<p>{{ n }} map pages on this site share the same Hard and Impoppable advice. Here it is once. Each map page keeps only its own notes and key rounds.</p>
+<h2 id="the-plan">The plan</h2>
+<ul>
+{% for s in lines %}<li>{{ lx(s, root) }}</li>{% endfor %}
+</ul>
+<h2 id="hard-vs-impoppable">Hard vs Impoppable</h2>
+<ul>
+<li><b>Hard</b>: rounds 3–80, 100 lives, prices ×1.08. Farms and selling are allowed.</li>
+<li><b>Impoppable</b>: rounds 6–100, 1 life, prices ×1.2. Farms and selling are allowed.</li>
+<li><b>CHIMPS</b>: rounds 6–100, 1 life, Hard prices, no farms, selling, Monkey Knowledge or powers.</li>
+</ul>
+<p>Danger rounds to plan around: {% for n in DANGER_ROUNDS %}<a class="rchip danger" href="{{ root }}rounds/{{ n }}/">R{{ n }}</a> {% endfor %}</p>

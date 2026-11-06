@@ -1,9 +1,15 @@
 {% extends 'base.html' %}
 {% import '_macros.html' as ui %}
-{% macro plan_tower_list(label, items) -%}
-<div class="tlist"><span class="tlist-l">{{ label }}</span>{% if items %}{% for tm in items %}<a class="tt" href="{{ root }}{{ tm.url }}">{{ tm.t.name }}</a>{% endfor %}{% else %}<span class="muted">none listed</span>{% endif %}</div>
-{%- endmacro %}
 {% macro unv(cond) -%}{% if cond %} <span class="badge badge-unverified" title="Not confirmed yet">unverified</span>{% endif %}{%- endmacro %}
+{% macro step_list(items, cls='') -%}
+<ul class="steps-list {{ cls }}">
+  {% for st in items[:6] %}{% set lab, rest = step_label(st) %}<li>{% if lab %}<b class="step-l">{{ lx(lab, root, false) }}:</b> {% endif %}{{ lx(rest, root) }}</li>{% endfor %}
+</ul>
+{% if items|length > 6 %}
+<details class="more more-inline"><summary class="more-btn">{{ items|length - 6 }} more</summary>
+<ul class="steps-list {{ cls }}">{% for st in items[6:] %}{% set lab, rest = step_label(st) %}<li>{% if lab %}<b class="step-l">{{ lab }}:</b> {% endif %}{{ lx(rest, root) }}</li>{% endfor %}</ul></details>
+{% endif %}
+{%- endmacro %}
 {% block main %}
 {% set m = mm.m %}
 {% set uv = m.unverified or [] %}
@@ -12,114 +18,115 @@
   <h1 class="h1">{{ m.name }}</h1>
   {{ ui.stamp(None, meta.researched) }}
 </div>
-<div class="head-bar">
-  <dl class="chips-dl">
-    <div><dt>Difficulty</dt><dd>{{ ui.tier_dot(m.difficulty) }}{{ m.difficulty }} <small class="muted">×{{ TIER_XP[m.difficulty] }} XP</small></dd></div>
-    <div><dt>Added</dt><dd>v{{ m.addedVersion }}</dd></div>
-    {% if not m.medals %}<div><dt>Medals</dt><dd>none on this map</dd></div>{% endif %}
-  </dl>
-  <a class="btn btn-grass" href="{{ root }}planner/#map={{ m.id }}">Open in Planner</a>
+<div class="map-glance">
+  <span class="glance-d">{{ ui.tier_dot(m.difficulty) }}{{ m.difficulty }}</span>
+  <span class="glance-l"><b>{{ m.paths }}</b> lane{{ 's' if m.paths != 1 }}</span>
+  {% if m.easiness %}<span class="glance-e" title="How easy the map plays, 5 is easiest">Easiness <b>{{ m.easiness }}</b>/5</span>{% endif %}
+  <span class="glance-facts">water: {{ m.water }} · line of sight: {{ 'clear' if m.losBlockers == 'none' else m.losBlockers }}{% if not m.medals %} · no medals{% endif %}{{ unv('water amount' in uv or 'water location' in uv) }}</span>
+  <a class="btn btn-small btn-grass glance-btn" href="{{ root }}tools/simulator/#map={{ m.id }}">Open in Simulator</a>
 </div>
 {% if m.special or m.notes %}<p class="lede">{{ m.special|rich }}{{ unv('special' in uv) }}{% if m.special and m.notes %} {% endif %}{{ m.notes|rich }}</p>{% endif %}
 
-<dl class="stats">
-  <div class="stat"><dt>Lanes</dt><dd class="big">{{ m.paths }}</dd><dd class="stat-s">{{ m.entrances }} in · {{ m.exits }} out</dd></div>
-  <div class="stat"><dt>Track</dt><dd class="big">{{ m.trackLength }}</dd><dd class="stat-s">RBS, {{ m.trackClass }}</dd></div>
-  <div class="stat"><dt>Water</dt><dd class="big cap">{{ m.water }}</dd><dd class="stat-s">BTD6 Index: {{ 'yes' if m.indexWater else 'no' }}{{ unv('water amount' in uv or 'water location' in uv) }}</dd></div>
-  <div class="stat"><dt>Line of sight</dt><dd class="big cap">{{ 'clear' if m.losBlockers == 'none' else m.losBlockers }}</dd><dd class="stat-s">BTD6 Index blockers: {{ 'yes' if m.indexLos else 'no' }}</dd></div>
-  <div class="stat"><dt>Easiness</dt><dd class="big">{{ m.easiness }}<small>/5</small></dd><dd class="stat-s">CHIMPS-friendly: {{ 'yes' if m.chimpsFriendly else 'no' }}{{ unv('easiness' in uv or 'chimpsFriendly' in uv) }}</dd></div>
-</dl>
+{% if s %}
+<section class="beat" aria-labelledby="hb">
+  <h2 class="h2" id="hb">How to beat it</h2>
+  {% if mm.key_rounds %}
+  <div class="keyrounds" aria-label="Key rounds on this map">
+    <span class="toolbar-l">Key rounds</span>
+    <ol class="kr-list">
+      {% for n, txt in mm.key_rounds %}<li>{{ ui.rchip(n, root) }}<span class="kr-t">{{ lx(txt, root) }}</span></li>{% endfor %}
+    </ol>
+  </div>
+  {% endif %}
+  <div class="beat-grid">
+    <div class="panel strat">
+      <h3 class="panel-h panel-h-light">{{ ui.medal('bronze') }}{{ ui.medal('silver') }}Easy and Medium</h3>
+      <div class="panel-b">{{ step_list(mm.easy_steps) }}</div>
+    </div>
+    <div class="panel strat">
+      <h3 class="panel-h panel-h-light">{{ ui.medal('gold') }}Hard and Impoppable</h3>
+      <div class="panel-b">
+        {% if mm.hard_own %}{{ step_list(mm.hard_own) }}{% endif %}
+        {% if mm.hard_uses_general %}<p class="general-link">{% if not mm.hard_own %}No special notes for this map. {% endif %}Follow the CHIMPS build, then the <a href="{{ root }}guides/hard-plan/">general Hard and Impoppable plan</a> (farms, lives, prices).</p>{% endif %}
+        {% if not mm.hard_own and not mm.hard_uses_general %}<p class="muted">Use the Easy plan with more damage by R40.</p>{% endif %}
+      </div>
+    </div>
+    <div class="panel strat">
+      <h3 class="panel-h panel-h-light">{{ ui.medal('chimps') }}CHIMPS</h3>
+      <div class="panel-b">
+        {% if mm.chimps_steps %}{{ step_list(mm.chimps_steps) }}{% endif %}
+        {% if mm.chimps.rows %}
+        <details class="more build-more">
+          <summary class="more-btn"><span class="nw">Build order</span> <span class="badge badge-calc" title="Worked out from the numbers on this site, not tested in a game">calculated, not play-tested</span></summary>
+          <p class="note">{{ mm.chimps.rows|length }} buys, {{ mm.chimps.basis }}. Treat it as a shopping list, not a proven route.</p>
+          <div class="table-wrap table-flat">
+          <table class="tbl tbl-build">
+            <thead><tr><th scope="col" class="n">Round</th><th scope="col">Buy</th><th scope="col" class="n">Cost</th><th scope="col" class="n hide-s">Spent</th></tr></thead>
+            <tbody>{% for r in mm.chimps.rows %}<tr><td class="n">{{ ui.rchip(r.round, root) }}</td><td class="wrapcell">{{ lx(r.step, root) }}</td><td class="n">${{ r.cost }}</td><td class="n hide-s">${{ r.total }}</td></tr>{% endfor %}</tbody>
+          </table>
+          </div>
+          {% if mm.chimps.tail %}<p class="note">{{ mm.chimps.tail|rich }}</p>{% endif %}
+        </details>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="panel best" aria-labelledby="bm">
+  <h2 class="panel-h" id="bm">Best monkeys here</h2>
+  <div class="panel-b tlists">
+    <div class="tlist"><span class="tlist-l">Strong</span>{% for tm in mm.strong %}<a class="tt tt-ok" href="{{ root }}{{ tm.url }}">{{ tm.t.name }}</a>{% else %}<span class="muted">none listed</span>{% endfor %}</div>
+    <div class="tlist"><span class="tlist-l">Heroes</span>{% for h in mm.heroes %}{% if h.hm %}<a class="tt" href="{{ root }}{{ h.hm.url }}">{{ h.name }}</a>{% else %}<span class="tt">{{ h.name }}</span>{% endif %}{% else %}<span class="muted">none listed</span>{% endfor %}</div>
+    <div class="tlist"><span class="tlist-l">Avoid</span>{% for tm in mm.avoid %}<a class="tt tt-no" href="{{ root }}{{ tm.url }}">{{ tm.t.name }}</a>{% else %}<span class="muted">none listed</span>{% endfor %}</div>
+  </div>
+  {% if mm.placement_steps %}
+  <div class="panel-b"><h3 class="h4">Where to place</h3>{{ step_list(mm.placement_steps) }}</div>
+  {% endif %}
+</section>
+{% else %}
+<p class="note">No strategy notes for this map yet.</p>
+{% endif %}
 
 {% if mm.removables %}
 <p class="note"><b>Removable:</b> {% for r in mm.removables %}{{ r.name|rich }}{% if r.cost %} ({{ ui.price(r.prices) }} Medium{% if r.count and r.count > 1 %}, first of {{ r.count }}{% endif %}){% endif %}{% if r.note %}: {{ r.note|rich }}{% endif %}{{ '; ' if not loop.last }}{% endfor %}</p>
 {% endif %}
 
-<section class="panel" aria-labelledby="ix">
-  <h2 class="panel-h" id="ix">Records <small>from the BTD6 Index</small></h2>
-  <div class="ix-grid panel-b">
-    <div class="ix-lanes">
-      <h3 class="h3">Lane length</h3>
-      {% if mm.lanes %}
-      <table class="mini-tbl">
-        <tbody>{% for l in mm.lanes %}<tr><th scope="row">{{ l.lane }}</th><td class="n">{{ l.rbs }} <small>RBS</small></td></tr>{% endfor %}</tbody>
-      </table>
-      {% else %}<p class="muted">Not measured.</p>{% endif %}
-      {% if m.removalCost %}<p class="muted">Removal cost: {{ m.removalCost }}</p>{% endif %}
-    </div>
-    <div class="ix-lcc">
-      <h3 class="h3">Least-cost CHIMPS</h3>
-      {% if m.lcc and m.lcc.money %}
-      <p class="big money">{{ m.lcc.money|money }}</p>
-      <p class="muted">set in v{{ m.lcc.version }}{% if m.lcc.date %}, {{ m.lcc.date }}{% endif %}</p>
-      {% else %}<p class="muted">No record yet.</p>{% endif %}
-    </div>
-    <div class="ix-2mp">
-      <h3 class="h3">Solo-CHIMPS (2MP)</h3>
-      <p class="big">{{ mm.two_mp_count if mm.two_mp_count is not none else '–' }}</p>
-      <p class="muted">{% if mm.list_state == 'complete' %}every run listed below{% elif mm.list_state == 'partial' %}first {{ m.twoMP.entities|length }} runs listed below{% else %}runs not listed{% endif %}</p>
-    </div>
-  </div>
-  {% if mm.proven_towers or mm.proven_heroes %}
-  <h3 class="h3 panel-b">Proven solo here <small class="muted">solo CHIMPS wins per tower</small></h3>
-  <ul class="proof-row panel-b">
-    {% for x in mm.proven_towers %}<li><a class="tt" href="{{ root }}{{ x.tm.url }}">{{ x.tm.t.name }}<span class="count"><span class="sr-only">: </span>{{ x.entities|length }}</span></a></li>{% endfor %}
-    {% for x in mm.proven_heroes %}<li><a class="tt tt-hero" href="{{ root }}{{ x.hm.url }}">{{ x.hm.h.name }}<span class="count count-hero">hero</span></a></li>{% endfor %}
-  </ul>
-  {% if mm.proven_towers or mm.other_ents %}
-  <details class="more panel-b">
-    <summary class="more-btn">Which upgrades</summary>
-    <dl class="proof-detail">
-      {% for x in mm.proven_towers %}<div><dt>{{ x.tm.t.name }}</dt><dd>{{ x.entities|join(', ') }}</dd></div>{% endfor %}
-      {% if mm.other_ents %}<div><dt>Also listed</dt><dd>{{ mm.other_ents|join(', ') }}</dd></div>{% endif %}
+<details class="more expert-more" id="expert">
+  <summary class="more-btn">Expert data <span class="more-n">lane lengths, BTD6 Index records, XP farm</span></summary>
+  <div class="more-b">
+    <dl class="chips-dl expert-facts">
+      <div><dt>Track</dt><dd>{{ m.trackLength }} RBS, {{ m.trackClass }}</dd></div>
+      <div><dt>In / out</dt><dd>{{ m.entrances }} / {{ m.exits }}</dd></div>
+      <div><dt>CHIMPS-friendly</dt><dd>{{ 'yes' if m.chimpsFriendly else 'no' }}{{ unv('easiness' in uv or 'chimpsFriendly' in uv) }}</dd></div>
+      <div><dt>Added</dt><dd>v{{ m.addedVersion }}</dd></div>
     </dl>
-  </details>
-  {% endif %}
-  {% endif %}
-</section>
-
-{% if s %}
-<section class="strats" aria-labelledby="st">
-  <h2 class="h2" id="st">Strategies <small>confidence: <span class="conf conf-{{ s.confidence }}">{{ s.confidence }}</span></small></h2>
-  <div class="panel strat">
-    <h3 class="panel-h panel-h-light">{{ ui.medal('bronze') }}{{ ui.medal('silver') }}Easy and Medium</h3>
-    <p class="panel-b">{{ mm.easy|rich }}</p>
-  </div>
-  <div class="panel strat">
-    <h3 class="panel-h panel-h-light">{{ ui.medal('gold') }}Hard and Impoppable</h3>
-    <p class="panel-b">{{ mm.hard|rich }}</p>
-  </div>
-  <div class="panel strat">
-    <h3 class="panel-h panel-h-light">{{ ui.medal('chimps') }}CHIMPS</h3>
-    {% if mm.chimps.summary %}<p class="panel-b">{{ mm.chimps.summary|rich }}</p>{% endif %}
-    {% if mm.chimps.rows %}
-    <h4 class="h4 panel-b">Build order <small class="muted">{{ mm.chimps.basis }}</small>{% if mm.chimps.calc %} <span class="badge badge-calc" title="Worked out from the numbers on this site, not tested in a game">calculated</span>{% endif %}</h4>
-    <div class="table-wrap table-flat panel-b">
-    <table class="tbl tbl-build">
-      <thead><tr><th scope="col" class="n">Round</th><th scope="col">Buy</th><th scope="col" class="n">Cost</th><th scope="col" class="n">Spent</th></tr></thead>
-      <tbody>{% for r in mm.chimps.rows %}<tr><td class="n"><span class="rnd">R{{ r.round }}</span></td><td class="wrapcell">{{ r.step|rich }}</td><td class="n">${{ r.cost }}</td><td class="n">${{ r.total }}</td></tr>{% endfor %}</tbody>
-    </table>
+    <div class="ix-grid">
+      <div class="ix-lanes">
+        <h3 class="h4">Lane length</h3>
+        {% if mm.lanes %}
+        <table class="mini-tbl"><tbody>{% for l in mm.lanes %}<tr><th scope="row">{{ l.lane }}</th><td class="n">{{ l.rbs }} <small>RBS</small></td></tr>{% endfor %}</tbody></table>
+        {% else %}<p class="muted">Not measured.</p>{% endif %}
+      </div>
+      <div class="ix-lcc">
+        <h3 class="h4">Least-cost CHIMPS</h3>
+        {% if m.lcc and m.lcc.money %}<p><b class="num">{{ m.lcc.money|money }}</b> <span class="muted">v{{ m.lcc.version }}{% if m.lcc.date %}, {{ m.lcc.date }}{% endif %}</span></p>
+        {% else %}<p class="muted">No record yet.</p>{% endif %}
+      </div>
+      <div class="ix-2mp">
+        <h3 class="h4">Solo CHIMPS (2MP)</h3>
+        <p><b class="num">{{ mm.two_mp_count if mm.two_mp_count is not none else '–' }}</b> <span class="muted">{% if mm.list_state == 'complete' %}all listed below{% elif mm.list_state == 'partial' %}first {{ m.twoMP.entities|length }} listed{% else %}not listed{% endif %}</span></p>
+      </div>
     </div>
-    {% if mm.chimps.tail %}<p class="panel-b note">{{ mm.chimps.tail|rich }}</p>{% endif %}
+    {% if mm.proven_towers or mm.proven_heroes %}
+    <ul class="proof-row">
+      {% for x in mm.proven_towers %}<li><a class="tt" href="{{ root }}{{ x.tm.url }}" title="{{ x.entities|join(', ') }}">{{ x.tm.t.name }}<span class="count"><span class="sr-only">: </span>{{ x.entities|length }}</span></a></li>{% endfor %}
+      {% for x in mm.proven_heroes %}<li><a class="tt tt-hero" href="{{ root }}{{ x.hm.url }}">{{ x.hm.h.name }}<span class="count count-hero">hero</span></a></li>{% endfor %}
+    </ul>
     {% endif %}
+    {% if mm.xp_steps %}<h3 class="h4">XP farm</h3>{{ step_list(mm.xp_steps) }}{% endif %}
+    {% if m.removalCost %}<p class="muted">Removal cost: {{ m.removalCost }}</p>{% endif %}
+    <p class="note">Records from the <a href="https://btd6index.win/" rel="noopener">BTD6 Index</a>. All maps side by side on <a href="{{ root }}records/">Records</a>.</p>
   </div>
-</section>
-
-<div class="split-2">
-<section class="panel" aria-labelledby="tw">
-  <h2 class="panel-h" id="tw">Towers and heroes</h2>
-  <div class="panel-b tlists">
-    {{ plan_tower_list('Strong', mm.strong) }}
-    {{ plan_tower_list('Avoid', mm.avoid) }}
-    <div class="tlist"><span class="tlist-l">Heroes</span>{% for h in mm.heroes %}{% if h.hm %}<a class="tt" href="{{ root }}{{ h.hm.url }}">{{ h.name }}</a>{% else %}<span class="tt">{{ h.name }}</span>{% endif %}{% endfor %}</div>
-  </div>
-</section>
-<section class="panel" aria-labelledby="pl">
-  <h2 class="panel-h" id="pl">Placement and XP</h2>
-  {% if mm.placement %}<p class="panel-b"><b>Placement.</b> {{ mm.placement|rich }}</p>{% endif %}
-  {% if mm.xpFarm %}<p class="panel-b"><b>XP farm.</b> {{ mm.xpFarm|rich }}</p>{% endif %}
-</section>
-</div>
-{% else %}
-<p class="note">No strategy notes for this map yet.</p>
-{% endif %}
+</details>
 {% endblock %}
