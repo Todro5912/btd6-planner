@@ -35,7 +35,7 @@ const PAGES = [
   ['records', 'records/'],
 ];
 // tool pages are written by another stream; test whichever exist
-for (const slug of ['simulator', 'xp', 'defence']) {
+for (const slug of ['advisor', 'simulator', 'xp', 'defence']) {
   if (fs.existsSync(path.join(REPO, 'tools', slug, 'index.html'))) PAGES.push(['tool-' + slug, 'tools/' + slug + '/']);
 }
 
@@ -117,7 +117,8 @@ async function main() {
     await page.keyboard.press('Escape');
     await page.click('.tools-menu > summary');
     const toolLinks = await page.evaluate(() => Array.from(document.querySelectorAll('.tools-menu[open] .menu-list a')).map((a) => a.getAttribute('href')));
-    ok(toolLinks.length === 3 && toolLinks.every((h) => /tools\/(simulator|xp|defence)\/$/.test(h)), 'Tools menu lists simulator, xp and defence', toolLinks);
+    ok(toolLinks.length === 4 && toolLinks.every((h) => /tools\/(advisor|simulator|xp|defence)\/$/.test(h)), 'Tools menu lists advisor, simulator, xp and defence', toolLinks);
+    ok(await page.evaluate(() => !!document.querySelector('.planband a[href$="tools/advisor/"]') && !!document.querySelector('.planband a[href$="tools/simulator/"]')), 'home "Plan a run" band links the Advisor and the Simulator');
     await page.mouse.click(5, 600);
     ok(!(await page.evaluate(() => document.querySelector('.tools-menu').open)), 'clicking outside closes the Tools menu');
     ok(await page.evaluate(() => /Made by/.test(document.querySelector('.maker').textContent) && /github\.com/.test(document.querySelector('.maker').href)), 'header shows "Made by" with a GitHub link');

@@ -4,6 +4,7 @@
 Writes:
   src/pages/assets/tools-data.js     window.MonkeyIntelData = {...}  (towers, modes, rounds, maps, pop model, presets)
   src/pages/assets/synergy-rules.js  window.MonkeyIntel.synergyRules = {...}  (rules + tower names, small; for tower pages)
+  src/pages/assets/map-tips.js       window.MonkeyIntelTips = {...}  (per-map plan steps, placement, key rounds; advisor + simulator)
 
 Pop model: data/pop-model.json (contract C1) and hero levels: data/heroes-levels.json (C2). Both are required:
 the build stops if either is missing or unreadable. There is no fixture fallback.
@@ -22,6 +23,8 @@ DATA = os.path.join(ROOT, 'data')
 ASSETS = os.path.join(HERE, 'pages', 'assets')
 PAGES = os.path.join(HERE, 'pages')
 PRIVATE = {'_src', 'notes_internal', 'source', 'about'}
+sys.path.insert(0, os.path.join(ROOT, 'tools'))
+from mi_lib import key_round, steps  # noqa: E402  (tools/mi_lib.py: the same sentence splitter the map pages use)
 
 
 def load(path, default=None):
@@ -93,6 +96,53 @@ def parse_presets(strats, towers, heroes):
     return out
 
 
+# ---------- map tips: the strategy text from map-strats, split into short steps (advisor + simulator) ----------
+def tidy(s):
+    """Same clean-up as tools/build_site.py: drop research-note references and alt prices."""
+    if not s:
+        return ''
+    s = re.sub(r'\s*See 0\d[a-z]? Part [\d.]+\.?', '', s)
+    s = re.sub(r'\s*\(see Methods\)', '', s)
+    s = re.sub(r'(;\s*)?alt: \$[\d,]+(?: fandom)?(;\s*)?', '', s)
+    s = re.sub(r'\s*\(\s*\)', '', s).replace('( ', '(')
+    return s.strip()
+
+
+def split_plan(text, cut_build=False):
+    """Plan text -> (steps, key rounds). Build orders after "Build:" are left out: the known start covers them."""
+    text = tidy(text)
+    m = re.search(r'Build(?: \([^)]*\))?(?: \{calc\})?:\s*', text)
+    if m and cut_build:
+        text = text[:m.start()].strip()
+    out, keys = [], []
+    for st in steps(text):
+        kr = key_round(st)
+        if kr:
+            keys.append([kr[0], kr[1]])
+        elif re.match(r'^Build: follow\b', st):
+            continue  # points at the map page's table; the known start covers it here
+        else:
+            out.append(re.sub(r'^Key rounds:\s*', '', st))
+    return out, keys
+
+
+def map_tips(strats):
+    out = {}
+    for s in strats:
+        mid = s.get('mapId')
+        if not mid:
+            continue
+        easy, ek = split_plan(s.get('easyPlan'))
+        hard, hk = split_plan(s.get('hardPlan'))
+        chimps, ck = split_plan(s.get('chimpsPlan'), cut_build=True)
+        keys = {}
+        for r, t in ek + hk + ck:
+            keys.setdefault(r, t)
+        out[mid] = {'easy': easy, 'hard': hard, 'chimps': chimps, 'placement': steps(tidy(s.get('placement'))),
+                    'keyRounds': [[r, keys[r]] for r in sorted(keys)], 'confidence': s.get('confidence')}
+    return out
+
+
 def require(name):
     path = os.path.join(DATA, name)
     try:
@@ -127,7 +177,7 @@ def collect():
         tt = pick(t, ['id', 'name', 'class', 'baseCost', 'waterOnly', 'paragon'])
         tt['paths'] = [[pick(u, ['tier', 'name', 'cost', 'xp']) for u in (p or [])] for p in (t.get('paths') or [])]
         tower_list.append(tt)
-    heroes = [pick(h, ['id', 'name', 'cost', 'xpCurve', 'camo', 'lead']) for h in towers.get('heroes', []) or []]
+    heroes = [pick(h, ['id', 'name', 'cost', 'xpCurve', 'camo', 'lead', 'bestFor', 'beginnerTier']) for h in towers.get('heroes', []) or []]
     rk = ['round', 'xp', 'cash', 'threats', 'composition', 'danger', 'notes']
     data = {
         'meta': {'version': towers.get('version'), 'popSource': pop_source, 'popVersion': (pop or {}).get('version'),
@@ -139,7 +189,8 @@ def collect():
                            'roundSet', 'allowedClasses', 'rules', 'medal']) for m in modes],
         'rounds': {k: [pick(r, rk) for r in rounds.get(k, []) or []] for k in ('standard', 'abr')},
         'strats': {s['mapId']: pick(s, ['strongTowers', 'avoidTowers', 'heroes']) for s in strats if s.get('mapId')},
-        'guides': {g['towerId']: pick(g, ['xpAllUpgrades', 'xpParagon', 'farm']) for g in guides if g.get('towerId')},
+        'guides': {g['towerId']: pick(g, ['xpAllUpgrades', 'xpParagon', 'farm', 'bestCrosspaths', 'buyTiming', 'lacks'])
+                   for g in guides if g.get('towerId')},
         'income': [pick(s, ['tower', 'code', 'incomePerRound', 'chimpsLegal']) for s in econ.get('incomeSources', []) or []],
         'pop': pop,
         'heroLevels': hero_levels,
@@ -156,6 +207,7 @@ def collect():
         if isinstance(o, list):
             return [strip(v) for v in o]
         return o
+    data['_tips'] = map_tips(strats)
     keep = {k: data.pop(k) for k in ('pop', 'heroLevels', 'synergy')}  # contract files ship whole (C1 uses 'source')
     data = strip(data)
     data.update(keep)
@@ -164,6 +216,7 @@ def collect():
 
 def build():
     data = collect()
+    tips = data.pop('_tips')
     rules = data['synergy']
     tower_list, heroes = data['towers'], data['heroes']
     pop_source = data['meta']['popSource']
@@ -176,6 +229,10 @@ def build():
     with open(os.path.join(ASSETS, 'synergy-rules.js'), 'w', encoding='utf-8') as f:
         f.write('/* generated by src/build_tools.py from data/synergy-rules.json; do not edit */\n'
                 'window.MonkeyIntel=window.MonkeyIntel||{};window.MonkeyIntel.synergyRules=' + js_blob(syn) + ';\n')
+    tblob = js_blob(tips)
+    with open(os.path.join(ASSETS, 'map-tips.js'), 'w', encoding='utf-8') as f:
+        f.write('/* generated by src/build_tools.py from data/map-strats-*.json; do not edit */\nwindow.MonkeyIntelTips=' + tblob + ';\n')
+    print(f'map-tips.js {len(tblob.encode()):,} bytes for {len(tips)} maps')
     print(f'tools-data.js {len(blob.encode()):,} bytes (pop model: {pop_source}); presets for {len(data["presets"])} maps; '
           f'{len(rules.get("rules", []))} synergy rules')
     return data

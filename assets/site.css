@@ -883,3 +883,19 @@ button.answer:active { transform: translateY(2px); box-shadow: 0 1px 0 var(--ink
 .panel > .paragon { border-top: 0; margin-top: 0 !important; padding-top: 0; }
 .fix-cost { -webkit-text-stroke: 3px var(--ink); }
 span.threat { background: var(--paper-2); color: var(--text); box-shadow: none; }
+
+/* ---------- 0.6: "Plan a run" band on home, tools index ---------- */
+.planband .panel-h small { margin-left: 10px; }
+.planband-b { display: grid; gap: 12px; padding-top: 12px; }
+.planband-sub { margin: 0; font-size: 17px; font-weight: 500; max-width: 65ch; }
+.planband-doors { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.planband-door .door-t { font-size: clamp(24px, 3.4vw, 32px); }
+.planband-door .door-s { font-size: 15px; }
+.planband-door { grid-template-columns: 52px minmax(0, 1fr); }
+.planband-door .door-ico { width: 52px; height: 52px; }
+.planband-more { margin: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 4px 14px; font-weight: 500; }
+.planband-more .toolbar-l { margin-right: -4px; }
+@media (max-width: 700px) { .planband-doors { grid-template-columns: minmax(0, 1fr); } }
+.tools-lede { margin: 0 0 14px; font-size: 17px; font-weight: 500; max-width: 65ch; }
+@media (min-width: 861px) { .tool-list { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.tool-list .tool-main .door-t { font-size: clamp(24px, 3.2vw, 30px); }

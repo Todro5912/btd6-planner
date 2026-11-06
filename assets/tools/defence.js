@@ -75,11 +75,11 @@
       h('button', { type: 'button', class: 'ti-sbtn', 'aria-label': '5 rounds later', onclick: () => { st.round = clampR(st.round + 5); render(); } }, '»'),
     ]);
     const top = h('div', { class: 'ti-row' }, [
-      U.field('Mode', U.select(U.modeOptions(D), st.modeId, (v) => { st.modeId = v; render(); }, { id: 'dfn-mode' }), 'ti-grow'),
+      U.field('Mode', U.combo(U.modeOptions(D), st.modeId, (v) => { st.modeId = v; render(); }, { id: 'dfn-mode' }), 'ti-grow'),
       h('div', { class: 'ti-field' }, [h('span', null, 'Round now'), roundCtl]),
     ]);
     const heroRow = h('div', { class: 'ti-row' }, [
-      U.field('Hero', U.select(U.heroOptions(D), st.heroId, (v) => { st.heroId = v; if (v) st.heroLevel = Math.max(1, C.heroLevelAt(D, v, C.modeRange(m)[0], Math.max(st.round, C.modeRange(m)[0]), 'Beginner')); render(); }, { id: 'dfn-hero' }), 'ti-grow'),
+      U.field('Hero', U.combo(U.heroOptions(D), st.heroId, (v) => { st.heroId = v; if (v) st.heroLevel = Math.max(1, C.heroLevelAt(D, v, C.modeRange(m)[0], Math.max(st.round, C.modeRange(m)[0]), 'Beginner')); render(); }, { id: 'dfn-hero' }), 'ti-grow'),
       st.heroId ? h('div', { class: 'ti-field' }, [h('span', null, 'Hero level'), h('div', { class: 'ti-round' }, [
         h('button', { type: 'button', class: 'ti-sbtn', 'aria-label': 'Lower hero level', onclick: () => { st.heroLevel = Math.max(1, st.heroLevel - 1); render(); } }, '−'),
         h('span', { class: 'ti-round-n', style: 'font-size:30px' }, 'L' + st.heroLevel),

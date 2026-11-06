@@ -1,4 +1,5 @@
-/* Monkey Intel: round-timeline simulator (slug: simulator). Needs tools-data, tools-core, synergy, tools-ui. */
+/* Monkey Intel: round-timeline simulator (slug: simulator). Needs tools-data, map-tips, tools-core, synergy, tools-ui.
+   A strategy lab: invent a build, try it round by round, see where it breaks. The Strategy Advisor (advisor.js) is the guided twin. */
 (function () {
   'use strict';
   const MI = window.MonkeyIntel;
@@ -15,6 +16,7 @@
   const newUid = () => 'u' + (++uidN) + Date.now().toString(36).slice(-3);
   let sheet = null; /* add-step sheet state: {op, r, t, x, ref} */
   let presetLoaded = false;
+  let stratOpen = null; /* map-ideas panel: null = open until the build has a few steps */
 
   function loadInitial() {
     const hash = location.hash || '';
@@ -99,6 +101,7 @@
     const pv = U.previewNote(D);
     if (pv) root.appendChild(pv);
     root.appendChild(setupPanel());
+    root.appendChild(stratPanel());
     root.appendChild(answer());
     root.appendChild(timelinePanel());
     root.appendChild(stepsPanel());
@@ -110,11 +113,10 @@
   function setupPanel() {
     const m = mode();
     const heroStep = plan.steps.find((s) => s.op === 'hero');
-    const preset = (D.presets || {})[plan.mapId];
     const kids = [
-      U.field('Map', U.select(U.mapOptions(D), plan.mapId, (v) => { plan.mapId = v; update(); }, { id: 'sim-map' }), 'ti-grow'),
-      U.field('Mode', U.select(U.modeOptions(D), plan.modeId, (v) => { plan.modeId = v; plan.steps.forEach((s) => { s.r = clampR(s.r); }); update(); }, { id: 'sim-mode' }), 'ti-grow'),
-      U.field('Hero', U.select(U.heroOptions(D), heroStep ? heroStep.h : '', setHero, { id: 'sim-hero' }), 'ti-grow'),
+      U.field('Map', U.combo(U.mapOptions(D), plan.mapId, (v) => { plan.mapId = v; update(); }, { id: 'sim-map' }), 'ti-grow'),
+      U.field('Mode', U.combo(U.modeOptions(D), plan.modeId, (v) => { plan.modeId = v; plan.steps.forEach((s) => { s.r = clampR(s.r); }); update(); }, { id: 'sim-mode' }), 'ti-grow'),
+      U.field('Hero', U.combo(U.heroOptions(D), heroStep ? heroStep.h : '', setHero, { id: 'sim-hero' }), 'ti-grow'),
     ];
     if (heroStep) {
       const lvl = h('input', { class: 'ti-input', type: 'number', min: '1', max: '20', inputmode: 'numeric', placeholder: 'auto', value: plan.heroLevel != null ? String(plan.heroLevel) : '', 'aria-label': 'Hero level override', style: 'width:6.5em' });
@@ -127,19 +129,63 @@
       heroStep && sim.rows.length ? ['. Hero level ', plan.heroLevel != null ? 'set to ' + plan.heroLevel : 'is an estimate', U.badge('calc', plan.heroLevel != null ? 'manual' : 'estimate')] : null,
     ]);
     const body = [h('div', { class: 'ti-row' }, kids), facts];
-    if (preset) {
-      body.push(h('div', { class: 'ti-share' }, [
-        h('button', { type: 'button', class: 'btn btn-small', onclick: () => { const p = C.presetPlan(D, plan.mapId); if (p) { plan.modeId = p.modeId; plan.steps = p.steps; plan.heroLevel = null; presetLoaded = true; update(); } } }, 'Load a known start'),
-        U.badge('calc', 'calculated, not play-tested'),
-        presetLoaded ? h('span', { class: 'ti-note' }, 'CHIMPS start for ' + map().name + ' loaded.') : null,
-      ]));
-    }
     body.push(h('div', { class: 'ti-share' }, [
       h('button', { type: 'button', class: 'btn btn-small', onclick: (e) => copyLink(e.currentTarget) }, 'Copy share link'),
       plan.steps.length ? h('button', { type: 'button', class: 'btn btn-small', onclick: () => { if (window.confirm('Clear every step?')) { plan.steps = []; plan.heroLevel = null; update(); } } }, 'Start over') : null,
     ]));
     return h('section', { class: 'panel', 'aria-labelledby': 'sim-setup-h' }, [h('h2', { class: 'panel-h', id: 'sim-setup-h' }, 'Your game'), h('div', { class: 'ti-panel-b ti' }, body)]);
   }
+  /* ---------- strategy ideas for the map ---------- */
+  function advisorLink() {
+    const heroStep = plan.steps.find((s) => s.op === 'hero');
+    const ids = [];
+    sim.insts.forEach((i) => { if (ids.indexOf(i.id) < 0) ids.push(i.id); });
+    return '../advisor/#map=' + plan.mapId + '&mode=' + plan.modeId + '&hero=' + (heroStep ? heroStep.h : 'auto') + (ids.length ? '&t=' + ids.join(',') : '');
+  }
+  function stratPanel() {
+    const s = strat();
+    const m = mode(), mp = map();
+    const tips = U.tips(plan.mapId);
+    const [a, b] = range();
+    const preset = (D.presets || {})[plan.mapId];
+    const used = sim.insts.map((i) => i.id);
+    const heroStep = plan.steps.find((x) => x.op === 'hero');
+    const towerChip = (id) => {
+      const t = C.tower(D, id);
+      if (!t) return null;
+      const issue = C.placeIssue(D, m, mp, t);
+      return h('button', { type: 'button', class: 'tag ti-tipchip' + (used.indexOf(id) >= 0 ? ' tag-banana' : ''), disabled: issue ? true : null, title: issue || 'Add a ' + t.name + ' step',
+        onclick: () => { openSheet('place'); sheet.t = id; render(); const el = document.getElementById('sim-sheet'); if (el) el.scrollIntoView({ block: 'nearest' }); } }, '+ ' + t.name.replace(/ Monkey$/, ''));
+    };
+    const heroes = C.mapHeroes ? C.mapHeroes(D, plan.mapId) : [];
+    const body = [h('dl', { class: 'chips-dl ti-tips-dl' }, [
+      arr(s.strongTowers).length ? h('div', null, [h('dt', null, 'Strong here'), h('dd', null, arr(s.strongTowers).map(towerChip))]) : null,
+      arr(s.avoidTowers).length ? h('div', null, [h('dt', null, 'Weak here'), h('dd', null, arr(s.avoidTowers).map((id) => { const t = C.tower(D, id); return t ? h('span', { class: 'tag' + (used.indexOf(id) >= 0 ? ' tag-danger' : '') }, t.name.replace(/ Monkey$/, '')) : null; }))]) : null,
+      heroes.length ? h('div', null, [h('dt', null, 'Best heroes'), h('dd', null, heroes.map((hh) => h('button', { type: 'button', class: 'tag ti-tipchip' + (heroStep && heroStep.h === hh.id ? ' tag-banana' : ''), onclick: () => setHero(hh.id) }, hh.name)))]) : null,
+    ])];
+    const pl = U.planFor(tips, m);
+    if (pl) body.push(h('div', null, [h('p', { class: 'ti-lbl' }, pl.label + ' from the map page'), U.stepList(pl.steps, 4)]));
+    const kr = U.keyRounds(tips, a, b, 6);
+    if (kr) body.push(h('div', null, [h('p', { class: 'ti-lbl' }, 'Key rounds'), kr]));
+    const acts = [];
+    if (preset) {
+      acts.push(h('button', { type: 'button', class: 'btn btn-small', id: 'sim-preset', onclick: () => { const p = C.presetPlan(D, plan.mapId); if (p) { plan.modeId = p.modeId; plan.steps = p.steps; plan.heroLevel = null; presetLoaded = true; update(); } } }, 'Load the known CHIMPS start'));
+      acts.push(U.badge('calc', 'calculated, not play-tested'));
+      if (presetLoaded) acts.push(h('span', { class: 'ti-note' }, 'Loaded. Change anything and watch what breaks.'));
+    }
+    acts.push(h('a', { class: 'btn btn-small', href: '../../maps/' + mp.id + '/' }, 'Full map page'));
+    body.push(h('div', { class: 'ti-share' }, acts));
+    body.push(h('div', { class: 'ti-cta' }, [h('p', null, 'Know which monkeys you want, but not how to use them?'),
+      h('a', { class: 'btn btn-small btn-grass', href: advisorLink(), id: 'sim-to-adv' }, 'Let the Strategy Advisor plan it')]));
+    const open = stratOpen != null ? stratOpen : plan.steps.length < 3;
+    const d = h('details', { class: 'panel ti-details ti-strat', open: open ? true : null }, [
+      h('summary', { class: 'panel-h' }, ['Strategy ideas', h('small', null, mp.name + (open ? '' : ' · tap to open'))]),
+      h('div', { class: 'ti-panel-b ti ti-tips', style: 'padding-top:10px' }, body),
+    ]);
+    d.addEventListener('toggle', () => { stratOpen = d.open; });
+    return d;
+  }
+
   function copyLink(btn) {
     const url = location.href.split('#')[0] + '#' + C.encodePlan(plan);
     const done = () => { btn.textContent = 'Link copied'; setTimeout(() => { btn.textContent = 'Copy share link'; }, 1600); };

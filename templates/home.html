@@ -2,9 +2,31 @@
 {% import '_macros.html' as ui %}
 {% block bodyclass %}home{% endblock %}
 {% block main %}
+<h1 class="sr-only">{{ site.project or site.name }}: BTD6 strategy tools and quick answers</h1>
+{% set tool_by = {} %}{% for t in TOOLS %}{% set _ = tool_by.update({t.slug: t}) %}{% endfor %}
+<section class="panel planband" aria-labelledby="pb">
+  <h2 class="panel-h" id="pb">Plan a run<small>strategy tools</small></h2>
+  <div class="panel-b planband-b">
+    <p class="planband-sub">Pick your monkeys and get a plan, or build your own and test it round by round.</p>
+    <div class="planband-doors">
+      <a class="door door-grass planband-door" href="{{ root }}tools/advisor/">
+        {{ ui.icon('book', 'door-ico') }}
+        <span class="door-t">Strategy Advisor</span>
+        <span class="door-s">I know my monkeys, not how to use them. Get each one's crosspath, a build order by round and the gaps to fix.</span>
+      </a>
+      <a class="door door-sky planband-door" href="{{ root }}tools/simulator/">
+        {{ ui.icon('plan', 'door-ico') }}
+        <span class="door-t">Simulator</span>
+        <span class="door-s">Strategy lab. Invent a build, try ideas round by round, see your cash, the first leak and the cheapest fix.</span>
+      </a>
+    </div>
+    <p class="planband-more"><span class="toolbar-l">Also</span>{% for t in TOOLS if t.slug not in ('advisor', 'simulator') %}<a href="{{ root }}{{ t.url }}">{{ t.name }}</a>{% endfor %}</p>
+  </div>
+</section>
+
 <section class="ingame" aria-labelledby="ig">
   <div class="ingame-head">
-    <h1 class="h1" id="ig">In a game right now?</h1>
+    <h2 class="h1" id="ig">In a game right now?</h2>
     <div class="ingame-diff">
       <span class="toolbar-l">Prices for</span>
       {{ ui.diff_toggle() }}

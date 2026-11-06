@@ -5,10 +5,11 @@
   <h1 class="h1">Tools</h1>
   {{ ui.stamp() }}
 </div>
+<p class="tools-lede">Plan a strategy, test it round by round, then work out your XP and check a defence mid-game.</p>
 <ul class="tool-list">
   {% for t in TOOLS %}
-  <li><a class="door {{ ['door-grass', 'door-wood', 'door-sky'][loop.index0 % 3] }}" href="{{ root }}{{ t.url }}">
-    {{ ui.icon(['plan', 'xp', 'monkey'][loop.index0 % 3], 'door-ico') }}
+  <li{% if t.slug in ('advisor', 'simulator') %} class="tool-main"{% endif %}><a class="door {{ t.door }}" href="{{ root }}{{ t.url }}">
+    {{ ui.icon(t.icon, 'door-ico') }}
     <span class="door-t">{{ t.name }}</span>
     <span class="door-s">{{ t.desc }}</span>
   </a></li>

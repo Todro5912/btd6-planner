@@ -60,9 +60,12 @@ GENERATED_DIRS = ['quick', 'rounds', 'monkeys', 'heroes', 'maps', 'guides', 'too
 # The rounds players name when they ask "what kills runs" (owner list, research 1.1 B3 and 3.6).
 DANGER_ROUNDS = [24, 28, 33, 37, 40, 45, 63, 76, 78, 90, 95, 98, 99, 100]
 # Tool pages written by the tools stream (C3). Order = menu order.
-TOOLS = [('simulator', 'Simulator', 'Round timeline: cash by round, the threats coming and your buys.'),
+TOOLS = [('advisor', 'Strategy Advisor', 'I know my monkeys, not how to use them: crosspaths, a build order and the gaps.'),
+         ('simulator', 'Simulator', 'Strategy lab: invent a build and test it round by round, cash and leaks included.'),
          ('xp', 'XP calculator', 'I have this much XP and want that upgrade: how many games of what.'),
          ('defence', 'Check my defence', 'Your towers and round: the next threats you can\'t pop, each with a fix.')]
+TOOL_ICON = {'advisor': 'book', 'simulator': 'plan', 'xp': 'xp', 'defence': 'monkey'}
+TOOL_DOOR = {'advisor': 'door-grass', 'simulator': 'door-sky', 'xp': 'door-wood', 'defence': 'door-banana'}
 # Footer and overflow menu.
 MORE_LINKS = [('Records', 'records/'), ('Patch notes', 'patch/'), ('Known issues', 'guides/known-issues/'),
               ('About', 'about/'), ('A–Z index', 'a-z/')]
@@ -1140,9 +1143,11 @@ def main():
     tool_src = tool_pages()
     tool_assets = os.path.join(PAGES_SRC, 'assets')
     has_synergy = os.path.isfile(os.path.join(tool_assets, 'synergy.js'))
-    tools = [{'slug': k, 'name': n, 'desc': d, 'url': f'tools/{k}/', 'ready': k in tool_src}
+    tools = [{'slug': k, 'name': n, 'desc': d, 'url': f'tools/{k}/', 'ready': k in tool_src,
+              'icon': TOOL_ICON.get(k, 'plan'), 'door': TOOL_DOOR.get(k, 'door-grass')}
              for k, n, d in TOOLS]
-    tools += [{'slug': k, 'name': k.replace('-', ' ').capitalize(), 'desc': '', 'url': f'tools/{k}/', 'ready': True}
+    tools += [{'slug': k, 'name': k.replace('-', ' ').capitalize(), 'desc': '', 'url': f'tools/{k}/', 'ready': True,
+               'icon': 'plan', 'door': 'door-grass'}
               for k in tool_src if k not in {t['slug'] for t in tools}]
 
     # every page path, for link checks inside guides
@@ -1222,7 +1227,7 @@ def main():
              rel_cards=[card_by[r] for r in q['related'] if r in card_by], about=pop_about)
 
     # ---- tools (C3): S's fragments wrapped in the site chrome. The old planner is retired.
-    page('tools/', 'tools.html', f"Tools · {name}", 'BTD6 tools: round simulator, XP calculator and defence check.',
+    page('tools/', 'tools.html', f"Tools · {name}", 'BTD6 tools: strategy advisor, round simulator, XP calculator and defence check.',
          section='tools', crumbs=[('Tools', None)], about=None)
     for t in tools:
         body = tool_src.get(t['slug'])

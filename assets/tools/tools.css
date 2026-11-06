@@ -198,3 +198,70 @@ button.ti-pip { cursor: pointer; width: 34px; height: 34px; }
 .ti-details[open] > summary::before { transform: rotate(90deg); }
 .ti-details > summary small { color: var(--muted); }
 .ti-alert .ti-lbl { color: inherit; }
+
+/* ---------- type-to-search picker (U.combo): map, mode, hero ---------- */
+.ti-combo { position: relative; min-width: 0; }
+.ti-field .ti-combo-in, .ti-combo-in { width: 100%; padding-right: 34px; cursor: text; text-overflow: ellipsis; }
+.ti-combo-in:focus { outline: 3px solid var(--banana); outline-offset: 1px; }
+.ti-combo-caret { position: absolute; right: 12px; top: 50%; width: 0; height: 0; margin-top: -2px; pointer-events: none;
+  border-left: 6px solid transparent; border-right: 6px solid transparent; border-top: 7px solid var(--text); }
+.ti-combo.open .ti-combo-caret { transform: rotate(180deg); }
+.ti-combo-list { position: absolute; z-index: 40; left: 0; right: 0; top: calc(100% + 4px); margin: 0; padding: 4px 0; list-style: none;
+  max-height: min(320px, 60vh); overflow-y: auto; background: var(--panel); color: var(--text);
+  border: var(--line) solid var(--ink); border-radius: var(--r); box-shadow: 0 4px 0 var(--ink); }
+.ti-combo-list[hidden] { display: none; }
+.ti-combo-g { position: sticky; top: -4px; padding: 6px 12px 3px; background: var(--paper-2); font-size: 11px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+.ti-combo-o { display: flex; align-items: baseline; gap: 8px; padding: 9px 12px; cursor: pointer; font-size: 15px; font-weight: 500; text-transform: none; letter-spacing: 0; color: var(--text); }
+.ti-combo-o small { margin-left: auto; font-size: 11.5px; color: var(--muted); font-weight: 500; }
+.ti-combo-o.on { background: var(--banana); color: #1C1A17; }
+.ti-combo-o.on small { color: #1C1A17; }
+.ti-combo-o.off { opacity: .45; cursor: not-allowed; }
+.ti-combo-now { margin-left: auto; font-size: 10.5px; text-transform: uppercase; letter-spacing: .05em; border: 2px solid var(--ink); border-radius: var(--r); padding: 0 4px; }
+.ti-combo-o small + .ti-combo-now { margin-left: 6px; }
+.ti-combo-none { padding: 10px 12px; color: var(--muted); font-size: 14px; }
+
+/* ---------- Strategy Advisor ---------- */
+.ti-roles { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+.ti-role { align-content: start; gap: 6px; }
+.ti-role-c { font-weight: 700; font-variant-numeric: tabular-nums; }
+.ti-role-x { display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 10px; }
+.ti-x-big { font-size: 26px; line-height: 1; }
+.ti-role-n { font-weight: 700; font-size: 15px; }
+.ti-role-u, .ti-role-j, .ti-role-p { margin: 0; font-size: 14.5px; line-height: 1.4; }
+.ti-role-p { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; }
+.ti-role-p .pop { font-size: 12.5px; padding: 0 6px; }
+.ti-pop-sup { background: var(--sky); color: #1C1A17; border-style: dashed; }
+.ti-role-more summary { cursor: pointer; font-size: 13px; font-weight: 700; color: var(--muted); }
+.ti-role-more p { margin: 4px 0 0; }
+.ti-role .ti-field select { width: 100%; font-size: 14.5px; }
+.ti-role-hero { background: var(--paper-2); }
+.ti-pathpips { display: grid; gap: 3px; }
+.ti-pathpip { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 8px; }
+.ti-pathpip .ti-pip { width: 13px; height: 14px; }
+.ti-pathpip .ti-path-name { font-size: 12.5px; color: var(--muted); }
+.ti-due { flex-wrap: wrap; justify-content: flex-end; gap: 4px; max-width: 14em; }
+.ti-due .ti-hint { font-size: 11px; white-space: nowrap; }
+.ti-order-list .ti-step { grid-template-columns: auto minmax(0, 1fr) auto; }
+@media (max-width: 560px) {
+  .ti-order-list .ti-step { grid-template-columns: auto minmax(0, 1fr); }
+  .ti-order-list .ti-step-r { grid-column: auto; }
+  .ti-order-list .ti-due { grid-column: 2; justify-content: flex-start; max-width: none; }
+}
+
+/* map tips (advisor and simulator) */
+.ti-tips { gap: 12px; }
+.ti-tips .ti-lbl { margin: 0 0 4px; }
+.ti-tips-dl { gap: 8px 22px; }
+.ti-tips-dl dd { gap: 4px; }
+.ti-tipchip { cursor: pointer; font: inherit; font-size: 13px; font-weight: 700; line-height: 1.6; padding: 1px 8px; box-shadow: 0 2px 0 var(--ink); }
+.ti-tipchip:active { transform: translateY(2px); box-shadow: none; }
+.ti-warn { color: var(--danger); font-weight: 700; }
+.ti-keyrounds { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.ti-keyrounds li { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 8px; align-items: baseline; font-size: 15px; line-height: 1.4; }
+.ti-strat .steps-list { font-size: 15px; }
+.ti-cta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; padding: 10px 14px; border: 2px dashed var(--ink); border-radius: var(--r); background: var(--paper-2); }
+.ti-cta p { margin: 0; font-weight: 500; }
+.ti-strat > summary small { color: #F3E3C4; }
+.ti-strat > summary::before { border-left-color: #FFF8E7; }
+.btn.ti-wrap { white-space: normal; text-align: left; }

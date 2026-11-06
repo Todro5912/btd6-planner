@@ -1,4 +1,4 @@
-/* Tests for the Monkey Intel tool pages (simulator, xp, defence) and the synergy engine.
+/* Tests for the Monkey Intel tool pages (advisor, simulator, xp, defence) and the synergy engine.
      python3 src/build_tools.py && node src/test_tools.js            logic + data checks
      node src/test_tools.js --browser [--shots]                       also loads each page fragment in a minimal
                                                                        shell in Chromium at 400px and 1280px */
@@ -11,7 +11,9 @@ const ASSETS = path.join(HERE, 'pages', 'assets');
 global.window = global;
 require(path.join(ASSETS, 'tools-data.js'));
 const D = global.MonkeyIntelData;
-const C = require(path.join(ASSETS, 'tools-core.js'));
+const C = require(path.join(ASSETS, 'advisor-core.js')); /* tools-core plus the Strategy Advisor */
+require(path.join(ASSETS, 'map-tips.js'));
+const TIPS = global.MonkeyIntelTips;
 const { synergy, match } = require(path.join(ASSETS, 'synergy.js'));
 const RULES = JSON.parse(fs.readFileSync(path.join(HERE, '..', 'data', 'synergy-rules.json'), 'utf8'));
 
@@ -248,6 +250,60 @@ const synOut = synergy([{ id: 'ninja', x: '4-0-1' }], { rules: RULES, modeId: 'h
 ok(synOut.some((s) => s.id === 'ninja-alch-classic' && s.pairsWith.indexOf('Ninja Monkey') >= 0), 'string crosspaths work and suggestions name the tower they pair with (tower-page use)');
 ok(synergy([{ id: 'alchemist', x: [3, 0, 0] }, { id: 'dartling', x: [0, 2, 0] }], { rules: RULES }).every((s) => s.id !== 'brew-fast-attackers'), 'a suggestion drops out once you already have it');
 
+console.log('Strategy Advisor');
+{
+  const adv = (o) => C.advise(D, Object.assign({ mapId: 'monkey-meadow', modeId: 'medium', heroId: '', towers: [] }, o));
+  const r0 = adv({});
+  ok(r0.picks.length === 0 && r0.steps.length === 0, 'no picks -> no plan');
+  const r1 = adv({ mapId: 'logs', modeId: 'chimps', heroId: 'quincy', towers: ['dart', 'boomerang', 'village', 'alchemist'] });
+  ok(r1.picks.length === 4 && r1.picks.every((p) => C.validCross(p.x)), 'every pick gets a legal end crosspath', r1.picks.map((p) => p.x));
+  ok(r1.gaps.length === 0, 'Logs CHIMPS Dart/Boomerang/Village/Alch + Quincy: no gaps', r1.gaps.map((g) => g.prop + '@' + g.round));
+  ok(r1.sim.steps.every((s) => !s.short && !s.flags.some((f) => f.k === 'bad')), 'every step of the order is affordable and legal in the simulator', r1.sim.steps.filter((s) => s.flags.length));
+  ok(r1.spent <= r1.budget + 1 && r1.spent > r1.budget * 0.5, 'CHIMPS plan spends most of the budget without going over', [r1.spent, r1.budget]);
+  ok(r1.steps[0].r === 6 && r1.steps[0].op === 'place', 'first buy is a tower on the first round (R6)', r1.steps[0]);
+  const lead = r1.sim.rows.find((x) => x.r === 28);
+  ok(lead && lead.cov.lead.length > 0, 'lead is covered by R28 (first lead round)');
+  const r2 = adv({ modeId: 'easy', towers: ['tack', 'glue'] });
+  ok(r2.gaps.some((g) => g.prop === 'camo') && r2.uncoverable.indexOf('camo') >= 0, 'Tack + Glue: camo reported as a gap the picks can\'t cover', r2.uncoverable);
+  ok(r2.gaps.find((g) => g.prop === 'camo').fixes.length > 0, 'the camo gap comes with fixes');
+  const r3 = adv({ modeId: 'chimps', towers: ['sub', 'farm', 'wizard'], heroId: 'auto' });
+  ok(r3.unusable.length === 2 && r3.picks.length === 1, 'Sub (no water) and Farm (CHIMPS) are listed as unusable', r3.unusable);
+  ok(r3.hero && r3.hero.id === C.mapHeroes(D, 'monkey-meadow')[0].id, '"pick for me" hero = the map page\'s first hero', r3.hero && r3.hero.id);
+  const r4 = adv({ mapId: 'tinkerton', modeId: 'hard', heroId: 'benjamin', towers: ['sniper', 'farm'] });
+  const farm = r4.picks.find((p) => p.id === 'farm');
+  ok(farm && farm.placedAt != null && farm.placedAt <= 15, 'Banana Farm is bought early so it pays back', farm && farm.placedAt);
+  const r5 = adv({ towers: ['dart'], force: { dart: [0, 2, 4] } });
+  ok(r5.picks[0].x.join('') === '024' && r5.picks[0].forced, 'a forced end crosspath is kept');
+  const enc = C.encodeAdvice({ mapId: 'logs', modeId: 'chimps', heroId: '', towers: ['dart', 'ninja'], force: { ninja: [4, 0, 1] } });
+  const dec = C.decodeAdvice(D, '#' + enc);
+  ok(dec.mapId === 'logs' && dec.modeId === 'chimps' && dec.heroId === '' && dec.towers.join() === 'dart,ninja' && dec.force.ninja.join('') === '401', 'advisor link round-trips (incl. "no hero" and a forced path)', enc);
+  const back = C.decodePlan(D, '#' + C.encodePlan(r1.plan));
+  ok(C.simulate(D, back).steps.length === r1.sim.steps.length, 'the plan opens in the simulator with every step');
+  let errs = 0, slow = 0;
+  const ids = D.towers.map((t) => t.id);
+  ['easy', 'medium', 'hard', 'chimps', 'deflation', 'abr', 'primary-only'].forEach((m, k) => D.maps.filter((x, i) => i % 9 === k % 9).forEach((mp) => {
+    const t0 = Date.now();
+    try { const r = adv({ mapId: mp.id, modeId: m, heroId: 'auto', towers: ids.filter((x, i) => (i + mp.id.length) % 5 === 0) }); if (r.sim && r.sim.steps.some((s) => s.short)) errs++; } catch (e) { errs++; console.log(e); }
+    if (Date.now() - t0 > 400) slow++;
+  }));
+  ok(errs === 0, 'advisor runs on many map x mode x pick mixes with no unaffordable steps', errs);
+  ok(slow === 0, 'advisor answers in under 400 ms', slow);
+  ok(Object.keys(TIPS).length === D.maps.length && D.maps.every((m) => TIPS[m.id] && Array.isArray(TIPS[m.id].keyRounds)), 'map tips for every map');
+  ok(Object.keys(TIPS).every((k) => !TIPS[k].chimps.some((s) => /\[\$|spent \$/.test(s))), 'map tips leave the bracketed build orders out');
+}
+
+console.log('Type-to-search picker');
+{
+  const ui = {};
+  global.document = undefined;
+  require(path.join(ASSETS, 'tools-ui.js'));
+  const U = global.MonkeyIntel.ui;
+  ok(U.comboScore({ label: 'Monkey Meadow' }, 'mm') > 0 && U.comboScore({ label: 'Monkey Meadow' }, 'meadow') > 0, 'combo matches initials and later words');
+  ok(U.comboScore({ label: 'Dark Castle', group: 'Expert maps' }, 'expert') > 0 && U.comboScore({ label: 'Logs' }, 'zz') === 0, 'combo matches the group and rejects junk');
+  ok(U.comboScore({ label: 'Dark Castle' }, 'dark c') > U.comboScore({ label: 'Dark Dungeons' }, 'dark c'), 'combo ranks the closer name first');
+  ok(U.comboScore({ label: "Dan D'Monke" }, 'dan d') > 0, 'apostrophes are ignored');
+}
+
 console.log('\n' + pass + ' passed, ' + fail + ' failed');
 
 async function browser() {
@@ -268,7 +324,7 @@ async function browser() {
       const page = await b.newPage({ viewport: { width: w, height: 900 } });
       page.on('console', (m) => { if (m.type() === 'error' || m.type() === 'warning') errors.push(slug + ' ' + w + 'px console.' + m.type() + ': ' + m.text()); });
       page.on('pageerror', (e) => errors.push(slug + ' ' + w + 'px pageerror: ' + e.message));
-      const hash = slug === 'simulator' ? '#map=logs&mode=chimps&b=6pdart_6hquincy' : '';
+      const hash = slug === 'simulator' ? '#map=logs&mode=chimps&b=6pdart_6hquincy' : slug === 'advisor' ? '#map=logs&mode=chimps&hero=quincy&t=dart,boomerang' : '';
       await page.goto('file://' + file + hash);
       await page.waitForTimeout(400);
       /* poke the main controls */
@@ -276,6 +332,12 @@ async function browser() {
         await page.click('.ti-alert .ti-fixes button');
         await page.click('#sim-add'); await page.click('.ti-tile >> nth=2'); await page.click('#sim-sheet .ti-primary');
         await page.click('.ti-details summary');
+      } else if (slug === 'advisor') {
+        await page.click('.ti-tile >> nth=17'); /* Alchemist */
+        await page.click('#adv-map'); await page.keyboard.type('dark c'); await page.keyboard.press('Enter');
+        if (!/Dark Castle/.test(await page.inputValue('#adv-map'))) errors.push('advisor ' + w + 'px: typing "dark c" + Enter did not pick Dark Castle');
+        await page.selectOption('.ti-role select >> nth=0', { index: 1 });
+        if (!(await page.$('#adv-to-sim'))) errors.push('advisor ' + w + 'px: no "Open in Simulator" link');
       } else if (slug === 'defence') {
         await page.click('.ti-tile >> nth=0'); await page.click('.ti-tile >> nth=6');
         await page.click('.ti-card >> nth=0 >> [aria-label="Path 3 up"]');

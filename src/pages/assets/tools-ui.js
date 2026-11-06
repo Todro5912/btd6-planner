@@ -61,14 +61,151 @@
   U.field = (label, control, cls) => U.h('label', { class: 'ti-field' + (cls ? ' ' + cls : '') }, [U.h('span', null, label), control]);
 
   U.mapOptions = function (D) {
-    return MI.core.TIERS.map((tier) => ({ group: tier + ' maps', items: D.maps.filter((m) => m.difficulty === tier).map((m) => ({ value: m.id, label: m.name })) }));
+    return MI.core.TIERS.map((tier) => ({ group: tier + ' maps', items: D.maps.filter((m) => m.difficulty === tier).map((m) => ({
+      value: m.id, label: m.name,
+      keys: [m.water && m.water !== 'none' ? 'water' : 'no water', m.losBlockers && m.losBlockers !== 'none' ? 'line of sight blockers' : ''].join(' '),
+    })) }));
   };
+  const MODE_KEYS = { abr: 'abr', chimps: 'chimps black border', impoppable: 'imp', 'double-hp-moabs': 'dhp double hp', 'half-cash': 'half cash', 'primary-only': 'primary', 'military-only': 'military', 'magic-monkeys-only': 'magic' };
   U.modeOptions = function (D) {
     const groups = { easy: 'Easy', medium: 'Medium', hard: 'Hard' };
-    return Object.keys(groups).map((b) => ({ group: groups[b], items: D.modes.filter((m) => m.base === b && !MI.core.isSandbox(m)).map((m) => ({ value: m.id, label: m.name })) }));
+    return Object.keys(groups).map((b) => ({ group: groups[b], items: D.modes.filter((m) => m.base === b && !MI.core.isSandbox(m))
+      .map((m) => ({ value: m.id, label: m.name, keys: (MODE_KEYS[m.id] || '') + ' R' + m.startRound + ' R' + m.endRound })) }));
   };
   U.heroOptions = function (D, none) {
-    return [{ value: '', label: none || 'No hero' }].concat(D.heroes.map((h) => ({ value: h.id, label: h.name })));
+    return [{ value: '', label: none || 'No hero', keys: 'none' }].concat(D.heroes.map((h) => ({ value: h.id, label: h.name })));
+  };
+
+  /* Type-to-search picker with the same arguments as U.select: opts (plain or {group, items}), value, onchange(value), attrs.
+     Matches words anywhere in the name, its group ("expert", "hard") or initials ("mm" = Monkey Meadow).
+     Keys: arrows move, Enter picks, Esc puts back what was there. Items may carry `keys` (extra search words). */
+  let comboN = 0;
+  const fold = (s) => String(s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/['’]/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
+  U.comboScore = function (it, q) {
+    const w = fold(q);
+    if (!w) return 1;
+    const label = fold(it.label);
+    const words = label.split(' ');
+    const hay = label + ' ' + fold(it.group) + ' ' + fold(it.keys) + ' ' + fold(it.value);
+    const initials = words.map((x) => x[0]).join('');
+    if (label === w) return 100;
+    if (label.indexOf(w) === 0) return 80;
+    if (initials.indexOf(w.replace(/ /g, '')) === 0 && w.length >= 2) return 70;
+    if (words.some((x) => x.indexOf(w) === 0)) return 60;
+    const parts = w.split(' ');
+    if (parts.every((p) => hay.split(' ').some((x) => x.indexOf(p) === 0))) return 40;
+    if (parts.every((p) => hay.indexOf(p) >= 0)) return 20;
+    return 0;
+  };
+  U.combo = function (opts, value, onchange, attrs) {
+    attrs = attrs || {};
+    const id = attrs.id || 'ti-combo-' + (++comboN);
+    const items = [];
+    opts.forEach((o) => {
+      if (o.group) o.items.forEach((it) => items.push(Object.assign({ group: o.group }, it)));
+      else items.push(o);
+    });
+    const cur = items.find((it) => it.value === value) || null;
+    const listId = id + '-list';
+    const input = U.h('input', {
+      type: 'text', id, class: 'ti-combo-in', role: 'combobox', 'aria-autocomplete': 'list', 'aria-expanded': 'false',
+      'aria-controls': listId, autocomplete: 'off', autocapitalize: 'off', spellcheck: 'false', enterkeyhint: 'done',
+      placeholder: attrs.placeholder || 'Type to search', 'aria-label': attrs['aria-label'] || null,
+    });
+    input.value = cur ? cur.label : '';
+    const list = U.h('ul', { class: 'ti-combo-list', id: listId, role: 'listbox', hidden: true });
+    const wrap = U.h('div', { class: 'ti-combo' + (attrs.class ? ' ' + attrs.class : '') }, [input, U.h('span', { class: 'ti-combo-caret', 'aria-hidden': 'true' }), list]);
+    let shown = [];
+    let active = -1;
+    let open = false;
+    let typed = false;
+    let done = false; /* picked: the page re-renders and this input is thrown away */
+    function paint() {
+      U.clear(list);
+      let lastGroup = null;
+      shown.forEach((it, i) => {
+        if (!typed && it.group && it.group !== lastGroup) list.appendChild(U.h('li', { class: 'ti-combo-g', role: 'presentation' }, it.group));
+        lastGroup = it.group;
+        const li = U.h('li', {
+          id: listId + '-' + i, role: 'option', class: 'ti-combo-o' + (i === active ? ' on' : '') + (it.disabled ? ' off' : ''),
+          'aria-selected': String(i === active), 'aria-disabled': it.disabled ? 'true' : null,
+        }, [U.h('span', null, it.label), typed && it.group ? U.h('small', null, it.group) : null, cur && it.value === cur.value ? U.h('b', { class: 'ti-combo-now' }, 'now') : null]);
+        li.addEventListener('mousedown', (e) => { e.preventDefault(); if (!it.disabled) choose(it, false); });
+        list.appendChild(li);
+      });
+      if (!shown.length) list.appendChild(U.h('li', { class: 'ti-combo-none', role: 'presentation' }, 'No match. Try fewer letters.'));
+      input.setAttribute('aria-activedescendant', active >= 0 ? listId + '-' + active : '');
+      const el = active >= 0 ? document.getElementById(listId + '-' + active) : null;
+      if (el && el.scrollIntoView) el.scrollIntoView({ block: 'nearest' });
+    }
+    function filter(q) {
+      typed = !!fold(q);
+      if (!typed) { shown = items.slice(); active = cur ? Math.max(0, shown.indexOf(cur)) : 0; }
+      else {
+        shown = items.map((it, i) => ({ it, i, s: U.comboScore(it, q) })).filter((x) => x.s > 0).sort((a, b) => (b.s - a.s) || (a.i - b.i)).map((x) => x.it);
+        active = shown.findIndex((it) => !it.disabled);
+      }
+      paint();
+    }
+    function show() {
+      if (open) return;
+      open = true;
+      list.hidden = false;
+      input.setAttribute('aria-expanded', 'true');
+      wrap.classList.add('open');
+    }
+    function hide(revert) {
+      open = false;
+      list.hidden = true;
+      input.setAttribute('aria-expanded', 'false');
+      wrap.classList.remove('open');
+      if (revert) input.value = cur ? cur.label : '';
+    }
+    function choose(it, byKey) {
+      if (done) return;
+      done = true;
+      hide(false);
+      input.value = it.label;
+      if (!cur || it.value !== cur.value) onchange(it.value);
+      else done = false;
+      /* keyboard users keep their place: focus the new copy of this field without opening it */
+      const again = byKey ? document.getElementById(id) : null;
+      if (again && again !== document.activeElement) { again.dataset.quiet = '1'; again.focus(); }
+    }
+    input.addEventListener('focus', () => {
+      if (input.dataset.quiet) { delete input.dataset.quiet; return; }
+      try { input.select(); } catch (e) { /* ignore */ }
+      filter('');
+      show();
+    });
+    input.addEventListener('click', () => { if (!open) { filter(''); show(); } });
+    input.addEventListener('input', () => { filter(input.value); show(); });
+    input.addEventListener('blur', () => {
+      if (done) return;
+      const exact = typed && shown.find((it) => !it.disabled && fold(it.label) === fold(input.value));
+      if (exact) choose(exact, false);
+      else hide(true);
+    });
+    input.addEventListener('keydown', (e) => {
+      const k = e.key;
+      if (k === 'ArrowDown' || k === 'ArrowUp') {
+        e.preventDefault();
+        if (!open) { filter(''); show(); return; }
+        const step = k === 'ArrowDown' ? 1 : -1;
+        for (let n = 0, i = active; n < shown.length; n++) {
+          i = (i + step + shown.length) % shown.length;
+          if (!shown[i].disabled) { active = i; break; }
+        }
+        paint();
+      } else if (k === 'Enter') {
+        if (open && active >= 0 && shown[active] && !shown[active].disabled) { e.preventDefault(); choose(shown[active], true); }
+      } else if (k === 'Escape') {
+        if (open) { e.preventDefault(); e.stopPropagation(); hide(true); input.select(); }
+      } else if (k === 'Tab') {
+        if (open && typed && active >= 0 && shown[active] && !shown[active].disabled) choose(shown[active], false);
+      }
+    });
+    return wrap;
   };
 
   /* tower grid: big tap targets; hint(t) -> [{cls, text}] */
@@ -116,6 +253,44 @@
       ]));
     }
     return wrap;
+  };
+
+  /* strategy text from the map pages: **bold**, crosspath codes in mono, {calc}/{unverified} as badges */
+  U.richText = function (s) {
+    const out = [];
+    String(s || '').split(/(\*\*[^*]+\*\*|\{calc\}|\{unverified\}|\b[0-5x]-[0-5x]-[0-5x]\b)/).forEach((part) => {
+      if (!part) return;
+      if (/^\*\*[^*]+\*\*$/.test(part)) out.push(U.h('b', null, part.slice(2, -2)));
+      else if (part === '{calc}') out.push(' ', U.badge('calc', 'calculated'));
+      else if (part === '{unverified}') out.push(' ', U.badge('unverified'));
+      else if (/^[0-5x]-[0-5x]-[0-5x]$/.test(part)) out.push(U.h('span', { class: 'ti-x' }, part));
+      else out.push(part);
+    });
+    return out;
+  };
+  U.tips = (mapId) => (root.MonkeyIntelTips && root.MonkeyIntelTips[mapId]) || null;
+  /* the map page's plan that fits this mode: CHIMPS, Hard (and harder) or Easy/Medium */
+  U.planFor = function (tips, mode) {
+    if (!tips || !mode) return null;
+    if (mode.id === 'chimps' && tips.chimps.length) return { label: 'CHIMPS plan', steps: tips.chimps };
+    if (mode.base === 'hard') return tips.hard.length ? { label: 'Hard plan', steps: tips.hard } : (tips.chimps.length ? { label: 'CHIMPS plan', steps: tips.chimps } : null);
+    return tips.easy.length ? { label: 'Easy and Medium plan', steps: tips.easy } : null;
+  };
+  U.stepList = (list, max) => U.h('ul', { class: 'steps-list' }, list.slice(0, max || list.length).map((s) => U.h('li', null, U.richText(s))));
+  U.keyRounds = function (tips, a, b, max) {
+    const list = ((tips && tips.keyRounds) || []).filter((k) => k[0] >= a && k[0] <= b).slice(0, max || 99);
+    if (!list.length) return null;
+    return U.h('ul', { class: 'ti-keyrounds' }, list.map((k) => U.h('li', null, [U.rchip(k[0], 'ti-r-danger'), U.h('span', null, U.richText(k[1]))])));
+  };
+
+  /* read-only 3 x 5 pips, the way the game shows a crosspath */
+  U.pathPips = function (t, x) {
+    const C = MI.core;
+    return U.h('div', { class: 'ti-pathpips', role: 'img', 'aria-label': 'Crosspath ' + C.code(x) }, [0, 1, 2].map((p) => {
+      const pips = U.h('span', { class: 'ti-pips' });
+      for (let k = 1; k <= 5; k++) pips.appendChild(U.h('span', { class: 'ti-pip' + (x[p] >= k ? ' on' : '') + (k === 5 ? ' t5' : '') }));
+      return U.h('div', { class: 'ti-pathpip' }, [pips, U.h('span', { class: 'ti-path-name' }, x[p] > 0 ? C.upgradeName(t, p, x[p]) : '–')]);
+    }));
   };
 
   U.fixList = function (fixes, opts) {
