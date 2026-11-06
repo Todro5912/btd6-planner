@@ -1,0 +1,3899 @@
+{
+ "version": "57.4",
+ "researched": "2026-11-06",
+ "schema": "C1 (docs/CONTRACTS.md) plus documented extensions: {path,maxTier}, conditional, explicit ddt; see docs/POP-MODEL.md",
+ "damageTypes": {
+  "normal": [],
+  "acid": [
+   "glass"
+  ],
+  "sharp": [
+   "lead",
+   "frozen"
+  ],
+  "shatter": [
+   "lead"
+  ],
+  "explosion": [
+   "black"
+  ],
+  "glacier": [
+   "white"
+  ],
+  "cold": [
+   "lead",
+   "white"
+  ],
+  "fire": [
+   "purple"
+  ],
+  "frigid": [
+   "purple",
+   "white"
+  ],
+  "plasma": [
+   "purple",
+   "glass"
+  ],
+  "energy": [
+   "lead",
+   "purple",
+   "glass"
+  ]
+ },
+ "damageTypesNote": "Values = bloon properties the type can't damage, decoded from the game's immunity bitflags on bloonswiki. Fandom's older table differs: Glacier also blocked by Lead, Cold also by Frozen. 'Magic' is a tower class, not a BTD6 damage type (Wizards deal Energy). Glass is a Frontier Legends/boss property.",
+ "bloonImmunities": {
+  "lead": [
+   "sharp",
+   "shatter",
+   "cold",
+   "energy"
+  ],
+  "black": [
+   "explosion"
+  ],
+  "white": [
+   "cold",
+   "glacier",
+   "frigid"
+  ],
+  "zebra": [
+   "explosion",
+   "cold",
+   "glacier",
+   "frigid"
+  ],
+  "purple": [
+   "energy",
+   "fire",
+   "plasma",
+   "frigid"
+  ],
+  "frozen": [
+   "sharp"
+  ],
+  "ddt": [
+   "sharp",
+   "shatter",
+   "cold",
+   "energy",
+   "explosion"
+  ],
+  "camo": [],
+  "regrow": [],
+  "fortified": [],
+  "moab": [],
+  "bad": []
+ },
+ "bloonImmunitiesNote": "Camo is a targeting rule, not a damage immunity: only towers with detection can target or hurt it. Fortified only adds HP. Ice Monkeys also can't target bloons that are already frozen (Re-Freeze fixes that). BAD is immune to slows, stuns and knockback, not to damage.",
+ "towers": {
+  "dart": {
+   "camo": {
+    "any": [
+     [
+      {
+       "path": 2,
+       "tier": 2
+      }
+     ]
+    ],
+    "note": "Enhanced Eyesight"
+   },
+   "lead": {
+    "any": [
+     [
+      {
+       "path": 0,
+       "tier": 4
+      }
+     ],
+     [
+      {
+       "path": 2,
+       "tier": 5
+      }
+     ]
+    ],
+    "note": "Juggernaut (Normal ball); Crossbow Master",
+    "conditional": [
+     {
+      "req": [
+       {
+        "path": 1,
+        "tier": 5
+       }
+      ],
+      "note": "Plasma Monkey Fan Club ability only"
+     }
+    ]
+   },
+   "purple": {
+    "any": [
+     [
+      "base"
+     ]
+    ],
+    "note": "Sharp darts pop Purple"
+   },
+   "black": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "white": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "zebra": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "frozen": {
+    "any": [
+     [
+      {
+       "path": 0,
+       "tier": 4
+      }
+     ],
+     [
+      {
+       "path": 2,
+       "tier": 5
+      }
+     ]
+    ],
+    "note": "same upgrades as Lead (Sharp can't pop Frozen)"
+   },
+   "moab": {
+    "any": [
+     [
+      "base"
+     ]
+    ],
+    "note": "darts damage MOAB-class from 0-0-0; MOAB *bonus* is a separate question"
+   },
+   "ddt": {
+    "derived": true
+   },
+   "bad": {
+    "any": [
+     [
+      "base"
+     ]
+    ],
+    "note": "BAD takes damage like any MOAB-class; it is only immune to slows, stuns and knockback"
+   },
+   "fortified": {
+    "any": [
+     [
+      "base"
+     ]
+    ],
+    "note": "Fortified is extra HP, never an immunity: anything that can damage the underlying bloon can damage its fortified version."
+   },
+   "bonuses": [
+    {
+     "vs": "ceramic",
+     "from": {
+      "path": 0,
+      "tier": 4
+     },
+     "note": "Juggernaut bonus Ceramic damage"
+    }
+   ],
+   "confidence": "high",
+   "sources": [
+    "https://bloons.fandom.com/wiki/Lead-Popping_Power (BTD6 lead table)",
+    "https://bloons.fandom.com/wiki/Camo_Bloon/Strategies (BTD6 camo table)",
+    "https://www.bloonswiki.com/Juggernaut_(BTD6)"
+   ]
+  },
+  "boomerang": {
+   "camo": {
+    "any": [
+     [
+      {
+       "path": 0,
+       "tier": 5
+      }
+     ]
+    ],
+    "note": "Glaive Lord orbiting glaives only"
+   },
+   "lead": {
+    "any": [
+     [
+      {
+       "path": 2,
+       "tier": 2
+      }
+     ]
+    ],
+    "note": "Red Hot Rangs"
+   },
+   "purple": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "black": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "white": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "zebra": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "frozen": {
+    "any": [
+     [
+      {
+       "path": 2,
+       "tier": 2
+      }
+     ]
+    ],
+    "note": "Red Hot Rangs"
+   },
+   "moab": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "ddt": {
+    "derived": true
+   },
+   "bad": {
+    "any": [
+     [
+      "base"
+     ]
+    ],
+    "note": "BAD takes damage like any MOAB-class; it is only immune to slows, stuns and knockback"
+   },
+   "fortified": {
+    "any": [
+     [
+      "base"
+     ]
+    ],
+    "note": "Fortified is extra HP, never an immunity: anything that can damage the underlying bloon can damage its fortified version."
+   },
+   "bonuses": [
+    {
+     "vs": "moab",
+     "from": {
+      "path": 2,
+      "tier": 4
+     },
+     "note": "MOAB Press knocks MOAB-class back"
+    }
+   ],
+   "confidence": "medium",
+   "sources": [
+    "https://bloons.fandom.com/wiki/Lead-Popping_Power (BTD6 lead table)",
+    "https://bloons.fandom.com/wiki/Camo_Bloon/Strategies (BTD6 camo table)"
+   ]
+  },
+  "bomb": {
+   "camo": {
+    "any": [
+     [
+      "never"
+     ]
+    ],
+    "note": "No detection on any main attack; explosions from a tower without detection pass through camo",
+    "conditional": [
+     {
+      "req": [
+       {
+        "path": 2,
+        "tier": 5
+       }
+      ],
+      "note": "Bomb Blitz passive ability (when a life is lost)"
+     }
+    ]
+   },
+   "lead": {
+    "any": [
+     [
+      "base"
+     ]
+    ],
+    "note": "Explosion pops Lead"
+   },
+   "purple": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "black": {
+    "any": [
+     [
+      {
+       "path": 2,
+       "tier": 2
+      }
+     ]
+    ],
+    "note": "Frag Bombs: the sharp frags (only) pop Black"
+   },
+   "white": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "zebra": {
+    "any": [
+     [
+      {
+       "path": 2,
+       "tier": 2
+      }
+     ]
+    ],
+    "note": "Frag Bombs frags only"
+   },
+   "frozen": {
+    "any": [
+     [
+      "base"
+     ]
+    ],
+    "note": "Explosion pops Frozen"
+   },
+   "moab": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "ddt": {
+    "derived": true
+   },
+   "bad": {
+    "any": [
+     [
+      "base"
+     ]
+    ],
+    "note": "BAD takes damage like any MOAB-class; it is only immune to slows, stuns and knockback"
+   },
+   "fortified": {
+    "any": [
+     [
+      "base"
+     ]
+    ],
+    "note": "Fortified is extra HP, never an immunity: anything that can damage the underlying bloon can damage its fortified version."
+   },
+   "bonuses": [
+    {
+     "vs": "moab",
+     "from": {
+      "path": 1,
+      "tier": 3
+     },
+     "note": "MOAB Mauler"
+    },
+    {
+     "vs": "moab",
+     "from": {
+      "path": 1,
+      "tier": 4
+     },
+     "note": "MOAB Assassin ability"
+    },
+    {
+     "vs": "bloons",
+     "from": {
+      "path": 0,
+      "tier": 4
+     },
+     "note": "Bloon Impact stuns (not MOAB-class)"
+    },
+    {
+     "vs": "moab",
+     "from": {
+      "path": 0,
+      "tier": 5
+     },
+     "note": "Bloon Crush stuns MOAB-class"
+    }
+   ],
+   "confidence": "high",
+   "sources": [
+    "https://bloons.fandom.com/wiki/Lead-Popping_Power (BTD6 lead table)",
+    "https://bloons.fandom.com/wiki/Camo_Bloon/Strategies (BTD6 camo table)",
+    "https://www.bloonswiki.com/Sharp (BTD6 damage-type bitflag table)",
+    "https://www.bloonswiki.com/Camo_Bloon_(BTD6) (towers without detection phase through camo)"
+   ]
+  },
+  "tack": {
+   "camo": {
+    "any": [
+     [
+      {
+       "path": 0,
+       "tier": 5
+      }
+     ]
+    ],
+    "note": "Inferno Ring meteor only"
+   },
+   "lead": {
+    "any": [
+     [
+      {
+       "path": 0,
+       "tier": 3
+      }
+     ],
+     [
+      {
+       "path": 1,
+       "tier": 5
+      }
+     ]
+    ],
+    "note": "Hot Shots; Super Maelstrom main attack. Tack Zone (0-0-5) is Sharp since v25"
+   },
+   "purple": {
+    "any": [
+     [
+      {
+       "path": 0,
+       "maxTier": 3
+      }
+     ]
+    ],
+    "note": "Ring of Fire / Inferno Ring (4-x-x+) are Fire and lose Purple; Hot Shots still pops it"
+   },
+   "black": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "white": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "zebra": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "frozen": {
+    "any": [
+     [
+      {
+       "path": 0,
+       "tier": 3
+      }
+     ],
+     [
+      {
+       "path": 1,
+       "tier": 5
+      }
+     ]
+    ]
+   },
+   "moab": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "ddt": {
+    "derived": true
+   },
+   "bad": {
+    "any": [
+     [
+      "base"
+     ]
+    ],
+    "note": "BAD takes damage like any MOAB-class; it is only immune to slows, stuns and knockback"
+   },
+   "fortified": {
+    "any": [
+     [
+      "base"
+     ]
+    ],
+    "note": "Fortified is extra HP, never an immunity: anything that can damage the underlying bloon can damage its fortified version."
+   },
+   "bonuses": [],
+   "confidence": "medium",
+   "sources": [
+    "https://bloons.fandom.com/wiki/Lead-Popping_Power (BTD6 lead table)",
+    "https://bloons.fandom.com/wiki/Camo_Bloon/Strategies (BTD6 camo table)",
+    "https://bloons.fandom.com/wiki/Purple_Bloon (BTD6 immune list)",
+    "https://steamdb.info/patchnotes/6537293 (BTD6 v25.0 damage-type rework notes)"
+   ]
+  },
+  "ice": {
+   "camo": {
+    "any": [
+     [
+      {
+       "path": 0,
+       "tier": 2
+      }
+     ]
+    ],
+    "note": "Cold Snap",
+    "conditional": [
+     {
+      "req": [
+       {
+        "path": 1,
+        "tier": 4
+       }
+      ],
+      "note": "Snowstorm ability"
+     }
+    ]
+   },
+   "lead": {
+    "any": [
+     [
+      {
+       "path": 0,
+       "tier": 2
+      }
+     ]
+    ],
+    "note": "Cold Snap",
+    "conditional": [
+     {
+      "req": [
+       {
+        "path": 1,
+        "tier": 5
+       }
+      ],
+      "note": "Absolute Zero ability"
+     }
+    ]
+   },
+   "purple": {
+    "any": [
+     [
+      "base"
+     ]
+    ],
+    "note": "Cold pops Purple"
+   },
+   "black": {
+    "any": [
+     [
+      "base"
+     ]
+    ],
+    "note": "Cold pops Black"
+   },
+   "white": {
+    "any": [
+     [
+      {
+       "path": 2,
+       "tier": 5
+      }
+     ]
+    ],
+    "note": "Cold/Glacier can't pop White. Icicle Impale is the only own upgrade that pops it; Silas L5/L13 or MIB fix it"
+   },
+   "zebra": {
+    "any": [
+     [
+      {
+       "path": 2,
+       "tier": 5
+      }
+     ]
+    ],
+    "note": "same as White"
+   },
+   "frozen": {
+    "any": [
+     [
+      {
+       "path": 2,
+       "tier": 2
+      }
+     ]
+    ],
+    "note": "Re-Freeze: the only way an Ice Monkey can hit already-frozen bloons"
+   },
+   "moab": {
+    "any": [
+     [
+      {
+       "path": 0,
+       "tier": 4
+      }
+     ],
+     [
+      {
+       "path": 2,
+       "tier": 4
+      }
+     ]
+    ],
+    "note": "base freeze can't affect MOAB-class; Embrittlement or Icicles can. Snowstorm only freezes/slows them"
+   },
+   "ddt": {
+    "any": [
+     [
+      {
+       "path": 0,
+       "tier": 4
+      }
+     ]
+    ],
+    "note": "DDT is MOAB-class: Cold Snap (2-x-x) has camo+Lead but the base freeze can't affect blimps, so the derived rule would wrongly pass 2-0-0. Embrittlement (4-x-x) can hit MOAB-class; unverified vs DDT specifically",
+    "derived": false
+   },
+   "bad": {
+    "any": [
+     [
+      {
+       "path": 0,
+       "tier": 4
+      }
+     ],
+     [
+      {
+       "path": 2,
+       "tier": 4
+      }
+     ]
+    ],
+    "note": "BAD takes damage like any MOAB-class; it is only immune to slows, stuns and knockback"
+   },
+   "fortified": {
+    "any": [
+     [
+      "base"
+     ]
+    ],
+    "note": "Fortified is extra HP, never an immunity: anything that can damage the underlying bloon can damage its fortified version."
+   },
+   "bonuses": [
+    {
+     "vs": "moab",
+     "from": {
+      "path": 2,
+      "tier": 4
+     },
+     "note": "Icicles bonus MOAB damage"
+    },
+    {
+     "vs": "moab",
+     "from": {
+      "path": 0,
+      "tier": 4
+     },
+     "note": "Embrittlement brittle debuff"
+    }
+   ],
+   "confidence": "medium",
+   "sources": [
+    "https://bloons.fandom.com/wiki/Ice_Monkey_(BTD6)",
+    "https://bloons.fandom.com/wiki/Lead-Popping_Power (BTD6 lead table)",
+    "https://bloons.fandom.com/wiki/Camo_Bloon/Strategies (BTD6 camo table)",
+    "https://www.bloonswiki.com/Sharp (BTD6 damage-type bitflag table)"
+   ]
+  },
+  "glue": {
+   "camo": {
+    "any": [
+     [
+      "never"
+     ]
+    ],
+    "note": "Glue can't target camo",
+    "conditional": [
+     {
+      "req": [
+       {
+        "path": 0,
+        "tier": 2
+       },
+       {
+        "path": 1,
+        "tier": 4
+       }
+      ],
+      "note": "Glue Strike ability with Corrosive Glue (2-4-0)"
+     }
+    ]
+   },
+   "lead": {
+    "any": [
+     [
+      {
+       "path": 0,
+       "tier": 2
+      }
+     ]
+    ],
+    "note": "Base glue deals no damage; Corrosive Glue (2-x-x) is the first damaging upgrade"
+   },
+   "purple": {
+    "any": [
+     [
+      {
+       "path": 0,
+       "tier": 2
+      }
+     ]
+    ],
+    "note": "Base glue deals no damage; Corrosive Glue (2-x-x) is the first damaging upgrade"
+   },
+   "black": {
+    "any": [
+     [
+      {
+       "path": 0,
+       "tier": 2
+      }
+     ]
+    ],
+    "note": "Base glue deals no damage; Corrosive Glue (2-x-x) is the first damaging upgrade"
+   },
+   "white": {
+    "any": [
+     [
+      {
+       "path": 0,
+       "tier": 2
+      }
+     ]
+    ],
+    "note": "Base glue deals no damage; Corrosive Glue (2-x-x) is the first damaging upgrade"
+   },
+   "zebra": {
+    "any": [
+     [
+      {
+       "path": 0,
+       "tier": 2
+      }
+     ]
+    ],
+    "note": "Base glue deals no damage; Corrosive Glue (2-x-x) is the first damaging upgrade"
+   },
+   "frozen": {
+    "any": [
+     [
+      {
+       "path": 0,
+       "tier": 2
+      }
+     ]
+    ],
+    "note": "Base glue deals no damage; Corrosive Glue (2-x-x) is the first damaging upgrade"
+   },
+   "moab": {
+    "any": [
+     [
+      {
+       "path": 0,
+       "tier": 2
+      }
+     ]
+    ],
+    "note": "Corrosive Glue lets it target MOAB-class; MOAB Glue (0-0-3) only slows them"
+   },
+   "ddt": {
+    "derived": true
+   },
+   "bad": {
+    "any": [
+     [
+      {
+       "path": 0,
+       "tier": 2
+      }
+     ]
+    ]
+   },
+   "fortified": {
+    "any": [
+     [
+      {
+       "path": 0,
+       "tier": 2
+      }
+     ]
+    ],
+    "note": "Fortified is extra HP, never an immunity: anything that can damage the underlying bloon can damage its fortified version. Glue needs Corrosive Glue to damage anything."
+   },
+   "bonuses": [
+    {
+     "vs": "moab",
+     "from": {
+      "path": 2,
+      "tier": 3
+     },
+     "note": "MOAB Glue slows MOAB-class"
+    },
+    {
+     "vs": "moab",
+     "from": {
+      "path": 2,
+      "tier": 5
+     },
+     "note": "Super Glue immobilises MOAB-class"
+    }
+   ],
+   "confidence": "high",
+   "sources": [
+    "https://bloons.fandom.com/wiki/Glue_Gunner_(BTD6)",
+    "https://bloons.fandom.com/wiki/Camo_Bloon/Strategies (BTD6 camo table)",
+    "https://bloons.fandom.com/wiki/Lead-Popping_Power (BTD6 lead table)"
+   ]
+  },
+  "desperado": {
+   "camo": {
+    "any": [
+     [
+      {
+       "path": 1,
+       "tier": 1
+      }
+     ]
+    ],
+    "note": "Eagle Eye"
+   },
+   "lead": {
+    "any": [
+     [
+      {
+       "path": 1,
+       "tier": 3
+      }
+     ]
+    ],
+    "note": "Deadeye rifle. towers.json's old Big Iron lead tag is not confirmed by the wiki and is not counted"
+   },
+   "purple": {
+    "any": [
+     [
+      "base"
+     ]
+    ],
+    "note": "Sharp"
+   },
+   "black": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "white": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "zebra": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "frozen": {
+    "any": [
+     [
+      {
+       "path": 1,
+       "tier": 3
+      }
+     ]
+    ],
+    "note": "assumed same as Lead (rifle); unverified"
+   },
+   "moab": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "ddt": {
+    "derived": true
+   },
+   "bad": {
+    "any": [
+     [
+      "base"
+     ]
+    ],
+    "note": "BAD takes damage like any MOAB-class; it is only immune to slows, stuns and knockback"
+   },
+   "fortified": {
+    "any": [
+     [
+      "base"
+     ]
+    ],
+    "note": "Fortified is extra HP, never an immunity: anything that can damage the underlying bloon can damage its fortified version."
+   },
+   "bonuses": [
+    {
+     "vs": "fortified",
+     "from": {
+      "path": 1,
+      "tier": 3
+     },
+     "note": "Deadeye rifle excels vs Fortified"
+    }
+   ],
+   "confidence": "medium",
+   "sources": [
+    "https://www.bloonswiki.com/Desperado_(BTD6)"
+   ]
+  },
+  "sniper": {
+   "camo": {
+    "any": [
+     [
+      {
+       "path": 1,
+       "tier": 1
+      }
+     ]
+    ],
+    "note": "Night Vision Goggles"
+   },
+   "lead": {
+    "any": [
+     [
+      {
+       "path": 0,
+       "tier": 1
+      }
+     ]
+    ],
+    "note": "Full Metal Jacket"
+   },
+   "purple": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "black": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "white": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "zebra": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "frozen": {
+    "any": [
+     [
+      {
+       "path": 0,
+       "tier": 1
+      }
+     ]
+    ],
+    "note": "Full Metal Jacket"
+   },
+   "moab": {
+    "any": [
+     [
+      "base"
+     ]
+    ],
+    "note": "can damage MOAB-class from base"
+   },
+   "ddt": {
+    "derived": true
+   },
+   "bad": {
+    "any": [
+     [
+      "base"
+     ]
+    ],
+    "note": "BAD takes damage like any MOAB-class; it is only immune to slows, stuns and knockback"
+   },
+   "fortified": {
+    "any": [
+     [
+      "base"
+     ]
+    ],
+    "note": "Fortified is extra HP, never an immunity: anything that can damage the underlying bloon can damage its fortified version."
+   },
+   "bonuses": [
+    {
+     "vs": "ceramic",
+     "from": {
+      "path": 0,
+      "tier": 3
+     },
+     "note": "Deadly Precision bonus Ceramic damage"
+    },
+    {
+     "vs": "moab",
+     "from": {
+      "path": 0,
+      "tier": 4
+     },
+     "note": "Maim MOAB stun"
+    },
+    {
+     "vs": "moab",
+     "from": {
+      "path": 0,
+      "tier": 5
+     },
+     "note": "Cripple MOAB stun + damage taken"
+    }
+   ],
+   "confidence": "high",
+   "sources": [
+    "https://bloons.fandom.com/wiki/Lead-Popping_Power (BTD6 lead table)",
+    "https://bloons.fandom.com/wiki/Camo_Bloon/Strategies (BTD6 camo table)",
+    "https://steamcommunity.com/app/960090/discussions/0/2970650017894287895"
+   ]
+  },
+  "sub": {
+   "camo": {
+    "any": [
+     [
+      {
+       "path": 0,
+       "tier": 4
+      }
+     ]
+    ],
+    "note": "Bloontonium Reactor: submerged reactor detects and pops camo. Base Sub has NO camo detection",
+    "conditional": [
+     {
+      "req": [
+       {
+        "path": 0,
+        "tier": 2
+       }
+      ],
+      "note": "Advanced Intel: can hit camo only inside the range of another tower that has camo detection"
+     },
+     {
+      "req": [
+       {
+        "path": 0,
+        "tier": 3
+       }
+      ],
+      "note": "Submerge and Support decamos bloons in its radius but the Sub does not attack while submerged"
+     },
+     {
+      "req": [
+       {
+        "path": 1,
+        "tier": 4
+       }
+      ],
+      "note": "First Strike Capability ability"
+     }
+    ]
+   },
+   "lead": {
+    "any": [
+     [
+      {
+       "path": 1,
+       "tier": 2
+      }
+     ]
+    ],
+    "note": "Heat-tipped Darts"
+   },
+   "purple": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "black": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "white": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "zebra": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "frozen": {
+    "any": [
+     [
+      {
+       "path": 1,
+       "tier": 2
+      }
+     ],
+     [
+      {
+       "path": 0,
+       "tier": 4
+      }
+     ]
+    ],
+    "note": "Heat-tipped Darts; Reactor radiation is Shatter (pops Frozen, not Lead) unless crossed with Heat-tipped"
+   },
+   "moab": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "ddt": {
+    "derived": true
+   },
+   "bad": {
+    "any": [
+     [
+      "base"
+     ]
+    ],
+    "note": "BAD takes damage like any MOAB-class; it is only immune to slows, stuns and knockback"
+   },
+   "fortified": {
+    "any": [
+     [
+      "base"
+     ]
+    ],
+    "note": "Fortified is extra HP, never an immunity: anything that can damage the underlying bloon can damage its fortified version."
+   },
+   "bonuses": [
+    {
+     "vs": "moab",
+     "from": {
+      "path": 1,
+      "tier": 3
+     },
+     "note": "Ballistic Missile bonus MOAB/Ceramic damage"
+    },
+    {
+     "vs": "moab",
+     "from": {
+      "path": 2,
+      "tier": 4
+     },
+     "note": "Armor Piercing Darts bonus MOAB/Fortified damage"
+    },
+    {
+     "vs": "moab",
+     "from": {
+      "path": 1,
+      "tier": 4
+     },
+     "note": "First Strike Capability ability"
+    }
+   ],
+   "confidence": "medium",
+   "sources": [
+    "https://bloons.fandom.com/wiki/Monkey_Sub_(BTD6)",
+    "https://bloons.fandom.com/wiki/Advanced_Intel_(BTD6)",
+    "https://www.bloonswiki.com/Monkey_Sub_(BTD6)",
+    "https://bloons.fandom.com/wiki/Camo_Bloon/Strategies (BTD6 camo table)",
+    "https://bloons.fandom.com/wiki/Lead-Popping_Power (BTD6 lead table)"
+   ]
+  },
+  "buccaneer": {
+   "camo": {
+    "any": [
+     [
+      {
+       "path": 2,
+       "tier": 2
+      }
+     ]
+    ],
+    "note": "Crow's Nest"
+   },
+   "lead": {
+    "any": [
+     [
+      {
+       "path": 1,
+       "tier": 2
+      }
+     ]
+    ],
+    "note": "Hot Shot (fire grapes)",
+    "conditional": [
+     {
+      "req": [
+       {
+        "path": 0,
+        "tier": 5
+       }
+      ],
+      "note": "Carrier Flagship: listed for DDTs only"
+     }
+    ]
+   },
+   "purple": {
+    "any": [
+     [
+      "base"
+     ]
+    ],
+    "note": "darts pop Purple even though Hot Shot grapes can't"
+   },
+   "black": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "white": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "zebra": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "frozen": {
+    "any": [
+     [
+      {
+       "path": 1,
+       "tier": 2
+      }
+     ]
+    ]
+   },
+   "moab": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "ddt": {
+    "derived": true
+   },
+   "bad": {
+    "any": [
+     [
+      "base"
+     ]
+    ],
+    "note": "BAD takes damage like any MOAB-class; it is only immune to slows, stuns and knockback"
+   },
+   "fortified": {
+    "any": [
+     [
+      "base"
+     ]
+    ],
+    "note": "Fortified is extra HP, never an immunity: anything that can damage the underlying bloon can damage its fortified version."
+   },
+   "bonuses": [
+    {
+     "vs": "moab",
+     "from": {
+      "path": 1,
+      "tier": 4
+     },
+     "note": "Monkey Pirates hook pulls a MOAB/BFB/DDT"
+    },
+    {
+     "vs": "moab",
+     "from": {
+      "path": 1,
+      "tier": 5
+     },
+     "note": "Pirate Lord hooks"
+    }
+   ],
+   "confidence": "high",
+   "sources": [
+    "https://bloons.fandom.com/wiki/Lead-Popping_Power (BTD6 lead table)",
+    "https://bloons.fandom.com/wiki/Camo_Bloon/Strategies (BTD6 camo table)",
+    "https://bloons.fandom.com/wiki/Purple_Bloon (BTD6 immune list)"
+   ]
+  },
+  "ace": {
+   "camo": {
+    "any": [
+     [
+      {
+       "path": 1,
+       "tier": 2
+      }
+     ]
+    ],
+    "note": "Spy Plane"
+   },
+   "lead": {
+    "any": [
+     [
+      {
+       "path": 1,
+       "tier": 1
+      }
+     ],
+     [
+      {
+       "path": 2,
+       "tier": 4
+      }
+     ],
+     [
+      {
+       "path": 0,
+       "tier": 5
+      }
+     ]
+    ],
+    "note": "Exploding Pineapple (unreliable, explosive), Spectre, Sky Shredder"
+   },
+   "purple": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "black": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "white": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "zebra": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "frozen": {
+    "any": [
+     [
+      {
+       "path": 1,
+       "tier": 1
+      }
+     ],
+     [
+      {
+       "path": 2,
+       "tier": 4
+      }
+     ],
+     [
+      {
+       "path": 0,
+       "tier": 5
+      }
+     ]
+    ]
+   },
+   "moab": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "ddt": {
+    "any": [
+     [
+      {
+       "path": 0,
+       "tier": 5
+      },
+      {
+       "path": 1,
+       "tier": 2
+      }
+     ]
+    ],
+    "note": "derived rule would wrongly pass 0-2-x: pineapples (explosive) can't hurt Black and darts can't hurt Lead. Sky Shredder + Spy Plane does. Spectre unverified",
+    "derived": false
+   },
+   "bad": {
+    "any": [
+     [
+      "base"
+     ]
+    ],
+    "note": "BAD takes damage like any MOAB-class; it is only immune to slows, stuns and knockback"
+   },
+   "fortified": {
+    "any": [
+     [
+      "base"
+     ]
+    ],
+    "note": "Fortified is extra HP, never an immunity: anything that can damage the underlying bloon can damage its fortified version."
+   },
+   "bonuses": [
+    {
+     "vs": "moab",
+     "from": {
+      "path": 0,
+      "tier": 3
+     },
+     "note": "Fighter Plane MOAB missiles"
+    },
+    {
+     "vs": "moab",
+     "from": {
+      "path": 1,
+      "tier": 4
+     },
+     "note": "Ground Zero ability"
+    },
+    {
+     "vs": "moab",
+     "from": {
+      "path": 1,
+      "tier": 5
+     },
+     "note": "Tsar Bomba stun"
+    }
+   ],
+   "confidence": "medium",
+   "sources": [
+    "https://bloons.fandom.com/wiki/Lead-Popping_Power (BTD6 lead table)",
+    "https://bloons.fandom.com/wiki/Camo_Bloon/Strategies (BTD6 camo table)",
+    "https://steamcommunity.com/app/960090/discussions/0/2970650017894287895"
+   ]
+  },
+  "heli": {
+   "camo": {
+    "any": [
+     [
+      {
+       "path": 1,
+       "tier": 2
+      }
+     ]
+    ],
+    "note": "IFR"
+   },
+   "lead": {
+    "any": [
+     [
+      {
+       "path": 0,
+       "tier": 3
+      }
+     ],
+     [
+      {
+       "path": 2,
+       "tier": 3
+      }
+     ],
+     [
+      {
+       "path": 1,
+       "tier": 5
+      }
+     ]
+    ],
+    "note": "Razor Rotors; MOAB Shove missiles; Special Poperations marine"
+   },
+   "purple": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "black": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "white": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "zebra": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "frozen": {
+    "any": [
+     [
+      {
+       "path": 0,
+       "tier": 3
+      }
+     ],
+     [
+      {
+       "path": 2,
+       "tier": 3
+      }
+     ],
+     [
+      {
+       "path": 1,
+       "tier": 5
+      }
+     ]
+    ]
+   },
+   "moab": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "ddt": {
+    "any": [
+     [
+      {
+       "path": 0,
+       "tier": 3
+      },
+      {
+       "path": 1,
+       "tier": 2
+      }
+     ],
+     [
+      {
+       "path": 1,
+       "tier": 5
+      }
+     ]
+    ],
+    "note": "derived rule would wrongly pass 0-2-3: MOAB Shove missiles are explosive. 3-2-0 Razor Rotors + IFR works",
+    "derived": false
+   },
+   "bad": {
+    "any": [
+     [
+      "base"
+     ]
+    ],
+    "note": "BAD takes damage like any MOAB-class; it is only immune to slows, stuns and knockback"
+   },
+   "fortified": {
+    "any": [
+     [
+      "base"
+     ]
+    ],
+    "note": "Fortified is extra HP, never an immunity: anything that can damage the underlying bloon can damage its fortified version."
+   },
+   "bonuses": [
+    {
+     "vs": "moab",
+     "from": {
+      "path": 2,
+      "tier": 3
+     },
+     "note": "MOAB Shove pushes MOAB-class back"
+    }
+   ],
+   "confidence": "medium",
+   "sources": [
+    "https://bloons.fandom.com/wiki/Heli_Pilot_(BTD6)",
+    "https://bloons.fandom.com/wiki/Lead-Popping_Power (BTD6 lead table)",
+    "https://bloons.fandom.com/wiki/Camo_Bloon/Strategies (BTD6 camo table)"
+   ]
+  },
+  "mortar": {
+   "camo": {
+    "any": [
+     [
+      {
+       "path": 2,
+       "tier": 3
+      }
+     ]
+    ],
+    "note": "Signal Flare gives the Mortar camo detection and its flares decamo. Increased Accuracy (0-0-1) only tightens aim. Base shells do NOT hit camo",
+    "conditional": [
+     {
+      "req": [
+       {
+        "path": 1,
+        "tier": 5
+       }
+      ],
+      "note": "Pop and Awe ability"
+     }
+    ]
+   },
+   "lead": {
+    "any": [
+     [
+      "base"
+     ]
+    ],
+    "note": "Explosion pops Lead"
+   },
+   "purple": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "black": {
+    "any": [
+     [
+      {
+       "path": 1,
+       "tier": 3
+      }
+     ],
+     [
+      {
+       "path": 2,
+       "tier": 5
+      }
+     ]
+    ],
+    "note": "Heavy Shells; Blooncineration fire walls"
+   },
+   "white": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "zebra": {
+    "any": [
+     [
+      {
+       "path": 1,
+       "tier": 3
+      }
+     ],
+     [
+      {
+       "path": 2,
+       "tier": 5
+      }
+     ]
+    ]
+   },
+   "frozen": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "moab": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "ddt": {
+    "derived": true
+   },
+   "bad": {
+    "any": [
+     [
+      "base"
+     ]
+    ],
+    "note": "BAD takes damage like any MOAB-class; it is only immune to slows, stuns and knockback"
+   },
+   "fortified": {
+    "any": [
+     [
+      "base"
+     ]
+    ],
+    "note": "Fortified is extra HP, never an immunity: anything that can damage the underlying bloon can damage its fortified version."
+   },
+   "bonuses": [
+    {
+     "vs": "moab",
+     "from": {
+      "path": 1,
+      "tier": 3
+     },
+     "note": "Heavy Shells bonus Ceramic/Lead/Fortified/MOAB damage"
+    },
+    {
+     "vs": "bloons",
+     "from": {
+      "path": 0,
+      "tier": 3
+     },
+     "note": "Shell Shock stun"
+    },
+    {
+     "vs": "fortified",
+     "from": {
+      "path": 2,
+      "tier": 4
+     },
+     "note": "Shattering Shells strips Fortified"
+    }
+   ],
+   "confidence": "medium",
+   "sources": [
+    "https://bloons.fandom.com/wiki/Mortar_Monkey_(BTD6)",
+    "https://www.bloonswiki.com/Signal_Flare_(BTD6)",
+    "https://bloons.fandom.com/wiki/Camo_Bloon/Strategies (BTD6 camo table)",
+    "https://bloons.fandom.com/wiki/Lead-Popping_Power (BTD6 lead table)"
+   ]
+  },
+  "dartling": {
+   "camo": {
+    "any": [
+     [
+      {
+       "path": 1,
+       "tier": 1
+      }
+     ]
+    ],
+    "note": "Advanced Targeting (no camo by default)"
+   },
+   "lead": {
+    "any": [
+     [
+      {
+       "path": 1,
+       "tier": 3
+      }
+     ],
+     [
+      {
+       "path": 0,
+       "tier": 4
+      }
+     ]
+    ],
+    "note": "Hydra Rocket Pods (damage all types); Plasma Accelerator"
+   },
+   "purple": {
+    "any": [
+     [
+      {
+       "path": 0,
+       "maxTier": 2
+      }
+     ],
+     [
+      {
+       "path": 0,
+       "tier": 5
+      }
+     ]
+    ],
+    "note": "Laser Cannon (Energy) and Plasma Accelerator (Plasma) lose Purple; Ray of Doom regains it"
+   },
+   "black": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "white": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "zebra": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "frozen": {
+    "any": [
+     [
+      {
+       "path": 0,
+       "tier": 3
+      }
+     ],
+     [
+      {
+       "path": 1,
+       "tier": 3
+      }
+     ],
+     [
+      {
+       "path": 2,
+       "tier": 2
+      }
+     ]
+    ],
+    "note": "Laser Cannon; Hydra; Powerful Darts (Shatter)"
+   },
+   "moab": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "ddt": {
+    "derived": true
+   },
+   "bad": {
+    "any": [
+     [
+      "base"
+     ]
+    ],
+    "note": "BAD takes damage like any MOAB-class; it is only immune to slows, stuns and knockback"
+   },
+   "fortified": {
+    "any": [
+     [
+      "base"
+     ]
+    ],
+    "note": "Fortified is extra HP, never an immunity: anything that can damage the underlying bloon can damage its fortified version."
+   },
+   "bonuses": [
+    {
+     "vs": "moab",
+     "from": {
+      "path": 1,
+      "tier": 5
+     },
+     "note": "M.A.D"
+    }
+   ],
+   "confidence": "medium",
+   "sources": [
+    "https://bloons.fandom.com/wiki/Dartling_Gunner_(BTD6)",
+    "https://bloons.fandom.com/wiki/Lead-Popping_Power (BTD6 lead table)",
+    "https://bloons.fandom.com/wiki/Purple_Bloon (BTD6 immune list)",
+    "https://bloons.fandom.com/wiki/Purple-Popping_Power",
+    "https://bloons.fandom.com/wiki/Energy"
+   ]
+  },
+  "wizard": {
+   "camo": {
+    "any": [
+     [
+      {
+       "path": 2,
+       "tier": 2
+      }
+     ],
+     [
+      {
+       "path": 0,
+       "tier": 5
+      }
+     ]
+    ],
+    "note": "Monkey Sense; Archmage"
+   },
+   "lead": {
+    "any": [
+     [
+      {
+       "path": 1,
+       "tier": 1
+      }
+     ],
+     [
+      {
+       "path": 0,
+       "tier": 4
+      }
+     ]
+    ],
+    "note": "Base bolts are Energy (no Lead, no Purple). Fireball; Arcane Spike",
+    "conditional": [
+     {
+      "req": [
+       {
+        "path": 2,
+        "tier": 4
+       }
+      ],
+      "note": "Necromancer undead bloons pop Lead/Purple, only while the graveyard has bloons"
+     }
+    ]
+   },
+   "purple": {
+    "any": [
+     [
+      {
+       "path": 2,
+       "tier": 4
+      }
+     ]
+    ],
+    "note": "Only via Necromancer undead bloons (needs bloons popped nearby). All other Wizard attacks are Energy/Fire/Plasma",
+    "conditional": [
+     {
+      "req": [
+       {
+        "path": 1,
+        "tier": 5
+       }
+      ],
+      "note": "Wizard Lord Phoenix transformation ability"
+     }
+    ]
+   },
+   "black": {
+    "any": [
+     [
+      "base"
+     ]
+    ],
+    "note": "Energy pops Black"
+   },
+   "white": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "zebra": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "frozen": {
+    "any": [
+     [
+      "base"
+     ]
+    ],
+    "note": "0-0-0 Wizard is the cheapest default Frozen popper"
+   },
+   "moab": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "ddt": {
+    "derived": true
+   },
+   "bad": {
+    "any": [
+     [
+      "base"
+     ]
+    ],
+    "note": "BAD takes damage like any MOAB-class; it is only immune to slows, stuns and knockback"
+   },
+   "fortified": {
+    "any": [
+     [
+      "base"
+     ]
+    ],
+    "note": "Fortified is extra HP, never an immunity: anything that can damage the underlying bloon can damage its fortified version."
+   },
+   "bonuses": [],
+   "confidence": "high",
+   "sources": [
+    "https://bloons.fandom.com/wiki/Energy",
+    "https://bloons.fandom.com/wiki/Frozen_Bloon",
+    "https://bloons.fandom.com/wiki/Lead-Popping_Power (BTD6 lead table)",
+    "https://bloons.fandom.com/wiki/Camo_Bloon/Strategies (BTD6 camo table)",
+    "https://bloons.fandom.com/wiki/Purple_Bloon (BTD6 immune list)",
+    "https://bloons.fandom.com/wiki/Necromancer:_Unpopped_Army"
+   ]
+  },
+  "super": {
+   "camo": {
+    "any": [
+     [
+      {
+       "path": 2,
+       "tier": 2
+      }
+     ]
+    ],
+    "note": "Ultravision",
+    "conditional": [
+     {
+      "req": [
+       {
+        "path": 1,
+        "tier": 4
+       }
+      ],
+      "note": "Tech Terror ability"
+     }
+    ]
+   },
+   "lead": {
+    "any": [
+     [
+      {
+       "path": 0,
+       "tier": 2
+      }
+     ],
+     [
+      {
+       "path": 2,
+       "tier": 4
+      }
+     ]
+    ],
+    "note": "Plasma Blasts; Dark Champion",
+    "conditional": [
+     {
+      "req": [
+       {
+        "path": 1,
+        "tier": 4
+       }
+      ],
+      "note": "Tech Terror ability"
+     }
+    ]
+   },
+   "purple": {
+    "any": [
+     [
+      {
+       "path": 0,
+       "maxTier": 0
+      },
+      {
+       "path": 1,
+       "maxTier": 3
+      }
+     ],
+     [
+      {
+       "path": 0,
+       "tier": 4
+      }
+     ],
+     [
+      {
+       "path": 1,
+       "tier": 5
+      }
+     ],
+     [
+      {
+       "path": 2,
+       "tier": 4
+      }
+     ]
+    ],
+    "note": "0-0-0 darts are Sharp and pop Purple. Laser/Plasma/Sun Avatar (1-3 top) and Tech Terror's main attack can't; Sun Temple, Anti-Bloon and Dark Champion can"
+   },
+   "black": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "white": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "zebra": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "frozen": {
+    "any": [
+     [
+      {
+       "path": 0,
+       "tier": 1
+      }
+     ],
+     [
+      {
+       "path": 2,
+       "tier": 4
+      }
+     ]
+    ],
+    "note": "Laser Blasts (Energy); Dark Champion"
+   },
+   "moab": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "ddt": {
+    "derived": true
+   },
+   "bad": {
+    "any": [
+     [
+      "base"
+     ]
+    ],
+    "note": "BAD takes damage like any MOAB-class; it is only immune to slows, stuns and knockback"
+   },
+   "fortified": {
+    "any": [
+     [
+      "base"
+     ]
+    ],
+    "note": "Fortified is extra HP, never an immunity: anything that can damage the underlying bloon can damage its fortified version."
+   },
+   "bonuses": [
+    {
+     "vs": "moab",
+     "from": {
+      "path": 2,
+      "tier": 3
+     },
+     "note": "Dark Knight bonus MOAB damage"
+    }
+   ],
+   "confidence": "medium",
+   "sources": [
+    "https://bloons.fandom.com/wiki/Purple_Bloon (BTD6 immune list)",
+    "https://bloons.fandom.com/wiki/Purple-Popping_Power",
+    "https://bloons.fandom.com/wiki/Energy",
+    "https://bloons.fandom.com/wiki/Lead-Popping_Power (BTD6 lead table)",
+    "https://bloons.fandom.com/wiki/Camo_Bloon/Strategies (BTD6 camo table)"
+   ]
+  },
+  "ninja": {
+   "camo": {
+    "any": [
+     [
+      "base"
+     ]
+    ],
+    "note": "built-in camo detection"
+   },
+   "lead": {
+    "any": [
+     [
+      {
+       "path": 2,
+       "tier": 3
+      }
+     ]
+    ],
+    "note": "Flash Bomb (every 4th throw, explosive stun)"
+   },
+   "purple": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "black": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "white": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "zebra": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "frozen": {
+    "any": [
+     [
+      {
+       "path": 2,
+       "tier": 3
+      }
+     ]
+    ]
+   },
+   "moab": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "ddt": {
+    "any": [
+     [
+      "never"
+     ]
+    ],
+    "note": "derived rule would wrongly pass 0-0-3: Flash Bomb is explosive (no Black) and shurikens are Sharp (no Lead). Pair with Alchemist 2-x-x or MIB",
+    "conditional": [
+     {
+      "req": [
+       {
+        "path": 2,
+        "tier": 4
+       }
+      ],
+      "note": "Sticky Bomb charges vs DDT unverified"
+     }
+    ],
+    "derived": false
+   },
+   "bad": {
+    "any": [
+     [
+      "base"
+     ]
+    ],
+    "note": "BAD takes damage like any MOAB-class; it is only immune to slows, stuns and knockback"
+   },
+   "fortified": {
+    "any": [
+     [
+      "base"
+     ]
+    ],
+    "note": "Fortified is extra HP, never an immunity: anything that can damage the underlying bloon can damage its fortified version."
+   },
+   "bonuses": [
+    {
+     "vs": "bloons",
+     "from": {
+      "path": 2,
+      "tier": 3
+     },
+     "note": "Flash Bomb stun"
+    },
+    {
+     "vs": "moab",
+     "from": {
+      "path": 2,
+      "tier": 4
+     },
+     "note": "Sticky Bomb"
+    },
+    {
+     "vs": "moab",
+     "from": {
+      "path": 1,
+      "tier": 4
+     },
+     "note": "Bloon Sabotage halves bloon speed"
+    },
+    {
+     "vs": "moab",
+     "from": {
+      "path": 1,
+      "tier": 5
+     },
+     "note": "Grand Saboteur weakens MOAB-class"
+    }
+   ],
+   "confidence": "medium",
+   "sources": [
+    "https://bloons.fandom.com/wiki/Lead-Popping_Power (BTD6 lead table)",
+    "https://bloons.fandom.com/wiki/Camo_Bloon/Strategies (BTD6 camo table)",
+    "https://steamdb.info/patchnotes/6537293 (BTD6 v25.0 damage-type rework notes)"
+   ]
+  },
+  "alchemist": {
+   "camo": {
+    "any": [
+     [
+      "never"
+     ]
+    ],
+    "note": "Alchemist can never target camo (needs Radar Scanner/Etienne etc.)"
+   },
+   "lead": {
+    "any": [
+     [
+      "base"
+     ]
+    ],
+    "note": "Acid pops every bloon type"
+   },
+   "purple": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "black": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "white": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "zebra": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "frozen": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "moab": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "ddt": {
+    "derived": true
+   },
+   "bad": {
+    "any": [
+     [
+      "base"
+     ]
+    ],
+    "note": "BAD takes damage like any MOAB-class; it is only immune to slows, stuns and knockback"
+   },
+   "fortified": {
+    "any": [
+     [
+      "base"
+     ]
+    ],
+    "note": "Fortified is extra HP, never an immunity: anything that can damage the underlying bloon can damage its fortified version."
+   },
+   "bonuses": [
+    {
+     "vs": "moab",
+     "from": {
+      "path": 1,
+      "tier": 2
+     },
+     "note": "Perishing Potions bonus MOAB damage"
+    },
+    {
+     "vs": "moab",
+     "from": {
+      "path": 1,
+      "tier": 3
+     },
+     "note": "Unstable Concoction"
+    }
+   ],
+   "confidence": "high",
+   "sources": [
+    "https://www.bloonswiki.com/Sharp (BTD6 damage-type bitflag table)",
+    "https://bloons.fandom.com/wiki/Damage_Types",
+    "https://bloons.fandom.com/wiki/Camo_Bloon/Strategies (BTD6 camo table)",
+    "https://bloons.fandom.com/wiki/Lead-Popping_Power (BTD6 lead table)"
+   ]
+  },
+  "druid": {
+   "camo": {
+    "any": [
+     [
+      {
+       "path": 0,
+       "tier": 5
+      }
+     ],
+     [
+      {
+       "path": 1,
+       "tier": 5
+      }
+     ]
+    ],
+    "note": "Superstorm; Spirit of the Forest vines. towers.json's old Ball Lightning (4-x-x) camo tag is not in the wiki table"
+   },
+   "lead": {
+    "any": [
+     [
+      {
+       "path": 0,
+       "tier": 1
+      }
+     ]
+    ],
+    "note": "Hard Thorns"
+   },
+   "purple": {
+    "any": [
+     [
+      "base"
+     ]
+    ],
+    "note": "thorns pop Purple; Heart of Thunder lightning can't"
+   },
+   "black": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "white": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "zebra": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "frozen": {
+    "any": [
+     [
+      {
+       "path": 0,
+       "tier": 1
+      }
+     ]
+    ]
+   },
+   "moab": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "ddt": {
+    "derived": true
+   },
+   "bad": {
+    "any": [
+     [
+      "base"
+     ]
+    ],
+    "note": "BAD takes damage like any MOAB-class; it is only immune to slows, stuns and knockback"
+   },
+   "fortified": {
+    "any": [
+     [
+      "base"
+     ]
+    ],
+    "note": "Fortified is extra HP, never an immunity: anything that can damage the underlying bloon can damage its fortified version."
+   },
+   "bonuses": [],
+   "confidence": "medium",
+   "sources": [
+    "https://bloons.fandom.com/wiki/Lead-Popping_Power (BTD6 lead table)",
+    "https://bloons.fandom.com/wiki/Camo_Bloon/Strategies (BTD6 camo table)",
+    "https://bloons.fandom.com/wiki/Purple_Bloon (BTD6 immune list)"
+   ]
+  },
+  "mermonkey": {
+   "camo": {
+    "any": [
+     [
+      {
+       "path": 2,
+       "tier": 1
+      }
+     ]
+    ],
+    "note": "Echosense Precision"
+   },
+   "lead": {
+    "any": [
+     [
+      {
+       "path": 1,
+       "tier": 3
+      }
+     ]
+    ],
+    "note": "Riptide Champion"
+   },
+   "purple": {
+    "any": [
+     [
+      {
+       "path": 1,
+       "maxTier": 2
+      }
+     ]
+    ],
+    "note": "Riptide Champion and above lose Purple popping"
+   },
+   "black": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "white": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "zebra": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "frozen": {
+    "any": [
+     [
+      "base"
+     ]
+    ],
+    "note": "splash is Shatter, which pops Frozen"
+   },
+   "moab": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "ddt": {
+    "derived": true
+   },
+   "bad": {
+    "any": [
+     [
+      "base"
+     ]
+    ],
+    "note": "BAD takes damage like any MOAB-class; it is only immune to slows, stuns and knockback"
+   },
+   "fortified": {
+    "any": [
+     [
+      "base"
+     ]
+    ],
+    "note": "Fortified is extra HP, never an immunity: anything that can damage the underlying bloon can damage its fortified version."
+   },
+   "bonuses": [],
+   "confidence": "medium",
+   "sources": [
+    "https://www.bloonswiki.com/Mermonkey_(BTD6)",
+    "https://bloons.fandom.com/wiki/Mermonkey",
+    "https://bloons.fandom.com/wiki/Purple_Bloon (BTD6 immune list)"
+   ]
+  },
+  "skywarden": {
+   "camo": {
+    "any": [
+     [
+      {
+       "path": 0,
+       "tier": 2
+      }
+     ]
+    ],
+    "note": "Zephyr Sense (Wind path detects camo)"
+   },
+   "lead": {
+    "any": [
+     [
+      {
+       "path": 1,
+       "tier": 2
+      }
+     ]
+    ],
+    "note": "Thundering Arc: Plasma since v57, pops Lead"
+   },
+   "purple": {
+    "any": [
+     [
+      "base"
+     ]
+    ],
+    "note": "arrows; Thundering Arc itself is Plasma"
+   },
+   "black": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "white": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "zebra": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "frozen": {
+    "any": [
+     [
+      {
+       "path": 1,
+       "tier": 2
+      }
+     ],
+     [
+      {
+       "path": 2,
+       "tier": 1
+      }
+     ]
+    ],
+    "note": "Thundering Arc (Plasma); Ice path shatters lower-tier Frozen (tier unverified)"
+   },
+   "moab": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "ddt": {
+    "derived": true
+   },
+   "bad": {
+    "any": [
+     [
+      "base"
+     ]
+    ],
+    "note": "BAD takes damage like any MOAB-class; it is only immune to slows, stuns and knockback"
+   },
+   "fortified": {
+    "any": [
+     [
+      "base"
+     ]
+    ],
+    "note": "Fortified is extra HP, never an immunity: anything that can damage the underlying bloon can damage its fortified version."
+   },
+   "bonuses": [
+    {
+     "vs": "moab",
+     "from": {
+      "path": 1,
+      "tier": 4
+     },
+     "note": "Thunder's Decree stun"
+    }
+   ],
+   "confidence": "low",
+   "sources": [
+    "Ninja Kiwi v56/v57 Steam announcements (store.steampowered.com/oldnews, appid 960090)"
+   ]
+  },
+  "farm": {
+   "camo": {
+    "any": [
+     [
+      "never"
+     ]
+    ],
+    "note": "Banana Farm doesn't attack"
+   },
+   "lead": {
+    "any": [
+     [
+      "never"
+     ]
+    ]
+   },
+   "purple": {
+    "any": [
+     [
+      "never"
+     ]
+    ]
+   },
+   "black": {
+    "any": [
+     [
+      "never"
+     ]
+    ]
+   },
+   "white": {
+    "any": [
+     [
+      "never"
+     ]
+    ]
+   },
+   "zebra": {
+    "any": [
+     [
+      "never"
+     ]
+    ]
+   },
+   "frozen": {
+    "any": [
+     [
+      "never"
+     ]
+    ]
+   },
+   "moab": {
+    "any": [
+     [
+      "never"
+     ]
+    ]
+   },
+   "ddt": {
+    "any": [
+     [
+      "never"
+     ]
+    ],
+    "derived": false
+   },
+   "bad": {
+    "any": [
+     [
+      "never"
+     ]
+    ]
+   },
+   "fortified": {
+    "any": [
+     [
+      "never"
+     ]
+    ],
+    "note": "no attack"
+   },
+   "bonuses": [],
+   "confidence": "high",
+   "sources": [
+    "towers.json (no attacking upgrades)"
+   ]
+  },
+  "spike": {
+   "camo": {
+    "any": [
+     [
+      "base"
+     ]
+    ],
+    "note": "spikes hit camo by default"
+   },
+   "lead": {
+    "any": [
+     [
+      {
+       "path": 0,
+       "tier": 2
+      }
+     ]
+    ],
+    "note": "White Hot Spikes"
+   },
+   "purple": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "black": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "white": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "zebra": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "frozen": {
+    "any": [
+     [
+      {
+       "path": 0,
+       "tier": 2
+      }
+     ]
+    ]
+   },
+   "moab": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "ddt": {
+    "derived": true
+   },
+   "bad": {
+    "any": [
+     [
+      "base"
+     ]
+    ],
+    "note": "BAD takes damage like any MOAB-class; it is only immune to slows, stuns and knockback"
+   },
+   "fortified": {
+    "any": [
+     [
+      "base"
+     ]
+    ],
+    "note": "Fortified is extra HP, never an immunity: anything that can damage the underlying bloon can damage its fortified version."
+   },
+   "bonuses": [
+    {
+     "vs": "moab",
+     "from": {
+      "path": 1,
+      "tier": 3
+     },
+     "note": "MOAB SHREDR"
+    },
+    {
+     "vs": "ceramic",
+     "from": {
+      "path": 0,
+      "tier": 3
+     },
+     "note": "Spiked Balls"
+    }
+   ],
+   "confidence": "high",
+   "sources": [
+    "https://bloons.fandom.com/wiki/Camo_Bloon/Strategies (BTD6 camo table)",
+    "https://bloons.fandom.com/wiki/Lead-Popping_Power (BTD6 lead table)"
+   ]
+  },
+  "village": {
+   "camo": {
+    "any": [
+     [
+      {
+       "path": 0,
+       "tier": 5
+      }
+     ]
+    ],
+    "note": "Only Primary Expertise (5-x-x) attacks; Village support effects are in supportFixes"
+   },
+   "lead": {
+    "any": [
+     [
+      {
+       "path": 0,
+       "tier": 5
+      }
+     ]
+    ],
+    "note": "Only Primary Expertise (5-x-x) attacks; Village support effects are in supportFixes; lead on PE balls is low confidence"
+   },
+   "purple": {
+    "any": [
+     [
+      {
+       "path": 0,
+       "tier": 5
+      }
+     ]
+    ]
+   },
+   "black": {
+    "any": [
+     [
+      {
+       "path": 0,
+       "tier": 5
+      }
+     ]
+    ]
+   },
+   "white": {
+    "any": [
+     [
+      {
+       "path": 0,
+       "tier": 5
+      }
+     ]
+    ]
+   },
+   "zebra": {
+    "any": [
+     [
+      {
+       "path": 0,
+       "tier": 5
+      }
+     ]
+    ]
+   },
+   "frozen": {
+    "any": [
+     [
+      {
+       "path": 0,
+       "tier": 5
+      }
+     ]
+    ]
+   },
+   "moab": {
+    "any": [
+     [
+      {
+       "path": 0,
+       "tier": 5
+      }
+     ]
+    ]
+   },
+   "ddt": {
+    "derived": true
+   },
+   "bad": {
+    "any": [
+     [
+      {
+       "path": 0,
+       "tier": 5
+      }
+     ]
+    ]
+   },
+   "fortified": {
+    "any": [
+     [
+      {
+       "path": 0,
+       "tier": 5
+      }
+     ]
+    ],
+    "note": "Fortified is extra HP, never an immunity: anything that can damage the underlying bloon can damage its fortified version."
+   },
+   "bonuses": [],
+   "confidence": "low",
+   "sources": [
+    "https://bloons.fandom.com/wiki/Camo_Bloon/Strategies (BTD6 camo table)",
+    "https://bloons.fandom.com/wiki/Lead-Popping_Power (BTD6 lead table)"
+   ]
+  },
+  "engineer": {
+   "camo": {
+    "any": [
+     [
+      {
+       "path": 1,
+       "tier": 3
+      }
+     ]
+    ],
+    "note": "Cleansing Foam decamos bloons on the track; the nail gun has no detection"
+   },
+   "lead": {
+    "any": [
+     [
+      {
+       "path": 0,
+       "tier": 4
+      }
+     ]
+    ],
+    "note": "Sentry Expert boom sentries",
+    "conditional": [
+     {
+      "req": [
+       {
+        "path": 1,
+        "tier": 3
+       }
+      ],
+      "note": "Cleansing Foam affects camo leads/DDTs but doesn't pop Lead itself"
+     }
+    ]
+   },
+   "purple": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "black": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "white": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "zebra": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "frozen": {
+    "any": [
+     [
+      {
+       "path": 2,
+       "tier": 1
+      }
+     ],
+     [
+      {
+       "path": 0,
+       "tier": 4
+      }
+     ]
+    ],
+    "note": "Oversize Nails; Sentry Expert"
+   },
+   "moab": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "ddt": {
+    "derived": true
+   },
+   "bad": {
+    "any": [
+     [
+      "base"
+     ]
+    ],
+    "note": "BAD takes damage like any MOAB-class; it is only immune to slows, stuns and knockback"
+   },
+   "fortified": {
+    "any": [
+     [
+      "base"
+     ]
+    ],
+    "note": "Fortified is extra HP, never an immunity: anything that can damage the underlying bloon can damage its fortified version."
+   },
+   "bonuses": [
+    {
+     "vs": "moab",
+     "from": {
+      "path": 1,
+      "tier": 2
+     },
+     "note": "Deconstruction bonus MOAB/Fortified damage"
+    },
+    {
+     "vs": "bloons",
+     "from": {
+      "path": 2,
+      "tier": 2
+     },
+     "note": "Pin stuns"
+    }
+   ],
+   "confidence": "medium",
+   "sources": [
+    "https://bloons.fandom.com/wiki/Camo_Bloon/Strategies (BTD6 camo table)",
+    "https://bloons.fandom.com/wiki/Lead-Popping_Power (BTD6 lead table)",
+    "https://bloons.fandom.com/wiki/Purple_Bloon (BTD6 immune list)"
+   ]
+  },
+  "beast": {
+   "camo": {
+    "any": [
+     [
+      {
+       "path": 2,
+       "tier": 2
+      }
+     ]
+    ],
+    "note": "Horned Owl",
+    "conditional": [
+     {
+      "req": [
+       {
+        "path": 1,
+        "tier": 4
+       }
+      ],
+      "note": "Tyrannosaurus Rex ability"
+     }
+    ]
+   },
+   "lead": {
+    "any": [
+     [
+      {
+       "path": 1,
+       "tier": 2
+      }
+     ],
+     [
+      {
+       "path": 0,
+       "tier": 3
+      }
+     ],
+     [
+      {
+       "path": 2,
+       "tier": 5
+      }
+     ]
+    ],
+    "note": "Adasaurus; Great White; Pouakai"
+   },
+   "purple": {
+    "any": [
+     [
+      {
+       "path": 0,
+       "tier": 1
+      }
+     ],
+     [
+      {
+       "path": 1,
+       "tier": 1
+      }
+     ],
+     [
+      {
+       "path": 2,
+       "tier": 1
+      }
+     ]
+    ],
+    "note": "0-0-0 staff is magic and can't pop Purple; any beast can"
+   },
+   "black": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "white": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "zebra": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "frozen": {
+    "any": [
+     [
+      "base"
+     ]
+    ],
+    "note": "staff pops Frozen"
+   },
+   "moab": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "ddt": {
+    "any": [
+     [
+      {
+       "path": 2,
+       "tier": 5
+      }
+     ]
+    ],
+    "note": "Pouakai. Derived rule would pass 0-2-2, but the Owl's detection is not known to carry to the Adasaurus (unverified)",
+    "derived": false
+   },
+   "bad": {
+    "any": [
+     [
+      "base"
+     ]
+    ],
+    "note": "BAD takes damage like any MOAB-class; it is only immune to slows, stuns and knockback"
+   },
+   "fortified": {
+    "any": [
+     [
+      "base"
+     ]
+    ],
+    "note": "Fortified is extra HP, never an immunity: anything that can damage the underlying bloon can damage its fortified version."
+   },
+   "bonuses": [
+    {
+     "vs": "bloons",
+     "from": {
+      "path": 1,
+      "tier": 4
+     },
+     "note": "Tyrannosaurus Rex stun"
+    }
+   ],
+   "confidence": "low",
+   "sources": [
+    "https://www.bloonswiki.com/Beast_Handler",
+    "https://bloons.fandom.com/wiki/Lead-Popping_Power (BTD6 lead table)",
+    "https://bloons.fandom.com/wiki/Camo_Bloon/Strategies (BTD6 camo table)",
+    "https://bloons.fandom.com/wiki/Purple_Bloon (BTD6 immune list)"
+   ]
+  }
+ },
+ "supportFixes": [
+  {
+   "grants": "camo",
+   "source": "village",
+   "req": {
+    "path": 1,
+    "tier": 2
+   },
+   "radius": "village range",
+   "note": "Radar Scanner: every tower in range gets camo detection"
+  },
+  {
+   "grants": "lead",
+   "source": "village",
+   "req": {
+    "path": 1,
+    "tier": 3
+   },
+   "radius": "village range",
+   "note": "Monkey Intelligence Bureau: towers in range can damage every bloon type; camo comes from Radar Scanner (0-2-0), which the MIB path includes"
+  },
+  {
+   "grants": "purple",
+   "source": "village",
+   "req": {
+    "path": 1,
+    "tier": 3
+   },
+   "radius": "village range",
+   "note": "Monkey Intelligence Bureau: towers in range can damage every bloon type; camo comes from Radar Scanner (0-2-0), which the MIB path includes"
+  },
+  {
+   "grants": "black",
+   "source": "village",
+   "req": {
+    "path": 1,
+    "tier": 3
+   },
+   "radius": "village range",
+   "note": "Monkey Intelligence Bureau: towers in range can damage every bloon type; camo comes from Radar Scanner (0-2-0), which the MIB path includes"
+  },
+  {
+   "grants": "white",
+   "source": "village",
+   "req": {
+    "path": 1,
+    "tier": 3
+   },
+   "radius": "village range",
+   "note": "Monkey Intelligence Bureau: towers in range can damage every bloon type; camo comes from Radar Scanner (0-2-0), which the MIB path includes"
+  },
+  {
+   "grants": "zebra",
+   "source": "village",
+   "req": {
+    "path": 1,
+    "tier": 3
+   },
+   "radius": "village range",
+   "note": "Monkey Intelligence Bureau: towers in range can damage every bloon type; camo comes from Radar Scanner (0-2-0), which the MIB path includes"
+  },
+  {
+   "grants": "frozen",
+   "source": "village",
+   "req": {
+    "path": 1,
+    "tier": 3
+   },
+   "radius": "village range",
+   "note": "Monkey Intelligence Bureau: towers in range can damage every bloon type; camo comes from Radar Scanner (0-2-0), which the MIB path includes"
+  },
+  {
+   "grants": "lead",
+   "source": "alchemist",
+   "req": {
+    "path": 0,
+    "tier": 2
+   },
+   "radius": "alchemist range, buffs a few towers at a time",
+   "note": "Acidic Mixture Dip: buffed towers (Sharp, and Ice since v25) pop Lead. Does NOT give Black, so explosives still can't hurt DDTs"
+  },
+  {
+   "grants": "camo",
+   "source": "etienne",
+   "req": {
+    "level": 8
+   },
+   "radius": "global",
+   "note": "UAV: all towers gain camo detection (his drones see camo from L5)"
+  },
+  {
+   "grants": "camo",
+   "source": "corvus",
+   "req": {
+    "level": 5
+   },
+   "radius": "global while the spell lasts",
+   "note": "Vision spell (temporary, costs mana); level from the fandom camo table"
+  },
+  {
+   "grants": "camo",
+   "source": "obyn",
+   "req": {
+    "level": 8
+   },
+   "radius": "Obyn range",
+   "note": "Nature's Wrath: nearby Druids (and Skywardens since v56) get camo detection. Druids/Skywardens only"
+  },
+  {
+   "grants": "lead",
+   "source": "gwendolin",
+   "req": {
+    "level": 4
+   },
+   "radius": "Gwendolin range, 8 s after each trigger",
+   "note": "Heat It Up: towers hit pop Lead and Frozen for 8 s; triggers every ~40 shots"
+  },
+  {
+   "grants": "frozen",
+   "source": "gwendolin",
+   "req": {
+    "level": 4
+   },
+   "radius": "Gwendolin range, temporary",
+   "note": "Heat It Up"
+  },
+  {
+   "grants": "black",
+   "source": "striker",
+   "req": {
+    "level": 19
+   },
+   "radius": "global (while on the map)",
+   "note": "Explosives ignore Black immunity (50% chance from L5)"
+  },
+  {
+   "grants": "camo",
+   "source": "brickell",
+   "req": {
+    "level": 8
+   },
+   "radius": "water towers in range during Naval Tactics",
+   "note": "Temporary ability buff; L5 also gives Normal damage (all non-camo types)"
+  },
+  {
+   "grants": "lead",
+   "source": "brickell",
+   "req": {
+    "level": 5
+   },
+   "radius": "water towers in range during Naval Tactics",
+   "note": "Normal damage type while the ability lasts"
+  },
+  {
+   "grants": "camo",
+   "source": "ezili",
+   "req": {
+    "level": 7
+   },
+   "radius": "totem range, 30-60 s",
+   "note": "Sacrificial Totem costs lives; L9 main attack also strips camo from non-MOABs"
+  },
+  {
+   "grants": "camo",
+   "source": "geraldo",
+   "req": {
+    "level": 3
+   },
+   "radius": "one tower, 5 rounds",
+   "note": "See Invisibility Potion shop item"
+  },
+  {
+   "grants": "white",
+   "source": "silas",
+   "req": {
+    "level": 13
+   },
+   "radius": "global",
+   "note": "Cold/Glacier/Frigid attacks ignore White immunity (50% chance from L5)"
+  },
+  {
+   "grants": "decamo",
+   "source": "ninja",
+   "req": {
+    "path": 1,
+    "tier": 2
+   },
+   "radius": "bloons the Ninja hits",
+   "note": "Counter-Espionage"
+  },
+  {
+   "grants": "decamo",
+   "source": "sub",
+   "req": {
+    "path": 0,
+    "tier": 3
+   },
+   "radius": "Sub range while submerged",
+   "note": "Submerge and Support"
+  },
+  {
+   "grants": "decamo",
+   "source": "mortar",
+   "req": {
+    "path": 2,
+    "tier": 3
+   },
+   "radius": "flare blast",
+   "note": "Signal Flare; works on DDTs"
+  },
+  {
+   "grants": "decamo",
+   "source": "wizard",
+   "req": {
+    "path": 2,
+    "tier": 3
+   },
+   "radius": "Shimmer radius",
+   "note": "Shimmer"
+  },
+  {
+   "grants": "decamo",
+   "source": "engineer",
+   "req": {
+    "path": 1,
+    "tier": 3
+   },
+   "radius": "foam on track",
+   "note": "Cleansing Foam (also removes Regrow)"
+  },
+  {
+   "grants": "decamo",
+   "source": "mermonkey",
+   "req": {
+    "path": 2,
+    "tier": 3
+   },
+   "radius": "song range",
+   "note": "Alluring Melody per bloonswiki; fandom names Symphonic Resonance (0-0-4)"
+  },
+  {
+   "grants": "decamo",
+   "source": "skywarden",
+   "req": {
+    "path": 0,
+    "tier": 4
+   },
+   "radius": "Skywarden attacks",
+   "note": "Galesage (v57 fix: also decamos DDT children); low confidence"
+  },
+  {
+   "grants": "decamo",
+   "source": "ice",
+   "req": {
+    "path": 0,
+    "tier": 4
+   },
+   "radius": "bloons hit",
+   "note": "Embrittlement; low confidence"
+  },
+  {
+   "grants": "degrow",
+   "source": "village",
+   "req": {
+    "path": 1,
+    "tier": 1
+   },
+   "radius": "village range",
+   "note": "Grow Blocker"
+  }
+ ],
+ "heroes": {
+  "quincy": {
+   "camo": {
+    "level": 5
+   },
+   "lead": {
+    "level": 7
+   },
+   "note": "Arrows never pop Lead/Frozen; L7 every 3rd arrow explodes (L17 every 2nd)"
+  },
+  "gwendolin": {
+   "camo": {
+    "level": null
+   },
+   "lead": {
+    "level": 1
+   },
+   "note": "Main attack never sees camo (abilities hit camo: L3 Cocktail of Fire, L10 Firestorm). Fire pops Lead; Purple from L16",
+   "purple": {
+    "level": 16
+   }
+  },
+  "striker": {
+   "camo": {
+    "level": null
+   },
+   "lead": {
+    "level": 1
+   },
+   "note": "Explosive: pops Lead, not Black (Black 50% at L5, always at L19)",
+   "black": {
+    "level": 19
+   }
+  },
+  "obyn": {
+   "camo": {
+    "level": null
+   },
+   "lead": {
+    "level": 1
+   },
+   "note": "Wolf spirit is Plasma: Lead yes, Purple no (Brambles all types from L16)",
+   "purple": {
+    "level": null
+   }
+  },
+  "churchill": {
+   "camo": {
+    "level": 6
+   },
+   "lead": {
+    "level": 1
+   },
+   "note": "Explosive shells pop Lead; Black via L3 Armor Piercing Shells ability",
+   "black": {
+    "level": 3
+   }
+  },
+  "benjamin": {
+   "camo": {
+    "level": null
+   },
+   "lead": {
+    "level": null
+   },
+   "note": "No damaging attack. L7 Bloon Trojan affects Leads; L18 Trojan can target camo"
+  },
+  "ezili": {
+   "camo": {
+    "level": 1
+   },
+   "lead": {
+    "level": 1
+   },
+   "note": "Only hero with innate camo; can't pop Purple without MIB",
+   "purple": {
+    "level": null
+   }
+  },
+  "pat": {
+   "camo": {
+    "level": null
+   },
+   "lead": {
+    "level": 1
+   },
+   "note": "Damages every non-camo type"
+  },
+  "adora": {
+   "camo": {
+    "level": null
+   },
+   "lead": {
+    "level": 1
+   },
+   "note": "Plasma bolts: Lead yes, Purple only during Long Arm of Light",
+   "purple": {
+    "level": null
+   }
+  },
+  "brickell": {
+   "camo": {
+    "level": 7
+   },
+   "lead": {
+    "level": 1
+   },
+   "note": "Pistol is Sharp; sea mines pop Lead from L1 (Normal-type explosions from L15)"
+  },
+  "etienne": {
+   "camo": {
+    "level": 5
+   },
+   "lead": {
+    "level": 10
+   },
+   "note": "Own drones see camo at L5, UAV gives every tower camo at L8. Lead only via the L10 UCAV ability (permanent at L20)"
+  },
+  "sauda": {
+   "camo": {
+    "level": 1
+   },
+   "lead": {
+    "level": 13
+   },
+   "note": "Frozen from L7; abilities pop Lead from L3"
+  },
+  "psi": {
+   "camo": {
+    "level": 1
+   },
+   "lead": {
+    "level": 6
+   },
+   "note": "Purple from L11; MOAB L14, BFB L16, DDT/ZOMG L20",
+   "purple": {
+    "level": 11
+   }
+  },
+  "geraldo": {
+   "camo": {
+    "level": null
+   },
+   "lead": {
+    "level": 8
+   },
+   "note": "Lightning never pops Lead/Purple. Camo via L3 potion item; Lead via L8 Gerry's Fire item"
+  },
+  "corvus": {
+   "camo": {
+    "level": 5
+   },
+   "lead": {
+    "level": 1
+   },
+   "note": "Camo via Vision spell (L5); Lead only while the Spear spell is active. Low confidence"
+  },
+  "rosalia": {
+   "camo": {
+    "level": null
+   },
+   "lead": {
+    "level": 2
+   },
+   "note": "No camo of her own; L2 grenade launcher pops Lead (lasers from L13)"
+  },
+  "silas": {
+   "camo": {
+    "level": 1
+   },
+   "lead": {
+    "level": null
+   },
+   "note": "Rime explosions can't hit Lead; L3 Frostbite ability lets attacks hit all types briefly. White 50% L5, 100% L13",
+   "white": {
+    "level": 13
+   }
+  },
+  "dan": {
+   "camo": {
+    "level": null
+   },
+   "lead": {
+    "level": null
+   },
+   "note": "Camo/Lead not documented on the wiki; towers.json says the Masqued Macaque form has camo and Normal damage (unverified)"
+  }
+ }
+}

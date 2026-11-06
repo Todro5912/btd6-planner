@@ -1,0 +1,538 @@
+{
+ "version": "57.4",
+ "researched": "2026-11-06",
+ "note": "speed is relative to a Red (1.0); rbe = hp + children's rbe. Immunities are damage types (see pop-model.json damageTypes).",
+ "bloons": [
+  {
+   "id": "red",
+   "name": "Red",
+   "hp": 1,
+   "rbe": 1,
+   "speed": 1.0,
+   "firstRound": 1,
+   "children": [],
+   "immunities": [],
+   "canCarry": [
+    "camo",
+    "regrow"
+   ],
+   "whatBeatsIt": "Anything that pops.",
+   "class": "regular",
+   "sources": [
+    "content/guides/bloons.md (Bloons Wiki / fandom stats, v57.4)",
+    "data/rounds.json (first appearances)"
+   ]
+  },
+  {
+   "id": "blue",
+   "name": "Blue",
+   "hp": 1,
+   "rbe": 2,
+   "speed": 1.4,
+   "firstRound": 3,
+   "children": [
+    {
+     "id": "red",
+     "count": 1
+    }
+   ],
+   "immunities": [],
+   "canCarry": [
+    "camo",
+    "regrow"
+   ],
+   "whatBeatsIt": "Anything that pops.",
+   "class": "regular",
+   "sources": [
+    "content/guides/bloons.md (Bloons Wiki / fandom stats, v57.4)",
+    "data/rounds.json (first appearances)"
+   ]
+  },
+  {
+   "id": "green",
+   "name": "Green",
+   "hp": 1,
+   "rbe": 3,
+   "speed": 1.8,
+   "firstRound": 6,
+   "children": [
+    {
+     "id": "blue",
+     "count": 1
+    }
+   ],
+   "immunities": [],
+   "canCarry": [
+    "camo",
+    "regrow"
+   ],
+   "whatBeatsIt": "Anything; camo greens on R24 need detection (Dart 0-0-2, Ninja).",
+   "class": "regular",
+   "sources": [
+    "content/guides/bloons.md (Bloons Wiki / fandom stats, v57.4)",
+    "data/rounds.json (first appearances)"
+   ]
+  },
+  {
+   "id": "yellow",
+   "name": "Yellow",
+   "hp": 1,
+   "rbe": 4,
+   "speed": 3.2,
+   "firstRound": 11,
+   "children": [
+    {
+     "id": "green",
+     "count": 1
+    }
+   ],
+   "immunities": [],
+   "canCarry": [
+    "camo",
+    "regrow"
+   ],
+   "whatBeatsIt": "Fast: projectiles that home or hit instantly (Sniper, Ninja Seeking Shuriken, Sub).",
+   "class": "regular",
+   "sources": [
+    "content/guides/bloons.md (Bloons Wiki / fandom stats, v57.4)",
+    "data/rounds.json (first appearances)"
+   ]
+  },
+  {
+   "id": "pink",
+   "name": "Pink",
+   "hp": 1,
+   "rbe": 5,
+   "speed": 3.5,
+   "firstRound": 15,
+   "children": [
+    {
+     "id": "yellow",
+     "count": 1
+    }
+   ],
+   "immunities": [],
+   "canCarry": [
+    "camo",
+    "regrow"
+   ],
+   "whatBeatsIt": "Fastest regular bloon: pierce and range, or area damage near the exit.",
+   "class": "regular",
+   "sources": [
+    "content/guides/bloons.md (Bloons Wiki / fandom stats, v57.4)",
+    "data/rounds.json (first appearances)"
+   ]
+  },
+  {
+   "id": "black",
+   "name": "Black",
+   "hp": 1,
+   "rbe": 11,
+   "speed": 1.8,
+   "firstRound": 20,
+   "children": [
+    {
+     "id": "pink",
+     "count": 2
+    }
+   ],
+   "immunities": [
+    "explosion"
+   ],
+   "canCarry": [
+    "camo",
+    "regrow"
+   ],
+   "whatBeatsIt": "Anything not explosive: Dart, Sniper, Ninja, Wizard. Bombs need Frag Bombs (0-0-2) or MIB.",
+   "class": "regular",
+   "sources": [
+    "content/guides/bloons.md (Bloons Wiki / fandom stats, v57.4)",
+    "data/rounds.json (first appearances)",
+    "https://www.bloonswiki.com/Sharp (BTD6 damage-type bitflags)"
+   ]
+  },
+  {
+   "id": "white",
+   "name": "White",
+   "hp": 1,
+   "rbe": 11,
+   "speed": 2.0,
+   "firstRound": 22,
+   "children": [
+    {
+     "id": "pink",
+     "count": 2
+    }
+   ],
+   "immunities": [
+    "cold",
+    "glacier",
+    "frigid"
+   ],
+   "canCarry": [
+    "camo",
+    "regrow"
+   ],
+   "whatBeatsIt": "Anything not cold; an Ice-only defence can't touch it (Silas L13 or MIB fixes ice).",
+   "class": "regular",
+   "sources": [
+    "content/guides/bloons.md (Bloons Wiki / fandom stats, v57.4)",
+    "data/rounds.json (first appearances)",
+    "https://www.bloonswiki.com/Sharp (BTD6 damage-type bitflags)"
+   ]
+  },
+  {
+   "id": "purple",
+   "name": "Purple",
+   "hp": 1,
+   "rbe": 11,
+   "speed": 3.0,
+   "firstRound": 25,
+   "children": [
+    {
+     "id": "pink",
+     "count": 2
+    }
+   ],
+   "immunities": [
+    "energy",
+    "fire",
+    "plasma",
+    "frigid"
+   ],
+   "canCarry": [
+    "camo",
+    "regrow"
+   ],
+   "whatBeatsIt": "Sharp or explosive damage (Dart, Ninja, Bomb, Sniper, Spikes); not Wizards, Super lasers/plasma, Ring of Fire or Laser Cannon.",
+   "class": "regular",
+   "sources": [
+    "content/guides/bloons.md (Bloons Wiki / fandom stats, v57.4)",
+    "data/rounds.json (first appearances)",
+    "https://www.bloonswiki.com/Sharp (BTD6 damage-type bitflags)"
+   ]
+  },
+  {
+   "id": "zebra",
+   "name": "Zebra",
+   "hp": 1,
+   "rbe": 23,
+   "speed": 1.8,
+   "firstRound": 26,
+   "children": [
+    {
+     "id": "black",
+     "count": 1
+    },
+    {
+     "id": "white",
+     "count": 1
+    }
+   ],
+   "immunities": [
+    "explosion",
+    "cold",
+    "glacier",
+    "frigid"
+   ],
+   "canCarry": [
+    "camo",
+    "regrow"
+   ],
+   "whatBeatsIt": "Sharp, Energy, Fire or Normal damage: anything that is neither explosive nor cold.",
+   "class": "regular",
+   "sources": [
+    "content/guides/bloons.md (Bloons Wiki / fandom stats, v57.4)",
+    "data/rounds.json (first appearances)",
+    "https://www.bloonswiki.com/Sharp (BTD6 damage-type bitflags)"
+   ]
+  },
+  {
+   "id": "lead",
+   "name": "Lead",
+   "hp": 1,
+   "hpFortified": 4,
+   "rbe": 23,
+   "rbeFortified": 26,
+   "speed": 1.0,
+   "firstRound": 28,
+   "children": [
+    {
+     "id": "black",
+     "count": 2
+    }
+   ],
+   "immunities": [
+    "sharp",
+    "shatter",
+    "cold",
+    "energy"
+   ],
+   "canCarry": [
+    "camo",
+    "regrow",
+    "fortified"
+   ],
+   "whatBeatsIt": "Explosions, fire, plasma, acid or Normal: Bomb, Mortar, Alchemist, Sniper 1-0-0 ($700), Wizard 0-1-0, or Alchemist 2-x-x next to sharp towers.",
+   "class": "regular",
+   "sources": [
+    "content/guides/bloons.md (Bloons Wiki / fandom stats, v57.4)",
+    "data/rounds.json (first appearances)",
+    "https://www.bloonswiki.com/Sharp (BTD6 damage-type bitflags)"
+   ]
+  },
+  {
+   "id": "rainbow",
+   "name": "Rainbow",
+   "hp": 1,
+   "rbe": 47,
+   "speed": 2.2,
+   "firstRound": 35,
+   "children": [
+    {
+     "id": "zebra",
+     "count": 2
+    }
+   ],
+   "immunities": [],
+   "canCarry": [
+    "camo",
+    "regrow"
+   ],
+   "whatBeatsIt": "Pierce and area damage that isn't explosive-only or cold-only (it splits into Zebras).",
+   "class": "regular",
+   "sources": [
+    "content/guides/bloons.md (Bloons Wiki / fandom stats, v57.4)",
+    "data/rounds.json (first appearances)"
+   ]
+  },
+  {
+   "id": "ceramic",
+   "name": "Ceramic",
+   "hp": 10,
+   "hpFortified": 20,
+   "rbe": 104,
+   "rbeFortified": 114,
+   "speed": 2.5,
+   "firstRound": 38,
+   "children": [
+    {
+     "id": "rainbow",
+     "count": 2
+    }
+   ],
+   "immunities": [],
+   "canCarry": [
+    "camo",
+    "regrow",
+    "fortified"
+   ],
+   "whatBeatsIt": "High damage per hit: Juggernaut, Bomb 2-0-4/0-2-4 area, Sniper Deadly Precision, Ice 3-2-0 + Glue. R63 is the big check.",
+   "note": "From R81 every Ceramic is a Super Ceramic (60 HP, 1 child).",
+   "class": "regular",
+   "sources": [
+    "content/guides/bloons.md (Bloons Wiki / fandom stats, v57.4)",
+    "data/rounds.json (first appearances)"
+   ]
+  },
+  {
+   "id": "moab",
+   "name": "MOAB",
+   "hp": 200,
+   "hpFortified": 400,
+   "rbe": 616,
+   "rbeFortified": 856,
+   "speed": 1.0,
+   "firstRound": 40,
+   "children": [
+    {
+     "id": "ceramic",
+     "count": 4
+    }
+   ],
+   "immunities": [],
+   "canCarry": [
+    "fortified"
+   ],
+   "whatBeatsIt": "Almost any damage hurts it; specialists: MOAB Mauler (Bomb 0-3-0), Sniper 2-x-x, Destroyer, Sticky Bomb.",
+   "class": "moab",
+   "sources": [
+    "content/guides/bloons.md (Bloons Wiki / fandom stats, v57.4)",
+    "data/rounds.json (first appearances)"
+   ]
+  },
+  {
+   "id": "bfb",
+   "name": "BFB",
+   "hp": 700,
+   "hpFortified": 1400,
+   "rbe": 3164,
+   "rbeFortified": 4824,
+   "speed": 0.25,
+   "firstRound": 60,
+   "children": [
+    {
+     "id": "moab",
+     "count": 4
+    }
+   ],
+   "immunities": [],
+   "canCarry": [
+    "fortified"
+   ],
+   "whatBeatsIt": "Sustained MOAB damage: MOAB Assassin, Sniper 4-x-x stun, Glue 2-0-3 + damage.",
+   "class": "moab",
+   "sources": [
+    "content/guides/bloons.md (Bloons Wiki / fandom stats, v57.4)",
+    "data/rounds.json (first appearances)"
+   ]
+  },
+  {
+   "id": "zomg",
+   "name": "ZOMG",
+   "hp": 4000,
+   "hpFortified": 8000,
+   "rbe": 16656,
+   "rbeFortified": 27296,
+   "speed": 0.18,
+   "firstRound": 80,
+   "children": [
+    {
+     "id": "bfb",
+     "count": 4
+    }
+   ],
+   "immunities": [],
+   "canCarry": [
+    "fortified"
+   ],
+   "whatBeatsIt": "Big single-target damage and stalls: MOAB Eliminator, Cripple MOAB, Ezili MOAB Hex.",
+   "class": "moab",
+   "sources": [
+    "content/guides/bloons.md (Bloons Wiki / fandom stats, v57.4)",
+    "data/rounds.json (first appearances)"
+   ]
+  },
+  {
+   "id": "ddt",
+   "name": "DDT",
+   "hp": 400,
+   "hpFortified": 800,
+   "rbe": 816,
+   "rbeFortified": 1256,
+   "speed": 2.64,
+   "firstRound": 90,
+   "children": [
+    {
+     "id": "ceramic",
+     "count": 4
+    }
+   ],
+   "immunities": [
+    "sharp",
+    "shatter",
+    "cold",
+    "energy",
+    "explosion"
+   ],
+   "inherent": [
+    "camo",
+    "lead",
+    "black"
+   ],
+   "canCarry": [
+    "fortified"
+   ],
+   "whatBeatsIt": "Camo detection plus non-sharp, non-explosive damage on the same tower: Sniper 1-1-0, Dart 4-0-2, Spike 2-x-x, Dartling 0-3-0, or MIB/Alchemist 2-x-x support.",
+   "note": "Children are Camo Regrow Ceramics.",
+   "class": "moab",
+   "sources": [
+    "content/guides/bloons.md (Bloons Wiki / fandom stats, v57.4)",
+    "data/rounds.json (first appearances)",
+    "https://www.bloonswiki.com/Sharp (BTD6 damage-type bitflags)"
+   ]
+  },
+  {
+   "id": "bad",
+   "name": "BAD",
+   "hp": 20000,
+   "hpFortified": 40000,
+   "rbe": 55760,
+   "rbeFortified": 98360,
+   "speed": 0.18,
+   "firstRound": 100,
+   "children": [
+    {
+     "id": "zomg",
+     "count": 2
+    },
+    {
+     "id": "ddt",
+     "count": 3
+    }
+   ],
+   "immunities": [],
+   "immuneToEffects": [
+    "slow",
+    "stun",
+    "knockback"
+   ],
+   "canCarry": [
+    "fortified"
+   ],
+   "whatBeatsIt": "Raw single-target burst; slows and stuns don't work on it. The R100 BAD has 28,000 HP after the R81+ ramp.",
+   "class": "moab",
+   "sources": [
+    "content/guides/bloons.md (Bloons Wiki / fandom stats, v57.4)",
+    "data/rounds.json (first appearances)"
+   ]
+  }
+ ],
+ "properties": [
+  {
+   "id": "camo",
+   "what": "Only towers with camo detection can target it; projectiles from towers without detection pass through. Spike Factory and Ninja see it by default.",
+   "immunities": [],
+   "firstRound": 24,
+   "whatBeatsIt": "Dart 0-0-2, Sniper 0-1-0, Ninja, Wizard 0-0-2, Village 0-2-0 Radar Scanner, Etienne L8.",
+   "sources": [
+    "https://bloons.fandom.com/wiki/Camo_Bloon/Strategies",
+    "https://www.bloonswiki.com/Camo_Bloon_(BTD6)"
+   ]
+  },
+  {
+   "id": "regrow",
+   "what": "Lost layers grow back up to the original type. Doesn't apply to blimp layers.",
+   "immunities": [],
+   "firstRound": 25,
+   "whatBeatsIt": "Pop it fast; Grow Blocker (Village 0-1-0) or Cleansing Foam (Engineer 0-3-0).",
+   "sources": [
+    "content/guides/bloons.md (Bloons Wiki / fandom stats, v57.4)"
+   ]
+  },
+  {
+   "id": "fortified",
+   "what": "Extra HP only (Lead x4, Ceramic and MOAB-class x2). Never an immunity.",
+   "immunities": [],
+   "firstRound": 45,
+   "whatBeatsIt": "More damage. Shattering Shells (Mortar 0-0-4) strips it.",
+   "sources": [
+    "https://bloons.fandom.com/wiki/Fortified_Bloon",
+    "content/guides/bloons.md (Bloons Wiki / fandom stats, v57.4)"
+   ]
+  },
+  {
+   "id": "frozen",
+   "what": "A status, not a bloon type: frozen bloons can't be damaged by Sharp attacks, and Ice Monkeys can't re-target them without Re-Freeze.",
+   "immunities": [
+    "sharp"
+   ],
+   "firstRound": null,
+   "whatBeatsIt": "Anything non-sharp; Wizard 0-0-0 is the cheapest default answer.",
+   "sources": [
+    "https://bloons.fandom.com/wiki/Frozen_Bloon",
+    "https://www.bloonswiki.com/Sharp (BTD6 damage-type bitflags)"
+   ]
+  }
+ ]
+}

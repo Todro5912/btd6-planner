@@ -4,7 +4,7 @@ slug: bloons
 group: Reference
 order: 10
 summary: Every bloon and MOAB-class blimp with RBE, HP, speed, immunities and the upgrades that counter it.
-updated: 2026-11-05
+updated: 2026-11-06
 gameVersion: "57.4"
 related:
   - danger-rounds
@@ -17,6 +17,25 @@ related:
 
 Speed is relative to a Red Bloon (1.0). **RBE** (Red Bloon Equivalent) is the number of single hits needed to pop a bloon and everything inside it.
 
+## Damage types: who can't pop what
+
+Every attack has a damage type. A bloon is immune to some types, never to damage as such.
+
+| Damage type | Can't damage | Typical users |
+|---|---|---|
+| Sharp | Lead, Frozen | Darts, tacks, shurikens, thorns, base Sniper |
+| Explosion | Black (so Zebra and DDT too) | Bomb Shooter, Mortar, Flash Bomb, pineapples |
+| Cold | Lead, White (Zebra) | Ice Monkey base attack |
+| Glacier | White (Zebra) | Cold Snap (Ice 2-0-0) |
+| Shatter | Lead | Powerful Darts (Dartling 0-0-2), Mermonkey splash, Bloontonium Reactor |
+| Energy | Lead, Purple | Wizard bolts, Laser Blasts, Laser Cannon |
+| Plasma | Purple | Plasma Blasts, Arcane Spike, Plasma Accelerator, Obyn, Adora |
+| Fire | Purple | Fireball, Dragon's Breath, Ring of Fire, Hot Shot grapes |
+| Normal | nothing | Juggernaut, Full Metal Jacket, Razor Rotors, White Hot Spikes, Hydra Rocket Pods |
+| Acid | nothing | Alchemist, Corrosive Glue |
+
+There is no "magic" damage type: Wizards deal Energy, which is why a 0-0-0 Wizard pops Frozen but not Lead or Purple. Per-tower answers for every crosspath are in `data/pop-model.json`.
+
 ## Regular bloons
 
 | Bloon | RBE | HP | Speed | First round | Immune to | Pops into |
@@ -27,10 +46,10 @@ Speed is relative to a Red Bloon (1.0). **RBE** (Red Bloon Equivalent) is the nu
 | Yellow | 4 | 1 | 3.2 | 11 | – | 1 Green |
 | Pink | 5 | 1 | 3.5 | 15 | – | 1 Yellow |
 | Black | 11 | 1 | 1.8 | 20 | Explosions | 2 Pink |
-| White | 11 | 1 | 2.0 | 22 | Freezing and cold | 2 Pink |
-| Purple | 11 | 1 | 3.0 | 25 | Energy, fire, plasma (most magic) | 2 Pink |
-| Zebra | 23 | 1 | 1.8 | 26 | Explosions and freezing | 1 Black + 1 White |
-| Lead | 23 (fortified 26) | 1 (fortified 4) | 1.0 | 28 | Sharp attacks | 2 Black |
+| White | 11 | 1 | 2.0 | 22 | Cold (Ice Monkey attacks) | 2 Pink |
+| Purple | 11 | 1 | 3.0 | 25 | Energy, fire, plasma | 2 Pink |
+| Zebra | 23 | 1 | 1.8 | 26 | Explosions and cold | 1 Black + 1 White |
+| Lead | 23 (fortified 26) | 1 (fortified 4) | 1.0 | 28 | Sharp, cold, energy (and shatter) | 2 Black |
 | Rainbow | 47 | 1 | 2.2 | 35 | – | 2 Zebra |
 | Ceramic | 104 (fortified 114) | 10 (fortified 20) | 2.5 | 38 | – (but tanky) | 2 Rainbow |
 
@@ -38,8 +57,8 @@ Speed is relative to a Red Bloon (1.0). **RBE** (Red Bloon Equivalent) is the nu
 
 Notes:
 - **Yellow and Pink** outrun many early projectiles. Slow darts and bombs can miss them.
-- **Purple** shuts down Wizards, most Super Monkey lasers and plasma, Tack fire paths (Hot Shots, Ring of Fire, Inferno Ring), Dartling laser paths and Dragon's Breath. Darts, Ninjas, Glaives, Subs and Spikes work fine.
-- **Lead** blocks sharp projectiles, so it also soaks shots aimed at bloons behind it.
+- **Purple** shuts down Wizards (except Necromancer's undead bloons), Super Monkey Laser/Plasma Blasts and Sun Avatar, Ring of Fire and Inferno Ring, Laser Cannon and Plasma Accelerator, Riptide Champion and Druid lightning. Darts, Ninjas, Glaives, Subs, Bombs, Spikes, Alchemists and Hot Shots Tacks work fine.
+- **Lead** blocks sharp, cold and energy attacks: darts, tacks, shurikens, Ice Monkeys and plain Wizard bolts. It also soaks shots aimed at bloons behind it.
 - **Ceramic** has a Red's hitbox and 10 HP. It is the main single-target check before blimps.
 
 ## MOAB-class
@@ -62,35 +81,38 @@ Base values, fortified in brackets. Only the outer layer's HP counts before it p
 
 | Property | What it does | Counters |
 |---|---|---|
-| **Camo** | Only towers with camo detection can target it. Area and track effects (spikes, Mortar shells, explosions) still hit it. Standard R24, ABR R5 | See camo counters below |
-| **Regrow** | Lost layers grow back to the original type. Doesn't apply to blimp layers | Pop it fast. Grow Blocker (Village 0-1-0) stops regrowth in its radius. Cleansing Foam (Engineer 0-3-0) is also used (regrow removal unverified) |
-| **Fortified** | Lead, Ceramic and MOAB-class only. Doubles outer HP (Lead ×4) | More damage. Perishing Potions (Alchemist 0-2-0) removes it from non-blimps. Shattering Shells (Mortar 0-0-4) strips it |
+| **Camo** | Only towers with camo detection can target or damage it. Projectiles and explosions from a tower without detection pass straight through. Spike Factory and Ninja see camo by default. Standard R24, ABR R5 | See camo counters below |
+| **Regrow** | Lost layers grow back to the original type. Doesn't apply to blimp layers | Pop it fast. Grow Blocker (Village 0-1-0) stops regrowth in its radius; Cleansing Foam (Engineer 0-3-0) strips Regrow and Camo |
+| **Fortified** | Lead, Ceramic and MOAB-class only. Doubles outer HP (Lead ×4). **It is never an immunity**: anything that can damage the bloon can damage it fortified | More damage. Shattering Shells (Mortar 0-0-4) strips it |
+| **Frozen** | A status, not a bloon type. Sharp attacks can't damage a frozen bloon, and Ice Monkeys can't target one again without Re-Freeze (Ice 0-0-2) | Any non-sharp damage; Wizard 0-0-0 is the cheapest |
 
 ## Counters by bloon type
 
-**Camo**
-- Built in: [Ninja Monkey](/monkeys/ninja/). [Monkey Sub](/monkeys/sub/) is a common early camo answer (built-in detection unverified).
-- Upgrades: Enhanced Eyesight (Dart 0-0-2), Night Vision Goggles (Sniper 0-1-0), Monkey Sense (Wizard 0-0-2), Ultravision (Super Monkey 0-0-2), Crow's Nest (Buccaneer 0-0-2), Spy Plane (Ace 0-2-0), IFR (Heli 0-2-0), Cold Snap (Ice 2-0-0).
-- For everything in range: Radar Scanner (Village 0-2-0).
-- Decamo: Signal Flare (Mortar 0-0-3), Submerge and Support (Sub 3-0-0), Counter-Espionage (Ninja 0-2-0), Shimmer (Wizard 0-0-3), Embrittlement (Ice 4-0-0), Super Brittle (Ice 5-0-0).
-- Hero: [Etienne](/heroes/etienne/)'s drones give camo detection to all towers.
+**Camo** (Medium prices)
+- Built in: [Ninja Monkey](/monkeys/ninja/) ($400) and [Spike Factory](/monkeys/spike/) spikes.
+- Upgrades: Enhanced Eyesight (Dart 0-0-2, $490), Night Vision Goggles (Sniper 0-1-0, $600), Monkey Sense (Wizard 0-0-2, $850), Cold Snap (Ice 2-0-0, $900), Eagle Eye (Desperado 0-1-0), Advanced Targeting (Dartling 0-1-0), Echosense Precision (Mermonkey 0-0-1), Crow's Nest (Buccaneer 0-0-2), Spy Plane (Ace 0-2-0), IFR (Heli 0-2-0), Horned Owl (Beast Handler 0-0-2), Zephyr Sense (Skywarden 2-0-0), Ultravision (Super Monkey 0-0-2), Signal Flare (Mortar 0-0-3, $2,300).
+- **No built-in camo:** Monkey Sub (camo only from Bloontonium Reactor 4-0-0; Advanced Intel 2-0-0 only hits camo inside another detecting tower's range), Mortar (until Signal Flare; Increased Accuracy only tightens aim), Bomb Shooter, Alchemist (never), Glue Gunner (never on its main attack).
+- For everything in range: Radar Scanner (Village 0-2-0, $3,450).
+- Decamo: Signal Flare (Mortar 0-0-3), Submerge and Support (Sub 3-0-0), Counter-Espionage (Ninja 0-2-0), Shimmer (Wizard 0-0-3), Cleansing Foam (Engineer 0-3-0).
+- Heroes: [Ezili](/heroes/ezili/), [Sauda](/heroes/sauda/), [Psi](/heroes/psi/) and [Silas](/heroes/silas/) from level 1, [Quincy](/heroes/quincy/) and [Etienne](/heroes/etienne/)'s drones from level 5, [Churchill](/heroes/churchill/) from level 6. Etienne's level 8 UAV gives **every** tower camo detection.
 
-**Lead**
-- Built in: [Bomb Shooter](/monkeys/bomb/), [Mortar Monkey](/monkeys/mortar/).
-- Upgrades: Juggernaut (Dart 4-0-0), Red Hot Rangs (Boomerang 0-0-2), Hot Shots (Tack 3-0-0), Full Metal Jacket (Sniper 1-0-0), Heat-tipped Darts (Sub 0-2-0), Hot Shot (Buccaneer 0-2-0), Flash Bomb (Ninja 0-0-3), Fireball (Wizard 0-1-0), Plasma Blasts (Super Monkey 2-0-0), White Hot Spikes (Spike Factory 2-0-0).
-- For nearby towers: Acidic Mixture Dip (Alchemist 2-0-0), Monkey Intelligence Bureau (Village 0-3-0).
-- Remove lead immunity: Glue Strike (Glue 0-4-0), Glue Storm (Glue 0-5-0).
-- Hero: [Gwendolin](/heroes/gwendolin/)'s Heat It Up.
+**Lead** (Medium prices)
+- Built in: [Bomb Shooter](/monkeys/bomb/) ($375), [Mortar Monkey](/monkeys/mortar/), [Alchemist](/monkeys/alchemist/).
+- Upgrades: Full Metal Jacket (Sniper 1-0-0, $700), Fireball (Wizard 0-1-0, $550), Red Hot Rangs (Boomerang 0-0-2, $715), Cold Snap (Ice 2-0-0, $900), Heat-tipped Darts (Sub 0-2-0, $1,075), Hot Shots (Tack 3-0-0, $1,230), Hard Thorns (Druid 1-0-0), Hot Shot (Buccaneer 0-2-0), Exploding Pineapple (Ace 0-1-0, unreliable), White Hot Spikes (Spike Factory 2-0-0), Razor Rotors (Heli 3-0-0), Thundering Arc (Skywarden 0-2-0), Adasaurus (Beast Handler 0-2-0), Riptide Champion (Mermonkey 0-3-0), Deadeye (Desperado 0-3-0), Hydra Rocket Pods (Dartling 0-3-0), Flash Bomb (Ninja 0-0-3), Juggernaut (Dart 4-0-0), Plasma Blasts (Super Monkey 2-0-0), Sentry Expert (Engineer 4-0-0).
+- For nearby towers: Acidic Mixture Dip (Alchemist 2-0-0, $1,150) lets buffed Sharp and Ice towers pop Lead; Monkey Intelligence Bureau (Village 0-3-0) lets them damage everything.
+- Heroes: [Gwendolin](/heroes/gwendolin/)'s Heat It Up (L4) gives nearby towers Lead popping for 8 s.
 
-**Black and Zebra:** anything that isn't explosive. A bomb or Mortar defence needs a MIB or a non-explosive partner.
+**Black and Zebra:** anything that isn't explosive (Zebra: not cold either). A Bomb or Mortar defence needs Frag Bombs (Bomb 0-0-2, frags only), Heavy Shells (Mortar 0-3-0), a MIB, or a non-explosive partner. [Striker Jones](/heroes/striker/) removes Black immunity for explosives at L19 (50% chance from L5).
 
-**White and Zebra:** anything that isn't cold. An ice-only defence can't touch them.
+**White and Zebra:** anything that isn't cold. An Ice-only defence can't touch them; [Silas](/heroes/silas/) L13 or a MIB fixes that.
 
-**Purple:** sharp and explosive damage: Dart, Ninja, Boomerang, Sub, Spike Factory, Bomb, Mortar, Sniper. Don't rely on Wizard, Tack fire paths or Super Monkey energy paths for R25, R45 and especially R95 (500 Camo Regrow Purples).
+**Purple:** sharp, explosive, acid or Normal damage: Dart, Ninja, Boomerang, Sub, Spike Factory, Bomb, Mortar, Sniper, Alchemist, Beast Handler beasts. Don't rely on Wizards, Super Monkey 1-3 top path, Ring of Fire, Laser Cannon or Riptide Champion for R25, R45 and especially R95 (500 Camo Regrow Purples).
 
-**DDT:** needs camo detection plus damage that isn't sharp or explosive, or immunity removal. Options: Acidic Mixture Dip, Gwendolin's Heat It Up, Radar Scanner, Etienne, Submerge and Support, Signal Flare, Glue Strike, Glue Storm, Embrittlement, Super Brittle, [Striker Jones](/heroes/striker/) (levels 5 and 19 remove Black immunity), MIB. Bloon Sabotage (Ninja 0-4-0) halves DDT speed.
+**Fortified:** not an immunity. Fortified Leads need a Lead popper and Fortified MOABs need anything that hurts a MOAB; they just take longer.
 
-**Blimps (common answers):**
+**DDT:** a MOAB-class blimp with Camo, Lead and Black. One tower needs camo detection plus an attack that is neither sharp nor explosive. Cheapest single towers: Sniper 1-1-0 ($950), Wizard 0-1-2 ($1,150), Buccaneer 0-2-2 ($2,000), Spike Factory 2-x-x ($2,400), Dart 4-0-2 ($2,950). Support routes: Acidic Mixture Dip next to a camo Sharp tower, MIB (includes Radar Scanner), or Signal Flare / Submerge and Support decamo for non-explosive Lead poppers. Not enough on their own: Radar Scanner or Etienne next to Bombs, Ninja Flash Bomb, Ice Cold Snap. Bloon Sabotage (Ninja 0-4-0) halves DDT speed.
+
+**Blimps.** Almost every attack can damage MOAB-class; the exceptions are Banana Farms, Villages, a Glue Gunner without Corrosive Glue (2-x-x) and an Ice Monkey without Embrittlement (4-x-x) or Icicles (0-0-4). These are the specialists with extra MOAB damage or control:
 
 | Tower | Upgrades |
 |---|---|
@@ -143,4 +165,4 @@ Frontier Legends (paid DLC) adds six more bloon types: Aura, Diamond, Dynamite, 
 
 ---
 
-Sources: Bloons Wiki, Bloons Fandom wiki.
+Sources: Bloons Wiki (damage-type bitflags, tower pages), Bloons Fandom wiki (camo, lead and purple tables; Damage Types; Frozen and Fortified Bloon pages), Ninja Kiwi v57 notes. Machine-readable versions: `data/bloons.json`, `data/pop-model.json`.

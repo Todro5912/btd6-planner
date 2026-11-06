@@ -1,0 +1,813 @@
+{
+ "quincy": {
+  "cost": 540,
+  "levels": {
+   "1": "Arrows bounce to up to 3 targets",
+   "2": "Pierce 4, bounces up to 4",
+   "3": "Unlocks Rapid Shot",
+   "4": "Slightly more range; v57 Focus toggle",
+   "5": "Camo detection",
+   "6": "2 arrows per shot",
+   "7": "Every 3rd arrow explodes (first Lead popping)",
+   "8": "Bonus MOAB-class damage",
+   "9": "Pierce/bounces 6",
+   "10": "Unlocks Storm of Arrows",
+   "11": "Attack cooldown 0.6s",
+   "12": "Pierce 7",
+   "13": "More range; Rapid Shot lasts 12s",
+   "14": "More MOAB bonus",
+   "15": "Rapid Shot 4x speed, 45s cooldown",
+   "16": "Attack cooldown 0.4s",
+   "17": "Arrows fly 25% farther; every 2nd arrow explodes",
+   "18": "Cooldown 0.25s; Storm of Arrows ceramic bonus, 55s cooldown",
+   "19": "3 arrows per shot, pierce 9",
+   "20": "Cooldown 0.2s; stronger Storm of Arrows"
+  },
+  "abilities": [
+   {
+    "name": "Rapid Shot",
+    "level": 3,
+    "cooldown": 60,
+    "note": "45s from L15"
+   },
+   {
+    "name": "Storm of Arrows",
+    "level": 10,
+    "cooldown": 70,
+    "note": "55s from L18"
+   }
+  ],
+  "camoLevel": 5,
+  "leadLevel": 7,
+  "notes": "Free starter hero. Arrows themselves never pop Lead/Frozen; only the exploding arrows do. Arrows never pop Lead/Frozen; L7 every 3rd arrow explodes (L17 every 2nd)",
+  "sources": [
+   "https://www.bloonswiki.com/Quincy_(BTD6)"
+  ]
+ },
+ "gwendolin": {
+  "cost": 725,
+  "levels": {
+   "1": "Pyro gun blasts (fire)",
+   "2": "More popping power",
+   "3": "Unlocks Cocktail of Fire",
+   "4": "Unlocks Heat It Up: nearby towers pop Lead/Frozen, +1 pierce",
+   "5": "More popping power",
+   "6": "Attacks burn",
+   "7": "Bigger Heat It Up radius",
+   "8": "2 blasts per shot",
+   "9": "+1 layer on first hit",
+   "10": "Unlocks Firestorm",
+   "11": "More range",
+   "12": "Faster attacks",
+   "13": "Much more popping power",
+   "14": "Cocktail burns MOAB-class",
+   "15": "Faster attacks",
+   "16": "Firestorm longer; can pop Purple",
+   "17": "Heat It Up +1 damage, bonus vs Lead",
+   "18": "Faster attacks",
+   "19": "3 blasts per shot",
+   "20": "Firestorm much stronger, hurts MOAB-class"
+  },
+  "abilities": [
+   {
+    "name": "Cocktail of Fire",
+    "level": 3,
+    "cooldown": 30
+   },
+   {
+    "name": "Firestorm",
+    "level": 10,
+    "cooldown": 60
+   }
+  ],
+  "camoLevel": null,
+  "leadLevel": 1,
+  "notes": "Cost cut from $900 to $725. Main attack never sees camo; her abilities hit camo. Main attack never sees camo (abilities hit camo: L3 Cocktail of Fire, L10 Firestorm). Fire pops Lead; Purple from L16",
+  "sources": [
+   "https://www.bloonswiki.com/Gwendolin_(BTD6)",
+   "https://bloons.fandom.com/wiki/Gwendolin"
+  ]
+ },
+ "striker": {
+  "cost": 700,
+  "levels": {
+   "1": "Bazooka explodes bloons",
+   "2": "Bigger blast radius",
+   "3": "Unlocks Concussive Shell",
+   "4": "Bombs/Mortars on screen fire 10% faster",
+   "5": "Explosives 50% chance to pop Black",
+   "6": "Bigger blast, more pierce",
+   "7": "2 layers per shot; Mortar radius +10%",
+   "8": "Nearby Bombs +5% range, +25% pierce",
+   "9": "Faster attacks",
+   "10": "Unlocks Artillery Command",
+   "11": "Faster attacks",
+   "12": "More range; 3 layers per shot",
+   "13": "Faster attacks",
+   "14": "Bigger, longer Concussive Shell",
+   "15": "Concussive Shell 11s cooldown",
+   "16": "Faster attacks",
+   "17": "More range; 4 layers per shot",
+   "18": "Bombs/Mortars +10% attack speed",
+   "19": "Faster; Black immunity removed for explosives on the map",
+   "20": "Artillery Command gives double damage/pierce for 10s"
+  },
+  "abilities": [
+   {
+    "name": "Concussive Shell",
+    "level": 3,
+    "cooldown": 15,
+    "note": "wiki text says 16s; 11s from L15"
+   },
+   {
+    "name": "Artillery Command",
+    "level": 10,
+    "cooldown": 80
+   }
+  ],
+  "camoLevel": null,
+  "leadLevel": 1,
+  "notes": "Cost cut from $750 to $700. Never sees camo. Explosive: pops Lead, not Black (Black 50% at L5, always at L19)",
+  "sources": [
+   "https://www.bloonswiki.com/Striker_Jones_(BTD6)",
+   "https://bloons.fandom.com/wiki/Striker_Jones"
+  ]
+ },
+ "obyn": {
+  "cost": 650,
+  "levels": {
+   "1": "Homing spirit wolf (pierce 4)",
+   "2": "Druids in range +1 pierce",
+   "3": "Unlocks Brambles",
+   "4": "Nature's Ward totem slows bloons 30%",
+   "5": "Faster attacks",
+   "6": "More popping power",
+   "7": "Brambles pop 100 bloons",
+   "8": "Totem slows 40%; nearby Druids (and Skywardens) get camo",
+   "9": "Attack pops 2 extra layers",
+   "10": "Unlocks Wall of Trees",
+   "11": "Magic Monkeys in range +5 range, +2 pierce",
+   "12": "Faster attacks",
+   "13": "More popping power",
+   "14": "Pops extra layers",
+   "15": "Totem slows 60%, shorter cooldown",
+   "16": "Brambles pop 500 and any bloon type",
+   "17": "Faster attacks",
+   "18": "Druids of Wrath start rounds at 200 pops",
+   "19": "Pops extra layers",
+   "20": "Wall of Trees holds far more"
+  },
+  "abilities": [
+   {
+    "name": "Brambles",
+    "level": 3,
+    "cooldown": 30
+   },
+   {
+    "name": "Wall of Trees",
+    "level": 10,
+    "cooldown": 90,
+    "note": "75s at L20"
+   }
+  ],
+  "camoLevel": null,
+  "leadLevel": 1,
+  "notes": "Wolf is plasma: pops Lead, not Purple. Camo only for nearby Druids/Skywardens at L8. Wolf spirit is Plasma: Lead yes, Purple no (Brambles all types from L16)",
+  "sources": [
+   "https://www.bloonswiki.com/Obyn_Greenfoot_(BTD6)",
+   "https://bloons.fandom.com/wiki/Obyn_Greenfoot"
+  ]
+ },
+ "churchill": {
+  "cost": 2000,
+  "levels": {
+   "1": "Tank shell, up to 3 explosions",
+   "2": "Explosion pierce 18",
+   "3": "Unlocks Armor Piercing Shells (pop Black, Ceramic bonus)",
+   "4": "Range 66",
+   "5": "Adds machine gun",
+   "6": "Binoculars: camo detection",
+   "7": "Shell damage 2, 4 explosions",
+   "8": "Main gun 0.5s",
+   "9": "5 explosions",
+   "10": "Unlocks MOAB Barrage",
+   "11": "Explosion pierce 23",
+   "12": "Explosion damage 3, 6 explosions",
+   "13": "AP Shells +1 dmg, +7 Ceramic/MOAB",
+   "14": "Explosion 4, machine gun 2",
+   "15": "+1 Fortified damage",
+   "16": "Main gun 0.3s",
+   "17": "AP Shells +2 dmg, +11 Ceramic/MOAB",
+   "18": "Explosion 5",
+   "19": "7 explosions",
+   "20": "MOAB Barrage 500 dmg, 30s cooldown"
+  },
+  "abilities": [
+   {
+    "name": "Armor Piercing Shells",
+    "level": 3,
+    "cooldown": 30
+   },
+   {
+    "name": "MOAB Barrage",
+    "level": 10,
+    "cooldown": 60,
+    "note": "30s at L20"
+   }
+  ],
+  "camoLevel": 6,
+  "leadLevel": 1,
+  "notes": "Expensive to place; slowest XP curve. Explosive shells pop Lead; Black via L3 Armor Piercing Shells ability",
+  "sources": [
+   "https://bloons.fandom.com/wiki/Captain_Churchill"
+  ]
+ },
+ "benjamin": {
+  "cost": 1200,
+  "levels": {
+   "1": "$100 income per round",
+   "2": "$150 per round",
+   "3": "Unlocks Biohack",
+   "4": "Skimming: $1 per bloon spawned",
+   "5": "Banks +5% income",
+   "6": "Cybersecurity: +5 lives per round",
+   "7": "Bloon Trojan (affects Leads)",
+   "8": "$250 per round",
+   "9": "Banks +12%",
+   "10": "Unlocks Syphon Funding",
+   "11": "$300 per round",
+   "12": "Skimming $2",
+   "13": "Biohack 6 towers, +2 dmg",
+   "14": "+10 lives per round, can exceed start",
+   "15": "$500 per round",
+   "16": "Trojan more often",
+   "17": "$800 per round",
+   "18": "Trojan targets BFB, DDT and camo",
+   "19": "Biohack +3 dmg",
+   "20": "Syphon Funding 20s, triple cash"
+  },
+  "abilities": [
+   {
+    "name": "Biohack",
+    "level": 3,
+    "cooldown": 30
+   },
+   {
+    "name": "Syphon Funding",
+    "level": 10,
+    "cooldown": 65
+   }
+  ],
+  "camoLevel": null,
+  "leadLevel": null,
+  "notes": "No damaging attack; income disabled in CHIMPS/Deflation. No damaging attack. L7 Bloon Trojan affects Leads; L18 Trojan can target camo",
+  "sources": [
+   "https://bloons.fandom.com/wiki/Benjamin"
+  ]
+ },
+ "ezili": {
+  "cost": 550,
+  "levels": {
+   "1": "Curse damage over time",
+   "2": "More range",
+   "3": "Unlocks Heartstopper",
+   "4": "More damage; splash curses",
+   "5": "Faster attacks",
+   "6": "Longer, faster DoT",
+   "7": "Unlocks Sacrificial Totem",
+   "8": "Big MOAB damage; DoT 20/s",
+   "9": "Strips Camo, Regrow, Fortified from non-MOABs",
+   "10": "Unlocks MOAB Hex",
+   "11": "More range; zombie bloons +50% pierce",
+   "12": "Heartstopper shorter cooldown, longer",
+   "13": "Bigger splash, more pierce",
+   "14": "Faster DoT",
+   "15": "More range",
+   "16": "Totem lasts longer, costs 1 life",
+   "17": "Even bigger splash",
+   "18": "Faster attacks",
+   "19": "DoT pops 2 layers",
+   "20": "MOAB Hex twice as fast, hits BADs"
+  },
+  "abilities": [
+   {
+    "name": "Heartstopper",
+    "level": 3,
+    "cooldown": 45,
+    "note": "40s L12, 30s L14"
+   },
+   {
+    "name": "Sacrificial Totem",
+    "level": 7,
+    "cooldown": 90
+   },
+   {
+    "name": "MOAB Hex",
+    "level": 10,
+    "cooldown": 60,
+    "note": "40s at L20"
+   }
+  ],
+  "camoLevel": 1,
+  "leadLevel": 1,
+  "notes": "Cost cut from $600 to $550. Only hero with innate camo; can't pop Purple without MIB. Only hero with innate camo; can't pop Purple without MIB",
+  "sources": [
+   "https://www.bloonswiki.com/Ezili_(BTD6)",
+   "https://bloons.fandom.com/wiki/Ezili"
+  ]
+ },
+ "pat": {
+  "cost": 800,
+  "levels": {
+   "1": "Fist slam with small splash",
+   "2": "Splash radius 13",
+   "3": "Unlocks Rallying Roar",
+   "4": "Attack 0.9s",
+   "5": "Every 5th attack is a knockback slap",
+   "6": "Slams stun non-MOABs 0.3s",
+   "7": "Slam 4, splash 3, pierce 20",
+   "8": "Attack 0.75s",
+   "9": "Range 30; Roar +2",
+   "10": "Unlocks Big Squeeze",
+   "11": "Slam 5, splash 4",
+   "12": "Attack 0.65s",
+   "13": "Stun 0.5s (0.2s MOAB)",
+   "14": "Roar +3, 10s",
+   "15": "More pierce",
+   "16": "Ceramic bonus +7/+8",
+   "17": "Attack 0.55s",
+   "18": "Splash pierce 40",
+   "19": "Slam 10, splash 9",
+   "20": "Big Squeeze grabs 4 blimps"
+  },
+  "abilities": [
+   {
+    "name": "Rallying Roar",
+    "level": 3,
+    "cooldown": 45
+   },
+   {
+    "name": "Big Squeeze",
+    "level": 10,
+    "cooldown": 20,
+    "note": "can't grab BADs; DDTs need camo detection"
+   }
+  ],
+  "camoLevel": null,
+  "leadLevel": 1,
+  "notes": "Never sees camo; damages every other type. Damages every non-camo type",
+  "sources": [
+   "https://www.bloonswiki.com/Pat_Fusty_(BTD6)"
+  ]
+ },
+ "adora": {
+  "cost": 1000,
+  "levels": {
+   "1": "Homing Divine Bolt, pierce 6",
+   "2": "More range",
+   "3": "Unlocks Long Arm of Light",
+   "4": "2 bolts",
+   "5": "Pierce 8",
+   "6": "3 bolts",
+   "7": "Unlocks Blood Sacrifice",
+   "8": "4 bolts",
+   "9": "More range",
+   "10": "Unlocks Ball of Light",
+   "11": "Faster attacks",
+   "12": "5 bolts",
+   "13": "Pierce 13",
+   "14": "6 bolts",
+   "15": "+1 layer per bolt",
+   "16": "Long Arm doubles damage for 15s",
+   "17": "Faster attacks",
+   "18": "8 bolts",
+   "19": "More range",
+   "20": "Ball of Light much stronger"
+  },
+  "abilities": [
+   {
+    "name": "The Long Arm of Light",
+    "level": 3,
+    "cooldown": 45
+   },
+   {
+    "name": "Blood Sacrifice",
+    "level": 7,
+    "cooldown": 30
+   },
+   {
+    "name": "Ball of Light",
+    "level": 10,
+    "cooldown": 60
+   }
+  ],
+  "camoLevel": null,
+  "leadLevel": 1,
+  "notes": "Plasma bolts pop Lead, not Purple (except during Long Arm of Light). Needs camo support. Plasma bolts: Lead yes, Purple only during Long Arm of Light",
+  "sources": [
+   "https://www.bloonswiki.com/Adora_(BTD6)",
+   "https://bloons.fandom.com/wiki/Adora"
+  ]
+ },
+ "brickell": {
+  "cost": 900,
+  "levels": {
+   "1": "Seeking sea mines + Sharp pistol",
+   "2": "Faster pistol and mines",
+   "3": "Unlocks Naval Tactics",
+   "4": "Water towers in radius +1 pierce (v57)",
+   "5": "Naval Tactics adds Normal damage",
+   "6": "More pistol/mine damage",
+   "7": "Camo detection (her and her mines); Blast Chain",
+   "8": "Naval Tactics grants camo to any water tower in radius",
+   "9": "More mine damage",
+   "10": "Unlocks Mega Mine",
+   "11": "Mines every 2.5s",
+   "12": "More damage",
+   "13": "Mega Mine 50s",
+   "14": "Naval Tactics +1 damage (v57)",
+   "15": "Mines become Normal type and decamo",
+   "16": "No longer grants range; Naval Tactics cooldown modifier 0.5x (v57)",
+   "17": "Much more damage",
+   "18": "Mega Mine 40s",
+   "19": "Naval Tactics affects all water towers on screen",
+   "20": "Mega Mine 11,000 damage"
+  },
+  "abilities": [
+   {
+    "name": "Naval Tactics",
+    "level": 3,
+    "cooldown": 50
+   },
+   {
+    "name": "Mega Mine",
+    "level": 10,
+    "cooldown": 60,
+    "note": "50s L13, 40s L18"
+   }
+  ],
+  "camoLevel": 7,
+  "leadLevel": 1,
+  "notes": "Water placement only. v57 rework (pistol 3->2, L4/L8/L14/L16 changes). Cost $900 (raised from $750). Pistol is Sharp; sea mines pop Lead from L1 (Normal-type explosions from L15)",
+  "sources": [
+   "https://www.bloonswiki.com/Admiral_Brickell_(BTD6)",
+   "https://bloons.fandom.com/wiki/Admiral_Brickell",
+   "Ninja Kiwi v57 notes"
+  ]
+ },
+ "etienne": {
+  "cost": 650,
+  "levels": {
+   "1": "Drone attack",
+   "2": "Range 60",
+   "3": "Unlocks Drone Swarm",
+   "4": "Drone pierce +1",
+   "5": "Drones and Etienne see camo",
+   "6": "Drone Swarm 55s",
+   "7": "2 drones",
+   "8": "UAV: every tower on screen gets camo detection",
+   "9": "Drones pop 1 extra layer",
+   "10": "Unlocks UCAV (explosive missiles)",
+   "11": "3 drones",
+   "12": "Drone pierce 6",
+   "13": "UCAV 75s",
+   "14": "Drone damage 3",
+   "15": "UCAV 25s, missiles 6 dmg",
+   "16": "Drone pierce 9, range 80; Swarm 50s",
+   "17": "UCAV missiles 9 dmg",
+   "18": "Drone damage 4",
+   "19": "4 drones",
+   "20": "Permanent UCAV, Normal damage"
+  },
+  "abilities": [
+   {
+    "name": "Drone Swarm",
+    "level": 3,
+    "cooldown": 80,
+    "note": "55s L6, 50s L16"
+   },
+   {
+    "name": "UCAV",
+    "level": 10,
+    "cooldown": 90,
+    "note": "75s L13; permanent at L20"
+   }
+  ],
+  "camoLevel": 5,
+  "leadLevel": 10,
+  "notes": "Cost cut from $850 to $650. The L8 UAV replaces a Radar Scanner. Own drones see camo at L5, UAV gives every tower camo at L8. Lead only via the L10 UCAV ability (permanent at L20)",
+  "sources": [
+   "https://www.bloonswiki.com/Etienne_(BTD6)",
+   "https://bloons.fandom.com/wiki/Etienne"
+  ]
+ },
+ "sauda": {
+  "cost": 600,
+  "levels": {
+   "1": "Twin-sword slashes; sees camo",
+   "2": "More pops per attack",
+   "3": "Unlocks Leaping Sword",
+   "4": "2 layers per slash",
+   "5": "Faster attacks",
+   "6": "More range and power",
+   "7": "Pops Frozen; bonus vs stunned",
+   "8": "Faster attacks",
+   "9": "Bloon Bleed DoT; 3 layers",
+   "10": "Unlocks Sword Charge",
+   "11": "Bonus vs slowed/DoT bloons",
+   "12": "Leaping Sword much stronger",
+   "13": "Pops Lead",
+   "14": "Faster; Sword Charge sweeps twice",
+   "15": "More range/power",
+   "16": "Sword Charge much stronger",
+   "17": "Many layers per slash",
+   "18": "Much faster",
+   "19": "Bonus vs Regrow/Fortified/Camo",
+   "20": "Sword Charge 3 sweeps; stronger Leaping Sword"
+  },
+  "abilities": [
+   {
+    "name": "Leaping Sword",
+    "level": 3,
+    "cooldown": 30
+   },
+   {
+    "name": "Sword Charge",
+    "level": 10,
+    "cooldown": 45
+   }
+  ],
+  "camoLevel": 1,
+  "leadLevel": 13,
+  "notes": "Melee: place on a bend. Frozen from L7; abilities pop Lead from L3",
+  "sources": [
+   "https://www.bloonswiki.com/Sauda_(BTD6)"
+  ]
+ },
+ "psi": {
+  "cost": 1000,
+  "levels": {
+   "1": "Psychic vibrations pop single bloons at any range",
+   "2": "Faster pops",
+   "3": "Unlocks Psychic Blast",
+   "4": "Hits 1 nearby bloon too",
+   "5": "Cooldown 0.85s",
+   "6": "Can target Lead",
+   "7": "Blast pulses twice; targets Ceramics",
+   "8": "Popped bloons explode",
+   "9": "Second psychic attack",
+   "10": "Unlocks Psionic Scream",
+   "11": "Can target Purple",
+   "12": "Blast pulses 3 times",
+   "13": "Faster; contagion 3",
+   "14": "Instakills MOABs",
+   "15": "Bigger pop explosions",
+   "16": "Targets BFBs",
+   "17": "Third attack",
+   "18": "Contagion 5",
+   "19": "Much bigger explosions",
+   "20": "Scream holds all bloons; DDT/ZOMG targetable"
+  },
+  "abilities": [
+   {
+    "name": "Psychic Blast",
+    "level": 3,
+    "cooldown": 40
+   },
+   {
+    "name": "Psionic Scream",
+    "level": 10,
+    "cooldown": 60
+   }
+  ],
+  "camoLevel": 1,
+  "leadLevel": 6,
+  "notes": "Global range through walls; camo from L1. Purple from L11; MOAB L14, BFB L16, DDT/ZOMG L20",
+  "sources": [
+   "https://bloons.fandom.com/wiki/Psi"
+  ]
+ },
+ "geraldo": {
+  "cost": 750,
+  "levels": {
+   "1": "Lightning attack; shop: Shooty Turret, Old Nails, Creepy Idol, Pickles",
+   "2": "Rare Quincy Action Figure",
+   "3": "See Invisibility Potion (camo)",
+   "4": "Tube of Amaz-o-Glue",
+   "5": "Sharpening Stone",
+   "6": "Worn Hero's Cape",
+   "7": "Blade Trap",
+   "8": "Gerry's Fire (Lead)",
+   "9": "Fertilizer",
+   "10": "Pet Rabbit",
+   "11": "Rejuv Potion",
+   "12": "Genie Bottle",
+   "13": "Better turrets and nails",
+   "14": "Potion longer and wider",
+   "15": "Stone +2 pierce; Blade Trap maelstrom (Lead/Frozen)",
+   "16": "Nail Mine; Gerry's Fire burns 10 rounds",
+   "17": "Glue affects MOAB-class",
+   "18": "Genie MOAB attack",
+   "19": "Faster lightning, potion +1 camo damage",
+   "20": "Paragon Power Totem; one free restock"
+  },
+  "abilities": [
+   {
+    "name": "Shop",
+    "level": 1,
+    "cooldown": null,
+    "note": "items restock after set rounds, no cooldown"
+   }
+  ],
+  "camoLevel": null,
+  "leadLevel": 8,
+  "notes": "Lightning never pops Lead or Purple. Lightning never pops Lead/Purple. Camo via L3 potion item; Lead via L8 Gerry's Fire item",
+  "sources": [
+   "https://bloons.fandom.com/wiki/Geraldo"
+  ]
+ },
+ "corvus": {
+  "cost": 1325,
+  "levels": {
+   "1": "Melee spear; Spear spell lets him pop Lead while active",
+   "5": "Vision spell (temporary camo detection)"
+  },
+  "abilities": [
+   {
+    "name": "Spells (mana)",
+    "level": 1,
+    "cooldown": null,
+    "note": "spellbook; per-spell levels not retrieved"
+   }
+  ],
+  "camoLevel": 5,
+  "leadLevel": 1,
+  "notes": "Level table could not be read this session (fandom and bloonswiki Corvus pages failed). $1,325. Highest-skill hero. Low confidence. Camo via Vision spell (L5); Lead only while the Spear spell is active. Low confidence",
+  "sources": [
+   "https://bloons.fandom.com/wiki/Camo_Bloon/Strategies",
+   "https://bloons.fandom.com/wiki/Lead-Popping_Power"
+  ]
+ },
+ "rosalia": {
+  "cost": 875,
+  "levels": {
+   "1": "Laser gun (no Lead/Purple)",
+   "2": "Grenade launcher (pops Lead)",
+   "3": "Unlocks Scatter Missile",
+   "4": "Adrenaline Rush attack speed",
+   "5": "Every 10th shot enhanced",
+   "6": "Nearby Aces/Helis 10% cheaper",
+   "7": "Hover anywhere in workshop range; Flight Boost",
+   "8": "Grenades 3 dmg; laser MOAB bonus",
+   "9": "Scatter Missile 30 missiles",
+   "10": "Unlocks Kinetic Charge",
+   "11": "Adrenaline cap 30%",
+   "12": "Laser 10 dmg",
+   "13": "Lasers become plasma (pop Lead)",
+   "14": "Scatter Missile 10 dmg",
+   "15": "Laser MOAB bonus +30",
+   "16": "Shorter ability cooldowns",
+   "17": "Adrenaline cap 40%",
+   "18": "Flight Boost 25s",
+   "19": "Grenade clusters; laser 15 + 45 MOAB",
+   "20": "Anti-Bloon cheaper nearby; 90 missiles"
+  },
+  "abilities": [
+   {
+    "name": "Scatter Missile",
+    "level": 3,
+    "cooldown": 45,
+    "note": "30s from L16"
+   },
+   {
+    "name": "Flight Boost",
+    "level": 7,
+    "cooldown": 45,
+    "note": "25s from L18"
+   },
+   {
+    "name": "Kinetic Charge",
+    "level": 10,
+    "cooldown": 75
+   }
+  ],
+  "camoLevel": null,
+  "leadLevel": 2,
+  "notes": "No camo of her own. No camo of her own; L2 grenade launcher pops Lead (lasers from L13)",
+  "sources": [
+   "https://bloons.fandom.com/wiki/Rosalia"
+  ]
+ },
+ "silas": {
+  "cost": 850,
+  "levels": {
+   "1": "Rime/freeze/explode attack; sees camo",
+   "2": "Ice Monkeys spawn Ice Fragments",
+   "3": "Unlocks Frostbite",
+   "4": "Ice Walls on track",
+   "5": "White 50% chance vs ice attacks",
+   "6": "Can target bloons in any Ice Monkey's range",
+   "7": "Unlocks Frozen Cascade",
+   "8": "Ice Monkeys +range",
+   "9": "Frostbite stronger",
+   "10": "Unlocks Frozen Burial",
+   "11": "Slow aura hits MOAB-class",
+   "12": "Stronger Ice Walls",
+   "13": "White immunity removed for ice; 4th Tier 5 Ice allowed",
+   "14": "More fragments",
+   "15": "Stronger abilities, shorter cooldowns",
+   "16": "More rime damage",
+   "17": "More fragments",
+   "18": "Stronger slow",
+   "19": "Stronger walls",
+   "20": "Frostbite and walls stronger"
+  },
+  "abilities": [
+   {
+    "name": "Frostbite",
+    "level": 3,
+    "cooldown": 30,
+    "note": "attacks hit all bloon types while active"
+   },
+   {
+    "name": "Frozen Cascade",
+    "level": 7,
+    "cooldown": 60,
+    "note": "45s from L15"
+   },
+   {
+    "name": "Frozen Burial",
+    "level": 10,
+    "cooldown": 90,
+    "note": "75s from L15"
+   }
+  ],
+  "camoLevel": 1,
+  "leadLevel": null,
+  "notes": "Rime explosions can't hit Lead. Rime explosions can't hit Lead; L3 Frostbite ability lets attacks hit all types briefly. White 50% L5, 100% L13",
+  "sources": [
+   "https://www.bloonswiki.com/Silas_(BTD6)"
+  ]
+ },
+ "dan": {
+  "cost": 650,
+  "levels": {
+   "1": "Sword swings",
+   "2": "More pierce",
+   "3": "Thrust blowback; Transformation to Masqued Macaque",
+   "4": "Net traps (Macaque: lightning)",
+   "5": "Ethereal shield on leaks",
+   "6": "More damage",
+   "7": "Reposition (Macaque: Volant Strike)",
+   "8": "Taunt (Macaque: Stomp)",
+   "9": "Jab flurry",
+   "10": "Rabble Rouser (Macaque: Berserk Frenzy)",
+   "11": "More range and pierce",
+   "12": "Quick Thinking on leaks",
+   "13": "Better flurry",
+   "14": "Recovers lost lives (Macaque: Moab Smack)",
+   "15": "All towers +40% blowback",
+   "16": "More damage",
+   "17": "Shorter L7/L10 cooldowns",
+   "18": "Extra flurry strikes",
+   "19": "Mana Shield per pop",
+   "20": "Battle Peril: more damage with more bloons"
+  },
+  "abilities": [
+   {
+    "name": "Transformation",
+    "level": 3,
+    "cooldown": null
+   },
+   {
+    "name": "Reposition",
+    "level": 7,
+    "cooldown": 30
+   },
+   {
+    "name": "Volant Strike",
+    "level": 7,
+    "cooldown": 30,
+    "note": "Macaque form"
+   },
+   {
+    "name": "Rabble Rouser",
+    "level": 10,
+    "cooldown": 60,
+    "note": "45s from L17"
+   },
+   {
+    "name": "Berserk Frenzy",
+    "level": 10,
+    "cooldown": null,
+    "note": "Macaque form"
+   }
+  ],
+  "camoLevel": null,
+  "leadLevel": null,
+  "notes": "Wiki doesn't document camo or Lead. Camo/Lead not documented on the wiki; towers.json says the Masqued Macaque form has camo and Normal damage (unverified)",
+  "sources": [
+   "https://www.bloonswiki.com/Dan_D%27Monke_(BTD6)"
+  ]
+ }
+}

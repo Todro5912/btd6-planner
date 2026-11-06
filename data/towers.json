@@ -27,6 +27,7 @@
   "stun",
   "white"
  ],
+ "popModel": "data/pop-model.json is the source of truth for 'can it pop X' (v0.5). Per-upgrade 'grants' was renamed '_grants_deprecated' and must not be used for pop checks; 'innate' is now generated from pop-model.json at 0-0-0; 'damageType' marks upgrades that change the tower's damage type.",
  "towers": [
   {
    "id": "dart",
@@ -42,8 +43,9 @@
     "black": true,
     "white": true,
     "frozen": false,
-    "moabDamage": false
+    "moabDamage": true
    },
+   "baseDamageType": "sharp",
    "paths": [
     [
      {
@@ -51,7 +53,7 @@
       "name": "Sharp Shots",
       "cost": 140,
       "xp": 0,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "+1 pierce"
      },
      {
@@ -59,7 +61,7 @@
       "name": "Razor Sharp Shots",
       "cost": 200,
       "xp": 100,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "+2 more pierce"
      },
      {
@@ -67,7 +69,7 @@
       "name": "Spike-o-pult",
       "cost": 320,
       "xp": 2100,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Throws a big spiked ball: high pierce, slower attack"
      },
      {
@@ -75,19 +77,21 @@
       "name": "Juggernaut",
       "cost": 1800,
       "xp": 7500,
-      "grants": [
+      "_grants_deprecated": [
        "lead",
        "frozen"
       ],
-      "effect": "Giant ball pops Lead and Frozen, bonus Ceramic damage, bounces off walls"
+      "effect": "Giant ball pops Lead and Frozen, bonus Ceramic damage, bounces off walls",
+      "damageType": "normal"
      },
      {
       "tier": 5,
       "name": "Ultra-Juggernaut",
       "cost": 15000,
       "xp": 22000,
-      "grants": [],
-      "effect": "Huge ball that splits into more Juggernaut balls; strong vs Ceramics"
+      "_grants_deprecated": [],
+      "effect": "Huge ball that splits into more Juggernaut balls; strong vs Ceramics",
+      "damageType": "normal"
      }
     ],
     [
@@ -96,7 +100,7 @@
       "name": "Quick Shots",
       "cost": 100,
       "xp": 0,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Attack speed up"
      },
      {
@@ -104,7 +108,7 @@
       "name": "Very Quick Shots",
       "cost": 190,
       "xp": 100,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Attack speed up again"
      },
      {
@@ -112,7 +116,7 @@
       "name": "Triple Shot",
       "cost": 450,
       "xp": 2000,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Throws 3 darts per shot"
      },
      {
@@ -120,7 +124,7 @@
       "name": "Super Monkey Fan Club",
       "cost": 7200,
       "xp": 9500,
-      "grants": [
+      "_grants_deprecated": [
        "buff"
       ],
       "effect": "Ability: this and up to 9 nearby Dart Monkeys become Super Monkeys for a few seconds"
@@ -130,11 +134,13 @@
       "name": "Plasma Monkey Fan Club",
       "cost": 45000,
       "xp": 30000,
-      "grants": [
+      "_grants_deprecated": [
        "lead",
        "buff"
       ],
-      "effect": "Ability: Plasma Monkeys (plasma darts pop Lead but not Purple during the ability)"
+      "effect": "Ability: Plasma Monkeys (plasma darts pop Lead but not Purple during the ability)",
+      "damageType": "plasma",
+      "damageTypeNote": "ability transforms Dart Monkeys"
      }
     ],
     [
@@ -143,7 +149,7 @@
       "name": "Long Range Darts",
       "cost": 90,
       "xp": 0,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "+range, faster darts"
      },
      {
@@ -151,7 +157,7 @@
       "name": "Enhanced Eyesight",
       "cost": 200,
       "xp": 100,
-      "grants": [
+      "_grants_deprecated": [
        "camo"
       ],
       "effect": "Camo detection and more range; cheapest camo in the game"
@@ -161,7 +167,7 @@
       "name": "Crossbow",
       "cost": 575,
       "xp": 1900,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Crossbow bolts: more damage and range (v57: pierce 4->5)"
      },
      {
@@ -169,7 +175,7 @@
       "name": "Sharp Shooter",
       "cost": 2050,
       "xp": 12000,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Fast crossbow with critical hits (v57: crit 50->60)"
      },
      {
@@ -177,10 +183,12 @@
       "name": "Crossbow Master",
       "cost": 21500,
       "xp": 35000,
-      "grants": [
+      "_grants_deprecated": [
        "moab"
       ],
-      "effect": "Very fast high-damage bolts; v57: fires 2 parallel bolts at half attack speed"
+      "effect": "Very fast high-damage bolts; v57: fires 2 parallel bolts at half attack speed",
+      "damageType": "normal",
+      "damageTypeNote": "inferred: Crossbow Master pops Lead"
      }
     ]
    ],
@@ -260,8 +268,9 @@
     "black": true,
     "white": true,
     "frozen": false,
-    "moabDamage": false
+    "moabDamage": true
    },
+   "baseDamageType": "sharp",
    "paths": [
     [
      {
@@ -269,7 +278,7 @@
       "name": "Improved Rangs",
       "cost": 200,
       "xp": 100,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "+pierce"
      },
      {
@@ -277,7 +286,7 @@
       "name": "Glaives",
       "cost": 280,
       "xp": 520,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Glaives: more pierce"
      },
      {
@@ -285,7 +294,7 @@
       "name": "Glaive Ricochet",
       "cost": 600,
       "xp": 2500,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Glaives bounce between Bloons automatically"
      },
      {
@@ -293,7 +302,7 @@
       "name": "M.O.A.R Glaives",
       "cost": 2000,
       "xp": 8500,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Much more pierce and damage, faster ricochets"
      },
      {
@@ -301,7 +310,7 @@
       "name": "Glaive Lord",
       "cost": 32500,
       "xp": 37500,
-      "grants": [
+      "_grants_deprecated": [
        "moab"
       ],
       "effect": "Orbiting glaives shred everything nearby, including blimps"
@@ -313,7 +322,7 @@
       "name": "Faster Throwing",
       "cost": 175,
       "xp": 120,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Attack speed up"
      },
      {
@@ -321,7 +330,7 @@
       "name": "Faster Rangs",
       "cost": 250,
       "xp": 550,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Faster boomerangs"
      },
      {
@@ -329,7 +338,7 @@
       "name": "Bionic Boomerang",
       "cost": 1250,
       "xp": 2500,
-      "grants": [
+      "_grants_deprecated": [
        "moab"
       ],
       "effect": "Very fast throws with bonus MOAB damage"
@@ -339,7 +348,7 @@
       "name": "Turbo Charge",
       "cost": 4200,
       "xp": 9000,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Ability: huge attack-speed burst"
      },
      {
@@ -347,7 +356,7 @@
       "name": "Perma Charge",
       "cost": 35000,
       "xp": 32000,
-      "grants": [
+      "_grants_deprecated": [
        "moab"
       ],
       "effect": "Permanent Turbo-level speed plus big damage ability"
@@ -359,7 +368,7 @@
       "name": "Long Range Rangs",
       "cost": 100,
       "xp": 110,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "+range"
      },
      {
@@ -367,18 +376,20 @@
       "name": "Red Hot Rangs",
       "cost": 300,
       "xp": 490,
-      "grants": [
+      "_grants_deprecated": [
        "lead",
        "frozen"
       ],
-      "effect": "Pops Lead and Frozen, +1 damage to Lead"
+      "effect": "Pops Lead and Frozen, +1 damage to Lead",
+      "damageType": "normal",
+      "damageTypeNote": "Red Hot Rangs pop Lead/Frozen and still pop Purple"
      },
      {
       "tier": 3,
       "name": "Kylie Boomerang",
       "cost": 1300,
       "xp": 3000,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Straight-line Kylie that goes out and back, high pierce"
      },
      {
@@ -386,7 +397,7 @@
       "name": "MOAB Press",
       "cost": 2700,
       "xp": 9500,
-      "grants": [
+      "_grants_deprecated": [
        "moab",
        "slow"
       ],
@@ -397,7 +408,7 @@
       "name": "MOAB Domination",
       "cost": 50000,
       "xp": 28000,
-      "grants": [
+      "_grants_deprecated": [
        "moab",
        "slow"
       ],
@@ -475,8 +486,9 @@
     "black": false,
     "white": true,
     "frozen": true,
-    "moabDamage": false
+    "moabDamage": true
    },
+   "baseDamageType": "explosion",
    "paths": [
     [
      {
@@ -484,7 +496,7 @@
       "name": "Bigger Bombs",
       "cost": 250,
       "xp": 200,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Bigger blast radius, more pierce"
      },
      {
@@ -492,7 +504,7 @@
       "name": "Heavy Bombs",
       "cost": 650,
       "xp": 1000,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "+1 damage per bomb"
      },
      {
@@ -500,7 +512,7 @@
       "name": "Really Big Bombs",
       "cost": 1100,
       "xp": 3000,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Even bigger blast, more pierce"
      },
      {
@@ -508,17 +520,19 @@
       "name": "Bloon Impact",
       "cost": 2800,
       "xp": 10000,
-      "grants": [
+      "_grants_deprecated": [
        "stun"
       ],
-      "effect": "Bombs stun Bloons they hit"
+      "effect": "Bombs stun Bloons they hit",
+      "damageType": "explosion",
+      "damageTypeNote": "Normal -> Explosion in v25"
      },
      {
       "tier": 5,
       "name": "Bloon Crush",
       "cost": 55000,
       "xp": 37500,
-      "grants": [
+      "_grants_deprecated": [
        "stun",
        "moab"
       ],
@@ -531,7 +545,7 @@
       "name": "Faster Reload",
       "cost": 250,
       "xp": 180,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Attack speed up"
      },
      {
@@ -539,7 +553,7 @@
       "name": "Missile Launcher",
       "cost": 400,
       "xp": 650,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Missiles: faster, longer range"
      },
      {
@@ -547,7 +561,7 @@
       "name": "MOAB Mauler",
       "cost": 1000,
       "xp": 2700,
-      "grants": [
+      "_grants_deprecated": [
        "moab"
       ],
       "effect": "Big bonus damage to MOAB-class"
@@ -557,7 +571,7 @@
       "name": "MOAB Assassin",
       "cost": 3450,
       "xp": 10000,
-      "grants": [
+      "_grants_deprecated": [
        "moab"
       ],
       "effect": "Assassinate ability: heavy blimp missile"
@@ -567,7 +581,7 @@
       "name": "MOAB Eliminator",
       "cost": 26000,
       "xp": 35000,
-      "grants": [
+      "_grants_deprecated": [
        "moab"
       ],
       "effect": "Much stronger missiles; ability ~6x Assassinate"
@@ -579,7 +593,7 @@
       "name": "Extra Range",
       "cost": 200,
       "xp": 150,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "+range"
      },
      {
@@ -587,17 +601,19 @@
       "name": "Frag Bombs",
       "cost": 300,
       "xp": 600,
-      "grants": [
+      "_grants_deprecated": [
        "black"
       ],
-      "effect": "Bombs throw sharp frags (frags can hit Black; v57 frag pierce 1->2)"
+      "effect": "Bombs throw sharp frags (frags can hit Black; v57 frag pierce 1->2)",
+      "damageType": "explosion",
+      "damageTypeNote": "plus Sharp frags (frags pop Black)"
      },
      {
       "tier": 3,
       "name": "Cluster Bombs",
       "cost": 700,
       "xp": 2500,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Bombs split into smaller bombs"
      },
      {
@@ -605,7 +621,7 @@
       "name": "Recursive Cluster",
       "cost": 2500,
       "xp": 10000,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Cluster bombs split again"
      },
      {
@@ -613,7 +629,7 @@
       "name": "Bomb Blitz",
       "cost": 30000,
       "xp": 25000,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Losing lives clears the screen (v57: once per round)"
      }
     ]
@@ -688,8 +704,9 @@
     "black": true,
     "white": true,
     "frozen": false,
-    "moabDamage": false
+    "moabDamage": true
    },
+   "baseDamageType": "sharp",
    "paths": [
     [
      {
@@ -697,7 +714,7 @@
       "name": "Faster Shooting",
       "cost": 150,
       "xp": 150,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Attack speed up"
      },
      {
@@ -705,7 +722,7 @@
       "name": "Even Faster Shooting",
       "cost": 220,
       "xp": 550,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Attack speed up again (v56: $300->$220)",
       "_src": {
        "effect": "Attack speed up again (v56: $300->$220; alt: $300 on pre-v56 wiki stats)"
@@ -716,29 +733,33 @@
       "name": "Hot Shots",
       "cost": 600,
       "xp": 2400,
-      "grants": [
+      "_grants_deprecated": [
        "lead",
        "frozen"
       ],
-      "effect": "Fire tacks pop Lead and Frozen (v56: damage 2->3)"
+      "effect": "Fire tacks pop Lead and Frozen (v56: damage 2->3)",
+      "damageType": "normal",
+      "damageTypeNote": "Hot Shots still pop Purple"
      },
      {
       "tier": 4,
       "name": "Ring of Fire",
       "cost": 3500,
       "xp": 9500,
-      "grants": [],
-      "effect": "Ring of fire hits everything in range (fire: can't pop Purple)"
+      "_grants_deprecated": [],
+      "effect": "Ring of fire hits everything in range (fire: can't pop Purple)",
+      "damageType": "fire"
      },
      {
       "tier": 5,
       "name": "Inferno Ring",
       "cost": 45500,
       "xp": 32500,
-      "grants": [
+      "_grants_deprecated": [
        "moab"
       ],
-      "effect": "Stronger ring plus meteors on strong targets (can't pop Purple)"
+      "effect": "Stronger ring plus meteors on strong targets (can't pop Purple)",
+      "damageType": "fire"
      }
     ],
     [
@@ -747,7 +768,7 @@
       "name": "Long Range Tacks",
       "cost": 100,
       "xp": 140,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "+range"
      },
      {
@@ -755,7 +776,7 @@
       "name": "Super Range Tacks",
       "cost": 225,
       "xp": 500,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "More range and pierce"
      },
      {
@@ -763,7 +784,7 @@
       "name": "Blade Shooter",
       "cost": 550,
       "xp": 2300,
-      "grants": [
+      "_grants_deprecated": [
        "frozen"
       ],
       "effect": "Blades: more pierce, pop Frozen"
@@ -773,7 +794,7 @@
       "name": "Blade Maelstrom",
       "cost": 2700,
       "xp": 9000,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Ability: spinning blades with huge pierce"
      },
      {
@@ -781,8 +802,10 @@
       "name": "Super Maelstrom",
       "cost": 15000,
       "xp": 28000,
-      "grants": [],
-      "effect": "Stronger, longer Maelstrom; good vs packed Ceramics"
+      "_grants_deprecated": [],
+      "effect": "Stronger, longer Maelstrom; good vs packed Ceramics",
+      "damageType": "normal",
+      "damageTypeNote": "inferred: main attack pops Lead"
      }
     ],
     [
@@ -791,7 +814,7 @@
       "name": "More Tacks",
       "cost": 150,
       "xp": 150,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "10 tacks per volley (v56: $110->$150)",
       "_src": {
        "effect": "10 tacks per volley (v56: $110->$150; alt: $110)"
@@ -802,7 +825,7 @@
       "name": "Even More Tacks",
       "cost": 150,
       "xp": 490,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "12 tacks per volley (v56: $110->$150)",
       "_src": {
        "effect": "12 tacks per volley (v56: $110->$150; alt: $110)"
@@ -813,7 +836,7 @@
       "name": "Tack Sprayer",
       "cost": 450,
       "xp": 2450,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Sprays many tacks very fast"
      },
      {
@@ -821,7 +844,7 @@
       "name": "Overdrive",
       "cost": 3200,
       "xp": 8750,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Extremely fast tack spray"
      },
      {
@@ -829,8 +852,10 @@
       "name": "The Tack Zone",
       "cost": 20000,
       "xp": 26500,
-      "grants": [],
-      "effect": "Massive tack output and pierce"
+      "_grants_deprecated": [],
+      "effect": "Massive tack output and pierce",
+      "damageType": "sharp",
+      "damageTypeNote": "Normal -> Sharp in v25"
      }
     ]
    ],
@@ -900,6 +925,7 @@
     "frozen": false,
     "moabDamage": false
    },
+   "baseDamageType": "cold",
    "paths": [
     [
      {
@@ -907,7 +933,7 @@
       "name": "Permafrost",
       "cost": 150,
       "xp": 160,
-      "grants": [
+      "_grants_deprecated": [
        "slow"
       ],
       "effect": "Bloons stay slowed after thawing"
@@ -917,18 +943,20 @@
       "name": "Cold Snap",
       "cost": 350,
       "xp": 500,
-      "grants": [
+      "_grants_deprecated": [
        "lead",
        "camo"
       ],
-      "effect": "Can freeze and pop Lead and Camo"
+      "effect": "Can freeze and pop Lead and Camo",
+      "damageType": "glacier",
+      "damageTypeNote": "pops Lead, not White"
      },
      {
       "tier": 3,
       "name": "Ice Shards",
       "cost": 1500,
       "xp": 2500,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Frozen Bloons shatter into damaging shards"
      },
      {
@@ -936,7 +964,7 @@
       "name": "Embrittlement",
       "cost": 2300,
       "xp": 8250,
-      "grants": [
+      "_grants_deprecated": [
        "moab",
        "buff",
        "decamo"
@@ -951,7 +979,7 @@
       "name": "Super Brittle",
       "cost": 28000,
       "xp": 25000,
-      "grants": [
+      "_grants_deprecated": [
        "moab",
        "buff"
       ],
@@ -964,7 +992,7 @@
       "name": "Enhanced Freeze",
       "cost": 200,
       "xp": 160,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Faster attack, longer freeze"
      },
      {
@@ -972,7 +1000,7 @@
       "name": "Deep Freeze",
       "cost": 300,
       "xp": 500,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Freezes 2 layers"
      },
      {
@@ -980,7 +1008,7 @@
       "name": "Arctic Wind",
       "cost": 2750,
       "xp": 2500,
-      "grants": [
+      "_grants_deprecated": [
        "slow"
       ],
       "effect": "Aura slows all non-MOAB Bloons in range; lets towers sit on water"
@@ -990,7 +1018,7 @@
       "name": "Snowstorm",
       "cost": 4750,
       "xp": 8500,
-      "grants": [
+      "_grants_deprecated": [
        "slow",
        "white",
        "moab"
@@ -1005,7 +1033,7 @@
       "name": "Absolute Zero",
       "cost": 21000,
       "xp": 27500,
-      "grants": [
+      "_grants_deprecated": [
        "slow",
        "white",
        "moab"
@@ -1019,7 +1047,7 @@
       "name": "Larger Radius",
       "cost": 150,
       "xp": 160,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "+freeze radius"
      },
      {
@@ -1027,7 +1055,7 @@
       "name": "Re-Freeze",
       "cost": 200,
       "xp": 500,
-      "grants": [
+      "_grants_deprecated": [
        "frozen"
       ],
       "effect": "Can re-freeze already-frozen Bloons"
@@ -1037,7 +1065,7 @@
       "name": "Cryo Cannon",
       "cost": 1900,
       "xp": 2500,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Fires freezing bombs at range"
      },
      {
@@ -1045,7 +1073,7 @@
       "name": "Icicles",
       "cost": 2750,
       "xp": 9000,
-      "grants": [
+      "_grants_deprecated": [
        "moab"
       ],
       "effect": "Frozen Bloons grow damaging icicles; can freeze/damage MOAB-class"
@@ -1055,7 +1083,7 @@
       "name": "Icicle Impale",
       "cost": 30000,
       "xp": 30000,
-      "grants": [
+      "_grants_deprecated": [
        "moab",
        "stun"
       ],
@@ -1124,13 +1152,15 @@
    "placement": "land",
    "innate": {
     "camo": false,
-    "lead": true,
-    "purple": true,
-    "black": true,
-    "white": true,
-    "frozen": true,
+    "lead": false,
+    "purple": false,
+    "black": false,
+    "white": false,
+    "frozen": false,
     "moabDamage": false
    },
+   "baseDamageType": "none",
+   "baseDamageTypeNote": "base glue deals no damage",
    "paths": [
     [
      {
@@ -1138,7 +1168,7 @@
       "name": "Glue Soak",
       "cost": 200,
       "xp": 150,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Glue soaks through all layers"
      },
      {
@@ -1146,15 +1176,17 @@
       "name": "Corrosive Glue",
       "cost": 300,
       "xp": 550,
-      "grants": [],
-      "effect": "Glue deals damage over time"
+      "_grants_deprecated": [],
+      "effect": "Glue deals damage over time",
+      "damageType": "acid",
+      "damageTypeNote": "inferred: corrosive glue damages all types"
      },
      {
       "tier": 3,
       "name": "Bloon Dissolver",
       "cost": 2000,
       "xp": 2500,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Faster, stronger corrosion"
      },
      {
@@ -1162,7 +1194,7 @@
       "name": "Bloon Liquefier",
       "cost": 5000,
       "xp": 9000,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Very fast corrosion"
      },
      {
@@ -1170,7 +1202,7 @@
       "name": "The Bloon Solver",
       "cost": 22500,
       "xp": 37500,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Glue splashes and melts Bloons; strong cleanup"
      }
     ],
@@ -1180,7 +1212,7 @@
       "name": "Bigger Globs",
       "cost": 100,
       "xp": 120,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Glue affects more Bloons per shot"
      },
      {
@@ -1188,7 +1220,7 @@
       "name": "Glue Splatter",
       "cost": 650,
       "xp": 900,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Glue splatters to many Bloons (v57: $970->$650)",
       "_src": {
        "effect": "Glue splatters to many Bloons (v57: $970->$650; alt: $970)"
@@ -1199,7 +1231,7 @@
       "name": "Glue Hose",
       "cost": 1950,
       "xp": 2500,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Very fast glue firing"
      },
      {
@@ -1207,7 +1239,7 @@
       "name": "Glue Strike",
       "cost": 4500,
       "xp": 8500,
-      "grants": [
+      "_grants_deprecated": [
        "buff"
       ],
       "effect": "Ability: glues every Bloon on screen; glued Bloons take more damage (v57: $4,000->$4,500)",
@@ -1220,7 +1252,7 @@
       "name": "Glue Storm",
       "cost": 16000,
       "xp": 25000,
-      "grants": [
+      "_grants_deprecated": [
        "buff"
       ],
       "effect": "Stronger global glue ability"
@@ -1232,7 +1264,7 @@
       "name": "Stickier Glue",
       "cost": 280,
       "xp": 130,
-      "grants": [
+      "_grants_deprecated": [
        "slow"
       ],
       "effect": "Glue lasts longer (v57 duration 24s->18s)"
@@ -1242,7 +1274,7 @@
       "name": "Stronger Glue",
       "cost": 400,
       "xp": 600,
-      "grants": [
+      "_grants_deprecated": [
        "slow"
       ],
       "effect": "Stronger slow"
@@ -1252,7 +1284,7 @@
       "name": "MOAB Glue",
       "cost": 3600,
       "xp": 2500,
-      "grants": [
+      "_grants_deprecated": [
        "moab",
        "slow"
       ],
@@ -1263,7 +1295,7 @@
       "name": "Relentless Glue",
       "cost": 4000,
       "xp": 8000,
-      "grants": [
+      "_grants_deprecated": [
        "slow"
       ],
       "effect": "Glue carries to children; more potent"
@@ -1273,7 +1305,7 @@
       "name": "Super Glue",
       "cost": 24000,
       "xp": 30000,
-      "grants": [
+      "_grants_deprecated": [
        "moab",
        "slow"
       ],
@@ -1343,8 +1375,9 @@
     "black": true,
     "white": true,
     "frozen": false,
-    "moabDamage": false
+    "moabDamage": true
    },
+   "baseDamageType": "sharp",
    "paths": [
     [
      {
@@ -1352,7 +1385,7 @@
       "name": "Quickdraw",
       "cost": 200,
       "xp": 200,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Faster revolver fire"
      },
      {
@@ -1360,7 +1393,7 @@
       "name": "Standoff",
       "cost": 200,
       "xp": 450,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Stacking duel bonus (v56: max stacks 4->6)"
      },
      {
@@ -1368,7 +1401,7 @@
       "name": "Big Iron",
       "cost": 1200,
       "xp": 2100,
-      "grants": [
+      "_grants_deprecated": [
        "lead"
       ],
       "effect": "Heavy revolver; v56: now pops Lead"
@@ -1378,7 +1411,7 @@
       "name": "Twin Sixes",
       "cost": 5800,
       "xp": 9500,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Dual revolvers, big single-target DPS"
      },
      {
@@ -1386,7 +1419,7 @@
       "name": "The Blazing Sun",
       "cost": 16500,
       "xp": 29000,
-      "grants": [
+      "_grants_deprecated": [
        "moab"
       ],
       "effect": "Boss/blimp single-target; Normal damage type (since v51)"
@@ -1398,7 +1431,7 @@
       "name": "Eagle Eye",
       "cost": 150,
       "xp": 200,
-      "grants": [
+      "_grants_deprecated": [
        "camo"
       ],
       "effect": "Rifle: camo detection, long range"
@@ -1408,7 +1441,7 @@
       "name": "Bullseye",
       "cost": 350,
       "xp": 650,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "More rifle damage"
      },
      {
@@ -1416,18 +1449,20 @@
       "name": "Deadeye",
       "cost": 3000,
       "xp": 3750,
-      "grants": [
+      "_grants_deprecated": [
        "lead",
        "ddt"
       ],
-      "effect": "Heavy rifle; pops Lead; Take Aim can help another tower's camo"
+      "effect": "Heavy rifle; pops Lead; Take Aim can help another tower's camo",
+      "damageType": "normal",
+      "damageTypeNote": "rifle; inferred from Lead popping"
      },
      {
       "tier": 4,
       "name": "Bounty Hunter",
       "cost": 6000,
       "xp": 18000,
-      "grants": [
+      "_grants_deprecated": [
        "moab"
       ],
       "effect": "Strong vs Ceramics and blimps"
@@ -1437,7 +1472,7 @@
       "name": "Golden Justice",
       "cost": 42000,
       "xp": 40000,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Infinite-pierce slow shots; needs cleanup"
      }
     ],
@@ -1447,7 +1482,7 @@
       "name": "Wanderer",
       "cost": 220,
       "xp": 150,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Shotgun stance bonus (v56: max stacks 3->5)"
      },
      {
@@ -1455,7 +1490,7 @@
       "name": "Nomad",
       "cost": 280,
       "xp": 600,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Short-range shotgun crowd control"
      },
      {
@@ -1463,7 +1498,7 @@
       "name": "Enforcer",
       "cost": 2100,
       "xp": 3000,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Stronger shotgun"
      },
      {
@@ -1471,7 +1506,7 @@
       "name": "Avenger",
       "cost": 9500,
       "xp": 14000,
-      "grants": [
+      "_grants_deprecated": [
        "moab",
        "slow"
       ],
@@ -1485,7 +1520,7 @@
       "name": "The Desert Phantom",
       "cost": 31000,
       "xp": 29000,
-      "grants": [
+      "_grants_deprecated": [
        "moab"
       ],
       "effect": "Crowd control with MOAB bonus (v56: shrapnel pierce 10->6)"
@@ -1539,8 +1574,9 @@
     "black": true,
     "white": true,
     "frozen": false,
-    "moabDamage": false
+    "moabDamage": true
    },
+   "baseDamageType": "sharp",
    "paths": [
     [
      {
@@ -1548,18 +1584,19 @@
       "name": "Full Metal Jacket",
       "cost": 350,
       "xp": 120,
-      "grants": [
+      "_grants_deprecated": [
        "lead",
        "frozen"
       ],
-      "effect": "4 damage, pops Lead and Frozen"
+      "effect": "4 damage, pops Lead and Frozen",
+      "damageType": "normal"
      },
      {
       "tier": 2,
       "name": "Large Calibre",
       "cost": 1300,
       "xp": 800,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "7 damage per shot"
      },
      {
@@ -1567,7 +1604,7 @@
       "name": "Deadly Precision",
       "cost": 2200,
       "xp": 3500,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Big damage, bonus vs Ceramics",
       "_src": {
        "effect": "Big damage, bonus vs Ceramics (alt: $3,000 fandom)"
@@ -1578,7 +1615,7 @@
       "name": "Maim MOAB",
       "cost": 6300,
       "xp": 10500,
-      "grants": [
+      "_grants_deprecated": [
        "moab",
        "stun"
       ],
@@ -1592,7 +1629,7 @@
       "name": "Cripple MOAB",
       "cost": 32000,
       "xp": 37500,
-      "grants": [
+      "_grants_deprecated": [
        "moab",
        "stun"
       ],
@@ -1605,7 +1642,7 @@
       "name": "Night Vision Goggles",
       "cost": 250,
       "xp": 200,
-      "grants": [
+      "_grants_deprecated": [
        "camo"
       ],
       "effect": "Camo detection, bonus damage vs Camo"
@@ -1615,7 +1652,7 @@
       "name": "Shrapnel Shot",
       "cost": 450,
       "xp": 600,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Hits spray shrapnel"
      },
      {
@@ -1623,7 +1660,7 @@
       "name": "Bouncing Bullet",
       "cost": 2100,
       "xp": 2500,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Bullets bounce to several Bloons",
       "_src": {
        "effect": "Bullets bounce to several Bloons (alt: $2,400 fandom)"
@@ -1634,7 +1671,7 @@
       "name": "Supply Drop",
       "cost": 7600,
       "xp": 11000,
-      "grants": [
+      "_grants_deprecated": [
        "income"
       ],
       "effect": "Ability: crate of cash; v57 toggle Cash Drop / Ammo Drop. No cash in CHIMPS"
@@ -1644,7 +1681,7 @@
       "name": "Elite Sniper",
       "cost": 12000,
       "xp": 35000,
-      "grants": [
+      "_grants_deprecated": [
        "income",
        "buff"
       ],
@@ -1660,7 +1697,7 @@
       "name": "Fast Firing",
       "cost": 450,
       "xp": 130,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Attack speed up"
      },
      {
@@ -1668,7 +1705,7 @@
       "name": "Even Faster Firing",
       "cost": 450,
       "xp": 600,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Attack speed up again"
      },
      {
@@ -1676,7 +1713,7 @@
       "name": "Semi-Automatic",
       "cost": 2700,
       "xp": 2750,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Attacks 3x as fast (v57 pierce set to 1)",
       "_src": {
        "effect": "Attacks 3x as fast (alt: $2,900 fandom; v57 pierce set to 1)"
@@ -1687,7 +1724,7 @@
       "name": "Full Auto Rifle",
       "cost": 4100,
       "xp": 10000,
-      "grants": [
+      "_grants_deprecated": [
        "moab"
       ],
       "effect": "Very fast fire, MOAB bonus"
@@ -1697,7 +1734,7 @@
       "name": "Elite Defender",
       "cost": 14900,
       "xp": 30000,
-      "grants": [
+      "_grants_deprecated": [
        "moab"
       ],
       "effect": "Faster as Bloons advance and lives are lost",
@@ -1790,8 +1827,9 @@
     "black": true,
     "white": true,
     "frozen": false,
-    "moabDamage": false
+    "moabDamage": true
    },
+   "baseDamageType": "sharp",
    "paths": [
     [
      {
@@ -1799,7 +1837,7 @@
       "name": "Longer Range",
       "cost": 130,
       "xp": 125,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "+range"
      },
      {
@@ -1807,7 +1845,7 @@
       "name": "Advanced Intel",
       "cost": 500,
       "xp": 750,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Can target anything in range of other towers (camo only if those towers see camo)"
      },
      {
@@ -1815,7 +1853,7 @@
       "name": "Submerge and Support",
       "cost": 700,
       "xp": 2250,
-      "grants": [
+      "_grants_deprecated": [
        "decamo"
       ],
       "effect": "Submerged: pulse removes Camo; cuts nearby hero ability cooldowns"
@@ -1825,18 +1863,20 @@
       "name": "Bloontonium Reactor",
       "cost": 2400,
       "xp": 11000,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Strong radioactive pulse",
       "_src": {
        "effect": "Strong radioactive pulse (alt: $2,300 fandom)"
-      }
+      },
+      "damageType": "shatter",
+      "damageTypeNote": "reactor; Normal when crossed with Heat-tipped Darts"
      },
      {
       "tier": 5,
       "name": "Energizer",
       "cost": 28000,
       "xp": 33000,
-      "grants": [
+      "_grants_deprecated": [
        "buff"
       ],
       "effect": "Buffs heroes (XP/cooldowns) and nearby towers' abilities",
@@ -1851,7 +1891,7 @@
       "name": "Barbed Darts",
       "cost": 450,
       "xp": 130,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "More pierce"
      },
      {
@@ -1859,18 +1899,19 @@
       "name": "Heat-tipped Darts",
       "cost": 300,
       "xp": 600,
-      "grants": [
+      "_grants_deprecated": [
        "lead",
        "frozen"
       ],
-      "effect": "Pops Lead and Frozen"
+      "effect": "Pops Lead and Frozen",
+      "damageType": "normal"
      },
      {
       "tier": 3,
       "name": "Ballistic Missile",
       "cost": 1350,
       "xp": 3000,
-      "grants": [
+      "_grants_deprecated": [
        "moab"
       ],
       "effect": "Missile with extra MOAB and Ceramic damage"
@@ -1880,7 +1921,7 @@
       "name": "First Strike Capability",
       "cost": 13000,
       "xp": 20000,
-      "grants": [
+      "_grants_deprecated": [
        "moab"
       ],
       "effect": "Ability: huge strike on the strongest blimp"
@@ -1890,7 +1931,7 @@
       "name": "Pre-emptive Strike",
       "cost": 29000,
       "xp": 45000,
-      "grants": [
+      "_grants_deprecated": [
        "moab"
       ],
       "effect": "Auto-hits every blimp as it spawns (ability 20k dmg since v51)"
@@ -1902,7 +1943,7 @@
       "name": "Twin Guns",
       "cost": 450,
       "xp": 150,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Attack speed up"
      },
      {
@@ -1910,7 +1951,7 @@
       "name": "Airburst Darts",
       "cost": 1000,
       "xp": 1000,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Darts burst into 3 on impact"
      },
      {
@@ -1918,7 +1959,7 @@
       "name": "Triple Guns",
       "cost": 1100,
       "xp": 2750,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Attack speed up again"
      },
      {
@@ -1926,7 +1967,7 @@
       "name": "Armor Piercing Darts",
       "cost": 2500,
       "xp": 10000,
-      "grants": [
+      "_grants_deprecated": [
        "moab",
        "fortified"
       ],
@@ -1940,7 +1981,7 @@
       "name": "Sub Commander",
       "cost": 25000,
       "xp": 25000,
-      "grants": [
+      "_grants_deprecated": [
        "buff"
       ],
       "effect": "Huge damage, buffs other Subs"
@@ -2017,8 +2058,9 @@
     "black": true,
     "white": true,
     "frozen": false,
-    "moabDamage": false
+    "moabDamage": true
    },
+   "baseDamageType": "sharp",
    "paths": [
     [
      {
@@ -2026,7 +2068,7 @@
       "name": "Faster Shooting",
       "cost": 275,
       "xp": 150,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Attack speed up"
      },
      {
@@ -2034,7 +2076,7 @@
       "name": "Double Shot",
       "cost": 425,
       "xp": 700,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Fires 2 darts"
      },
      {
@@ -2042,7 +2084,7 @@
       "name": "Destroyer",
       "cost": 3350,
       "xp": 3000,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Very fast firing"
      },
      {
@@ -2050,7 +2092,7 @@
       "name": "Aircraft Carrier",
       "cost": 8000,
       "xp": 12500,
-      "grants": [
+      "_grants_deprecated": [
        "moab"
       ],
       "effect": "Launches planes with anti-MOAB missiles"
@@ -2060,7 +2102,7 @@
       "name": "Carrier Flagship",
       "cost": 26000,
       "xp": 37000,
-      "grants": [
+      "_grants_deprecated": [
        "moab"
       ],
       "effect": "More planes; other towers can sit on deck"
@@ -2072,7 +2114,7 @@
       "name": "Grape Shot",
       "cost": 550,
       "xp": 200,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Adds grape shot spread (v56 cooldown 1.3s->1.35s)"
      },
      {
@@ -2080,17 +2122,19 @@
       "name": "Hot Shot",
       "cost": 500,
       "xp": 650,
-      "grants": [
+      "_grants_deprecated": [
        "lead"
       ],
-      "effect": "Fire grapes pop Lead (fire: no Purple)"
+      "effect": "Fire grapes pop Lead (fire: no Purple)",
+      "damageType": "fire",
+      "damageTypeNote": "grapes only; darts stay Sharp"
      },
      {
       "tier": 3,
       "name": "Cannon Ship",
       "cost": 900,
       "xp": 2700,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Explosive cannon (v56: pierce 28->20)"
      },
      {
@@ -2098,7 +2142,7 @@
       "name": "Monkey Pirates",
       "cost": 3900,
       "xp": 13000,
-      "grants": [
+      "_grants_deprecated": [
        "moab"
       ],
       "effect": "MOAB Takedown harpoon ability"
@@ -2108,7 +2152,7 @@
       "name": "Pirate Lord",
       "cost": 29000,
       "xp": 35000,
-      "grants": [
+      "_grants_deprecated": [
        "moab",
        "income"
       ],
@@ -2124,7 +2168,7 @@
       "name": "Long Range",
       "cost": 200,
       "xp": 150,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "+range"
      },
      {
@@ -2132,7 +2176,7 @@
       "name": "Crow's Nest",
       "cost": 350,
       "xp": 600,
-      "grants": [
+      "_grants_deprecated": [
        "camo"
       ],
       "effect": "Camo detection"
@@ -2142,7 +2186,7 @@
       "name": "Merchantman",
       "cost": 2400,
       "xp": 3100,
-      "grants": [
+      "_grants_deprecated": [
        "income"
       ],
       "effect": "Cash every round (no income in CHIMPS)"
@@ -2152,7 +2196,7 @@
       "name": "Favored Trades",
       "cost": 5500,
       "xp": 10000,
-      "grants": [
+      "_grants_deprecated": [
        "income",
        "buff"
       ],
@@ -2163,7 +2207,7 @@
       "name": "Trade Empire",
       "cost": 23000,
       "xp": 40000,
-      "grants": [
+      "_grants_deprecated": [
        "income",
        "buff"
       ],
@@ -2228,8 +2272,9 @@
     "black": true,
     "white": true,
     "frozen": false,
-    "moabDamage": false
+    "moabDamage": true
    },
+   "baseDamageType": "sharp",
    "paths": [
     [
      {
@@ -2237,7 +2282,7 @@
       "name": "Rapid Fire",
       "cost": 450,
       "xp": 160,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Attack speed up"
      },
      {
@@ -2245,7 +2290,7 @@
       "name": "Lots More Darts",
       "cost": 550,
       "xp": 750,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "12 darts per volley"
      },
      {
@@ -2253,7 +2298,7 @@
       "name": "Fighter Plane",
       "cost": 1000,
       "xp": 2700,
-      "grants": [
+      "_grants_deprecated": [
        "moab"
       ],
       "effect": "Homing anti-MOAB missiles"
@@ -2263,7 +2308,7 @@
       "name": "Operation: Dart Storm",
       "cost": 3300,
       "xp": 8000,
-      "grants": [
+      "_grants_deprecated": [
        "moab"
       ],
       "effect": "Very fast radial darts"
@@ -2273,7 +2318,7 @@
       "name": "Sky Shredder",
       "cost": 42500,
       "xp": 35000,
-      "grants": [
+      "_grants_deprecated": [
        "moab"
       ],
       "effect": "Extreme dart output, big blimp DPS"
@@ -2285,20 +2330,22 @@
       "name": "Exploding Pineapple",
       "cost": 200,
       "xp": 120,
-      "grants": [
+      "_grants_deprecated": [
        "lead"
       ],
       "effect": "Drops explosive pineapples; the explosions pop Lead {unverified}",
       "_src": {
        "effect": "Drops explosive pineapples (explosions pop Lead; unverified)"
-      }
+      },
+      "damageType": "explosion",
+      "damageTypeNote": "pineapples only; darts stay Sharp"
      },
      {
       "tier": 2,
       "name": "Spy Plane",
       "cost": 350,
       "xp": 600,
-      "grants": [
+      "_grants_deprecated": [
        "camo"
       ],
       "effect": "Camo detection"
@@ -2308,7 +2355,7 @@
       "name": "Bomber Ace",
       "cost": 900,
       "xp": 2500,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Drops bombs along the flight path"
      },
      {
@@ -2316,7 +2363,7 @@
       "name": "Ground Zero",
       "cost": 16000,
       "xp": 15000,
-      "grants": [
+      "_grants_deprecated": [
        "moab"
       ],
       "effect": "Ability: big bomb damaging everything on screen"
@@ -2326,7 +2373,7 @@
       "name": "Tsar Bomba",
       "cost": 26000,
       "xp": 30000,
-      "grants": [
+      "_grants_deprecated": [
        "moab",
        "stun"
       ],
@@ -2339,7 +2386,7 @@
       "name": "Sharper Darts",
       "cost": 500,
       "xp": 160,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "More pierce"
      },
      {
@@ -2347,7 +2394,7 @@
       "name": "Centered Path",
       "cost": 550,
       "xp": 600,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Flies a centered figure-8 path"
      },
      {
@@ -2355,7 +2402,7 @@
       "name": "Neva-Miss Targeting",
       "cost": 2550,
       "xp": 3000,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Homing darts that chase Bloons"
      },
      {
@@ -2363,7 +2410,7 @@
       "name": "Spectre",
       "cost": 23400,
       "xp": 19000,
-      "grants": [
+      "_grants_deprecated": [
        "moab"
       ],
       "effect": "Circles target, alternating darts and bombs (v55 nerf)"
@@ -2373,7 +2420,7 @@
       "name": "Flying Fortress",
       "cost": 90000,
       "xp": 45000,
-      "grants": [
+      "_grants_deprecated": [
        "moab"
       ],
       "effect": "Huge late-game plane, big boss damage (v55: $85,000->$90,000)"
@@ -2437,8 +2484,9 @@
     "black": true,
     "white": true,
     "frozen": false,
-    "moabDamage": false
+    "moabDamage": true
    },
+   "baseDamageType": "sharp",
    "paths": [
     [
      {
@@ -2446,7 +2494,7 @@
       "name": "Quad Darts",
       "cost": 800,
       "xp": 200,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Fires 4 darts"
      },
      {
@@ -2454,7 +2502,7 @@
       "name": "Pursuit",
       "cost": 500,
       "xp": 650,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Pursuit mode: auto-chases Bloons"
      },
      {
@@ -2462,18 +2510,19 @@
       "name": "Razor Rotors",
       "cost": 1850,
       "xp": 2700,
-      "grants": [
+      "_grants_deprecated": [
        "lead",
        "frozen"
       ],
-      "effect": "Rotor blades pop Lead and Frozen"
+      "effect": "Rotor blades pop Lead and Frozen",
+      "damageType": "normal"
      },
      {
       "tier": 4,
       "name": "Apache Dartship",
       "cost": 19600,
       "xp": 20000,
-      "grants": [
+      "_grants_deprecated": [
        "moab"
       ],
       "effect": "Machine guns and missiles"
@@ -2483,10 +2532,12 @@
       "name": "Apache Prime",
       "cost": 45000,
       "xp": 55000,
-      "grants": [
+      "_grants_deprecated": [
        "moab"
       ],
-      "effect": "Plasma/laser weapons (can't pop Purple) plus missiles"
+      "effect": "Plasma/laser weapons (can't pop Purple) plus missiles",
+      "damageType": "energy",
+      "damageTypeNote": "laser and plasma gun (wiki changelog)"
      }
     ],
     [
@@ -2495,7 +2546,7 @@
       "name": "Bigger Jets",
       "cost": 300,
       "xp": 150,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Faster movement"
      },
      {
@@ -2503,7 +2554,7 @@
       "name": "IFR",
       "cost": 600,
       "xp": 650,
-      "grants": [
+      "_grants_deprecated": [
        "camo"
       ],
       "effect": "Camo detection"
@@ -2513,7 +2564,7 @@
       "name": "Downdraft",
       "cost": 3500,
       "xp": 3300,
-      "grants": [
+      "_grants_deprecated": [
        "slow"
       ],
       "effect": "Blows Bloons back along the track"
@@ -2523,7 +2574,7 @@
       "name": "Support Chinook",
       "cost": 9500,
       "xp": 15000,
-      "grants": [
+      "_grants_deprecated": [
        "income"
       ],
       "effect": "Ability: cash/lives crates, can move towers"
@@ -2533,7 +2584,7 @@
       "name": "Special Poperations",
       "cost": 30000,
       "xp": 40000,
-      "grants": [
+      "_grants_deprecated": [
        "income"
       ],
       "effect": "Drops a marine and supply crates"
@@ -2545,7 +2596,7 @@
       "name": "Faster Darts",
       "cost": 250,
       "xp": 140,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Faster darts"
      },
      {
@@ -2553,7 +2604,7 @@
       "name": "Faster Firing",
       "cost": 350,
       "xp": 550,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Attack speed up"
      },
      {
@@ -2561,18 +2612,20 @@
       "name": "MOAB Shove",
       "cost": 3400,
       "xp": 2500,
-      "grants": [
+      "_grants_deprecated": [
        "moab",
        "slow"
       ],
-      "effect": "Pushes back or slows MOAB-class"
+      "effect": "Pushes back or slows MOAB-class",
+      "damageType": "explosion",
+      "damageTypeNote": "missiles"
      },
      {
       "tier": 4,
       "name": "Comanche Defense",
       "cost": 8500,
       "xp": 12500,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Summons mini Comanches when Bloons near"
      },
      {
@@ -2580,7 +2633,7 @@
       "name": "Comanche Commander",
       "cost": 35000,
       "xp": 50000,
-      "grants": [
+      "_grants_deprecated": [
        "moab"
       ],
       "effect": "Permanent mini Comanches, big damage"
@@ -2640,8 +2693,9 @@
     "black": false,
     "white": true,
     "frozen": true,
-    "moabDamage": false
+    "moabDamage": true
    },
+   "baseDamageType": "explosion",
    "paths": [
     [
      {
@@ -2649,7 +2703,7 @@
       "name": "Bigger Blast",
       "cost": 300,
       "xp": 180,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Bigger blast radius"
      },
      {
@@ -2657,7 +2711,7 @@
       "name": "Bloon Buster",
       "cost": 500,
       "xp": 600,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "+damage, more layers"
      },
      {
@@ -2665,7 +2719,7 @@
       "name": "Shell Shock",
       "cost": 825,
       "xp": 2500,
-      "grants": [
+      "_grants_deprecated": [
        "stun"
       ],
       "effect": "Shells stun and deal extra damage"
@@ -2675,15 +2729,17 @@
       "name": "The Big One",
       "cost": 7000,
       "xp": 15000,
-      "grants": [],
-      "effect": "Very large blast"
+      "_grants_deprecated": [],
+      "effect": "Very large blast",
+      "damageType": "explosion",
+      "damageTypeNote": "centre blast Normal -> Explosion"
      },
      {
       "tier": 5,
       "name": "The Biggest One",
       "cost": 36000,
       "xp": 29000,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Huge blast radius and damage"
      }
     ],
@@ -2693,7 +2749,7 @@
       "name": "Faster Reload",
       "cost": 400,
       "xp": 150,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Attack speed up"
      },
      {
@@ -2701,7 +2757,7 @@
       "name": "Rapid Reload",
       "cost": 500,
       "xp": 600,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Attack speed up again"
      },
      {
@@ -2709,17 +2765,19 @@
       "name": "Heavy Shells",
       "cost": 900,
       "xp": 2300,
-      "grants": [
+      "_grants_deprecated": [
        "black"
       ],
-      "effect": "Shells can pop Black; more damage"
+      "effect": "Shells can pop Black; more damage",
+      "damageType": "normal",
+      "damageTypeNote": "inferred: Heavy Shells pop Black"
      },
      {
       "tier": 4,
       "name": "Artillery Battery",
       "cost": 6500,
       "xp": 12500,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Fires 3 shells; ability doubles speed"
      },
      {
@@ -2727,7 +2785,7 @@
       "name": "Pop and Awe",
       "cost": 38000,
       "xp": 32000,
-      "grants": [
+      "_grants_deprecated": [
        "stun"
       ],
       "effect": "Very high DPS; ability stuns everything below BAD"
@@ -2739,7 +2797,7 @@
       "name": "Increased Accuracy",
       "cost": 200,
       "xp": 140,
-      "grants": [
+      "_grants_deprecated": [
        "camo"
       ],
       "effect": "Tighter spread; v56: can damage Camo"
@@ -2749,7 +2807,7 @@
       "name": "Burny Stuff",
       "cost": 400,
       "xp": 650,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Shells set Bloons on fire"
      },
      {
@@ -2757,7 +2815,7 @@
       "name": "Signal Flare",
       "cost": 1100,
       "xp": 2200,
-      "grants": [
+      "_grants_deprecated": [
        "decamo"
       ],
       "effect": "Permanently removes Camo, long range"
@@ -2767,7 +2825,7 @@
       "name": "Shattering Shells",
       "cost": 9500,
       "xp": 12000,
-      "grants": [
+      "_grants_deprecated": [
        "moab",
        "defortify"
       ],
@@ -2778,11 +2836,13 @@
       "name": "Blooncineration",
       "cost": 40000,
       "xp": 35000,
-      "grants": [
+      "_grants_deprecated": [
        "moab",
        "defortify"
       ],
-      "effect": "Incinerates MOAB-class; late CHIMPS carry"
+      "effect": "Incinerates MOAB-class; late CHIMPS carry",
+      "damageType": "fire",
+      "damageTypeNote": "fire walls; shells stay Explosion"
      }
     ]
    ],
@@ -2845,8 +2905,9 @@
     "black": true,
     "white": true,
     "frozen": false,
-    "moabDamage": false
+    "moabDamage": true
    },
+   "baseDamageType": "sharp",
    "paths": [
     [
      {
@@ -2854,7 +2915,7 @@
       "name": "Focused Firing",
       "cost": 300,
       "xp": 150,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Tighter spread"
      },
      {
@@ -2862,7 +2923,7 @@
       "name": "Laser Shock",
       "cost": 900,
       "xp": 600,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Shock damage over time (v56: bonuses trigger on Bloons shocked by other tiers)"
      },
      {
@@ -2870,32 +2931,36 @@
       "name": "Laser Cannon",
       "cost": 3000,
       "xp": 2600,
-      "grants": [
+      "_grants_deprecated": [
        "frozen",
        "moab"
       ],
-      "effect": "Laser beam: pops Frozen, MOAB bonus; energy (no Purple)"
+      "effect": "Laser beam: pops Frozen, MOAB bonus; energy (no Purple)",
+      "damageType": "energy"
      },
      {
       "tier": 4,
       "name": "Plasma Accelerator",
       "cost": 11750,
       "xp": 12500,
-      "grants": [
+      "_grants_deprecated": [
        "lead",
        "moab"
       ],
-      "effect": "Plasma beam pops Lead; still no Purple"
+      "effect": "Plasma beam pops Lead; still no Purple",
+      "damageType": "plasma"
      },
      {
       "tier": 5,
       "name": "Ray of Doom",
       "cost": 75000,
       "xp": 75000,
-      "grants": [
+      "_grants_deprecated": [
        "moab"
       ],
-      "effect": "Continuous beam across the map"
+      "effect": "Continuous beam across the map",
+      "damageType": "normal",
+      "damageTypeNote": "inferred: Ray of Doom pops Purple"
      }
     ],
     [
@@ -2904,7 +2969,7 @@
       "name": "Advanced Targeting",
       "cost": 250,
       "xp": 130,
-      "grants": [
+      "_grants_deprecated": [
        "camo"
       ],
       "effect": "Camo detection, better accuracy"
@@ -2914,7 +2979,7 @@
       "name": "Faster Barrel Spin",
       "cost": 950,
       "xp": 700,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Attack speed up"
      },
      {
@@ -2922,7 +2987,7 @@
       "name": "Hydra Rocket Pods",
       "cost": 4500,
       "xp": 2700,
-      "grants": [
+      "_grants_deprecated": [
        "lead",
        "frozen",
        "black",
@@ -2931,14 +2996,16 @@
       "effect": "Rockets; can damage all Bloon types",
       "_src": {
        "effect": "Rockets; can damage all Bloon types (wiki)"
-      }
+      },
+      "damageType": "normal",
+      "damageTypeNote": "missiles damage all types"
      },
      {
       "tier": 4,
       "name": "Rocket Storm",
       "cost": 5000,
       "xp": 14000,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Ability: missile barrage"
      },
      {
@@ -2946,7 +3013,7 @@
       "name": "M.A.D",
       "cost": 65000,
       "xp": 60000,
-      "grants": [
+      "_grants_deprecated": [
        "moab"
       ],
       "effect": "Extreme MOAB-class damage"
@@ -2958,7 +3025,7 @@
       "name": "Faster Swivel",
       "cost": 150,
       "xp": 110,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Turns faster"
      },
      {
@@ -2966,17 +3033,19 @@
       "name": "Powerful Darts",
       "cost": 1200,
       "xp": 650,
-      "grants": [
+      "_grants_deprecated": [
        "frozen"
       ],
-      "effect": "More damage, pops Frozen"
+      "effect": "More damage, pops Frozen",
+      "damageType": "shatter",
+      "damageTypeNote": "Sharp -> Shatter"
      },
      {
       "tier": 3,
       "name": "Buckshot",
       "cost": 3000,
       "xp": 3000,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Shotgun spread"
      },
      {
@@ -2984,7 +3053,7 @@
       "name": "Bloon Area Denial System",
       "cost": 12000,
       "xp": 15000,
-      "grants": [
+      "_grants_deprecated": [
        "moab"
       ],
       "effect": "Fires at many targets independently"
@@ -2994,7 +3063,7 @@
       "name": "Bloon Exclusion Zone",
       "cost": 58000,
       "xp": 55000,
-      "grants": [
+      "_grants_deprecated": [
        "moab"
       ],
       "effect": "Huge multi-target output"
@@ -3057,8 +3126,9 @@
     "black": true,
     "white": true,
     "frozen": true,
-    "moabDamage": false
+    "moabDamage": true
    },
+   "baseDamageType": "energy",
    "paths": [
     [
      {
@@ -3066,7 +3136,7 @@
       "name": "Guided Magic",
       "cost": 175,
       "xp": 110,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Bolts home in and go through walls (was $150)"
      },
      {
@@ -3074,7 +3144,7 @@
       "name": "Arcane Blast",
       "cost": 450,
       "xp": 600,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "+1 damage"
      },
      {
@@ -3082,7 +3152,7 @@
       "name": "Arcane Mastery",
       "cost": 1450,
       "xp": 2300,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Faster attacks, more range and pierce"
      },
      {
@@ -3090,18 +3160,19 @@
       "name": "Arcane Spike",
       "cost": 10000,
       "xp": 11000,
-      "grants": [
+      "_grants_deprecated": [
        "lead",
        "moab"
       ],
-      "effect": "Plasma bolts pop Lead, big MOAB bonus"
+      "effect": "Plasma bolts pop Lead, big MOAB bonus",
+      "damageType": "plasma"
      },
      {
       "tier": 5,
       "name": "Archmage",
       "cost": 32000,
       "xp": 35000,
-      "grants": [
+      "_grants_deprecated": [
        "decamo",
        "moab",
        "ddt"
@@ -3115,17 +3186,18 @@
       "name": "Fireball",
       "cost": 300,
       "xp": 130,
-      "grants": [
+      "_grants_deprecated": [
        "lead"
       ],
-      "effect": "Adds a fireball (fire pops Lead)"
+      "effect": "Adds a fireball (fire pops Lead)",
+      "damageType": "fire"
      },
      {
       "tier": 2,
       "name": "Wall of Fire",
       "cost": 800,
       "xp": 700,
-      "grants": [
+      "_grants_deprecated": [
        "lead"
       ],
       "effect": "Places a wall of fire on the track; classic Lead answer"
@@ -3135,15 +3207,16 @@
       "name": "Dragon's Breath",
       "cost": 3300,
       "xp": 2600,
-      "grants": [],
-      "effect": "Flamethrower area damage"
+      "_grants_deprecated": [],
+      "effect": "Flamethrower area damage",
+      "damageType": "fire"
      },
      {
       "tier": 4,
       "name": "Summon Phoenix",
       "cost": 6000,
       "xp": 13000,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Ability: temporary Phoenix"
      },
      {
@@ -3151,7 +3224,7 @@
       "name": "Wizard Lord Phoenix",
       "cost": 50000,
       "xp": 35000,
-      "grants": [
+      "_grants_deprecated": [
        "moab"
       ],
       "effect": "Permanent Phoenix; ability summons Lava Phoenix"
@@ -3163,7 +3236,7 @@
       "name": "Intense Magic",
       "cost": 300,
       "xp": null,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Bigger, stronger bolts"
      },
      {
@@ -3171,7 +3244,7 @@
       "name": "Monkey Sense",
       "cost": 300,
       "xp": 500,
-      "grants": [
+      "_grants_deprecated": [
        "camo"
       ],
       "effect": "Camo detection"
@@ -3181,7 +3254,7 @@
       "name": "Shimmer",
       "cost": 1500,
       "xp": 2200,
-      "grants": [
+      "_grants_deprecated": [
        "decamo"
       ],
       "effect": "Permanently removes Camo in range, incl. DDTs"
@@ -3191,19 +3264,21 @@
       "name": "Necromancer: Unpopped Army",
       "cost": 2800,
       "xp": 10000,
-      "grants": [
+      "_grants_deprecated": [
        "lead",
        "purple",
        "ddt"
       ],
-      "effect": "Zombie Bloons from graveyard; damage any type"
+      "effect": "Zombie Bloons from graveyard; damage any type",
+      "damageType": "normal",
+      "damageTypeNote": "undead bloons pop Lead and Purple (inferred type)"
      },
      {
       "tier": 5,
       "name": "Prince of Darkness",
       "cost": 26500,
       "xp": 30000,
-      "grants": [
+      "_grants_deprecated": [
        "moab"
       ],
       "effect": "Zombie MOABs and stronger army"
@@ -3287,8 +3362,9 @@
     "black": true,
     "white": true,
     "frozen": false,
-    "moabDamage": false
+    "moabDamage": true
    },
+   "baseDamageType": "sharp",
    "paths": [
     [
      {
@@ -3296,45 +3372,51 @@
       "name": "Laser Blasts",
       "cost": 2000,
       "xp": 500,
-      "grants": [
+      "_grants_deprecated": [
        "frozen"
       ],
-      "effect": "Energy lasers: pop Frozen, but lose Purple popping"
+      "effect": "Energy lasers: pop Frozen, but lose Purple popping",
+      "damageType": "energy"
      },
      {
       "tier": 2,
       "name": "Plasma Blasts",
       "cost": 2500,
       "xp": 2200,
-      "grants": [
+      "_grants_deprecated": [
        "lead"
       ],
-      "effect": "Plasma pops Lead (still no Purple)"
+      "effect": "Plasma pops Lead (still no Purple)",
+      "damageType": "plasma"
      },
      {
       "tier": 3,
       "name": "Sun Avatar",
       "cost": 20000,
       "xp": 7000,
-      "grants": [],
-      "effect": "Sunbeams: huge DPS"
+      "_grants_deprecated": [],
+      "effect": "Sunbeams: huge DPS",
+      "damageType": "plasma",
+      "damageTypeNote": "inferred: pops Lead, not Purple"
      },
      {
       "tier": 4,
       "name": "Sun Temple",
       "cost": 100000,
       "xp": 50000,
-      "grants": [
+      "_grants_deprecated": [
        "moab"
       ],
-      "effect": "Sacrifice towers for power; v57: $20,001+ Magic sacrifice storm decamos (DDTs need $35,001+)"
+      "effect": "Sacrifice towers for power; v57: $20,001+ Magic sacrifice storm decamos (DDTs need $35,001+)",
+      "damageType": "normal",
+      "damageTypeNote": "inferred: Sun Temple pops Purple"
      },
      {
       "tier": 5,
       "name": "True Sun God",
       "cost": 500000,
       "xp": 150000,
-      "grants": [
+      "_grants_deprecated": [
        "moab"
       ],
       "effect": "Ultimate Temple; sacrifices again"
@@ -3346,7 +3428,7 @@
       "name": "Super Range",
       "cost": 1500,
       "xp": 300,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "+range"
      },
      {
@@ -3354,7 +3436,7 @@
       "name": "Epic Range",
       "cost": 1900,
       "xp": 1300,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "More range, faster darts"
      },
      {
@@ -3362,7 +3444,7 @@
       "name": "Robo Monkey",
       "cost": 7500,
       "xp": 6000,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Two arms, double attacks"
      },
      {
@@ -3370,7 +3452,7 @@
       "name": "Tech Terror",
       "cost": 25000,
       "xp": 35000,
-      "grants": [
+      "_grants_deprecated": [
        "moab"
       ],
       "effect": "Annihilation ability: damages everything nearby"
@@ -3380,7 +3462,7 @@
       "name": "The Anti-Bloon",
       "cost": 70000,
       "xp": 85000,
-      "grants": [
+      "_grants_deprecated": [
        "moab"
       ],
       "effect": "Stronger annihilation and attacks"
@@ -3392,7 +3474,7 @@
       "name": "Knockback",
       "cost": 3000,
       "xp": 550,
-      "grants": [
+      "_grants_deprecated": [
        "slow"
       ],
       "effect": "Shots knock Bloons back"
@@ -3402,7 +3484,7 @@
       "name": "Ultravision",
       "cost": 1200,
       "xp": 2000,
-      "grants": [
+      "_grants_deprecated": [
        "camo"
       ],
       "effect": "Camo detection, +1 damage to Camo"
@@ -3412,7 +3494,7 @@
       "name": "Dark Knight",
       "cost": 5600,
       "xp": 6500,
-      "grants": [
+      "_grants_deprecated": [
        "moab"
       ],
       "effect": "Dark blades with MOAB bonus. Blades are Sharp (pop Purple, not Lead); 1-0-3 makes them Sharp+Energy and 2-0-3 Energy+Plasma (pop Lead, not Purple).",
@@ -3425,19 +3507,21 @@
       "name": "Dark Champion",
       "cost": 55555,
       "xp": 47500,
-      "grants": [
+      "_grants_deprecated": [
        "lead",
        "frozen",
        "ddt"
       ],
-      "effect": "Blades pop all Bloon types"
+      "effect": "Blades pop all Bloon types",
+      "damageType": "normal",
+      "damageTypeNote": "inferred: Dark Champion pops all types"
      },
      {
       "tier": 5,
       "name": "Legend of the Night",
       "cost": 165650,
       "xp": 100000,
-      "grants": [
+      "_grants_deprecated": [
        "moab"
       ],
       "effect": "Elite MOAB and boss damage"
@@ -3503,8 +3587,9 @@
     "black": true,
     "white": true,
     "frozen": false,
-    "moabDamage": false
+    "moabDamage": true
    },
+   "baseDamageType": "sharp",
    "paths": [
     [
      {
@@ -3512,7 +3597,7 @@
       "name": "Ninja Discipline",
       "cost": 350,
       "xp": 150,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Faster attacks, more range"
      },
      {
@@ -3520,7 +3605,7 @@
       "name": "Sharp Shurikens",
       "cost": 350,
       "xp": 550,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "+pierce"
      },
      {
@@ -3528,7 +3613,7 @@
       "name": "Double Shot",
       "cost": 900,
       "xp": 2000,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Throws 2 shurikens"
      },
      {
@@ -3536,7 +3621,7 @@
       "name": "Bloonjitsu",
       "cost": 2750,
       "xp": 16000,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Throws 5 shurikens"
      },
      {
@@ -3544,7 +3629,7 @@
       "name": "Grandmaster Ninja",
       "cost": 35000,
       "xp": 50000,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Very fast, many shurikens; needs Shinobi buffs"
      }
     ],
@@ -3554,7 +3639,7 @@
       "name": "Distraction",
       "cost": 250,
       "xp": 200,
-      "grants": [
+      "_grants_deprecated": [
        "slow"
       ],
       "effect": "Chance to knock Bloons back"
@@ -3564,7 +3649,7 @@
       "name": "Counter-Espionage",
       "cost": 400,
       "xp": 600,
-      "grants": [
+      "_grants_deprecated": [
        "decamo"
       ],
       "effect": "Strips Camo from Bloons it damages"
@@ -3574,7 +3659,7 @@
       "name": "Shinobi Tactics",
       "cost": 1200,
       "xp": 2000,
-      "grants": [
+      "_grants_deprecated": [
        "buff"
       ],
       "effect": "Buffs nearby Ninjas (stacks to 20)"
@@ -3584,7 +3669,7 @@
       "name": "Bloon Sabotage",
       "cost": 5200,
       "xp": 14000,
-      "grants": [
+      "_grants_deprecated": [
        "slow"
       ],
       "effect": "Ability: halves Bloon speed for 15s"
@@ -3594,7 +3679,7 @@
       "name": "Grand Saboteur",
       "cost": 22000,
       "xp": 35000,
-      "grants": [
+      "_grants_deprecated": [
        "slow",
        "moab"
       ],
@@ -3607,7 +3692,7 @@
       "name": "Seeking Shuriken",
       "cost": 300,
       "xp": 140,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Homing shurikens"
      },
      {
@@ -3615,7 +3700,7 @@
       "name": "Caltrops",
       "cost": 450,
       "xp": 500,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Drops caltrops on the track"
      },
      {
@@ -3623,7 +3708,7 @@
       "name": "Flash Bomb",
       "cost": 2250,
       "xp": 2500,
-      "grants": [
+      "_grants_deprecated": [
        "stun",
        "lead",
        "frozen"
@@ -3631,14 +3716,16 @@
       "effect": "Bombs that stun groups. The flash bomb's explosion is Normal damage that can damage every Bloon type, so it pops Lead.",
       "_src": {
        "effect": "Bombs that stun groups. The flash bomb's explosion is Normal damage that can damage every Bloon type, so it pops Lead (bloonswiki Flash Bomb page)."
-      }
+      },
+      "damageType": "explosion",
+      "damageTypeNote": "Flash Bomb only"
      },
      {
       "tier": 4,
       "name": "Sticky Bomb",
       "cost": 5000,
       "xp": 15500,
-      "grants": [
+      "_grants_deprecated": [
        "moab"
       ],
       "effect": "Sticky bombs for heavy MOAB damage"
@@ -3648,7 +3735,7 @@
       "name": "Master Bomber",
       "cost": 40000,
       "xp": 37500,
-      "grants": [
+      "_grants_deprecated": [
        "moab"
       ],
       "effect": "Huge sticky-bomb blimp damage"
@@ -3719,8 +3806,9 @@
     "black": true,
     "white": true,
     "frozen": true,
-    "moabDamage": false
+    "moabDamage": true
    },
+   "baseDamageType": "acid",
    "paths": [
     [
      {
@@ -3728,7 +3816,7 @@
       "name": "Larger Potions",
       "cost": 250,
       "xp": 140,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Bigger splash"
      },
      {
@@ -3736,7 +3824,7 @@
       "name": "Acidic Mixture Dip",
       "cost": 350,
       "xp": 550,
-      "grants": [
+      "_grants_deprecated": [
        "buff"
       ],
       "effect": "Buffs a tower: pops Lead, bonus Ceramic/MOAB damage"
@@ -3746,7 +3834,7 @@
       "name": "Berserker Brew",
       "cost": 1400,
       "xp": 2250,
-      "grants": [
+      "_grants_deprecated": [
        "buff"
       ],
       "effect": "Brew: +damage, pierce, range, attack speed"
@@ -3756,7 +3844,7 @@
       "name": "Stronger Stimulant",
       "cost": 2850,
       "xp": 10000,
-      "grants": [
+      "_grants_deprecated": [
        "buff"
       ],
       "effect": "Stronger, longer brew"
@@ -3766,7 +3854,7 @@
       "name": "Permanent Brew",
       "cost": 48000,
       "xp": 30000,
-      "grants": [
+      "_grants_deprecated": [
        "buff"
       ],
       "effect": "Brew effects become permanent"
@@ -3778,7 +3866,7 @@
       "name": "Stronger Acid",
       "cost": 250,
       "xp": 140,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Acid does more damage"
      },
      {
@@ -3786,7 +3874,7 @@
       "name": "Perishing Potions",
       "cost": 475,
       "xp": 500,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "More damage vs MOAB-class"
      },
      {
@@ -3794,7 +3882,7 @@
       "name": "Unstable Concoction",
       "cost": 2800,
       "xp": 2500,
-      "grants": [
+      "_grants_deprecated": [
        "moab"
       ],
       "effect": "MOABs explode for area damage when popped"
@@ -3804,7 +3892,7 @@
       "name": "Transforming Tonic",
       "cost": 4200,
       "xp": 10000,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Ability: turns into a laser monster briefly"
      },
      {
@@ -3812,7 +3900,7 @@
       "name": "Total Transformation",
       "cost": 45000,
       "xp": 28000,
-      "grants": [
+      "_grants_deprecated": [
        "buff"
       ],
       "effect": "Ability: 5 nearby Monkeys transform for 20s (v57: no stacking with Fan Clubs)"
@@ -3824,7 +3912,7 @@
       "name": "Faster Throwing",
       "cost": 650,
       "xp": 145,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Attack speed up"
      },
      {
@@ -3832,7 +3920,7 @@
       "name": "Acid Pool",
       "cost": 450,
       "xp": 700,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Leaves acid pools on the track"
      },
      {
@@ -3840,7 +3928,7 @@
       "name": "Lead to Gold",
       "cost": 1000,
       "xp": 2000,
-      "grants": [
+      "_grants_deprecated": [
        "income"
       ],
       "effect": "Popping Lead gives bonus cash (+$50 per Lead); in CHIMPS after 57.1 {unverified}",
@@ -3853,7 +3941,7 @@
       "name": "Rubber to Gold",
       "cost": 2750,
       "xp": 8500,
-      "grants": [
+      "_grants_deprecated": [
        "income"
       ],
       "effect": "Bloons hit pay extra cash (57.1: no longer pays in CHIMPS)"
@@ -3863,7 +3951,7 @@
       "name": "Bloon Master Alchemist",
       "cost": 40000,
       "xp": 24000,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Shrinks Bloons down to Reds"
      }
     ]
@@ -3928,8 +4016,9 @@
     "black": true,
     "white": true,
     "frozen": false,
-    "moabDamage": false
+    "moabDamage": true
    },
+   "baseDamageType": "sharp",
    "paths": [
     [
      {
@@ -3937,26 +4026,29 @@
       "name": "Hard Thorns",
       "cost": 350,
       "xp": 150,
-      "grants": [
+      "_grants_deprecated": [
        "lead",
        "frozen"
       ],
-      "effect": "Thorns pop any Bloon type"
+      "effect": "Thorns pop any Bloon type",
+      "damageType": "normal"
      },
      {
       "tier": 2,
       "name": "Heart of Thunder",
       "cost": 850,
       "xp": 750,
-      "grants": [],
-      "effect": "Adds lightning attack"
+      "_grants_deprecated": [],
+      "effect": "Adds lightning attack",
+      "damageType": "plasma",
+      "damageTypeNote": "lightning; thorns stay Normal"
      },
      {
       "tier": 3,
       "name": "Druid of the Storm",
       "cost": 1700,
       "xp": 2500,
-      "grants": [
+      "_grants_deprecated": [
        "slow"
       ],
       "effect": "Tornado blows Bloons back"
@@ -3966,7 +4058,7 @@
       "name": "Ball Lightning",
       "cost": 4500,
       "xp": 12000,
-      "grants": [
+      "_grants_deprecated": [
        "camo",
        "ddt"
       ],
@@ -3977,7 +4069,7 @@
       "name": "Monarch of Storms",
       "cost": 60000,
       "xp": 35000,
-      "grants": [
+      "_grants_deprecated": [
        "moab"
       ],
       "effect": "Storm attack blows blimps back and damages them"
@@ -3989,7 +4081,7 @@
       "name": "Thorn Swarm",
       "cost": 250,
       "xp": 140,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "+thorns per volley"
      },
      {
@@ -3997,7 +4089,7 @@
       "name": "Heart of Oak",
       "cost": 350,
       "xp": 600,
-      "grants": [
+      "_grants_deprecated": [
        "degrow"
       ],
       "effect": "Strips Regrow"
@@ -4007,7 +4099,7 @@
       "name": "Druid of the Jungle",
       "cost": 1050,
       "xp": 2000,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Vines grab and pop Bloons"
      },
      {
@@ -4015,7 +4107,7 @@
       "name": "Jungle's Bounty",
       "cost": 4900,
       "xp": 11000,
-      "grants": [
+      "_grants_deprecated": [
        "income"
       ],
       "effect": "Passive since v53: $120 + $10-$120 per Banana Farm in range, +1 life at end of round (cap $10,000); its ability is now Vine Crush (crush 10 Bloons, 30s). No cash in CHIMPS"
@@ -4025,7 +4117,7 @@
       "name": "Spirit of the Forest",
       "cost": 35000,
       "xp": 40000,
-      "grants": [
+      "_grants_deprecated": [
        "moab",
        "income"
       ],
@@ -4038,7 +4130,7 @@
       "name": "Druidic Reach",
       "cost": 100,
       "xp": 120,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "+range"
      },
      {
@@ -4046,7 +4138,7 @@
       "name": "Heart of Vengeance",
       "cost": 300,
       "xp": 550,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Faster attacks when lives are lost"
      },
      {
@@ -4054,7 +4146,7 @@
       "name": "Druid of Wrath",
       "cost": 600,
       "xp": 1700,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Attack speed ramps up while hitting"
      },
      {
@@ -4062,7 +4154,7 @@
       "name": "Poplust",
       "cost": 2350,
       "xp": 14000,
-      "grants": [
+      "_grants_deprecated": [
        "buff"
       ],
       "effect": "Buffs other Druids in range (stacks to 5)"
@@ -4072,7 +4164,7 @@
       "name": "Avatar of Wrath",
       "cost": 45000,
       "xp": 33000,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Damage scales with Bloons on screen"
      }
     ]
@@ -4137,8 +4229,10 @@
     "black": true,
     "white": true,
     "frozen": true,
-    "moabDamage": false
+    "moabDamage": true
    },
+   "baseDamageType": "sharp",
+   "baseDamageTypeNote": "trident Sharp; splash is Shatter (pops Frozen)",
    "paths": [
     [
      {
@@ -4146,7 +4240,7 @@
       "name": "Trident Efficiency",
       "cost": 150,
       "xp": 160,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Trident upgrades"
      },
      {
@@ -4154,7 +4248,7 @@
       "name": "Trident Swiftness",
       "cost": 250,
       "xp": 580,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Faster attacks"
      },
      {
@@ -4162,15 +4256,17 @@
       "name": "Abyss Dweller",
       "cost": 1800,
       "xp": 2800,
-      "grants": [],
-      "effect": "Abyss form, stronger attacks"
+      "_grants_deprecated": [],
+      "effect": "Abyss form, stronger attacks",
+      "damageType": "shatter",
+      "damageTypeNote": "tentacles"
      },
      {
       "tier": 4,
       "name": "Abyssal Warrior",
       "cost": 4200,
       "xp": 11000,
-      "grants": [
+      "_grants_deprecated": [
        "slow"
       ],
       "effect": "Ink slows Bloons"
@@ -4180,7 +4276,7 @@
       "name": "Lord of the Abyss",
       "cost": 23000,
       "xp": 68000,
-      "grants": [
+      "_grants_deprecated": [
        "buff"
       ],
       "effect": "Adds water to the map; buffs Spike Factories"
@@ -4192,7 +4288,7 @@
       "name": "Sharper Prongs",
       "cost": 200,
       "xp": 150,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "More damage"
      },
      {
@@ -4200,7 +4296,7 @@
       "name": "Tidal Chill",
       "cost": 225,
       "xp": 700,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Chilling tridents"
      },
      {
@@ -4208,17 +4304,19 @@
       "name": "Riptide Champion",
       "cost": 2000,
       "xp": 2500,
-      "grants": [
+      "_grants_deprecated": [
        "lead"
       ],
-      "effect": "Pops Lead; long-range Ceramic stall"
+      "effect": "Pops Lead; long-range Ceramic stall",
+      "damageType": "plasma",
+      "damageTypeNote": "inferred: pops Lead, loses Purple"
      },
      {
       "tier": 4,
       "name": "Arctic Knight",
       "cost": 8000,
       "xp": 16000,
-      "grants": [
+      "_grants_deprecated": [
        "slow"
       ],
       "effect": "Freezing attacks"
@@ -4228,7 +4326,7 @@
       "name": "Popseidon",
       "cost": 52000,
       "xp": 70000,
-      "grants": [
+      "_grants_deprecated": [
        "slow",
        "moab"
       ],
@@ -4241,7 +4339,7 @@
       "name": "Echosense Precision",
       "cost": 200,
       "xp": 150,
-      "grants": [
+      "_grants_deprecated": [
        "camo"
       ],
       "effect": "Camo detection, homing tridents"
@@ -4251,7 +4349,7 @@
       "name": "Echosense Network",
       "cost": 280,
       "xp": 670,
-      "grants": [
+      "_grants_deprecated": [
        "buff"
       ],
       "effect": "+range per Echosense Mermonkey (stacks to 10)"
@@ -4261,7 +4359,7 @@
       "name": "Alluring Melody",
       "cost": 2000,
       "xp": 3000,
-      "grants": [
+      "_grants_deprecated": [
        "decamo"
       ],
       "effect": "Strips Camo; trances Bloons"
@@ -4271,7 +4369,7 @@
       "name": "Symphonic Resonance",
       "cost": 7600,
       "xp": 14500,
-      "grants": [
+      "_grants_deprecated": [
        "slow"
       ],
       "effect": "Can trance low-tier MOABs"
@@ -4281,7 +4379,7 @@
       "name": "The Final Harmonic",
       "cost": 25000,
       "xp": 52000,
-      "grants": [
+      "_grants_deprecated": [
        "buff"
       ],
       "effect": "Heroes +15% range/-15% cooldown; Magic towers +3 pierce"
@@ -4338,8 +4436,10 @@
     "black": true,
     "white": true,
     "frozen": false,
-    "moabDamage": false
+    "moabDamage": true
    },
+   "baseDamageType": "sharp",
+   "baseDamageTypeNote": "arrows; inferred Sharp",
    "paths": [
     [
      {
@@ -4347,7 +4447,7 @@
       "name": "Aerial Attunement",
       "cost": 140,
       "xp": null,
-      "grants": [
+      "_grants_deprecated": [
        "buff"
       ],
       "effect": "Range buff to nearby towers up to one tier above the Skywarden (v57: $110->$140)",
@@ -4360,7 +4460,7 @@
       "name": "Zephyr Sense",
       "cost": 175,
       "xp": null,
-      "grants": [
+      "_grants_deprecated": [
        "camo"
       ],
       "effect": "Camo detection, long-range stance toggle (v57: $215->$175)",
@@ -4373,7 +4473,7 @@
       "name": "Wind Weaver",
       "cost": 1200,
       "xp": 2750,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Wind combo mark (v57: $1,650->$1,200)",
       "_src": {
        "effect": "Wind combo mark (v57: $1,650->$1,200; alt: $1,650)"
@@ -4384,7 +4484,7 @@
       "name": "Galesage",
       "cost": 3000,
       "xp": 16000,
-      "grants": [
+      "_grants_deprecated": [
        "decamo"
       ],
       "effect": "Disables Camo inside its radius (not permanent) (v57: $3,300->$3,000)",
@@ -4397,7 +4497,7 @@
       "name": "Farwind Seer",
       "cost": 19000,
       "xp": 30000,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Wind path tier 5"
      }
     ],
@@ -4407,7 +4507,7 @@
       "name": "Storm's Pulse",
       "cost": 175,
       "xp": null,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Thunder pulse"
      },
      {
@@ -4415,17 +4515,19 @@
       "name": "Thundering Arc",
       "cost": 275,
       "xp": null,
-      "grants": [
+      "_grants_deprecated": [
        "lead"
       ],
-      "effect": "Arc burst; v57: Plasma damage, pops Lead"
+      "effect": "Arc burst; v57: Plasma damage, pops Lead",
+      "damageType": "plasma",
+      "damageTypeNote": "Energy -> Plasma in v57"
      },
      {
       "tier": 3,
       "name": "Galvanic Conduit",
       "cost": 2500,
       "xp": 3000,
-      "grants": [
+      "_grants_deprecated": [
        "moab"
       ],
       "effect": "+3 damage to MOAB, Ceramic and Lead (v57: $1,800->$2,500)",
@@ -4438,7 +4540,7 @@
       "name": "Thunder's Decree",
       "cost": 3500,
       "xp": 12000,
-      "grants": [
+      "_grants_deprecated": [
        "stun"
       ],
       "effect": "Thunder combo stuns, up to ZOMGs (v57: $2,000->$3,500, ability 15s->9s)",
@@ -4451,7 +4553,7 @@
       "name": "Stormwrath Archon",
       "cost": 32000,
       "xp": 36000,
-      "grants": [
+      "_grants_deprecated": [
        "moab",
        "stun"
       ],
@@ -4467,7 +4569,7 @@
       "name": "Shatterpoint",
       "cost": 150,
       "xp": null,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Ice path tier 1"
      },
      {
@@ -4475,7 +4577,7 @@
       "name": "Icebore",
       "cost": 250,
       "xp": null,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Ice path tier 2"
      },
      {
@@ -4483,7 +4585,7 @@
       "name": "Coldchain",
       "cost": 1500,
       "xp": 2750,
-      "grants": [
+      "_grants_deprecated": [
        "slow"
       ],
       "effect": "Ice combo mark: slow and shatter"
@@ -4493,7 +4595,7 @@
       "name": "Frozen Verdict",
       "cost": 3900,
       "xp": 14000,
-      "grants": [
+      "_grants_deprecated": [
        "slow"
       ],
       "effect": "Stronger ice combo"
@@ -4503,7 +4605,7 @@
       "name": "Winter's Mercy",
       "cost": 20000,
       "xp": 32000,
-      "grants": [
+      "_grants_deprecated": [
        "slow"
       ],
       "effect": "Ice path tier 5"
@@ -4562,6 +4664,8 @@
     "frozen": false,
     "moabDamage": false
    },
+   "baseDamageType": "none",
+   "baseDamageTypeNote": "no attack",
    "paths": [
     [
      {
@@ -4569,7 +4673,7 @@
       "name": "Increased Production",
       "cost": 500,
       "xp": 200,
-      "grants": [
+      "_grants_deprecated": [
        "income"
       ],
       "effect": "+2 bananas per round ($120/round)"
@@ -4579,7 +4683,7 @@
       "name": "Greater Production",
       "cost": 600,
       "xp": 750,
-      "grants": [
+      "_grants_deprecated": [
        "income"
       ],
       "effect": "+2 more bananas ($160/round)"
@@ -4589,7 +4693,7 @@
       "name": "Banana Plantation",
       "cost": 3000,
       "xp": 3000,
-      "grants": [
+      "_grants_deprecated": [
        "income"
       ],
       "effect": "16 bananas per round"
@@ -4599,7 +4703,7 @@
       "name": "Banana Research Facility",
       "cost": 19000,
       "xp": 20000,
-      "grants": [
+      "_grants_deprecated": [
        "income"
       ],
       "effect": "Crates of $300 (about $1,500/round)"
@@ -4609,7 +4713,7 @@
       "name": "Banana Central",
       "cost": 115000,
       "xp": 50000,
-      "grants": [
+      "_grants_deprecated": [
        "income",
        "buff"
       ],
@@ -4622,7 +4726,7 @@
       "name": "Long Life Bananas",
       "cost": 300,
       "xp": 200,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Bananas last longer"
      },
      {
@@ -4630,7 +4734,7 @@
       "name": "Valuable Bananas",
       "cost": 800,
       "xp": 1000,
-      "grants": [
+      "_grants_deprecated": [
        "income"
       ],
       "effect": "+25% banana value"
@@ -4640,7 +4744,7 @@
       "name": "Monkey Bank",
       "cost": 3650,
       "xp": 3500,
-      "grants": [
+      "_grants_deprecated": [
        "income"
       ],
       "effect": "Deposits cash with 15% interest per round"
@@ -4650,7 +4754,7 @@
       "name": "IMF Loan",
       "cost": 7200,
       "xp": 20000,
-      "grants": [
+      "_grants_deprecated": [
        "income"
       ],
       "effect": "Ability: $9,000 loan repaid from income"
@@ -4660,7 +4764,7 @@
       "name": "Monkey-Nomics",
       "cost": 100000,
       "xp": 50000,
-      "grants": [
+      "_grants_deprecated": [
        "income"
       ],
       "effect": "Ability: $9,000 with no debt"
@@ -4672,7 +4776,7 @@
       "name": "EZ Collect",
       "cost": 250,
       "xp": 200,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Bananas easier to collect"
      },
      {
@@ -4680,7 +4784,7 @@
       "name": "Banana Salvage",
       "cost": 400,
       "xp": null,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "+10% sellback"
      },
      {
@@ -4688,7 +4792,7 @@
       "name": "Marketplace",
       "cost": 2700,
       "xp": 3200,
-      "grants": [
+      "_grants_deprecated": [
        "income"
       ],
       "effect": "Auto-collected cash, $320/round"
@@ -4698,7 +4802,7 @@
       "name": "Central Market",
       "cost": 15000,
       "xp": 20000,
-      "grants": [
+      "_grants_deprecated": [
        "income",
        "buff"
       ],
@@ -4709,7 +4813,7 @@
       "name": "Monkey Wall Street",
       "cost": 70000,
       "xp": 50000,
-      "grants": [
+      "_grants_deprecated": [
        "income"
       ],
       "effect": "+$4,000 and 15 lives at round end"
@@ -4779,8 +4883,9 @@
     "black": true,
     "white": true,
     "frozen": false,
-    "moabDamage": false
+    "moabDamage": true
    },
+   "baseDamageType": "sharp",
    "paths": [
     [
      {
@@ -4788,7 +4893,7 @@
       "name": "Bigger Stacks",
       "cost": 800,
       "xp": 170,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "More spikes per pile"
      },
      {
@@ -4796,19 +4901,20 @@
       "name": "White Hot Spikes",
       "cost": 600,
       "xp": 600,
-      "grants": [
+      "_grants_deprecated": [
        "lead",
        "frozen",
        "ddt"
       ],
-      "effect": "New spikes pop Lead and Frozen (incl. DDT lead layer)"
+      "effect": "New spikes pop Lead and Frozen (incl. DDT lead layer)",
+      "damageType": "normal"
      },
      {
       "tier": 3,
       "name": "Spiked Balls",
       "cost": 2300,
       "xp": 2400,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Spiked balls with Ceramic bonus"
      },
      {
@@ -4816,15 +4922,17 @@
       "name": "Spiked Mines",
       "cost": 9500,
       "xp": 15000,
-      "grants": [],
-      "effect": "Mines that explode"
+      "_grants_deprecated": [],
+      "effect": "Mines that explode",
+      "damageType": "explosion",
+      "damageTypeNote": "mines; spikes stay Normal"
      },
      {
       "tier": 5,
       "name": "Super Mines",
       "cost": 125000,
       "xp": 32500,
-      "grants": [
+      "_grants_deprecated": [
        "moab"
       ],
       "effect": "Massive mine explosions"
@@ -4836,7 +4944,7 @@
       "name": "Faster Production",
       "cost": 600,
       "xp": 180,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Faster production"
      },
      {
@@ -4844,7 +4952,7 @@
       "name": "Even Faster Production",
       "cost": 800,
       "xp": 650,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Faster again"
      },
      {
@@ -4852,7 +4960,7 @@
       "name": "MOAB SHREDR",
       "cost": 2500,
       "xp": 2500,
-      "grants": [
+      "_grants_deprecated": [
        "moab"
       ],
       "effect": "Spikes shred MOAB-class"
@@ -4862,7 +4970,7 @@
       "name": "Spike Storm",
       "cost": 7000,
       "xp": 11000,
-      "grants": [
+      "_grants_deprecated": [
        "moab"
       ],
       "effect": "Ability: spikes everywhere; good vs R100 BAD"
@@ -4872,7 +4980,7 @@
       "name": "Carpet of Spikes",
       "cost": 41000,
       "xp": 35000,
-      "grants": [
+      "_grants_deprecated": [
        "moab"
       ],
       "effect": "Carpets the track regularly"
@@ -4884,7 +4992,7 @@
       "name": "Long Reach",
       "cost": 150,
       "xp": 120,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "+range"
      },
      {
@@ -4892,7 +5000,7 @@
       "name": "Smart Spikes",
       "cost": 400,
       "xp": 550,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Choose where spikes land"
      },
      {
@@ -4900,7 +5008,7 @@
       "name": "Long Life Spikes",
       "cost": 1300,
       "xp": 2100,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Spikes last longer"
      },
      {
@@ -4908,7 +5016,7 @@
       "name": "Deadly Spikes",
       "cost": 3600,
       "xp": 9000,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "More damage, survive rounds"
      },
      {
@@ -4916,7 +5024,7 @@
       "name": "Perma-Spike",
       "cost": 30000,
       "xp": 29500,
-      "grants": [
+      "_grants_deprecated": [
        "moab"
       ],
       "effect": "Huge long-lasting stockpile"
@@ -4988,6 +5096,8 @@
     "frozen": false,
     "moabDamage": false
    },
+   "baseDamageType": "none",
+   "baseDamageTypeNote": "no attack (5-x-x attacks)",
    "paths": [
     [
      {
@@ -4995,7 +5105,7 @@
       "name": "Bigger Radius",
       "cost": 400,
       "xp": 160,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "+radius"
      },
      {
@@ -5003,7 +5113,7 @@
       "name": "Jungle Drums",
       "cost": 1500,
       "xp": 1000,
-      "grants": [
+      "_grants_deprecated": [
        "buff"
       ],
       "effect": "+15% attack speed in range"
@@ -5013,7 +5123,7 @@
       "name": "Primary Training",
       "cost": 800,
       "xp": 2000,
-      "grants": [
+      "_grants_deprecated": [
        "buff"
       ],
       "effect": "Primary towers: +pierce, +range"
@@ -5023,7 +5133,7 @@
       "name": "Primary Mentoring",
       "cost": 2500,
       "xp": 12000,
-      "grants": [
+      "_grants_deprecated": [
        "buff"
       ],
       "effect": "Stronger Primary buffs incl. cheaper/free low-tier Primary upgrades and shorter Primary ability cooldowns"
@@ -5033,7 +5143,7 @@
       "name": "Primary Expertise",
       "cost": 25000,
       "xp": 32000,
-      "grants": [
+      "_grants_deprecated": [
        "buff",
        "moab"
       ],
@@ -5046,7 +5156,7 @@
       "name": "Grow Blocker",
       "cost": 250,
       "xp": 150,
-      "grants": [
+      "_grants_deprecated": [
        "degrow"
       ],
       "effect": "Stops Regrow in range"
@@ -5056,7 +5166,7 @@
       "name": "Radar Scanner",
       "cost": 2000,
       "xp": 2500,
-      "grants": [
+      "_grants_deprecated": [
        "camo",
        "buff"
       ],
@@ -5067,7 +5177,7 @@
       "name": "Monkey Intelligence Bureau",
       "cost": 7500,
       "xp": 3500,
-      "grants": [
+      "_grants_deprecated": [
        "lead",
        "purple",
        "black",
@@ -5083,7 +5193,7 @@
       "name": "Call to Arms",
       "cost": 20000,
       "xp": 20000,
-      "grants": [
+      "_grants_deprecated": [
        "buff"
       ],
       "effect": "Ability: +50% attack speed and pierce (v57: can't stack with itself/Homeland)"
@@ -5093,7 +5203,7 @@
       "name": "Homeland Defense",
       "cost": 40000,
       "xp": 30000,
-      "grants": [
+      "_grants_deprecated": [
        "buff"
       ],
       "effect": "Ability: +100% global for 20s"
@@ -5105,7 +5215,7 @@
       "name": "Monkey Business",
       "cost": 500,
       "xp": 250,
-      "grants": [
+      "_grants_deprecated": [
        "buff"
       ],
       "effect": "10% off towers/upgrades up to tier 3 in range"
@@ -5115,7 +5225,7 @@
       "name": "Monkey Commerce",
       "cost": 500,
       "xp": 750,
-      "grants": [
+      "_grants_deprecated": [
        "buff"
       ],
       "effect": "+5% more discount (stacks to 25% across 3 Villages)"
@@ -5125,7 +5235,7 @@
       "name": "Monkey Town",
       "cost": 10000,
       "xp": 3000,
-      "grants": [
+      "_grants_deprecated": [
        "income"
       ],
       "effect": "+50% cash per pop in range"
@@ -5135,7 +5245,7 @@
       "name": "Monkey City",
       "cost": 3000,
       "xp": 15500,
-      "grants": [
+      "_grants_deprecated": [
        "income",
        "buff"
       ],
@@ -5149,7 +5259,7 @@
       "name": "Monkeyopolis",
       "cost": 5000,
       "xp": 28000,
-      "grants": [
+      "_grants_deprecated": [
        "income"
       ],
       "effect": "Absorbs Banana Farms into income; real cost $5,000 + $5,000 per absorbed Farm",
@@ -5219,8 +5329,9 @@
     "black": true,
     "white": true,
     "frozen": false,
-    "moabDamage": false
+    "moabDamage": true
    },
+   "baseDamageType": "sharp",
    "paths": [
     [
      {
@@ -5228,7 +5339,7 @@
       "name": "Sentry Gun",
       "cost": 500,
       "xp": 160,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Builds temporary sentries"
      },
      {
@@ -5236,7 +5347,7 @@
       "name": "Faster Engineering",
       "cost": 400,
       "xp": 550,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Sentries built faster"
      },
      {
@@ -5244,7 +5355,7 @@
       "name": "Sprockets",
       "cost": 575,
       "xp": 1850,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Engineer and sentries attack faster"
      },
      {
@@ -5252,18 +5363,20 @@
       "name": "Sentry Expert",
       "cost": 2500,
       "xp": 9500,
-      "grants": [
+      "_grants_deprecated": [
        "lead",
        "frozen"
       ],
-      "effect": "Sentries of different damage types (no camo)"
+      "effect": "Sentries of different damage types (no camo)",
+      "damageType": "mixed",
+      "damageTypeNote": "specialised sentries: crushing/boom/cold/energy"
      },
      {
       "tier": 5,
       "name": "Sentry Champion",
       "cost": 32000,
       "xp": 30000,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Powerful plasma sentries (needs Purple support)"
      }
     ],
@@ -5273,7 +5386,7 @@
       "name": "Larger Service Area",
       "cost": 250,
       "xp": 170,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "+range"
      },
      {
@@ -5281,7 +5394,7 @@
       "name": "Deconstruction",
       "cost": 350,
       "xp": 500,
-      "grants": [
+      "_grants_deprecated": [
        "moab",
        "fortified"
       ],
@@ -5292,7 +5405,7 @@
       "name": "Cleansing Foam",
       "cost": 900,
       "xp": 2000,
-      "grants": [
+      "_grants_deprecated": [
        "decamo",
        "degrow",
        "lead"
@@ -5304,7 +5417,7 @@
       "name": "Overclock",
       "cost": 13500,
       "xp": 14000,
-      "grants": [
+      "_grants_deprecated": [
        "buff"
       ],
       "effect": "Ability: big attack-speed boost to one tower"
@@ -5314,7 +5427,7 @@
       "name": "Ultraboost",
       "cost": 72000,
       "xp": 35000,
-      "grants": [
+      "_grants_deprecated": [
        "buff"
       ],
       "effect": "Permanent stacking boosts"
@@ -5326,17 +5439,19 @@
       "name": "Oversize Nails",
       "cost": 450,
       "xp": 150,
-      "grants": [
+      "_grants_deprecated": [
        "frozen"
       ],
-      "effect": "Shatter damage pops Frozen"
+      "effect": "Shatter damage pops Frozen",
+      "damageType": "shatter",
+      "damageTypeNote": "inferred: pops Frozen, not Lead"
      },
      {
       "tier": 2,
       "name": "Pin",
       "cost": 220,
       "xp": 500,
-      "grants": [
+      "_grants_deprecated": [
        "stun"
       ],
       "effect": "Nails pin (stun) Bloons"
@@ -5346,7 +5461,7 @@
       "name": "Double Gun",
       "cost": 450,
       "xp": 1800,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Double fire rate"
      },
      {
@@ -5354,7 +5469,7 @@
       "name": "Bloon Trap",
       "cost": 3600,
       "xp": 11000,
-      "grants": [
+      "_grants_deprecated": [
        "income"
       ],
       "effect": "Trap collects Bloons for cash (v57: pop cash now immediate). Traps do not affect MOAB-class Bloons.",
@@ -5367,7 +5482,7 @@
       "name": "XXXL Trap",
       "cost": 45000,
       "xp": 40000,
-      "grants": [
+      "_grants_deprecated": [
        "income",
        "moab"
       ],
@@ -5451,8 +5566,10 @@
     "black": true,
     "white": true,
     "frozen": true,
-    "moabDamage": false
+    "moabDamage": true
    },
+   "baseDamageType": "energy",
+   "baseDamageTypeNote": "staff; inferred Energy (no Lead/Purple, pops Frozen)",
    "paths": [
     [
      {
@@ -5460,7 +5577,7 @@
       "name": "Piranha",
       "cost": 160,
       "xp": 250,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Water beast: pulls Bloons under"
      },
      {
@@ -5468,7 +5585,7 @@
       "name": "Barracuda",
       "cost": 810,
       "xp": 500,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Stronger fish"
      },
      {
@@ -5476,7 +5593,7 @@
       "name": "Great White",
       "cost": 2010,
       "xp": 1000,
-      "grants": [
+      "_grants_deprecated": [
        "lead"
       ],
       "effect": "Shark; can crush Lead"
@@ -5486,7 +5603,7 @@
       "name": "Orca",
       "cost": 12500,
       "xp": 4250,
-      "grants": [
+      "_grants_deprecated": [
        "moab"
       ],
       "effect": "Drags blimps (up to ZOMG at max Beast Power)"
@@ -5496,7 +5613,7 @@
       "name": "Megalodon",
       "cost": 45000,
       "xp": 100000,
-      "grants": [
+      "_grants_deprecated": [
        "moab"
       ],
       "effect": "Needs 3 more same-path tier-4 beasts merged in"
@@ -5508,7 +5625,7 @@
       "name": "Microraptor",
       "cost": 175,
       "xp": 250,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Land beast"
      },
      {
@@ -5516,7 +5633,7 @@
       "name": "Adasaurus",
       "cost": 830,
       "xp": 500,
-      "grants": [
+      "_grants_deprecated": [
        "lead"
       ],
       "effect": "Pops Lead"
@@ -5526,7 +5643,7 @@
       "name": "Velociraptor",
       "cost": 2065,
       "xp": 1000,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Pounces; x1.5 vs stunned (v56)"
      },
      {
@@ -5534,7 +5651,7 @@
       "name": "Tyrannosaurus Rex",
       "cost": 9500,
       "xp": 5000,
-      "grants": [
+      "_grants_deprecated": [
        "stun",
        "moab"
       ],
@@ -5545,7 +5662,7 @@
       "name": "Giganotosaurus",
       "cost": 60000,
       "xp": 90000,
-      "grants": [
+      "_grants_deprecated": [
        "stun",
        "moab"
       ],
@@ -5558,7 +5675,7 @@
       "name": "Gyrfalcon",
       "cost": 190,
       "xp": 250,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Bird that grabs Bloons"
      },
      {
@@ -5566,7 +5683,7 @@
       "name": "Horned Owl",
       "cost": 860,
       "xp": 550,
-      "grants": [
+      "_grants_deprecated": [
        "camo"
       ],
       "effect": "Camo detection"
@@ -5576,7 +5693,7 @@
       "name": "Golden Eagle",
       "cost": 2120,
       "xp": 1000,
-      "grants": [],
+      "_grants_deprecated": [],
       "effect": "Grabs bigger Bloons"
      },
      {
@@ -5584,7 +5701,7 @@
       "name": "Giant Condor",
       "cost": 9000,
       "xp": 5500,
-      "grants": [
+      "_grants_deprecated": [
        "moab"
       ],
       "effect": "Picks up small MOAB-class"
@@ -5594,7 +5711,7 @@
       "name": "Pouākai",
       "cost": 30000,
       "xp": 110000,
-      "grants": [
+      "_grants_deprecated": [
        "moab",
        "lead",
        "ddt"
@@ -6000,7 +6117,7 @@
   "Engineer Monkey main bloonswiki page could not be read; tier 1-2 XP values come from fandom (fandom's tier 3-5 XP match bloonswiki/chapter 02, so likely correct).",
   "Dart Monkey stats page is dated v53.0 and Beast Handler v54.0; v55-v57 patch notes list no price changes for them.",
   "Glue Gunner innate Lead/Black/White/Purple/Frozen flags mean 'glue can affect it'; base glue deals no damage. Whether plain glue sticks to Lead was not confirmed.",
-  "'grants' tokens are this dataset's reading of wiki/patch-note text, not a game export. Least certain: Frag Bombs 'black' (frags only), Exploding Pineapple 'lead', Hydra Rocket Pods 'black', Dark Champion all-types, Necromancer 'lead/purple', Ice Shards decamo (chapter 01 claims it; not used here).",
+  "DEPRECATED 2026-11-06: 'grants' tokens are this dataset's reading of wiki/patch-note text, not a game export. Least certain: Frag Bombs 'black' (frags only), Exploding Pineapple 'lead', Hydra Rocket Pods 'black', Dark Champion all-types, Necromancer 'lead/purple', Ice Shards decamo (chapter 01 claims it; not used here). Superseded by data/pop-model.json.",
   "RESOLVED 2026-11-05: Desperado is Primary, added v49.0 (bloonswiki infobox + v49.0 update page: 'A new Primary Monkey strolls into town!'). Chapter 02's 'Military/v47' was wrong and has been corrected; no Elite Military Training bonus.",
   "Hero unlock prices for Benjamin (3,000 MM, level 15) come from chapter 02 only; his and Corvus's current bloonswiki pages partly failed (Corvus confirmed via the Spellbook redirect: $1,325, 7,000 MM, level 35).",
   "Churchill and Dan D'Monke unlock wording on bloonswiki is ambiguous ('reach level X, or buy for N MM'); stored as MM price + unlock level.",
