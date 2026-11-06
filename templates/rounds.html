@@ -8,7 +8,7 @@
   <tbody>
   {% for r in rows %}
   <tr class="d{{ r.danger or 0 }}"{% if set == 'standard' %} id="r{{ r.round }}"{% else %} id="abr{{ r.round }}"{% endif %} data-danger="{{ r.danger or 0 }}">
-    <th scope="row" class="n"><span class="rnd">{{ r.round }}</span>{% if r.danger and r.danger >= 3 %}<span class="danger-flag" title="Run-ending round">!</span>{% elif r.danger == 2 %}<span class="danger-flag warn" title="Tough round">!</span>{% endif %}</th>
+    <th scope="row" class="n">{% if set == 'standard' and r.round <= 100 %}<a class="rnd" href="{{ root }}rounds/{{ r.round }}/">{{ r.round }}</a>{% else %}<span class="rnd">{{ r.round }}</span>{% endif %}{% if r.danger and r.danger >= 3 %}<span class="danger-flag" title="Run-ending round">!</span>{% elif r.danger == 2 %}<span class="danger-flag warn" title="Tough round">!</span>{% endif %}</th>
     <td class="wrapcell">{{ r.composition }}</td>
     <td class="n">{{ r.rbe|num }}</td>
     <td class="n">{{ r.cash|money }}</td>
@@ -29,6 +29,17 @@
 {% if intro %}<div class="prose">{{ intro }}</div>{% else %}
 <p class="lede">Cash is pop cash plus the end-of-round bonus with no income towers or Monkey Knowledge. Half Cash halves it. Rows marked <span class="danger-flag">!</span> are the rounds most likely to end a run.</p>
 {% endif %}
+<div class="panel round-look">
+  <form class="panel-b round-form" action="{{ root }}rounds/" method="get" data-round-form>
+    <label for="roundN" class="round-label">Round</label>
+    <input id="roundN" name="n" type="number" inputmode="numeric" min="1" max="140" placeholder="63">
+    <button class="btn btn-grass" type="submit">Show</button>
+  </form>
+  <div class="panel-b danger-strip">
+    <span class="toolbar-l">Rounds that end runs</span>
+    <span class="rchips">{% for n in DANGER_ROUNDS %}{{ ui.rchip(n, root) }}{% endfor %}</span>
+  </div>
+</div>
 <div class="toolbar" id="roundTools" hidden>
   <div class="seg" role="radiogroup" aria-label="Round set">
     <button type="button" role="radio" data-set="standard" aria-checked="true">Standard</button>

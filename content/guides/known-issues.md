@@ -1,7 +1,7 @@
 ---
 title: Known Issues
 slug: known-issues
-group: Reference
+group: More
 order: 15
 summary: What in this site's 57.4 data is still unconfirmed, and the quick in-game checks that would settle each item.
 updated: 2026-11-05

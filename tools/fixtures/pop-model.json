@@ -1,0 +1,2902 @@
+{
+ "version": "57.4",
+ "_fixture": true,
+ "bloonImmunities": {
+  "lead": [
+   "sharp",
+   "cold",
+   "energy"
+  ],
+  "purple": [
+   "energy",
+   "fire",
+   "plasma"
+  ],
+  "black": [
+   "explosion"
+  ],
+  "white": [
+   "cold"
+  ],
+  "zebra": [
+   "explosion",
+   "cold"
+  ],
+  "frozen": [
+   "sharp"
+  ],
+  "camo": [
+   "needs detection to be targeted"
+  ],
+  "fortified": [],
+  "ddt": [
+   "camo",
+   "lead",
+   "black properties"
+  ]
+ },
+ "towers": {
+  "dart": {
+   "camo": {
+    "any": [
+     [
+      {
+       "path": 2,
+       "tier": 2
+      }
+     ]
+    ],
+    "note": "Enhanced Eyesight"
+   },
+   "lead": {
+    "any": [
+     [
+      {
+       "path": 0,
+       "tier": 4
+      }
+     ],
+     [
+      {
+       "path": 1,
+       "tier": 5
+      }
+     ]
+    ],
+    "note": "Juggernaut"
+   },
+   "purple": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "black": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "white": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "zebra": {
+    "derived": true
+   },
+   "frozen": {
+    "any": [
+     [
+      {
+       "path": 0,
+       "tier": 4
+      }
+     ],
+     [
+      {
+       "path": 1,
+       "tier": 5
+      }
+     ]
+    ],
+    "note": "Juggernaut"
+   },
+   "moab": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "ddt": {
+    "derived": true
+   },
+   "bad": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "fortified": {
+    "any": [
+     [
+      "base"
+     ]
+    ],
+    "note": "Fortified only adds HP; any damage pops it"
+   },
+   "bonuses": [
+    {
+     "vs": "moab",
+     "from": {
+      "path": 2,
+      "tier": 5
+     },
+     "note": "Crossbow Master"
+    }
+   ],
+   "confidence": "high",
+   "sources": [
+    "fixture: hand-made from the 0.4 data and the audit; replace with data/pop-model.json"
+   ]
+  },
+  "boomerang": {
+   "camo": {
+    "any": [
+     [
+      "never"
+     ]
+    ]
+   },
+   "lead": {
+    "any": [
+     [
+      {
+       "path": 2,
+       "tier": 2
+      }
+     ]
+    ],
+    "note": "Red Hot Rangs"
+   },
+   "purple": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "black": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "white": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "zebra": {
+    "derived": true
+   },
+   "frozen": {
+    "any": [
+     [
+      {
+       "path": 2,
+       "tier": 2
+      }
+     ]
+    ],
+    "note": "Red Hot Rangs"
+   },
+   "moab": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "ddt": {
+    "derived": true
+   },
+   "bad": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "fortified": {
+    "any": [
+     [
+      "base"
+     ]
+    ],
+    "note": "Fortified only adds HP; any damage pops it"
+   },
+   "bonuses": [
+    {
+     "vs": "moab",
+     "from": {
+      "path": 2,
+      "tier": 4
+     },
+     "note": "MOAB Press"
+    },
+    {
+     "vs": "moab",
+     "from": {
+      "path": 0,
+      "tier": 5
+     },
+     "note": "Glaive Lord"
+    }
+   ],
+   "confidence": "medium",
+   "sources": [
+    "fixture: hand-made from the 0.4 data and the audit; replace with data/pop-model.json"
+   ]
+  },
+  "bomb": {
+   "camo": {
+    "any": [
+     [
+      "never"
+     ]
+    ]
+   },
+   "lead": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "purple": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "black": {
+    "any": [
+     [
+      {
+       "path": 2,
+       "tier": 2
+      }
+     ]
+    ],
+    "note": "Frag Bombs"
+   },
+   "white": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "zebra": {
+    "derived": true
+   },
+   "frozen": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "moab": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "ddt": {
+    "derived": true
+   },
+   "bad": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "fortified": {
+    "any": [
+     [
+      "base"
+     ]
+    ],
+    "note": "Fortified only adds HP; any damage pops it"
+   },
+   "bonuses": [
+    {
+     "vs": "moab",
+     "from": {
+      "path": 1,
+      "tier": 3
+     },
+     "note": "MOAB Mauler"
+    }
+   ],
+   "confidence": "high",
+   "sources": [
+    "fixture: hand-made from the 0.4 data and the audit; replace with data/pop-model.json"
+   ]
+  },
+  "tack": {
+   "camo": {
+    "any": [
+     [
+      "never"
+     ]
+    ]
+   },
+   "lead": {
+    "any": [
+     [
+      {
+       "path": 0,
+       "tier": 3
+      }
+     ]
+    ],
+    "note": "Hot Shots"
+   },
+   "purple": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "black": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "white": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "zebra": {
+    "derived": true
+   },
+   "frozen": {
+    "any": [
+     [
+      {
+       "path": 0,
+       "tier": 3
+      }
+     ],
+     [
+      {
+       "path": 1,
+       "tier": 3
+      }
+     ]
+    ]
+   },
+   "moab": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "ddt": {
+    "derived": true
+   },
+   "bad": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "fortified": {
+    "any": [
+     [
+      "base"
+     ]
+    ],
+    "note": "Fortified only adds HP; any damage pops it"
+   },
+   "bonuses": [],
+   "confidence": "medium",
+   "sources": [
+    "fixture: hand-made from the 0.4 data and the audit; replace with data/pop-model.json"
+   ]
+  },
+  "ice": {
+   "camo": {
+    "any": [
+     [
+      {
+       "path": 0,
+       "tier": 2
+      }
+     ]
+    ],
+    "note": "Cold Snap hits camo in its blast"
+   },
+   "lead": {
+    "any": [
+     [
+      {
+       "path": 0,
+       "tier": 2
+      }
+     ]
+    ],
+    "note": "Cold Snap"
+   },
+   "purple": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "black": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "white": {
+    "any": [
+     [
+      {
+       "path": 1,
+       "tier": 4
+      }
+     ]
+    ],
+    "note": "Snowstorm"
+   },
+   "zebra": {
+    "derived": true
+   },
+   "frozen": {
+    "any": [
+     [
+      {
+       "path": 2,
+       "tier": 2
+      }
+     ]
+    ],
+    "note": "Re-Freeze"
+   },
+   "moab": {
+    "any": [
+     [
+      {
+       "path": 0,
+       "tier": 4
+      }
+     ],
+     [
+      {
+       "path": 1,
+       "tier": 4
+      }
+     ],
+     [
+      {
+       "path": 2,
+       "tier": 4
+      }
+     ]
+    ],
+    "note": "base freeze does not hurt MOAB-class"
+   },
+   "ddt": {
+    "derived": true
+   },
+   "bad": {
+    "any": [
+     [
+      {
+       "path": 0,
+       "tier": 4
+      }
+     ],
+     [
+      {
+       "path": 1,
+       "tier": 4
+      }
+     ],
+     [
+      {
+       "path": 2,
+       "tier": 4
+      }
+     ]
+    ],
+    "note": "base freeze does not hurt MOAB-class"
+   },
+   "fortified": {
+    "any": [
+     [
+      "base"
+     ]
+    ],
+    "note": "Fortified only adds HP; any damage pops it"
+   },
+   "bonuses": [],
+   "confidence": "low",
+   "sources": [
+    "fixture: hand-made from the 0.4 data and the audit; replace with data/pop-model.json"
+   ]
+  },
+  "glue": {
+   "camo": {
+    "any": [
+     [
+      "never"
+     ]
+    ]
+   },
+   "lead": {
+    "any": [
+     [
+      {
+       "path": 0,
+       "tier": 2
+      }
+     ]
+    ],
+    "note": "Corrosive Glue does the damage"
+   },
+   "purple": {
+    "any": [
+     [
+      {
+       "path": 0,
+       "tier": 2
+      }
+     ]
+    ]
+   },
+   "black": {
+    "any": [
+     [
+      {
+       "path": 0,
+       "tier": 2
+      }
+     ]
+    ]
+   },
+   "white": {
+    "any": [
+     [
+      {
+       "path": 0,
+       "tier": 2
+      }
+     ]
+    ]
+   },
+   "zebra": {
+    "derived": true
+   },
+   "frozen": {
+    "any": [
+     [
+      {
+       "path": 0,
+       "tier": 2
+      }
+     ]
+    ]
+   },
+   "moab": {
+    "any": [
+     [
+      {
+       "path": 2,
+       "tier": 3
+      }
+     ]
+    ],
+    "note": "MOAB Glue"
+   },
+   "ddt": {
+    "derived": true
+   },
+   "bad": {
+    "any": [
+     [
+      {
+       "path": 2,
+       "tier": 3
+      }
+     ]
+    ],
+    "note": "MOAB Glue"
+   },
+   "fortified": {
+    "any": [
+     [
+      {
+       "path": 0,
+       "tier": 2
+      }
+     ]
+    ],
+    "note": "needs Corrosive Glue to do damage"
+   },
+   "bonuses": [
+    {
+     "vs": "moab",
+     "from": {
+      "path": 2,
+      "tier": 3
+     },
+     "note": "MOAB Glue slows blimps"
+    }
+   ],
+   "confidence": "low",
+   "sources": [
+    "fixture: hand-made from the 0.4 data and the audit; replace with data/pop-model.json"
+   ]
+  },
+  "desperado": {
+   "camo": {
+    "any": [
+     [
+      {
+       "path": 1,
+       "tier": 1
+      }
+     ]
+    ],
+    "note": "Eagle Eye"
+   },
+   "lead": {
+    "any": [
+     [
+      {
+       "path": 0,
+       "tier": 3
+      }
+     ],
+     [
+      {
+       "path": 1,
+       "tier": 3
+      }
+     ]
+    ],
+    "note": "Big Iron or Deadeye"
+   },
+   "purple": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "black": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "white": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "zebra": {
+    "derived": true
+   },
+   "frozen": {
+    "any": [
+     [
+      {
+       "path": 0,
+       "tier": 3
+      }
+     ],
+     [
+      {
+       "path": 1,
+       "tier": 3
+      }
+     ]
+    ],
+    "note": "Big Iron or Deadeye"
+   },
+   "moab": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "ddt": {
+    "derived": true
+   },
+   "bad": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "fortified": {
+    "any": [
+     [
+      "base"
+     ]
+    ],
+    "note": "Fortified only adds HP; any damage pops it"
+   },
+   "bonuses": [],
+   "confidence": "low",
+   "sources": [
+    "fixture: hand-made from the 0.4 data and the audit; replace with data/pop-model.json"
+   ]
+  },
+  "sniper": {
+   "camo": {
+    "any": [
+     [
+      {
+       "path": 1,
+       "tier": 1
+      }
+     ]
+    ],
+    "note": "Night Vision Goggles"
+   },
+   "lead": {
+    "any": [
+     [
+      {
+       "path": 0,
+       "tier": 1
+      }
+     ]
+    ],
+    "note": "Full Metal Jacket"
+   },
+   "purple": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "black": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "white": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "zebra": {
+    "derived": true
+   },
+   "frozen": {
+    "any": [
+     [
+      {
+       "path": 0,
+       "tier": 1
+      }
+     ]
+    ],
+    "note": "Full Metal Jacket"
+   },
+   "moab": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "ddt": {
+    "derived": true
+   },
+   "bad": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "fortified": {
+    "any": [
+     [
+      "base"
+     ]
+    ],
+    "note": "Fortified only adds HP; any damage pops it"
+   },
+   "bonuses": [
+    {
+     "vs": "moab",
+     "from": {
+      "path": 0,
+      "tier": 4
+     },
+     "note": "Maim MOAB stun"
+    }
+   ],
+   "confidence": "high",
+   "sources": [
+    "fixture: hand-made from the 0.4 data and the audit; replace with data/pop-model.json"
+   ]
+  },
+  "sub": {
+   "camo": {
+    "any": [
+     [
+      {
+       "path": 0,
+       "tier": 3
+      }
+     ]
+    ],
+    "note": "Submerge and Support"
+   },
+   "lead": {
+    "any": [
+     [
+      {
+       "path": 1,
+       "tier": 2
+      }
+     ]
+    ],
+    "note": "Heat-tipped Darts"
+   },
+   "purple": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "black": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "white": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "zebra": {
+    "derived": true
+   },
+   "frozen": {
+    "any": [
+     [
+      {
+       "path": 1,
+       "tier": 2
+      }
+     ]
+    ],
+    "note": "Heat-tipped Darts"
+   },
+   "moab": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "ddt": {
+    "derived": true
+   },
+   "bad": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "fortified": {
+    "any": [
+     [
+      "base"
+     ]
+    ],
+    "note": "Fortified only adds HP; any damage pops it"
+   },
+   "bonuses": [
+    {
+     "vs": "moab",
+     "from": {
+      "path": 1,
+      "tier": 3
+     },
+     "note": "Ballistic Missile"
+    },
+    {
+     "vs": "fortified",
+     "from": {
+      "path": 2,
+      "tier": 4
+     },
+     "note": "Armor Piercing Darts"
+    }
+   ],
+   "confidence": "low",
+   "sources": [
+    "fixture: hand-made from the 0.4 data and the audit; replace with data/pop-model.json"
+   ]
+  },
+  "buccaneer": {
+   "camo": {
+    "any": [
+     [
+      {
+       "path": 2,
+       "tier": 2
+      }
+     ]
+    ],
+    "note": "Crow's Nest"
+   },
+   "lead": {
+    "any": [
+     [
+      {
+       "path": 1,
+       "tier": 2
+      }
+     ]
+    ],
+    "note": "Hot Shot"
+   },
+   "purple": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "black": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "white": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "zebra": {
+    "derived": true
+   },
+   "frozen": {
+    "any": [
+     [
+      {
+       "path": 1,
+       "tier": 2
+      }
+     ]
+    ],
+    "note": "Hot Shot"
+   },
+   "moab": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "ddt": {
+    "derived": true
+   },
+   "bad": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "fortified": {
+    "any": [
+     [
+      "base"
+     ]
+    ],
+    "note": "Fortified only adds HP; any damage pops it"
+   },
+   "bonuses": [
+    {
+     "vs": "moab",
+     "from": {
+      "path": 1,
+      "tier": 4
+     },
+     "note": "Monkey Pirates hooks"
+    },
+    {
+     "vs": "moab",
+     "from": {
+      "path": 0,
+      "tier": 4
+     },
+     "note": "Aircraft Carrier"
+    }
+   ],
+   "confidence": "medium",
+   "sources": [
+    "fixture: hand-made from the 0.4 data and the audit; replace with data/pop-model.json"
+   ]
+  },
+  "ace": {
+   "camo": {
+    "any": [
+     [
+      {
+       "path": 1,
+       "tier": 2
+      }
+     ]
+    ],
+    "note": "Spy Plane"
+   },
+   "lead": {
+    "any": [
+     [
+      {
+       "path": 1,
+       "tier": 1
+      }
+     ]
+    ],
+    "note": "Exploding Pineapple"
+   },
+   "purple": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "black": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "white": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "zebra": {
+    "derived": true
+   },
+   "frozen": {
+    "any": [
+     [
+      {
+       "path": 1,
+       "tier": 1
+      }
+     ]
+    ],
+    "note": "Exploding Pineapple"
+   },
+   "moab": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "ddt": {
+    "derived": true
+   },
+   "bad": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "fortified": {
+    "any": [
+     [
+      "base"
+     ]
+    ],
+    "note": "Fortified only adds HP; any damage pops it"
+   },
+   "bonuses": [
+    {
+     "vs": "moab",
+     "from": {
+      "path": 0,
+      "tier": 3
+     },
+     "note": "Fighter Plane missiles"
+    }
+   ],
+   "confidence": "medium",
+   "sources": [
+    "fixture: hand-made from the 0.4 data and the audit; replace with data/pop-model.json"
+   ]
+  },
+  "heli": {
+   "camo": {
+    "any": [
+     [
+      {
+       "path": 1,
+       "tier": 2
+      }
+     ]
+    ],
+    "note": "IFR"
+   },
+   "lead": {
+    "any": [
+     [
+      {
+       "path": 0,
+       "tier": 3
+      }
+     ]
+    ],
+    "note": "Razor Rotors"
+   },
+   "purple": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "black": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "white": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "zebra": {
+    "derived": true
+   },
+   "frozen": {
+    "any": [
+     [
+      {
+       "path": 0,
+       "tier": 3
+      }
+     ]
+    ],
+    "note": "Razor Rotors"
+   },
+   "moab": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "ddt": {
+    "derived": true
+   },
+   "bad": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "fortified": {
+    "any": [
+     [
+      "base"
+     ]
+    ],
+    "note": "Fortified only adds HP; any damage pops it"
+   },
+   "bonuses": [
+    {
+     "vs": "moab",
+     "from": {
+      "path": 2,
+      "tier": 3
+     },
+     "note": "MOAB Shove"
+    }
+   ],
+   "confidence": "medium",
+   "sources": [
+    "fixture: hand-made from the 0.4 data and the audit; replace with data/pop-model.json"
+   ]
+  },
+  "mortar": {
+   "camo": {
+    "any": [
+     [
+      "base"
+     ]
+    ],
+    "note": "shells hit camo in the blast; you aim them, so no detection is needed"
+   },
+   "lead": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "purple": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "black": {
+    "any": [
+     [
+      {
+       "path": 1,
+       "tier": 3
+      }
+     ],
+     [
+      {
+       "path": 2,
+       "tier": 4
+      }
+     ]
+    ],
+    "note": "Heavy Shells"
+   },
+   "white": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "zebra": {
+    "derived": true
+   },
+   "frozen": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "moab": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "ddt": {
+    "derived": true
+   },
+   "bad": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "fortified": {
+    "any": [
+     [
+      "base"
+     ]
+    ],
+    "note": "Fortified only adds HP; any damage pops it"
+   },
+   "bonuses": [
+    {
+     "vs": "moab",
+     "from": {
+      "path": 2,
+      "tier": 4
+     },
+     "note": "Shattering Shells"
+    },
+    {
+     "vs": "fortified",
+     "from": {
+      "path": 2,
+      "tier": 4
+     },
+     "note": "Shattering Shells strip the fortified layer"
+    }
+   ],
+   "confidence": "medium",
+   "sources": [
+    "fixture: hand-made from the 0.4 data and the audit; replace with data/pop-model.json"
+   ]
+  },
+  "dartling": {
+   "camo": {
+    "any": [
+     [
+      {
+       "path": 1,
+       "tier": 1
+      }
+     ]
+    ],
+    "note": "Advanced Targeting"
+   },
+   "lead": {
+    "any": [
+     [
+      {
+       "path": 1,
+       "tier": 3
+      }
+     ],
+     [
+      {
+       "path": 0,
+       "tier": 4
+      }
+     ]
+    ],
+    "note": "Hydra Rocket Pods"
+   },
+   "purple": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "black": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "white": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "zebra": {
+    "derived": true
+   },
+   "frozen": {
+    "any": [
+     [
+      {
+       "path": 0,
+       "tier": 3
+      }
+     ],
+     [
+      {
+       "path": 1,
+       "tier": 3
+      }
+     ],
+     [
+      {
+       "path": 2,
+       "tier": 2
+      }
+     ]
+    ]
+   },
+   "moab": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "ddt": {
+    "derived": true
+   },
+   "bad": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "fortified": {
+    "any": [
+     [
+      "base"
+     ]
+    ],
+    "note": "Fortified only adds HP; any damage pops it"
+   },
+   "bonuses": [
+    {
+     "vs": "moab",
+     "from": {
+      "path": 0,
+      "tier": 3
+     },
+     "note": "Laser Cannon"
+    }
+   ],
+   "confidence": "medium",
+   "sources": [
+    "fixture: hand-made from the 0.4 data and the audit; replace with data/pop-model.json"
+   ]
+  },
+  "wizard": {
+   "camo": {
+    "any": [
+     [
+      {
+       "path": 2,
+       "tier": 2
+      }
+     ]
+    ],
+    "note": "Monkey Sense"
+   },
+   "lead": {
+    "any": [
+     [
+      {
+       "path": 1,
+       "tier": 1
+      }
+     ],
+     [
+      {
+       "path": 0,
+       "tier": 4
+      }
+     ]
+    ],
+    "note": "Fireball"
+   },
+   "purple": {
+    "any": [
+     [
+      {
+       "path": 2,
+       "tier": 4
+      }
+     ]
+    ],
+    "note": "Necromancer zombies"
+   },
+   "black": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "white": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "zebra": {
+    "derived": true
+   },
+   "frozen": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "moab": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "ddt": {
+    "derived": true
+   },
+   "bad": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "fortified": {
+    "any": [
+     [
+      "base"
+     ]
+    ],
+    "note": "Fortified only adds HP; any damage pops it"
+   },
+   "bonuses": [],
+   "confidence": "high",
+   "sources": [
+    "fixture: hand-made from the 0.4 data and the audit; replace with data/pop-model.json"
+   ]
+  },
+  "super": {
+   "camo": {
+    "any": [
+     [
+      {
+       "path": 2,
+       "tier": 2
+      }
+     ]
+    ],
+    "note": "Ultravision"
+   },
+   "lead": {
+    "any": [
+     [
+      {
+       "path": 0,
+       "tier": 2
+      }
+     ]
+    ],
+    "note": "Plasma Blasts"
+   },
+   "purple": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "black": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "white": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "zebra": {
+    "derived": true
+   },
+   "frozen": {
+    "any": [
+     [
+      {
+       "path": 0,
+       "tier": 1
+      }
+     ]
+    ]
+   },
+   "moab": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "ddt": {
+    "derived": true
+   },
+   "bad": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "fortified": {
+    "any": [
+     [
+      "base"
+     ]
+    ],
+    "note": "Fortified only adds HP; any damage pops it"
+   },
+   "bonuses": [],
+   "confidence": "medium",
+   "sources": [
+    "fixture: hand-made from the 0.4 data and the audit; replace with data/pop-model.json"
+   ]
+  },
+  "ninja": {
+   "camo": {
+    "any": [
+     [
+      "base"
+     ]
+    ],
+    "note": "built in"
+   },
+   "lead": {
+    "any": [
+     [
+      {
+       "path": 2,
+       "tier": 3
+      }
+     ]
+    ],
+    "note": "Flash Bomb"
+   },
+   "purple": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "black": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "white": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "zebra": {
+    "derived": true
+   },
+   "frozen": {
+    "any": [
+     [
+      {
+       "path": 2,
+       "tier": 3
+      }
+     ]
+    ],
+    "note": "Flash Bomb"
+   },
+   "moab": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "ddt": {
+    "derived": true
+   },
+   "bad": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "fortified": {
+    "any": [
+     [
+      "base"
+     ]
+    ],
+    "note": "Fortified only adds HP; any damage pops it"
+   },
+   "bonuses": [],
+   "confidence": "high",
+   "sources": [
+    "fixture: hand-made from the 0.4 data and the audit; replace with data/pop-model.json"
+   ]
+  },
+  "alchemist": {
+   "camo": {
+    "any": [
+     [
+      "never"
+     ]
+    ]
+   },
+   "lead": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "purple": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "black": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "white": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "zebra": {
+    "derived": true
+   },
+   "frozen": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "moab": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "ddt": {
+    "derived": true
+   },
+   "bad": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "fortified": {
+    "any": [
+     [
+      "base"
+     ]
+    ],
+    "note": "Fortified only adds HP; any damage pops it"
+   },
+   "bonuses": [],
+   "confidence": "medium",
+   "sources": [
+    "fixture: hand-made from the 0.4 data and the audit; replace with data/pop-model.json"
+   ]
+  },
+  "druid": {
+   "camo": {
+    "any": [
+     [
+      {
+       "path": 0,
+       "tier": 4
+      }
+     ]
+    ],
+    "note": "Ball Lightning"
+   },
+   "lead": {
+    "any": [
+     [
+      {
+       "path": 0,
+       "tier": 1
+      }
+     ]
+    ],
+    "note": "Hard Thorns"
+   },
+   "purple": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "black": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "white": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "zebra": {
+    "derived": true
+   },
+   "frozen": {
+    "any": [
+     [
+      {
+       "path": 0,
+       "tier": 1
+      }
+     ]
+    ],
+    "note": "Hard Thorns"
+   },
+   "moab": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "ddt": {
+    "derived": true
+   },
+   "bad": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "fortified": {
+    "any": [
+     [
+      "base"
+     ]
+    ],
+    "note": "Fortified only adds HP; any damage pops it"
+   },
+   "bonuses": [],
+   "confidence": "medium",
+   "sources": [
+    "fixture: hand-made from the 0.4 data and the audit; replace with data/pop-model.json"
+   ]
+  },
+  "mermonkey": {
+   "camo": {
+    "any": [
+     [
+      {
+       "path": 2,
+       "tier": 1
+      }
+     ]
+    ],
+    "note": "Echosense Precision"
+   },
+   "lead": {
+    "any": [
+     [
+      {
+       "path": 1,
+       "tier": 3
+      }
+     ]
+    ],
+    "note": "Riptide Champion"
+   },
+   "purple": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "black": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "white": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "zebra": {
+    "derived": true
+   },
+   "frozen": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "moab": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "ddt": {
+    "derived": true
+   },
+   "bad": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "fortified": {
+    "any": [
+     [
+      "base"
+     ]
+    ],
+    "note": "Fortified only adds HP; any damage pops it"
+   },
+   "bonuses": [],
+   "confidence": "low",
+   "sources": [
+    "fixture: hand-made from the 0.4 data and the audit; replace with data/pop-model.json"
+   ]
+  },
+  "skywarden": {
+   "camo": {
+    "any": [
+     [
+      {
+       "path": 0,
+       "tier": 2
+      }
+     ]
+    ],
+    "note": "Zephyr Sense"
+   },
+   "lead": {
+    "any": [
+     [
+      {
+       "path": 1,
+       "tier": 2
+      }
+     ]
+    ],
+    "note": "Thundering Arc"
+   },
+   "purple": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "black": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "white": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "zebra": {
+    "derived": true
+   },
+   "frozen": {
+    "any": [
+     [
+      {
+       "path": 1,
+       "tier": 2
+      }
+     ]
+    ],
+    "note": "Thundering Arc"
+   },
+   "moab": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "ddt": {
+    "derived": true
+   },
+   "bad": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "fortified": {
+    "any": [
+     [
+      "base"
+     ]
+    ],
+    "note": "Fortified only adds HP; any damage pops it"
+   },
+   "bonuses": [],
+   "confidence": "low",
+   "sources": [
+    "fixture: hand-made from the 0.4 data and the audit; replace with data/pop-model.json"
+   ]
+  },
+  "spike": {
+   "camo": {
+    "any": [
+     [
+      "base"
+     ]
+    ],
+    "note": "spikes sit on the track, so camo walks into them"
+   },
+   "lead": {
+    "any": [
+     [
+      {
+       "path": 0,
+       "tier": 2
+      }
+     ]
+    ],
+    "note": "White Hot Spikes"
+   },
+   "purple": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "black": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "white": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "zebra": {
+    "derived": true
+   },
+   "frozen": {
+    "any": [
+     [
+      {
+       "path": 0,
+       "tier": 2
+      }
+     ]
+    ],
+    "note": "White Hot Spikes"
+   },
+   "moab": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "ddt": {
+    "derived": true
+   },
+   "bad": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "fortified": {
+    "any": [
+     [
+      "base"
+     ]
+    ],
+    "note": "Fortified only adds HP; any damage pops it"
+   },
+   "bonuses": [],
+   "confidence": "high",
+   "sources": [
+    "fixture: hand-made from the 0.4 data and the audit; replace with data/pop-model.json"
+   ]
+  },
+  "engineer": {
+   "camo": {
+    "any": [
+     [
+      "never"
+     ]
+    ]
+   },
+   "lead": {
+    "any": [
+     [
+      {
+       "path": 0,
+       "tier": 4
+      }
+     ],
+     [
+      {
+       "path": 1,
+       "tier": 3
+      }
+     ]
+    ],
+    "note": "Sentry Expert or Cleansing Foam"
+   },
+   "purple": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "black": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "white": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "zebra": {
+    "derived": true
+   },
+   "frozen": {
+    "any": [
+     [
+      {
+       "path": 2,
+       "tier": 1
+      }
+     ],
+     [
+      {
+       "path": 0,
+       "tier": 4
+      }
+     ]
+    ]
+   },
+   "moab": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "ddt": {
+    "derived": true
+   },
+   "bad": {
+    "any": [
+     [
+      "base"
+     ]
+    ]
+   },
+   "fortified": {
+    "any": [
+     [
+      "base"
+     ]
+    ],
+    "note": "Fortified only adds HP; any damage pops it"
+   },
+   "bonuses": [
+    {
+     "vs": "fortified",
+     "from": {
+      "path": 1,
+      "tier": 2
+     },
+     "note": "Deconstruction: extra damage to fortified and MOAB-class"
+    },
+    {
+     "vs": "moab",
+     "from": {
+      "path": 1,
+      "tier": 2
+     },
+     "note": "Deconstruction"
+    }
+   ],
+   "confidence": "medium",
+   "sources": [
+    "fixture: hand-made from the 0.4 data and the audit; replace with data/pop-model.json"
+   ]
+  },
+  "beast": {
+   "camo": {
+    "any": [
+     [
+      {
+       "path": 2,
+       "tier": 2
+      }
+     ]
+    ],
+    "note": "Horned Owl"
+   },
+   "lead": {
+    "any": [
+     [
+      {
+       "path": 1,
+       "tier": 2
+      }
+     ],
+     [
+      {
+       "path": 0,
+       "tier": 3
+      }
+     ]
+    ],
+    "note": "Adasaurus or Great White"
+   },
+   "purple": {
+    "any": [
+     [
+      {
+       "path": 0,
+       "tier": 1
+      }
+     ],
+     [
+      {
+       "path": 1,
+       "tier": 1
+      }
+     ],
+     [
+      {
+       "path": 2,
+       "tier": 1
+      }
+     ]
+    ]
+   },
+   "black": {
+    "any": [
+     [
+      {
+       "path": 0,
+       "tier": 1
+      }
+     ],
+     [
+      {
+       "path": 1,
+       "tier": 1
+      }
+     ],
+     [
+      {
+       "path": 2,
+       "tier": 1
+      }
+     ]
+    ]
+   },
+   "white": {
+    "any": [
+     [
+      {
+       "path": 0,
+       "tier": 1
+      }
+     ],
+     [
+      {
+       "path": 1,
+       "tier": 1
+      }
+     ],
+     [
+      {
+       "path": 2,
+       "tier": 1
+      }
+     ]
+    ]
+   },
+   "zebra": {
+    "derived": true
+   },
+   "frozen": {
+    "any": [
+     [
+      {
+       "path": 1,
+       "tier": 2
+      }
+     ],
+     [
+      {
+       "path": 0,
+       "tier": 3
+      }
+     ]
+    ]
+   },
+   "moab": {
+    "any": [
+     [
+      {
+       "path": 0,
+       "tier": 1
+      }
+     ],
+     [
+      {
+       "path": 1,
+       "tier": 1
+      }
+     ],
+     [
+      {
+       "path": 2,
+       "tier": 1
+      }
+     ]
+    ],
+    "note": "needs a beast"
+   },
+   "ddt": {
+    "derived": true
+   },
+   "bad": {
+    "any": [
+     [
+      {
+       "path": 0,
+       "tier": 1
+      }
+     ],
+     [
+      {
+       "path": 1,
+       "tier": 1
+      }
+     ],
+     [
+      {
+       "path": 2,
+       "tier": 1
+      }
+     ]
+    ],
+    "note": "needs a beast"
+   },
+   "fortified": {
+    "any": [
+     [
+      "base"
+     ]
+    ],
+    "note": "Fortified only adds HP; any damage pops it"
+   },
+   "bonuses": [],
+   "confidence": "low",
+   "sources": [
+    "fixture: hand-made from the 0.4 data and the audit; replace with data/pop-model.json"
+   ]
+  },
+  "village": {
+   "camo": {
+    "any": [
+     [
+      "never"
+     ]
+    ]
+   },
+   "lead": {
+    "any": [
+     [
+      "never"
+     ]
+    ]
+   },
+   "purple": {
+    "any": [
+     [
+      "never"
+     ]
+    ]
+   },
+   "black": {
+    "any": [
+     [
+      "never"
+     ]
+    ]
+   },
+   "white": {
+    "any": [
+     [
+      "never"
+     ]
+    ]
+   },
+   "frozen": {
+    "any": [
+     [
+      "never"
+     ]
+    ]
+   },
+   "moab": {
+    "any": [
+     [
+      "never"
+     ]
+    ]
+   },
+   "bad": {
+    "any": [
+     [
+      "never"
+     ]
+    ]
+   },
+   "fortified": {
+    "any": [
+     [
+      "never"
+     ]
+    ]
+   },
+   "zebra": {
+    "derived": true
+   },
+   "ddt": {
+    "derived": true
+   },
+   "bonuses": [],
+   "confidence": "high",
+   "nonAttacker": true,
+   "sources": [
+    "fixture"
+   ]
+  },
+  "farm": {
+   "camo": {
+    "any": [
+     [
+      "never"
+     ]
+    ]
+   },
+   "lead": {
+    "any": [
+     [
+      "never"
+     ]
+    ]
+   },
+   "purple": {
+    "any": [
+     [
+      "never"
+     ]
+    ]
+   },
+   "black": {
+    "any": [
+     [
+      "never"
+     ]
+    ]
+   },
+   "white": {
+    "any": [
+     [
+      "never"
+     ]
+    ]
+   },
+   "frozen": {
+    "any": [
+     [
+      "never"
+     ]
+    ]
+   },
+   "moab": {
+    "any": [
+     [
+      "never"
+     ]
+    ]
+   },
+   "bad": {
+    "any": [
+     [
+      "never"
+     ]
+    ]
+   },
+   "fortified": {
+    "any": [
+     [
+      "never"
+     ]
+    ]
+   },
+   "zebra": {
+    "derived": true
+   },
+   "ddt": {
+    "derived": true
+   },
+   "bonuses": [],
+   "confidence": "high",
+   "nonAttacker": true,
+   "sources": [
+    "fixture"
+   ]
+  }
+ },
+ "supportFixes": [
+  {
+   "grants": "camo",
+   "source": "village",
+   "req": {
+    "path": 1,
+    "tier": 2
+   },
+   "radius": "village range",
+   "note": "Radar Scanner: every tower in range sees camo"
+  },
+  {
+   "grants": "lead",
+   "source": "village",
+   "req": {
+    "path": 1,
+    "tier": 3
+   },
+   "radius": "village range",
+   "note": "Monkey Intelligence Bureau: towers in range pop every type"
+  },
+  {
+   "grants": "purple",
+   "source": "village",
+   "req": {
+    "path": 1,
+    "tier": 3
+   },
+   "radius": "village range",
+   "note": "Monkey Intelligence Bureau"
+  },
+  {
+   "grants": "black",
+   "source": "village",
+   "req": {
+    "path": 1,
+    "tier": 3
+   },
+   "radius": "village range",
+   "note": "Monkey Intelligence Bureau"
+  },
+  {
+   "grants": "white",
+   "source": "village",
+   "req": {
+    "path": 1,
+    "tier": 3
+   },
+   "radius": "village range",
+   "note": "Monkey Intelligence Bureau"
+  },
+  {
+   "grants": "frozen",
+   "source": "village",
+   "req": {
+    "path": 1,
+    "tier": 3
+   },
+   "radius": "village range",
+   "note": "Monkey Intelligence Bureau"
+  },
+  {
+   "grants": "ddt",
+   "source": "village",
+   "req": {
+    "path": 1,
+    "tier": 3
+   },
+   "radius": "village range",
+   "note": "MIB on top of Radar: camo + every type"
+  },
+  {
+   "grants": "lead",
+   "source": "alchemist",
+   "req": {
+    "path": 0,
+    "tier": 2
+   },
+   "radius": "one tower at a time",
+   "note": "Acidic Mixture Dip: dipped towers pop Lead"
+  },
+  {
+   "grants": "camo",
+   "source": "hero:etienne",
+   "req": {
+    "level": 8
+   },
+   "radius": "whole map",
+   "note": "UAV: every tower sees camo"
+  },
+  {
+   "grants": "lead",
+   "source": "hero:gwendolin",
+   "req": {
+    "level": 4
+   },
+   "radius": "her range",
+   "note": "Heat It Up: towers in range pop Lead"
+  },
+  {
+   "grants": "camo",
+   "source": "mortar",
+   "req": {
+    "path": 2,
+    "tier": 3
+   },
+   "radius": "flare blast",
+   "note": "Signal Flare strips camo"
+  },
+  {
+   "grants": "camo",
+   "source": "ninja",
+   "req": {
+    "path": 1,
+    "tier": 2
+   },
+   "radius": "ninja range",
+   "note": "Counter-Espionage strips camo"
+  }
+ ],
+ "heroes": {
+  "quincy": {
+   "camo": {
+    "level": 5
+   },
+   "lead": {
+    "level": null
+   }
+  },
+  "gwendolin": {
+   "camo": {
+    "level": null
+   },
+   "lead": {
+    "level": 4
+   }
+  },
+  "striker": {
+   "camo": {
+    "level": null
+   },
+   "lead": {
+    "level": null
+   }
+  },
+  "obyn": {
+   "camo": {
+    "level": null
+   },
+   "lead": {
+    "level": 1
+   }
+  },
+  "churchill": {
+   "camo": {
+    "level": 6
+   },
+   "lead": {
+    "level": null
+   }
+  },
+  "benjamin": {
+   "camo": {
+    "level": null
+   },
+   "lead": {
+    "level": null
+   }
+  },
+  "ezili": {
+   "camo": {
+    "level": 1
+   },
+   "lead": {
+    "level": 1
+   }
+  },
+  "pat": {
+   "camo": {
+    "level": null
+   },
+   "lead": {
+    "level": 1
+   }
+  },
+  "adora": {
+   "camo": {
+    "level": null
+   },
+   "lead": {
+    "level": 1
+   }
+  },
+  "brickell": {
+   "camo": {
+    "level": 7
+   },
+   "lead": {
+    "level": null
+   }
+  },
+  "etienne": {
+   "camo": {
+    "level": 5
+   },
+   "lead": {
+    "level": null
+   }
+  },
+  "sauda": {
+   "camo": {
+    "level": 1
+   },
+   "lead": {
+    "level": 13
+   }
+  },
+  "psi": {
+   "camo": {
+    "level": 1
+   },
+   "lead": {
+    "level": 6
+   }
+  },
+  "geraldo": {
+   "camo": {
+    "level": null
+   },
+   "lead": {
+    "level": null
+   }
+  },
+  "corvus": {
+   "camo": {
+    "level": null
+   },
+   "lead": {
+    "level": null
+   }
+  },
+  "rosalia": {
+   "camo": {
+    "level": null
+   },
+   "lead": {
+    "level": 1
+   }
+  },
+  "silas": {
+   "camo": {
+    "level": 1
+   },
+   "lead": {
+    "level": null
+   }
+  },
+  "dan": {
+   "camo": {
+    "level": null
+   },
+   "lead": {
+    "level": null
+   }
+  }
+ }
+}

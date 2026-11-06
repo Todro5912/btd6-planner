@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% import '_macros.html' as ui %}
+{% block main %}
+{% set r = rm.r %}
+<div class="title-row round-title">
+  <h1 class="h1">Round {{ rm.n }}</h1>
+  {% if rm.danger %}<span class="danger-badge">Run-ender</span>{% elif rm.level >= 2 %}<span class="danger-badge warn">Tough round</span>{% endif %}
+</div>
+<nav class="round-nav" aria-label="Rounds">
+  {% if prev %}<a class="btn btn-small" href="{{ root }}{{ prev.url }}" rel="prev">‹ R{{ prev.n }}</a>{% endif %}
+  <a class="btn btn-small" href="{{ root }}rounds/#r{{ rm.n }}">All rounds</a>
+  {% if next %}<a class="btn btn-small" href="{{ root }}{{ next.url }}" rel="next">R{{ next.n }} ›</a>{% endif %}
+  <form class="round-jump" action="{{ root }}rounds/" method="get" data-round-form>
+    <label class="sr-only" for="rj">Go to round</label>
+    <input id="rj" name="n" type="number" inputmode="numeric" min="1" max="140" placeholder="Round">
+    <button class="btn btn-small" type="submit">Go</button>
+  </form>
+</nav>
+
+<section class="panel spawn" aria-labelledby="sp">
+  <h2 class="panel-h" id="sp">What spawns</h2>
+  <ul class="spawn-list panel-b">
+    {% for g in r.groups or [r.composition] %}<li>{{ g }}</li>{% endfor %}
+  </ul>
+  {% if rm.threats %}
+  <div class="panel-b threat-row">
+    <span class="toolbar-l">Watch for</span>
+    {% for k in rm.threats %}{% set card = THREAT_CARD.get(k) %}{% if card and card in card_by %}<a class="threat t-{{ k }}" href="{{ root }}{{ card_by[card].url }}">{{ THREAT_LABEL.get(k) or k|capitalize }}</a>{% else %}<span class="threat t-{{ k }}">{{ THREAT_LABEL.get(k) or k|capitalize }}</span>{% endif %}{% endfor %}
+  </div>
+  {% endif %}
+  {% if rm.notes %}<ul class="bullets panel-b">{% for n in rm.notes %}<li>{{ lx(n, root) }}</li>{% endfor %}</ul>{% endif %}
+  <dl class="chips-dl panel-b round-facts">
+    <div><dt>RBE</dt><dd>{{ r.rbe|num }}</dd></div>
+    <div><dt>Cash</dt><dd>{{ r.cash|money }}</dd></div>
+    <div><dt>XP</dt><dd>{{ r.xp|num }}</dd></div>
+  </dl>
+</section>
+
+<section class="panel need" aria-labelledby="nd">
+  <h2 class="panel-h" id="nd">What you need by now</h2>
+  {% if rm.need %}
+  <ul class="need-list panel-b">
+    {% for x in rm.need %}
+    <li><a class="need-item" href="{{ root }}quick/{{ x.card }}/"><span class="need-l">{{ x.label }}</span><span class="need-f">since {{ ui.rchip(x.first, root)|striptags }}</span><span class="need-go">fixes ›</span></a></li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <p class="panel-b">Nothing special yet: any damage works.</p>
+  {% endif %}
+  {% if rm.coming %}<p class="panel-b note"><b>Coming soon:</b> {% for x in rm.coming %}{{ x.label }} on {{ ui.rchip(x.first, root) }}{{ ', ' if not loop.last }}{% endfor %}</p>{% endif %}
+  {% if rm.next_danger %}<p class="panel-b note"><b>Next run-enders:</b> {% for n in rm.next_danger %}{{ ui.rchip(n, root) }} {% endfor %}</p>{% endif %}
+</section>
+<p class="note">Standard rounds. <a href="{{ root }}rounds/#abr{{ rm.n }}">ABR round {{ rm.n }}</a> · <a href="{{ root }}guides/danger-rounds/">Danger rounds guide</a></p>
+{% endblock %}
+{% block scripts %}<script src="{{ root }}assets/rounds.js?v={{ site.version }}" defer></script>{% endblock %}

@@ -1,4 +1,4 @@
-/* Monkey Intel: theme toggle and site search. No libraries. */
+/* Monkey Intel: theme toggle, header menus, round lookup and site search (scoring in search-core.js). No libraries. */
 (function () {
   'use strict';
   var doc = document.documentElement;
@@ -33,6 +33,27 @@
   }
   window.MI = { radioKeys: radioKeys, root: ROOT };
 
+  /* ---------- header menus (<details>): close on outside click, Esc, or when another opens ---------- */
+  var menus = Array.prototype.slice.call(document.querySelectorAll('[data-menu]'));
+  menus.forEach(function (m) {
+    m.addEventListener('toggle', function () { if (m.open) menus.forEach(function (o) { if (o !== m) o.open = false; }); });
+  });
+  document.addEventListener('click', function (e) { menus.forEach(function (m) { if (m.open && !m.contains(e.target)) m.open = false; }); });
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Escape') return;
+    menus.forEach(function (m) { if (m.open) { m.open = false; var s = m.querySelector('summary'); if (s) s.focus(); } });
+  });
+
+  /* ---------- round lookup: "63" -> rounds/63/ (1-100 have pages; 101-140 sit in the table) ---------- */
+  document.querySelectorAll('[data-round-form]').forEach(function (f) {
+    f.addEventListener('submit', function (e) {
+      var n = parseInt((f.querySelector('input') || {}).value, 10);
+      if (!(n >= 1 && n <= 140)) return;
+      e.preventDefault();
+      location.href = ROOT + 'rounds/' + (n <= 100 ? n + '/' : '#r' + n);
+    });
+  });
+
   /* ---------- search ---------- */
   var dlg = document.getElementById('search');
   if (!dlg || typeof dlg.showModal !== 'function') return;
@@ -40,42 +61,16 @@
   var list = document.getElementById('searchList');
   var entries = null, loading = null, results = [], active = -1, opener = null;
 
-  function norm(s) { return String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim(); }
+  var core = null;
   function load() {
     if (loading) return loading;
     loading = fetch(ROOT + 'search-index.json').then(function (r) { return r.json(); }).then(function (j) {
-      entries = (j.entries || []).map(function (e) { e.n = norm(e.t); e.w = e.n.split(' '); e.xn = norm(e.x || ''); return e; });
-    }).catch(function () { entries = []; });
+      entries = j.entries || [];
+      core = window.MISearch ? window.MISearch.create(entries) : { search: function () { return []; } };
+    }).catch(function () { entries = []; core = { search: function () { return []; } }; });
     return loading;
   }
-  var KIND_BOOST = { Tower: 6, Hero: 6, Map: 5, Paragon: 4, Guide: 4, Reference: 4, Upgrade: 2, Round: 0 };
-  /* Prefix-first matching: whole title, then word prefixes, then substring, then letters in order. */
-  function score(e, q, qs) {
-    var s = 0, t = e.n;
-    if (t === q) s = 100;
-    else if (t.indexOf(q) === 0) s = 80;
-    else if (qs.every(function (w) { return e.w.some(function (x) { return x.indexOf(w) === 0; }) || e.xn.split(' ').some(function (x) { return x.indexOf(w) === 0; }); })) s = 60 - e.w.length;
-    else if (t.indexOf(q) > 0) s = 30;
-    else {
-      var i = 0; for (var k = 0; k < t.length && i < q.length; k++) if (t[k] === q[i]) i++;
-      if (i === q.length && q.length > 2) s = 8;
-    }
-    if (!s) return 0;
-    var m = q.match(/^(?:r|round )?(\d{1,3})$/);
-    if (e.k === 'Round') return m && e.xn === 'r' + m[1] ? 120 : (m ? 0 : s - 20);
-    return s + (KIND_BOOST[e.k] || 0);
-  }
-  function search(raw) {
-    var q = norm(raw); if (!q || !entries) return [];
-    var qs = q.split(' '), out = [];
-    var m = q.match(/^(?:r|round )?(\d{1,3})$/);
-    entries.forEach(function (e) {
-      var s = m && e.k === 'Round' ? (e.xn === 'r' + m[1] ? 120 : 0) : score(e, q, qs);
-      if (s > 0) out.push([s, e]);
-    });
-    out.sort(function (a, b) { return b[0] - a[0] || a[1].t.length - b[1].t.length; });
-    return out.slice(0, 12).map(function (x) { return x[1]; });
-  }
+  function search(raw) { return core ? core.search(raw, 12) : []; }
 
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
   function render() {

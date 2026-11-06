@@ -8,13 +8,15 @@
   var count = document.getElementById('mapCount');
   var rows = Array.prototype.slice.call(document.querySelectorAll('.tbl-maps tbody tr'));
   var groups = document.querySelectorAll('.map-group');
+  /* '' = any; the 'water' / 'blocked' options mean anything except none */
+  function match(want, have, anyOf) { return !want || (want === anyOf ? have !== 'none' : have === want); }
   function run() {
     var text = q.value.trim().toLowerCase();
     var ds = Array.prototype.slice.call(form.querySelectorAll('input[name="d"]:checked')).map(function (x) { return x.value; });
     var shown = 0;
     rows.forEach(function (r) {
       var ok = (!text || r.getAttribute('data-name').indexOf(text) >= 0) && ds.indexOf(r.getAttribute('data-d')) >= 0 &&
-        (!w.value || r.getAttribute('data-w') === w.value) && (!l.value || r.getAttribute('data-l') === l.value);
+        match(w.value, r.getAttribute('data-w'), 'water') && match(l.value, r.getAttribute('data-l'), 'blocked');
       r.hidden = !ok; if (ok) shown++;
     });
     groups.forEach(function (g) { g.hidden = !g.querySelector('tbody tr:not([hidden])'); });

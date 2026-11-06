@@ -3,12 +3,18 @@
 
     python3 tools/build_site.py
 
-Reads data/*.json, content/guides/*.md, templates/ and static/, plus the
-planner from src/ (via src/build.py). Writes index.html, 404.html,
-search-index.json and the planner/, monkeys/, heroes/, maps/, guides/,
-records/, a-z/ and assets/ folders. Every generated path is listed in
-.build-manifest.json; the next build deletes exactly those files first, so
-hand-written files are never touched.
+Reads data/*.json, content/guides/*.md, content/quick/*.md, templates/ and
+static/, the tool pages from src/pages/*.body.html (docs/CONTRACTS.md C3) and
+the legacy planner from src/ (via src/build.py). Writes index.html, 404.html,
+search-index.json and the quick/, rounds/, monkeys/, heroes/, maps/, guides/,
+tools/<slug>/, patch/, about/, records/, a-z/, planner/ (redirect) and assets/
+folders. Every generated path is listed in .build-manifest.json; the next
+build deletes exactly those files first, so hand-written files are never
+touched.
+
+data/pop-model.json (C1) and data/heroes-levels.json (C2) come from the data
+stream. Until they exist, the stand-ins in tools/fixtures/ are used and the
+build says so.
 
 Needs: pip install --break-system-packages markdown jinja2 (PyYAML optional).
 Set MI_CONTENT_DIR to render guides from another folder (testing only).
@@ -34,15 +40,38 @@ except ImportError:  # pragma: no cover
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA = os.path.join(ROOT, 'data')
 SRC = os.path.join(ROOT, 'src')
+PAGES_SRC = os.path.join(SRC, 'pages')
 TEMPLATES = os.path.join(ROOT, 'templates')
 STATIC = os.path.join(ROOT, 'static')
+FIXTURES = os.path.join(ROOT, 'tools', 'fixtures')
 CONTENT = os.environ.get('MI_CONTENT_DIR') or os.path.join(ROOT, 'content')
 MANIFEST = os.path.join(ROOT, '.build-manifest.json')
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from mi_lib import PopModel, PROP_LABEL, Linker, code_of, sentences, steps, key_round  # noqa: E402
 
 PROTECTED_DIRS = {'.git', 'src', 'data', 'content', 'docs', 'tools', 'templates', 'static', 'node_modules'}
 PROTECTED_FILES = {'README.md', 'CHANGELOG.md', 'LICENSE', 'DATA-LICENSE.md', 'site.json', '.nojekyll',
                    '.gitignore', '.build-manifest.json'}
-GENERATED_DIRS = ['planner', 'monkeys', 'heroes', 'maps', 'guides', 'records', 'a-z', 'assets']
+# Tool pages live at /tools/<slug>/ (C3), next to this script's own folder. Only these generated files
+# inside tools/ may be written or cleaned.
+TOOL_OUTPUT = re.compile(r'^tools/(?:index\.html|(?!fixtures/)[a-z0-9-]+/index\.html)$')
+GENERATED_DIRS = ['quick', 'rounds', 'monkeys', 'heroes', 'maps', 'guides', 'tools/<slug>', 'patch', 'about',
+                  'records', 'a-z', 'planner', 'assets']
+
+# The rounds players name when they ask "what kills runs" (owner list, research 1.1 B3 and 3.6).
+DANGER_ROUNDS = [24, 28, 33, 37, 40, 45, 63, 76, 78, 90, 95, 98, 99, 100]
+# Tool pages written by the tools stream (C3). Order = menu order.
+TOOLS = [('simulator', 'Simulator', 'Round timeline: cash by round, the threats coming and your buys.'),
+         ('xp', 'XP calculator', 'I have this much XP and want that upgrade: how many games of what.'),
+         ('defence', 'Check my defence', 'Your towers and round: the next threats you can\'t pop, each with a fix.')]
+# Footer and overflow menu.
+MORE_LINKS = [('Records', 'records/'), ('Patch notes', 'patch/'), ('Known issues', 'guides/known-issues/'),
+              ('About', 'about/'), ('A–Z index', 'a-z/')]
+# Round threats -> quick card slug.
+THREAT_CARD = {'camo': 'camo', 'lead': 'lead', 'purple': 'purple', 'black': 'black-zebra', 'zebra': 'black-zebra',
+               'white': 'white-frozen', 'fortified': 'fortified', 'moab': 'moab', 'bfb': 'moab', 'zomg': 'moab',
+               'bad': 'moab', 'ddt': 'ddt'}
 
 DIFFS = [('easy', 'Easy'), ('medium', 'Medium'), ('hard', 'Hard'), ('impoppable', 'Impoppable')]
 CLASSES = ['Primary', 'Military', 'Magic', 'Support']
@@ -96,6 +125,23 @@ def load(name, default=None):
     except (OSError, ValueError) as e:
         warn(f'could not read data/{name}: {e}')
         return default
+
+
+USED_FIXTURES = []
+
+
+def load_opt(name):
+    """data/<name> from another stream, or the stand-in in tools/fixtures/ until it lands."""
+    real = os.path.join(DATA, name)
+    if os.path.exists(real):
+        return load(name, {}) or {}
+    fx = os.path.join(FIXTURES, name)
+    if os.path.exists(fx):
+        USED_FIXTURES.append(name)
+        with open(fx, encoding='utf-8') as f:
+            return json.load(f)
+    warn(f'neither data/{name} nor a fixture exists')
+    return {}
 
 
 def norm_name(s):
@@ -179,6 +225,18 @@ def valid_cross(c):
             and sum(1 for x in c if x > 0) <= 2 and sum(1 for x in c if x > 2) <= 1)
 
 
+def inline_md(s):
+    """**bold** in short frontmatter strings (escaped first)."""
+    out = htmlmod.escape(str(s or ''), quote=False)
+    return Markup(re.sub(r'\*\*(.+?)\*\*', r'<b>\1</b>', out))
+
+
+def step_label(s):
+    """Split a leading "Medium:" / "On Hard:" label off a step."""
+    m = re.match(r'^((?:On )?(?:Easy|Medium|Hard|Impoppable|CHIMPS|Core build|Spend by R\d+|Placement|Camo|Lead))\s*:\s*(.+)$', s)
+    return (m.group(1), m.group(2)) if m else (None, s)
+
+
 class Ctx:
     """Everything the templates need, computed once."""
 
@@ -213,6 +271,36 @@ def build_model():
         costs = [x for x in costs if x is not None]
         return {k: sum(price(x, c.mult.get(k, 1)) for x in costs) for k, _ in DIFFS}
     c.prices = prices
+
+    # ---- pop model (C1) and hero levels (C2) from the data stream, or the fixtures
+    c.pop = PopModel(load_opt('pop-model.json'))
+    hl = load_opt('heroes-levels.json')
+    c.hero_levels = {k: v for k, v in hl.items() if isinstance(v, dict)}
+    c.fixtures = list(USED_FIXTURES)
+
+    def cross_items(tid, cross):
+        t = c.tower_by.get(tid)
+        if not t:
+            return []
+        items = [t.get('baseCost')]
+        for pi, n in enumerate(cross):
+            for u in t['paths'][pi][:n]:
+                items.append(u.get('cost'))
+        return items
+    c.cross_prices = lambda tid, cross: prices(cross_items(tid, cross))
+    c.cross_medium = lambda tid, cross: prices(cross_items(tid, cross))['medium']
+
+    def cross_name(tid, cross):
+        t = c.tower_by[tid]
+        mp = max(range(3), key=lambda i: cross[i])
+        if not cross[mp]:
+            return 'base ' + re.sub(r'^Monkey ', '', t['name'])
+        main = t['paths'][mp][cross[mp] - 1]['name']
+        other = [i for i in range(3) if i != mp and cross[i]]
+        if other:
+            main += ' + ' + t['paths'][other[0]][cross[other[0]] - 1]['name']
+        return main
+    c.cross_name = cross_name
 
     # ---- Index name lookup (who each 2MP entity belongs to)
     ent_owner = {}
@@ -279,9 +367,44 @@ def build_model():
     for hm in c.hero_models:
         hm['good_with'] = good_with(c, hm['h'])
 
+    # ---- text linker (round chips, codes, tower/hero links) used by map, round and card pages
+    names = []
+    for t in c.towers:
+        names.append((t['name'], f"monkeys/{t['id']}/"))
+        short = re.sub(r'^Monkey |(?: Monkey| Shooter| Gunner| Pilot)$', '', t['name'])
+        if short not in ('Ice', 'Super', 'Farm', 'Spike', 'Monkey'):
+            names.append((short, f"monkeys/{t['id']}/"))
+        for a in TOWER_ALIAS.get(t['id'], []):
+            names.append((a, f"monkeys/{t['id']}/"))
+        for pi, p in enumerate(t['paths']):
+            for u in p:
+                if (u.get('tier') or 0) >= 3:
+                    names.append((u['name'], f"monkeys/{t['id']}/#u-{pi + 1}-{u['tier']}"))
+        if t.get('paragon'):
+            names.append((t['paragon']['name'], f"monkeys/{t['id']}/#paragon"))
+    names.append(('MIB', 'monkeys/village/#u-2-3'))
+    for h in c.heroes:
+        names.append((h['name'], f"heroes/{h['id']}/"))
+        first = h['name'].split(' ')[0]
+        if first not in ('Captain', 'Admiral') and len(first) >= 3:
+            names.append((first, f"heroes/{h['id']}/"))
+        for a in HERO_ALIAS.get(h['id'], []):
+            names.append((a.capitalize(), f"heroes/{h['id']}/"))
+    c.lx = Linker(names, DANGER_ROUNDS, badge)
+
     # ---- maps
     c.map_models = [map_model(c, m, ent_owner) for m in c.maps]
     c.mm_by = {mm['id']: mm for mm in c.map_models}
+    hard_plans(c)
+
+    # ---- rounds (standard 1-100 get a page each)
+    c.round_models = round_models(c)
+    c.rm_by = {r['n']: r for r in c.round_models}
+
+    # ---- tower key answers + picker data (needs the pop model)
+    for tm in c.tower_models:
+        tm['answers'] = key_answers(c, tm)
+        tm['picker'] = picker_data(c, tm)
 
     # ---- v57 changes for the home strip
     c.changes = []
@@ -469,6 +592,10 @@ def map_model(c, m, ent_owner):
     return {
         'id': m['id'], 'm': m, 's': s, 'url': f"maps/{m['id']}/",
         'easy': tidy(s.get('easyPlan')), 'hard': tidy(s.get('hardPlan')), 'chimps': parse_chimps(s.get('chimpsPlan')),
+        'easy_steps': steps(tidy(s.get('easyPlan'))),
+        'chimps_steps': [x for x in steps(parse_chimps(s.get('chimpsPlan')).get('summary') or '') if not key_round(x)],
+        'placement_steps': steps(tidy(s.get('placement'))),
+        'xp_steps': steps(tidy(s.get('xpFarm'))),
         'placement': tidy(s.get('placement')), 'xpFarm': tidy(s.get('xpFarm')),
         'strong': [c.tm_by[x] for x in s.get('strongTowers', []) or [] if x in c.tm_by],
         'avoid': [c.tm_by[x] for x in s.get('avoidTowers', []) or [] if x in c.tm_by],
@@ -477,6 +604,252 @@ def map_model(c, m, ent_owner):
         'lane_max': max(lane_vals) if lane_vals else None, 'list_state': list_state,
         'two_mp_count': tm.get('count'), 'removables': [dict(r, prices=c.prices([r.get('cost')])) for r in m.get('removables') or []],
     }
+
+
+# ---------------------------------------------------------------- 0.5: pop-model answers, picker, rounds, cards
+ANSWER_PROPS = ['camo', 'lead', 'purple', 'black', 'white', 'frozen', 'ddt']
+
+
+def key_answers(c, tm):
+    """'Camo: 0-1-0 Night Vision Goggles' style chips from the pop model."""
+    tid = tm['id']
+    if not c.pop.has(tid) or c.pop.non_attacker(tid):
+        return []
+    out = []
+    for prop in ANSWER_PROPS:
+        cross = c.pop.cheapest(tid, [prop], c.cross_medium)
+        if cross is None:
+            out.append({'prop': prop, 'label': PROP_LABEL[prop], 'state': 'never', 'code': None, 'name': None})
+        elif sum(cross) == 0:
+            out.append({'prop': prop, 'label': PROP_LABEL[prop], 'state': 'base', 'code': '0-0-0', 'name': 'from the start'})
+        else:
+            out.append({'prop': prop, 'label': PROP_LABEL[prop], 'state': 'up', 'code': code_of(cross),
+                        'name': c.cross_name(tid, cross)})
+    cross = c.pop.cheapest(tid, ['moab'], c.cross_medium, mode='bonus')
+    if cross is not None:
+        b = c.pop.bonuses(tid, cross, 'moab')
+        out.append({'prop': 'moab', 'label': 'MOAB bonus', 'state': 'up', 'code': code_of(cross),
+                    'name': (b[0].get('note') if b else None) or c.cross_name(tid, cross)})
+    return out
+
+
+# Built-in synergy hints, used on tower pages until (or unless) S's synergy.js answers.
+# when: a missing pop property ("no-camo"), "attacker", "primary" (class) or "always".
+FALLBACK_SYNERGY = [
+    ('no-camo', 'village', [0, 2, 0], 'Radar Scanner: every tower in range sees camo'),
+    ('no-lead', 'alchemist', [2, 0, 0], 'Acidic Mixture Dip: towers it dips pop Lead'),
+    ('no-purple', 'village', [0, 3, 0], 'Monkey Intelligence Bureau: towers in range pop every Bloon type'),
+    ('no-black', 'village', [0, 3, 0], 'Monkey Intelligence Bureau: towers in range pop every Bloon type'),
+    ('no-ddt', 'village', [0, 3, 0], 'Radar + MIB in one Village: towers in range can hit DDTs'),
+    ('attacker', 'alchemist', [3, 0, 0], 'Berserker Brew: more damage, pierce, range and speed'),
+    ('attacker', 'village', [2, 0, 0], 'Jungle Drums: everything in range attacks faster'),
+    ('primary', 'village', [3, 0, 0], 'Primary Training: Primary towers get more pierce and range'),
+    ('support', 'dart', [0, 2, 4], 'Put strong attackers in its range: buffs only help towers nearby'),
+]
+
+
+def picker_data(c, tm):
+    t = tm['t']
+    tid = t['id']
+    fallback = []
+    for when, other, cross, why in FALLBACK_SYNERGY:
+        if other == tid or other not in c.tower_by:
+            continue
+        o = c.tower_by[other]
+        fallback.append({'when': when, 'tower': other, 'name': o['name'], 'code': code_of(cross),
+                         'up': c.cross_name(other, cross), 'why': why, 'url': f'monkeys/{other}/',
+                         'prices': c.cross_prices(other, cross)})
+    return {
+        'id': tid, 'name': t['name'], 'cls': t.get('class'), 'base': t.get('baseCost'), 'mult': c.mult,
+        'paths': [[{'n': u['name'], 'c': u.get('cost')} for u in p] for p in t['paths']],
+        'pathNames': PATH_NAMES, 'pop': c.pop.js(tid), 'popKnown': c.pop.has(tid),
+        'nonAttacker': tm['non_attacker'] or (c.pop.has(tid) and c.pop.non_attacker(tid)),
+        'labels': PROP_LABEL, 'fallback': fallback,
+    }
+
+
+def hard_plans(c):
+    """Find the Hard/Impoppable sentences many maps share and keep each map's own notes and key rounds."""
+    freq = {}
+    per = {}
+    for mm in c.map_models:
+        ss = sentences(mm['hard'] or '')
+        per[mm['id']] = ss
+        for s in set(ss):
+            freq[s] = freq.get(s, 0) + 1
+    n_maps = max(1, len(c.map_models))
+    shared = {s for s, k in freq.items() if k >= max(5, n_maps // 9) and not key_round(s)}
+    c.hard_general = sorted(shared, key=lambda s: (-freq[s], s))
+    c.hard_general_count = max([freq[s] for s in shared] or [0])
+    for mm in c.map_models:
+        own, keys = [], []
+        for s in per[mm['id']]:
+            kr = key_round(s)
+            if kr:
+                keys.append(kr)
+            elif s not in shared:
+                own.append(s)
+        for s in sentences(mm['chimps'].get('summary') or ''):
+            kr = key_round(s)
+            if kr and kr[0] not in {k for k, _ in keys}:
+                keys.append(kr)
+        mm['hard_own'] = [x for s in own for x in steps(s)]
+        mm['hard_uses_general'] = any(s in shared for s in per[mm['id']])
+        mm['key_rounds'] = sorted(keys)
+
+
+def round_threats(r):
+    th = list(r.get('threats') or [])
+    comp = r.get('composition') or ''
+    for word, key in (('Zebra', 'zebra'), ('Black', 'black'), ('White', 'white')):
+        if re.search(r'\b' + word + r'\b', comp) and key not in th:
+            th.append(key)
+    return th
+
+
+ACRONYMS = {'MOAB', 'MOABS', 'ZOMG', 'ZOMGS', 'CHIMPS', 'DDTS', 'BFBS', 'RBE'}
+
+
+def soften_caps(s):
+    """'CERAMIC RUSH: ...' -> 'Ceramic rush: ...' (shouting in the data), keeping MOAB/ZOMG/CHIMPS."""
+    def fix(m):
+        words = m.group(0).split(' ')
+        if all(w in ACRONYMS for w in words):
+            return m.group(0)
+        out = ' '.join(w if w in ACRONYMS else w.lower() for w in words)
+        return out[0].upper() + out[1:]
+    return re.sub(r'\b[A-Z]{4,}(?: [A-Z]{2,})*\b', fix, s)
+
+
+def round_models(c):
+    rows = [r for r in c.rounds['standard'] if 1 <= (r.get('round') or 0) <= 100]
+    first = {}
+    for r in rows:
+        for k in round_threats(r):
+            first.setdefault(k, r['round'])
+    c.threat_first = first
+    out = []
+    for r in rows:
+        n = r['round']
+        th = round_threats(r)
+        need = []
+        for k, f in sorted(first.items(), key=lambda kv: kv[1]):
+            if f <= n and k in THREAT_CARD and THREAT_CARD[k] not in [x['card'] for x in need]:
+                need.append({'key': k, 'label': THREAT_LABEL.get(k, k.capitalize()), 'first': f, 'card': THREAT_CARD[k]})
+        nxt = [d for d in DANGER_ROUNDS if d > n][:3]
+        coming = [{'key': k, 'label': THREAT_LABEL.get(k, k.capitalize()), 'first': f, 'card': THREAT_CARD.get(k)}
+                  for k, f in sorted(first.items(), key=lambda kv: kv[1]) if n < f <= n + 15]
+        notes = steps(soften_caps(r.get('notes') or ''), long=90)
+        out.append({'n': n, 'r': r, 'threats': th, 'danger': n in DANGER_ROUNDS, 'level': r.get('danger') or 0,
+                    'need': need, 'next_danger': nxt, 'coming': coming, 'notes': notes,
+                    'url': f'rounds/{n}/'})
+    return out
+
+
+def quick_cards(c, root_unused=None):
+    """content/quick/*.md -> cards with fixes generated from the pop model and towers.json (C5)."""
+    qdir = os.path.join(CONTENT, 'quick')
+    cards = []
+    if not os.path.isdir(qdir):
+        return cards
+    for fn in sorted(os.listdir(qdir)):
+        if not fn.endswith('.md') or fn.startswith(('_', '.')):
+            continue
+        with open(os.path.join(qdir, fn), encoding='utf-8') as f:
+            fm, body = parse_frontmatter(f.read())
+        slug = slugify(str(fm.get('slug') or fn[:-3]))
+        props = fm.get('props') or [slug]
+        if isinstance(props, str):
+            props = [p.strip() for p in props.strip('[]').split(',') if p.strip()]
+        mode = str(fm.get('mode') or 'can')
+        rows = []
+        for tm in c.tower_models:
+            tid = tm['id']
+            if not c.pop.has(tid) or c.pop.non_attacker(tid):
+                continue
+            cross = c.pop.cheapest(tid, props, c.cross_medium, mode=mode)
+            if cross is None:
+                continue
+            why = None
+            if mode == 'bonus':
+                b = c.pop.bonuses(tid, cross, props[0])
+                why = b[0].get('note') if b else None
+            elif len(props) == 1:
+                why = c.pop.note(tid, props[0]) if sum(cross) else None
+            rows.append({'tm': tm, 'cross': cross, 'code': code_of(cross), 'up': c.cross_name(tid, cross),
+                         'prices': c.cross_prices(tid, cross), 'why': why, 'kind': 'tower',
+                         'url': tm['url'] + (f'#u-{max(range(3), key=lambda i: cross[i]) + 1}-{max(cross)}' if sum(cross) else '')})
+        rows.sort(key=lambda x: (x['prices']['medium'], x['tm']['t']['name']))
+        if mode == 'bonus' and len(rows) < 3:
+            # fewer than 3 bonus answers: fill up with the cheapest towers that simply do damage
+            have = {x['tm']['id'] for x in rows}
+            extra = []
+            for tm in c.tower_models:
+                if tm['id'] in have or not c.pop.has(tm['id']) or c.pop.non_attacker(tm['id']):
+                    continue
+                cross = c.pop.cheapest(tm['id'], props, c.cross_medium)
+                if cross is not None:
+                    extra.append({'tm': tm, 'cross': cross, 'code': code_of(cross), 'up': c.cross_name(tm['id'], cross),
+                                  'prices': c.cross_prices(tm['id'], cross), 'why': 'any damage works', 'kind': 'tower',
+                                  'url': tm['url']})
+            extra.sort(key=lambda x: x['prices']['medium'])
+            rows += extra[:3 - len(rows)]
+        # support fixes: towers/heroes that give the property to others
+        need = set()
+        for p in props:
+            need |= set({'zebra': ['black', 'white'], 'ddt': ['ddt']}.get(p, [p]))
+        groups = {}
+        for s in c.pop.support:
+            key = (s.get('source'), json.dumps(s.get('req'), sort_keys=True))
+            groups.setdefault(key, {'s': s, 'grants': set(), 'notes': []})
+            groups[key]['grants'].add(s.get('grants'))
+            if s.get('note'):
+                groups[key]['notes'].append(s['note'])
+        support = []
+        for (src, _), g in groups.items():
+            if not need <= g['grants']:
+                continue
+            req = g['s'].get('req') or {}
+            if src and src.startswith('hero:'):
+                hid = src.split(':', 1)[1]
+                hm = c.hm_by.get(hid)
+                if not hm:
+                    continue
+                support.append({'kind': 'hero', 'name': hm['h']['name'], 'url': hm['url'], 'code': None,
+                                'up': f"level {req.get('level')}", 'prices': hm['prices'],
+                                'why': g['notes'][0] if g['notes'] else None})
+            elif src in c.tm_by and 'path' in req:
+                cross = [0, 0, 0]
+                cross[int(req['path'])] = int(req['tier'])
+                support.append({'kind': 'support', 'tm': c.tm_by[src], 'name': c.tm_by[src]['t']['name'],
+                                'url': c.tm_by[src]['url'] + f"#u-{int(req['path']) + 1}-{int(req['tier'])}",
+                                'code': code_of(cross), 'up': c.cross_name(src, cross),
+                                'prices': c.cross_prices(src, cross), 'why': g['notes'][0] if g['notes'] else None})
+        support.sort(key=lambda x: (x['kind'] == 'hero', x['prices']['medium']))
+        heroes = []
+        if need <= {'camo', 'lead'}:
+            for hm in c.hero_models:
+                levels = [((c.pop.heroes.get(hm['id']) or {}).get(p) or {}).get('level') for p in need]
+                if levels and all(lv is not None for lv in levels):
+                    heroes.append({'hm': hm, 'level': max(levels)})
+            heroes.sort(key=lambda x: (x['level'], x['hm']['h'].get('cost') or 0))
+        top = rows[:5]
+        first_support = support[:1]
+        more = rows[5:]
+        threat = str(fm.get('threat') or props[0])
+        first_round = c.threat_first.get(threat)
+        bullets = [re.sub(r'^\s*[-*]\s+', '', ln).strip() for ln in body.splitlines() if re.match(r'^\s*[-*]\s+', ln)]
+        cards.append({
+            'slug': slug, 'title': str(fm.get('title') or slug.title()), 'tile': str(fm.get('tile') or slug.title()),
+            'order': float(fm.get('order') or 99), 'props': props, 'mode': mode,
+            'rule': inline_md(fm.get('rule')), 'rule_plain': re.sub(r'\*\*', '', str(fm.get('rule') or '')),
+            'sub': inline_md(fm.get('sub')), 'top': top, 'support_top': first_support, 'more': more,
+            'support_more': support[1:], 'heroes': heroes, 'n_fixes': len(top) + len(first_support),
+            'first': first_round, 'bullets': bullets, 'related': fm.get('related') or [],
+            'cheapest': top[0]['prices'] if top else None, 'url': f'quick/{slug}/',
+        })
+    cards.sort(key=lambda x: (x['order'], x['title']))
+    return cards
 
 
 def about(c, keys, notes=None):
@@ -592,7 +965,7 @@ def load_guides():
             continue
         title = str(fm.get('title') or fn[:-3].replace('-', ' ').title())
         group = str(fm.get('group') or 'Guides').strip()
-        group = 'Reference' if group.lower().startswith('ref') else 'Guides'
+        group = 'Reference' if group.lower().startswith('ref') else ('More' if group.lower() == 'more' else 'Guides')
         try:
             order = float(fm.get('order'))
         except (TypeError, ValueError):
@@ -669,6 +1042,11 @@ def render_markdown(g, planned, base, root):
         return '<a' + attrs.replace(hm.group(0), 'href="' + htmlmod.escape(new, quote=True) + '"') + '>' + inner + '</a>'
     body = re.sub(r'<a(\s[^>]*)>(.*?)</a>', fix, body, flags=re.S)
     body = re.sub(r'<img(?![^>]*\balt=)', '<img alt=""', body)
+    # glossary-style tables: give each "**Term**" row an id so search can point at it
+    def row_id(mo):
+        term = htmlmod.unescape(re.sub(r'<[^>]+>', '', mo.group(2)))
+        return f'<tr id="g-{slugify(term)}">{mo.group(1)}<strong>{mo.group(2)}</strong>'
+    body = re.sub(r'<tr>(\s*<td>)<strong>(.*?)</strong>', row_id, body)
     return body, toc
 
 
@@ -678,6 +1056,8 @@ class Writer:
         self.files = []
 
     def write(self, rel, content, binary=False):
+        if not safe_rel(rel):
+            raise RuntimeError(f'refusing to write {rel}')
         full = os.path.join(ROOT, rel)
         os.makedirs(os.path.dirname(full) or ROOT, exist_ok=True)
         with open(full, 'wb' if binary else 'w', **({} if binary else {'encoding': 'utf-8'})) as f:
@@ -689,6 +1069,8 @@ def safe_rel(rel):
     rel = rel.replace('\\', '/').lstrip('/')
     if not rel or '..' in rel.split('/'):
         return False
+    if TOOL_OUTPUT.match(rel) or rel == 'tools' or re.match(r'^tools/(?!fixtures$)[a-z0-9-]+$', rel):
+        return True
     first = rel.split('/')[0]
     if first in PROTECTED_DIRS:
         return False
@@ -726,6 +1108,18 @@ def clean_previous():
     return n
 
 
+def tool_pages():
+    """src/pages/<slug>.body.html from the tools stream (C3); slug -> fragment text."""
+    out = {}
+    if os.path.isdir(PAGES_SRC):
+        for fn in sorted(os.listdir(PAGES_SRC)):
+            m = re.match(r'^([a-z0-9-]+)\.body\.html$', fn)
+            if m and m.group(1) != 'fixtures':
+                with open(os.path.join(PAGES_SRC, fn), encoding='utf-8') as f:
+                    out[m.group(1)] = f.read()
+    return out
+
+
 def main():
     t0 = time.time()
     c = build_model()
@@ -737,12 +1131,24 @@ def main():
     guides = load_guides()
     rounds_md = next((g for g in guides if g['slug'] == 'rounds'), None)
     guides = [g for g in guides if g['slug'] != 'rounds']
+    cards = quick_cards(c)
+    c.cards = cards
+    card_by = {q['slug']: q for q in cards}
+    tool_src = tool_pages()
+    tool_assets = os.path.join(PAGES_SRC, 'assets')
+    has_synergy = os.path.isfile(os.path.join(tool_assets, 'synergy.js'))
+    tools = [{'slug': k, 'name': n, 'desc': d, 'url': f'tools/{k}/', 'ready': k in tool_src or k == 'simulator'}
+             for k, n, d in TOOLS]
+    tools += [{'slug': k, 'name': k.replace('-', ' ').capitalize(), 'desc': '', 'url': f'tools/{k}/', 'ready': True}
+              for k in tool_src if k not in {t['slug'] for t in tools}]
 
     # every page path, for link checks inside guides
     planned = {'', 'planner/', 'monkeys/', 'monkeys/heroes/', 'monkeys/paragons/', 'heroes/', 'maps/', 'guides/',
-               'guides/rounds/', 'records/', 'a-z/', '404.html', 'search-index.json'}
+               'guides/rounds/', 'guides/hard-plan/', 'rounds/', 'records/', 'a-z/', 'patch/', 'about/', 'tools/',
+               '404.html', 'search-index.json'}
     planned |= {tm['url'] for tm in c.tower_models} | {hm['url'] for hm in c.hero_models}
     planned |= {mm['url'] for mm in c.map_models} | {g['url'] for g in guides}
+    planned |= {q['url'] for q in cards} | {r['url'] for r in c.round_models} | {t['url'] for t in tools}
 
     env = jinja2.Environment(loader=jinja2.FileSystemLoader(TEMPLATES),
                              autoescape=jinja2.select_autoescape(['html']),
@@ -752,8 +1158,16 @@ def main():
     env.filters['tidy'] = tidy
     env.filters['rich'] = rich
     env.filters['plain'] = plain
+    env.filters['tojson_safe'] = lambda v: Markup(json.dumps(v, ensure_ascii=False, separators=(',', ':')).replace('</', '<\\/'))
     env.globals.update(site=site, meta=c.meta, DIFFS=DIFFS, TIERS=TIERS, TIER_XP=TIER_XP, CLASSES=CLASSES,
-                       THREAT_LABEL=THREAT_LABEL, mult=c.mult, ctx=c, year=datetime.date.today().year)
+                       THREAT_LABEL=THREAT_LABEL, mult=c.mult, ctx=c, year=datetime.date.today().year,
+                       TOOLS=tools, MORE_LINKS=MORE_LINKS, DANGER_ROUNDS=DANGER_ROUNDS, THREAT_CARD=THREAT_CARD,
+                       card_by=card_by, step_label=step_label, has_synergy=has_synergy)
+
+    def lx(text, root, link=True):
+        return c.lx(tidy(text or ''), root, link_names=link)
+    env.globals['lx'] = lx
+    env.globals['lxb'] = lambda text, root: Markup(re.sub(r'\*\*(.+?)\*\*', r'<b>\1</b>', str(lx(text, root))))
 
     def link_maps(text, root):
         """Escape text and link any map names in it."""
@@ -766,10 +1180,15 @@ def main():
     env.globals['link_maps'] = link_maps
 
     generic_about = about(c, ['wiki', 'fandom', 'index', 'cq', 'nk'])
+    fixture_note = ([f"This build uses stand-in data for {', '.join(c.fixtures)} until the full data set lands."]
+                    if c.fixtures else [])
+    pop_about = about(c, ['wiki', 'fandom', 'nk'], [
+        'Fixes are worked out from the site\'s pop model: the cheapest crosspath of each tower that can damage the Bloon, '
+        'priced on the difficulty you pick with the $5 rounding the game uses.'] + fixture_note)
 
     def page(path, template, title, description, section=None, crumbs=None, **kw):
         if 'about' not in kw:
-            kw['about'] = None if template in ('404.html', 'redirect.html', 'guide.html') else generic_about
+            kw['about'] = None if template in ('404.html', 'redirect.html', 'guide.html', 'about.html') else generic_about
         if path == '404.html':
             root = base
         else:
@@ -782,88 +1201,118 @@ def main():
         W.write(path + 'index.html' if path.endswith('/') or path == '' else path, html)
 
     v = c.meta['version']
+    name = site['name']
     counts = {'towers': len(c.towers), 'heroes': len(c.heroes), 'maps': len(c.maps),
               'paragons': sum(1 for t in c.towers if t.get('paragon')), 'guides': len(guides)}
+    starter = next((g for g in guides if g['slug'] == 'getting-started'), None)
 
-    # ---- home
-    farm_guide = next((g for g in guides if re.search(r'xp|farm', g['slug'])), None)
-    page('', 'home.html', f"{site['name']}: unofficial BTD6 hub",
-         f"Unofficial Bloons TD 6 hub for v{v}: every tower, hero, paragon and map, CHIMPS records, rounds and a build planner.",
-         section='home', counts=counts, farm_guide=farm_guide)
+    # ---- home = quick answers
+    page('', 'home.html', f"{name}: BTD6 answers in seconds",
+         f"Unofficial Bloons TD 6 help for v{v}: what pops camo, lead, purple, MOABs and DDTs, the cheapest fix on your "
+         f"difficulty, every round and every tower, map and hero.",
+         section='home', counts=counts, cards=cards, starter=starter, about=pop_about)
 
-    # ---- planner
-    sys.path.insert(0, SRC)
-    import build as planner_build  # src/build.py
-    planner_build.main()
-    with open(os.path.join(SRC, 'btd6-planner.html'), encoding='utf-8') as f:
-        frag = f.read()
-    frag = re.sub(r'<title>.*?</title>\s*', '', frag, flags=re.S)
-    frag = re.sub(r'<meta name="claude:[^>]*>\s*', '', frag)
-    frag = re.sub(r'<link rel="(?:preconnect|stylesheet)"[^>]*fonts\.(?:googleapis|gstatic)[^>]*>\s*', '', frag)
-    styles = ''.join(re.findall(r'<style>.*?</style>', frag, flags=re.S))
-    frag = re.sub(r'<style>.*?</style>\s*', '', frag, flags=re.S)
-    page('planner/', 'planner.html', f"Planner · {site['name']}",
-         'BTD6 build planner: coverage check, mode legality, priced build order, cash curve and tower-XP projection for any map and mode.',
-         section='planner', crumbs=[('Planner', None)], planner_html=Markup(frag),
-         planner_css=Markup(styles))
+    # ---- quick cards
+    for q in cards:
+        page(q['url'], 'quick.html', f"{q['title']}: what pops it · {name}",
+             f"{q['rule_plain']} The cheapest fixes on every difficulty (BTD6 v{v}).",
+             section='home', crumbs=[('Quick answers', ''), (q['tile'], None)], q=q,
+             rel_cards=[card_by[r] for r in q['related'] if r in card_by], about=pop_about)
+
+    # ---- tools (C3): S's fragments wrapped in the site chrome; legacy planner until the simulator lands
+    page('tools/', 'tools.html', f"Tools · {name}", 'BTD6 tools: round simulator, XP calculator and defence check.',
+         section='tools', crumbs=[('Tools', None)], about=None)
+    legacy = None
+    for t in tools:
+        body = tool_src.get(t['slug'])
+        crumbs = [('Tools', 'tools/'), (t['name'], None)]
+        if body is not None:
+            depth_root = '../../'
+            body = body.replace('{{BASE}}static/tools/', depth_root + 'assets/tools/').replace('{{BASE}}', depth_root)
+            body = body.replace('{{ROOT}}', depth_root)
+            page(t['url'], 'tool.html', f"{t['name']} · {name}", t['desc'] or f"{t['name']}: a BTD6 tool.",
+                 section='tools', crumbs=crumbs, tool=t, body=Markup(body), legacy=False)
+        elif t['slug'] == 'simulator':
+            if legacy is None:
+                sys.path.insert(0, SRC)
+                import build as planner_build  # src/build.py
+                planner_build.main()
+                with open(os.path.join(SRC, 'btd6-planner.html'), encoding='utf-8') as f:
+                    frag = f.read()
+                frag = re.sub(r'<title>.*?</title>\s*', '', frag, flags=re.S)
+                frag = re.sub(r'<meta name="claude:[^>]*>\s*', '', frag)
+                frag = re.sub(r'<link rel="(?:preconnect|stylesheet)"[^>]*fonts\.(?:googleapis|gstatic)[^>]*>\s*', '', frag)
+                styles = ''.join(re.findall(r'<style>.*?</style>', frag, flags=re.S))
+                frag = re.sub(r'<style>.*?</style>\s*', '', frag, flags=re.S)
+                legacy = (frag, styles)
+            page(t['url'], 'tool.html', f"{t['name']} · {name}",
+                 'BTD6 build planner: coverage check, mode legality, priced build order, cash curve and tower-XP projection.',
+                 section='tools', crumbs=crumbs, tool=t, body=Markup(legacy[0]), head=Markup(legacy[1]), legacy=True)
+        else:
+            page(t['url'], 'tool.html', f"{t['name']} · {name}", t['desc'], section='tools', crumbs=crumbs,
+                 tool=t, body=None, legacy=False, starter=starter)
+    page('planner/', 'redirect.html', f"Simulator · {name}", 'The planner is now the Simulator.',
+         target='tools/simulator/', keep_hash=True, label='Go to the Simulator')
 
     # ---- monkeys
     by_class = [(cl, [tm for tm in c.tower_models if tm['t'].get('class') == cl]) for cl in CLASSES]
-    page('monkeys/', 'monkeys.html', f"Monkeys · {site['name']}",
+    page('monkeys/', 'monkeys.html', f"Monkeys · {name}",
          f"All {counts['towers']} BTD6 towers by class, with base prices, top crosspaths and paragons (v{v}).",
          section='monkeys', crumbs=[('Monkeys', None)], tab='towers', by_class=by_class)
-    page('monkeys/heroes/', 'heroes.html', f"Heroes · {site['name']}",
+    page('monkeys/heroes/', 'heroes.html', f"Heroes · {name}",
          f"All {counts['heroes']} BTD6 heroes: price on every difficulty, unlock level, camo and lead answers (v{v}).",
          section='monkeys', crumbs=[('Monkeys', 'monkeys/'), ('Heroes', None)], tab='heroes')
-    page('monkeys/paragons/', 'paragons.html', f"Paragons and XP farms · {site['name']}",
+    page('monkeys/paragons/', 'paragons.html', f"Paragons and XP farms · {name}",
          f"Every BTD6 paragon with its price, XP from zero and the best Deflation farm to get there (v{v}).",
          section='monkeys', crumbs=[('Monkeys', 'monkeys/'), ('Paragons', None)], tab='paragons',
          about=about(c, ['wiki', 'fandom', 'community'], ['Farm XP and runs are worked out with the Deflation XP formula '
                      '(Expert map x1.3, Monkey Education on), split by each tower\'s share of the money spent. They are not play-tested.']))
-    page('heroes/', 'redirect.html', f"Heroes · {site['name']}", 'Moved to the Monkeys page, Heroes tab.',
-         section='monkeys', target='monkeys/heroes/')
+    page('heroes/', 'redirect.html', f"Heroes · {name}", 'Moved to the Monkeys page, Heroes tab.',
+         section='monkeys', target='monkeys/heroes/', label='Go to the Heroes list')
     for tm in c.tower_models:
         t = tm['t']
-        page(tm['url'], 'tower.html', f"{t['name']} · {site['name']}",
-             f"{t['name']} (BTD6 v{v}): all 15 upgrades with prices on every difficulty, XP to unlock, best crosspaths, what it pops and CHIMPS proof.",
+        ab = about_tower(c, tm)
+        ab['notes'] = ab['notes'] + fixture_note
+        page(tm['url'], 'tower.html', f"{t['name']} · {name}",
+             f"{t['name']} (BTD6 v{v}): what it pops on each crosspath, prices on every difficulty, best crosspaths, "
+             f"good partners and its paragon.",
              section='monkeys', crumbs=[('Monkeys', 'monkeys/'), (t.get('class'), 'monkeys/#' + slugify(t.get('class'))), (t['name'], None)],
-             tm=tm, about=about_tower(c, tm))
+             tm=tm, about=ab, tools_ready={x['slug']: x['ready'] for x in tools})
     for hm in c.hero_models:
         h = hm['h']
-        page(hm['url'], 'hero.html', f"{h['name']} · {site['name']}",
-             f"{h['name']} (BTD6 v{v}): price, unlock, camo and lead, best maps and solo-CHIMPS proof.",
+        hl = c.hero_levels.get(hm['id'])
+        page(hm['url'], 'hero.html', f"{h['name']} · {name}",
+             f"{h['name']} (BTD6 v{v}): price, when it sees camo and pops Lead, abilities by level and best maps.",
              section='monkeys', crumbs=[('Monkeys', 'monkeys/'), ('Heroes', 'monkeys/heroes/'), (h['name'], None)], hm=hm,
-             about=about_hero(c, hm))
+             hl=hl, about=about_hero(c, hm))
 
     # ---- maps
-    page('maps/', 'maps.html', f"Maps · {site['name']}",
-         f"All {counts['maps']} BTD6 maps: difficulty, water, line of sight, lane length, CHIMPS records. Filter and search.",
+    page('maps/', 'maps.html', f"Maps · {name}",
+         f"All {counts['maps']} BTD6 maps: filter by difficulty, water and line of sight.",
          section='maps', crumbs=[('Maps', None)])
     for mm in c.map_models:
         m = mm['m']
-        page(mm['url'], 'map.html', f"{m['name']} · {site['name']}",
-             f"{m['name']} ({m['difficulty']}) in BTD6 v{v}: map facts, BTD6 Index records and strategies for Easy, Hard and CHIMPS.",
+        page(mm['url'], 'map.html', f"{m['name']} · {name}",
+             f"How to beat {m['name']} ({m['difficulty']}) in BTD6 v{v}: steps for Easy, Hard and CHIMPS, key rounds and the best monkeys.",
              section='maps', crumbs=[('Maps', 'maps/'), (m['difficulty'], 'maps/#' + m['difficulty'].lower()), (m['name'], None)], mm=mm,
              about=about_map(c, mm))
 
-    # ---- guides
-    for g in guides:
-        g['html'], g['toc'] = render_markdown(g, planned, base, '../../')
+    # ---- rounds
     rounds_intro = None
     if rounds_md:
-        rounds_md['url'] = 'guides/rounds/'
-        rounds_intro, _ = render_markdown(rounds_md, planned, base, '../../')
-    rounds_entry = {'slug': 'rounds', 'title': rounds_md['title'] if rounds_md else 'Rounds',
-                    'group': 'Reference', 'order': rounds_md['order'] if rounds_md else 0,
-                    'summary': (rounds_md or {}).get('summary') or 'Every round 1–140, standard and ABR: Bloons, RBE, cash, XP and the danger rounds.',
-                    'url': 'guides/rounds/', 'updated': (rounds_md or {}).get('updated') or c.meta['researched'] or '',
+        rounds_md['url'] = 'rounds/'
+        rounds_intro, _ = render_markdown(rounds_md, planned, base, '../')
+    rounds_entry = {'slug': 'rounds', 'title': 'Rounds', 'group': 'Reference', 'order': rounds_md['order'] if rounds_md else 0,
+                    'summary': 'Every round 1–140, standard and ABR, with a page for each of rounds 1–100.',
+                    'url': 'rounds/', 'updated': (rounds_md or {}).get('updated') or c.meta['researched'] or '',
                     'gameVersion': (rounds_md or {}).get('gameVersion') or v, 'related': (rounds_md or {}).get('related') or []}
-    all_guides = guides + [rounds_entry]
-    groups = [(name, sorted([g for g in all_guides if g['group'] == name], key=lambda g: (g['order'], g['title'])))
-              for name in ('Guides', 'Reference')]
-    page('guides/', 'guides.html', f"Guides · {site['name']}",
-         'BTD6 guides and reference: rounds, Bloons, modes, Monkey Knowledge and a glossary.',
-         section='guides', crumbs=[('Guides', None)], groups=groups)
+    hard_entry = {'slug': 'hard-plan', 'title': 'General Hard and Impoppable plan', 'group': 'Guides', 'order': 50,
+                  'summary': 'What changes on Hard and Impoppable compared with a CHIMPS build, for any map.',
+                  'url': 'guides/hard-plan/', 'updated': c.meta['researched'] or '', 'gameVersion': v, 'related': ['chimps', 'economy'],
+                  'toc': []}
+    all_guides = guides + [rounds_entry, hard_entry]
+    groups = [(gname, sorted([g for g in all_guides if g['group'] == gname], key=lambda g: (g['order'], g['title'])))
+              for gname in ('Guides', 'Reference')]
 
     def related_links(items, root):
         out = []
@@ -881,8 +1330,11 @@ def main():
                 elif rr.startswith('guides/'):
                     label = next((g['title'] for g in all_guides if g['slug'] == key), key)
                 out.append((label, rr + '/'))
+            elif key == 'rounds':
+                out.append(('Rounds', 'rounds/'))
             elif key in {g['slug'] for g in all_guides}:
-                out.append((next(g['title'] for g in all_guides if g['slug'] == key), f'guides/{key}/'))
+                g = next(g for g in all_guides if g['slug'] == key)
+                out.append((g['title'], g['url']))
             elif key in c.tm_by:
                 out.append((c.tm_by[key]['t']['name'], c.tm_by[key]['url']))
             elif key in c.mm_by:
@@ -896,28 +1348,62 @@ def main():
                 warn(f"related entry '{r}' matches no page; skipped")
         return out
 
-    for g in guides:
-        page(g['url'], 'guide.html', f"{g['title']} · {site['name']}",
-             g['summary'] or f"{g['title']}: a BTD6 v{v} guide.", section='guides',
-             crumbs=[('Guides', 'guides/')] + ([('Reference', 'guides/#reference')] if g['group'] == 'Reference' else []) + [(g['title'], None)],
-             g=g, related=related_links(g['related'], '../../'))
-    page('guides/rounds/', 'rounds.html', f"Rounds 1–140 · {site['name']}",
+    page('rounds/', 'rounds.html', f"Rounds 1–140 · {name}",
          'Every BTD6 round 1–140 for standard and Alternate Bloons Rounds: Bloons, RBE, cash, XP and danger rounds.',
-         section='guides', crumbs=[('Guides', 'guides/'), ('Reference', 'guides/#reference'), ('Rounds', None)],
+         section='guides', crumbs=[('Rounds', None)],
          intro=Markup(rounds_intro) if rounds_intro else None, g=rounds_entry,
-         related=related_links(rounds_entry['related'], '../../'),
+         related=related_links(rounds_entry['related'], '../'),
          about=about(c, ['wiki', 'cq', 'nk'], ['Cash is pop cash plus the end-of-round bonus (100 + the round number), with no '
                      'income towers, Monkey Knowledge or Double Cash.', 'Freeplay pop-cash rates for rounds 101-140 (8% and 5%) '
                      'follow the v53.0 patch notes.']))
+    round_about = about(c, ['wiki', 'cq'], ['"What you need by now" lists every Bloon property that has appeared in rounds '
+                                           '1 to this one, so a defence that handles them all is ready for this round.'])
+    for rm in c.round_models:
+        n = rm['n']
+        page(rm['url'], 'round.html', f"Round {n} · {name}",
+             f"BTD6 round {n}: {rm['r'].get('composition') or ''}. What spawns, the threats and what you need by now.",
+             section='guides', crumbs=[('Rounds', 'rounds/'), (f'Round {n}', None)], rm=rm,
+             prev=c.rm_by.get(n - 1), next=c.rm_by.get(n + 1), about=round_about)
+    page('guides/rounds/', 'redirect.html', f"Rounds · {name}", 'The rounds table moved to /rounds/.',
+         target='rounds/', keep_hash=True, label='Go to the rounds table')
 
-    # ---- records
-    page('records/', 'records.html', f"Records · {site['name']}",
+    # ---- guides
+    for g in guides:
+        g['html'], g['toc'] = render_markdown(g, planned, base, '../../')
+    page('guides/', 'guides.html', f"Guides · {name}",
+         'BTD6 guides and reference: getting started, CHIMPS, XP, rounds, Bloons, modes, Monkey Knowledge and a glossary.',
+         section='guides', crumbs=[('Guides', None)], groups=groups, starter=starter)
+    for g in guides:
+        crumbs = [('Guides', 'guides/')] + ([('Reference', 'guides/#reference')] if g['group'] == 'Reference' else []) + [(g['title'], None)]
+        if g['group'] == 'More':
+            crumbs = [(g['title'], None)]
+        page(g['url'], 'guide.html', f"{g['title']} · {name}",
+             g['summary'] or f"{g['title']}: a BTD6 v{v} guide.", section=None if g['group'] == 'More' else 'guides',
+             crumbs=crumbs, g=g, related=related_links(g['related'], '../../'))
+    hard_entry['html'] = Markup(env.get_template('_hardplan.html').render(lines=c.hard_general, n=c.hard_general_count,
+                                                                         root='../../', lx=lx))
+    page('guides/hard-plan/', 'guide.html', f"{hard_entry['title']} · {name}", hard_entry['summary'], section='guides',
+         crumbs=[('Guides', 'guides/'), (hard_entry['title'], None)], g=hard_entry,
+         related=related_links(hard_entry['related'], '../../'))
+
+    # ---- more: records, patch, about
+    page('records/', 'records.html', f"Records · {name}",
          'BTD6 Index records for all 90 maps: solo-CHIMPS (2MP) counts, least-cost CHIMPS, lane lengths, entrances and exits.',
-         section='records', crumbs=[('Records', None)],
+         section=None, crumbs=[('Records', None)],
          about=about(c, ['index'], ['Map metadata and records from the BTD6 Index, v57.4 data.']))
+    page('patch/', 'patch.html', f"Patch notes {v} · {name}",
+         f"Every tower change from v57.0 to v{v}, linked to the upgrade it touches.", section=None,
+         crumbs=[('Patch notes', None)], about=about(c, ['nk', 'wiki']))
+    page('about/', 'about.html', f"About · {name}",
+         f"{name} is an unofficial BTD6 fan project by {site.get('author')} for {site.get('brand', 'Solou')}: credits and how to report errors.",
+         section=None, crumbs=[('About', None)])
 
     # ---- search index + A-Z
     entries = []
+    for q in cards:
+        entries.append({'t': q['title'], 'k': 'Quick', 'u': q['url'], 's': q['rule_plain'][:90]})
+    for t in tools:
+        entries.append({'t': t['name'], 'k': 'Tool', 'u': t['url'], 's': t['desc'][:90]})
     for tm in c.tower_models:
         t = tm['t']
         entries.append({'t': t['name'], 'k': 'Tower', 'u': tm['url'], 's': f"{t.get('class')} · {money(t.get('baseCost'))}"})
@@ -933,32 +1419,81 @@ def main():
     for mm in c.map_models:
         entries.append({'t': mm['m']['name'], 'k': 'Map', 'u': mm['url'], 's': mm['m']['difficulty']})
     for g in all_guides:
-        entries.append({'t': g['title'], 'k': g['group'][:-1] if g['group'].endswith('s') else g['group'], 'u': g['url'], 's': g['summary'][:80]})
+        entries.append({'t': g['title'], 'k': 'Guide' if g['group'] != 'Reference' else 'Reference', 'u': g['url'],
+                        's': g['summary'][:80]})
     for r in c.rounds['standard']:
+        n = r['round']
         comp = (r.get('composition') or '')[:70]
-        entries.append({'t': f"Round {r['round']}", 'k': 'Round', 'u': f"guides/rounds/#r{r['round']}", 's': comp, 'x': f"r{r['round']}"})
+        entries.append({'t': f"Round {n}", 'k': 'Round', 'u': f"rounds/{n}/" if n <= 100 else f"rounds/#r{n}", 's': comp, 'x': f"r{n}"})
+    # glossary terms, bosses and modes
+    gl = next((g for g in guides if g['slug'] == 'glossary'), None)
+    if gl:
+        for gid, term in re.findall(r'<tr id="(g-[a-z0-9-]+)">\s*<td><strong>(.*?)</strong>', gl['html']):
+            term = htmlmod.unescape(re.sub(r'<[^>]+>', '', term))
+            entries.append({'t': term, 'k': 'Glossary', 'u': f'guides/glossary/#{gid}', 's': 'Glossary',
+                            'a': [norm_name(x) for x in term.split('/') if x.strip()]})
+    be = next((g for g in guides if g['slug'] == 'boss-events'), None)
+    if be:
+        for bid, bname in re.findall(r'<h3 id="([^"]+)">(.*?)</h3>', be['html']):
+            bname = htmlmod.unescape(re.sub(r'<[^>]+>', '', bname))
+            short = bname.split(',')[0].strip()
+            entries.append({'t': short, 'k': 'Boss', 'u': f'guides/boss-events/#{bid}', 's': bname, 'a': [norm_name(short)]})
+    for md in c.modes:
+        if md.get('name'):
+            entries.append({'t': md['name'], 'k': 'Mode', 'u': 'guides/modes/', 's': 'Game mode',
+                            'a': [norm_name(md['name']), norm_name(md.get('id', '').replace('-', ' '))]})
+    entries.append({'t': 'Patch notes', 'k': 'Page', 'u': 'patch/', 's': f'Changes up to v{v}'})
+    entries.append({'t': 'About', 'k': 'Page', 'u': 'about/', 's': f"Who makes {name}, credits, report an error"})
+    # synonyms (C4): attach player words to the page they mean
+    syn = load('search-synonyms.json', {}) or {}
+    by_u = {}
+    for e in entries:
+        by_u.setdefault(e['u'], e)
+    for s_ in syn.get('entries', []):
+        tgt = s_.get('target', '')
+        path = tgt.split('#')[0]
+        if path not in planned:
+            warn(f"search synonym target '{tgt}' has no page; skipped")
+            continue
+        e = by_u.get(tgt)
+        if not e:
+            title = {'rounds/': 'Rounds'}.get(tgt) or tgt.strip('/').split('/')[-1].replace('-', ' ').capitalize()
+            e = {'t': title, 'k': 'Page', 'u': tgt, 's': ''}
+            entries.append(e)
+            by_u[tgt] = e
+        e.setdefault('a', [])
+        e['a'] += [norm_name(x) for x in s_.get('terms', []) if norm_name(x)]
+    for e in entries:
+        if 'a' in e:
+            e['a'] = sorted(set(a for a in e['a'] if a))
     W.write('search-index.json', json.dumps({'version': site['version'], 'entries': entries}, ensure_ascii=False, separators=(',', ':')))
 
     az = {}
     for e in entries:
-        if e['k'] == 'Round':
+        if e['k'] in ('Round', 'Glossary', 'Page'):
             continue
         letter = norm_name(e['t'])[:1].upper()
         letter = letter if letter.isalpha() else '#'
         az.setdefault(letter, []).append(e)
     az_groups = [(k, sorted(az[k], key=lambda e: (norm_name(e['t']), e['k']))) for k in sorted(az, key=lambda k: (k == '#', k))]
-    page('a-z/', 'az.html', f"A–Z index · {site['name']}",
-         'Every tower, upgrade, paragon, hero, map and guide on the site, A to Z.',
+    page('a-z/', 'az.html', f"A–Z index · {name}",
+         'Every quick answer, tower, upgrade, paragon, hero, map, boss and guide on the site, A to Z.',
          section=None, crumbs=[('A–Z', None)], az_groups=az_groups)
 
-    page('404.html', '404.html', f"Page not found · {site['name']}", 'This page does not exist.', section=None)
+    page('404.html', '404.html', f"Page not found · {name}", 'This page does not exist.', section=None)
 
-    # ---- static assets
+    # ---- static assets (+ the tools stream's assets under assets/tools/)
     for fn in sorted(os.listdir(STATIC)):
         full = os.path.join(STATIC, fn)
         if os.path.isfile(full) and not fn.startswith('.'):
             with open(full, 'rb') as f:
                 W.write('assets/' + fn, f.read(), binary=True)
+    if os.path.isdir(tool_assets):
+        for fn in sorted(os.listdir(tool_assets)):
+            full = os.path.join(tool_assets, fn)
+            if os.path.isfile(full) and not fn.startswith('.'):
+                with open(full, 'rb') as f:
+                    W.write('assets/tools/' + fn, f.read(), binary=True)
 
     if not os.path.exists(os.path.join(ROOT, '.nojekyll')):
         open(os.path.join(ROOT, '.nojekyll'), 'w').close()
@@ -974,6 +1509,10 @@ def main():
     dt = time.time() - t0
     print(f"built {sum(kinds.values())} pages ({', '.join(f'{k} {n}' for k, n in sorted(kinds.items()))}); "
           f"{len(W.files)} files; removed {removed} old files; {len(WARNINGS)} warnings; {dt:.2f}s")
+    print('inputs: pop model ' + ('FIXTURE' if 'pop-model.json' in c.fixtures else 'data/pop-model.json')
+          + ', hero levels ' + ('FIXTURE' if 'heroes-levels.json' in c.fixtures else 'data/heroes-levels.json')
+          + f", tool pages: {', '.join(sorted(tool_src)) or 'none (legacy planner as simulator)'}"
+          + (', synergy.js: yes' if has_synergy else ', synergy.js: no (built-in hints)'))
 
 
 if __name__ == '__main__':

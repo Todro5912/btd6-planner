@@ -5,18 +5,110 @@
   read the way GitHub Pages serves it under the site.json base path;
 - every page has a <title> and a meta description;
 - no private names or workspace words in the output;
-- search-index.json parses and every entry points at a real page.
+- search-index.json parses and every entry points at a real page;
+- no button, summary or label text with a stray "(" (the 0.4 "( INTERMEDIATE" bug);
+- every quick card shows at least 3 fixes;
+- no wall-of-text paragraph over 450 characters outside guides;
+- search (static/search-core.js, run with node) puts the right page first for player words.
 Exit code 1 on any failure.
 """
 import json
 import os
 import posixpath
 import re
+import shutil
+import subprocess
 import sys
 from html.parser import HTMLParser
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BANNED = re.compile(r'\b(sean|claude|vault)\b', re.I)
+WALL = 450
+# query -> the page that must come first (C4). Synonyms live in data/search-synonyms.json.
+SEARCH_EXPECT = [
+    ('camo', 'quick/camo/'), ('see camo', 'quick/camo/'), ('camo detection', 'quick/camo/'),
+    ('lead', 'quick/lead/'), ('pops lead', 'quick/lead/'), ('purple', 'quick/purple/'),
+    ('black', 'quick/black-zebra/'), ('zebra', 'quick/black-zebra/'), ('white', 'quick/white-frozen/'),
+    ('fortified', 'quick/fortified/'), ('ddt', 'quick/ddt/'), ('moab', 'quick/moab/'),
+    ('r63', 'rounds/63/'), ('round 63', 'rounds/63/'), ('63', 'rounds/63/'), ('r100', 'rounds/100/'),
+    ('impoppable', 'guides/modes/'), ('chimps', 'guides/chimps/'), ('deflation', 'guides/modes/'),
+    ('black border', 'guides/glossary/#g-bb-black-border'), ('lych', 'guides/boss-events/#lych-the-gravelord'),
+    ('vortex', 'guides/boss-events/#vortex-deadly-master-of-air'), ('phayze', 'guides/boss-events/#phayze-the-reality-warper'),
+    ('xp', 'tools/xp/'), ('farm xp', 'tools/xp/'), ('paragon', 'monkeys/paragons/'), ('monkey money', 'guides/monkey-money/'),
+    ('mk', 'guides/monkey-knowledge/'), ('glaive', None), ('infernal', 'maps/infernal/'), ('sniper', 'monkeys/sniper/'),
+]
+
+
+class Text(HTMLParser):
+    """Collects text of buttons/summaries/labels and of <p> elements (with the page section they sit in)."""
+    def __init__(self):
+        super().__init__(convert_charrefs=True)
+        self.stack, self.controls, self.paras, self.fix_counts = [], [], [], []
+        self._ctl, self._p, self._fixes = None, None, None
+
+    def handle_starttag(self, tag, attrs):
+        a = dict(attrs)
+        if tag in ('button', 'summary', 'label') and self._ctl is None:
+            self._ctl = [tag, '', 0]
+        if self._ctl is not None and tag == self._ctl[0]:
+            self._ctl[2] += 1
+        if tag == 'p' and self._p is None:
+            self._p = ''
+        if tag == 'ol' and 'fixes' in (a.get('class') or '').split() and self._fixes is None and not self.fix_counts:
+            self._fixes = 0
+        if tag == 'li' and self._fixes is not None and 'fix' in (a.get('class') or '').split():
+            self._fixes += 1
+
+    def handle_endtag(self, tag):
+        if self._ctl is not None and tag == self._ctl[0]:
+            self._ctl[2] -= 1
+            if self._ctl[2] <= 0:
+                self.controls.append((self._ctl[0], ' '.join(self._ctl[1].split())))
+                self._ctl = None
+        if tag == 'p' and self._p is not None:
+            self.paras.append(' '.join(self._p.split()))
+            self._p = None
+        if tag == 'ol' and self._fixes is not None:
+            self.fix_counts.append(self._fixes)
+            self._fixes = None
+
+    def handle_data(self, data):
+        if self._ctl is not None:
+            self._ctl[1] += data
+        if self._p is not None:
+            self._p += data
+
+
+def stray_paren(text):
+    t = text.strip()
+    return t.startswith('(') and ')' not in t or t.count('(') != t.count(')')
+
+
+def search_check(errors):
+    node = shutil.which('node')
+    if not node:
+        print('search check skipped: node not found')
+        return 0
+    js = ("const S=require(process.argv[1]);const idx=require(process.argv[2]);const s=S.create(idx.entries);"
+          "const qs=JSON.parse(process.argv[3]);const out={};for(const q of qs){out[q]=s.search(q,5).map(e=>e.u);}"
+          "console.log(JSON.stringify(out));")
+    qs = [q for q, _ in SEARCH_EXPECT]
+    r = subprocess.run([node, '-e', js, os.path.join(ROOT, 'assets', 'search-core.js'),
+                        os.path.join(ROOT, 'search-index.json'), json.dumps(qs)], capture_output=True, text=True)
+    if r.returncode:
+        errors.append('search check: node failed: ' + r.stderr.strip()[:300])
+        return 0
+    got = json.loads(r.stdout)
+    n = 0
+    for q, want in SEARCH_EXPECT:
+        res = got.get(q) or []
+        n += 1
+        if want is None:
+            if not res:
+                errors.append(f'search "{q}": no results')
+        elif not res or res[0] != want:
+            errors.append(f'search "{q}": first result {res[:1]} (want {want})')
+    return n
 
 
 class Page(HTMLParser):
@@ -123,6 +215,30 @@ def main():
             if frag and '=' not in frag and tgt.endswith('.html') and tgt in pages and frag not in pages[tgt][0].ids:
                 errors.append(f'{rel}: missing anchor #{frag} in {tgt}')
 
+    # buttons, quick cards, paragraph length
+    n_ctl = n_cards = 0
+    for rel in files:
+        if not rel.endswith('.html'):
+            continue
+        with open(os.path.join(ROOT, rel), encoding='utf-8') as f:
+            tp = Text()
+            tp.feed(f.read())
+        for tag, txt in tp.controls:
+            n_ctl += 1
+            if stray_paren(txt):
+                errors.append(f'{rel}: stray "(" in <{tag}>: "{txt[:60]}"')
+        if rel.startswith('quick/') and rel != 'quick/index.html':
+            n_cards += 1
+            if not tp.fix_counts or tp.fix_counts[0] < 3:
+                errors.append(f'{rel}: quick card shows {tp.fix_counts[:1] or [0]} fixes, needs at least 3')
+        if not rel.startswith(('guides/', 'tools/simulator/')):
+            for ptxt in tp.paras:
+                if len(ptxt) > WALL:
+                    errors.append(f'{rel}: {len(ptxt)}-character paragraph: "{ptxt[:70]}..."')
+    if n_cards < 8:
+        errors.append(f'only {n_cards} quick cards built (want 8+)')
+    n_search = search_check(errors)
+
     for rel in files:
         if rel.endswith(('.html', '.json', '.js', '.css')):
             with open(os.path.join(ROOT, rel), encoding='utf-8') as f:
@@ -156,8 +272,8 @@ def main():
     if not os.path.exists(os.path.join(ROOT, '.nojekyll')):
         errors.append('.nojekyll is missing')
 
-    print(f'{len(pages)} pages, {n_links} internal links checked, search index: '
-          + ', '.join(f'{k} {v}' for k, v in sorted(kinds.items())))
+    print(f'{len(pages)} pages, {n_links} internal links checked, {n_ctl} controls, {n_cards} quick cards, '
+          f'{n_search} search queries; search index: ' + ', '.join(f'{k} {v}' for k, v in sorted(kinds.items())))
     if errors:
         print(f'{len(errors)} problems:')
         for e in errors[:80]:

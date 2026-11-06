@@ -18,32 +18,30 @@
   </fieldset>
   <div class="filter">
     <label for="mapW">Water</label>
-    <select id="mapW"><option value="">Any</option><option value="none">None</option><option value="little">Little</option><option value="lots">Lots</option></select>
+    <select id="mapW"><option value="">Any</option><option value="water">Has water</option><option value="none">No water</option><option value="little">A little</option><option value="lots">Lots</option></select>
   </div>
   <div class="filter">
     <label for="mapL">Line of sight</label>
-    <select id="mapL"><option value="">Any</option><option value="none">Clear</option><option value="some">Some blockers</option><option value="heavy">Heavy blockers</option></select>
+    <select id="mapL"><option value="">Any</option><option value="blocked">Has blockers</option><option value="none">Clear</option><option value="some">Some blockers</option><option value="heavy">Heavy blockers</option></select>
   </div>
   <p class="filter-count" id="mapCount" role="status" aria-live="polite"></p>
 </form>
 {% for tr in TIERS %}
 {% set ms = ctx.map_models|selectattr('m.difficulty', 'equalto', tr)|list %}
 <section class="map-group" id="{{ tr|lower }}" data-group="{{ tr }}" aria-labelledby="g-{{ tr|lower }}">
-  <h2 class="h2 group-h" id="g-{{ tr|lower }}">{{ ui.tier_dot(tr) }}{{ tr }} <small>{{ ms|length }} maps · ×{{ TIER_XP[tr] }} XP</small></h2>
+  <h2 class="h2 group-h" id="g-{{ tr|lower }}">{{ ui.tier_dot(tr) }}{{ tr }} <small>{{ ms|length }} maps</small></h2>
   <div class="table-wrap">
   <table class="tbl tbl-maps">
-    <thead><tr><th scope="col">Map</th><th scope="col" class="n">Lanes</th><th scope="col" class="n">RBS</th><th scope="col">Water</th><th scope="col">Line of sight</th><th scope="col" class="n hide-s">2MP</th><th scope="col" class="n hide-s">LCC</th></tr></thead>
+    <thead><tr><th scope="col">Map</th><th scope="col" class="n">Lanes</th><th scope="col">Water</th><th scope="col">Line of sight</th><th scope="col" class="n hide-s">Easiness</th></tr></thead>
     <tbody>
     {% for mm in ms %}
     {% set m = mm.m %}
     <tr data-name="{{ m.name|lower }}" data-d="{{ m.difficulty }}" data-w="{{ m.water }}" data-l="{{ m.losBlockers }}">
       <th scope="row"><a href="{{ root }}{{ mm.url }}">{{ m.name }}</a></th>
       <td class="n">{{ m.paths }}</td>
-      <td class="n">{{ m.trackLength if m.trackLength is not none else '–' }}</td>
       <td><span class="wl wl-{{ m.water }}">{{ m.water }}</span></td>
       <td><span class="wl wl-{{ m.losBlockers }}">{{ 'clear' if m.losBlockers == 'none' else m.losBlockers }}</span></td>
-      <td class="n hide-s">{{ mm.two_mp_count if mm.two_mp_count is not none else '–' }}</td>
-      <td class="n hide-s">{{ m.lcc.money|money if m.lcc and m.lcc.money else '–' }}</td>
+      <td class="n hide-s">{{ m.easiness ~ '/5' if m.easiness else '–' }}</td>
     </tr>
     {% endfor %}
     </tbody>
@@ -51,6 +49,6 @@
   </div>
 </section>
 {% endfor %}
-<p class="note">RBS = track length in red-Bloon seconds (BTD6 Index; for several lanes, the average). 2MP = number of single-tower CHIMPS wins. LCC = least-cost CHIMPS record. Full numbers on <a href="{{ root }}records/">Records</a>.</p>
+<p class="note">Water decides where Subs, Buccaneers and other water towers can go. Line-of-sight blockers stop towers shooting through scenery. Track lengths and CHIMPS records are on <a href="{{ root }}records/">Records</a>.</p>
 {% endblock %}
 {% block scripts %}<script src="{{ root }}assets/maps.js?v={{ site.version }}" defer></script>{% endblock %}
