@@ -10,5 +10,5 @@ sub: "Every fix below pops both."
 related: [white-frozen, lead]
 ---
 - A Zebra is Black + White in one Bloon.
-- Bombs need **Frag Bombs** (0-0-2) to pop Black; Mortars need **Heavy Shells**.
+- Bombs need **Frag Bombs** (0-0-2) to pop Black; Mortars need **Heavy Shells** (0-3-0).
 - Sharp towers (Darts, Tacks, Boomerangs) pop Black and Zebra from the start.

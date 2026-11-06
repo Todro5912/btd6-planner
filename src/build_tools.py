@@ -5,8 +5,8 @@ Writes:
   src/pages/assets/tools-data.js     window.MonkeyIntelData = {...}  (towers, modes, rounds, maps, pop model, presets)
   src/pages/assets/synergy-rules.js  window.MonkeyIntel.synergyRules = {...}  (rules + tower names, small; for tower pages)
 
-Pop model: data/pop-model.json (contract C1, stream D) when it exists, else src/fixtures/pop-model.fixture.json,
-flagged as preview data. Hero levels: data/heroes-levels.json (C2) when it exists.
+Pop model: data/pop-model.json (contract C1) and hero levels: data/heroes-levels.json (C2). Both are required:
+the build stops if either is missing or unreadable. There is no fixture fallback.
 
   python3 src/build_tools.py            build the bundles
   python3 src/build_tools.py --preview  also write src/.preview/<slug>.html (each fragment in a minimal shell)
@@ -21,7 +21,6 @@ ROOT = os.path.normpath(os.path.join(HERE, '..'))
 DATA = os.path.join(ROOT, 'data')
 ASSETS = os.path.join(HERE, 'pages', 'assets')
 PAGES = os.path.join(HERE, 'pages')
-FIXTURE = os.path.join(HERE, 'fixtures', 'pop-model.fixture.json')
 PRIVATE = {'_src', 'notes_internal', 'source', 'about'}
 
 
@@ -94,7 +93,20 @@ def parse_presets(strats, towers, heroes):
     return out
 
 
-def build():
+def require(name):
+    path = os.path.join(DATA, name)
+    try:
+        with open(path, encoding='utf-8') as f:
+            data = json.load(f)
+    except (OSError, ValueError) as e:
+        sys.exit(f'build_tools: data/{name} is required ({e})')
+    if not data:
+        sys.exit(f'build_tools: data/{name} is empty')
+    return data
+
+
+def collect():
+    """Everything the tool pages ship, as one dict (no files written)."""
     towers = load(os.path.join(DATA, 'towers.json'), {}) or {}
     maps = load(os.path.join(DATA, 'maps.json'), []) or []
     modes = load(os.path.join(DATA, 'modes.json'), []) or []
@@ -104,14 +116,11 @@ def build():
     econ = load(os.path.join(DATA, 'economy.json'), {}) or {}
     rules = load(os.path.join(DATA, 'synergy-rules.json'), {}) or {}
 
-    pop_path = os.path.join(DATA, 'pop-model.json')
-    pop = load(pop_path, False) if os.path.exists(pop_path) else False
+    pop = require('pop-model.json')
+    if pop.get('_fixture') or not pop.get('towers'):
+        sys.exit('build_tools: data/pop-model.json is a fixture or has no towers')
     pop_source = 'data'
-    if not pop:
-        pop = load(FIXTURE, {}) or {}
-        pop_source = 'fixture'
-    hl_path = os.path.join(DATA, 'heroes-levels.json')
-    hero_levels = load(hl_path, False) if os.path.exists(hl_path) else None
+    hero_levels = require('heroes-levels.json')
 
     tower_list = []
     for t in towers.get('towers', []) or []:
@@ -150,7 +159,14 @@ def build():
     keep = {k: data.pop(k) for k in ('pop', 'heroLevels', 'synergy')}  # contract files ship whole (C1 uses 'source')
     data = strip(data)
     data.update(keep)
+    return data
 
+
+def build():
+    data = collect()
+    rules = data['synergy']
+    tower_list, heroes = data['towers'], data['heroes']
+    pop_source = data['meta']['popSource']
     os.makedirs(ASSETS, exist_ok=True)
     blob = js_blob(data)
     with open(os.path.join(ASSETS, 'tools-data.js'), 'w', encoding='utf-8') as f:

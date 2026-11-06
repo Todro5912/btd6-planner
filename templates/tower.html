@@ -171,6 +171,7 @@
 {% endblock %}
 {% block scripts %}
 <script src="{{ root }}assets/prices.js?v={{ site.version }}" defer></script>
-{% if has_synergy %}<script src="{{ root }}assets/tools/synergy.js?v={{ site.version }}" defer></script>{% endif %}
+{% if has_synergy %}<script src="{{ root }}assets/tools/synergy-rules.js?v={{ site.version }}" defer></script>
+<script src="{{ root }}assets/tools/synergy.js?v={{ site.version }}" defer></script>{% endif %}
 <script src="{{ root }}assets/picker.js?v={{ site.version }}" defer></script>
 {% endblock %}

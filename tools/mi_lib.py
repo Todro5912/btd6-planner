@@ -12,9 +12,10 @@ from markupsafe import Markup
 POP_PROPS = ['camo', 'lead', 'purple', 'black', 'white', 'zebra', 'frozen', 'moab', 'fortified', 'ddt']
 PROP_LABEL = {'camo': 'Camo', 'lead': 'Lead', 'purple': 'Purple', 'black': 'Black', 'white': 'White', 'zebra': 'Zebra',
               'frozen': 'Frozen', 'moab': 'MOAB-class', 'fortified': 'Fortified', 'ddt': 'DDT', 'bad': 'BAD'}
-# C1 says DDT = camo AND lead AND black on one crosspath. A DDT is also a MOAB-class bloon, so we add moab:
-# without it, e.g. an Ice 2-0-0 would be listed as a DDT answer although it can't hurt blimps.
-DERIVED = {'zebra': ['black', 'white'], 'ddt': ['camo', 'lead', 'black', 'moab']}
+# C1: a derived DDT is camo AND lead AND black on one crosspath. A DDT is also MOAB-class, so moab is checked too
+# (docs/POP-MODEL.md: the data tests prove it never changes the answer for derived towers). Towers whose ddt has
+# "derived": false carry their own any[], which is used as-is. Zebra has its own entry in the data.
+DDT_PARTS = ['camo', 'lead', 'black', 'moab']
 
 
 def valid_cross(c):
@@ -35,6 +36,8 @@ def _holds(req, tiers):
     if req == 'never' or not isinstance(req, dict):
         return False
     try:
+        if 'maxTier' in req:  # POP-MODEL.md extension: an upgrade that loses the ability is not bought
+            return tiers[int(req['path'])] <= int(req['maxTier'])
         return tiers[int(req['path'])] >= int(req['tier'])
     except (KeyError, ValueError, IndexError, TypeError):
         return False
@@ -67,13 +70,28 @@ class PopModel:
         e = (self.towers.get(tid) or {}).get(prop)
         return e if isinstance(e, dict) else None
 
+    def ddt_explicit(self, tid):
+        e = self.entry(tid, 'ddt')
+        return bool(e) and e.get('derived') is False
+
     def can(self, tid, prop, tiers):
-        if prop in DERIVED:
-            return all(self.can(tid, p, tiers) for p in DERIVED[prop])
+        """Can this crosspath damage prop on its own. `conditional` entries never count (see hints())."""
         e = self.entry(tid, prop)
-        if not e or e.get('derived'):
+        if prop == 'ddt' and (not e or e.get('derived') is not False):
+            return all(self.can(tid, p, tiers) for p in DDT_PARTS)
+        if prop == 'zebra' and not e:
+            return self.can(tid, 'black', tiers) and self.can(tid, 'white', tiers)
+        if not e:
             return False
         return any(all(_holds(r, tiers) for r in alt) for alt in (e.get('any') or []) if isinstance(alt, list))
+
+    def hints(self, tid, prop, tiers=None):
+        """`conditional` notes (abilities, effects that need another tower): hints only, never coverage."""
+        out = []
+        for c in (self.entry(tid, prop) or {}).get('conditional') or []:
+            if tiers is None or all(_holds(r, tiers) for r in c.get('req') or []):
+                out.append(c)
+        return out
 
     def bonuses(self, tid, tiers, vs=None):
         out = []

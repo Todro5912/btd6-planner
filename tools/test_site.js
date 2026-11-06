@@ -183,6 +183,8 @@ async function main() {
     ok(st.code === '1-1-0' && st.yes.includes('Camo') && st.yes.includes('DDT'), 'middle + : 1-1-0 sees camo and can hit DDTs', st);
     const synAfter = await page.evaluate(() => document.querySelector('.pk-syn').textContent);
     ok(synBefore !== synAfter && st.syn > 0, 'synergy suggestions react to the crosspath', [synBefore.slice(0, 60), synAfter.slice(0, 60)]);
+    const synSrc = await page.evaluate(() => ({ src: document.querySelector('.pk-src').textContent, links: Array.from(document.querySelectorAll('.pk-syn li a')).map((a) => a.getAttribute('href')), text: document.querySelector('.pk-syn').textContent }));
+    ok(/synergy rules/.test(synSrc.src) && synSrc.links.length > 0 && synSrc.links.every((h) => /(monkeys|heroes)\/[a-z-]+\/$/.test(h)) && !/undefined|null/.test(synSrc.text), 'tower page uses the synergy engine (adapter): linked suggestions, no undefined', synSrc);
     ok(await page.isDisabled('.pk-btn[data-p="2"][data-d="1"]'), 'bottom + is disabled: only two paths can be upgraded');
     for (let i = 0; i < 2; i++) await page.click('.pk-btn[data-p="0"][data-d="1"]');
     await page.click('.pk-btn[data-p="1"][data-d="1"]');

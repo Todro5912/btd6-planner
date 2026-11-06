@@ -4,8 +4,8 @@
     python3 tools/leak_scan.py data [--list]   # every string the generators render from data/
     python3 tools/leak_scan.py html [--list]   # the built pages (run tools/build_site.py first)
 
-"data" walks exactly what reaches a page: the planner's embedded data (src/build.py build_data(),
-a superset of what tools/build_site.py renders) plus the hero, map and tower fields only the site
+"data" walks exactly what reaches a page: the tool pages' data bundle (src/build_tools.py collect(),
+much of what tools/build_site.py renders) plus the hero, map and tower fields only the site
 pages use. Keys the generators never render (notes_internal, _src, source) are skipped.
 
 "html" reads every built .html page except /guides/ prose (the rounds table is kept). It scans visible text and text
@@ -80,10 +80,10 @@ def walk(obj, path, out):
 
 
 def data_strings():
-    import build  # src/build.py
+    import build_tools  # src/build_tools.py
     out = []
-    walk(build.build_data(), '', out)
-    # fields only the site pages render (not in the planner's data)
+    walk(build_tools.collect(), '', out)
+    # fields only the site pages render (not in the tool pages' data bundle)
     with open(os.path.join(ROOT, 'data', 'tower-guides.json'), encoding='utf-8') as f:
         for g in json.load(f):
             if g.get('lead'):

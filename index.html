@@ -3,115 +3,178 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Monkey Intel: unofficial BTD6 hub</title>
-<meta name="description" content="Unofficial Bloons TD 6 hub for v57.4: every tower, hero, paragon and map, CHIMPS records, rounds and a build planner.">
+<title>Monkey Intel: BTD6 answers in seconds</title>
+<meta name="description" content="Unofficial Bloons TD 6 help for v57.4: what pops camo, lead, purple, MOABs and DDTs, the cheapest fix on your difficulty, every round and every tower, map and hero.">
 <link rel="canonical" href="https://todro5912.github.io/btd6-planner/">
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#3E9B2F">
+<meta name="author" content="Todro5912">
 <script>try{var t=localStorage.getItem('mi-theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Luckiest+Guy&family=Rubik:wght@400;500;700&display=swap">
-<link rel="stylesheet" href="assets/site.css?v=0.4.1">
+<link rel="stylesheet" href="assets/site.css?v=0.5.0">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 44'%3E%3Cellipse cx='20' cy='18' rx='14' ry='16' fill='%23E2412E' stroke='%231C1A17' stroke-width='3'/%3E%3Cpath d='M17 34h6l-3 4z' fill='%23E2412E' stroke='%231C1A17' stroke-width='2.5'/%3E%3C/svg%3E">
 </head>
 <body class="home">
 <a class="skip" href="#main">Skip to content</a>
+<div class="credit-strip">
+  <div class="credit-in">
+    <span class="credit-what">Unofficial BTD6 fan project</span>
+    <a class="maker" href="https://github.com/Todro5912" rel="noopener author"><svg class="maker-ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 6l-6 6 6 6M16 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square"/></svg><span>Made by <b>Todro5912</b></span></a>
+  </div>
+</div>
 <header class="top">
   <div class="top-in">
-    <a class="brand" href=""><svg class="brand-mark" viewBox="0 0 40 44" aria-hidden="true" focusable="false"><ellipse cx="20" cy="18" rx="14" ry="16" fill="#E2412E" stroke="#1C1A17" stroke-width="3"/><path d="M13 11c1.5-3 4-4.5 6-5" stroke="#FFF8E7" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M17 34h6l-3 4z" fill="#E2412E" stroke="#1C1A17" stroke-width="2.5" stroke-linejoin="round"/><path d="M20 38c-3 2 2 3 0 5" stroke="#1C1A17" stroke-width="2" fill="none"/></svg><span class="wordmark">Monkey Intel</span></a>
+    <a class="brand" href="" aria-label="Monkey Intel by Solou, home">
+      <svg class="brand-mark" viewBox="0 0 40 44" aria-hidden="true" focusable="false"><ellipse cx="20" cy="18" rx="14" ry="16" fill="#E2412E" stroke="#1C1A17" stroke-width="3"/><path d="M13 11c1.5-3 4-4.5 6-5" stroke="#FFF8E7" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M17 34h6l-3 4z" fill="#E2412E" stroke="#1C1A17" stroke-width="2.5" stroke-linejoin="round"/><path d="M20 38c-3 2 2 3 0 5" stroke="#1C1A17" stroke-width="2" fill="none"/></svg>
+      <span class="lockup"><span class="wordmark">Monkey Intel</span><span class="byline">by Solou</span></span>
+    </a>
+    <form class="top-search" action="a-z/" method="get" role="search">
+      <label class="sr-only" for="topQ">Search</label>
+      <svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="10" cy="10" r="6.5" fill="none" stroke="currentColor" stroke-width="3"/><path d="M15 15l6 6" stroke="currentColor" stroke-width="3.4" stroke-linecap="square"/></svg>
+      <input id="topQ" name="q" type="search" autocomplete="off" placeholder="camo, r63, glaive…" data-search-proxy>
+      <kbd aria-hidden="true">/</kbd>
+    </form>
+    <a class="searchbtn" href="a-z/" data-search-open aria-haspopup="dialog" aria-label="Search (press /)"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="10" cy="10" r="6.5" fill="none" stroke="currentColor" stroke-width="3"/><path d="M15 15l6 6" stroke="currentColor" stroke-width="3.4" stroke-linecap="square"/></svg></a>
+    <details class="menu more-menu" data-menu>
+      <summary class="menubtn" aria-label="More pages"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="3"/></svg><span class="sl">More</span></summary>
+      <ul class="menu-list menu-right">
+<li><a href="records/">Records</a></li><li><a href="patch/">Patch notes</a></li><li><a href="guides/known-issues/">Known issues</a></li><li><a href="about/">About</a></li><li><a href="a-z/">A–Z index</a></li>      </ul>
+    </details>
     <nav class="tabs" aria-label="Main">
-      <a class="tab" href="planner/">Planner</a>
+      <a class="tab on" href="" aria-current="page">Quick</a>
       <a class="tab" href="monkeys/">Monkeys</a>
       <a class="tab" href="maps/">Maps</a>
       <a class="tab" href="guides/">Guides</a>
-      <a class="tab" href="records/">Records</a>
+      <details class="menu tools-menu" data-menu>
+        <summary class="tab">Tools<span class="caret" aria-hidden="true"></span></summary>
+        <ul class="menu-list menu-right">
+<li><a href="tools/simulator/"><b>Simulator</b><small>Round timeline: cash by round, the threats coming and your buys.</small></a></li><li><a href="tools/xp/"><b>XP calculator</b><small>I have this much XP and want that upgrade: how many games of what.</small></a></li><li><a href="tools/defence/"><b>Check my defence</b><small>Your towers and round: the next threats you can&#39;t pop, each with a fix.</small></a></li>        </ul>
+      </details>
     </nav>
-    <a class="searchbtn" href="a-z/" data-search-open aria-haspopup="dialog" aria-label="Search (press /)"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="10" cy="10" r="6.5" fill="none" stroke="currentColor" stroke-width="3"/><path d="M15 15l6 6" stroke="currentColor" stroke-width="3.4" stroke-linecap="square"/></svg><span class="sl">Search</span><kbd>/</kbd></a>
   </div>
 </header>
 <main id="main" class="wrap">
-<h1 class="sr-only">Monkey Intel: unofficial Bloons TD 6 hub</h1>
-<section class="home-search panel" aria-labelledby="hs">
-  <h2 class="panel-h" id="hs">Look anything up</h2>
-  <form class="panel-b home-search-form" action="a-z/" method="get" role="search">
-    <label class="sr-only" for="homeQ">Search the site</label>
-    <input id="homeQ" name="q" type="search" autocomplete="off" placeholder="Tower, upgrade, hero, map, round…" data-search-proxy>
-    <button class="btn btn-grass" type="submit"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="10" cy="10" r="6.5" fill="none" stroke="currentColor" stroke-width="3"/><path d="M15 15l6 6" stroke="currentColor" stroke-width="3.4" stroke-linecap="square"/></svg><span>Search</span></button>
+<section class="ingame" aria-labelledby="ig">
+  <div class="ingame-head">
+    <h1 class="h1" id="ig">In a game right now?</h1>
+    <div class="ingame-diff">
+      <span class="toolbar-l">Prices for</span>
+      <div class="seg diff-toggle" role="radiogroup" aria-label="Prices for difficulty" hidden>
+<button type="button" role="radio" data-diff="easy" aria-checked="false">Easy <small>×0.85</small></button>
+<button type="button" role="radio" data-diff="medium" aria-checked="true">Medium <small>×1</small></button>
+<button type="button" role="radio" data-diff="hard" aria-checked="false">Hard <small>×1.08</small></button>
+<button type="button" role="radio" data-diff="impoppable" aria-checked="false">Impoppable <small>×1.2</small></button>
+</div>
+    </div>
+  </div>
+  <p class="ingame-sub">Tap what's leaking. You get the rule and the cheapest fixes.</p>
+  <ul class="tiles">
+    <li><a class="tile tile-camo" href="quick/camo/">
+      <span class="tile-t">Camo</span>
+      <span class="tile-r">Camo needs <b>detection</b>. Towers without it won't shoot them.</span>
+<span class="tile-p">from <b><span class="price" data-easy="$340" data-medium="$400" data-hard="$430" data-impoppable="$480">$400</span></b></span>    </a></li>
+    <li><a class="tile tile-lead" href="quick/lead/">
+      <span class="tile-t">Lead</span>
+      <span class="tile-r">Lead needs <b>non-sharp</b> damage. Darts can't.</span>
+<span class="tile-p">from <b><span class="price" data-easy="$320" data-medium="$375" data-hard="$405" data-impoppable="$450">$375</span></b></span>    </a></li>
+    <li><a class="tile tile-purple" href="quick/purple/">
+      <span class="tile-t">Purple</span>
+      <span class="tile-r">Purple ignores <b>Energy, Fire and Plasma</b>.</span>
+<span class="tile-p">from <b><span class="price" data-easy="$170" data-medium="$200" data-hard="$215" data-impoppable="$240">$200</span></b></span>    </a></li>
+    <li><a class="tile tile-black-zebra" href="quick/black-zebra/">
+      <span class="tile-t">Black / Zebra</span>
+      <span class="tile-r">Black ignores <b>explosions</b>. Zebra ignores explosions <b>and</b> ice.</span>
+<span class="tile-p">from <b><span class="price" data-easy="$170" data-medium="$200" data-hard="$215" data-impoppable="$240">$200</span></b></span>    </a></li>
+    <li><a class="tile tile-white-frozen" href="quick/white-frozen/">
+      <span class="tile-t">White / Frozen</span>
+      <span class="tile-r">White ignores <b>ice</b>. Frozen Bloons can't be popped by <b>sharp</b> attacks.</span>
+<span class="tile-p">from <b><span class="price" data-easy="$210" data-medium="$250" data-hard="$270" data-impoppable="$300">$250</span></b></span>    </a></li>
+    <li><a class="tile tile-fortified" href="quick/fortified/">
+      <span class="tile-t">Fortified</span>
+      <span class="tile-r">Fortified is just <b>more HP</b>. Every tower can pop it.</span>
+<span class="tile-p"><b>No special upgrade needed</b></span>    </a></li>
+    <li><a class="tile tile-moab" href="quick/moab/">
+      <span class="tile-t">MOAB-class</span>
+      <span class="tile-r">Almost every attack hurts a MOAB. You need <b>damage</b>, not a special key.</span>
+<span class="tile-p">from <b><span class="price" data-easy="$800" data-medium="$950" data-hard="$1,030" data-impoppable="$1,140">$950</span></b></span>    </a></li>
+    <li><a class="tile tile-ddt" href="quick/ddt/">
+      <span class="tile-t">DDT</span>
+      <span class="tile-r">A DDT is <b>camo + Lead + Black</b>, and fast. One tower must handle all three.</span>
+<span class="tile-p">from <b><span class="price" data-easy="$800" data-medium="$950" data-hard="$1,030" data-impoppable="$1,140">$950</span></b></span>    </a></li>
+  </ul>
+</section>
+<section class="panel round-look" aria-labelledby="rl">
+  <h2 class="panel-h" id="rl"><svg class="ph-ico" viewBox="0 0 40 40" aria-hidden="true" focusable="false"><circle cx="20" cy="20" r="15" fill="var(--panel)" stroke="var(--ink)" stroke-width="3"/><path d="M20 10v10l7 5" fill="none" stroke="var(--ink)" stroke-width="3.4" stroke-linecap="square"/></svg>Round lookup</h2>
+  <form class="panel-b round-form" action="rounds/" method="get" data-round-form>
+    <label for="roundN" class="round-label">Round</label>
+    <input id="roundN" name="n" type="number" inputmode="numeric" min="1" max="140" placeholder="63" required>
+    <button class="btn btn-grass" type="submit">Show</button>
   </form>
-  <p class="panel-b home-try">Try <a href="monkeys/boomerang/#u-1-5">Glaive Lord</a>, <a href="maps/infernal/">Infernal</a>, <a href="guides/rounds/#r63">round 63</a> or <a href="monkeys/sniper/">Sniper</a>. Press <kbd>/</kbd> from any page.</p>
+  <div class="panel-b danger-strip">
+    <span class="toolbar-l">Rounds that end runs</span>
+    <span class="rchips"><a class="rchip danger" href="rounds/24/">R24</a><a class="rchip danger" href="rounds/28/">R28</a><a class="rchip danger" href="rounds/33/">R33</a><a class="rchip danger" href="rounds/37/">R37</a><a class="rchip danger" href="rounds/40/">R40</a><a class="rchip danger" href="rounds/45/">R45</a><a class="rchip danger" href="rounds/63/">R63</a><a class="rchip danger" href="rounds/76/">R76</a><a class="rchip danger" href="rounds/78/">R78</a><a class="rchip danger" href="rounds/90/">R90</a><a class="rchip danger" href="rounds/95/">R95</a><a class="rchip danger" href="rounds/98/">R98</a><a class="rchip danger" href="rounds/99/">R99</a><a class="rchip danger" href="rounds/100/">R100</a></span>
+  </div>
 </section>
-<nav class="doors" aria-label="Start here">
-  <a class="door door-grass" href="planner/">
-    <svg class="door-ico" viewBox="0 0 40 40" aria-hidden="true" focusable="false"><rect x="7" y="5" width="26" height="31" fill="var(--panel)" stroke="var(--ink)" stroke-width="3"/><rect x="14" y="2.5" width="12" height="6" fill="var(--wood)" stroke="var(--ink)" stroke-width="3"/><path d="M12 16h16M12 23h16M12 30h9" stroke="var(--ink)" stroke-width="3"/></svg>
-    <span class="door-t">Plan a game</span>
-    <span class="door-s">Map + mode + towers → coverage, cash by round, XP per run</span>
-  </a>
-  <a class="door door-sky" href="monkeys/">
-    <svg class="door-ico" viewBox="0 0 40 40" aria-hidden="true" focusable="false"><path d="M6 32L27 11" stroke="var(--ink)" stroke-width="5"/><path d="M6 32L27 11" stroke="var(--wood)" stroke-width="2"/><path d="M24 6l10 0 0 10z" fill="var(--panel)" stroke="var(--ink)" stroke-width="3" stroke-linejoin="round"/><path d="M4 28l8 8M8 26l6 6" stroke="var(--ink)" stroke-width="3"/></svg>
-    <span class="door-t">Find a monkey</span>
-    <span class="door-s"><b>26</b> towers · <b>18</b> heroes · <b>14</b> paragons</span>
-  </a>
-  <a class="door door-banana" href="maps/">
-    <svg class="door-ico" viewBox="0 0 40 40" aria-hidden="true" focusable="false"><path d="M4 9l10-4 12 4 10-4v26l-10 4-12-4-10 4z" fill="var(--panel)" stroke="var(--ink)" stroke-width="3" stroke-linejoin="round"/><path d="M9 26c5-2 4-9 10-9s6 7 13 4" fill="none" stroke="var(--danger)" stroke-width="3" stroke-dasharray="3 3"/></svg>
-    <span class="door-t">Find a map</span>
-    <span class="door-s"><b>90</b> maps, filter by water and line of sight</span>
-  </a>
-  <a class="door door-wood" href="guides/xp-farming/">
-    <svg class="door-ico" viewBox="0 0 40 40" aria-hidden="true" focusable="false"><path d="M20 3l5 11 12 1.5-9 8 2.5 12L20 29.5 9.5 35.5 12 23.5l-9-8L15 14z" fill="var(--panel)" stroke="var(--ink)" stroke-width="3" stroke-linejoin="round"/><path d="M15 20h10M20 15v10" stroke="var(--ink)" stroke-width="3"/></svg>
-    <span class="door-t">Farm XP</span>
-    <span class="door-s">Best Deflation farm per tower, runs to every paragon</span>
-  </a>
-</nav>
-<section class="panel changes" aria-labelledby="ch">
-  <h2 class="panel-h" id="ch">What's in 57.4 <small>biggest changes first</small></h2>
-  <ul class="change-list">
-  <li><a class="change-who" href="monkeys/skywarden/">Skywarden</a><span class="change-items"><span><a href="monkeys/skywarden/#u-1-1">Aerial Attunement</a> <span class="change-what">$110→$140</span></span><span><a href="monkeys/skywarden/#u-1-2">Zephyr Sense</a> <span class="change-what">$215→$175</span></span><span><a href="monkeys/skywarden/#u-1-3">Wind Weaver</a> <span class="change-what">$1,650→$1,200</span></span><span><a href="monkeys/skywarden/#u-1-4">Galesage</a> <span class="change-what">$3,300→$3,000</span></span><span><a href="monkeys/skywarden/#u-2-2">Thundering Arc</a> <span class="change-what">Plasma damage, pops Lead</span></span><span><a href="monkeys/skywarden/#u-2-3">Galvanic Conduit</a> <span class="change-what">$1,800→$2,500</span></span><span><a href="monkeys/skywarden/#u-2-4">Thunder&#39;s Decree</a> <span class="change-what">$2,000→$3,500, ability 15s→9s</span></span><span><a href="monkeys/skywarden/#u-2-5">Stormwrath Archon</a> <span class="change-what">$35,000→$32,000</span></span></span></li>
-  <li><a class="change-who" href="monkeys/dart/">Dart Monkey</a><span class="change-items"><span><a href="monkeys/dart/#u-3-3">Crossbow</a> <span class="change-what">pierce 4→5</span></span><span><a href="monkeys/dart/#u-3-4">Sharp Shooter</a> <span class="change-what">crit 50→60</span></span><span><a href="monkeys/dart/#u-3-5">Crossbow Master</a> <span class="change-what">fires 2 parallel bolts at half attack speed</span></span></span></li>
-  <li><a class="change-who" href="monkeys/glue/">Glue Gunner</a><span class="change-items"><span><a href="monkeys/glue/#u-2-2">Glue Splatter</a> <span class="change-what">$970→$650</span></span><span><a href="monkeys/glue/#u-2-4">Glue Strike</a> <span class="change-what">$4,000→$4,500</span></span><span><a href="monkeys/glue/#u-3-1">Stickier Glue</a> <span class="change-what">duration 24s→18s</span></span></span></li>
-  <li><a class="change-who" href="monkeys/bomb/">Bomb Shooter</a><span class="change-items"><span><a href="monkeys/bomb/#u-3-2">Frag Bombs</a> <span class="change-what">frag pierce 1→2</span></span><span><a href="monkeys/bomb/#u-3-5">Bomb Blitz</a> <span class="change-what">once per round</span></span></span></li>
-</ul>
-  <details class="more panel-b">
-    <summary class="more-btn">All 57.x changes <span class="more-n">+5 towers</span></summary>
-    <ul class="change-list">
-  <li><a class="change-who" href="monkeys/sniper/">Sniper Monkey</a><span class="change-items"><span><a href="monkeys/sniper/#u-2-4">Supply Drop</a> <span class="change-what">toggle Cash Drop / Ammo Drop. No cash in CHIMPS</span></span><span><a href="monkeys/sniper/#u-3-3">Semi-Automatic</a> <span class="change-what">pierce set to 1</span></span></span></li>
-  <li><a class="change-who" href="monkeys/super/">Super Monkey</a><span class="change-items"><span><a href="monkeys/super/#u-1-4">Sun Temple</a> <span class="change-what">$20,001+ Magic sacrifice storm decamos (DDTs need $35,001+)</span></span></span></li>
-  <li><a class="change-who" href="monkeys/alchemist/">Alchemist</a><span class="change-items"><span><a href="monkeys/alchemist/#u-2-5">Total Transformation</a> <span class="change-what">no stacking with Fan Clubs</span></span></span></li>
-  <li><a class="change-who" href="monkeys/village/">Monkey Village</a><span class="change-items"><span><a href="monkeys/village/#u-2-4">Call to Arms</a> <span class="change-what">can't stack with itself/Homeland</span></span></span></li>
-  <li><a class="change-who" href="monkeys/engineer/">Engineer Monkey</a><span class="change-items"><span><a href="monkeys/engineer/#u-3-4">Bloon Trap</a> <span class="change-what">pop cash now immediate</span></span></span></li>
-</ul>
-  </details>
-  <p class="panel-b note">Balance changes from v57.0 to v57.4. Each one links to the upgrade on its tower page.</p>
+<section class="between" aria-labelledby="bg">
+  <h2 class="h2" id="bg">Between games</h2>
+  <nav class="doors" aria-label="Between games">
+    <a class="door door-wood" href="tools/xp/">
+      <svg class="door-ico" viewBox="0 0 40 40" aria-hidden="true" focusable="false"><path d="M20 3l5 11 12 1.5-9 8 2.5 12L20 29.5 9.5 35.5 12 23.5l-9-8L15 14z" fill="var(--panel)" stroke="var(--ink)" stroke-width="3" stroke-linejoin="round"/><path d="M15 20h10M20 15v10" stroke="var(--ink)" stroke-width="3"/></svg>
+      <span class="door-t">XP calculator</span>
+      <span class="door-s">Games left to the upgrade you want</span>
+    </a>
+    <a class="door door-banana" href="maps/">
+      <svg class="door-ico" viewBox="0 0 40 40" aria-hidden="true" focusable="false"><path d="M4 9l10-4 12 4 10-4v26l-10 4-12-4-10 4z" fill="var(--panel)" stroke="var(--ink)" stroke-width="3" stroke-linejoin="round"/><path d="M9 26c5-2 4-9 10-9s6 7 13 4" fill="none" stroke="var(--danger)" stroke-width="3" stroke-dasharray="3 3"/></svg>
+      <span class="door-t">Find a map</span>
+      <span class="door-s"><b>90</b> maps · filter water and line of sight</span>
+    </a>
+    <a class="door door-sky" href="monkeys/">
+      <svg class="door-ico" viewBox="0 0 40 40" aria-hidden="true" focusable="false"><path d="M6 32L27 11" stroke="var(--ink)" stroke-width="5"/><path d="M6 32L27 11" stroke="var(--wood)" stroke-width="2"/><path d="M24 6l10 0 0 10z" fill="var(--panel)" stroke="var(--ink)" stroke-width="3" stroke-linejoin="round"/><path d="M4 28l8 8M8 26l6 6" stroke="var(--ink)" stroke-width="3"/></svg>
+      <span class="door-t">Find a monkey</span>
+      <span class="door-s"><b>26</b> towers · <b>18</b> heroes · what each one pops</span>
+    </a>
+    <a class="door door-grass" href="guides/getting-started/">
+      <svg class="door-ico" viewBox="0 0 40 40" aria-hidden="true" focusable="false"><path d="M5 8h12c2 0 3 1 3 3v23c0-2-1-3-3-3H5z M35 8H23c-2 0-3 1-3 3v23c0-2 1-3 3-3h12z" fill="var(--panel)" stroke="var(--ink)" stroke-width="3" stroke-linejoin="round"/></svg>
+      <span class="door-t">Beginner guide</span>
+      <span class="door-s">The route from first map to first CHIMPS</span>
+    </a>
+  </nav>
 </section>
-<section class="home-facts" aria-labelledby="hf">
-  <h2 class="h2" id="hf">Quick numbers</h2>
-  <dl class="stats">
-    <div class="stat"><dt>Maps with a full solo-CHIMPS list</dt><dd class="big">41<small>/90</small></dd></div>
-    <div class="stat"><dt>Cheapest CHIMPS record</dt><dd class="big money">$4,610</dd><dd class="stat-s"><a href="maps/spa-pits/">Spa Pits</a>, v48.0</dd></div>
-    <div class="stat"><dt>Expert Deflation XP per run</dt><dd class="big">59,735</dd><dd class="stat-s">45,950 base × 1.3, no Monkey Knowledge</dd></div>
-    <div class="stat"><dt>Rounds that end runs</dt><dd class="big">36</dd><dd class="stat-s"><a href="guides/rounds/">see the danger rounds</a></dd></div>
-  </dl>
-</section>
-<p class="version-stamp">Data for BTD6 <b>v57.4</b>, updated 2026-11-05 · Monkey Intel 0.4.1 · prices are Medium unless a page says otherwise</p>
+<p class="version-stamp">Data for BTD6 <b>v57.4</b>, updated 2026-11-05 · <a href="patch/">What changed in 57.4</a> · Monkey Intel 0.5.0 by Todro5912</p>
 <details class="about-data">
   <summary>About this data</summary>
   <div class="about-b">
     <h2 class="about-h">Sources</h2>
     <ul class="about-list">
-<li><a href="https://www.bloonswiki.com/" rel="noopener">Bloons Wiki</a>: stats, prices, XP and map facts (CC BY-SA)</li><li><a href="https://bloons.fandom.com/" rel="noopener">BTD6 Fandom wiki</a>: second source used to cross-check prices and XP</li><li><a href="https://btd6index.win/" rel="noopener">BTD6 Index</a>: lane lengths, water and line-of-sight flags, least-cost CHIMPS and solo-CHIMPS (2MP) records</li><li><a href="https://github.com/hemisemidemipresent/cyberquincy" rel="noopener">Cyber Quincy</a>: cross-check for costs and rounds</li><li><b>Ninja Kiwi patch notes</b>: balance changes up to v57.4</li>    </ul>
+<li><a href="https://www.bloonswiki.com/" rel="noopener">Bloons Wiki</a>: stats, prices, XP and map facts (CC BY-SA)</li><li><a href="https://bloons.fandom.com/" rel="noopener">BTD6 Fandom wiki</a>: second source used to cross-check prices and XP</li><li><b>Ninja Kiwi patch notes</b>: balance changes up to v57.4</li>    </ul>
+    <h2 class="about-h">How the numbers were made</h2>
+    <ul class="about-list"><li>Fixes are worked out from the site&#39;s pop model: the cheapest crosspath of each tower that can damage the Bloon, priced on the difficulty you pick with the $5 rounding the game uses.</li></ul>
 <p>Checked against these sources on 2026-11-05, game version 57.4.</p>  </div>
 </details></main>
 <footer class="foot">
   <div class="foot-in">
-    <p class="disclaimer"><b>Unofficial fan site.</b> Not affiliated with or endorsed by Ninja Kiwi. Bloons and Bloons TD 6 are their trademarks. No game art is used here.</p>
-    <dl class="foot-facts">
-      <div><dt>Data</dt><dd>BTD6 v57.4, updated 2026-11-05</dd></div>
-      <div><dt>Site</dt><dd>Monkey Intel 0.4.1</dd></div>
-      <div class="credits"><dt>Credits</dt><dd><a href="https://www.bloonswiki.com/" rel="noopener">Bloons Wiki</a> (CC BY-SA), <a href="https://btd6index.win/" rel="noopener">BTD6 Index</a>, <a href="https://github.com/hemisemidemipresent/cyberquincy" rel="noopener">Cyber Quincy</a>, Ninja Kiwi patch notes. Made by <a href="https://github.com/Todro5912" rel="noopener">Todro5912</a>.</dd></div>
-    </dl>
-    <div class="foot-row">
-      <a href="a-z/">A–Z index</a>
-      <a href="https://github.com/Todro5912/btd6-planner" rel="noopener">GitHub</a>
+    <div class="foot-credit">
+      <p class="foot-made">Made by <a href="https://github.com/Todro5912" rel="noopener author">Todro5912</a></p>
+      <p class="foot-for">Monkey Intel is a fan project for Solou. Built with AI assistance, checked by a player.</p>
+      <p class="foot-btns">
+        <a class="btn btn-small btn-cream" href="https://github.com/Todro5912/btd6-planner" rel="noopener"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 6l-6 6 6 6M16 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square"/></svg>Source on GitHub</a>
+        <a class="btn btn-small btn-cream" href="https://github.com/Todro5912/btd6-planner/issues" rel="noopener">Report an error</a>
+        <a class="btn btn-small btn-cream" href="about/">About</a>
+      </p>
+    </div>
+    <nav class="foot-more" aria-labelledby="footMore">
+      <h2 class="foot-h" id="footMore">More</h2>
+      <ul><li><a href="records/">Records</a></li><li><a href="patch/">Patch notes</a></li><li><a href="guides/known-issues/">Known issues</a></li><li><a href="about/">About</a></li><li><a href="a-z/">A–Z index</a></li></ul>
+    </nav>
+    <nav class="foot-more" aria-labelledby="footTools">
+      <h2 class="foot-h" id="footTools">Tools</h2>
+      <ul><li><a href="tools/simulator/">Simulator</a></li><li><a href="tools/xp/">XP calculator</a></li><li><a href="tools/defence/">Check my defence</a></li></ul>
+    </nav>
+    <div class="foot-legal">
+      <p class="disclaimer"><b>Unofficial fan site.</b> Not affiliated with or endorsed by Ninja Kiwi. Bloons and Bloons TD 6 are their trademarks. No game art is used here.</p>
+      <p>Data: BTD6 v57.4, updated 2026-11-05 · Site 0.5.0 · Sources: <a href="https://www.bloonswiki.com/" rel="noopener">Bloons Wiki</a> (CC BY-SA), <a href="https://btd6index.win/" rel="noopener">BTD6 Index</a>, <a href="https://github.com/hemisemidemipresent/cyberquincy" rel="noopener">Cyber Quincy</a>, Ninja Kiwi patch notes.</p>
       <div class="seg theme-toggle" role="radiogroup" aria-label="Colour theme" hidden>
         <button type="button" role="radio" data-theme-set="auto" aria-checked="true">Auto</button>
         <button type="button" role="radio" data-theme-set="light" aria-checked="false">Light</button>
@@ -122,16 +185,17 @@
 </footer>
 <dialog class="search" id="search" aria-labelledby="searchLabel">
   <form method="dialog" class="search-in" role="search">
-    <label id="searchLabel" for="searchInput">Search towers, upgrades, heroes, maps, guides and rounds</label>
+    <label id="searchLabel" for="searchInput">Search answers, towers, maps, rounds and guides</label>
     <div class="search-row">
       <svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="10" cy="10" r="6.5" fill="none" stroke="currentColor" stroke-width="3"/><path d="M15 15l6 6" stroke="currentColor" stroke-width="3.4" stroke-linecap="square"/></svg>
-      <input id="searchInput" type="search" autocomplete="off" spellcheck="false" placeholder="Try: glaive, infernal, r63" role="combobox" aria-expanded="false" aria-controls="searchList" aria-autocomplete="list">
+      <input id="searchInput" type="search" autocomplete="off" spellcheck="false" placeholder="Try: camo, r63, glaive" role="combobox" aria-expanded="false" aria-controls="searchList" aria-autocomplete="list">
       <button type="button" class="btn btn-small" data-search-close>Esc</button>
     </div>
     <ul id="searchList" role="listbox" aria-label="Results"></ul>
     <p class="search-hint" id="searchHint"><kbd>↑</kbd><kbd>↓</kbd> move · <kbd>Enter</kbd> open · <kbd>Esc</kbd> close</p>
   </form>
 </dialog>
-<script src="assets/site.js?v=0.4.1" defer></script>
-</body>
+<script src="assets/search-core.js?v=0.5.0" defer></script>
+<script src="assets/site.js?v=0.5.0" defer></script>
+<script src="assets/prices.js?v=0.5.0" defer></script></body>
 </html>

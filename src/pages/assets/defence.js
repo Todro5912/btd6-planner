@@ -59,7 +59,7 @@
     res.threats.forEach((t, i) => {
       kids.push(h('p', { class: 'ti-alert-t', style: i ? 'font-size:clamp(20px,4vw,28px);margin-top:6px' : null }, 'R' + t.round + ': ' + t.text));
       kids.push(h('p', { class: 'ti-alert-s' }, 'R' + t.round + ' is ' + t.composition + (t.rounds.length > 1 ? '. ' + t.rounds.length + ' of the next 15 rounds need it.' : '.')));
-      kids.push(U.fixList(t.fixes));
+      kids.push(U.fixList(t.fixes, { hints: t.hints }));
     });
     if (res.state.unknown.length) kids.push(h('p', { class: 'ti-alert-s' }, 'Not counted (no pop data yet): ' + res.state.unknown.map((id) => C.tower(D, id).name).join(', ') + '.'));
     return h('section', { class: 'ti-alert', 'aria-label': 'Threats' }, kids);

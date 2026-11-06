@@ -8,26 +8,51 @@
 <link rel="canonical" href="https://todro5912.github.io/btd6-planner/guides/bloons/">
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#3E9B2F">
+<meta name="author" content="Todro5912">
 <script>try{var t=localStorage.getItem('mi-theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Luckiest+Guy&family=Rubik:wght@400;500;700&display=swap">
-<link rel="stylesheet" href="../../assets/site.css?v=0.4.1">
+<link rel="stylesheet" href="../../assets/site.css?v=0.5.0">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 44'%3E%3Cellipse cx='20' cy='18' rx='14' ry='16' fill='%23E2412E' stroke='%231C1A17' stroke-width='3'/%3E%3Cpath d='M17 34h6l-3 4z' fill='%23E2412E' stroke='%231C1A17' stroke-width='2.5'/%3E%3C/svg%3E">
 </head>
 <body class="">
 <a class="skip" href="#main">Skip to content</a>
+<div class="credit-strip">
+  <div class="credit-in">
+    <span class="credit-what">Unofficial BTD6 fan project</span>
+    <a class="maker" href="https://github.com/Todro5912" rel="noopener author"><svg class="maker-ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 6l-6 6 6 6M16 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square"/></svg><span>Made by <b>Todro5912</b></span></a>
+  </div>
+</div>
 <header class="top">
   <div class="top-in">
-    <a class="brand" href="../../"><svg class="brand-mark" viewBox="0 0 40 44" aria-hidden="true" focusable="false"><ellipse cx="20" cy="18" rx="14" ry="16" fill="#E2412E" stroke="#1C1A17" stroke-width="3"/><path d="M13 11c1.5-3 4-4.5 6-5" stroke="#FFF8E7" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M17 34h6l-3 4z" fill="#E2412E" stroke="#1C1A17" stroke-width="2.5" stroke-linejoin="round"/><path d="M20 38c-3 2 2 3 0 5" stroke="#1C1A17" stroke-width="2" fill="none"/></svg><span class="wordmark">Monkey Intel</span></a>
+    <a class="brand" href="../../" aria-label="Monkey Intel by Solou, home">
+      <svg class="brand-mark" viewBox="0 0 40 44" aria-hidden="true" focusable="false"><ellipse cx="20" cy="18" rx="14" ry="16" fill="#E2412E" stroke="#1C1A17" stroke-width="3"/><path d="M13 11c1.5-3 4-4.5 6-5" stroke="#FFF8E7" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M17 34h6l-3 4z" fill="#E2412E" stroke="#1C1A17" stroke-width="2.5" stroke-linejoin="round"/><path d="M20 38c-3 2 2 3 0 5" stroke="#1C1A17" stroke-width="2" fill="none"/></svg>
+      <span class="lockup"><span class="wordmark">Monkey Intel</span><span class="byline">by Solou</span></span>
+    </a>
+    <form class="top-search" action="../../a-z/" method="get" role="search">
+      <label class="sr-only" for="topQ">Search</label>
+      <svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="10" cy="10" r="6.5" fill="none" stroke="currentColor" stroke-width="3"/><path d="M15 15l6 6" stroke="currentColor" stroke-width="3.4" stroke-linecap="square"/></svg>
+      <input id="topQ" name="q" type="search" autocomplete="off" placeholder="camo, r63, glaive…" data-search-proxy>
+      <kbd aria-hidden="true">/</kbd>
+    </form>
+    <a class="searchbtn" href="../../a-z/" data-search-open aria-haspopup="dialog" aria-label="Search (press /)"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="10" cy="10" r="6.5" fill="none" stroke="currentColor" stroke-width="3"/><path d="M15 15l6 6" stroke="currentColor" stroke-width="3.4" stroke-linecap="square"/></svg></a>
+    <details class="menu more-menu" data-menu>
+      <summary class="menubtn" aria-label="More pages"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="3"/></svg><span class="sl">More</span></summary>
+      <ul class="menu-list menu-right">
+<li><a href="../../records/">Records</a></li><li><a href="../../patch/">Patch notes</a></li><li><a href="../../guides/known-issues/">Known issues</a></li><li><a href="../../about/">About</a></li><li><a href="../../a-z/">A–Z index</a></li>      </ul>
+    </details>
     <nav class="tabs" aria-label="Main">
-      <a class="tab" href="../../planner/">Planner</a>
+      <a class="tab" href="../../">Quick</a>
       <a class="tab" href="../../monkeys/">Monkeys</a>
       <a class="tab" href="../../maps/">Maps</a>
       <a class="tab on" href="../../guides/" aria-current="true">Guides</a>
-      <a class="tab" href="../../records/">Records</a>
+      <details class="menu tools-menu" data-menu>
+        <summary class="tab">Tools<span class="caret" aria-hidden="true"></span></summary>
+        <ul class="menu-list menu-right">
+<li><a href="../../tools/simulator/"><b>Simulator</b><small>Round timeline: cash by round, the threats coming and your buys.</small></a></li><li><a href="../../tools/xp/"><b>XP calculator</b><small>I have this much XP and want that upgrade: how many games of what.</small></a></li><li><a href="../../tools/defence/"><b>Check my defence</b><small>Your towers and round: the next threats you can&#39;t pop, each with a fix.</small></a></li>        </ul>
+      </details>
     </nav>
-    <a class="searchbtn" href="../../a-z/" data-search-open aria-haspopup="dialog" aria-label="Search (press /)"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="10" cy="10" r="6.5" fill="none" stroke="currentColor" stroke-width="3"/><path d="M15 15l6 6" stroke="currentColor" stroke-width="3.4" stroke-linecap="square"/></svg><span class="sl">Search</span><kbd>/</kbd></a>
   </div>
 </header>
 <main id="main" class="wrap">
@@ -39,15 +64,79 @@
 </ol></nav>
 <div class="title-row">
   <h1 class="h1">Bloons</h1>
-  <span class="stamp"><b>v57.4</b> · updated 2026-11-05</span>
+  <span class="stamp"><b>v57.4</b> · updated 2026-11-06</span>
 </div>
 <p class="lede">Every bloon and MOAB-class blimp with RBE, HP, speed, immunities and the upgrades that counter it.</p><div class="guide-layout">
   <nav class="toc panel" aria-labelledby="tocH">
     <h2 class="panel-h" id="tocH">On this page</h2>
-    <ol><li><a href="#regular-bloons">Regular bloons</a></li><li><a href="#moab-class">MOAB-class</a></li><li><a href="#properties">Properties</a></li><li><a href="#counters-by-bloon-type">Counters by bloon type</a></li><li><a href="#late-rounds-and-freeplay">Late rounds and Freeplay</a></li><li><a href="#boss-bloons">Boss Bloons</a></li></ol>
+    <ol><li><a href="#damage-types-who-cant-pop-what">Damage types: who can&#39;t pop what</a></li><li><a href="#regular-bloons">Regular bloons</a></li><li><a href="#moab-class">MOAB-class</a></li><li><a href="#properties">Properties</a></li><li><a href="#counters-by-bloon-type">Counters by bloon type</a></li><li><a href="#late-rounds-and-freeplay">Late rounds and Freeplay</a></li><li><a href="#boss-bloons">Boss Bloons</a></li></ol>
   </nav>
   <article class="prose">
     <p>Speed is relative to a Red Bloon (1.0). <strong>RBE</strong> (Red Bloon Equivalent) is the number of single hits needed to pop a bloon and everything inside it.</p>
+<h2 id="damage-types-who-cant-pop-what">Damage types: who can't pop what</h2>
+<p>Every attack has a damage type. A bloon is immune to some types, never to damage as such.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Damage type</th>
+<th>Can't damage</th>
+<th>Typical users</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sharp</td>
+<td>Lead, Frozen</td>
+<td>Darts, tacks, shurikens, thorns, base Sniper</td>
+</tr>
+<tr>
+<td>Explosion</td>
+<td>Black (so Zebra and DDT too)</td>
+<td>Bomb Shooter, Mortar, Flash Bomb, pineapples</td>
+</tr>
+<tr>
+<td>Cold</td>
+<td>Lead, White (Zebra)</td>
+<td>Ice Monkey base attack</td>
+</tr>
+<tr>
+<td>Glacier</td>
+<td>White (Zebra)</td>
+<td>Cold Snap (Ice 2-0-0)</td>
+</tr>
+<tr>
+<td>Shatter</td>
+<td>Lead</td>
+<td>Powerful Darts (Dartling 0-0-2), Mermonkey splash, Bloontonium Reactor</td>
+</tr>
+<tr>
+<td>Energy</td>
+<td>Lead, Purple</td>
+<td>Wizard bolts, Laser Blasts, Laser Cannon</td>
+</tr>
+<tr>
+<td>Plasma</td>
+<td>Purple</td>
+<td>Plasma Blasts, Arcane Spike, Plasma Accelerator, Obyn, Adora</td>
+</tr>
+<tr>
+<td>Fire</td>
+<td>Purple</td>
+<td>Fireball, Dragon's Breath, Ring of Fire, Hot Shot grapes</td>
+</tr>
+<tr>
+<td>Normal</td>
+<td>nothing</td>
+<td>Juggernaut, Full Metal Jacket, Razor Rotors, White Hot Spikes, Hydra Rocket Pods</td>
+</tr>
+<tr>
+<td>Acid</td>
+<td>nothing</td>
+<td>Alchemist, Corrosive Glue</td>
+</tr>
+</tbody>
+</table></div>
+<p>There is no "magic" damage type: Wizards deal Energy, which is why a 0-0-0 Wizard pops Frozen but not Lead or Purple. Per-tower answers for every crosspath are in <code>data/pop-model.json</code>.</p>
 <h2 id="regular-bloons">Regular bloons</h2>
 <div class="table-wrap"><table>
 <thead>
@@ -122,7 +211,7 @@
 <td>1</td>
 <td>2.0</td>
 <td>22</td>
-<td>Freezing and cold</td>
+<td>Cold (Ice Monkey attacks)</td>
 <td>2 Pink</td>
 </tr>
 <tr>
@@ -131,7 +220,7 @@
 <td>1</td>
 <td>3.0</td>
 <td>25</td>
-<td>Energy, fire, plasma (most magic)</td>
+<td>Energy, fire, plasma</td>
 <td>2 Pink</td>
 </tr>
 <tr>
@@ -140,7 +229,7 @@
 <td>1</td>
 <td>1.8</td>
 <td>26</td>
-<td>Explosions and freezing</td>
+<td>Explosions and cold</td>
 <td>1 Black + 1 White</td>
 </tr>
 <tr>
@@ -149,7 +238,7 @@
 <td>1 (fortified 4)</td>
 <td>1.0</td>
 <td>28</td>
-<td>Sharp attacks</td>
+<td>Sharp, cold, energy (and shatter)</td>
 <td>2 Black</td>
 </tr>
 <tr>
@@ -175,8 +264,8 @@
 <p>"First round" is the standard round set. Alternate Bloons Rounds bring most types in far earlier: see <a href="../../guides/danger-rounds/">Danger Rounds</a>.</p>
 <p>Notes:
 - <strong>Yellow and Pink</strong> outrun many early projectiles. Slow darts and bombs can miss them.
-- <strong>Purple</strong> shuts down Wizards, most Super Monkey lasers and plasma, Tack fire paths (Hot Shots, Ring of Fire, Inferno Ring), Dartling laser paths and Dragon's Breath. Darts, Ninjas, Glaives, Subs and Spikes work fine.
-- <strong>Lead</strong> blocks sharp projectiles, so it also soaks shots aimed at bloons behind it.
+- <strong>Purple</strong> shuts down Wizards (except Necromancer's undead bloons), Super Monkey Laser/Plasma Blasts and Sun Avatar, Ring of Fire and Inferno Ring, Laser Cannon and Plasma Accelerator, Riptide Champion and Druid lightning. Darts, Ninjas, Glaives, Subs, Bombs, Spikes, Alchemists and Hot Shots Tacks work fine.
+- <strong>Lead</strong> blocks sharp, cold and energy attacks: darts, tacks, shurikens, Ice Monkeys and plain Wizard bolts. It also soaks shots aimed at bloons behind it.
 - <strong>Ceramic</strong> has a Red's hitbox and 10 HP. It is the main single-target check before blimps.</p>
 <h2 id="moab-class">MOAB-class</h2>
 <p>Base values, fortified in brackets. Only the outer layer's HP counts before it pops and releases its children.</p>
@@ -255,41 +344,47 @@
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr id="g-camo">
 <td><strong>Camo</strong></td>
-<td>Only towers with camo detection can target it. Area and track effects (spikes, Mortar shells, explosions) still hit it. Standard R24, ABR R5</td>
+<td>Only towers with camo detection can target or damage it. Projectiles and explosions from a tower without detection pass straight through. Spike Factory and Ninja see camo by default. Standard R24, ABR R5</td>
 <td>See camo counters below</td>
 </tr>
-<tr>
+<tr id="g-regrow">
 <td><strong>Regrow</strong></td>
 <td>Lost layers grow back to the original type. Doesn't apply to blimp layers</td>
-<td>Pop it fast. Grow Blocker (Village 0-1-0) stops regrowth in its radius. Cleansing Foam (Engineer 0-3-0) is also used (regrow removal unverified)</td>
+<td>Pop it fast. Grow Blocker (Village 0-1-0) stops regrowth in its radius; Cleansing Foam (Engineer 0-3-0) strips Regrow and Camo</td>
 </tr>
-<tr>
+<tr id="g-fortified">
 <td><strong>Fortified</strong></td>
-<td>Lead, Ceramic and MOAB-class only. Doubles outer HP (Lead ×4)</td>
-<td>More damage. Perishing Potions (Alchemist 0-2-0) removes it from non-blimps. Shattering Shells (Mortar 0-0-4) strips it</td>
+<td>Lead, Ceramic and MOAB-class only. Doubles outer HP (Lead ×4). <strong>It is never an immunity</strong>: anything that can damage the bloon can damage it fortified</td>
+<td>More damage. Shattering Shells (Mortar 0-0-4) strips it</td>
+</tr>
+<tr id="g-frozen">
+<td><strong>Frozen</strong></td>
+<td>A status, not a bloon type. Sharp attacks can't damage a frozen bloon, and Ice Monkeys can't target one again without Re-Freeze (Ice 0-0-2)</td>
+<td>Any non-sharp damage; Wizard 0-0-0 is the cheapest</td>
 </tr>
 </tbody>
 </table></div>
 <h2 id="counters-by-bloon-type">Counters by bloon type</h2>
-<p><strong>Camo</strong>
-- Built in: <a href="../../monkeys/ninja/">Ninja Monkey</a>. <a href="../../monkeys/sub/">Monkey Sub</a> is a common early camo answer (built-in detection unverified).
-- Upgrades: Enhanced Eyesight (Dart 0-0-2), Night Vision Goggles (Sniper 0-1-0), Monkey Sense (Wizard 0-0-2), Ultravision (Super Monkey 0-0-2), Crow's Nest (Buccaneer 0-0-2), Spy Plane (Ace 0-2-0), IFR (Heli 0-2-0), Cold Snap (Ice 2-0-0).
-- For everything in range: Radar Scanner (Village 0-2-0).
-- Decamo: Signal Flare (Mortar 0-0-3), Submerge and Support (Sub 3-0-0), Counter-Espionage (Ninja 0-2-0), Shimmer (Wizard 0-0-3), Embrittlement (Ice 4-0-0), Super Brittle (Ice 5-0-0).
-- Hero: <a href="../../heroes/etienne/">Etienne</a>'s drones give camo detection to all towers.</p>
-<p><strong>Lead</strong>
-- Built in: <a href="../../monkeys/bomb/">Bomb Shooter</a>, <a href="../../monkeys/mortar/">Mortar Monkey</a>.
-- Upgrades: Juggernaut (Dart 4-0-0), Red Hot Rangs (Boomerang 0-0-2), Hot Shots (Tack 3-0-0), Full Metal Jacket (Sniper 1-0-0), Heat-tipped Darts (Sub 0-2-0), Hot Shot (Buccaneer 0-2-0), Flash Bomb (Ninja 0-0-3), Fireball (Wizard 0-1-0), Plasma Blasts (Super Monkey 2-0-0), White Hot Spikes (Spike Factory 2-0-0).
-- For nearby towers: Acidic Mixture Dip (Alchemist 2-0-0), Monkey Intelligence Bureau (Village 0-3-0).
-- Remove lead immunity: Glue Strike (Glue 0-4-0), Glue Storm (Glue 0-5-0).
-- Hero: <a href="../../heroes/gwendolin/">Gwendolin</a>'s Heat It Up.</p>
-<p><strong>Black and Zebra:</strong> anything that isn't explosive. A bomb or Mortar defence needs a MIB or a non-explosive partner.</p>
-<p><strong>White and Zebra:</strong> anything that isn't cold. An ice-only defence can't touch them.</p>
-<p><strong>Purple:</strong> sharp and explosive damage: Dart, Ninja, Boomerang, Sub, Spike Factory, Bomb, Mortar, Sniper. Don't rely on Wizard, Tack fire paths or Super Monkey energy paths for R25, R45 and especially R95 (500 Camo Regrow Purples).</p>
-<p><strong>DDT:</strong> needs camo detection plus damage that isn't sharp or explosive, or immunity removal. Options: Acidic Mixture Dip, Gwendolin's Heat It Up, Radar Scanner, Etienne, Submerge and Support, Signal Flare, Glue Strike, Glue Storm, Embrittlement, Super Brittle, <a href="../../heroes/striker/">Striker Jones</a> (levels 5 and 19 remove Black immunity), MIB. Bloon Sabotage (Ninja 0-4-0) halves DDT speed.</p>
-<p><strong>Blimps (common answers):</strong></p>
+<p><strong>Camo</strong> (Medium prices)
+- Built in: <a href="../../monkeys/ninja/">Ninja Monkey</a> ($400) and <a href="../../monkeys/spike/">Spike Factory</a> spikes.
+- Upgrades: Enhanced Eyesight (Dart 0-0-2, $490), Night Vision Goggles (Sniper 0-1-0, $600), Monkey Sense (Wizard 0-0-2, $850), Cold Snap (Ice 2-0-0, $900), Eagle Eye (Desperado 0-1-0), Advanced Targeting (Dartling 0-1-0), Echosense Precision (Mermonkey 0-0-1), Crow's Nest (Buccaneer 0-0-2), Spy Plane (Ace 0-2-0), IFR (Heli 0-2-0), Horned Owl (Beast Handler 0-0-2), Zephyr Sense (Skywarden 2-0-0), Ultravision (Super Monkey 0-0-2), Signal Flare (Mortar 0-0-3, $2,300).
+- <strong>No built-in camo:</strong> Monkey Sub (camo only from Bloontonium Reactor 4-0-0; Advanced Intel 2-0-0 only hits camo inside another detecting tower's range), Mortar (until Signal Flare; Increased Accuracy only tightens aim), Bomb Shooter, Alchemist (never), Glue Gunner (never on its main attack).
+- For everything in range: Radar Scanner (Village 0-2-0, $3,450).
+- Decamo: Signal Flare (Mortar 0-0-3), Submerge and Support (Sub 3-0-0), Counter-Espionage (Ninja 0-2-0), Shimmer (Wizard 0-0-3), Cleansing Foam (Engineer 0-3-0).
+- Heroes: <a href="../../heroes/ezili/">Ezili</a>, <a href="../../heroes/sauda/">Sauda</a>, <a href="../../heroes/psi/">Psi</a> and <a href="../../heroes/silas/">Silas</a> from level 1, <a href="../../heroes/quincy/">Quincy</a> and <a href="../../heroes/etienne/">Etienne</a>'s drones from level 5, <a href="../../heroes/churchill/">Churchill</a> from level 6. Etienne's level 8 UAV gives <strong>every</strong> tower camo detection.</p>
+<p><strong>Lead</strong> (Medium prices)
+- Built in: <a href="../../monkeys/bomb/">Bomb Shooter</a> ($375), <a href="../../monkeys/mortar/">Mortar Monkey</a>, <a href="../../monkeys/alchemist/">Alchemist</a>.
+- Upgrades: Full Metal Jacket (Sniper 1-0-0, $700), Fireball (Wizard 0-1-0, $550), Red Hot Rangs (Boomerang 0-0-2, $715), Cold Snap (Ice 2-0-0, $900), Heat-tipped Darts (Sub 0-2-0, $1,075), Hot Shots (Tack 3-0-0, $1,230), Hard Thorns (Druid 1-0-0), Hot Shot (Buccaneer 0-2-0), Exploding Pineapple (Ace 0-1-0, unreliable), White Hot Spikes (Spike Factory 2-0-0), Razor Rotors (Heli 3-0-0), Thundering Arc (Skywarden 0-2-0), Adasaurus (Beast Handler 0-2-0), Riptide Champion (Mermonkey 0-3-0), Deadeye (Desperado 0-3-0), Hydra Rocket Pods (Dartling 0-3-0), Flash Bomb (Ninja 0-0-3), Juggernaut (Dart 4-0-0), Plasma Blasts (Super Monkey 2-0-0), Sentry Expert (Engineer 4-0-0).
+- For nearby towers: Acidic Mixture Dip (Alchemist 2-0-0, $1,150) lets buffed Sharp and Ice towers pop Lead; Monkey Intelligence Bureau (Village 0-3-0) lets them damage everything.
+- Heroes: <a href="../../heroes/gwendolin/">Gwendolin</a>'s Heat It Up (L4) gives nearby towers Lead popping for 8 s.</p>
+<p><strong>Black and Zebra:</strong> anything that isn't explosive (Zebra: not cold either). A Bomb or Mortar defence needs Frag Bombs (Bomb 0-0-2, frags only), Heavy Shells (Mortar 0-3-0), a MIB, or a non-explosive partner. <a href="../../heroes/striker/">Striker Jones</a> removes Black immunity for explosives at L19 (50% chance from L5).</p>
+<p><strong>White and Zebra:</strong> anything that isn't cold. An Ice-only defence can't touch them; <a href="../../heroes/silas/">Silas</a> L13 or a MIB fixes that.</p>
+<p><strong>Purple:</strong> sharp, explosive, acid or Normal damage: Dart, Ninja, Boomerang, Sub, Spike Factory, Bomb, Mortar, Sniper, Alchemist, Beast Handler beasts. Don't rely on Wizards, Super Monkey 1-3 top path, Ring of Fire, Laser Cannon or Riptide Champion for R25, R45 and especially R95 (500 Camo Regrow Purples).</p>
+<p><strong>Fortified:</strong> not an immunity. Fortified Leads need a Lead popper and Fortified MOABs need anything that hurts a MOAB; they just take longer.</p>
+<p><strong>DDT:</strong> a MOAB-class blimp with Camo, Lead and Black. One tower needs camo detection plus an attack that is neither sharp nor explosive. Cheapest single towers: Sniper 1-1-0 ($950), Wizard 0-1-2 ($1,150), Buccaneer 0-2-2 ($2,000), Spike Factory 2-x-x ($2,400), Dart 4-0-2 ($2,950). Support routes: Acidic Mixture Dip next to a camo Sharp tower, MIB (includes Radar Scanner), or Signal Flare / Submerge and Support decamo for non-explosive Lead poppers. Not enough on their own: Radar Scanner or Etienne next to Bombs, Ninja Flash Bomb, Ice Cold Snap. Bloon Sabotage (Ninja 0-4-0) halves DDT speed.</p>
+<p><strong>Blimps.</strong> Almost every attack can damage MOAB-class; the exceptions are Banana Farms, Villages, a Glue Gunner without Corrosive Glue (2-x-x) and an Ice Monkey without Embrittlement (4-x-x) or Icicles (0-0-4). These are the specialists with extra MOAB damage or control:</p>
 <div class="table-wrap"><table>
 <thead>
 <tr>
@@ -422,25 +517,36 @@
 <p>Bloonarius, Lych, Vortex, Dreadbloon, Phayze, Blastapopoulos and Diamondback appear in weekly Boss Events. Their mechanics and counters are on the <a href="../../guides/boss-events/">Boss Events</a> page.</p>
 <p>Frontier Legends (paid DLC) adds six more bloon types: Aura, Diamond, Dynamite, Glass, Retribution and Ringleader. Apart from the Diamond Bloons that Diamondback scatters, they don't appear in the base game.</p>
 <hr />
-<p>Sources: Bloons Wiki, Bloons Fandom wiki.</p>
+<p>Sources: Bloons Wiki (damage-type bitflags, tower pages), Bloons Fandom wiki (camo, lead and purple tables; Damage Types; Frozen and Fortified Bloon pages), Ninja Kiwi v57 notes. Machine-readable versions: <code>data/bloons.json</code>, <code>data/pop-model.json</code>.</p>
   </article>
 </div>
 <section class="related" aria-labelledby="relH">
   <h2 class="h3" id="relH">Related</h2>
-  <ul class="related-list"><li><a href="../../guides/danger-rounds/">Danger Rounds</a></li><li><a href="../../guides/rounds/">Rounds</a></li><li><a href="../../guides/boss-events/">Boss Events</a></li><li><a href="../../guides/glossary/">Glossary</a></li></ul>
+  <ul class="related-list"><li><a href="../../guides/danger-rounds/">Danger Rounds</a></li><li><a href="../../rounds/">Rounds</a></li><li><a href="../../guides/boss-events/">Boss Events</a></li><li><a href="../../guides/glossary/">Glossary</a></li></ul>
 </section>
 </main>
 <footer class="foot">
   <div class="foot-in">
-    <p class="disclaimer"><b>Unofficial fan site.</b> Not affiliated with or endorsed by Ninja Kiwi. Bloons and Bloons TD 6 are their trademarks. No game art is used here.</p>
-    <dl class="foot-facts">
-      <div><dt>Data</dt><dd>BTD6 v57.4, updated 2026-11-05</dd></div>
-      <div><dt>Site</dt><dd>Monkey Intel 0.4.1</dd></div>
-      <div class="credits"><dt>Credits</dt><dd><a href="https://www.bloonswiki.com/" rel="noopener">Bloons Wiki</a> (CC BY-SA), <a href="https://btd6index.win/" rel="noopener">BTD6 Index</a>, <a href="https://github.com/hemisemidemipresent/cyberquincy" rel="noopener">Cyber Quincy</a>, Ninja Kiwi patch notes. Made by <a href="https://github.com/Todro5912" rel="noopener">Todro5912</a>.</dd></div>
-    </dl>
-    <div class="foot-row">
-      <a href="../../a-z/">A–Z index</a>
-      <a href="https://github.com/Todro5912/btd6-planner" rel="noopener">GitHub</a>
+    <div class="foot-credit">
+      <p class="foot-made">Made by <a href="https://github.com/Todro5912" rel="noopener author">Todro5912</a></p>
+      <p class="foot-for">Monkey Intel is a fan project for Solou. Built with AI assistance, checked by a player.</p>
+      <p class="foot-btns">
+        <a class="btn btn-small btn-cream" href="https://github.com/Todro5912/btd6-planner" rel="noopener"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 6l-6 6 6 6M16 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square"/></svg>Source on GitHub</a>
+        <a class="btn btn-small btn-cream" href="https://github.com/Todro5912/btd6-planner/issues" rel="noopener">Report an error</a>
+        <a class="btn btn-small btn-cream" href="../../about/">About</a>
+      </p>
+    </div>
+    <nav class="foot-more" aria-labelledby="footMore">
+      <h2 class="foot-h" id="footMore">More</h2>
+      <ul><li><a href="../../records/">Records</a></li><li><a href="../../patch/">Patch notes</a></li><li><a href="../../guides/known-issues/">Known issues</a></li><li><a href="../../about/">About</a></li><li><a href="../../a-z/">A–Z index</a></li></ul>
+    </nav>
+    <nav class="foot-more" aria-labelledby="footTools">
+      <h2 class="foot-h" id="footTools">Tools</h2>
+      <ul><li><a href="../../tools/simulator/">Simulator</a></li><li><a href="../../tools/xp/">XP calculator</a></li><li><a href="../../tools/defence/">Check my defence</a></li></ul>
+    </nav>
+    <div class="foot-legal">
+      <p class="disclaimer"><b>Unofficial fan site.</b> Not affiliated with or endorsed by Ninja Kiwi. Bloons and Bloons TD 6 are their trademarks. No game art is used here.</p>
+      <p>Data: BTD6 v57.4, updated 2026-11-05 · Site 0.5.0 · Sources: <a href="https://www.bloonswiki.com/" rel="noopener">Bloons Wiki</a> (CC BY-SA), <a href="https://btd6index.win/" rel="noopener">BTD6 Index</a>, <a href="https://github.com/hemisemidemipresent/cyberquincy" rel="noopener">Cyber Quincy</a>, Ninja Kiwi patch notes.</p>
       <div class="seg theme-toggle" role="radiogroup" aria-label="Colour theme" hidden>
         <button type="button" role="radio" data-theme-set="auto" aria-checked="true">Auto</button>
         <button type="button" role="radio" data-theme-set="light" aria-checked="false">Light</button>
@@ -451,16 +557,17 @@
 </footer>
 <dialog class="search" id="search" aria-labelledby="searchLabel">
   <form method="dialog" class="search-in" role="search">
-    <label id="searchLabel" for="searchInput">Search towers, upgrades, heroes, maps, guides and rounds</label>
+    <label id="searchLabel" for="searchInput">Search answers, towers, maps, rounds and guides</label>
     <div class="search-row">
       <svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="10" cy="10" r="6.5" fill="none" stroke="currentColor" stroke-width="3"/><path d="M15 15l6 6" stroke="currentColor" stroke-width="3.4" stroke-linecap="square"/></svg>
-      <input id="searchInput" type="search" autocomplete="off" spellcheck="false" placeholder="Try: glaive, infernal, r63" role="combobox" aria-expanded="false" aria-controls="searchList" aria-autocomplete="list">
+      <input id="searchInput" type="search" autocomplete="off" spellcheck="false" placeholder="Try: camo, r63, glaive" role="combobox" aria-expanded="false" aria-controls="searchList" aria-autocomplete="list">
       <button type="button" class="btn btn-small" data-search-close>Esc</button>
     </div>
     <ul id="searchList" role="listbox" aria-label="Results"></ul>
     <p class="search-hint" id="searchHint"><kbd>↑</kbd><kbd>↓</kbd> move · <kbd>Enter</kbd> open · <kbd>Esc</kbd> close</p>
   </form>
 </dialog>
-<script src="../../assets/site.js?v=0.4.1" defer></script>
+<script src="../../assets/search-core.js?v=0.5.0" defer></script>
+<script src="../../assets/site.js?v=0.5.0" defer></script>
 </body>
 </html>

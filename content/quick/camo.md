@@ -6,7 +6,7 @@ order: 1
 props: [camo]
 threat: camo
 rule: "Camo needs **detection**. Towers without it won't shoot them."
-sub: "Spikes on the track and Mortar blasts still hit camo."
+sub: "Spike Factory spikes on the track still hit camo. A plain Mortar doesn't: it needs Signal Flare (0-0-3)."
 related: [lead, ddt]
 ---
 - Camo is a property, not a colour: any Bloon can be camo.

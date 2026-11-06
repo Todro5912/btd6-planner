@@ -164,7 +164,7 @@
     return h('section', { class: 'ti-alert', 'aria-label': 'First problem' }, kids);
   }
   function fixBlock(pr) {
-    const ul = U.fixList(pr.fixes);
+    const ul = U.fixList(pr.fixes, { hints: pr.hints });
     Array.prototype.forEach.call(ul.children, (li, i) => {
       const fx = pr.fixes[i];
       if (!fx || fx.kind === 'hero') return;

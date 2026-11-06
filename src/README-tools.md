@@ -17,15 +17,14 @@ Three tool pages plus a synergy engine, built to contract C3 in `docs/CONTRACTS.
 | `pages/assets/synergy.js` | `window.MonkeyIntel.synergy(placed, ctx)`. No DOM. |
 | `pages/assets/tools-ui.js` | Shared DOM helpers: tower grid, path steppers, fix list, suggestion list. |
 | `pages/assets/tools.css` | Tool components. Site tokens only, no gradients or soft shadows. |
-| `fixtures/pop-model.fixture.json` | Preview pop model (C1 shape): 14 towers, support fixes, 18 heroes. |
 | `../data/synergy-rules.json` | 50 hand-written rules. |
 | `test_tools.js` | Node tests; `--browser [--shots]` adds the playwright smoke test. |
 
-The old planner (`template.html`, `logic.js`, `build.py`, `test_logic.js`) is untouched and still passes.
+The old planner (`template.html`, `logic.js`, `build.py`, `test_logic.js`) was retired in 0.5.
 
 ## Data flow
 
-`build_tools.py` reads `data/*.json`. For the pop model it uses `data/pop-model.json` when that file exists. Otherwise it uses the fixture, and every page shows a "Preview data" note. It reads `data/heroes-levels.json` (C2) when present: `xpTable` (21 cumulative values, index = level) or `xpRatio` override the built-in hero XP estimate. The old `grants` tags are never read.
+`build_tools.py` reads `data/*.json`. `data/pop-model.json` and `data/heroes-levels.json` are required (the build stops without them; there is no fixture). From `data/heroes-levels.json` (C2) it reads `xpTable` (21 cumulative values, index = level) or `xpRatio` override the built-in hero XP estimate. The old `grants` tags are never read.
 
 Rebuild after any data change:
 
@@ -36,7 +35,7 @@ node src/test_tools.js --browser
 
 ## Integration (for U's build, beyond C3)
 
-1. Run `python3 src/build_tools.py` **before** copying `src/pages/assets/*` to `/static/tools/`, so the bundle picks up D's `pop-model.json`. The committed bundle uses the fixture.
+1. `tools/build_site.py` runs `src/build_tools.py` itself before copying `src/pages/assets/*` to `assets/tools/`.
 2. Replace `{{BASE}}` in the fragments with the site base. Each fragment starts with a `<link rel="stylesheet" href="{{BASE}}static/tools/tools.css">`; hoist it to `<head>` if you prefer. Scripts are `defer` and in load order.
 3. Each fragment has its own `<h1 class="h1">` and an `about-data` `<details>` at the foot. Don't add a second title.
 4. `/planner/` → `/tools/simulator/`, keeping the hash. The simulator reads both the old planner hashes (`#map=`, `#mode=`, `#tower=`, `#hero=`) and its own format.
@@ -83,7 +82,6 @@ A `pair` suggestion drops out once the build already has it (tower at ≥ the su
 
 ## Known gaps
 
-- The fixture covers 14 of 26 towers. Others (Sub, Buccaneer, Ace, Heli, Dartling, Glue, Desperado, Mermonkey, Skywarden, Beast Handler, Engineer, Farm) are listed as "not counted" until D's model lands. Fixture facts are a best effort and not authoritative.
 - The hero XP table and the "no catch-up XP" assumption are unverified; hence the manual override.
 - Coverage is "can hit", not "enough damage". There is no DPS or pierce model; R63, R98 and the BAD are flagged only when nothing can damage them.
 - Support towers are assumed to be in range of everything.

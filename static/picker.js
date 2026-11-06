@@ -11,7 +11,9 @@
   var ROOT = (window.MI && window.MI.root) || document.documentElement.getAttribute('data-root') || '';
   var DIFF_LABEL = { easy: 'Easy', medium: 'Medium', hard: 'Hard', impoppable: 'Impoppable' };
   var PROPS = ['camo', 'lead', 'purple', 'black', 'white', 'frozen', 'moab', 'fortified', 'ddt'];
-  var DERIVED = { zebra: ['black', 'white'], ddt: ['camo', 'lead', 'black', 'moab'] };
+  /* derived DDT = camo AND lead AND black (+ MOAB-class) on this crosspath; ddt.derived === false uses its own any[] */
+  var DDT_PARTS = ['camo', 'lead', 'black', 'moab'];
+  var GAPS = ['camo', 'lead', 'purple', 'black', 'white', 'zebra', 'moab', 'ddt'];
   var tiers = [0, 0, 0];
   var diff = 'medium';
   try { var s = localStorage.getItem('mi-diff'); if (DIFF_LABEL[s]) diff = s; } catch (e) { /* storage blocked */ }
@@ -37,13 +39,28 @@
   function holds(req, t) {
     if (req === 'base') return true;
     if (!req || req === 'never' || typeof req !== 'object') return false;
+    if (req.maxTier != null) return t[+req.path] <= +req.maxTier; /* the upgrade that loses the ability is not bought */
     return t[+req.path] >= +req.tier;
   }
+  function anyHolds(e, t) {
+    return !!(e && e.any) && e.any.some(function (alt) { return Array.isArray(alt) && alt.every(function (r) { return holds(r, t); }); });
+  }
   function can(prop, t) {
-    if (DERIVED[prop]) return DERIVED[prop].every(function (p) { return can(p, t); });
     var e = D.pop && D.pop[prop];
-    if (!e || e.derived || !e.any) return false;
-    return e.any.some(function (alt) { return Array.isArray(alt) && alt.every(function (r) { return holds(r, t); }); });
+    if (prop === 'ddt' && !(e && e.derived === false)) return DDT_PARTS.every(function (p) { return can(p, t); });
+    if (prop === 'zebra' && !e) return can('black', t) && can('white', t);
+    return anyHolds(e, t);
+  }
+  /* conditional entries: abilities and effects that need another tower. Shown as hints, never as "can pop". */
+  function hints(t) {
+    var out = [];
+    PROPS.forEach(function (k) {
+      var e = D.pop && D.pop[k];
+      ((e && e.conditional) || []).forEach(function (c) {
+        if ((c.req || []).every(function (r) { return holds(r, t); }) && !can(k, t)) out.push((D.labels[k] || k) + ': ' + c.note);
+      });
+    });
+    return out;
   }
   function bonuses(t) {
     return ((D.pop && D.pop.bonuses) || []).filter(function (b) { return holds(b.from, t); });
@@ -58,18 +75,29 @@
     return {
       tower: x.tower || x.towerId || x.id || null, name: x.name || x.towerName || x.title || null,
       code: x.code || x.crosspath || x.path || null, why: x.why || x.reason || x.text || x.note || x.description || '',
-      url: x.url || null
+      url: x.url || null, prices: x.prices || null, kind: x.kind || 'pair', unverified: !!x.unverified
     };
   }
+  /* Adapter for the tools stream's engine: synergy(placed, ctx) -> [{label, why, strength, kind, unverified,
+     pairsWith, tower, x, hero}]. We pass this crosspath plus what it can't pop, and map each result to the list
+     items this page renders: {tower, name, code, why, url, prices, kind, unverified}. */
   function external(t) {
     var S = window.MonkeyIntel && window.MonkeyIntel.synergy;
-    if (!S) return null;
-    var fn = typeof S === 'function' ? S : (S.suggest || S.forTower || S.get || S.suggestions);
-    if (typeof fn !== 'function') return null;
-    try {
-      var res = fn.call(S, { tower: D.id, tiers: t.slice(), code: code(t), difficulty: diff });
-      return res;
-    } catch (e) { return null; }
+    if (typeof S !== 'function' || !(window.MonkeyIntel.synergyRules || window.MonkeyIntelData)) return null;
+    var missing = D.nonAttacker || !D.popKnown ? [] : GAPS.filter(function (k) { return !can(k, t); });
+    var bon = {};
+    bonuses(t).forEach(function (b) { bon[b.vs] = true; });
+    var res;
+    try { res = S([{ id: D.id, x: t.slice() }], { missing: missing, bonuses: bon, modeId: null }); } catch (e) { return null; }
+    if (!Array.isArray(res)) return null;
+    return res.filter(function (x) { return x && (x.tower !== D.id || x.kind === 'avoid'); }).map(function (x) {
+      var url = x.tower ? 'monkeys/' + x.tower + '/' : x.hero ? 'heroes/' + x.hero + '/' : null;
+      return {
+        tower: x.tower || x.hero || null, name: x.name || x.label, code: x.kind === 'avoid' ? null : x.x, why: x.why,
+        url: url, kind: x.kind, unverified: !!x.unverified,
+        prices: x.tower && x.x ? (D.synPrices || {})[x.tower + ':' + x.x] : null
+      };
+    });
   }
   function builtin(t) {
     var out = [], seen = {};
@@ -92,7 +120,9 @@
     synList.innerHTML = items.map(function (x) {
       var who = x.url ? '<a href="' + esc(ROOT + x.url) + '">' + esc(x.name || x.tower) + '</a>' : '<b>' + esc(x.name || x.tower || '') + '</b>';
       var p = x.prices ? ' <span class="pk-sp">' + esc(money(x.prices[diff])) + '</span>' : '';
-      return '<li>' + who + (x.code ? ' <code class="xcode">' + esc(x.code) + '</code>' : '') + p + (x.why ? '<span class="pk-why">' + esc(x.why) + '</span>' : '') + '</li>';
+      var tag = x.kind === 'avoid' ? '<span class="tag tag-danger">avoid</span> ' : '';
+      var unv = x.unverified ? ' <span class="badge badge-unverified">unverified</span>' : '';
+      return '<li>' + tag + who + (x.code ? ' <code class="xcode">' + esc(x.code) + '</code>' : '') + p + unv + (x.why ? '<span class="pk-why">' + esc(x.why) + '</span>' : '') + '</li>';
     }).join('');
     synSrc.textContent = source;
   }
@@ -131,15 +161,18 @@
     rule.textContent = msg || RULE;
     rule.classList.toggle('warn', !!msg);
     var pops = box.querySelector('.pk-pops');
-    if (D.nonAttacker) pops.innerHTML = '<li class="pop pop-na">Doesn\'t attack</li>';
-    else if (!D.popKnown) pops.innerHTML = '<li class="pop pop-na">Not in the pop model yet</li>';
+    /* fortified = "can damage anything" (POP-MODEL.md), so it doubles as "attacks at this crosspath" */
+    if (!D.popKnown) pops.innerHTML = '<li class="pop pop-na">Not in the pop model yet</li>';
+    else if (!can('fortified', tiers)) pops.innerHTML = '<li class="pop pop-na">Doesn\'t attack' + (D.nonAttacker ? '' : ' at this crosspath') + '</li>';
     else pops.innerHTML = PROPS.map(function (k) {
       var y = can(k, tiers);
       return '<li class="pop ' + (y ? 'pop-y' : 'pop-n') + '"><span class="sr-only">' + (y ? 'can pop ' : 'cannot pop ') + '</span>' + esc(D.labels[k] || k) + '</li>';
     }).join('');
     var b = bonuses(tiers), bEl = box.querySelector('.pk-bonus');
-    bEl.hidden = !b.length;
-    bEl.innerHTML = b.length ? '<b>Bonus:</b> ' + b.map(function (x) { return esc((D.labels[x.vs] || x.vs) + (x.note ? ': ' + x.note : '')); }).join('; ') : '';
+    var hs = D.nonAttacker || !D.popKnown ? [] : hints(tiers);
+    bEl.hidden = !b.length && !hs.length;
+    bEl.innerHTML = (b.length ? '<b>Bonus:</b> ' + b.map(function (x) { return esc((D.labels[x.vs] || x.vs) + (x.note ? ': ' + x.note : '')); }).join('; ') : '')
+      + (hs.length ? (b.length ? '<br>' : '') + '<b>Also, not counted:</b> ' + hs.map(esc).join('; ') : '');
     synergy(tiers);
   }
   function why(p) {

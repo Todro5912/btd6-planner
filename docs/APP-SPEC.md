@@ -1,3 +1,5 @@
+> **Retired in 0.5.** The single-page planner described here was replaced by `/tools/simulator/` (`src/pages/`, `src/README-tools.md`). Kept for history.
+
 # Bloons Planner: app spec
 
 A single-page BTD6 (v57.4) planner for tower-XP grinding and build planning. Built around a Sniper Paragon grind, and works for any tower, map and mode.

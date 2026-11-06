@@ -135,6 +135,8 @@
     if (req === 'never' || req == null) return false;
     if (typeof req === 'object') {
       if (req.level !== undefined) return req.level != null && num(level, 0) >= Math.max(1, req.level);
+      /* maxTier (POP-MODEL.md extension): the upgrade that loses the ability is not bought */
+      if (req.path !== undefined && req.maxTier !== undefined) return !!x && num(x[req.path], 0) <= num(req.maxTier, 5);
       if (req.path !== undefined) return !!x && num(x[req.path], 0) >= num(req.tier, 0);
     }
     return false;
@@ -145,13 +147,38 @@
   };
   C.entryPossible = (entry) => !!(entry && Array.isArray(entry.any) && entry.any.some((alt) => Array.isArray(alt) && alt.length && alt.indexOf('never') < 0));
   C.isAttacker = (entry) => !!entry && C.POP_PROPS.some((p) => C.entryPossible(entry[p]));
-  /* Props a tower at crosspath x can damage, with C1's derived DDT (plus the MOAB-class check). */
+  /* DDT: explicit entries (ddt.derived === false) carry their own any[] and must be used as-is (POP-MODEL.md).
+     Derived: camo AND lead AND black on the same crosspath, plus the MOAB-class check (a DDT is a blimp). */
+  C.ddtExplicit = (e) => !!(e && e.ddt && e.ddt.derived === false);
+  C.ddtHolds = function (e, x, own) {
+    if (!e) return false;
+    if (C.ddtExplicit(e)) return C.entryHolds(e.ddt, x);
+    const s = own || {};
+    return ['camo', 'lead', 'black', 'moab'].every((p) => (own ? s[p] : C.entryHolds(e[p], x)));
+  };
+  /* Props a tower at crosspath x can damage on its own (conditional entries are hints, never coverage). */
   C.towerProps = function (pm, id, x) {
     const e = pm && pm.towers && pm.towers[id];
     if (!e) return null;
     const s = {};
     C.POP_PROPS.forEach((p) => { if (C.entryHolds(e[p], x)) s[p] = true; });
+    if (C.ddtHolds(e, x)) s.ddt = true;
     return s;
+  };
+  /* "Also:" hints: conditional entries (abilities, effects that need another tower) whose req holds. Never coverage. */
+  C.conditionalHints = function (pm, id, x, prop) {
+    const e = pm && pm.towers && pm.towers[id];
+    const spec = e && e[prop];
+    return arr(spec && spec.conditional).filter((c) => c && arr(c.req).every((r) => C.reqHolds(r, x))).map((c) => c.note);
+  };
+  C.hintsFor = function (D, insts, prop) {
+    const pm = D.pop || {};
+    const out = [];
+    arr(insts).forEach((i) => C.conditionalHints(pm, i.id, i.x, prop).forEach((n) => {
+      const t = i.label + ': ' + n;
+      if (out.indexOf(t) < 0) out.push(t);
+    }));
+    return out;
   };
   C.heroProps = function (pm, id, level) {
     const e = pm && pm.heroes && pm.heroes[id];
@@ -176,6 +203,7 @@
         let ok = true;
         for (const req of alt) {
           if (req === 'base') continue;
+          if (req && req.path !== undefined && req.maxTier !== undefined) continue; /* checked below */
           if (req && req.path !== undefined) x[req.path] = Math.max(x[req.path], num(req.tier, 0));
           else ok = false;
         }
@@ -185,7 +213,8 @@
       if (!combos.length) return [];
     }
     const seen = {};
-    return combos.filter((x) => { const k = x.join(''); if (seen[k]) return false; seen[k] = 1; return true; });
+    /* raising one path can break another entry's maxTier: keep only crosspaths where every entry still holds */
+    return combos.filter((x) => { const k = x.join(''); if (seen[k]) return false; seen[k] = 1; return entries.every((e) => C.entryHolds(e, x)); });
   };
 
   /* ---------- bloon needs per round ---------- */
@@ -210,10 +239,12 @@
 
   /* ---------- coverage of one moment ---------- */
   /* insts: [{uid, id, x, label}], hero: {id, level, label} | null */
+  /* a support fix comes from a hero when it says so or when its req is a hero level (data/pop-model.json) */
+  C.isHeroFix = (f) => !!(f && (f.hero || (f.req && f.req.level !== undefined)));
   C.activeFixes = function (D, insts, hero) {
     const pm = D.pop || {};
     return arr(pm.supportFixes).filter((f) => {
-      if (f.hero) return !!hero && hero.id === f.source && C.reqHolds(f.req, null, hero.level);
+      if (C.isHeroFix(f)) return !!hero && hero.id === f.source && C.reqHolds(f.req, null, hero.level);
       return insts.some((i) => i.id === f.source && C.reqHolds(f.req, i.x));
     });
   };
@@ -226,14 +257,19 @@
     const bonuses = {};
     const fixFor = (id) => {
       const g = {};
-      fixes.forEach((f) => { if (!f.only || f.only.indexOf(id) >= 0) arr([].concat(f.grants)).forEach((p) => { g[p] = f; }); });
+      /* decamo strips camo from the bloons it reaches: camo solved for the towers that hit them (POP-MODEL.md) */
+      fixes.forEach((f) => { if (!f.only || f.only.indexOf(id) >= 0) arr([].concat(f.grants)).forEach((p) => { if (p === 'decamo') p = 'camo'; if (C.POP_PROPS.indexOf(p) >= 0 && !g[p]) g[p] = f; }); });
       return g;
     };
     const add = (label, own, id) => {
       const g = fixFor(id);
+      const e = pm.towers && pm.towers[id];
       const eff = Object.assign({}, own);
       Object.keys(g).forEach((p) => { eff[p] = true; });
-      eff.ddt = !!(eff.camo && eff.lead && eff.black && eff.moab);
+      /* DDT needs every part on the same tower. Explicit towers (their Lead and Black come from different attacks)
+         only count with support when that support gives both Lead and Black (MIB) and the tower hits blimps. */
+      if (e && C.ddtExplicit(e)) eff.ddt = !!(own.ddt || (g.lead && g.black && eff.camo && own.moab));
+      else eff.ddt = !!(eff.camo && eff.lead && eff.black && eff.moab);
       cov.pop.push(label);
       ['camo', 'lead', 'purple', 'black', 'white', 'zebra', 'moab', 'ddt', 'bad'].forEach((p) => {
         if (eff[p]) cov[p].push(own[p] || p === 'ddt' ? label : label + ' + ' + (g[p].note ? g[p].source : 'support'));
@@ -243,8 +279,10 @@
       const e = pm.towers && pm.towers[i.id];
       if (!e) { if (unknown.indexOf(i.id) < 0) unknown.push(i.id); return; }
       arr(e.bonuses).forEach((b) => { if (b && b.from && C.reqHolds(b.from, i.x)) bonuses[b.vs] = true; });
-      if (!C.isAttacker(e)) return;
-      add(i.label, C.towerProps(pm, i.id, i.x), i.id);
+      /* attacks at this crosspath? (a Village only attacks at 5-x-x; fortified = "can damage anything") */
+      const own = C.towerProps(pm, i.id, i.x);
+      if (!C.POP_PROPS.some((p) => own[p])) return;
+      add(i.label, own, i.id);
     });
     if (hero) {
       const hp = C.heroProps(pm, hero.id, hero.level);
@@ -310,6 +348,7 @@
       const e = pm.towers && pm.towers[id];
       let out = [];
       if (e && C.isAttacker(e) && parts.length) {
+        if (prop === 'ddt' && C.ddtExplicit(e)) out = out.concat(C.candidateCrosses([e.ddt], cur));
         if (prop === 'ddt') {
           /* every subset of the four parts, so support can fill the rest */
           for (let mask = 1; mask < 16; mask++) {
@@ -342,7 +381,7 @@
       const t = C.tower(D, id);
       if (!t || C.placeIssue(D, mode, map, t)) return;
       const e = pm.towers && pm.towers[id];
-      const cands = prop === 'pop' ? (e && C.isAttacker(e) ? [[0, 0, 0]] : []) : crossesFor(id, [0, 0, 0]);
+      const cands = prop === 'pop' ? (e && C.entryHolds(e.fortified, [0, 0, 0]) ? [[0, 0, 0]] : []) : crossesFor(id, [0, 0, 0]);
       let best = null;
       cands.forEach((x) => {
         const add = { uid: 'new', id, x, label: t.name };
@@ -530,6 +569,7 @@
       pr.bank = x.avail;
       pr.fixes = C.fixesFor({ D, mode, map, insts: live, hero: hero && hero.placed <= pr.round ? { id: hero.id, level: x.heroLevel, label: hero.name } : null, heroPlaced: hero ? hero.placed : null, strong: arr(strat.strongTowers) }, pr.prop, 3);
       pr.fixes.forEach((f) => { f.affordable = pr.bank != null && f.cost <= pr.bank + 0.5; });
+      pr.hints = C.hintsFor(D, live, pr.prop);
       pr.composition = x.composition;
     });
     const unknown = {};
@@ -621,7 +661,7 @@
         threats.push(seen[p]);
       });
     }
-    threats.forEach((t) => { t.fixes = C.fixesFor({ D, mode, map, insts, hero, heroPlaced: null }, t.prop, 3); });
+    threats.forEach((t) => { t.fixes = C.fixesFor({ D, mode, map, insts, hero, heroPlaced: null }, t.prop, 3); t.hints = C.hintsFor(D, insts, t.prop); });
     return { mode, map, round: r0, end, threats, nextDanger, state: st, insts, hero };
   };
 

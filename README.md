@@ -39,12 +39,12 @@ templates/              Jinja2 page templates (base.html, _macros.html, one per 
 static/                 site.css and scripts, copied to assets/: site.js (theme, menus, search UI, round lookup),
                         search-core.js (search scoring, also used by the checks), picker.js (tower crosspath picker),
                         prices.js, maps.js, rounds.js, sort.js
-src/pages/*.body.html   tool pages from the tools stream, wrapped into /tools/<slug>/ (assets -> assets/tools/)
-src/                    the legacy planner (template.html, logic.js, build.py), used as the simulator until
-                        src/pages/simulator.body.html exists
+src/pages/*.body.html   tool pages (simulator, xp, defence), wrapped into /tools/<slug>/ (assets -> assets/tools/)
+src/build_tools.py      builds the tools' data bundle (tools-data.js, synergy-rules.js); build_site.py runs it first
+data/pop-model.json     the single source of truth for "can it pop X" (docs/POP-MODEL.md); required, no fallback
 tools/build_site.py     builds the whole site into the repo root
 tools/mi_lib.py         pop-model maths, crosspath rules, strategy text -> steps and links
-tools/fixtures/         stand-ins for data/pop-model.json and data/heroes-levels.json until those land
+tools/consistency_check.py  proves every "can it pop X" evaluator agrees with the pop model
 tools/check_site.py     static checks on the built site
 tools/test_site.js      browser checks (playwright)
 docs/                   DESIGN.md (design system), CONTRACTS.md, APP-SPEC.md
@@ -62,7 +62,9 @@ Needs Python 3 with `markdown` and `jinja2` (`pip install --break-system-package
 python3 tools/build_site.py              # build the whole site (about 1 s)
 python3 tools/check_site.py              # links, anchors, titles, search index, stray "(" in buttons,
                                          # 3+ fixes per quick card, no 450+ char paragraphs, search words
-cd src && node test_logic.js --browser   # planner logic tests + headless planner check
+python3 data/_tests/test_pop_model.py    # pop model schema and known truths
+node src/test_tools.js --browser         # simulator, XP, defence and synergy logic + headless tool pages
+python3 tools/consistency_check.py       # data tests, site build, tools and the built pickers agree (--all: every crosspath)
 node tools/test_site.js                  # browser checks at 1280px and 400px under /btd6-planner/
 node tools/test_site.js --shots DIR --prefix v05-   # same, plus full-page screenshots into DIR
 ```

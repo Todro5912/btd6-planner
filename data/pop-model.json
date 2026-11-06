@@ -3543,7 +3543,11 @@
     "level": 8
    },
    "radius": "Obyn range",
-   "note": "Nature's Wrath: nearby Druids (and Skywardens since v56) get camo detection. Druids/Skywardens only"
+   "note": "Nature's Wrath: nearby Druids (and Skywardens since v56) get camo detection. Druids/Skywardens only",
+   "only": [
+    "druid",
+    "skywarden"
+   ]
   },
   {
    "grants": "lead",
@@ -3579,7 +3583,11 @@
     "level": 8
    },
    "radius": "water towers in range during Naval Tactics",
-   "note": "Temporary ability buff; L5 also gives Normal damage (all non-camo types)"
+   "note": "Temporary ability buff; L5 also gives Normal damage (all non-camo types)",
+   "only": [
+    "sub",
+    "buccaneer"
+   ]
   },
   {
    "grants": "lead",
@@ -3588,7 +3596,11 @@
     "level": 5
    },
    "radius": "water towers in range during Naval Tactics",
-   "note": "Normal damage type while the ability lasts"
+   "note": "Normal damage type while the ability lasts",
+   "only": [
+    "sub",
+    "buccaneer"
+   ]
   },
   {
    "grants": "camo",

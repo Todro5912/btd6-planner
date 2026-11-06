@@ -267,6 +267,7 @@ kbd { font-family: var(--font-body); font-size: .8em; font-weight: 700; padding:
 .tag { display: inline-block; font-size: 12px; font-weight: 700; padding: 0 6px; border: 2px solid var(--ink); border-radius: var(--r); background: var(--panel); color: var(--text); margin-right: 4px; white-space: nowrap; line-height: 1.5; }
 .tag-banana { background: var(--banana); color: var(--ink); }
 .tag-sky { background: var(--sky); color: var(--ink); }
+.tag-danger { background: var(--danger); color: var(--ink); }
 .gtag { display: inline-block; font-size: 11.5px; font-weight: 700; padding: 0 5px; border: 2px solid var(--ink); border-radius: var(--r); margin: 2px 4px 0 0; background: var(--paper-2); color: var(--text); text-transform: uppercase; letter-spacing: .03em; }
 .counter { display: inline-grid; place-items: center; min-width: 26px; height: 26px; padding: 0 6px; border: 2px solid var(--ink); border-radius: 999px; background: var(--banana); color: var(--ink); font-weight: 700; font-size: 13px; }
 .tier-s { background: var(--gold); } .tier-a { background: var(--grass); color: #fff; } .tier-b { background: var(--sky); } .tier-c { background: var(--panel); color: var(--text); } .tier-d { background: var(--silver); }
@@ -771,6 +772,7 @@ a.threat:hover { background: var(--panel); color: var(--text); }
 button.answer:hover { background: var(--banana); color: var(--ink); }
 button.answer:active { transform: translateY(2px); box-shadow: 0 1px 0 var(--ink); }
 .answer-l { font-weight: 700; }
+.answer .xcode { white-space: nowrap; }
 .answer-l::after { content: ":"; }
 .a-base { background: #DDF2D3; color: #14320F; }
 .a-never { background: var(--paper-2); color: var(--muted); border-style: dashed; cursor: default; box-shadow: none; }

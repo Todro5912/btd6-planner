@@ -27,13 +27,12 @@ const up = (r, ref, x) => ({ uid: 'u' + (++uid), r, op: 'up', ref: ref.uid, x })
 const sell = (r, ref) => ({ uid: 's' + (++uid), r, op: 'sell', ref: ref.uid });
 
 console.log('Data bundle');
-ok(D.meta.popSource === 'data' || D.meta.popSource === 'fixture', 'pop model source is recorded (' + D.meta.popSource + ')');
+ok(D.meta.popSource === 'data' && D.heroLevels && D.meta.heroLevelsSource === 'data', 'bundle uses the real data/pop-model.json and data/heroes-levels.json (no fixtures)', D.meta);
 ok(D.towers.length === 26 && D.heroes.length >= 18 && D.maps.length === 90, '26 towers, heroes and 90 maps in the bundle');
 ok(D.rounds.standard.length === 140 && D.rounds.abr.length === 140, '140 standard and 140 ABR rounds');
 
 console.log('Pop model (contract C1)');
 const pm = D.pop;
-const fixture = JSON.parse(fs.readFileSync(path.join(HERE, 'fixtures', 'pop-model.fixture.json'), 'utf8'));
 const checkC1 = (model, label) => {
   const errs = [];
   Object.keys(model.towers || {}).forEach((id) => {
@@ -44,21 +43,19 @@ const checkC1 = (model, label) => {
       if (!v || !Array.isArray(v.any)) { errs.push(id + '.' + p + ': no any[]'); return; }
       v.any.forEach((alt) => {
         if (!Array.isArray(alt) || !alt.length) errs.push(id + '.' + p + ': empty alternative');
-        else alt.forEach((r) => { if (!(r === 'base' || r === 'never' || (r && r.path >= 0 && r.path <= 2 && r.tier >= 1 && r.tier <= 5))) errs.push(id + '.' + p + ': bad requirement ' + JSON.stringify(r)); });
+        else alt.forEach((r) => { if (!(r === 'base' || r === 'never' || (r && r.path >= 0 && r.path <= 2 && ((r.tier >= 1 && r.tier <= 5) || (r.maxTier >= 0 && r.maxTier <= 4))))) errs.push(id + '.' + p + ': bad requirement ' + JSON.stringify(r)); });
       });
     });
-    if (!(e.ddt && e.ddt.derived)) errs.push(id + '.ddt not derived');
+    if (!(e.ddt && (e.ddt.derived === true || (e.ddt.derived === false && Array.isArray(e.ddt.any))))) errs.push(id + '.ddt neither derived nor explicit any[]');
   });
   (model.supportFixes || []).forEach((f) => { if (!f.grants || !f.source || !f.req) errs.push('supportFix missing fields ' + JSON.stringify(f)); });
   ok(errs.length === 0, label + ' follows C1 (' + Object.keys(model.towers || {}).length + ' towers, ' + (model.supportFixes || []).length + ' support fixes)', errs.slice(0, 5));
 };
-checkC1(fixture, 'fixture');
-if (D.meta.popSource === 'data') checkC1(pm, 'data/pop-model.json');
-['dart', 'sniper', 'bomb', 'ice', 'wizard', 'ninja', 'alchemist', 'village'].forEach((id) => ok(!!fixture.towers[id], 'fixture covers ' + id));
-ok(fixture.heroes && Object.keys(fixture.heroes).length >= 18 && fixture.supportFixes.length >= 5, 'fixture has heroes and supportFixes blocks');
+checkC1(pm, 'data/pop-model.json');
+ok(Object.keys(pm.towers).length === 26 && Object.keys(pm.heroes || {}).length >= 18 && pm.supportFixes.length >= 5, 'pop model covers 26 towers, 18 heroes and support fixes');
 ok(!/grants/.test(fs.readFileSync(path.join(ASSETS, 'tools-core.js'), 'utf8').replace(/f\.grants|\.grants\]|grants:|"grants"/g, '')), 'tools-core never reads the old per-upgrade grants tags');
 
-if (D.meta.popSource === 'fixture') {
+{
   const P = (id, x) => C.towerProps(pm, id, x);
   ok(P('sniper', [1, 1, 0]).camo && P('sniper', [1, 1, 0]).lead && !P('sniper', [0, 0, 0]).lead, 'Sniper: camo at 0-1-0, lead at 1-0-0');
   const s110 = C.coverState(D, [{ uid: 1, id: 'sniper', x: [1, 1, 0], label: 'Sniper' }], null);
@@ -74,6 +71,18 @@ if (D.meta.popSource === 'fixture') {
   ok(acid.cov.ddt.length === 1, 'Dart 0-0-2 + Alchemist acid (lead) reaches DDT');
   ok(C.coverState(D, [], { id: 'quincy', level: 4, label: 'Quincy' }).cov.camo.length === 0 && C.coverState(D, [], { id: 'quincy', level: 5, label: 'Quincy' }).cov.camo.length === 1, 'hero levels: Quincy camo from level 5');
   ok(C.coverState(D, [{ uid: 1, id: 'dart', x: [0, 0, 0], label: 'D' }], { id: 'etienne', level: 8, label: 'Etienne' }).cov.camo.length === 2, 'Etienne L8 UAV gives every tower camo');
+  /* POP-MODEL.md extensions: maxTier, explicit ddt, conditional = hint only */
+  ok(P('tack', [3, 0, 0]).purple && !P('tack', [4, 0, 0]).purple, 'maxTier: Tack 3-0-0 pops Purple, Ring of Fire 4-0-0 does not');
+  ok(!P('ice', [2, 0, 0]).ddt && P('ice', [4, 0, 0]).ddt, 'explicit DDT: Ice 2-0-0 can\'t hit DDTs (derived rule would say yes), 4-0-0 can');
+  ok(!P('ace', [0, 2, 0]).ddt && P('ace', [5, 2, 0]).ddt, 'explicit DDT: Ace 0-2-0 no, 5-2-0 yes');
+  ok(!P('ninja', [0, 0, 3]).ddt && !P('ninja', [0, 0, 4]).ddt, 'explicit DDT: Ninja never alone (Sticky Bomb is a hint only)');
+  ok(C.coverState(D, [{ uid: 1, id: 'ninja', x: [0, 0, 0], label: 'N' }, { uid: 2, id: 'village', x: [0, 3, 0], label: 'V' }], null).cov.ddt.length === 1, 'explicit DDT: Ninja inside an MIB Village hits DDTs');
+  ok(C.coverState(D, [{ uid: 1, id: 'ace', x: [0, 2, 0], label: 'A' }, { uid: 2, id: 'village', x: [0, 2, 0], label: 'V' }], null).cov.ddt.length === 0, 'explicit DDT: Ace 0-2-0 + Radar still can\'t hit DDTs');
+  ok(!P('bomb', [0, 0, 5]).camo && C.conditionalHints(pm, 'bomb', [0, 0, 5], 'camo').length === 1, 'conditional: Bomb Blitz is a hint, not camo coverage');
+  ok(C.checkDefence(D, { modeId: 'hard', round: 20, towers: [{ id: 'bomb', x: [0, 0, 5] }], span: 15 }).threats.some((t) => t.prop === 'camo' && t.hints.length === 1), 'defence check: camo still flagged for Bomb 0-0-5, with the Bomb Blitz hint attached');
+  const tackFix = C.fixesFor({ D, mode: mode('hard'), map: null, insts: [{ uid: 1, id: 'tack', x: [4, 0, 0], label: 'Tack' }], hero: null }, 'purple', 3);
+  ok(tackFix.every((f) => !(f.towerId === 'tack' && f.x[0] >= 4)), 'fixes never suggest a crosspath that breaks a maxTier rule', tackFix);
+  ok(C.coverState(D, [{ uid: 1, id: 'dart', x: [0, 0, 0], label: 'D' }], { id: 'obyn', level: 8, label: 'Obyn' }).cov.camo.length === 0, 'Obyn L8 camo only helps Druids and Skywardens');
 }
 
 console.log('Cash timeline (rounds.json)');

@@ -539,7 +539,7 @@
     "20 Blue"
    ],
    "danger": 2,
-   "notes": "First in this round set: camo. FIRST CAMO (1 Camo Green). Need detection or a track/area hitter (spikes, mortar)."
+   "notes": "First in this round set: camo. FIRST CAMO (1 Camo Green). Need camo detection (Dart 0-0-2, Sniper 0-1-0, Ninja) or Spike Factory spikes. A plain Mortar can't hit it: it needs Signal Flare (0-0-3)."
   },
   {
    "round": 25,

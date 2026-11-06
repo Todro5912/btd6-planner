@@ -8,33 +8,56 @@
 <link rel="canonical" href="https://todro5912.github.io/btd6-planner/guides/known-issues/">
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#3E9B2F">
+<meta name="author" content="Todro5912">
 <script>try{var t=localStorage.getItem('mi-theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Luckiest+Guy&family=Rubik:wght@400;500;700&display=swap">
-<link rel="stylesheet" href="../../assets/site.css?v=0.4.1">
+<link rel="stylesheet" href="../../assets/site.css?v=0.5.0">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 44'%3E%3Cellipse cx='20' cy='18' rx='14' ry='16' fill='%23E2412E' stroke='%231C1A17' stroke-width='3'/%3E%3Cpath d='M17 34h6l-3 4z' fill='%23E2412E' stroke='%231C1A17' stroke-width='2.5'/%3E%3C/svg%3E">
 </head>
 <body class="">
 <a class="skip" href="#main">Skip to content</a>
+<div class="credit-strip">
+  <div class="credit-in">
+    <span class="credit-what">Unofficial BTD6 fan project</span>
+    <a class="maker" href="https://github.com/Todro5912" rel="noopener author"><svg class="maker-ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 6l-6 6 6 6M16 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square"/></svg><span>Made by <b>Todro5912</b></span></a>
+  </div>
+</div>
 <header class="top">
   <div class="top-in">
-    <a class="brand" href="../../"><svg class="brand-mark" viewBox="0 0 40 44" aria-hidden="true" focusable="false"><ellipse cx="20" cy="18" rx="14" ry="16" fill="#E2412E" stroke="#1C1A17" stroke-width="3"/><path d="M13 11c1.5-3 4-4.5 6-5" stroke="#FFF8E7" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M17 34h6l-3 4z" fill="#E2412E" stroke="#1C1A17" stroke-width="2.5" stroke-linejoin="round"/><path d="M20 38c-3 2 2 3 0 5" stroke="#1C1A17" stroke-width="2" fill="none"/></svg><span class="wordmark">Monkey Intel</span></a>
+    <a class="brand" href="../../" aria-label="Monkey Intel by Solou, home">
+      <svg class="brand-mark" viewBox="0 0 40 44" aria-hidden="true" focusable="false"><ellipse cx="20" cy="18" rx="14" ry="16" fill="#E2412E" stroke="#1C1A17" stroke-width="3"/><path d="M13 11c1.5-3 4-4.5 6-5" stroke="#FFF8E7" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M17 34h6l-3 4z" fill="#E2412E" stroke="#1C1A17" stroke-width="2.5" stroke-linejoin="round"/><path d="M20 38c-3 2 2 3 0 5" stroke="#1C1A17" stroke-width="2" fill="none"/></svg>
+      <span class="lockup"><span class="wordmark">Monkey Intel</span><span class="byline">by Solou</span></span>
+    </a>
+    <form class="top-search" action="../../a-z/" method="get" role="search">
+      <label class="sr-only" for="topQ">Search</label>
+      <svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="10" cy="10" r="6.5" fill="none" stroke="currentColor" stroke-width="3"/><path d="M15 15l6 6" stroke="currentColor" stroke-width="3.4" stroke-linecap="square"/></svg>
+      <input id="topQ" name="q" type="search" autocomplete="off" placeholder="camo, r63, glaive…" data-search-proxy>
+      <kbd aria-hidden="true">/</kbd>
+    </form>
+    <a class="searchbtn" href="../../a-z/" data-search-open aria-haspopup="dialog" aria-label="Search (press /)"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="10" cy="10" r="6.5" fill="none" stroke="currentColor" stroke-width="3"/><path d="M15 15l6 6" stroke="currentColor" stroke-width="3.4" stroke-linecap="square"/></svg></a>
+    <details class="menu more-menu" data-menu>
+      <summary class="menubtn" aria-label="More pages"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="3"/></svg><span class="sl">More</span></summary>
+      <ul class="menu-list menu-right">
+<li><a href="../../records/">Records</a></li><li><a href="../../patch/">Patch notes</a></li><li><a href="../../guides/known-issues/" aria-current="page">Known issues</a></li><li><a href="../../about/">About</a></li><li><a href="../../a-z/">A–Z index</a></li>      </ul>
+    </details>
     <nav class="tabs" aria-label="Main">
-      <a class="tab" href="../../planner/">Planner</a>
+      <a class="tab" href="../../">Quick</a>
       <a class="tab" href="../../monkeys/">Monkeys</a>
       <a class="tab" href="../../maps/">Maps</a>
-      <a class="tab on" href="../../guides/" aria-current="true">Guides</a>
-      <a class="tab" href="../../records/">Records</a>
+      <a class="tab" href="../../guides/">Guides</a>
+      <details class="menu tools-menu" data-menu>
+        <summary class="tab">Tools<span class="caret" aria-hidden="true"></span></summary>
+        <ul class="menu-list menu-right">
+<li><a href="../../tools/simulator/"><b>Simulator</b><small>Round timeline: cash by round, the threats coming and your buys.</small></a></li><li><a href="../../tools/xp/"><b>XP calculator</b><small>I have this much XP and want that upgrade: how many games of what.</small></a></li><li><a href="../../tools/defence/"><b>Check my defence</b><small>Your towers and round: the next threats you can&#39;t pop, each with a fix.</small></a></li>        </ul>
+      </details>
     </nav>
-    <a class="searchbtn" href="../../a-z/" data-search-open aria-haspopup="dialog" aria-label="Search (press /)"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="10" cy="10" r="6.5" fill="none" stroke="currentColor" stroke-width="3"/><path d="M15 15l6 6" stroke="currentColor" stroke-width="3.4" stroke-linecap="square"/></svg><span class="sl">Search</span><kbd>/</kbd></a>
   </div>
 </header>
 <main id="main" class="wrap">
 <nav class="crumbs" aria-label="Breadcrumb"><ol>
 <li><a href="../../">Home</a></li>
-<li><a href="../../guides/">Guides</a></li>
-<li><a href="../../guides/#reference">Reference</a></li>
 <li><span aria-current="page">Known Issues</span></li>
 </ol></nav>
 <div class="title-row">
@@ -59,32 +82,32 @@
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr id="g-lead-to-gold-in-chimps">
 <td><strong>Lead to Gold in CHIMPS</strong></td>
 <td>Sources conflict. Plan as if it pays nothing</td>
 <td>CHIMPS game, Alchemist 0-0-3 on R28 or R37 (Lead rounds). Watch its cash counter (added in v57)</td>
 </tr>
-<tr>
+<tr id="g-benjamin-income-per-level">
 <td><strong>Benjamin income per level</strong></td>
 <td>$90 / 140 / 250 / 1,000 / 2,500 / 5,000; one older source says 100 / 150 / 250 / 300 / 500 / 800</td>
 <td>Easy game: note his end-of-round cash at levels 1, 2, 8 and 11</td>
 </tr>
-<tr>
+<tr id="g-mm-for-sub-modes-and-chimps">
 <td><strong>MM for sub-modes and CHIMPS</strong></td>
 <td>Assumed to pay the parent difficulty's row; CHIMPS = Impoppable. Advanced Medium / Hard / Impoppable cells are ×3 of Beginner (calc)</td>
 <td>Note the MM after a first-time CHIMPS, Deflation or Half Cash win, and an Advanced Medium win</td>
 </tr>
-<tr>
+<tr id="g-income-models">
 <td><strong>Income models</strong></td>
 <td>Monkey Bank interest/deposit order, Supply Drop crates per round, Trade Empire base income, Banana Salvage sell bonus, Elite Sniper crate value</td>
 <td>Record cash before and after a few rounds in a Medium game</td>
 </tr>
-<tr>
+<tr id="g-easy-price-ties">
 <td><strong>Easy price ties</strong></td>
 <td>Upgrade ties round down; the base Sniper ($350 → $300) rounds up</td>
 <td>Read Easy prices in a Deflation game</td>
 </tr>
-<tr>
+<tr id="g-removal-costs-by-difficulty">
 <td><strong>Removal costs by difficulty</strong></td>
 <td>Index prices fit Medium; unknown if Chutes, Cracked, Tricky Tracks train or Three Mines crystals scale</td>
 <td>Compare a removable's price in a Medium game and a CHIMPS game</td>
@@ -101,12 +124,12 @@
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr id="g-apopalypse-win-round">
 <td><strong>Apopalypse win round</strong></td>
 <td>R60 or R70</td>
 <td>Play Apopalypse and see which round shows the victory screen</td>
 </tr>
-<tr>
+<tr id="g-deflation-details">
 <td><strong>Deflation details</strong></td>
 <td>70% sell rate, 200 lives, and whether Easy's R40 MOAB HP cut applies</td>
 <td>Sell a tower in Deflation and compare the refund; read the starting lives; check the R40 MOAB's HP</td>
@@ -123,37 +146,37 @@
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr id="g-missing-xp-values">
 <td><strong>Missing XP values</strong></td>
 <td>Skywarden tier 1–2 upgrades (6), Intense Magic, Banana Salvage</td>
 <td>Read the XP cost on the Monkeys menu upgrade screen</td>
 </tr>
-<tr>
+<tr id="g-single-source-v57-prices">
 <td><strong>Single-source v57 prices</strong></td>
 <td>Glue Splatter $650, Glue Strike $4,500, seven Skywarden changes</td>
 <td>Read the Medium price in a Medium game or Sandbox</td>
 </tr>
-<tr>
+<tr id="g-heli-pilot-tier-34-split">
 <td><strong><a href="../../monkeys/heli/">Heli Pilot</a> tier 3/4 split</strong></td>
 <td>Razor Rotors $1,850 + Apache Dartship $19,600; another source says $1,450 + $20,000. Same $21,450 total</td>
 <td>Read Razor Rotors' Medium price</td>
 </tr>
-<tr>
+<tr id="g-v57-damage-changes">
 <td><strong>v57 damage changes</strong></td>
 <td>Sharp Shooter crit 50 → 60; Crossbow Master's second bolt at half speed. Not yet in the damage tables</td>
 <td>Tower stats panel and the Damage/Pops toggle in Sandbox</td>
 </tr>
-<tr>
+<tr id="g-spider-monkey-line-of-sight">
 <td><strong>S.P.I.D.E.R. Monkey line of sight</strong></td>
 <td>Normal Snipers are blocked by LoS; unknown for the Paragon</td>
 <td>Sandbox on a LoS-heavy map: look for red zones</td>
 </tr>
-<tr>
+<tr id="g-tower-capabilities">
 <td><strong>Tower capabilities</strong></td>
 <td>Beast Handler Great White vs Lead; Mermonkey and Skywarden vs Purple; Monkey Sub built-in camo; Advanced Intel and LoS; exact Elite Military Training text</td>
 <td>Send a Lead or Purple round in Sandbox; read the tooltips</td>
 </tr>
-<tr>
+<tr id="g-xp-edge-cases">
 <td><strong>XP edge cases</strong></td>
 <td>Sandbox gives no XP; Insta Monkeys take no XP share; a lost run keeps finished rounds' XP; map and MK bonuses multiply</td>
 <td>Compare the post-game XP screen in each case</td>
@@ -170,12 +193,12 @@
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr id="g-ceramic-rushes">
 <td><strong>Ceramic rushes</strong></td>
 <td>2× Sniper 2-0-4 + Village 0-2-0 on <a href="../../maps/infernal/">Infernal</a> Deflation; R49 and R54–55 are the weak points</td>
 <td>Sandbox on Easy, place the build, send R49–R60 and count leaks</td>
 </tr>
-<tr>
+<tr id="g-etienne-level-8-timing">
 <td><strong>Etienne level 8 timing</strong></td>
 <td>Estimated end of R48</td>
 <td>Run Expert Deflation with Etienne and note the round he reaches level 8</td>
@@ -192,32 +215,32 @@
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr id="g-los-conflicts-on-9-maps">
 <td><strong>LoS conflicts on 9 maps</strong></td>
 <td>The BTD6 Index flags no blockers; wiki text names bushes, trees, cliffs, cave walls or cacti on <a href="../../maps/monkey-meadow/">Monkey Meadow</a>, <a href="../../maps/off-the-coast/">Off The Coast</a>, <a href="../../maps/downstream/">Downstream</a>, <a href="../../maps/underground/">Underground</a>, <a href="../../maps/carved/">Carved</a>, <a href="../../maps/park-path/">Park Path</a>, <a href="../../maps/end-of-the-road/">End Of The Road</a>, <a href="../../maps/in-the-loop/">In The Loop</a>, <a href="../../maps/sunset-gulch/">Sunset Gulch</a></td>
 <td>Select a Sniper in Sandbox and look for red zones</td>
 </tr>
-<tr>
+<tr id="g-dark-path-cave-walls">
 <td><strong><a href="../../maps/dark-path/">Dark Path</a> cave walls</strong></td>
 <td>8 walls, $5,500 to clear all (calc); the Index lists none</td>
 <td>Read the wall prices in a Medium game and count them</td>
 </tr>
-<tr>
+<tr id="g-unmeasured-layouts">
 <td><strong>Unmeasured layouts</strong></td>
 <td><a href="../../maps/ascent/">Ascent</a> and <a href="../../maps/ship-capture/">Ship Capture</a> lane lengths; Ship Capture's $1,000 hatch; a reported v57 rework of <a href="../../maps/lost-crevasse/">Lost Crevasse</a></td>
 <td>Open each map in Sandbox</td>
 </tr>
-<tr>
+<tr id="g-water-spots">
 <td><strong>Water spots</strong></td>
 <td>Water exists on <a href="../../maps/encrypted/">Encrypted</a>, <a href="../../maps/sanctuary/">Sanctuary</a> and <a href="../../maps/dark-dungeons/">Dark Dungeons</a>; location and space unknown</td>
 <td>Try placing a Sub</td>
 </tr>
-<tr>
+<tr id="g-party-parade">
 <td><strong><a href="../../maps/party-parade/">Party Parade</a></strong></td>
 <td>Can a range-buffed Prince of Darkness on one side spawn zombies on the far lane?</td>
 <td>Sandbox test</td>
 </tr>
-<tr>
+<tr id="g-map-geometry">
 <td><strong>Map geometry</strong></td>
 <td>No placement hotspots are published yet</td>
 <td>Top-down Sandbox screenshots of each map would let us add them</td>
@@ -245,15 +268,26 @@
 </main>
 <footer class="foot">
   <div class="foot-in">
-    <p class="disclaimer"><b>Unofficial fan site.</b> Not affiliated with or endorsed by Ninja Kiwi. Bloons and Bloons TD 6 are their trademarks. No game art is used here.</p>
-    <dl class="foot-facts">
-      <div><dt>Data</dt><dd>BTD6 v57.4, updated 2026-11-05</dd></div>
-      <div><dt>Site</dt><dd>Monkey Intel 0.4.1</dd></div>
-      <div class="credits"><dt>Credits</dt><dd><a href="https://www.bloonswiki.com/" rel="noopener">Bloons Wiki</a> (CC BY-SA), <a href="https://btd6index.win/" rel="noopener">BTD6 Index</a>, <a href="https://github.com/hemisemidemipresent/cyberquincy" rel="noopener">Cyber Quincy</a>, Ninja Kiwi patch notes. Made by <a href="https://github.com/Todro5912" rel="noopener">Todro5912</a>.</dd></div>
-    </dl>
-    <div class="foot-row">
-      <a href="../../a-z/">A–Z index</a>
-      <a href="https://github.com/Todro5912/btd6-planner" rel="noopener">GitHub</a>
+    <div class="foot-credit">
+      <p class="foot-made">Made by <a href="https://github.com/Todro5912" rel="noopener author">Todro5912</a></p>
+      <p class="foot-for">Monkey Intel is a fan project for Solou. Built with AI assistance, checked by a player.</p>
+      <p class="foot-btns">
+        <a class="btn btn-small btn-cream" href="https://github.com/Todro5912/btd6-planner" rel="noopener"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 6l-6 6 6 6M16 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square"/></svg>Source on GitHub</a>
+        <a class="btn btn-small btn-cream" href="https://github.com/Todro5912/btd6-planner/issues" rel="noopener">Report an error</a>
+        <a class="btn btn-small btn-cream" href="../../about/">About</a>
+      </p>
+    </div>
+    <nav class="foot-more" aria-labelledby="footMore">
+      <h2 class="foot-h" id="footMore">More</h2>
+      <ul><li><a href="../../records/">Records</a></li><li><a href="../../patch/">Patch notes</a></li><li><a href="../../guides/known-issues/">Known issues</a></li><li><a href="../../about/">About</a></li><li><a href="../../a-z/">A–Z index</a></li></ul>
+    </nav>
+    <nav class="foot-more" aria-labelledby="footTools">
+      <h2 class="foot-h" id="footTools">Tools</h2>
+      <ul><li><a href="../../tools/simulator/">Simulator</a></li><li><a href="../../tools/xp/">XP calculator</a></li><li><a href="../../tools/defence/">Check my defence</a></li></ul>
+    </nav>
+    <div class="foot-legal">
+      <p class="disclaimer"><b>Unofficial fan site.</b> Not affiliated with or endorsed by Ninja Kiwi. Bloons and Bloons TD 6 are their trademarks. No game art is used here.</p>
+      <p>Data: BTD6 v57.4, updated 2026-11-05 · Site 0.5.0 · Sources: <a href="https://www.bloonswiki.com/" rel="noopener">Bloons Wiki</a> (CC BY-SA), <a href="https://btd6index.win/" rel="noopener">BTD6 Index</a>, <a href="https://github.com/hemisemidemipresent/cyberquincy" rel="noopener">Cyber Quincy</a>, Ninja Kiwi patch notes.</p>
       <div class="seg theme-toggle" role="radiogroup" aria-label="Colour theme" hidden>
         <button type="button" role="radio" data-theme-set="auto" aria-checked="true">Auto</button>
         <button type="button" role="radio" data-theme-set="light" aria-checked="false">Light</button>
@@ -264,16 +298,17 @@
 </footer>
 <dialog class="search" id="search" aria-labelledby="searchLabel">
   <form method="dialog" class="search-in" role="search">
-    <label id="searchLabel" for="searchInput">Search towers, upgrades, heroes, maps, guides and rounds</label>
+    <label id="searchLabel" for="searchInput">Search answers, towers, maps, rounds and guides</label>
     <div class="search-row">
       <svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="10" cy="10" r="6.5" fill="none" stroke="currentColor" stroke-width="3"/><path d="M15 15l6 6" stroke="currentColor" stroke-width="3.4" stroke-linecap="square"/></svg>
-      <input id="searchInput" type="search" autocomplete="off" spellcheck="false" placeholder="Try: glaive, infernal, r63" role="combobox" aria-expanded="false" aria-controls="searchList" aria-autocomplete="list">
+      <input id="searchInput" type="search" autocomplete="off" spellcheck="false" placeholder="Try: camo, r63, glaive" role="combobox" aria-expanded="false" aria-controls="searchList" aria-autocomplete="list">
       <button type="button" class="btn btn-small" data-search-close>Esc</button>
     </div>
     <ul id="searchList" role="listbox" aria-label="Results"></ul>
     <p class="search-hint" id="searchHint"><kbd>↑</kbd><kbd>↓</kbd> move · <kbd>Enter</kbd> open · <kbd>Esc</kbd> close</p>
   </form>
 </dialog>
-<script src="../../assets/site.js?v=0.4.1" defer></script>
+<script src="../../assets/search-core.js?v=0.5.0" defer></script>
+<script src="../../assets/site.js?v=0.5.0" defer></script>
 </body>
 </html>

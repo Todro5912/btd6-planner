@@ -136,6 +136,8 @@
       ul.appendChild(U.h('li', null, [U.h('span', null, [U.h('span', { class: 'ti-fix-k' }, kind[f.kind] || ''), U.h('span', { class: 'ti-fix-l' }, label)]), cost]));
     });
     if (!fixes.length) ul.appendChild(U.h('li', null, [U.h('span', { class: 'ti-fix-l' }, (opts && opts.empty) || 'No fix in the data for this mode.'), U.h('span')]));
+    /* conditional entries from the pop model: abilities and helper effects. Shown as hints, never counted. */
+    ((opts && opts.hints) || []).forEach((t) => ul.appendChild(U.h('li', { class: 'ti-fix-hint' }, [U.h('span', null, [U.h('span', { class: 'ti-fix-k' }, 'Also, not counted'), U.h('span', { class: 'ti-fix-l' }, t)]), U.h('span')])));
     return ul;
   };
 

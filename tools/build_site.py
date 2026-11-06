@@ -4,17 +4,16 @@
     python3 tools/build_site.py
 
 Reads data/*.json, content/guides/*.md, content/quick/*.md, templates/ and
-static/, the tool pages from src/pages/*.body.html (docs/CONTRACTS.md C3) and
-the legacy planner from src/ (via src/build.py). Writes index.html, 404.html,
+static/ and the tool pages from src/pages/*.body.html (docs/CONTRACTS.md C3;
+src/build_tools.py runs first so their data bundle is current). Writes index.html, 404.html,
 search-index.json and the quick/, rounds/, monkeys/, heroes/, maps/, guides/,
 tools/<slug>/, patch/, about/, records/, a-z/, planner/ (redirect) and assets/
 folders. Every generated path is listed in .build-manifest.json; the next
 build deletes exactly those files first, so hand-written files are never
 touched.
 
-data/pop-model.json (C1) and data/heroes-levels.json (C2) come from the data
-stream. Until they exist, the stand-ins in tools/fixtures/ are used and the
-build says so.
+data/pop-model.json (C1) and data/heroes-levels.json (C2) are required: the
+build stops if either is missing. There are no fixture stand-ins.
 
 Needs: pip install --break-system-packages markdown jinja2 (PyYAML optional).
 Set MI_CONTENT_DIR to render guides from another folder (testing only).
@@ -43,7 +42,6 @@ SRC = os.path.join(ROOT, 'src')
 PAGES_SRC = os.path.join(SRC, 'pages')
 TEMPLATES = os.path.join(ROOT, 'templates')
 STATIC = os.path.join(ROOT, 'static')
-FIXTURES = os.path.join(ROOT, 'tools', 'fixtures')
 CONTENT = os.environ.get('MI_CONTENT_DIR') or os.path.join(ROOT, 'content')
 MANIFEST = os.path.join(ROOT, '.build-manifest.json')
 
@@ -127,21 +125,16 @@ def load(name, default=None):
         return default
 
 
-USED_FIXTURES = []
-
-
-def load_opt(name):
-    """data/<name> from another stream, or the stand-in in tools/fixtures/ until it lands."""
-    real = os.path.join(DATA, name)
-    if os.path.exists(real):
-        return load(name, {}) or {}
-    fx = os.path.join(FIXTURES, name)
-    if os.path.exists(fx):
-        USED_FIXTURES.append(name)
-        with open(fx, encoding='utf-8') as f:
-            return json.load(f)
-    warn(f'neither data/{name} nor a fixture exists')
-    return {}
+def load_required(name):
+    """data/<name> that the site can't be built without (C1 pop model, C2 hero levels). Missing = build fails."""
+    try:
+        with open(os.path.join(DATA, name), encoding='utf-8') as f:
+            data = json.load(f)
+    except (OSError, ValueError) as e:
+        sys.exit(f'build_site: data/{name} is required ({e})')
+    if not data or (isinstance(data, dict) and data.get('_fixture')):
+        sys.exit(f'build_site: data/{name} is empty or a fixture')
+    return data
 
 
 def norm_name(s):
@@ -272,11 +265,13 @@ def build_model():
         return {k: sum(price(x, c.mult.get(k, 1)) for x in costs) for k, _ in DIFFS}
     c.prices = prices
 
-    # ---- pop model (C1) and hero levels (C2) from the data stream, or the fixtures
-    c.pop = PopModel(load_opt('pop-model.json'))
-    hl = load_opt('heroes-levels.json')
+    # ---- pop model (C1) and hero levels (C2): required
+    c.pop = PopModel(load_required('pop-model.json'))
+    if not c.pop.towers:
+        sys.exit('build_site: data/pop-model.json has no towers')
+    hl = load_required('heroes-levels.json')
     c.hero_levels = {k: v for k, v in hl.items() if isinstance(v, dict)}
-    c.fixtures = list(USED_FIXTURES)
+    c.synergy_rules = (load('synergy-rules.json', {}) or {}).get('rules') or []
 
     def cross_items(tid, cross):
         t = c.tower_by.get(tid)
@@ -401,6 +396,14 @@ def build_model():
     c.round_models = round_models(c)
     c.rm_by = {r['n']: r for r in c.round_models}
 
+    # ---- prices of every synergy-rule suggestion (the tower-page picker shows them next to each pairing)
+    c.syn_prices = {}
+    for r in c.synergy_rules:
+        sg = r.get('suggest') or {}
+        cross = parse_code(sg.get('x')) if sg.get('tower') in c.tower_by and sg.get('x') else None
+        if cross and valid_cross(cross):
+            c.syn_prices[f"{sg['tower']}:{sg['x']}"] = c.cross_prices(sg['tower'], cross)
+
     # ---- tower key answers + picker data (needs the pop model)
     for tm in c.tower_models:
         tm['answers'] = key_answers(c, tm)
@@ -453,25 +456,21 @@ def tower_model(c, t, proven):
         code[pi] = tier
         return {'name': u['name'], 'code': '-'.join(map(str, code)), 'anchor': f'u-{pi + 1}-{tier}'}
 
-    # what it can hit
-    innate = t.get('innate') or {}
+    # what it can hit: the pop model (C1) only. The old per-upgrade `grants` tags are retired.
     hits = []
-    for key, label, ikey in HIT_PROPS:
-        src = []
+    for key, label, _ in HIT_PROPS:
+        base = c.pop.can(t['id'], key, [0, 0, 0])
+        frm = []
         for pi, p in enumerate(t['paths']):
             for u in p:
-                if key in (u.get('grants') or []):
-                    src.append((u['tier'], u.get('cost') or 0, pi, u))
-        src.sort(key=lambda x: (x[0], x[1]))
-        base = bool(ikey and innate.get(ikey))
-        hits.append({'label': label, 'key': key, 'base': base,
-                     'from': [up_label(pi, u['tier']) for _, _, pi, u in src]})
+                cross = [0, 0, 0]
+                cross[pi] = u['tier']
+                prev = cross[:]
+                prev[pi] -= 1
+                if c.pop.can(t['id'], key, cross) and not c.pop.can(t['id'], key, prev):
+                    frm.append(up_label(pi, u['tier']))
+        hits.append({'label': label, 'key': key, 'base': base, 'from': frm})
     utility = []
-    for key, label in UTILITY:
-        src = [(u['tier'], pi, u) for pi, p in enumerate(t['paths']) for u in p if key in (u.get('grants') or [])]
-        src.sort(key=lambda x: x[0])
-        if src:
-            utility.append({'label': label, 'from': [up_label(pi, u['tier']) for _, pi, u in src]})
 
     # crosspaths: the guide's picks first, then the dataset's popular ones
     cps = {}
@@ -613,7 +612,7 @@ ANSWER_PROPS = ['camo', 'lead', 'purple', 'black', 'white', 'frozen', 'ddt']
 def key_answers(c, tm):
     """'Camo: 0-1-0 Night Vision Goggles' style chips from the pop model."""
     tid = tm['id']
-    if not c.pop.has(tid) or c.pop.non_attacker(tid):
+    if not c.pop.has(tid) or c.pop.non_attacker(tid) or tm['non_attacker']:
         return []
     out = []
     for prop in ANSWER_PROPS:
@@ -664,7 +663,7 @@ def picker_data(c, tm):
         'paths': [[{'n': u['name'], 'c': u.get('cost')} for u in p] for p in t['paths']],
         'pathNames': PATH_NAMES, 'pop': c.pop.js(tid), 'popKnown': c.pop.has(tid),
         'nonAttacker': tm['non_attacker'] or (c.pop.has(tid) and c.pop.non_attacker(tid)),
-        'labels': PROP_LABEL, 'fallback': fallback,
+        'labels': PROP_LABEL, 'fallback': fallback, 'synPrices': c.syn_prices,
     }
 
 
@@ -765,7 +764,7 @@ def quick_cards(c, root_unused=None):
         rows = []
         for tm in c.tower_models:
             tid = tm['id']
-            if not c.pop.has(tid) or c.pop.non_attacker(tid):
+            if not c.pop.has(tid) or c.pop.non_attacker(tid) or tm['non_attacker']:
                 continue
             cross = c.pop.cheapest(tid, props, c.cross_medium, mode=mode)
             if cross is None:
@@ -785,7 +784,7 @@ def quick_cards(c, root_unused=None):
             have = {x['tm']['id'] for x in rows}
             extra = []
             for tm in c.tower_models:
-                if tm['id'] in have or not c.pop.has(tm['id']) or c.pop.non_attacker(tm['id']):
+                if tm['id'] in have or not c.pop.has(tm['id']) or c.pop.non_attacker(tm['id']) or tm['non_attacker']:
                     continue
                 cross = c.pop.cheapest(tm['id'], props, c.cross_medium)
                 if cross is not None:
@@ -810,8 +809,8 @@ def quick_cards(c, root_unused=None):
             if not need <= g['grants']:
                 continue
             req = g['s'].get('req') or {}
-            if src and src.startswith('hero:'):
-                hid = src.split(':', 1)[1]
+            if src and (src.startswith('hero:') or 'level' in req or src in c.hm_by):
+                hid = src.split(':', 1)[1] if src.startswith('hero:') else src
                 hm = c.hm_by.get(hid)
                 if not hm:
                     continue
@@ -1122,6 +1121,10 @@ def tool_pages():
 
 def main():
     t0 = time.time()
+    # the tool pages' data bundle (tools-data.js, synergy-rules.js) must be rebuilt from data/ before assets are copied
+    sys.path.insert(0, SRC)
+    import build_tools  # src/build_tools.py
+    build_tools.build()
     c = build_model()
     site = c.site
     base = site.get('base', '/')
@@ -1137,7 +1140,7 @@ def main():
     tool_src = tool_pages()
     tool_assets = os.path.join(PAGES_SRC, 'assets')
     has_synergy = os.path.isfile(os.path.join(tool_assets, 'synergy.js'))
-    tools = [{'slug': k, 'name': n, 'desc': d, 'url': f'tools/{k}/', 'ready': k in tool_src or k == 'simulator'}
+    tools = [{'slug': k, 'name': n, 'desc': d, 'url': f'tools/{k}/', 'ready': k in tool_src}
              for k, n, d in TOOLS]
     tools += [{'slug': k, 'name': k.replace('-', ' ').capitalize(), 'desc': '', 'url': f'tools/{k}/', 'ready': True}
               for k in tool_src if k not in {t['slug'] for t in tools}]
@@ -1180,8 +1183,7 @@ def main():
     env.globals['link_maps'] = link_maps
 
     generic_about = about(c, ['wiki', 'fandom', 'index', 'cq', 'nk'])
-    fixture_note = ([f"This build uses stand-in data for {', '.join(c.fixtures)} until the full data set lands."]
-                    if c.fixtures else [])
+    fixture_note = []
     pop_about = about(c, ['wiki', 'fandom', 'nk'], [
         'Fixes are worked out from the site\'s pop model: the cheapest crosspath of each tower that can damage the Bloon, '
         'priced on the difficulty you pick with the $5 rounding the game uses.'] + fixture_note)
@@ -1219,10 +1221,9 @@ def main():
              section='home', crumbs=[('Quick answers', ''), (q['tile'], None)], q=q,
              rel_cards=[card_by[r] for r in q['related'] if r in card_by], about=pop_about)
 
-    # ---- tools (C3): S's fragments wrapped in the site chrome; legacy planner until the simulator lands
+    # ---- tools (C3): S's fragments wrapped in the site chrome. The old planner is retired.
     page('tools/', 'tools.html', f"Tools · {name}", 'BTD6 tools: round simulator, XP calculator and defence check.',
          section='tools', crumbs=[('Tools', None)], about=None)
-    legacy = None
     for t in tools:
         body = tool_src.get(t['slug'])
         crumbs = [('Tools', 'tools/'), (t['name'], None)]
@@ -1231,23 +1232,8 @@ def main():
             body = body.replace('{{BASE}}static/tools/', depth_root + 'assets/tools/').replace('{{BASE}}', depth_root)
             body = body.replace('{{ROOT}}', depth_root)
             page(t['url'], 'tool.html', f"{t['name']} · {name}", t['desc'] or f"{t['name']}: a BTD6 tool.",
-                 section='tools', crumbs=crumbs, tool=t, body=Markup(body), legacy=False)
-        elif t['slug'] == 'simulator':
-            if legacy is None:
-                sys.path.insert(0, SRC)
-                import build as planner_build  # src/build.py
-                planner_build.main()
-                with open(os.path.join(SRC, 'btd6-planner.html'), encoding='utf-8') as f:
-                    frag = f.read()
-                frag = re.sub(r'<title>.*?</title>\s*', '', frag, flags=re.S)
-                frag = re.sub(r'<meta name="claude:[^>]*>\s*', '', frag)
-                frag = re.sub(r'<link rel="(?:preconnect|stylesheet)"[^>]*fonts\.(?:googleapis|gstatic)[^>]*>\s*', '', frag)
-                styles = ''.join(re.findall(r'<style>.*?</style>', frag, flags=re.S))
-                frag = re.sub(r'<style>.*?</style>\s*', '', frag, flags=re.S)
-                legacy = (frag, styles)
-            page(t['url'], 'tool.html', f"{t['name']} · {name}",
-                 'BTD6 build planner: coverage check, mode legality, priced build order, cash curve and tower-XP projection.',
-                 section='tools', crumbs=crumbs, tool=t, body=Markup(legacy[0]), head=Markup(legacy[1]), legacy=True)
+                 section='tools', crumbs=crumbs, tool=t, body=Markup(body), legacy=False,
+                 about=None)  # the fragment carries its own "About this data" (C3)
         else:
             page(t['url'], 'tool.html', f"{t['name']} · {name}", t['desc'], section='tools', crumbs=crumbs,
                  tool=t, body=None, legacy=False, starter=starter)
@@ -1509,9 +1495,8 @@ def main():
     dt = time.time() - t0
     print(f"built {sum(kinds.values())} pages ({', '.join(f'{k} {n}' for k, n in sorted(kinds.items()))}); "
           f"{len(W.files)} files; removed {removed} old files; {len(WARNINGS)} warnings; {dt:.2f}s")
-    print('inputs: pop model ' + ('FIXTURE' if 'pop-model.json' in c.fixtures else 'data/pop-model.json')
-          + ', hero levels ' + ('FIXTURE' if 'heroes-levels.json' in c.fixtures else 'data/heroes-levels.json')
-          + f", tool pages: {', '.join(sorted(tool_src)) or 'none (legacy planner as simulator)'}"
+    print('inputs: pop model data/pop-model.json, hero levels data/heroes-levels.json'
+          + f", tool pages: {', '.join(sorted(tool_src)) or 'none'}"
           + (', synergy.js: yes' if has_synergy else ', synergy.js: no (built-in hints)'))
 
 

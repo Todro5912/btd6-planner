@@ -8,26 +8,51 @@
 <link rel="canonical" href="https://todro5912.github.io/btd6-planner/guides/danger-rounds/">
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#3E9B2F">
+<meta name="author" content="Todro5912">
 <script>try{var t=localStorage.getItem('mi-theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Luckiest+Guy&family=Rubik:wght@400;500;700&display=swap">
-<link rel="stylesheet" href="../../assets/site.css?v=0.4.1">
+<link rel="stylesheet" href="../../assets/site.css?v=0.5.0">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 44'%3E%3Cellipse cx='20' cy='18' rx='14' ry='16' fill='%23E2412E' stroke='%231C1A17' stroke-width='3'/%3E%3Cpath d='M17 34h6l-3 4z' fill='%23E2412E' stroke='%231C1A17' stroke-width='2.5'/%3E%3C/svg%3E">
 </head>
 <body class="">
 <a class="skip" href="#main">Skip to content</a>
+<div class="credit-strip">
+  <div class="credit-in">
+    <span class="credit-what">Unofficial BTD6 fan project</span>
+    <a class="maker" href="https://github.com/Todro5912" rel="noopener author"><svg class="maker-ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 6l-6 6 6 6M16 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square"/></svg><span>Made by <b>Todro5912</b></span></a>
+  </div>
+</div>
 <header class="top">
   <div class="top-in">
-    <a class="brand" href="../../"><svg class="brand-mark" viewBox="0 0 40 44" aria-hidden="true" focusable="false"><ellipse cx="20" cy="18" rx="14" ry="16" fill="#E2412E" stroke="#1C1A17" stroke-width="3"/><path d="M13 11c1.5-3 4-4.5 6-5" stroke="#FFF8E7" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M17 34h6l-3 4z" fill="#E2412E" stroke="#1C1A17" stroke-width="2.5" stroke-linejoin="round"/><path d="M20 38c-3 2 2 3 0 5" stroke="#1C1A17" stroke-width="2" fill="none"/></svg><span class="wordmark">Monkey Intel</span></a>
+    <a class="brand" href="../../" aria-label="Monkey Intel by Solou, home">
+      <svg class="brand-mark" viewBox="0 0 40 44" aria-hidden="true" focusable="false"><ellipse cx="20" cy="18" rx="14" ry="16" fill="#E2412E" stroke="#1C1A17" stroke-width="3"/><path d="M13 11c1.5-3 4-4.5 6-5" stroke="#FFF8E7" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M17 34h6l-3 4z" fill="#E2412E" stroke="#1C1A17" stroke-width="2.5" stroke-linejoin="round"/><path d="M20 38c-3 2 2 3 0 5" stroke="#1C1A17" stroke-width="2" fill="none"/></svg>
+      <span class="lockup"><span class="wordmark">Monkey Intel</span><span class="byline">by Solou</span></span>
+    </a>
+    <form class="top-search" action="../../a-z/" method="get" role="search">
+      <label class="sr-only" for="topQ">Search</label>
+      <svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="10" cy="10" r="6.5" fill="none" stroke="currentColor" stroke-width="3"/><path d="M15 15l6 6" stroke="currentColor" stroke-width="3.4" stroke-linecap="square"/></svg>
+      <input id="topQ" name="q" type="search" autocomplete="off" placeholder="camo, r63, glaive…" data-search-proxy>
+      <kbd aria-hidden="true">/</kbd>
+    </form>
+    <a class="searchbtn" href="../../a-z/" data-search-open aria-haspopup="dialog" aria-label="Search (press /)"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="10" cy="10" r="6.5" fill="none" stroke="currentColor" stroke-width="3"/><path d="M15 15l6 6" stroke="currentColor" stroke-width="3.4" stroke-linecap="square"/></svg></a>
+    <details class="menu more-menu" data-menu>
+      <summary class="menubtn" aria-label="More pages"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="3"/></svg><span class="sl">More</span></summary>
+      <ul class="menu-list menu-right">
+<li><a href="../../records/">Records</a></li><li><a href="../../patch/">Patch notes</a></li><li><a href="../../guides/known-issues/">Known issues</a></li><li><a href="../../about/">About</a></li><li><a href="../../a-z/">A–Z index</a></li>      </ul>
+    </details>
     <nav class="tabs" aria-label="Main">
-      <a class="tab" href="../../planner/">Planner</a>
+      <a class="tab" href="../../">Quick</a>
       <a class="tab" href="../../monkeys/">Monkeys</a>
       <a class="tab" href="../../maps/">Maps</a>
       <a class="tab on" href="../../guides/" aria-current="true">Guides</a>
-      <a class="tab" href="../../records/">Records</a>
+      <details class="menu tools-menu" data-menu>
+        <summary class="tab">Tools<span class="caret" aria-hidden="true"></span></summary>
+        <ul class="menu-list menu-right">
+<li><a href="../../tools/simulator/"><b>Simulator</b><small>Round timeline: cash by round, the threats coming and your buys.</small></a></li><li><a href="../../tools/xp/"><b>XP calculator</b><small>I have this much XP and want that upgrade: how many games of what.</small></a></li><li><a href="../../tools/defence/"><b>Check my defence</b><small>Your towers and round: the next threats you can&#39;t pop, each with a fix.</small></a></li>        </ul>
+      </details>
     </nav>
-    <a class="searchbtn" href="../../a-z/" data-search-open aria-haspopup="dialog" aria-label="Search (press /)"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="10" cy="10" r="6.5" fill="none" stroke="currentColor" stroke-width="3"/><path d="M15 15l6 6" stroke="currentColor" stroke-width="3.4" stroke-linecap="square"/></svg><span class="sl">Search</span><kbd>/</kbd></a>
   </div>
 </header>
 <main id="main" class="wrap">
@@ -38,12 +63,12 @@
 </ol></nav>
 <div class="title-row">
   <h1 class="h1">Danger Rounds</h1>
-  <span class="stamp"><b>v57.4</b> · updated 2026-11-05</span>
+  <span class="stamp"><b>v57.4</b> · updated 2026-11-06</span>
 </div>
 <p class="lede">The rounds 1–100 that end runs, what each one needs, and how Alternate Bloons Rounds move the threats earlier.</p><div class="guide-layout">
   <nav class="toc panel" aria-labelledby="tocH">
     <h2 class="panel-h" id="tocH">On this page</h2>
-    <ol><li><a href="#standard-rounds-1100">Standard rounds 1–100</a></li><li><a href="#save-abilities-for">Save abilities for</a></li><li><a href="#alternate-bloons-rounds-abr">Alternate Bloons Rounds (ABR)</a></li><li><a href="#quick-threat-table">Quick threat table</a></li></ol>
+    <ol><li><a href="#standard-rounds-1100">Standard rounds 1–100</a></li><li><a href="#key-rounds-cheap-answers">Key rounds: cheap answers</a></li><li><a href="#save-abilities-for">Save abilities for</a></li><li><a href="#alternate-bloons-rounds-abr">Alternate Bloons Rounds (ABR)</a></li><li><a href="#quick-threat-table">Quick threat table</a></li></ol>
   </nav>
   <article class="prose">
     <p>Have camo detection by R24, lead popping by R28 and a MOAB answer before R40 starts. After that the big checks are R63 (ceramic rush), R78 (camo ceramics), R90 and R95 (DDTs), R98 (highest RBE) and R100 (the BAD).</p>
@@ -59,193 +84,199 @@
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr id="g-22">
 <td><strong>22</strong></td>
 <td>16 White</td>
 <td>Immune to freezing</td>
 <td>Any non-ice damage</td>
 </tr>
-<tr>
+<tr id="g-24">
 <td><strong>24</strong></td>
 <td>1 Camo Green, 20 Blue</td>
 <td><strong>First camo</strong></td>
-<td>Camo detection, or a track or area hitter (Spike Factory, Mortar)</td>
+<td>Camo detection: Dart 0-0-2, Ninja, Sniper 0-1-0, or a Spike Factory (spikes see camo). A plain Mortar or Bomb can't hit it</td>
 </tr>
-<tr>
+<tr id="g-25">
 <td><strong>25</strong></td>
 <td>25 Regrow Yellow, 10 Purple</td>
 <td>First Purple and Regrow</td>
-<td>Non-magic damage</td>
+<td>Anything except Wizard, Super Monkey lasers/plasma, Ring of Fire or Laser Cannon</td>
 </tr>
-<tr>
+<tr id="g-28">
 <td><strong>28</strong></td>
 <td>6 Lead (about $6.9k earned by now)</td>
 <td><strong>First Lead</strong></td>
-<td>A lead popper: Bomb, Mortar, Hot Shots, Full Metal Jacket</td>
+<td>A lead popper: any Bomb ($375), Sniper 1-0-0, Wizard 0-1-0</td>
 </tr>
-<tr>
+<tr id="g-33">
 <td><strong>33</strong></td>
 <td>20 Camo Red, 13 Camo Yellow</td>
 <td>Bigger camo test</td>
 <td>Real camo coverage; one Dart won't do</td>
 </tr>
-<tr>
+<tr id="g-37">
+<td><strong>37</strong></td>
+<td>25 Black, 25 White, 15 Lead, 10 Zebra, 7 Camo White</td>
+<td>Every property at once</td>
+<td>Lead popping plus non-explosive damage plus a little camo</td>
+</tr>
+<tr id="g-36">
 <td><strong>36</strong></td>
 <td>140 Pink, 20 Camo Regrow Green</td>
 <td>Dense Pinks plus camo regrow</td>
 <td>Pierce or area damage, plus camo</td>
 </tr>
-<tr>
+<tr id="g-38">
 <td><strong>38</strong></td>
 <td>42 Pink, 17 White, 10 Zebra, 14 Lead, 2 Ceramic</td>
 <td>First Ceramics, mixed with Leads</td>
 <td>Lead popping and some single-target damage</td>
 </tr>
-<tr>
+<tr id="g-40">
 <td><strong>40</strong></td>
 <td>1 MOAB (about $16.9k earned)</td>
 <td><strong>First MOAB</strong></td>
-<td>Focused damage: MOAB Mauler (Bomb x-3-x), Destroyer (Buccaneer 3-x-x), Sticky Bomb (Ninja 0-0-4), Sniper 2-x-x or 3-x-x, Ezili's MOAB Hex, Corvus</td>
+<td>200 HP of focused damage. Almost every tower can hurt a MOAB; MOAB Mauler (Bomb 0-3-0) and Sniper 2-x-x are the cheap specialists</td>
 </tr>
-<tr>
+<tr id="g-45">
 <td><strong>45</strong></td>
 <td>25 Rainbow, 10 Camo Purple, 180 Pink, 4 Fortified Lead</td>
 <td>First Camo Purple, first Fortified</td>
 <td>Camo, non-magic damage and lead together</td>
 </tr>
-<tr>
+<tr id="g-46">
 <td><strong>46</strong></td>
 <td>6 Fortified Ceramic</td>
 <td>20 HP each</td>
 <td>Single-target damage</td>
 </tr>
-<tr>
+<tr id="g-49">
 <td><strong>49</strong></td>
 <td>343 Green, 20 Zebra, 30 Rainbow (10 Regrow), 18 Ceramic</td>
 <td>Huge bloon count</td>
 <td>Pierce and area damage</td>
 </tr>
-<tr>
+<tr id="g-50">
 <td><strong>50</strong></td>
 <td>2 MOAB, 20 Ceramic, 8 Fortified Lead, 20 Red</td>
 <td>Two MOABs. Last round at full pop cash</td>
 <td>MOAB damage</td>
 </tr>
-<tr>
+<tr id="g-55">
 <td><strong>55</strong></td>
 <td>45 Ceramic, 1 MOAB</td>
 <td>Four clustered ceramic waves</td>
 <td>Area and ceramic damage</td>
 </tr>
-<tr>
+<tr id="g-59">
 <td><strong>59</strong></td>
 <td>50 Camo Lead, 20 Ceramic, 10 Regrow Ceramic</td>
 <td>First Camo Leads</td>
 <td>Camo and lead on the same towers</td>
 </tr>
-<tr>
+<tr id="g-60">
 <td><strong>60</strong></td>
 <td>1 BFB</td>
 <td>First BFB. Medium's final round</td>
 <td>Sustained MOAB damage</td>
 </tr>
-<tr>
+<tr id="g-63">
 <td><strong>63</strong></td>
 <td>75 Lead, 122 Ceramic in 3 packed waves (about $60k earned)</td>
 <td><strong>Ceramic rush.</strong> The top mid-game killer</td>
-<td>Heavy grouped damage. One ability won't cover all three waves</td>
+<td>Area damage that pops Lead: Bomb 2-0-4, Ice 3-2-0 + Glue 2-3-0, Dart 4-0-2. One ability won't cover all three waves</td>
 </tr>
-<tr>
+<tr id="g-64">
 <td><strong>64</strong></td>
 <td>6 MOAB, 3 Fortified MOAB</td>
 <td></td>
 <td>MOAB damage</td>
 </tr>
-<tr>
+<tr id="g-75">
 <td><strong>75</strong></td>
 <td>7 BFB, 3 Fortified MOAB, 14 Lead, 14 Fortified Lead</td>
 <td>Leads soak shots meant for blimps</td>
 <td>Single-target and grouped damage. Save abilities</td>
 </tr>
-<tr>
+<tr id="g-76">
 <td><strong>76</strong></td>
 <td>60 Regrow Ceramic, tightly packed</td>
 <td>Dense ceramics</td>
-<td>Burst area damage. Grow Blocker helps</td>
+<td>Burst area damage plus Grow Blocker (Village 0-1-0)</td>
 </tr>
-<tr>
+<tr id="g-78">
 <td><strong>78</strong></td>
 <td>150 Rainbow, 75 Ceramic, 72 Camo Ceramic, 80 Purple, 1 BFB (about 90s long)</td>
 <td><strong>Camo ceramic wave</strong></td>
-<td>Camo or decamo, plus area damage that isn't magic</td>
+<td>Radar Scanner or Signal Flare in front of your Bombs; no Wizard-only defence (80 Purples)</td>
 </tr>
-<tr>
+<tr id="g-79">
 <td><strong>79</strong></td>
 <td>500 Regrow Rainbow, 4 BFB, 2 Fortified BFB</td>
 <td>Highest RBE before R80</td>
 <td>Grouped damage and MOAB damage</td>
 </tr>
-<tr>
+<tr id="g-80">
 <td><strong>80</strong></td>
 <td>1 ZOMG</td>
 <td>First ZOMG. Hard's final round</td>
 <td>Big single-target damage, about 10k HP to chew</td>
 </tr>
-<tr>
+<tr id="g-81">
 <td><strong>81</strong></td>
 <td>17 BFB</td>
 <td>Super Ceramics and the blimp HP ramp begin</td>
 <td>Strong MOAB damage</td>
 </tr>
-<tr>
+<tr id="g-89">
 <td><strong>89</strong></td>
 <td>20 Fortified MOAB, 8 Fortified BFB</td>
 <td>Community "hard round"</td>
 <td>MOAB damage</td>
 </tr>
-<tr>
+<tr id="g-90">
 <td><strong>90</strong></td>
 <td>50 Fortified Camo Regrow Lead, 3 DDT</td>
 <td><strong>First DDTs</strong></td>
 <td>Camo plus damage that hits Lead and Black (see below)</td>
 </tr>
-<tr>
+<tr id="g-91">
 <td><strong>91</strong></td>
 <td>100 Fortified Ceramic, 20 BFB</td>
 <td></td>
 <td>Grouped damage</td>
 </tr>
-<tr>
+<tr id="g-93">
 <td><strong>93</strong></td>
 <td>10 Fortified BFB, 6 DDT</td>
 <td></td>
 <td>DDT answer</td>
 </tr>
-<tr>
+<tr id="g-95">
 <td><strong>95</strong></td>
 <td>500 Camo Regrow Purple, 250 Fortified Camo Regrow Lead, 50 Fortified MOAB, 30 DDT</td>
 <td><strong>30 DDTs</strong> behind Fortified MOABs that eat pierce</td>
 <td>DDT damage that reaches past the MOABs. No magic-only defence</td>
 </tr>
-<tr>
+<tr id="g-96">
 <td><strong>96</strong></td>
 <td>40 Fortified MOAB, 30 BFB, 6 ZOMG</td>
 <td>Community "hard round"</td>
 <td>Big blimp damage</td>
 </tr>
-<tr>
+<tr id="g-98">
 <td><strong>98</strong></td>
 <td>30 Fortified BFB, 8 ZOMG (327,456 RBE)</td>
 <td><strong>Highest RBE before Freeplay</strong></td>
-<td>Grouped popping and abilities</td>
+<td>Blimp damage and stalls: Maim MOAB stuns, MOAB Assassin abilities, MOAB Glue</td>
 </tr>
-<tr>
+<tr id="g-99">
 <td><strong>99</strong></td>
 <td>60 MOAB, 9 Fortified DDT</td>
 <td>DDTs arrive while abilities are on cooldown from R98</td>
 <td>Keep one ability back for this round</td>
 </tr>
-<tr>
+<tr id="g-100">
 <td><strong>100</strong></td>
 <td>1 BAD (28,000 HP outer layer)</td>
 <td>Immune to slows, stuns and knockback</td>
@@ -255,52 +286,114 @@
 </table></div>
 <p>Community "hard rounds" list: <strong>55, 63, 75, 78, 89, 95, 96, 98, 99.</strong></p>
 <h3 id="ddt-answers">DDT answers</h3>
-<p>A DDT has Camo, Lead and Black properties: you need camo detection, and sharp and explosive damage can't hurt it.</p>
+<p>A DDT is a fast MOAB-class blimp with Camo, Lead and Black properties. One tower needs camo detection <strong>and</strong> an attack that is neither sharp nor explosive (Normal, fire, plasma or acid). A camo Sharp tower can't hurt it, and nor can a Bomb.</p>
 <div class="table-wrap"><table>
 <thead>
 <tr>
 <th>Approach</th>
-<th>Options</th>
+<th>Options (Medium price)</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Camo detection</td>
-<td>Radar Scanner (Village 0-2-0), <a href="../../heroes/etienne/">Etienne</a></td>
+<td>One tower does it all</td>
+<td>Sniper 1-1-0 ($950), Dart 4-0-2 ($2,950), Spike Factory 2-x-x ($2,400), Buccaneer 0-2-2 ($2,000), Wizard 0-1-2 ($1,150), Heli 3-2-0 ($5,550), Dartling 0-3-0 ($6,550), Super 2-0-2 ($11,200)</td>
+</tr>
+<tr>
+<td>Give your sharp towers Lead</td>
+<td>Acidic Mixture Dip (Alchemist 2-0-0, $1,150) next to a camo Sharp tower; <a href="../../heroes/gwendolin/">Gwendolin</a>'s Heat It Up (L4)</td>
+</tr>
+<tr>
+<td>Give your Lead poppers camo</td>
+<td>Radar Scanner (Village 0-2-0, $3,450) or <a href="../../heroes/etienne/">Etienne</a> L8, <em>only</em> if the Lead popper isn't explosive</td>
 </tr>
 <tr>
 <td>Decamo</td>
-<td>Submerge and Support (Sub 3-0-0), Signal Flare (Mortar 0-0-3)</td>
+<td>Signal Flare (Mortar 0-0-3, $2,300), Submerge and Support (Sub 3-0-0), Cleansing Foam (Engineer 0-3-0, $1,850)</td>
 </tr>
 <tr>
-<td>Lead damage for nearby towers</td>
-<td>Acidic Mixture Dip (Alchemist 2-0-0), <a href="../../heroes/gwendolin/">Gwendolin</a>'s Heat It Up</td>
-</tr>
-<tr>
-<td>Remove lead immunity</td>
-<td>Glue Strike, Glue Storm, Embrittlement, Super Brittle</td>
-</tr>
-<tr>
-<td>Remove black immunity</td>
-<td><a href="../../heroes/striker/">Striker Jones</a> level 5 and 19</td>
+<td>Explosives on DDTs</td>
+<td><a href="../../heroes/striker/">Striker Jones</a> L19 removes Black immunity for explosives (50% chance from L5)</td>
 </tr>
 <tr>
 <td>Everything at once</td>
-<td>Monkey Intelligence Bureau (Village 0-3-0), reliable but pricey</td>
+<td>Monkey Intelligence Bureau (Village 0-3-0, $10,950): every tower in range can damage every type, and the path includes Radar Scanner, so they see camo too</td>
 </tr>
 <tr>
 <td>Slow them</td>
-<td>Bloon Sabotage (Ninja 0-4-0) halves DDT speed</td>
+<td>Bloon Sabotage (Ninja 0-4-0, $7,450) halves bloon speed</td>
 </tr>
 </tbody>
 </table></div>
-<p>Effects that only reach "up to BFB" don't work on DDTs, such as Abyssal Warrior's ink and Psi before level 20.</p>
+<p>Not DDT answers on their own: a Ninja with Flash Bomb (explosive), a Bomb Shooter, an Ice Monkey with Cold Snap (can't affect blimps), and any Sharp tower without lead help. Effects that only reach "up to BFB" skip DDTs, such as Abyssal Warrior's ink and Psi before level 20.</p>
 <h3 id="the-bad-on-r100">The BAD on R100</h3>
 <ul>
 <li>Single-target bursts: Spike Storm's ability, First Strike Capability timed after the BAD's last damage phase so it one-shots the insides, MOAB Eliminator, Legend of the Night.</li>
 <li><a href="../../heroes/ezili/">Ezili</a>'s MOAB Hex deals percentage damage.</li>
 <li>Plan R98 → R99 → R100 as one sequence. Most players fire everything on R98 and have nothing for the Fortified DDTs on R99.</li>
 </ul>
+<h2 id="key-rounds-cheap-answers">Key rounds: cheap answers</h2>
+<p>Prices are Medium totals for the whole crosspath (tower plus upgrades). Multiply by about 1.08 on Hard and 1.2 on Impoppable/CHIMPS. Codes are top-middle-bottom paths.</p>
+<p><strong>R24: 1 Camo Green.</strong> The first camo; a tower without camo detection can't see or hit it, explosions included.
+- Dart 0-0-2 Enhanced Eyesight: $490
+- Ninja 0-0-0: $400 (camo built in)
+- Sniper 0-1-0 Night Vision Goggles: $600</p>
+<p><strong>R28: 6 Lead.</strong> Sharp, cold and energy attacks (darts, tacks, shurikens, Ice, Wizard bolts) bounce off.
+- Any Bomb Shooter: $375
+- Sniper 1-0-0 Full Metal Jacket: $700
+- Wizard 0-1-0 Fireball: $550, or Alchemist 2-0-0 ($1,150) next to your Dart Monkeys</p>
+<p><strong>R33: 20 Camo Red, 13 Camo Yellow.</strong> Too many for one 0-0-2 Dart.
+- Dart 0-2-2 ($780) or 2-0-2 ($830)
+- Ninja 2-0-1: $1,400
+- Wizard 0-0-2 Monkey Sense: $850</p>
+<p><strong>R37: 25 Black, 25 White, 15 Lead, 10 Zebra, 7 Camo White.</strong> Bombs can't touch the Blacks or Zebras; darts can't touch the Leads.
+- Sniper 1-1-0: $950 (pops all of it)
+- Wizard 0-1-2: $1,150 (fire pops Lead, Black and White; Monkey Sense for the camo)
+- Bomb 0-0-2 Frag Bombs ($875) beside a Dart 0-0-2 ($490)</p>
+<p><strong>R40: 1 MOAB, 200 HP.</strong> Any damage works; you just need enough of it focused on one target.
+- Bomb 0-3-0 MOAB Mauler: $2,025
+- Sniper 2-0-0 Large Calibre: $2,000 (2-1-0 for $2,250 adds camo)
+- Alchemist 0-2-0 Perishing Potions: $1,275 (bonus MOAB damage; supports your other towers)</p>
+<p><strong>R45: 10 Camo Purple, 4 Fortified Lead, 180 Pink.</strong> Camo, Lead and no-magic all at once. Fortified Leads just have 4 HP.
+- Ninja 2-0-1 ($1,400) plus any Bomb ($375)
+- Spike Factory 2-0-0 White Hot Spikes: $2,400 (camo, Lead and Purple)
+- Sniper 1-1-0: $950</p>
+<p><strong>R50: 2 MOAB, 20 Ceramic, 8 Fortified Lead.</strong>
+- Bomb 2-3-0 MOAB Mauler + Heavy Bombs: $2,925
+- Dart 4-0-2 Juggernaut: $2,950 (ceramics and Leads)
+- Sniper 2-1-0: $2,250</p>
+<p><strong>R63: 75 Lead and 122 Ceramic in 3 packed waves.</strong> The top mid-game killer. You need area damage that pops Lead, spread over three waves.
+- Bomb 2-0-4 Recursive Cluster: $4,975 (or 4-2-0 Bloon Impact, $5,825)
+- Ice 3-2-0 ($2,900) plus Glue 2-3-0 ($3,425) to soften the waves
+- Two Dart 4-0-2 Juggernauts: $2,950 each</p>
+<p><strong>R76: 60 Regrow Ceramic, tightly packed.</strong>
+- Village 0-1-0 Grow Blocker: $1,450 in range of your damage
+- Bomb 2-0-4: $4,975
+- Dart 4-0-2: $2,950</p>
+<p><strong>R78: 72 Camo Ceramic, 80 Purple, 150 Rainbow, 1 BFB.</strong> About 90 s long. Bombs need camo help; Wizards can't touch the Purples.
+- Village 0-2-0 Radar Scanner ($3,450) over a Bomb 2-0-4 ($4,975)
+- Mortar 0-0-3 Signal Flare: $2,300 (gives the Mortar camo and decamos the wave for everyone)
+- Ninja 4-0-2 Bloonjitsu: $5,500</p>
+<p><strong>R90: 3 DDT behind 50 Fortified Camo Regrow Lead.</strong> First DDTs. See the DDT answers below.
+- Spike Factory 2-0-0 at the exit: $2,400
+- Dartling 0-3-0 Hydra Rocket Pods: $6,550
+- Sniper 1-1-0 ($950) for the Leads, plus MIB ($10,950) if your carry is a Bomb or a Sharp tower</p>
+<p><strong>R95: 30 DDT, 50 Fortified MOAB, 500 Camo Regrow Purple, 250 Fortified Camo Regrow Lead.</strong> The MOABs soak pierce meant for the DDTs.
+- Monkey Intelligence Bureau, Village 2-3-0: $12,850 over your main damage
+- Spike Factory 2-4-0 Spike Storm: $13,300 (camo, Lead, Purple; ability for the DDT wave)
+- Dartling 0-4-0 Rocket Storm: $11,550</p>
+<p><strong>R98: 30 Fortified BFB, 8 ZOMG (327,456 RBE).</strong> Pure blimp damage and stalls.
+- Sniper 4-0-2 Maim MOAB: $11,400 each; two of them chain stuns
+- Bomb 2-4-0 MOAB Assassin: $6,375 (ability on each ZOMG)
+- Glue 2-0-3 MOAB Glue: $5,005 slows every blimp</p>
+<p><strong>R99: 60 MOAB, 9 Fortified DDT.</strong> Arrives while your R98 abilities recharge.
+- Buccaneer 0-4-2 Monkey Pirates: $6,800 (Crow's Nest lets the hook take DDTs)
+- Ninja 0-4-0 Bloon Sabotage: $7,450 halves DDT speed
+- Spike Factory 2-4-0: $13,300 at the exit</p>
+<p><strong>R100: 1 BAD (28,000 HP outer layer).</strong> Immune to slows, stuns and knockback.
+- Sub 0-4-0 First Strike Capability: $15,425 (time it after the BAD's last damage phase)
+- Spike Factory 0-4-0 Spike Storm ability: $11,900
+- Bomb 0-5-0 MOAB Eliminator: $31,475, or <a href="../../heroes/ezili/">Ezili</a>'s MOAB Hex (L10)</p>
 <h2 id="save-abilities-for">Save abilities for</h2>
 <p><strong>R40, 63, 75, 78, 95, 98, 99 and 100.</strong> Don't fire them on an easy round because they're ready.</p>
 <h2 id="alternate-bloons-rounds-abr">Alternate Bloons Rounds (ABR)</h2>
@@ -314,97 +407,97 @@
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr id="g-5">
 <td><strong>5</strong></td>
 <td>12 Camo Red, 1 Camo Regrow Red, 15 Regrow Blue, 3 Green</td>
 <td><strong>First camo.</strong> Detection from the start</td>
 </tr>
-<tr>
+<tr id="g-10">
 <td><strong>10</strong></td>
 <td>40 Green, 22 Blue, 2 Lead</td>
 <td>First Lead. Leads block sharp shots aimed at the Blues. A 1-0-0 Sniper, or let the Leads leak</td>
 </tr>
-<tr>
+<tr id="g-15">
 <td><strong>15</strong></td>
 <td>3 Purple among Blues, Greens, Yellows, Pinks</td>
 <td>First Purple</td>
 </tr>
-<tr>
+<tr id="g-24">
 <td><strong>24</strong></td>
 <td>1 Camo Lead</td>
 <td>First Camo Lead</td>
 </tr>
-<tr>
+<tr id="g-27">
 <td><strong>27</strong></td>
 <td>100 Camo Red, 60 Camo Blue, 45 Camo Green, 45 Camo Yellow</td>
 <td><strong>Massive camo rush.</strong> Grouped camo damage and decamo</td>
 </tr>
-<tr>
+<tr id="g-30">
 <td><strong>30</strong></td>
 <td>9 Camo Lead</td>
 <td>Camo and lead on the same tower</td>
 </tr>
-<tr>
+<tr id="g-40">
 <td><strong>40</strong></td>
 <td>1 Fortified MOAB (400 HP)</td>
 <td><strong>First blimp is fortified.</strong> MOAB Assassin's ability one-shots it; Corvus helps</td>
 </tr>
-<tr>
+<tr id="g-45">
 <td><strong>45</strong></td>
 <td>10 Camo Purple, 120 Pink, 10 Ceramic, 4 Fortified Lead</td>
 <td>First Camo Purple</td>
 </tr>
-<tr>
+<tr id="g-46">
 <td><strong>46</strong></td>
 <td>8 Fortified Ceramic</td>
 <td>Single-target damage</td>
 </tr>
-<tr>
+<tr id="g-50">
 <td><strong>50</strong></td>
 <td>2 Fortified MOAB, 4 MOAB, 8 Fortified Regrow Lead</td>
 <td>Single-target and area damage</td>
 </tr>
-<tr>
+<tr id="g-51">
 <td><strong>51</strong></td>
 <td>28 Fortified Camo Ceramic, 10 Zebra</td>
 <td>Camo plus ceramic damage</td>
 </tr>
-<tr>
+<tr id="g-54">
 <td><strong>54</strong></td>
 <td>1 BFB, 1 MOAB, 35 Regrow Black</td>
 <td>First BFB</td>
 </tr>
-<tr>
+<tr id="g-60">
 <td><strong>60</strong></td>
 <td>1 Fortified BFB</td>
 <td>MOAB damage</td>
 </tr>
-<tr>
+<tr id="g-63">
 <td><strong>63</strong></td>
 <td>30 Fortified Ceramic, 40 Ceramic, 40 Camo Ceramic, 5 MOAB</td>
 <td>Decamo or grouped camo popping</td>
 </tr>
-<tr>
+<tr id="g-69">
 <td><strong>69</strong></td>
 <td>40 Camo Regrow Purple, 40 Camo Regrow Black, 50 Camo Ceramic</td>
 <td>All-camo round</td>
 </tr>
-<tr>
+<tr id="g-75">
 <td><strong>75</strong></td>
 <td>6 BFB, 2 Fortified BFB, 4 Fortified MOAB, 64 Leads (14 Fortified)</td>
 <td>Called the hardest round before Freeplay. Save abilities</td>
 </tr>
-<tr>
+<tr id="g-78">
 <td><strong>78</strong></td>
 <td>60 Fortified Ceramic, 72 Camo Ceramic, 80 Purple, 150 Zebra, 1 Fortified BFB</td>
 <td>Camo ceramic wave</td>
 </tr>
-<tr>
+<tr id="g-79">
 <td><strong>79</strong></td>
 <td>1 ZOMG, 4 Fortified BFB, 500 Camo Rainbow</td>
 <td>First ZOMG</td>
 </tr>
-<tr>
+<tr id="g-80">
 <td><strong>80</strong></td>
 <td>2 ZOMG</td>
 <td>ABR's final round</td>
@@ -428,25 +521,25 @@
 <td>Camo</td>
 <td>R24</td>
 <td>R5</td>
-<td>Radar Scanner Village, Ninja, or a Spike Factory as backup</td>
+<td>Dart 0-0-2, Ninja, Radar Scanner Village, or a Spike Factory</td>
 </tr>
 <tr>
 <td>Lead</td>
 <td>R28</td>
 <td>R10</td>
-<td>Bomb, Mortar, or an Acidic Mixture Dip Alchemist near sharp towers</td>
+<td>Bomb, Sniper 1-0-0, or an Acidic Mixture Dip Alchemist near sharp towers</td>
 </tr>
 <tr>
 <td>Purple</td>
 <td>R25</td>
 <td>R15</td>
-<td>Keep sharp or explosive damage; don't go all-in on magic</td>
+<td>Keep sharp, explosive or acid damage; don't go all-in on Wizards or Super Monkey lasers</td>
 </tr>
 <tr>
 <td>Fortified</td>
 <td>R45</td>
 <td>R40</td>
-<td>Raw single-target damage; Perishing Potions for non-blimps</td>
+<td>Just more HP: any tower that can hit the bloon can hit it fortified</td>
 </tr>
 <tr>
 <td>Camo Lead</td>
@@ -458,7 +551,7 @@
 <td>MOAB</td>
 <td>R40</td>
 <td>R40 (fortified)</td>
-<td>MOAB Mauler, Destroyer, Sticky Bomb</td>
+<td>MOAB Mauler (Bomb 0-3-0), Sniper 2-x-x</td>
 </tr>
 <tr>
 <td>DDT</td>
@@ -476,25 +569,36 @@
 </table></div>
 <p>The full list of every round, with RBE and cash, is on the <a href="../../guides/rounds/">Rounds</a> page.</p>
 <hr />
-<p>Sources: Bloons Wiki, Bloons Fandom wiki, Ninja Kiwi patch notes, community CHIMPS guides.</p>
+<p>Sources: Bloons Wiki, Bloons Fandom wiki (camo, lead and purple tables), Ninja Kiwi patch notes, community CHIMPS guides. Prices from data/towers.json; pop facts from data/pop-model.json.</p>
   </article>
 </div>
 <section class="related" aria-labelledby="relH">
   <h2 class="h3" id="relH">Related</h2>
-  <ul class="related-list"><li><a href="../../guides/rounds/">Rounds</a></li><li><a href="../../guides/bloons/">Bloons</a></li><li><a href="../../guides/chimps/">CHIMPS</a></li><li><a href="../../guides/modes/">Game Modes</a></li><li><a href="../../guides/economy/">Economy and Income</a></li></ul>
+  <ul class="related-list"><li><a href="../../rounds/">Rounds</a></li><li><a href="../../guides/bloons/">Bloons</a></li><li><a href="../../guides/chimps/">CHIMPS</a></li><li><a href="../../guides/modes/">Game Modes</a></li><li><a href="../../guides/economy/">Economy and Income</a></li></ul>
 </section>
 </main>
 <footer class="foot">
   <div class="foot-in">
-    <p class="disclaimer"><b>Unofficial fan site.</b> Not affiliated with or endorsed by Ninja Kiwi. Bloons and Bloons TD 6 are their trademarks. No game art is used here.</p>
-    <dl class="foot-facts">
-      <div><dt>Data</dt><dd>BTD6 v57.4, updated 2026-11-05</dd></div>
-      <div><dt>Site</dt><dd>Monkey Intel 0.4.1</dd></div>
-      <div class="credits"><dt>Credits</dt><dd><a href="https://www.bloonswiki.com/" rel="noopener">Bloons Wiki</a> (CC BY-SA), <a href="https://btd6index.win/" rel="noopener">BTD6 Index</a>, <a href="https://github.com/hemisemidemipresent/cyberquincy" rel="noopener">Cyber Quincy</a>, Ninja Kiwi patch notes. Made by <a href="https://github.com/Todro5912" rel="noopener">Todro5912</a>.</dd></div>
-    </dl>
-    <div class="foot-row">
-      <a href="../../a-z/">A–Z index</a>
-      <a href="https://github.com/Todro5912/btd6-planner" rel="noopener">GitHub</a>
+    <div class="foot-credit">
+      <p class="foot-made">Made by <a href="https://github.com/Todro5912" rel="noopener author">Todro5912</a></p>
+      <p class="foot-for">Monkey Intel is a fan project for Solou. Built with AI assistance, checked by a player.</p>
+      <p class="foot-btns">
+        <a class="btn btn-small btn-cream" href="https://github.com/Todro5912/btd6-planner" rel="noopener"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 6l-6 6 6 6M16 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="square"/></svg>Source on GitHub</a>
+        <a class="btn btn-small btn-cream" href="https://github.com/Todro5912/btd6-planner/issues" rel="noopener">Report an error</a>
+        <a class="btn btn-small btn-cream" href="../../about/">About</a>
+      </p>
+    </div>
+    <nav class="foot-more" aria-labelledby="footMore">
+      <h2 class="foot-h" id="footMore">More</h2>
+      <ul><li><a href="../../records/">Records</a></li><li><a href="../../patch/">Patch notes</a></li><li><a href="../../guides/known-issues/">Known issues</a></li><li><a href="../../about/">About</a></li><li><a href="../../a-z/">A–Z index</a></li></ul>
+    </nav>
+    <nav class="foot-more" aria-labelledby="footTools">
+      <h2 class="foot-h" id="footTools">Tools</h2>
+      <ul><li><a href="../../tools/simulator/">Simulator</a></li><li><a href="../../tools/xp/">XP calculator</a></li><li><a href="../../tools/defence/">Check my defence</a></li></ul>
+    </nav>
+    <div class="foot-legal">
+      <p class="disclaimer"><b>Unofficial fan site.</b> Not affiliated with or endorsed by Ninja Kiwi. Bloons and Bloons TD 6 are their trademarks. No game art is used here.</p>
+      <p>Data: BTD6 v57.4, updated 2026-11-05 · Site 0.5.0 · Sources: <a href="https://www.bloonswiki.com/" rel="noopener">Bloons Wiki</a> (CC BY-SA), <a href="https://btd6index.win/" rel="noopener">BTD6 Index</a>, <a href="https://github.com/hemisemidemipresent/cyberquincy" rel="noopener">Cyber Quincy</a>, Ninja Kiwi patch notes.</p>
       <div class="seg theme-toggle" role="radiogroup" aria-label="Colour theme" hidden>
         <button type="button" role="radio" data-theme-set="auto" aria-checked="true">Auto</button>
         <button type="button" role="radio" data-theme-set="light" aria-checked="false">Light</button>
@@ -505,16 +609,17 @@
 </footer>
 <dialog class="search" id="search" aria-labelledby="searchLabel">
   <form method="dialog" class="search-in" role="search">
-    <label id="searchLabel" for="searchInput">Search towers, upgrades, heroes, maps, guides and rounds</label>
+    <label id="searchLabel" for="searchInput">Search answers, towers, maps, rounds and guides</label>
     <div class="search-row">
       <svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="10" cy="10" r="6.5" fill="none" stroke="currentColor" stroke-width="3"/><path d="M15 15l6 6" stroke="currentColor" stroke-width="3.4" stroke-linecap="square"/></svg>
-      <input id="searchInput" type="search" autocomplete="off" spellcheck="false" placeholder="Try: glaive, infernal, r63" role="combobox" aria-expanded="false" aria-controls="searchList" aria-autocomplete="list">
+      <input id="searchInput" type="search" autocomplete="off" spellcheck="false" placeholder="Try: camo, r63, glaive" role="combobox" aria-expanded="false" aria-controls="searchList" aria-autocomplete="list">
       <button type="button" class="btn btn-small" data-search-close>Esc</button>
     </div>
     <ul id="searchList" role="listbox" aria-label="Results"></ul>
     <p class="search-hint" id="searchHint"><kbd>↑</kbd><kbd>↓</kbd> move · <kbd>Enter</kbd> open · <kbd>Esc</kbd> close</p>
   </form>
 </dialog>
-<script src="../../assets/site.js?v=0.4.1" defer></script>
+<script src="../../assets/search-core.js?v=0.5.0" defer></script>
+<script src="../../assets/site.js?v=0.5.0" defer></script>
 </body>
 </html>

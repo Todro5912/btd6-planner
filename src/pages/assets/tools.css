@@ -46,6 +46,7 @@
 .ti-fixes { list-style: none; margin: 0; padding: 0; }
 .ti-fixes li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 12px; align-items: center; padding: 8px 12px; }
 .ti-fixes li + li { border-top: 2px solid var(--paper-2); }
+.ti-fixes li.ti-fix-hint { color: var(--muted); font-size: 14px; }
 .ti-fix-k { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); display: block; }
 .ti-fix-l { font-weight: 700; }
 .ti-fix-c { text-align: right; white-space: nowrap; }
@@ -69,12 +70,14 @@
 .ti-tile-n { font-weight: 700; font-size: 14px; line-height: 1.15; }
 .ti-tile-c { font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }
 .ti-tile[aria-pressed="true"] .ti-tile-c { color: var(--ink); }
-.ti-tile::before { content: ""; position: absolute; left: -3px; top: -3px; bottom: -3px; width: 7px; border: 0; border-radius: var(--r) 0 0 var(--r); }
+/* class marker: a small outlined dot (DESIGN.md medal-dot pattern), not an accent rail */
+.ti-tile::before { content: ""; position: absolute; right: 6px; bottom: 6px; width: 10px; height: 10px; border: 2px solid var(--ink); border-radius: 999px; }
+
 .ti-tile.cls-Primary::before { background: var(--cls-primary); }
 .ti-tile.cls-Military::before { background: var(--cls-military); }
 .ti-tile.cls-Magic::before { background: var(--cls-magic); }
 .ti-tile.cls-Support::before { background: var(--cls-support); }
-.ti-tile { padding-left: 12px; }
+.ti-tile { padding-left: 8px; }
 .ti-hint { justify-self: start; font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; padding: 0 4px;
   border: 2px solid var(--ink); border-radius: var(--r); line-height: 1.35; margin-top: 2px; }
 .ti-hint-strong { background: var(--ok); color: #fff; }

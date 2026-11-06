@@ -16,7 +16,7 @@
     <li><a class="tile tile-{{ q.slug }}" href="{{ root }}{{ q.url }}">
       <span class="tile-t">{{ q.tile }}</span>
       <span class="tile-r">{{ q.rule }}</span>
-      {% if q.cheapest %}<span class="tile-p">from <b>{{ ui.price(q.cheapest) }}</b></span>{% endif %}
+      {% if q.slug == 'fortified' %}<span class="tile-p"><b>No special upgrade needed</b></span>{% elif q.cheapest %}<span class="tile-p">from <b>{{ ui.price(q.cheapest) }}</b></span>{% endif %}
     </a></li>
     {% endfor %}
   </ul>
