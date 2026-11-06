@@ -1,0 +1,24 @@
+<link rel="stylesheet" href="{{BASE}}static/tools/tools.css">
+<div class="ti" id="sim" data-tool="simulator">
+  <div class="ti-head">
+    <div>
+      <h1 class="h1">Simulator</h1>
+      <p class="ti-sub">Add your towers round by round. It shows your cash, the first round that will beat you, and the cheapest fix.</p>
+    </div>
+  </div>
+  <noscript><p class="ti-note">The simulator needs JavaScript.</p></noscript>
+  <div id="sim-root" class="ti" aria-live="polite"></div>
+  <details class="about-data">
+    <summary>About this data</summary>
+    <div class="about-b">
+      <p>Cash per round comes from the round table: start cash plus pop cash and the end-of-round bonus, times the mode's cash multiplier. Prices are Medium prices times the mode's multiplier, rounded to $5 per purchase. Selling refunds 70% of what you spent on that tower. Banana Farm income is added for the farm crosspaths in the economy table; other income, Monkey Knowledge and Powers are not counted.</p>
+      <p>Coverage uses the pop model: what each crosspath can damage, plus support such as Village Radar, MIB and Alchemist acid. It assumes support towers are in range. It shows whether a tower <em>can</em> hit a bloon, not whether it does enough damage.</p>
+      <p>Hero levels are an estimate from round XP and the hero's XP rate, starting when you place the hero. Known starts are worked out from the map pages and are not play-tested.</p>
+    </div>
+  </details>
+</div>
+<script src="{{BASE}}static/tools/tools-data.js" defer></script>
+<script src="{{BASE}}static/tools/tools-core.js" defer></script>
+<script src="{{BASE}}static/tools/synergy.js" defer></script>
+<script src="{{BASE}}static/tools/tools-ui.js" defer></script>
+<script src="{{BASE}}static/tools/simulator.js" defer></script>
