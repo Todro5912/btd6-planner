@@ -169,16 +169,22 @@
   C.blimpHpMult = (r) => (r <= 80 ? 1 : r <= 100 ? 1 + 0.02 * (r - 80) : r <= 124 ? 1.4 + 0.05 * (r - 100) : r <= 150 ? 2.6 + 0.15 * (r - 124) : r <= 250 ? 6.5 + 0.35 * (r - 150) : 41.5 + (r - 250));
   C.speedMult = (r) => (r <= 80 ? 1 : r <= 100 ? 1 + 0.02 * (r - 80) : r <= 150 ? 1.6 + 0.02 * (r - 101) : r <= 200 ? 3 + 0.02 * (r - 151) : 4.5);
   C.BLIMP_KIDS = { moab: [['ceramic', 4]], bfb: [['moab', 4]], zomg: [['bfb', 4]], ddt: [['ceramic', 4]], bad: [['zomg', 2], ['ddt', 3]] };
-  C.leakRound = function (D, mode, map, r, list) {
+  C.leakRound = function (D, mode, map, r, list, fx) {
     const pw = D.power || {};
-    const groups = arr(arr(pw.rounds)[r - 1]);
+    const abr = mode && mode.roundSet === 'abr';
+    /* bloon groups from the game's round sets (data/game/rounds.json; ABR too) */
+    const groups = arr(arr(abr ? pw.roundsAbr : pw.rounds)[r - 1]);
     const row = C.roundRow(D, mode, r);
-    if (!groups.length || !row || (mode && mode.roundSet === 'abr')) return null;
+    if (!groups.length || !row) return null;
     const late = r >= 81;
     /* every bloon moves faster on Medium (x1.1) and Hard/CHIMPS (x1.25), game: GlobalSpeedModModel; and from R81 */
     const vMult = num(mode && mode.bloonSpeedMult, 1) * C.speedMult(r);
     const speedOf = (t) => num((pw.bloonSpeed || {})[t], 25) * vMult;
-    const hpMult = C.blimpHpMult(r) * (mode && mode.id === 'double-hp-moabs' ? 2 : 1);
+    /* Double HP MOABs (game: DoubleMoabHealth x2), Big Bloon Sabotage (Monkey Knowledge: blimps spawn with 10% less HP) */
+    const hpMult = C.blimpHpMult(r) * (mode && mode.id === 'double-hp-moabs' ? 2 : 1) * num(fx && fx.blimpHpMult, 1);
+    /* Easy difficulty (Easy, Primary Only, Deflation): the R40 MOAB has 2/3 HP (game: Mods/Easy.json SetHealthForBloonModModel) */
+    const easyR40 = r === 40 && mode && mode.base === 'easy' ? 0.6667 : 1;
+    const hpOf = (t, fort) => C.BLIMP_HP[t] * (fort ? 2 : 1) * hpMult * (t === 'moab' ? easyR40 : 1);
     let t0 = Infinity, t1 = 0, rbe = 0;
     const stream = {}; /* 'type|fort|camo' -> count */
     const addStream = (t, c, fort, camo) => { const k = t + '|' + (fort ? 1 : 0) + '|' + (camo ? 1 : 0); stream[k] = (stream[k] || 0) + c; };
@@ -200,7 +206,7 @@
       const key = t + (fort ? 1 : 0);
       if (bMemo[key] != null) return bMemo[key];
       const kids = arr(C.BLIMP_KIDS[t]);
-      const hp = C.BLIMP_HP[t] * (fort ? 2 : 1) * hpMult;
+      const hp = hpOf(t, fort);
       bMemo[key] = hp + kids.reduce((a, [k, c]) => a + c * (C.BLIMP_HP[k] ? blimpRbe(k, fort, late2) : C.rbeOf(k, late2, fort)), 0);
       return bMemo[key];
     };
@@ -212,7 +218,7 @@
     let guard = 0;
     while (queue.length && guard++ < 200) {
       const b = queue.shift();
-      const hp = C.BLIMP_HP[b.type] * (b.fort ? 2 : 1) * hpMult;
+      const hp = hpOf(b.type, b.fort);
       const v = speedOf(b.type);
       let dmg = 0, over = 0;
       list.forEach((it) => {
@@ -246,11 +252,10 @@
       if (g.camo) camoRbe += e;
       else if (g.t === 'lead') leadShell += node('lead', late, g.fort)[0] * g.n; /* only the Lead shell needs a Lead popper */
     });
-    const total0 = streamRbe + blimpsIn.reduce((a, b) => a + b.count * blimpRbe(b.type, b.fort, late), 0);
-    /* the round table's RBE is the reference; our bloon model reproduces it to within rounding (fortified, R81+) */
-    const scale = total0 > 0 && num(row.rbe, 0) > 0 ? row.rbe / total0 : 1;
-    const total = total0 * scale;
-    leak *= scale;
+    /* our bloon tree reproduces the game's round RBE exactly (tested), so no scaling: modes that change blimp HP
+       (Double HP MOABs, Easy R40, Big Bloon Sabotage) change the RBE too */
+    const scale = 1;
+    const total = streamRbe + blimpsIn.reduce((a, b) => a + b.count * blimpRbe(b.type, b.fort, late), 0);
     const v = n ? vSum / n : 25;
     const lambda = n / dur; /* bloons spawned per second */
     /* RBE removed per hit with d damage (leftover damage carries into children) */
@@ -296,7 +301,11 @@
       pops += p;
     });
     leak += Math.max(0, streamRbe * scale - pops);
-    return { r, rbe: Math.round(total), popped: Math.round(Math.max(0, total - leak)), leak: Math.round(Math.min(total, leak)), share: total > 0 ? Math.max(0, 1 - leak / total) : 1,
+    leak = Math.min(total, leak);
+    /* lives: a leaked bloon costs its layers, but from R81 blimps don't cost their ramped HP and Super Ceramics cost 65,
+       so lives per leaked RBE follow the game's round table (data/game/rounds.json leak vs rbe) */
+    const livesPerRbe = num(row.lives, 0) > 0 && num(row.rbe, 0) > 0 ? Math.min(1, row.lives / row.rbe) : 1;
+    return { r, rbe: Math.round(total), popped: Math.round(Math.max(0, total - leak)), leak: Math.round(leak), lives: Math.round(leak * livesPerRbe), share: total > 0 ? Math.max(0, 1 - leak / total) : 1,
       dur, perSec: Math.round(lambda * 10) / 10, depth: perHit(1), per, blimps: blimpOut, power: Math.round(pops), frozenShare };
   };
   /* Ice freezing factor, fitted to one real game (lone 2-2-0 Ice + Quincy, Glacial Trail Hard, 16 lives at R13). Estimate */
@@ -305,7 +314,7 @@
   C.ROUGH_FROM = 76;
   C.FREEZE_FIT = 0.63; /* 14 lives at R13 with this model; it is a steep curve: 0.60 gives 28, 0.65 gives 4 */
   /* the attackers of one moment, for C.leakRound: towers [{uid, id, x, label}] and the hero {id, level, label} */
-  C.powerList = function (D, insts, hero) {
+  C.powerList = function (D, insts, hero, fx) {
     const pm = D.pop || {};
     const out = [];
     insts.forEach((i) => {
@@ -330,7 +339,9 @@
       const bf = { hits: 1, dmg: 0, range: 1 };
       if (vil >= 0) { bf.range *= 1.1; if (vil >= 2) bf.hits /= 0.85; if (vil >= 3 && primary) { bf.hits *= 1.15; bf.range *= 1.1; } }
       if (alch >= 3 && it.id !== 'alchemist') { const big = alch >= 4; bf.dmg += 1; bf.hits *= (big ? 1.15 : 1.1) * (big ? 1.35 : 1.25); bf.range *= big ? 1.15 : 1.1; }
-      if (vil >= 0 || alch >= 3) it.buff = bf;
+      /* Veteran Monkey Training (Monkey Knowledge): every tower reloads 3% faster */
+      if (fx && fx.reloadMult && fx.reloadMult < 1) bf.hits /= fx.reloadMult;
+      if (vil >= 0 || alch >= 3 || (fx && fx.reloadMult < 1)) it.buff = bf;
     });
     return out;
   };
@@ -341,11 +352,11 @@
     return list;
   };
   /* what to buy when a round leaks: the cheapest pops. Upgrades of what you have and new towers, by leak removed per $ */
-  C.powerFixes = function (D, mode, map, r, insts, hero, st, limit) {
+  C.powerFixes = function (D, mode, map, r, insts, hero, st, limit, fx) {
     const mult = num(mode.costMult, 1);
-    const base = C.leakRound(D, mode, map, r, C.powerWithSupport(C.powerList(D, insts, hero), st));
+    const base = C.leakRound(D, mode, map, r, C.powerWithSupport(C.powerList(D, insts, hero, fx), st), fx);
     if (!base || base.leak <= 0) return [];
-    const tryList = (list2) => { const x = C.leakRound(D, mode, map, r, C.powerWithSupport(C.powerList(D, list2, hero), C.coverState(D, list2, hero))); return x ? x.leak : base.leak; };
+    const tryList = (list2) => { const x = C.leakRound(D, mode, map, r, C.powerWithSupport(C.powerList(D, list2, hero, fx), C.coverState(D, list2, hero)), fx); return x ? x.leak : base.leak; };
     const cands = [];
     insts.forEach((i, idx) => {
       const t = C.tower(D, i.id);
@@ -381,7 +392,7 @@
   /* freeplay pop cash (game: IncomeSets/DefaultIncomeSet.json) */
   /* is this leak a problem? Over 2% of the round, or any leak worth 10% of your starting lives
      (in CHIMPS and Impoppable, with 1 life, that's any leak at all) */
-  C.leakIsProblem = (leak, rbe, livesStart) => leak != null && leak >= 1 && (leak > Math.max(1, 0.02 * num(rbe, 0)) || leak >= 0.1 * num(livesStart, 100));
+  C.leakIsProblem = (leak, rbe, livesStart, lives) => leak != null && leak >= 1 && (leak > Math.max(1, 0.02 * num(rbe, 0)) || num(lives, leak) >= 0.1 * num(livesStart, 100));
   C.popCashMult = (r) => (r <= 50 ? 1 : r <= 60 ? 0.5 : r <= 85 ? 0.2 : r <= 100 ? 0.1 : r <= 120 ? 0.05 : r <= 140 ? 0.04 : 0.02);
   /* pop cash per leaked RBE this round: the round's own pop cash over its RBE (a MOAB pays $381 for 616 RBE) */
   C.popCashPerRbe = function (row, r) {
@@ -641,13 +652,36 @@
   };
 
   /* ---------- your profile (My profile page): Monkey Knowledge effects the tools model ---------- */
-  /* profile: progress.js profile; settings: {me, emt}. Returns null when you switched MK off. Modes with noMK ignore it (simulate checks). */
+  /* profile: progress.js profile; settings: {me, emt}. Returns null when you switched MK off. Modes with noMK ignore it (simulate checks).
+     Every number comes from the node's fx in data/monkey-knowledge.json, built by tools/game/build_mk.py from the game files
+     (btd6-game-data v56.0, Knowledge/<Tree>/<Id>.json; each node keeps its file in "source"). What the tools apply:
+       startCash            More Cash +$200 (StartingCashModModel addition 200)
+       heroCostMult         Hero Favors x0.9 (SimTowerDiscountModModel multiplier 0.1, all heroes)
+       heroXpMult           Monkey Education x1.08, Self Taught Heroes x1.1 (TowerXpModModel), Monkeys Together Strong
+                            x1.05 (HeroXPBonusModModel 0.05 per hero placed; one hero per game here)
+       heroStartLevel       Empowered Heroes 3 (HeroXpInjectionModModel levels 2)
+       sellAdd / sellAddFor Better Sell Deals +0.05 all; Flat Pack Buildings +0.02 Farm and Village (TowerSellModModel)
+       towerCost            Cheap 'Rangs -$50 every Boomerang; Farm Subsidy -$100 first Farm; First Last Line of Defense -$150
+                            first Spike Factory; Military Conscription -33% first Military tower; Advanced Logistics -5% Military;
+                            Flat Pack Buildings -2% Farm and Village (SimTowerDiscountModModel; charges 1 = first only)
+       upgradeCost          12 upgrade discounts (UpgradeCostModModel amountReduced / percentageReduced)
+       freeTowers           Bonus Monkey! / Bonus Glue Gunner: the base price of your first Dart or Glue is free (FreeTowerModModel,
+                            one free tower per game)
+       incomeAdd            Trade Agreements +$20 a round per Buccaneer x-x-3+ (CashPerRoundModModel 20)
+       bananaValueAdd       More Valuable Bananas: Valuable Bananas farms (x-2-x) +30% instead of +25% (CashModModel 0.05)
+     Carried for other tools, not used in sums yet: blimpHpMult (Big Bloon Sabotage x0.9 MOAB-class HP), reloadMult (Veteran Monkey
+     Training x0.97), attack[] (per-tower pierce, range, rate, damage, can-pop), townPopCashAdd, bankCapAdd, loanAdd,
+     heroLevelCostMult, lives[].
+     Prices: a percentage comes off the base price before the difficulty multiplier and $5 rounding (as Hero Favors always did);
+     a flat discount comes off after it. The game files hold no rule for this; it is our choice until tested in game. */
   C.profileFx = function (D, profile, settings) {
     if (profile && profile.mkOn === false) return null;
     const on = Object.assign({}, (profile && profile.mk) || {});
     if (settings && settings.me !== false) on['monkey-education'] = true;
     if (settings && settings.emt) on['elite-military-training'] = true;
-    const fx = { startCash: 0, heroCostMult: 1, sellAdd: 0, heroXpMult: 1, heroStartLevel: 1, me: false, emt: false, nodes: [], unverified: false };
+    const fx = { startCash: 0, heroCostMult: 1, sellAdd: 0, heroXpMult: 1, heroStartLevel: 1, me: false, emt: false, nodes: [], unverified: false,
+      towerCost: [], upgradeCost: {}, freeTowers: [], sellAddFor: {}, incomeAdd: [], bananaValueAdd: 0, heroXpPerHero: 0,
+      blimpHpMult: 1, reloadMult: 1, attack: [], townPopCashAdd: 0, bankCapAdd: 0, loanAdd: 0, heroLevelCostMult: 1, lives: [], noted: [] };
     arr(D.mk).forEach((n) => {
       if (!on[n.id] || !n.fx) return;
       const f = n.fx;
@@ -659,19 +693,89 @@
       if (f.militaryXpMult) fx.emt = true;
       if (f.heroStartLevel) fx.heroStartLevel = Math.max(fx.heroStartLevel, f.heroStartLevel);
       if (f.unverified) fx.unverified = true;
-      fx.nodes.push(n.name);
+      arr(f.towerCost).forEach((row) => fx.towerCost.push(Object.assign({ key: n.id }, row)));
+      arr(f.upgradeCost).forEach((row) => {
+        const k = row.tower + '.' + row.path + '.' + row.tier;
+        const cur = fx.upgradeCost[k] || (fx.upgradeCost[k] = { pct: 0, flat: 0 });
+        cur.pct += num(row.pct, 0); cur.flat += num(row.flat, 0);
+      });
+      if (f.freeTower && fx.freeTowers.indexOf(f.freeTower) < 0) fx.freeTowers.push(f.freeTower);
+      Object.keys(f.sellAddFor || {}).forEach((t) => { fx.sellAddFor[t] = num(fx.sellAddFor[t], 0) + f.sellAddFor[t]; });
+      arr(f.incomeAdd).forEach((row) => fx.incomeAdd.push(row));
+      if (f.bananaValueAdd) fx.bananaValueAdd += f.bananaValueAdd;
+      if (f.heroXpPerHero) { fx.heroXpPerHero += f.heroXpPerHero; fx.heroXpMult *= 1 + f.heroXpPerHero; }
+      /* carried, not applied yet */
+      if (f.blimpHpMult) fx.blimpHpMult *= f.blimpHpMult;
+      if (f.reloadMult) fx.reloadMult *= f.reloadMult;
+      arr(f.attack).forEach((row) => fx.attack.push(Object.assign({ node: n.id }, row)));
+      if (f.townPopCashAdd) fx.townPopCashAdd += f.townPopCashAdd;
+      if (f.bankCapAdd) fx.bankCapAdd += f.bankCapAdd;
+      if (f.loanAdd) fx.loanAdd += f.loanAdd;
+      if (f.heroLevelCostMult) fx.heroLevelCostMult *= f.heroLevelCostMult;
+      if (f.lives) fx.lives.push(Object.assign({ node: n.id }, f.lives));
+      if (n.use === 'noted') fx.noted.push(n.name); else fx.nodes.push(n.name);
     });
     return fx;
   };
   /* the fx that apply in this mode (CHIMPS and other no-MK modes: none) */
   C.fxFor = (fx, mode) => (fx && C.mkActive(mode) ? fx : null);
   C.heroOpts = (fx) => (fx ? { xpMult: fx.heroXpMult, startLevel: fx.heroStartLevel } : null);
+  /* placement price of tower t at crosspath x with your MK. used: {} you keep per game (first-only discounts and the free tower
+     are spent from it); pass null to price without them (a tower that isn't your first). */
+  C.mkPlaceCost = function (D, t, x, mult, fx, used) {
+    if (!t) return 0;
+    const ups = C.mkUpgradeCost(t, [0, 0, 0], x || [0, 0, 0], mult, fx);
+    if (!fx) return C.placeCost(t, x, mult);
+    let keep = 1, flat = 0;
+    arr(fx.towerCost).forEach((row) => {
+      if (arr(row.towers).indexOf(t.id) < 0) return;
+      if (row.first) { if (!used || used[row.key]) return; used[row.key] = true; }
+      keep *= 1 + num(row.pct, 0);
+      flat += num(row.flat, 0);
+    });
+    if (used && !used.free && arr(fx.freeTowers).indexOf(t.id) >= 0) { used.free = t.id; return ups; }
+    return Math.max(0, (C.price(t.baseCost * keep, mult) || 0) + flat) + ups;
+  };
+  /* price of one upgrade tier (path 0-2, tier 1-5) with your MK upgrade discounts */
+  C.mkTierCost = function (t, p, k, mult, fx) {
+    const u = t && t.paths[p] && t.paths[p][k - 1];
+    const adj = fx && fx.upgradeCost ? fx.upgradeCost[t.id + '.' + p + '.' + k] : null;
+    if (!adj) return C.price(u ? u.cost : 0, mult) || 0;
+    return Math.max(0, (C.price((u ? u.cost : 0) * (1 + num(adj.pct, 0)), mult) || 0) + num(adj.flat, 0));
+  };
+  C.mkUpgradeCost = function (t, from, to, mult, fx) {
+    if (!t) return 0;
+    if (!fx || !fx.upgradeCost || !Object.keys(fx.upgradeCost).length) return C.upgradeCost(t, from, to, mult);
+    let s = 0;
+    for (let p = 0; p < 3; p++) for (let k = num(from[p], 0) + 1; k <= num(to[p], 0); k++) s += C.mkTierCost(t, p, k, mult, fx);
+    return s;
+  };
+  /* extra sell rate for one tower (Flat Pack Buildings: Farm and Village only) */
+  C.mkSellAdd = (fx, id) => (fx && fx.sellAddFor ? num(fx.sellAddFor[id], 0) : 0);
+  /* end-of-round income for one tower with your MK: Trade Agreements, More Valuable Bananas; same mode rules as C.incomeFor */
+  C.mkIncome = function (D, mode, id, x, fx) {
+    const base = C.incomeFor(D, mode, id, x);
+    if (!fx) return base;
+    const rules = (mode && mode.rules) || {};
+    if (rules.noIncome || rules.noIncomeTowers) return base;
+    let add = 0;
+    arr(fx.incomeAdd).forEach((row) => { if (row.tower === id && C.geq(x, row.min)) add += num(row.value, 0); });
+    /* Valuable Bananas (x-2-x) is +25% on the bananas; the farm data holds it, so the bananas alone are (x-2-x minus x-0-x) / 0.25 */
+    if (fx.bananaValueAdd && id === 'farm' && num(x[1], 0) === 2) {
+      const plain = C.incomeFor(D, mode, id, [x[0], 0, x[2]]);
+      add += (base - plain) / 0.25 * fx.bananaValueAdd;
+    }
+    return base + add * (rules.incomeHalved ? 0.5 : 1);
+  };
   C.fxSummary = function (fx) {
     if (!fx) return [];
     const out = [];
     if (fx.startCash) out.push('+$' + fx.startCash + ' start');
+    if (arr(fx.freeTowers).length) out.push('a free ' + fx.freeTowers.map((t) => (t === 'dart' ? 'Dart' : t === 'glue' ? 'Glue Gunner' : t)).join(' or '));
     if (fx.heroCostMult < 1) out.push('heroes ' + Math.round((1 - fx.heroCostMult) * 100) + '% cheaper');
+    if (arr(fx.towerCost).length || Object.keys(fx.upgradeCost || {}).length) out.push('tower and upgrade discounts');
     if (fx.sellAdd) out.push('sell +' + Math.round(fx.sellAdd * 100) + '%');
+    if (arr(fx.incomeAdd).length || fx.bananaValueAdd) out.push('more income');
     if (fx.heroStartLevel > 1) out.push('heroes start at level ' + fx.heroStartLevel);
     if (fx.heroXpMult > 1.0001) out.push('hero XP +' + Math.round((fx.heroXpMult - 1) * 100) + '%');
     return out;
@@ -819,6 +923,7 @@
     const mult = num(mode.costMult, 1);
     const rules = mode.rules || {};
     const fx = C.fxFor(plan.fx, mode); /* your Monkey Knowledge (My profile), off in CHIMPS */
+    const mkUsed = {}; /* MK first-only discounts and the free tower, spent once per game (C.mkPlaceCost) */
     const players = C.players(plan.players);
     const base = C.baseCash(D, mode, players);
     /* More Cash: +$200, halved in Half Cash (Bloons Wiki "More Cash"); Deflation keeps the full $200 */
@@ -869,7 +974,8 @@
             counts[t.id] = (counts[t.id] || 0) + 1;
             const inst = { uid: s.uid, id: t.id, x, invested: 0, placedAt: r, soldAt: null, n: counts[t.id], ord: ++order, name: t.name };
             inst.label = t.name.replace(/ Monkey$/, '') + ' #' + inst.n;
-            res.cost = s.insta ? 0 : C.placeCost(t, x, mult);
+            res.cost = s.insta ? 0 : C.mkPlaceCost(D, t, x, mult, fx, mkUsed);
+            if (!s.insta && fx && res.cost < C.placeCost(t, x, mult)) res.mkSave = C.placeCost(t, x, mult) - res.cost;
             inst.invested = res.cost;
             if (s.insta) {
               inst.insta = true;
@@ -897,7 +1003,7 @@
           else if (inst.soldAt != null) { res.flags.push({ k: 'bad', t: 'already sold' }); res.label = 'Upgrade ' + inst.label; }
           else if (!C.validCross(s.x) || !C.geq(s.x, inst.x)) { res.flags.push({ k: 'bad', t: 'can\'t go from ' + C.code(inst.x) + ' to ' + C.code(s.x || []) }); res.label = 'Upgrade ' + inst.label; }
           else {
-            res.cost = C.upgradeCost(t, inst.x, s.x, mult);
+            res.cost = C.mkUpgradeCost(t, inst.x, s.x, mult, fx);
             res.from = inst.x.slice();
             inst.x = s.x.slice();
             inst.invested += res.cost;
@@ -912,7 +1018,7 @@
           else if (rules.noSelling) { res.flags.push({ k: 'bad', t: 'no selling in ' + mode.name }); res.label = 'Sell ' + inst.label; }
           else {
             /* an Insta sells like a bought tower: its value counts, though it cost you nothing */
-            res.refund = Math.round((inst.invested + (inst.insta ? num(inst.instaValue, 0) : 0)) * C.sellRateFor(D, sellRate, inst.id, inst.x));
+            res.refund = Math.round((inst.invested + (inst.insta ? num(inst.instaValue, 0) : 0)) * C.sellRateFor(D, sellRate + C.mkSellAdd(fx, inst.id), inst.id, inst.x));
             inst.soldAt = r;
             res.label = 'Sell ' + inst.label;
             res.towerId = inst.id; res.inst = inst.label;
@@ -933,8 +1039,8 @@
       const need = C.roundNeeds(row);
       const missing = C.missingFor(st, need);
       /* pop power (estimate): how much of the round gets through, and the lives it costs */
-      const lk = plan.noPower ? null : C.leakRound(D, mode, map, r, C.powerWithSupport(C.powerList(D, live.map((i) => ({ uid: i.uid, id: i.id, x: i.x, label: i.label })), hero ? { id: hero.id, level: hl, label: hero.name } : null), st));
-      if (lk) lives = Math.max(0, lives - lk.leak);
+      const lk = plan.noPower ? null : C.leakRound(D, mode, map, r, C.powerWithSupport(C.powerList(D, live.map((i) => ({ uid: i.uid, id: i.id, x: i.x, label: i.label })), hero ? { id: hero.id, level: hl, label: hero.name } : null, fx), st), fx);
+      if (lk) lives = Math.max(0, lives - lk.lives);
       if (lk && lives <= 0 && lostAt == null) lostAt = r;
       rows.push({ r, leak: lk ? lk.leak : null, leakInfo: lk, lives: lk ? Math.round(lives) : null, avail: base[r] + income + ref0 - spent0 - lostCash,
         bank: base[r] + income + refunds - spent - lostCash, need, missing, heroLevel: hl, danger: row ? num(row.danger, 0) : 0,
@@ -943,7 +1049,7 @@
       /* leaked layers pay no pop cash (counted from the next round on) */
       if (lk && lk.leak > 0 && !plan.keepLeakCash && !(rules.noIncome || rules.noPopCash)) lostCash += lk.leak * C.popCashPerRbe(row, r) * num(mode.cashMult, 1) / players;
       /* end of round: income, paid into the next round */
-      live.forEach((i) => { income += C.incomeFor(D, mode, i.id, i.x); });
+      live.forEach((i) => { income += C.mkIncome(D, mode, i.id, i.x, fx); });
       if (hero) income += C.heroIncome(mode, hero.id, hl);
     }
     /* steps after the last round */
@@ -980,9 +1086,9 @@
     {
       let open = null;
       rows.forEach((x) => {
-        const bad = x.leakInfo && C.leakIsProblem(x.leak, x.leakInfo.rbe, num(mode.lives, 100)) && !x.missing.length;
-        if (bad && !open) { open = { prop: 'power', round: x.r, last: x.r, rounds: 1, lives: x.leak }; problems.push(open); }
-        else if (bad) { open.last = x.r; open.rounds++; open.lives += x.leak; }
+        const bad = x.leakInfo && C.leakIsProblem(x.leak, x.leakInfo.rbe, num(mode.lives, 100), x.leakInfo.lives) && !x.missing.length;
+        if (bad && !open) { open = { prop: 'power', round: x.r, last: x.r, rounds: 1, lives: x.leakInfo.lives }; problems.push(open); }
+        else if (bad) { open.last = x.r; open.rounds++; open.lives += x.leakInfo.lives; }
         else open = null;
       });
     }
@@ -997,7 +1103,7 @@
       pr.bank = x.avail;
       pr.composition = x.composition;
       pr.leakInfo = x.leakInfo;
-      pr.fixes = C.powerFixes(D, mode, map, pr.round, live, h, C.coverState(D, live, h), 3);
+      pr.fixes = C.powerFixes(D, mode, map, pr.round, live, h, C.coverState(D, live, h), 3, fx);
       pr.fixes.forEach((f) => { f.affordable = pr.bank != null && f.cost <= pr.bank + 0.5; });
       pr.hints = [];
       if (x.leakInfo.frozenShare > 0.05) pr.hints.push('Your Ice Monkey freezes bloons, and Sharp attacks (darts, tacks, Quincy) can\'t pop frozen bloons. Place them apart, or use towers that pop frozen bloons.');
@@ -1117,15 +1223,15 @@
       for (let r = r0; r <= end; r++) {
         const lk = C.leakRound(D, mode, map, r, list);
         if (!lk) continue;
-        lost += lk.leak;
-        if (!leak && C.leakIsProblem(lk.leak, lk.rbe, num(mode.lives, 100))) {
+        lost += lk.lives;
+        if (!leak && C.leakIsProblem(lk.leak, lk.rbe, num(mode.lives, 100), lk.lives)) {
           const row = C.roundRow(D, mode, r);
           leak = { prop: 'power', round: r, rounds: [r], estimate: true, composition: row ? row.composition : '', leakInfo: lk,
             text: 'not enough popping power: about ' + lk.leak + ' of ' + lk.rbe + ' RBE gets through' };
           leak.fixes = C.powerFixes(D, mode, map, r, insts, hero, st, 3);
           leak.hints = lk.frozenShare > 0.05 ? ['Your Ice Monkey freezes bloons, and Sharp attacks can\'t pop frozen bloons.'] : [];
           leak.hints.push('Estimate from each tower\'s damage, pierce and attack speed. Placement, abilities and buffs change it.');
-        } else if (leak && C.leakIsProblem(lk.leak, lk.rbe, num(mode.lives, 100))) leak.rounds.push(r);
+        } else if (leak && C.leakIsProblem(lk.leak, lk.rbe, num(mode.lives, 100), lk.lives)) leak.rounds.push(r);
       }
       if (leak) { leak.lives = lost; threats.push(leak); }
     }

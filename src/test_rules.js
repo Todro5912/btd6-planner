@@ -78,7 +78,8 @@ module.exports = function (ok, D, C) {
     ok(P('skywarden', [2, 0, 2]).purple && !P('skywarden', [0, 1, 0]).purple, 'Skywarden\'s middle path (Energy/Plasma) can\'t pop Purple');
     ok(P('mermonkey', [0, 2, 0]).white && !P('mermonkey', [0, 3, 0]).white, 'Mermonkey x-3-x (Cold) can\'t pop White');
     ok(!P('heli', [0, 5, 0]).lead && C.conditionalHints(D.pop, 'heli', [0, 5, 0], 'lead').length === 1, 'Heli 0-5-0 Lead is the Special Poperations ability, shown as a hint');
-    ok(P('wizard', [0, 1, 0]).purple && P('ace', [3, 0, 0]).lead && P('super', [0, 4, 0]).lead && P('desperado', [3, 0, 0]).lead && P('ice', [3, 0, 0]).white, 'under-claims fixed: Fireball Purple, Fighter Plane, Tech Terror, Desperado 3-x-x Lead, Ice Shards White');
+    ok(P('wizard', [0, 1, 0]).purple && P('super', [0, 4, 0]).lead && P('desperado', [3, 0, 0]).lead && P('ice', [3, 0, 0]).white, 'under-claims fixed: Fireball Purple, Tech Terror, Desperado 3-x-x Lead, Ice Shards White');
+    ok(!P('ace', [3, 0, 0]).lead && !P('buccaneer', [4, 0, 0]).lead, 'Fighter Plane and Carrier missiles only hit MOAB-class, so no Lead (game files; 0.9.1 got this wrong)');
     const hp = (id, l) => C.heroProps(D.pop, id, l);
     ok(!hp('corvus', 20).camo && !hp('corvus', 20).lead, 'Corvus: camo and Lead come only from spells (game files), not counted as permanent');
     ok(!hp('etienne', 15).lead && hp('etienne', 20).lead, 'Etienne pops Lead with his own attacks from L20 (L10 is the UCAV ability)');

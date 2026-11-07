@@ -345,3 +345,56 @@ button.ti-pip { cursor: pointer; width: 34px; height: 34px; }
 .ti-details > summary.panel-h:not(.panel-h-light)::before { border-left-color: #FFF8E7; }
 .prf-ins-add .ti-paths { max-width: 440px; }
 .ti-alert .btn, .ti-share .btn { white-space: normal; text-align: center; }
+
+/* ---------- My profile: Monkey Knowledge trees (0.10) ----------
+   Tree colours come from the site palette (class colours, grass-deep, gold, wood). Tile fills are the same in light and dark;
+   their text colour is fixed per tree so it stays readable on the fill. */
+.mk-c-primary { --mk: var(--cls-primary); --mk-t: #1C1A17; }
+.mk-c-military { --mk: var(--grass-deep); --mk-t: #FFFFFF; }
+.mk-c-magic { --mk: var(--cls-magic); --mk-t: #FFFFFF; }
+.mk-c-support { --mk: var(--cls-support); --mk-t: #1C1A17; }
+.mk-c-heroes { --mk: var(--gold); --mk-t: #1C1A17; }
+.mk-c-powers { --mk: #8A5A2B; --mk-t: #FFFFFF; }
+.mk-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin: 2px 0 0; }
+.mk-tab { display: inline-flex; align-items: center; gap: 6px; font: inherit; font-weight: 700; font-size: 14px; color: var(--text); cursor: pointer;
+  background: var(--panel); border: var(--line) solid var(--ink); border-radius: var(--r); padding: 4px 10px; box-shadow: 0 3px 0 var(--ink);
+  transition: transform 80ms, box-shadow 80ms; }
+.mk-tab small { font-weight: 500; font-size: 12px; color: var(--muted); }
+.mk-tab.on { background: var(--mk); color: var(--mk-t); }
+.mk-tab.on small { color: var(--mk-t); }
+.mk-tab:active { transform: translateY(3px); box-shadow: 0 0 0 var(--ink); }
+.mk-tab:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+.mk-dot { width: 12px; height: 12px; border-radius: 999px; border: 2px solid var(--ink); background: var(--mk); flex: none; }
+.mk-panel { display: grid; gap: 8px; min-width: 0; border: var(--line) solid var(--ink); border-radius: var(--r); background: var(--paper-2); padding: 8px 10px 10px; }
+.mk-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; }
+.mk-spent { margin: 0 auto 0 0; font-size: 14px; }
+.mk-spent b { font-family: var(--font-display); font-weight: 400; font-size: 22px; color: var(--text); }
+.mk-scroll { overflow-x: auto; overflow-y: hidden; max-width: 100%; border: 2px solid var(--ink); border-radius: var(--r); background: var(--panel); }
+.mk-tree { position: relative; }
+.mk-lines { position: absolute; left: 0; top: 0; pointer-events: none; }
+.mk-line { fill: none; stroke: var(--muted); stroke-width: 2; stroke-dasharray: 5 4; }
+.mk-line.on { stroke: var(--text); stroke-width: 2.5; stroke-dasharray: none; }
+.mk-head-off { fill: var(--muted); }
+.mk-head-on { fill: var(--text); }
+.mk-gate { stroke: var(--wood); stroke-width: 2; stroke-dasharray: 8 5; }
+.mk-gate-t { fill: var(--muted); font: 700 11.5px var(--font-body); }
+.mk-tile { position: absolute; display: flex; align-items: center; justify-content: center; text-align: center; padding: 3px 6px; margin: 0; cursor: pointer;
+  font: 700 12.5px/1.15 var(--font-body); color: var(--text); background: var(--panel); border: 2.5px solid var(--ink); border-radius: var(--r);
+  box-shadow: 0 3px 0 var(--ink); transition: transform 80ms, box-shadow 80ms; overflow: hidden; }
+.mk-tile::before { content: ""; position: absolute; left: 4px; top: 4px; width: 8px; height: 8px; border-radius: 999px; border: 2px solid var(--ink); background: var(--mk); }
+.mk-tile-n { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.mk-tile.on { background: var(--mk); color: var(--mk-t); }
+.mk-tile.on::before { background: var(--mk-t); }
+.mk-tile.locked { background: var(--paper-2); color: var(--muted); border-style: dashed; box-shadow: none; cursor: not-allowed; }
+.mk-tile.orphan { outline: 3px dashed var(--danger); outline-offset: 1px; }
+.mk-tile.sel { box-shadow: 0 0 0 3px var(--banana), 0 3px 0 3px var(--ink); }
+.mk-tile:active:not(.locked) { transform: translateY(3px); box-shadow: 0 0 0 var(--ink); }
+.mk-tile:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; z-index: 2; }
+.mk-used { position: absolute; right: 4px; top: 4px; width: 10px; height: 10px; border-radius: 999px; border: 2px solid var(--ink); background: var(--banana); }
+.mk-msg { margin: 0; min-height: 1.3em; font-weight: 700; color: var(--text); }
+.mk-info { border: 2px solid var(--ink); border-radius: var(--r); background: var(--panel); padding: 8px 10px; display: grid; gap: 4px; max-width: 65ch; }
+.mk-info p { margin: 0; }
+.mk-info-h b { font-size: 16px; }
+.mk-st-on { background: var(--mk); color: var(--mk-t); }
+.mk-why { color: var(--danger); font-weight: 700; }
+@media (prefers-reduced-motion: reduce) { .mk-tile, .mk-tab { transition: none; } }

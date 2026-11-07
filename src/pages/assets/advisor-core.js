@@ -258,10 +258,10 @@
     /* ---- 3. build order ---- */
     const atoms = [];
     picks.forEach((pk, i) => {
-      atoms.push({ i, kind: 'place', cost: C.placeCost(pk.t, [0, 0, 0], mult), dl: placeDl[i], why: placeWhy[i] });
+      /* your MK price cuts (My profile); first-only ones and the free tower are settled by the Simulator run below */
+      atoms.push({ i, kind: 'place', cost: C.mkPlaceCost(D, pk.t, [0, 0, 0], mult, fx, null), dl: placeDl[i], why: placeWhy[i] });
       for (let q = 0; q < 3; q++) for (let k = 1; k <= finals[i][q]; k++) {
-        const u = pk.t.paths[q] && pk.t.paths[q][k - 1];
-        atoms.push({ i, kind: 'tier', path: q, tier: k, cost: C.price(u ? u.cost : 0, mult) || 0, dl: num(tierDl[i][q][k], Infinity), why: tierWhy[i][q][k] || [] });
+        atoms.push({ i, kind: 'tier', path: q, tier: k, cost: C.mkTierCost(pk.t, q, k, mult, fx), dl: num(tierDl[i][q][k], Infinity), why: tierWhy[i][q][k] || [] });
       }
     });
     if (hero) atoms.push({ kind: 'hero', cost: heroCost, dl: Math.min(b, a + 6), why: heroJobs.map((j) => j.prop) });
@@ -369,8 +369,9 @@
     const plan = { mapId: map.id, modeId: mode.id, heroLevel: null, players, keepLeakCash: true, me: !!(fx && fx.me), emt: !!(fx && fx.emt), fx: opts.fx || null,
       steps: steps.map((s) => (s.op === 'hero' ? { uid: s.uid, r: s.r, op: 'hero', h: s.h } : s.op === 'place' ? Object.assign({ uid: s.uid, r: s.r, op: 'place', t: s.t, x: s.x.slice() }, s.insta ? { insta: true } : {}) : { uid: s.uid, r: s.r, op: 'up', ref: s.ref, x: s.x.slice() })) };
     const sim = C.simulate(D, plan);
-    const bankAfter = {};
-    sim.steps.forEach((o) => { bankAfter[o.uid] = o.bank; });
+    const bankAfter = {}, simCost = {};
+    sim.steps.forEach((o) => { bankAfter[o.uid] = o.bank; simCost[o.uid] = o.cost; });
+    steps.forEach((s) => { if (simCost[s.uid] != null) s.cost = simCost[s.uid]; }); /* MK first-only discounts and the free tower */
     steps.forEach((s) => { s.bank = bankAfter[s.uid]; s.label = s.op === 'hero' ? hero.name : picks[s.i].label; s.name = s.op === 'hero' ? '' : C.topName(picks[s.i].t, s.x); });
 
     /* ---- 4. explain ---- */

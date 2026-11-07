@@ -180,6 +180,24 @@ def collect():
         tower_list.append(tt)
     heroes = [pick(h, ['id', 'name', 'cost', 'waterOnly', 'xpCurve', 'camo', 'lead', 'bestFor', 'beginnerTier', 'unlockLevel', 'mmUnlock']) for h in towers.get('heroes', []) or []]
     rk = ['round', 'xp', 'cash', 'cashPop', 'rbe', 'threats', 'composition', 'danger', 'notes']
+    # the game's round sets (data/game/rounds.json, from the game files): lives each round costs if it all leaks,
+    # and the ABR bloon groups for the leak check, in the same [name, count, start, duration] form as tower-power rounds
+    game_rounds = (load(os.path.join(DATA, 'game', 'rounds.json'), {}) or {}).get('sets', {})
+
+    def game_lives(rows, key):
+        by = {g['round']: g for g in game_rounds.get(key, [])}
+        for r in rows:
+            g = by.get(r.get('round'))
+            if g:
+                r['lives'] = (g.get('late') or g).get('leak')
+        return rows
+
+    def game_power(pw):
+        abr = game_rounds.get('abr') or []
+        if abr:
+            pw['roundsAbr'] = [[[b, c, round(st, 3), round(max(0.05, en - st), 3)] for b, c, st, en, _sp in g['groups']] for g in abr]
+        return pw
+
     data = {
         'meta': {'version': towers.get('version'), 'popSource': pop_source, 'popVersion': (pop or {}).get('version'),
                  'heroLevelsSource': 'data' if hero_levels else 'estimate'},
@@ -192,7 +210,7 @@ def collect():
                          if isinstance(m.get('rbs'), dict) and (m.get('rbs') or {}).get('avg') else {})) for m in maps],
         'modes': [pick(m, ['id', 'name', 'base', 'startCash', 'lives', 'startRound', 'endRound', 'costMult', 'cashMult',
                            'roundSet', 'allowedClasses', 'rules', 'medal', 'bloonSpeedMult']) for m in modes],
-        'rounds': {k: [pick(r, rk) for r in rounds.get(k, []) or []] for k in ('standard', 'abr')},
+        'rounds': {k: game_lives([pick(r, rk) for r in rounds.get(k, []) or []], {'standard': 'default', 'abr': 'abr'}[k]) for k in ('standard', 'abr')},
         'strats': {s['mapId']: pick(s, ['strongTowers', 'avoidTowers', 'heroes']) for s in strats if s.get('mapId')},
         'guides': {g['towerId']: pick(g, ['xpAllUpgrades', 'xpParagon', 'farm', 'bestCrosspaths', 'buyTiming', 'lacks'])
                    for g in guides if g.get('towerId')},
@@ -202,9 +220,9 @@ def collect():
         'heroLevels': hero_levels,
         'presets': parse_presets(strats, tower_list, heroes),
         'synergy': rules,
-        'mk': [pick(n, ['id', 'name', 'tree', 'group', 'effect', 'ptsNeeded', 'mm', 'fx']) for n in mk.get('nodes', []) or []],
-        'mkMeta': pick(mk, ['totalNodes', 'maxPoints', 'trees']),
-        'power': load(os.path.join(DATA, 'tower-power.json'), {}) or {},
+        'mk': [pick(n, ['id', 'name', 'tree', 'group', 'effect', 'ptsNeeded', 'mm', 'fx', 'pre', 'layout', 'tags', 'use']) for n in mk.get('nodes', []) or []],
+        'mkMeta': pick(mk, ['totalNodes', 'maxPoints', 'trees', 'treeInfo']),
+        'power': game_power(load(os.path.join(DATA, 'tower-power.json'), {}) or {}),
     }
     for m in data['modes']:
         if isinstance(m.get('rules'), dict):

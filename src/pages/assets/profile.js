@@ -15,7 +15,7 @@
   const ins = { t: 'dart', x: [0, 0, 0], n: 1 }; /* the "add an Insta" form */
   let flash = null;
   let jump = null;
-  const openPanels = { towers: true };
+  const openPanels = { towers: true, mk: true };
 
   function render() {
     const s = P.get();
@@ -166,38 +166,229 @@
     ]);
   }
 
-  /* ---------- Monkey Knowledge ---------- */
+  /* ---------- Monkey Knowledge: the game's six trees ---------- */
+  /* Rows follow the point gates (data/monkey-knowledge.json layout, from the game files), arrows are prerequisites.
+     A node needs every node it has an arrow from, and enough points already spent in its tree (the game's rule).
+     Monkey Education and Elite Military Training live in settings.me / settings.emt; everything else in profile.mk. */
+  const MK_TREES = (D.mkMeta && D.mkMeta.trees) || ['Primary', 'Military', 'Magic', 'Support', 'Heroes', 'Powers'];
+  const MK = {};
+  (D.mk || []).forEach((n) => { MK[n.id] = n; });
+  const mkKids = {};
+  (D.mk || []).forEach((n) => (n.pre || []).forEach((p) => { (mkKids[p] = mkKids[p] || []).push(n.id); }));
+  const mkUi = { tree: MK_TREES[0], sel: null, msg: '', scroll: {} };
+  const TILE = { w: 112, h: 52, gx: 16, gy: 30, gate: 24, pad: 8 };
+  const SVGNS = 'http://www.w3.org/2000/svg';
+  const sv = (tag, attrs) => { const el = document.createElementNS(SVGNS, tag); Object.keys(attrs || {}).forEach((k) => el.setAttribute(k, attrs[k])); return el; };
+  const mkName = (id) => (MK[id] ? MK[id].name : id);
+  const list = (ids) => (ids.length <= 2 ? ids.join(' and ') : ids.slice(0, -1).join(', ') + ' and ' + ids[ids.length - 1]);
+
+  function mkState(s) {
+    const on = {};
+    Object.keys(s.profile.mk).forEach((k) => { if (s.profile.mk[k] && MK[k]) on[k] = true; });
+    if (s.settings.me !== false) on['monkey-education'] = true;
+    if (s.settings.emt) on['elite-military-training'] = true;
+    return on;
+  }
+  const spentIn = (on, tree, except) => Object.keys(on).filter((k) => MK[k] && MK[k].tree === tree && k !== except).length;
+  /* why a node can't be turned on yet (null = it can) */
+  function mkBlock(on, n) {
+    const miss = (n.pre || []).filter((p) => !on[p]);
+    const have = spentIn(on, n.tree, n.id);
+    const parts = [];
+    if (miss.length) parts.push(list(miss.map(mkName)));
+    if (have < (n.ptsNeeded || 0)) parts.push((n.ptsNeeded - have) + ' more point' + (n.ptsNeeded - have === 1 ? '' : 's') + ' in ' + n.tree);
+    return parts.length ? 'Needs ' + parts.join(' and ') + ' first.' : null;
+  }
+  function mkSave(on) {
+    const m = {};
+    Object.keys(on).forEach((k) => { if (on[k] && k !== 'monkey-education' && k !== 'elite-military-training') m[k] = true; });
+    P.update((x) => { x.settings.me = !!on['monkey-education']; x.settings.emt = !!on['elite-military-training']; x.profile.mk = m; });
+  }
+  /* turn a node on or off; turning off also turns off what needs it (its arrows, or the points it gave) */
+  function mkToggle(id) {
+    const s = P.get();
+    const on = mkState(s);
+    const n = MK[id];
+    mkUi.sel = id;
+    if (!on[id]) {
+      const why = mkBlock(on, n);
+      if (why) { mkUi.msg = n.name + ': ' + why; render(); return; }
+      on[id] = true;
+      mkUi.msg = n.name + ' on.';
+    } else {
+      const ptsOk = {};
+      Object.keys(on).forEach((k) => { ptsOk[k] = spentIn(on, MK[k].tree, k) >= (MK[k].ptsNeeded || 0); });
+      delete on[id];
+      const gone = [];
+      for (let changed = true; changed;) {
+        changed = false;
+        Object.keys(on).forEach((k) => {
+          const m = MK[k];
+          const preBad = (m.pre || []).some((p) => !on[p]);
+          const ptsBad = ptsOk[k] && spentIn(on, m.tree, k) < (m.ptsNeeded || 0);
+          if (preBad || ptsBad) { delete on[k]; gone.push(m.name); changed = true; }
+        });
+      }
+      mkUi.msg = n.name + ' off.' + (gone.length ? ' Also turned off ' + list(gone) + ': ' + (gone.length === 1 ? 'it needs' : 'they need') + ' it.' : '');
+    }
+    mkSave(on);
+    render();
+  }
+  function mkFillTree(tree, v) {
+    const on = mkState(P.get());
+    (D.mk || []).forEach((n) => { if (n.tree === tree) { if (v) on[n.id] = true; else delete on[n.id]; } });
+    mkUi.msg = v ? 'All of ' + tree + ' on.' : tree + ' cleared.';
+    mkUi.sel = null;
+    mkSave(on);
+    render();
+  }
+  /* pixel geometry of one tree: rows grow by the point gates above them */
+  function mkGeo(tree) {
+    const ti = (D.mkMeta && D.mkMeta.treeInfo && D.mkMeta.treeInfo[tree]) || {};
+    const nodes = (D.mk || []).filter((n) => n.tree === tree && n.layout);
+    const rows = ti.rows || 1 + Math.max(0, ...nodes.map((n) => n.layout.row));
+    const cols = ti.cols || 1 + Math.max(0, ...nodes.map((n) => n.layout.col));
+    const bandRows = ti.bandRows || [0];
+    const gatesAbove = (r) => bandRows.filter((br) => br > 0 && br <= r).length;
+    const y = (r) => TILE.pad + TILE.gate + r * (TILE.h + TILE.gy) + gatesAbove(r) * TILE.gate;
+    const x = (c) => TILE.pad + c * (TILE.w + TILE.gx);
+    return { nodes, rows, cols, bandRows, bands: ti.bands || [0], x, y,
+      width: x(cols) - TILE.gx + TILE.pad, height: y(rows - 1) + TILE.h + TILE.pad + 6 };
+  }
+  function mkArrows(g, on) {
+    const svg = sv('svg', { class: 'mk-lines', width: g.width, height: g.height, viewBox: '0 0 ' + g.width + ' ' + g.height, 'aria-hidden': 'true', focusable: 'false' });
+    const defs = sv('defs');
+    ['on', 'off'].forEach((k) => {
+      const m = sv('marker', { id: 'mk-head-' + k, viewBox: '0 0 10 10', refX: '8', refY: '5', markerWidth: '7', markerHeight: '7', orient: 'auto-start-reverse' });
+      m.appendChild(sv('path', { d: 'M0,0 L10,5 L0,10 z', class: 'mk-head mk-head-' + k }));
+      defs.appendChild(m);
+    });
+    svg.appendChild(defs);
+    /* point gates: a dashed line and "N pts" above the first row of each band */
+    g.bandRows.forEach((br, i) => {
+      const gy = g.y(br) - TILE.gate / 2 - (br > 0 ? TILE.gy / 2 - 4 : 0);
+      if (br > 0) svg.appendChild(sv('line', { x1: 2, x2: g.width - 2, y1: gy, y2: gy, class: 'mk-gate' }));
+      const t = sv('text', { x: 4, y: gy - 4, class: 'mk-gate-t' });
+      t.textContent = (g.bands[i] || 0) + ' pts';
+      svg.appendChild(t);
+    });
+    g.nodes.forEach((n) => (n.pre || []).forEach((pid) => {
+      const p = MK[pid];
+      if (!p || !p.layout) return;
+      const x1 = g.x(p.layout.col) + TILE.w / 2, y1 = g.y(p.layout.row) + TILE.h;
+      const x2 = g.x(n.layout.col) + TILE.w / 2, y2 = g.y(n.layout.row) - 2;
+      const midTop = y2 - TILE.gy / 2;
+      let d;
+      if (n.layout.row - p.layout.row === 1) d = 'M' + x1 + ',' + y1 + ' V' + (y1 + (midTop - y1) / 2 + 2) + ' H' + x2 + ' V' + y2;
+      else {
+        /* longer arrows run down the gap between columns, so they never cross a tile */
+        const gut = (x2 >= x1 ? g.x(Math.max(p.layout.col, n.layout.col - 1)) + TILE.w + TILE.gx / 2 : g.x(n.layout.col + 1) - TILE.gx / 2);
+        const out = y1 + TILE.gy / 2 - 2;
+        d = 'M' + x1 + ',' + y1 + ' V' + out + ' H' + gut + ' V' + midTop + ' H' + x2 + ' V' + y2;
+      }
+      const lit = on[pid] && on[n.id];
+      svg.appendChild(sv('path', { d, class: 'mk-line' + (lit ? ' on' : ''), 'marker-end': 'url(#mk-head-' + (lit ? 'on' : 'off') + ')' }));
+    }));
+    return svg;
+  }
+  /* arrow keys move between tiles: nearest tile in that direction */
+  function mkKeys(e) {
+    const dir = { ArrowLeft: [-1, 0], ArrowRight: [1, 0], ArrowUp: [0, -1], ArrowDown: [0, 1] }[e.key];
+    const cur = e.target.closest && e.target.closest('.mk-tile');
+    if (!dir || !cur) return;
+    const tiles = Array.from(cur.parentNode.querySelectorAll('.mk-tile'));
+    const cr = +cur.dataset.row, cc = +cur.dataset.col;
+    let best = null, bd = Infinity;
+    tiles.forEach((t) => {
+      const dr = +t.dataset.row - cr, dc = +t.dataset.col - cc;
+      if (t === cur || (dir[0] && Math.sign(dc) !== dir[0]) || (dir[1] && Math.sign(dr) !== dir[1])) return;
+      const dist = dir[0] ? Math.abs(dc) * 10 + Math.abs(dr) * 3 : Math.abs(dr) * 10 + Math.abs(dc) * 3;
+      if (dist < bd) { bd = dist; best = t; }
+    });
+    if (best) { e.preventDefault(); best.focus(); }
+  }
+  function mkTreeView(tree, on) {
+    const g = mkGeo(tree);
+    const box = h('div', { class: 'mk-tree', style: 'width:' + g.width + 'px;height:' + g.height + 'px', onkeydown: mkKeys });
+    box.appendChild(mkArrows(g, on));
+    g.nodes.forEach((n) => {
+      const isOn = !!on[n.id];
+      const why = isOn ? null : mkBlock(on, n);
+      const orphan = isOn && (n.pre || []).some((p) => !on[p]);
+      const label = n.name + (isOn ? ', on' : why ? ', locked. ' + why : ', off') + (n.use === 'applied' ? ' Used by the tools.' : '');
+      box.appendChild(h('button', {
+        type: 'button', id: 'pf-mk-' + n.id, class: 'mk-tile' + (isOn ? ' on' : '') + (why ? ' locked' : '') + (orphan ? ' orphan' : '') + (mkUi.sel === n.id ? ' sel' : ''),
+        'aria-pressed': String(isOn), 'aria-disabled': why ? 'true' : null, 'aria-label': label, title: n.effect,
+        'data-row': n.layout.row, 'data-col': n.layout.col,
+        style: 'left:' + g.x(n.layout.col) + 'px;top:' + g.y(n.layout.row) + 'px;width:' + TILE.w + 'px;height:' + TILE.h + 'px',
+        onclick: () => mkToggle(n.id), onfocus: () => { if (mkUi.sel !== n.id) { mkUi.sel = n.id; const d = document.getElementById('prf-mk-info'); if (d) d.replaceWith(mkInfo(P.get())); } },
+      }, [h('span', { class: 'mk-tile-n' }, n.name), n.use === 'applied' ? h('span', { class: 'mk-used', title: 'Used by the tools' }) : null]));
+    });
+    const scroller = h('div', { class: 'mk-scroll', id: 'prf-mk-scroll', tabindex: '-1' }, box);
+    const hint = h('p', { class: 'ti-note mk-swipe', hidden: true }, 'Swipe sideways for the rest of this tree.');
+    scroller.addEventListener('scroll', () => { mkUi.scroll[tree] = scroller.scrollLeft; });
+    setTimeout(() => {
+      if (mkUi.scroll[tree]) scroller.scrollLeft = mkUi.scroll[tree];
+      hint.hidden = !(scroller.scrollWidth > scroller.clientWidth + 2);
+    }, 0);
+    return [hint, scroller];
+  }
+  function mkInfo(s) {
+    const on = mkState(s);
+    const n = mkUi.sel && MK[mkUi.sel];
+    if (!n) return h('div', { class: 'mk-info', id: 'prf-mk-info' }, h('p', { class: 'ti-note' }, 'Tap a node to turn it on or off. Its details show here.'));
+    const why = on[n.id] ? null : mkBlock(on, n);
+    const kids = (mkKids[n.id] || []).map(mkName);
+    const use = n.use === 'applied' ? h('span', { class: 'tag tag-banana' }, 'used by the tools') : n.use === 'noted' ? h('span', { class: 'tag' }, 'noted, not used yet') : null;
+    return h('div', { class: 'mk-info', id: 'prf-mk-info' }, [
+      h('p', { class: 'mk-info-h' }, [h('b', null, n.name), ' ', h('span', { class: 'tag mk-st ' + (on[n.id] ? 'mk-st-on' : '') }, on[n.id] ? 'on' : why ? 'locked' : 'off'), ' ', use]),
+      h('p', { class: 'mk-info-d' }, n.effect),
+      h('p', { class: 'ti-note' }, [(n.ptsNeeded ? n.ptsNeeded + ' pts in ' + n.tree : 'No points needed') + (n.mm ? ' · ' + C.int(n.mm) + ' MM' : ' · free'),
+        (n.pre || []).length ? ' · needs ' + list(n.pre.map(mkName)) : '', kids.length ? ' · leads to ' + list(kids) : '']),
+      why ? h('p', { class: 'ti-note mk-why' }, why) : null,
+    ]);
+  }
   function mkPanel(s) {
     const pr = s.profile;
-    const isOn = (n) => (n.id === 'monkey-education' ? s.settings.me !== false : n.id === 'elite-military-training' ? !!s.settings.emt : !!pr.mk[n.id]);
-    const flip = (n, v) => {
-      if (n.id === 'monkey-education') P.update((x) => { x.settings.me = v; });
-      else if (n.id === 'elite-military-training') P.update((x) => { x.settings.emt = v; });
-      else { const m = Object.assign({}, pr.mk); if (v) m[n.id] = true; else delete m[n.id]; P.setProfile({ mk: m }); }
-      render();
-    };
-    const groups = {};
-    (D.mk || []).forEach((n) => { const g = n.tree || n.group || 'Other'; (groups[g] = groups[g] || []).push(n); });
-    const order = ((D.mkMeta && D.mkMeta.trees) || []).concat(Object.keys(groups).filter((g) => ((D.mkMeta && D.mkMeta.trees) || []).indexOf(g) < 0));
+    const on = mkState(s);
     const fx = C.profileFx(D, pr, s.settings);
     const sum = C.fxSummary(fx);
+    const total = Object.keys(on).length;
+    const tree = mkUi.tree;
+    const treeNodes = (D.mk || []).filter((n) => n.tree === tree);
+    const mmIn = treeNodes.filter((n) => on[n.id]).reduce((m, n) => m + (n.mm || 0), 0);
+    const orphans = Object.keys(on).filter((k) => (MK[k].pre || []).some((p) => !on[p]));
+    const tabs = h('div', { class: 'mk-tabs', role: 'tablist', 'aria-label': 'Monkey Knowledge trees' }, MK_TREES.map((t) => {
+      const sel = t === tree;
+      return h('button', { type: 'button', role: 'tab', id: 'pf-mkt-' + t, class: 'mk-tab mk-c-' + t.toLowerCase() + (sel ? ' on' : ''), 'aria-selected': String(sel), 'aria-controls': 'prf-mk-tree', tabindex: sel ? '0' : '-1',
+        onclick: () => { mkUi.tree = t; mkUi.sel = null; mkUi.msg = ''; render(); },
+        onkeydown: (e) => {
+          const i = MK_TREES.indexOf(t) + (e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0);
+          if (i !== MK_TREES.indexOf(t) && MK_TREES[i]) { e.preventDefault(); mkUi.tree = MK_TREES[i]; mkUi.sel = null; render(); const b = document.getElementById('pf-mkt-' + MK_TREES[i]); if (b) b.focus(); }
+        } }, [h('span', { class: 'mk-dot' }), t, h('small', { class: 'ti-num' }, String(spentIn(on, t)))]);
+    }));
     const body = [
       h('div', { class: 'ti-share' }, [
         h('label', { class: 'check' }, [h('input', { type: 'checkbox', id: 'pf-mk-on', checked: pr.mkOn ? true : null, onchange: (e) => { P.setProfile({ mkOn: e.target.checked }); render(); } }), 'Use my Monkey Knowledge in the tools']),
-        h('span', { class: 'ti-note' }, pr.mkOn ? (sum.length ? 'Tools apply: ' + sum.join(', ') + '.' : 'Nothing ticked changes cash or heroes yet.') : 'Off: the tools plan as if you had none.'),
+        h('span', { class: 'ti-note' }, pr.mkOn ? (sum.length ? 'Tools apply: ' + sum.join(', ') + '.' : 'Nothing ticked changes cash, prices or XP yet.') : 'Off: the tools plan as if you had none.'),
       ]),
+      h('p', { class: 'ti-note' }, 'Tap a node to turn it on. It needs the nodes its arrows come from, and the points shown on its row already spent in that tree. Turning one off also turns off what needs it. A yellow dot marks the ones the Simulator and Advisor use.'),
+      orphans.length ? h('p', { class: 'ti-note mk-why' }, orphans.length + ' ticked node' + (orphans.length === 1 ? ' is' : 's are') + ' missing what ' + (orphans.length === 1 ? 'it needs' : 'they need') + ' (saved before the full tree): ' + list(orphans.slice(0, 5).map(mkName).concat(orphans.length > 5 ? [(orphans.length - 5) + ' more'] : [])) + '. Tick the nodes above ' + (orphans.length === 1 ? 'it' : 'them') + '.') : null,
+      tabs,
+      h('div', { class: 'mk-panel mk-c-' + tree.toLowerCase(), role: 'tabpanel', id: 'prf-mk-tree', 'aria-labelledby': 'pf-mkt-' + tree }, [
+        h('div', { class: 'mk-bar' }, [
+          h('p', { class: 'mk-spent' }, [h('b', { class: 'ti-num' }, String(spentIn(on, tree))), ' of ' + treeNodes.length + ' points in ' + tree, mmIn ? ' · ' + C.int(mmIn) + ' MM' : '']),
+          h('button', { type: 'button', class: 'btn btn-small', id: 'pf-mk-all', onclick: () => mkFillTree(tree, true) }, 'All of ' + tree),
+          h('button', { type: 'button', class: 'btn btn-small', id: 'pf-mk-none', onclick: () => mkFillTree(tree, false) }, 'Clear'),
+        ]),
+        mkTreeView(tree, on),
+        h('p', { class: 'ti-note mk-msg', id: 'prf-mk-msg', role: 'status' }, mkUi.msg),
+        mkInfo(s),
+      ]),
+      h('p', { class: 'ti-note' }, [total + ' of ' + (D.mk || []).length + ' nodes on (the game allows ' + ((D.mkMeta && D.mkMeta.maxPoints) || 138) + ' points). CHIMPS and other modes without Monkey Knowledge ignore all of it. What to take first: ', h('a', { href: '../../guides/monkey-knowledge/' }, 'Monkey Knowledge guide'), '.']),
     ];
-    order.forEach((g) => {
-      if (!groups[g]) return;
-      body.push(h('div', { class: 'prf-mk-g' }, [h('p', { class: 'ti-lbl' }, g), h('ul', { class: 'prf-mk' }, groups[g].map((n) => h('li', null, h('label', { class: 'check prf-mk-i' }, [
-        h('input', { type: 'checkbox', id: 'pf-mk-' + n.id, checked: isOn(n) ? true : null, onchange: (e) => flip(n, e.target.checked) }),
-        h('span', null, [h('b', null, n.name), n.fx ? [' ', h('span', { class: 'tag tag-sky prf-used' }, 'used by the tools')] : null, n.fx && n.fx.unverified ? [' ', U.badge('unverified')] : null,
-          h('br'), h('span', { class: 'ti-note' }, n.effect + (n.ptsNeeded != null || n.mm ? ' · needs ' + (n.ptsNeeded || 0) + ' pts in tree' + (n.mm ? ', ' + C.int(n.mm) + ' MM' : '') : ''))]),
-      ]))))]));
-    });
-    body.push(h('p', { class: 'ti-note' }, ['CHIMPS and other modes without Monkey Knowledge ignore all of it. Full tree and what to take first: ', h('a', { href: '../../guides/monkey-knowledge/' }, 'Monkey Knowledge guide'), '.']));
-    return keepOpen(h('details', { class: 'panel ti-details' }, [
-      h('summary', { class: 'panel-h', id: 'prf-mk-sum' }, ['Monkey Knowledge', h('small', null, (Object.keys(pr.mk).length + (s.settings.me !== false ? 1 : 0) + (s.settings.emt ? 1 : 0)) + ' ticked')]),
+    return keepOpen(h('details', { class: 'panel ti-details', id: 'prf-mk' }, [
+      h('summary', { class: 'panel-h', id: 'prf-mk-sum' }, ['Monkey Knowledge', h('small', null, total + ' ticked')]),
       h('div', { class: 'ti-panel-b ti', style: 'padding-top:10px' }, body),
     ]), 'mk');
   }
@@ -253,6 +444,7 @@
     ]), 'backup');
   }
 
+  if (/(^#|&)mk(=|&|$)/.test(String(location.hash || ''))) jump = 'prf-mk';
   const q = String(location.hash || '').match(/tower=([a-z]+)/);
   if (q && C.tower(D, q[1])) { openPanels.towers = true; jump = 'prf-t-' + q[1]; }
   render();

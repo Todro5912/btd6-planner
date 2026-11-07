@@ -294,7 +294,7 @@
     /* coverage strip */
     rows.forEach((x) => {
       const needs = Object.keys(x.need).length > 0;
-      const leaks = x.leakInfo && C.leakIsProblem(x.leak, x.leakInfo.rbe, sim.livesStart);
+      const leaks = x.leakInfo && C.leakIsProblem(x.leak, x.leakInfo.rbe, sim.livesStart, x.leakInfo.lives);
       const cls = !needs ? 'cov-none' : x.missing.length || leaks ? 'cov-bad' : 'cov-ok';
       const rc = svg('rect', { class: cls, x: L + (x.r - sim.start) * col + 1, y: covY, width: col - 2, height: covH });
       rc.appendChild(svg('title', {}, 'R' + x.r + ': ' + (x.missing.length ? 'missing ' + x.missing.map((p) => C.NEED_LABEL[p]).join(', ') : leaks ? 'about ' + x.leak + ' of ' + x.leakInfo.rbe + ' RBE leaks (estimate)' : needs ? 'covered' : 'nothing new') + (x.lives != null ? ' · ' + x.lives + ' lives' : '') + (x.heroLevel ? ' · hero L' + x.heroLevel + ' (est.)' : '')));

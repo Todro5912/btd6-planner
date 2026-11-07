@@ -1,239 +1,424 @@
 """Build data/tower-power.json: how hard each tower crosspath (and hero level) hits, for the leak check.
 
-    python3 tools/build_power.py /path/to/btd6-game-data /path/to/DefaultRoundSet.json
+    python3 tools/build_power.py /path/to/btd6-game-data [/path/to/DefaultRoundSet.json]
+    python3 tools/build_power.py --gd /path/to/btd6-game-data [--rounds /path/to/DefaultRoundSet.json]
 
-The second file is the Bloons Wiki round set (JSON:Bloons_TD_6/Rounds/DefaultRoundSet, CC BY-NC-SA 4.0):
+The round set is the Bloons Wiki JSON (JSON:Bloons_TD_6/Rounds/DefaultRoundSet, CC BY-NC-SA 4.0):
 {"rounds": [{"bloonGroups": [{"bloon", "count", "start", "duration"}]}]}, seconds. It agrees with the game's own
-Rounds/DefaultRoundSet on rounds 1-100 and adds 101-140.
+Rounds/DefaultRoundSet on rounds 1-100 and adds 101-140. Without it, the rounds already in data/tower-power.json are kept.
 
-Input: a checkout (or partial download) of https://github.com/Btd6ModHelper/btd6-game-data: the game's own
-tower models, exported with BTD Mod Helper's "Export Game Data" (Towers/<Name>/<Name>-<abc>.json, heroes as
-Towers/<Hero>/<Hero> <level>.json, Bloons/<Name>/<Name>.json). Data (c) Ninja Kiwi; used for a fan tool.
+Input: a checkout of https://github.com/Btd6ModHelper/btd6-game-data (game v56): the game's tower models exported with
+BTD Mod Helper's "Export Game Data". Data (c) Ninja Kiwi; used for a fan tool.
 
-What we keep, per crosspath, is a summary the browser can evaluate fast (src/pages/assets/tools-core.js, C.power*):
-  r      attack range (the longest attack); g: 1 if global range
+The tower models are decoded by tools/game/extract_towers.py (the same walker that writes data/game/towers.json): paired
+weapons, bursts, alternate shots, multi-tag bonuses, zero-base bonus damage, DoT, ring damage, code-driven pets and the
+sub-towers are all read there. This file turns each decoded crosspath into the summary the browser evaluates
+(src/pages/assets/tools-core.js, C.leakRound):
+  r      attack range (the longest finite attack); g: 1 if global range
   a      [[range, damage, [bloon-hits per second when 1, 2, 4, 8, 16, 32 bloons are in range]], ...]
-         Every projectile is walked: emission count, pierce, sub-projectiles on contact / exhaust / expire /
-         interval, damage over time. Explosions only reach the bloons near the target (radius / range).
   m      damage per second against one MOAB-class target (0 = can't hit MOABs); c: the same vs one Ceramic
-  f      flags: 'nomoab' (filters MOABs out), 'onlymoab'
-Abilities, buffs from other towers (Village, Alchemist), sub-towers and targeting are left out: the leak
-check says so on the page. This is an estimate of throughput, not a replay of the game.
+  f      flags: 'nomoab'
+_meta.notes lists every rule and estimate.
 """
-import glob
+import argparse
 import json
+import math
 import os
-import re
 import sys
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.join(REPO, 'tools', 'game'))
+import extract_towers as X  # noqa: E402
+
 CROWD = [1, 2, 4, 8, 16, 32]
+TOWERS = {k: v for k, v in X.TOWERS.items()}
+HEROES = {k: v for k, v in X.HEROES.items()}
+TYPE_BITS = {v: k for k, v in X.DAMAGE_TYPES.items()}
+# the stream sees these trigger kinds once per bloon the parent hits; exhaust/expire once per parent projectile
+PER_HIT = ('contact', 'pierceUsed', 'damage', 'damageState', 'pop', 'galvanized', 'SilasApplyRime', 'FrozenRemainsExplosion',
+           'MarkedToPopProjectileBehavior')
+PER_PROJECTILE = ('exhaust', 'expire', 'destroy', 'blocker', 'area', 'CreateGreatWhiteEffect')
+# sub-towers that are part of normal play (the rest need a sacrifice, an ability, a spell or a transformation)
+PERMANENT_VIA = ('placed', 'pet', 'drone', 'attack', 'totem', 'reinforcement', 'projectile')
+OWN_COND = (None, 'passive')
 
-# our tower ids -> the game's folder names
-TOWERS = {
-    'dart': 'DartMonkey', 'boomerang': 'BoomerangMonkey', 'bomb': 'BombShooter', 'tack': 'TackShooter', 'ice': 'IceMonkey',
-    'glue': 'GlueGunner', 'desperado': 'Desperado', 'sniper': 'SniperMonkey', 'sub': 'MonkeySub', 'buccaneer': 'MonkeyBuccaneer',
-    'ace': 'MonkeyAce', 'heli': 'HeliPilot', 'mortar': 'MortarMonkey', 'dartling': 'DartlingGunner', 'wizard': 'WizardMonkey',
-    'super': 'SuperMonkey', 'ninja': 'NinjaMonkey', 'alchemist': 'Alchemist', 'druid': 'Druid', 'mermonkey': 'Mermonkey',
-    'skywarden': 'Skywarden', 'farm': 'BananaFarm', 'spike': 'SpikeFactory', 'village': 'MonkeyVillage', 'engineer': 'EngineerMonkey',
-    'beast': 'BeastHandler',
-}
-HEROES = {
-    'quincy': 'Quincy', 'gwendolin': 'Gwendolin', 'striker': 'StrikerJones', 'obyn': 'ObynGreenfoot', 'churchill': 'CaptainChurchill',
-    'benjamin': 'Benjamin', 'ezili': 'Ezili', 'pat': 'PatFusty', 'adora': 'Adora', 'brickell': 'AdmiralBrickell', 'etienne': 'Etienne',
-    'sauda': 'Sauda', 'psi': 'Psi', 'geraldo': 'Geraldo', 'corvus': 'Corvus', 'rosalia': 'Rosalia', 'silas': 'Silas',
-}
-SUB = re.compile(r'CreateProjectileOn(Contact|ExhaustFraction|ExhaustPierce|Expire|Interval|BlockerCollide|TowerDestroy)Model')
-SKIP = re.compile(r'(Ability|Sound|Effect|Display|Audio|Sprite|Prefab|Animation|Icon|CreateTowerModel)')
-
-
-def short(o):
-    t = o.get('$type', '') if isinstance(o, dict) else ''
-    return t.split(',')[0].split('.')[-1]
+NOTES = [
+    'Decoding: tools/game/extract_towers.py (game v56 export). Only the tower\'s own attacks count: abilities, Sun Temple / True Sun God '
+    'sacrifice add-ons, Corvus spells, submerged-only attacks, Necromancer graveyard attacks, Silas\' ice shards on Ice Monkeys and Adora\'s '
+    'Sun God transformation are left out; "passive" damage (Sub Pre-emptive Strike, Druid Spirit of the Forest) is counted.',
+    'Rate: projectiles/s = emission count x burst count / cooldown. A weapon with FireWhenAlternateWeaponIsReadyModel (rate 0.05 placeholder, '
+    'every Monkey Buccaneer) fires once per shot of its partner, so it uses the partner\'s cooldown.',
+    'Alternate shots (AlternateProjectileModel, every k-th shot: Flash Bomb, Bomb Shooter, Quincy...) replace 1 in k shots. BonusProjectileAfterInterval '
+    '(Gwendolin) adds 1 every k shots. Swap weapons (Rosalia) count projectile A only.',
+    'Damage per hit = DamageModel damage; vs one MOAB / Ceramic add every DamageModifierForTagModel whose tag list (often several tags, e.g. '
+    '"Moabs,Ceramic") matches the bloon (MOAB = Moab+Moabs, Ceramic = Ceramic). A DamageModel of 0 with a MOAB bonus (M.A.D. +450) is MOAB-only '
+    'damage. BloonTagDamageOverride sets the damage vs that bloon; DamageModifierForBloonType adds damage vs a bloon id (Ceramic, Moab). '
+    'Damage >= 1e6 (instant kills: Druid vines) is left out of m and c.',
+    'Ring damage (DamageInRingRadiusModel: Mortar The Big One shockwave) counts like an explosion with that damage and the projectile radius.',
+    'Crowd model (unchanged from 0.9): with n bloons spread over 2R of track, a projectile reaches 1 + (n-1) x min(1, cover/2R), cover = max(2 x '
+    'radius, 0.7 x travel distance); seeking and bouncing projectiles and zones the size of the range, or anything that sits on the track 3 s or more, '
+    'reach all n. Hits per projectile = min(pierce, reach x rehits), rehits = lifespan / ClearHitBloons interval, capped at 20.',
+    'Spread shots (Arc / RandomArc / Random emission with n projectiles over arc degrees): only 1 + (n-1)(1 - arc/30) of them (at least 1) can reach '
+    'one bloon; each extra bloon in range lets one more projectile find a target, so the share that hits is (one + (n-one) x min(1, (N-1)/(n-1)))/n '
+    'with N bloons. 8 tacks over 360 degrees: 1 of 8 hit a lone bloon, all 8 with 8 bloons. Seeking projectiles (Ace Flying Fortress radial '
+    'darts) all reach the target whatever the spread. Estimate.',
+    'State bonuses (DamageModifierForBloonState) count when the same weapon applies that state: Laser Shock (+damage vs shocked), Flash Bomb '
+    'stun (+4 for shuriken vs stunned), freeze bonuses. Estimate: assumes the target always carries the state.',
+    'Sub-projectiles: on-contact / on-damage / pierce-used children spawn once per bloon the parent hits; on-exhaust / on-expire once per parent '
+    'projectile; on-interval every interval of the parent\'s lifespan. A spread of fragments (n > 1 over 90 degrees or more) never hits the bloon '
+    'that spawned it: it adds nothing at 1 bloon and needs a second bloon - unless each fragment explodes within its own blast radius of where it '
+    'was made (Bomb cluster bombs), then every one of them hits the first bloon too.',
+    'DoT refreshes, it does not stack: a bloon carrying it takes damage / interval per second. Bloons holding it at once = min(bloons in range, '
+    'applications/s x duration); each tick is a hit of that damage. Vs one MOAB / Ceramic: damage / interval per DoT kind (not per hit). Estimate: '
+    'bloons that leave the range keep burning, bloons that pop early waste ticks.',
+    'Psi: PsiEffectModel is a DoT (damagePerTick every tickRate up to maxDuration); PsiLimitProjectileModel (how many bloons Psi holds at once) is not '
+    'in the export, so the cap is applications/s x maxDuration. Estimate.',
+    'Filters: FilterOutTag / FilterWithTag(inclusive=true) drop a tag, FilterWithTag(inclusive=false) keeps only it, FilterMoabModel flip=false '
+    'keeps only MOAB-class and flip=true drops them. Attacks that drop MOAB-class get m = 0; attacks that keep only MOAB-class get no stream row.',
+    'Sub-towers (permanent only) are added to the parent\'s entry: Engineer sentries at min(max, lifespan / spawn interval) x per spawn (typed '
+    'Sentry Expert/Champion sentries: one of the 4 types per spawn, so each type at 1/4), Aircraft Carrier planes (up to 3), Wizard Lord Phoenix\'s '
+    'permanent Phoenix, Corvus\' Spirit, Beast Handler pets, Etienne drones, Comanche reinforcements at count x duration / cooldown. Each sub-tower '
+    'attack keeps its own range (global ones use 9999). Ability-made towers (Marines, Lord Phoenix, Drone Swarm, UCAV, Sacrificial Totem, Ball of '
+    'Light, Sun Avatars) are excluded.',
+    'Beast Handler pets use their base-power stats (BeastHandlerPetModel dmgRange/pierceRange scale them with merged power in code; not modelled). '
+    'Gyrfalcon line: GyrfalconPatternModel swoop (initialDamage, pierce = grabAmount, radius = grabRadius 45, every cooldown) and grapple damage on the held target (every '
+    'grappleDamageRate, in m only). Great White / Orca / Megalodon: thrash explosions (CreateGreatWhiteEffectModel); the grab-and-drown itself is code '
+    'and not counted. Estimate.',
+    'Zone immunity bypass (Striker Jones L5/L19 Black, Silas White): changes what pops, not the numbers here; the pop model decides that.',
+    'Not modelled: buffs from other towers (the engine applies Village / Alchemist itself), crits, ability uptime, targeting priority, exact placement, '
+    'MOAB-class children and Ice freezing (the engine handles those).',
+]
 
 
 def num(v, d=0.0):
     return float(v) if isinstance(v, (int, float)) and not isinstance(v, bool) else d
 
 
-def emission_count(e):
-    t = short(e)
-    if not t:
-        return 1
-    for k in ('count', 'projectileCount', 'Count'):
-        if num(e.get(k)) > 0:
-            return int(num(e.get(k)))
-    return 1
+def node_bits(p):
+    if 'imm' in p:
+        return int(p['imm'])
+    return TYPE_BITS.get(p.get('type'), 0)
 
 
-def lifespan(p):
-    best = 0.0
-    for b in p.get('behaviors') or []:
-        t = short(b)
-        if t in ('AgeModel', 'TravelStraitModel', 'TravelStraitSlowdownModel', 'TrackTargetModel', 'ArriveAtTargetModel', 'FollowPathModel'):
-            best = max(best, num(b.get('lifespan')))
-    return best
+def reach(p, n, R):
+    """bloons one projectile can touch when n bloons are in range R (spread over 2R of track) - 0.9 model"""
+    R = min(max(R, 1.0), 120.0)
+    life = num(p.get('life'))
+    r = num(p.get('r')) or num((p.get('ring') or {}).get('r'))
+    if r >= 0.6 * R or life >= 3.0 or p.get('move') in ('seeking',) or p.get('bounces') or p.get('chain'):
+        return float(n)
+    travel = num(p.get('speed')) * life if p.get('move') == 'straight' else 0.0
+    cover = max(r * 2, 0.7 * travel)
+    return 1 + (n - 1) * min(1.0, cover / (2 * R))
 
 
-def filters(p):
-    out = set()
-    for f in (p.get('filters') or []):
-        t = short(f)
-        tag = f.get('tag') if isinstance(f, dict) else None
-        if t == 'FilterOutTagModel' and tag in ('Moabs', 'Moab'):
-            out.add('nomoab')
-        if t in ('FilterMoabModel',) or (t in ('FilterWithTagModel',) and tag in ('Moabs', 'Moab')):
-            out.add('onlymoab')
+def rehits(p):
+    life, iv = num(p.get('life')), num(p.get('rehitEvery'))
+    if iv > 0 and life > 0:
+        return max(1.0, min(20.0, life / iv))
+    return 1.0
+
+
+def spread_share(n, em, arc, N):
+    """share of a volley of n projectiles that hits something with N bloons in range"""
+    if n <= 1:
+        return 1.0
+    one = X.hits_one(n, em, arc)
+    if N <= 1:
+        return one / n
+    return min(1.0, (one + (n - one) * min(1.0, (N - 1) / (n - 1))) / n)
+
+
+def applied_states(p, out=None):
+    """states this projectile tree puts on bloons (LaserShock4, Stun:Weak, Freeze...)"""
+    out = set() if out is None else out
+    for n, _ in X.tree_nodes(p):
+        for f in n.get('fx') or []:
+            if f.get('k') == 'freeze':
+                out.add('Freeze')
+            if f.get('id'):
+                out.add(str(f['id']))
     return out
 
 
-class Proj:
-    """One projectile: pierce, damage per hit, bonus damage, re-hits, sub-projectiles."""
-
-    def __init__(self, p, depth=0):
-        self.pierce = max(0.0, num(p.get('pierce'), 1.0))
-        if self.pierce <= 0:
-            self.pierce = 1.0 if num(p.get('pierce'), -1) < 0 else 0.0
-        self.radius = num(p.get('radius'))
-        self.dmg = 0.0
-        self.bonus = {}
-        self.dot = 0.0
-        self.rehit = 1.0
-        self.subs = []  # (trigger, count, Proj)
-        self.flags = filters(p)
-        life = lifespan(p)
-        self.life = life
-        self.travel = 0.0
-        for b in p.get('behaviors') or []:
-            if short(b) in ('TravelStraitModel', 'TravelStraitSlowdownModel'):
-                self.travel = max(self.travel, num(b.get('speed')) * num(b.get('lifespan')))
-            if short(b) in ('TrackTargetModel', 'RetargetOnContactModel'):
-                self.travel = max(self.travel, 1e9)  # seeks the next bloon
-        for b in p.get('behaviors') or []:
-            t = short(b)
-            if SKIP.search(t):
-                continue
-            if t == 'DamageModel':
-                self.dmg += num(b.get('damage'))
-            elif t in ('DamageModifierForTagModel',):
-                tag = str(b.get('tag') or '')
-                self.bonus[tag] = self.bonus.get(tag, 0.0) + num(b.get('damageAddative'))
-            elif t == 'AddBehaviorToBloonModel':
-                for bb in (b.get('behaviors') or []):
-                    if short(bb) == 'DamageOverTimeModel' and num(bb.get('interval')) > 0:
-                        ticks = max(1.0, num(b.get('lifespan'), num(bb.get('interval'))) / num(bb.get('interval')))
-                        self.dot += num(bb.get('damage')) * ticks
-            elif t == 'ClearHitBloonsModel' and num(b.get('interval')) > 0 and life > 0:
-                self.rehit = max(1.0, min(20.0, life / num(b.get('interval'))))
-            elif SUB.match(t) and depth < 6 and isinstance(b.get('projectile'), dict):
-                trig = SUB.match(t).group(1)
-                cnt = emission_count(b.get('emission') or {})
-                if trig == 'ExhaustPierce':  # one more every pierceInterval of pierce used: like on-contact, per hit
-                    trig = 'Contact'
-                    cnt = cnt / max(1.0, num(b.get('pierceInterval'), 1.0))
-                if trig == 'Interval' and num(b.get('intervalFrames')) > 0 and life > 0:
-                    cnt *= max(1, int(life * 60 / num(b.get('intervalFrames'))))
-                self.subs.append((trig, cnt, Proj(b['projectile'], depth + 1)))
-
-    def hits(self, n, R):
-        """bloon-hits from one of these when n bloons are in the tower's range R (spread along 2R of track)"""
-        R = min(R, 120.0)  # global-range towers still only see the bloons bunched near the target
-        if self.radius >= 0.6 * R or self.life >= 3.0:  # a zone the size of the range, or a projectile that sits on the track
-            reach = n
-        else:
-            cover = max(self.radius * 2, 0.7 * self.travel)  # a dart flies through the crowd, an explosion only reaches its radius
-            reach = 1 + (n - 1) * min(1.0, cover / (2 * R))
-        return min(self.pierce, reach * self.rehit)
-
-    def walk(self, n, R, mult, out):
-        """append (damage, bloon-hits) for one shot, times mult"""
-        h = self.hits(n, R)
-        d = self.dmg + (self.dot / max(1.0, self.rehit))
-        if d > 0 and h > 0:
-            out.append((d, h * mult))
-        for trig, cnt, sp in self.subs:
-            k = h if trig == 'Contact' else 1.0
-            sp.walk(n, R, mult * cnt * max(k, 0.0), out)
-
-    def single(self, tag):
-        """damage dealt to one big target (a MOAB or Ceramic) by one of these"""
-        if tag == 'Moabs' and 'nomoab' in self.flags:
-            return 0.0
-        d = (self.dmg + self.bonus.get(tag, 0.0) + (self.bonus.get('Moab', 0.0) if tag == 'Moabs' else 0.0)) if self.dmg > 0 else 0.0
-        d = d * min(self.rehit, max(1.0, self.pierce)) + self.dot
-        for trig, cnt, sp in self.subs:
-            if trig in ('Contact', 'Expire', 'ExhaustFraction', 'Interval'):
-                d += cnt * sp.single(tag) * (1 if trig != 'Interval' else 0.5)
-        return d
+def state_bonus(p, states):
+    """bonus damage vs bloons in a state the same weapon applies (Laser Shock, Flash Bomb stun, Ice freeze)"""
+    add, mult = 0.0, 1.0
+    for b in p.get('bonus') or []:
+        st = b.get('states')
+        if st and not b.get('bloons') and any(any(x == s or x.startswith(s + ':') or x.startswith(s) for x in states) for s in st):
+            add += num(b.get('add'))
+            mult *= num(b.get('mult'), 1.0)
+    return add, mult
 
 
-def attacks(tower):
-    out = []
-
-    def find(o, in_skip):
-        if isinstance(o, dict):
-            t = short(o)
-            if t and SKIP.search(t) and t != 'AttackModel':
-                return
-            if t in ('AttackModel', 'AttackAirUnitModel'):
-                out.append(o)
-                return
-            for v in o.values():
-                find(v, in_skip)
-        elif isinstance(o, list):
-            for v in o:
-                find(v, in_skip)
-    find(tower.get('behaviors') or [], False)
-    return out
+def plain_dmg(p, states=()):
+    """damage one hit does to an ordinary bloon; 0 if the node only hits MOAB-class or has no DamageModel"""
+    if 'dmg' not in p and not p.get('ring'):
+        return 0.0
+    if X.blocked(p, ('Red',)):
+        return 0.0
+    add, mult = state_bonus(p, states)
+    d = (num(p.get('dmg')) + add) * mult if 'dmg' in p else 0.0
+    d += num(p['ring'].get('dmg')) if p.get('ring') else 0.0
+    return d
 
 
-def summarize(tower):
-    rng = num(tower.get('range'))
-    glob_range = bool(tower.get('isGlobalRange'))
-    rows = {}
-    moab = cer = 0.0
-    flags = set()
-    any_attack = False
-    max_r = 0.0
-    for a in attacks(tower):
-        R = num(a.get('range'), rng) or rng
-        if R > 900 and not [x for x in attacks(tower) if 0 < num(x.get('range')) < 900]:
-            glob_range = True
-        afl = filters(a)
-        for w in a.get('weapons') or []:
-            if not isinstance(w, dict) or not isinstance(w.get('projectile'), dict):
-                continue
-            rate = num(w.get('rate'))
-            if rate <= 0:
-                continue
-            any_attack = True
-            max_r = max(max_r, R)
-            cnt = emission_count(w.get('emission') or {})
-            p = Proj(w['projectile'])
-            p.flags |= afl
-            flags |= p.flags
-            per = cnt / rate
+def tag_dmg(p, tags, states=()):
+    d = X.node_hit(p, tags, est=True) if 'dmg' in p else 0.0
+    if d > 0:
+        add, mult = state_bonus(p, states)
+        for b in p.get('bonus') or []:  # DamageModifierForBloonType: +damage vs a bloon id (Spike Factory vs Ceramic)
+            if b.get('bloons') and not b.get('states') and 'setTo' not in b and any(x in tags for x in b['bloons']):
+                add += num(b.get('add'))
+                mult *= num(b.get('mult'), 1.0)
+        d = (d + add) * mult
+    if p.get('ring') and not X.blocked(p, tags):
+        d += num(p['ring'].get('dmg'))
+    return d
+
+
+class Acc:
+    """rows {(R, dmg): [hits/s at each crowd]}, plus single-target MOAB / Ceramic dps"""
+
+    def __init__(self):
+        self.rows = {}
+        self.m = 0.0
+        self.c = 0.0
+        self.dot_m = {}
+        self.dot_c = {}
+        self.flags = set()
+
+    def add_row(self, R, d, hs, scale=1.0):
+        if d <= 0 or not any(hs):
+            return
+        key = (round(min(R, 9999.0), 1), round(d, 2))
+        row = self.rows.setdefault(key, [0.0] * len(CROWD))
+        for i, h in enumerate(hs):
+            row[i] += h * scale
+
+    def merge(self, other, scale):
+        for (R, d), hs in other.rows.items():
+            self.add_row(R, d, hs, scale)
+        self.m += other.total_m() * scale
+        self.c += other.total_c() * scale
+
+    def total_m(self):
+        return self.m + sum(self.dot_m.values())
+
+    def total_c(self):
+        return self.c + sum(self.dot_c.values())
+
+
+def near_burst(p):
+    """a 'fragment' that explodes about where it was made (Bomb cluster bombs: lifespan 0, explosion radius 15): its
+    explosion still covers the bloon that spawned it"""
+    travel = num(p.get('speed')) * num(p.get('life')) if p.get('move') == 'straight' else 0.0
+    for s in p.get('subs') or []:
+        sp = s.get('p') or {}
+        if s.get('on') in PER_PROJECTILE and num(sp.get('r')) >= max(travel, 1.0) and (plain_dmg(sp) > 0 or tag_dmg(sp, ('Moab', 'Moabs')) > 0):
+            return True
+    return False
+
+
+def walk_node(acc, a, p, R, rate_fn, single_rate, depth=0, attack_moab_ok=True, states=()):
+    """p: projectile; rate_fn(i) = projectiles/s of this node at crowd i that actually find bloons;
+    single_rate = projectiles/s of this node that hit the one big target (MOAB / Ceramic)"""
+    if not p or depth > 8:
+        return
+    hits = []
+    for i, n in enumerate(CROWD):
+        pierce = num(p.get('pierce'), 1.0)
+        h = min(max(pierce, 1.0), reach(p, n, R) * rehits(p))
+        hits.append(rate_fn(i) * h)
+    d = plain_dmg(p, states)
+    if d > 0 and not X.blocked(a, ('Red',)):
+        acc.add_row(R, d, hits)
+    # single target: a projectile that stays (rehits) hits the same MOAB again, up to its pierce
+    rep = min(rehits(p), max(1.0, num(p.get('pierce'), 1.0)))
+    if attack_moab_ok:
+        acc.m += single_rate * rep * tag_dmg(p, ('Moab', 'Moabs'), states)
+    if not X.blocked(a, ('Ceramic',)):
+        acc.c += single_rate * rep * tag_dmg(p, ('Ceramic',), states)
+    # DoT: refreshes per bloon
+    hit_ok = 'dmg' not in p or num(p.get('dmg')) <= 0 or plain_dmg(p) > 0
+    for f in p.get('fx') or []:
+        if f.get('k') != 'dot' or num(f.get('dmg')) <= 0:
+            continue
+        every = num(f.get('every')) or 1.0
+        dur = num(f.get('dur')) or every
+        per_bloon = f['dmg'] / every
+        if not X.blocked(f, ('Red',)) and not X.blocked(p, ('Red',)) and hit_ok:
+            dhs = []
             for i, n in enumerate(CROWD):
-                acc = []
-                p.walk(n, R, per, acc)
-                for d, h in acc:
-                    key = (min(R, 9999.0), round(d, 2))
-                    rows.setdefault(key, [0.0] * len(CROWD))[i] += h
-            moab += per * p.single('Moabs')
-            cer += per * p.single('Ceramic')
-    if not any_attack:
-        return None
-    a_out = [[round(R, 1), d, [round(h, 3) for h in hs]] for (R, d), hs in sorted(rows.items()) if any(hs)]
-    if not a_out and moab == 0:
-        return None
-    finite = [R for (R, d) in rows if R < 900]
-    res = {'r': round(max(finite) if finite else min(max_r or rng, 9999.0), 1), 'a': a_out, 'm': round(moab, 2), 'c': round(cer, 2)}
-    if glob_range:
+                holders = min(float(n), hits[i] * dur)
+                dhs.append(holders / every)
+            acc.add_row(R, f['dmg'], dhs)
+        key = (f.get('id'), f['dmg'], every)
+        if single_rate > 0:
+            cap = per_bloon if single_rate * dur >= 1 else f['dmg'] * max(1, f.get('ticks') or 1) * single_rate
+            if attack_moab_ok and not X.blocked(f, ('Moab', 'Moabs')) and not X.blocked(p, ('Moab', 'Moabs')):
+                acc.dot_m[key] = max(acc.dot_m.get(key, 0.0), cap)
+            if not X.blocked(f, ('Ceramic',)) and not X.blocked(p, ('Ceramic',)):
+                acc.dot_c[key] = max(acc.dot_c.get(key, 0.0), cap)
+    # children
+    for s in p.get('subs') or []:
+        sp = s.get('p')
+        if not sp:
+            continue
+        cnt = num(s.get('n'), 1.0)
+        on = s.get('on') or ''
+        frag = cnt > 1 and (s.get('em') in ('Arc', 'RandomArc', 'Random') or num(s.get('arc')) >= 90) and not near_burst(sp)
+        if on == 'interval':
+            every = num(s.get('every'))
+            life = num(p.get('life'))
+            k = max(1.0, life / every) if every > 0 and life > 0 else 1.0
+            per = [rate_fn(i) * cnt * k for i in range(len(CROWD))]
+            single = single_rate * cnt * k * 0.5
+        elif on in PER_PROJECTILE or not (on in PER_HIT or on.startswith('bloon:')):
+            # exhaust / expire, and any other behaviour that holds a projectile (ScaleProjectileOverTime split...): once per projectile
+            per = [rate_fn(i) * cnt for i in range(len(CROWD))]
+            single = single_rate * (cnt if not frag else 0.0)
+        else:  # once per bloon the parent hits (contact, pierce used, damage, pop, galvanized, bloon-borne, Silas rime)
+            k = 1.0 / max(1.0, num(s.get('perPierce'), 1.0))
+            per = [hits[i] * cnt * k for i in range(len(CROWD))]
+            single = single_rate * (cnt if not frag else 0.0) * k
+        if frag:
+            # fragments fly away from the bloon that made them: nothing at 1 bloon, then the second bloon onwards
+            per = [0.0 if CROWD[i] <= 1 else per[i] * spread_share(int(cnt), s.get('em'), num(s.get('arc')), CROWD[i] - 1) for i in range(len(CROWD))]
+        walk_node(acc, a, sp, R, (lambda i, per=per: per[i]), single, depth + 1, attack_moab_ok, states)
+
+
+def walk_attack(acc, a, rng_fallback):
+    R = num(a.get('range')) or rng_fallback
+    moab_ok = not X.blocked(a, ('Moab', 'Moabs'))
+    for w in a.get('weapons') or []:
+        sps = num(w.get('sps'))
+        if sps <= 0 and a.get('cond') == 'passive' and w.get('p'):
+            zone_dot(acc, a, w['p'], moab_ok)
+            continue
+        if sps <= 0 or not w.get('p'):
+            continue
+        n = max(1, int(num(w.get('n'), 1)))
+        em, arc = w.get('em'), num(w.get('arc'))
+        shots = [(w['p'], sps, n, em, arc)]
+        alt = w.get('alt')
+        if alt and alt.get('p') and num(alt.get('every')) > 0:
+            k = num(alt['every'])
+            volleys = sps / n
+            shots = [(w['p'], sps * (k - 1) / k, n, em, arc), (alt['p'], volleys / k * num(alt.get('n'), 1), int(num(alt.get('n'), 1)), None, num(alt.get('arc')))]
+        bs = w.get('bonusShot')
+        if bs and bs.get('p') and num(bs.get('every')) > 0:
+            shots.append((bs['p'], sps / n / num(bs['every']), 1, None, 0))
+        if w.get('codeDriven'):
+            # Gyrfalcon swoop: grabs up to grabAmount (= pierce) bloons within GyrfalconPatternModel.grabRadius (45)
+            shots = [(dict(p, r=45.0) if 'initial' in str(w.get('w')) else p, rt, nn, e, ar) for p, rt, nn, e, ar in shots]
+        states = set()
+        for p, *_ in shots:
+            applied_states(p, states)
+        for p, rate, nn, e, ar in shots:
+            if p.get('move') == 'seeking':
+                e, ar = None, 0  # homing projectiles all turn onto the target, whatever the spread
+            fn = (lambda i, rate=rate, nn=nn, e=e, ar=ar: rate * spread_share(nn, e, ar, CROWD[i]))
+            single = rate * X.hits_one(nn, e, ar) / nn
+            walk_node(acc, a, p, R, fn, single, 0, moab_ok, states)
+    return R
+
+
+def zone_dot(acc, a, p, moab_ok):
+    """a DoT zone over the track (Druid Spirit of the Forest): every bloon in it burns at damage/interval. The model has
+    Close (<50), Middle (<100) and Far zones; most of a track is Far, so only the Far zone is counted (estimate)"""
+    if 'Close' in str(p.get('id')) or 'Medium' in str(p.get('id')) or 'Middle' in str(p.get('id')):
+        return
+    for f in p.get('fx') or []:
+        if f.get('k') != 'dot' or num(f.get('dmg')) <= 0:
+            continue
+        every = num(f.get('every')) or 1.0
+        acc.add_row(9999.0, f['dmg'], [float(n) / every for n in CROWD])
+        if moab_ok:
+            acc.dot_m[('zone', p.get('id'))] = f['dmg'] / every
+        acc.dot_c[('zone', p.get('id'))] = f['dmg'] / every
+        acc.ranges_extra = getattr(acc, 'ranges_extra', []) + [9999.0]
+
+
+def own_attacks(rec):
+    return [a for a in rec.get('attacks') or [] if a.get('cond') in OWN_COND]
+
+
+def sub_count(s, refs):
+    """steady-state number of this sub-tower"""
+    st = SUBS.get(s['ref']) or {}
+    via = s.get('via')
+    if via in ('attack', 'projectile'):
+        every = num(s.get('every'))
+        life = num(st.get('life'))
+        per = num(s.get('n'), 1.0)
+        if life <= 0 or life >= 1e6:
+            cnt = num(s.get('max')) or per
+        else:
+            cnt = per * (life / every if every > 0 else 1.0)
+            if num(s.get('max')) > 0:
+                cnt = min(cnt, num(s['max']))
+        # typed sentries: one of the sibling types per spawn
+        sib = [r for r in refs if r.get('via') == via and r.get('attack') == s.get('attack') and r.get('every') == s.get('every')]
+        return cnt / max(1, len(sib))
+    if via == 'drone':
+        return num(s.get('n'), 1.0)
+    if via == 'reinforcement':
+        every = num(s.get('every'))
+        return num(s.get('n'), 1.0) * (min(1.0, num(s.get('dur')) / every) if every > 0 else 1.0)
+    return 1.0
+
+
+SUBS = {}
+
+
+def tower_acc(rec, depth=0):
+    acc = Acc()
+    rng = num(rec.get('range'))
+    ranges = []
+    for a in own_attacks(rec):
+        before = (len(acc.rows), acc.m, acc.c, len(acc.dot_m))
+        R = walk_attack(acc, a, rng)
+        if (len(acc.rows), acc.m, acc.c, len(acc.dot_m)) != before:
+            ranges.append(R)
+        if X.blocked(a, ('Moab', 'Moabs')):
+            acc.flags.add('nomoab')
+    ranges += getattr(acc, 'ranges_extra', [])
+    used = []
+    refs = rec.get('subTowers') or []
+    for s in refs:
+        if s.get('via') not in PERMANENT_VIA or depth > 2:
+            continue
+        st = SUBS.get(s['ref'])
+        if not st:
+            continue
+        sub = tower_acc(st, depth + 1)
+        cnt = sub_count(s, refs)
+        if cnt <= 0 or (not sub.rows and sub.total_m() <= 0):
+            continue
+        acc.merge(sub, cnt)
+        ranges += sub.ranges
+        used.append([st.get('name'), round(cnt, 2)])
+    acc.ranges = ranges
+    acc.subs_used = used
+    return acc
+
+
+def summarize(rec):
+    acc = tower_acc(rec)
+    if not acc.rows and acc.total_m() <= 0:
+        return None, []
+    a_out = [[R, d, [round(h, 3) for h in hs]] for (R, d), hs in sorted(acc.rows.items()) if any(hs)]
+    finite = [R for R in acc.ranges if R < 900]
+    rr = num(rec.get('range'))
+    res = {'r': round(max(finite) if finite else min(max(acc.ranges or [rr]), 9999.0), 1), 'a': a_out,
+           'm': round(acc.total_m(), 2), 'c': round(acc.total_c(), 2)}
+    if rec.get('global') or (acc.ranges and not finite):
         res['g'] = 1
-    fl = sorted(f for f in flags if f in ('nomoab', 'onlymoab'))
-    if 'nomoab' in fl and moab == 0:
+    if 'nomoab' in acc.flags and res['m'] == 0:
         res['f'] = ['nomoab']
-    return res
+    return res, acc.subs_used
 
 
 def load(path):
@@ -241,40 +426,45 @@ def load(path):
         return json.load(f)
 
 
-def crosspaths():
-    out = []
-    for a in range(6):
-        for b in range(6):
-            for c in range(6):
-                x = [a, b, c]
-                nz = [v for v in x if v > 0]
-                if len(nz) <= 2 and sorted(x)[1] <= 2:
-                    out.append(x)
-    return out
-
-
 def main():
-    if len(sys.argv) < 2:
+    ap = argparse.ArgumentParser(description='Build data/tower-power.json from the BTD6 game-data export')
+    ap.add_argument('gd_pos', nargs='?', help='btd6-game-data checkout (same as --gd)')
+    ap.add_argument('rounds_pos', nargs='?', help='Bloons Wiki DefaultRoundSet JSON (same as --rounds)')
+    ap.add_argument('--gd', default=None)
+    ap.add_argument('--rounds', default=None)
+    ap.add_argument('--out', default=os.path.join(REPO, 'data', 'tower-power.json'))
+    args = ap.parse_args()
+    gd = args.gd or args.gd_pos
+    if not gd:
         sys.exit(__doc__)
-    gd = sys.argv[1]
+    rounds_path = args.rounds or args.rounds_pos
+    old = load(args.out) if os.path.exists(args.out) else {}
+    ex = X.Extractor(gd)
+    SUBS.clear()
     out = {'_meta': {
         'source': 'https://github.com/Btd6ModHelper/btd6-game-data (BTD Mod Helper "Export Game Data")',
         'gameVersion': '56.0',
         'note': 'Throughput summary per crosspath for the leak check. a = [[attack range, damage, bloon-hits/s with 1,2,4,8,16,32 bloons in range]], '
                 'm / c = damage per second to one MOAB-class / Ceramic, r = range (units; a Red moves 25 units/s). '
-                'No abilities, no buffs from other towers, no sub-towers. Data (c) Ninja Kiwi.',
+                'Own attacks plus permanent sub-towers; no abilities, no buffs from other towers. Data (c) Ninja Kiwi.',
         'crowd': CROWD,
+        'notes': NOTES,
+        'generator': 'tools/build_power.py (decoder: tools/game/extract_towers.py)',
     }, 'towers': {}, 'heroes': {}, 'bloonSpeed': {}}
+    subs_report = {}
     for tid, folder in TOWERS.items():
         rows = {}
-        for x in crosspaths():
-            code = ''.join(map(str, x))
+        for code in X.crosspaths():
             f = os.path.join(gd, 'Towers', folder, folder + ('' if code == '000' else '-' + code) + '.json')
             if not os.path.exists(f):
                 continue
-            s = summarize(load(f))
+            rec = ex.describe(load(f), os.path.relpath(f, gd))
+            SUBS.update(ex.subtowers)
+            s, used = summarize(rec)
             if s:
                 rows[code] = s
+            if used:
+                subs_report.setdefault(tid, {})[code] = used
         out['towers'][tid] = rows
         print(f'{tid:10} {len(rows):3} crosspaths')
     for hid, folder in HEROES.items():
@@ -283,25 +473,34 @@ def main():
             f = os.path.join(gd, 'Towers', folder, folder + ('' if n == 1 else ' ' + str(n)) + '.json')
             if not os.path.exists(f):
                 continue
-            s = summarize(load(f))
+            rec = ex.describe(load(f), os.path.relpath(f, gd))
+            SUBS.update(ex.subtowers)
+            s, used = summarize(rec)
             if s:
                 lv[str(n)] = s
+            if used:
+                subs_report.setdefault(hid, {})[str(n)] = used
         out['heroes'][hid] = lv
         print(f'{hid:10} {len(lv):3} levels')
+    out['_meta']['subTowers'] = 'sub-towers added (name, steady-state count) per crosspath: see _meta.subTowersUsed'
+    out['_meta']['subTowersUsed'] = subs_report
     for b in ['Red', 'Blue', 'Green', 'Yellow', 'Pink', 'Black', 'White', 'Purple', 'Lead', 'Zebra', 'Rainbow', 'Ceramic', 'Moab', 'Bfb', 'Zomg', 'Ddt', 'Bad']:
         f = os.path.join(gd, 'Bloons', b, b + '.json')
         if os.path.exists(f):
             out['bloonSpeed'][b.lower()] = num(load(f).get('speed'))
-    if len(sys.argv) > 2:
-        rs = load(sys.argv[2])
+    if rounds_path:
+        rs = load(rounds_path)
         out['rounds'] = [[[g['bloon'], int(g['count']), round(float(g['start']), 3), round(float(g['duration']), 3)] for g in r.get('bloonGroups', [])]
                          for r in rs.get('rounds', [])]
         out['_meta']['rounds'] = 'Bloons Wiki JSON:Bloons_TD_6/Rounds/DefaultRoundSet (CC BY-NC-SA 4.0): [bloon, count, start s, duration s] per group'
         print(len(out['rounds']), 'rounds')
-    dest = os.path.join(REPO, 'data', 'tower-power.json')
-    with open(dest, 'w') as f:
+    elif old.get('rounds'):
+        out['rounds'] = old['rounds']
+        out['_meta']['rounds'] = old.get('_meta', {}).get('rounds')
+        print(len(out['rounds']), 'rounds kept from the previous file')
+    with open(args.out, 'w') as f:
         json.dump(out, f, separators=(',', ':'), sort_keys=True)
-    print('wrote', dest, os.path.getsize(dest) // 1024, 'KB')
+    print('wrote', args.out, os.path.getsize(args.out) // 1024, 'KB')
 
 
 if __name__ == '__main__':

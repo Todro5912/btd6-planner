@@ -161,17 +161,33 @@
      [
       {
        "path": 0,
-       "tier": 4
+       "tier": 3
+      },
+      {
+       "path": 1,
+       "maxTier": 2
+      },
+      {
+       "path": 2,
+       "maxTier": 2
       }
      ],
      [
+      {
+       "path": 0,
+       "maxTier": 2
+      },
+      {
+       "path": 1,
+       "maxTier": 2
+      },
       {
        "path": 2,
        "tier": 5
       }
      ]
     ],
-    "note": "same upgrades as Lead (Sharp can't pop Frozen)"
+    "note": "same upgrades as Lead (Sharp can't pop Frozen) (synced with the game files, v56)"
    },
    "moab": {
     "any": [
@@ -486,13 +502,10 @@
    "camo": {
     "any": [
      [
-      {
-       "path": 0,
-       "tier": 5
-      }
+      "never"
      ]
     ],
-    "note": "Inferno Ring meteor only"
+    "note": "Inferno Ring meteor only (synced with the game files, v56)"
    },
    "lead": {
     "any": [
@@ -554,16 +567,33 @@
      [
       {
        "path": 0,
+       "maxTier": 2
+      },
+      {
+       "path": 1,
        "tier": 3
+      },
+      {
+       "path": 2,
+       "maxTier": 2
       }
      ],
      [
       {
+       "path": 0,
+       "tier": 3
+      },
+      {
        "path": 1,
-       "tier": 5
+       "maxTier": 2
+      },
+      {
+       "path": 2,
+       "maxTier": 2
       }
      ]
-    ]
+    ],
+    "note": " (synced with the game files, v56)"
    },
    "moab": {
     "any": [
@@ -703,26 +733,70 @@
        "path": 2,
        "tier": 2
       }
+     ],
+     [
+      {
+       "path": 0,
+       "tier": 4
+      },
+      {
+       "path": 1,
+       "maxTier": 2
+      },
+      {
+       "path": 2,
+       "maxTier": 2
+      }
      ]
     ],
-    "note": "Re-Freeze: the only way an Ice Monkey can hit already-frozen bloons"
+    "note": "Re-Freeze: the only way an Ice Monkey can hit already-frozen bloons (synced with the game files, v56)"
    },
    "moab": {
     "any": [
      [
       {
        "path": 0,
+       "maxTier": 2
+      },
+      {
+       "path": 1,
+       "maxTier": 2
+      },
+      {
+       "path": 2,
        "tier": 4
       }
      ],
      [
       {
-       "path": 2,
+       "path": 0,
        "tier": 4
+      },
+      {
+       "path": 1,
+       "maxTier": 2
+      },
+      {
+       "path": 2,
+       "maxTier": 2
+      }
+     ],
+     [
+      {
+       "path": 0,
+       "maxTier": 2
+      },
+      {
+       "path": 1,
+       "tier": 5
+      },
+      {
+       "path": 2,
+       "maxTier": 2
       }
      ]
     ],
-    "note": "base freeze can't affect MOAB-class; Embrittlement or Icicles can. Snowstorm only freezes/slows them"
+    "note": "base freeze can't affect MOAB-class; Embrittlement or Icicles can. Snowstorm only freezes/slows them (synced with the game files, v56)"
    },
    "ddt": {
     "any": [
@@ -730,10 +804,54 @@
       {
        "path": 0,
        "tier": 4
+      },
+      {
+       "path": 1,
+       "maxTier": 2
+      },
+      {
+       "path": 2,
+       "maxTier": 2
+      }
+     ],
+     [
+      {
+       "path": 0,
+       "tier": 2
+      },
+      {
+       "path": 0,
+       "maxTier": 2
+      },
+      {
+       "path": 1,
+       "maxTier": 0
+      },
+      {
+       "path": 2,
+       "tier": 4
+      }
+     ],
+     [
+      {
+       "path": 0,
+       "tier": 2
+      },
+      {
+       "path": 0,
+       "maxTier": 2
+      },
+      {
+       "path": 1,
+       "tier": 5
+      },
+      {
+       "path": 2,
+       "maxTier": 0
       }
      ]
     ],
-    "note": "DDT is MOAB-class: Cold Snap (2-x-x) has camo+Lead but the base freeze can't affect blimps, so the derived rule would wrongly pass 2-0-0. Embrittlement (4-x-x) can hit MOAB-class; unverified vs DDT specifically",
+    "note": "DDT is MOAB-class: Cold Snap (2-x-x) has camo+Lead but the base freeze can't affect blimps, so the derived rule would wrongly pass 2-0-0. Embrittlement (4-x-x) can hit MOAB-class; unverified vs DDT specifically (synced with the game files, v56)",
     "derived": false
    },
    "bad": {
@@ -741,17 +859,47 @@
      [
       {
        "path": 0,
+       "maxTier": 2
+      },
+      {
+       "path": 1,
+       "maxTier": 2
+      },
+      {
+       "path": 2,
        "tier": 4
       }
      ],
      [
       {
-       "path": 2,
+       "path": 0,
        "tier": 4
+      },
+      {
+       "path": 1,
+       "maxTier": 2
+      },
+      {
+       "path": 2,
+       "maxTier": 2
+      }
+     ],
+     [
+      {
+       "path": 0,
+       "maxTier": 2
+      },
+      {
+       "path": 1,
+       "tier": 5
+      },
+      {
+       "path": 2,
+       "maxTier": 2
       }
      ]
     ],
-    "note": "BAD takes damage like any MOAB-class; it is only immune to slows, stuns and knockback"
+    "note": "BAD takes damage like any MOAB-class; it is only immune to slows, stuns and knockback (synced with the game files, v56)"
    },
    "fortified": {
     "any": [
@@ -819,9 +967,23 @@
        "path": 0,
        "tier": 2
       }
+     ],
+     [
+      {
+       "path": 0,
+       "maxTier": 2
+      },
+      {
+       "path": 1,
+       "maxTier": 2
+      },
+      {
+       "path": 2,
+       "tier": 5
+      }
      ]
     ],
-    "note": "Base glue deals no damage; Corrosive Glue (2-x-x) is the first damaging upgrade"
+    "note": "Base glue deals no damage; Corrosive Glue (2-x-x) is the first damaging upgrade (synced with the game files, v56)"
    },
    "purple": {
     "any": [
@@ -830,9 +992,23 @@
        "path": 0,
        "tier": 2
       }
+     ],
+     [
+      {
+       "path": 0,
+       "maxTier": 2
+      },
+      {
+       "path": 1,
+       "maxTier": 2
+      },
+      {
+       "path": 2,
+       "tier": 5
+      }
      ]
     ],
-    "note": "Base glue deals no damage; Corrosive Glue (2-x-x) is the first damaging upgrade"
+    "note": "Base glue deals no damage; Corrosive Glue (2-x-x) is the first damaging upgrade (synced with the game files, v56)"
    },
    "black": {
     "any": [
@@ -841,9 +1017,23 @@
        "path": 0,
        "tier": 2
       }
+     ],
+     [
+      {
+       "path": 0,
+       "maxTier": 2
+      },
+      {
+       "path": 1,
+       "maxTier": 2
+      },
+      {
+       "path": 2,
+       "tier": 5
+      }
      ]
     ],
-    "note": "Base glue deals no damage; Corrosive Glue (2-x-x) is the first damaging upgrade"
+    "note": "Base glue deals no damage; Corrosive Glue (2-x-x) is the first damaging upgrade (synced with the game files, v56)"
    },
    "white": {
     "any": [
@@ -852,9 +1042,23 @@
        "path": 0,
        "tier": 2
       }
+     ],
+     [
+      {
+       "path": 0,
+       "maxTier": 2
+      },
+      {
+       "path": 1,
+       "maxTier": 2
+      },
+      {
+       "path": 2,
+       "tier": 5
+      }
      ]
     ],
-    "note": "Base glue deals no damage; Corrosive Glue (2-x-x) is the first damaging upgrade"
+    "note": "Base glue deals no damage; Corrosive Glue (2-x-x) is the first damaging upgrade (synced with the game files, v56)"
    },
    "zebra": {
     "any": [
@@ -863,9 +1067,23 @@
        "path": 0,
        "tier": 2
       }
+     ],
+     [
+      {
+       "path": 0,
+       "maxTier": 2
+      },
+      {
+       "path": 1,
+       "maxTier": 2
+      },
+      {
+       "path": 2,
+       "tier": 5
+      }
      ]
     ],
-    "note": "Base glue deals no damage; Corrosive Glue (2-x-x) is the first damaging upgrade"
+    "note": "Base glue deals no damage; Corrosive Glue (2-x-x) is the first damaging upgrade (synced with the game files, v56)"
    },
    "frozen": {
     "any": [
@@ -874,9 +1092,23 @@
        "path": 0,
        "tier": 2
       }
+     ],
+     [
+      {
+       "path": 0,
+       "maxTier": 2
+      },
+      {
+       "path": 1,
+       "maxTier": 2
+      },
+      {
+       "path": 2,
+       "tier": 5
+      }
      ]
     ],
-    "note": "Base glue deals no damage; Corrosive Glue (2-x-x) is the first damaging upgrade"
+    "note": "Base glue deals no damage; Corrosive Glue (2-x-x) is the first damaging upgrade (synced with the game files, v56)"
    },
    "moab": {
     "any": [
@@ -885,9 +1117,23 @@
        "path": 0,
        "tier": 2
       }
+     ],
+     [
+      {
+       "path": 0,
+       "maxTier": 2
+      },
+      {
+       "path": 1,
+       "maxTier": 2
+      },
+      {
+       "path": 2,
+       "tier": 5
+      }
      ]
     ],
-    "note": "Corrosive Glue lets it target MOAB-class; MOAB Glue (0-0-3) only slows them"
+    "note": "Corrosive Glue lets it target MOAB-class; MOAB Glue (0-0-3) only slows them (synced with the game files, v56)"
    },
    "ddt": {
     "derived": true
@@ -899,8 +1145,23 @@
        "path": 0,
        "tier": 2
       }
+     ],
+     [
+      {
+       "path": 0,
+       "maxTier": 2
+      },
+      {
+       "path": 1,
+       "maxTier": 2
+      },
+      {
+       "path": 2,
+       "tier": 5
+      }
      ]
-    ]
+    ],
+    "note": " (synced with the game files, v56)"
    },
    "fortified": {
     "any": [
@@ -909,9 +1170,23 @@
        "path": 0,
        "tier": 2
       }
+     ],
+     [
+      {
+       "path": 0,
+       "maxTier": 2
+      },
+      {
+       "path": 1,
+       "maxTier": 2
+      },
+      {
+       "path": 2,
+       "tier": 5
+      }
      ]
     ],
-    "note": "Fortified is extra HP, never an immunity: anything that can damage the underlying bloon can damage its fortified version. Glue needs Corrosive Glue to damage anything."
+    "note": "Fortified is extra HP, never an immunity: anything that can damage the underlying bloon can damage its fortified version. Glue needs Corrosive Glue to damage anything. (synced with the game files, v56)"
    },
    "bonuses": [
     {
@@ -1006,12 +1281,48 @@
     "any": [
      [
       {
+       "path": 0,
+       "maxTier": 2
+      },
+      {
+       "path": 1,
+       "maxTier": 2
+      },
+      {
+       "path": 2,
+       "tier": 3
+      }
+     ],
+     [
+      {
+       "path": 0,
+       "maxTier": 2
+      },
+      {
        "path": 1,
        "tier": 3
+      },
+      {
+       "path": 2,
+       "maxTier": 2
+      }
+     ],
+     [
+      {
+       "path": 0,
+       "tier": 3
+      },
+      {
+       "path": 1,
+       "maxTier": 2
+      },
+      {
+       "path": 2,
+       "maxTier": 2
       }
      ]
     ],
-    "note": "assumed same as Lead (rifle); unverified"
+    "note": "assumed same as Lead (rifle); unverified (synced with the game files, v56)"
    },
    "moab": {
     "any": [
@@ -1184,10 +1495,32 @@
       {
        "path": 0,
        "tier": 4
+      },
+      {
+       "path": 1,
+       "maxTier": 2
+      },
+      {
+       "path": 2,
+       "maxTier": 2
+      }
+     ],
+     [
+      {
+       "path": 0,
+       "maxTier": 2
+      },
+      {
+       "path": 1,
+       "tier": 5
+      },
+      {
+       "path": 2,
+       "maxTier": 2
       }
      ]
     ],
-    "note": "Bloontonium Reactor: submerged reactor detects and pops camo. Base Sub has NO camo detection",
+    "note": "Bloontonium Reactor: submerged reactor detects and pops camo. Base Sub has NO camo detection (synced with the game files, v56)",
     "conditional": [
      {
       "req": [
@@ -1354,15 +1687,9 @@
        "path": 1,
        "tier": 2
       }
-     ],
-     [
-      {
-       "path": 0,
-       "tier": 4
-      }
      ]
     ],
-    "note": "Hot Shot (fire grapes); Aircraft Carrier planes (4-x-x+)"
+    "note": "Hot Shot (fire grapes); Aircraft Carrier planes (4-x-x+) (synced with the game files, v56)"
    },
    "purple": {
     "any": [
@@ -1411,7 +1738,42 @@
     ]
    },
    "ddt": {
-    "derived": true
+    "derived": false,
+    "any": [
+     [
+      {
+       "path": 0,
+       "maxTier": 0
+      },
+      {
+       "path": 1,
+       "tier": 2
+      },
+      {
+       "path": 2,
+       "tier": 2
+      }
+     ],
+     [
+      {
+       "path": 0,
+       "tier": 5
+      },
+      {
+       "path": 1,
+       "maxTier": 0
+      },
+      {
+       "path": 2,
+       "tier": 2
+      },
+      {
+       "path": 2,
+       "maxTier": 2
+      }
+     ]
+    ],
+    "note": " (synced with the game files, v56)"
    },
    "bad": {
     "any": [
@@ -1477,6 +1839,14 @@
      ],
      [
       {
+       "path": 0,
+       "maxTier": 2
+      },
+      {
+       "path": 1,
+       "maxTier": 2
+      },
+      {
        "path": 2,
        "tier": 4
       }
@@ -1484,11 +1854,19 @@
      [
       {
        "path": 0,
-       "tier": 3
+       "tier": 5
+      },
+      {
+       "path": 1,
+       "maxTier": 2
+      },
+      {
+       "path": 2,
+       "maxTier": 2
       }
      ]
     ],
-    "note": "Exploding Pineapple (unreliable, explosive), Spectre, Fighter Plane missiles (3-x-x+)"
+    "note": "Exploding Pineapple (unreliable, explosive), Spectre, Fighter Plane missiles (3-x-x+) (synced with the game files, v56)"
    },
    "purple": {
     "any": [
@@ -1552,15 +1930,41 @@
      [
       {
        "path": 0,
+       "maxTier": 0
+      },
+      {
+       "path": 1,
+       "tier": 2
+      },
+      {
+       "path": 1,
+       "maxTier": 2
+      },
+      {
+       "path": 2,
+       "tier": 5
+      }
+     ],
+     [
+      {
+       "path": 0,
        "tier": 5
       },
       {
        "path": 1,
        "tier": 2
+      },
+      {
+       "path": 1,
+       "maxTier": 2
+      },
+      {
+       "path": 2,
+       "maxTier": 0
       }
      ]
     ],
-    "note": "derived rule would wrongly pass 0-2-x: pineapples (explosive) can't hurt Black and darts can't hurt Lead. Sky Shredder + Spy Plane does. Spectre unverified",
+    "note": "derived rule would wrongly pass 0-2-x: pineapples (explosive) can't hurt Black and darts can't hurt Lead. Sky Shredder + Spy Plane does. Spectre unverified (synced with the game files, v56)",
     "derived": false
    },
    "bad": {
@@ -1726,16 +2130,18 @@
       {
        "path": 1,
        "tier": 2
-      }
-     ],
-     [
+      },
       {
        "path": 1,
-       "tier": 5
+       "maxTier": 2
+      },
+      {
+       "path": 2,
+       "maxTier": 0
       }
      ]
     ],
-    "note": "derived rule would wrongly pass 0-2-3: MOAB Shove missiles are explosive. 3-2-0 Razor Rotors + IFR works",
+    "note": "derived rule would wrongly pass 0-2-3: MOAB Shove missiles are explosive. 3-2-0 Razor Rotors + IFR works (synced with the game files, v56)",
     "derived": false
    },
    "bad": {
@@ -1778,11 +2184,11 @@
      [
       {
        "path": 2,
-       "tier": 3
+       "tier": 1
       }
      ]
     ],
-    "note": "Signal Flare gives the Mortar camo detection and its flares decamo. Increased Accuracy (0-0-1) only tightens aim. Base shells do NOT hit camo",
+    "note": "Signal Flare gives the Mortar camo detection and its flares decamo. Increased Accuracy (0-0-1) only tightens aim. Base shells do NOT hit camo (synced with the game files, v56)",
     "conditional": [
      {
       "req": [
@@ -1814,18 +2220,48 @@
     "any": [
      [
       {
+       "path": 0,
+       "maxTier": 2
+      },
+      {
        "path": 1,
        "tier": 3
+      },
+      {
+       "path": 2,
+       "maxTier": 2
       }
      ],
      [
+      {
+       "path": 0,
+       "tier": 4
+      },
+      {
+       "path": 1,
+       "maxTier": 2
+      },
+      {
+       "path": 2,
+       "maxTier": 2
+      }
+     ],
+     [
+      {
+       "path": 0,
+       "maxTier": 2
+      },
+      {
+       "path": 1,
+       "maxTier": 2
+      },
       {
        "path": 2,
        "tier": 5
       }
      ]
     ],
-    "note": "Heavy Shells; Blooncineration fire walls"
+    "note": "Heavy Shells; Blooncineration fire walls (synced with the game files, v56)"
    },
    "white": {
     "any": [
@@ -1838,17 +2274,48 @@
     "any": [
      [
       {
+       "path": 0,
+       "maxTier": 2
+      },
+      {
        "path": 1,
        "tier": 3
+      },
+      {
+       "path": 2,
+       "maxTier": 2
       }
      ],
      [
+      {
+       "path": 0,
+       "tier": 4
+      },
+      {
+       "path": 1,
+       "maxTier": 2
+      },
+      {
+       "path": 2,
+       "maxTier": 2
+      }
+     ],
+     [
+      {
+       "path": 0,
+       "maxTier": 2
+      },
+      {
+       "path": 1,
+       "maxTier": 2
+      },
       {
        "path": 2,
        "tier": 5
       }
      ]
-    ]
+    ],
+    "note": " (synced with the game files, v56)"
    },
    "frozen": {
     "any": [
@@ -1865,7 +2332,60 @@
     ]
    },
    "ddt": {
-    "derived": true
+    "derived": false,
+    "any": [
+     [
+      {
+       "path": 0,
+       "maxTier": 2
+      },
+      {
+       "path": 1,
+       "maxTier": 2
+      },
+      {
+       "path": 2,
+       "tier": 4
+      }
+     ],
+     [
+      {
+       "path": 0,
+       "maxTier": 0
+      },
+      {
+       "path": 1,
+       "tier": 3
+      },
+      {
+       "path": 2,
+       "tier": 1
+      },
+      {
+       "path": 2,
+       "maxTier": 2
+      }
+     ],
+     [
+      {
+       "path": 0,
+       "tier": 4
+      },
+      {
+       "path": 1,
+       "maxTier": 0
+      },
+      {
+       "path": 2,
+       "tier": 1
+      },
+      {
+       "path": 2,
+       "maxTier": 2
+      }
+     ]
+    ],
+    "note": " (synced with the game files, v56)"
    },
    "bad": {
     "any": [
@@ -2060,15 +2580,9 @@
        "path": 2,
        "tier": 2
       }
-     ],
-     [
-      {
-       "path": 0,
-       "tier": 5
-      }
      ]
     ],
-    "note": "Monkey Sense; Archmage"
+    "note": "Monkey Sense; Archmage (synced with the game files, v56)"
    },
    "lead": {
     "any": [
@@ -2081,11 +2595,33 @@
      [
       {
        "path": 0,
+       "maxTier": 2
+      },
+      {
+       "path": 1,
+       "maxTier": 2
+      },
+      {
+       "path": 2,
        "tier": 4
+      }
+     ],
+     [
+      {
+       "path": 0,
+       "tier": 4
+      },
+      {
+       "path": 1,
+       "maxTier": 2
+      },
+      {
+       "path": 2,
+       "maxTier": 2
       }
      ]
     ],
-    "note": "Base bolts are Energy (no Lead, no Purple). Fireball; Arcane Spike",
+    "note": "Base bolts are Energy (no Lead, no Purple). Fireball; Arcane Spike (synced with the game files, v56)",
     "conditional": [
      {
       "req": [
@@ -2164,7 +2700,42 @@
     ]
    },
    "ddt": {
-    "derived": true
+    "derived": false,
+    "any": [
+     [
+      {
+       "path": 0,
+       "maxTier": 0
+      },
+      {
+       "path": 1,
+       "tier": 1
+      },
+      {
+       "path": 2,
+       "tier": 2
+      }
+     ],
+     [
+      {
+       "path": 0,
+       "tier": 4
+      },
+      {
+       "path": 1,
+       "maxTier": 0
+      },
+      {
+       "path": 2,
+       "tier": 2
+      },
+      {
+       "path": 2,
+       "maxTier": 2
+      }
+     ]
+    ],
+    "note": " (synced with the game files, v56)"
    },
    "bad": {
     "any": [
@@ -2304,12 +2875,34 @@
      ],
      [
       {
+       "path": 0,
+       "maxTier": 2
+      },
+      {
+       "path": 1,
+       "maxTier": 2
+      },
+      {
        "path": 2,
        "tier": 4
       }
+     ],
+     [
+      {
+       "path": 0,
+       "maxTier": 2
+      },
+      {
+       "path": 1,
+       "tier": 4
+      },
+      {
+       "path": 2,
+       "maxTier": 2
+      }
      ]
     ],
-    "note": "Laser Blasts (Energy); Dark Champion"
+    "note": "Laser Blasts (Energy); Dark Champion (synced with the game files, v56)"
    },
    "moab": {
     "any": [
@@ -2425,10 +3018,21 @@
    "ddt": {
     "any": [
      [
-      "never"
+      {
+       "path": 0,
+       "maxTier": 2
+      },
+      {
+       "path": 1,
+       "maxTier": 2
+      },
+      {
+       "path": 2,
+       "tier": 3
+      }
      ]
     ],
-    "note": "derived rule would wrongly pass 0-0-3: Flash Bomb is explosive (no Black) and shurikens are Sharp (no Lead). Pair with Alchemist 2-x-x or MIB",
+    "note": "derived rule would wrongly pass 0-0-3: Flash Bomb is explosive (no Black) and shurikens are Sharp (no Lead). Pair with Alchemist 2-x-x or MIB (synced with the game files, v56)",
     "conditional": [
      {
       "req": [
@@ -2609,17 +3213,33 @@
      [
       {
        "path": 0,
-       "tier": 5
+       "tier": 4
+      },
+      {
+       "path": 1,
+       "maxTier": 2
+      },
+      {
+       "path": 2,
+       "maxTier": 2
       }
      ],
      [
       {
+       "path": 0,
+       "maxTier": 2
+      },
+      {
        "path": 1,
        "tier": 5
+      },
+      {
+       "path": 2,
+       "maxTier": 2
       }
      ]
     ],
-    "note": "Superstorm; Spirit of the Forest vines. towers.json's old Ball Lightning (4-x-x) camo tag is not in the wiki table"
+    "note": "Superstorm; Spirit of the Forest vines. towers.json's old Ball Lightning (4-x-x) camo tag is not in the wiki table (synced with the game files, v56)"
    },
    "lead": {
     "any": [
@@ -3238,13 +3858,10 @@
    "camo": {
     "any": [
      [
-      {
-       "path": 1,
-       "tier": 3
-      }
+      "never"
      ]
     ],
-    "note": "Cleansing Foam decamos bloons on the track; the nail gun has no detection"
+    "note": "Cleansing Foam decamos bloons on the track; the nail gun has no detection (synced with the game files, v56)"
    },
    "lead": {
     "any": [
@@ -3457,17 +4074,80 @@
    "frozen": {
     "any": [
      [
-      "base"
+      {
+       "path": 0,
+       "tier": 1
+      }
+     ],
+     [
+      {
+       "path": 1,
+       "tier": 2
+      }
+     ],
+     [
+      {
+       "path": 0,
+       "maxTier": 2
+      },
+      {
+       "path": 1,
+       "maxTier": 2
+      },
+      {
+       "path": 2,
+       "tier": 5
+      }
+     ],
+     [
+      {
+       "path": 1,
+       "maxTier": 0
+      },
+      {
+       "path": 2,
+       "maxTier": 0
+      }
      ]
     ],
-    "note": "staff pops Frozen"
+    "note": "staff pops Frozen (synced with the game files, v56)"
    },
    "moab": {
     "any": [
      [
-      "base"
+      {
+       "path": 1,
+       "tier": 1
+      }
+     ],
+     [
+      {
+       "path": 0,
+       "tier": 1
+      }
+     ],
+     [
+      {
+       "path": 0,
+       "maxTier": 2
+      },
+      {
+       "path": 1,
+       "maxTier": 2
+      },
+      {
+       "path": 2,
+       "tier": 4
+      }
+     ],
+     [
+      {
+       "path": 2,
+       "maxTier": 0
+      }
      ]
-    ]
+    ],
+    "note": " (synced with the game files, v56)"
    },
    "ddt": {
     "any": [
@@ -3484,10 +4164,39 @@
    "bad": {
     "any": [
      [
-      "base"
+      {
+       "path": 1,
+       "tier": 1
+      }
+     ],
+     [
+      {
+       "path": 0,
+       "tier": 1
+      }
+     ],
+     [
+      {
+       "path": 2,
+       "maxTier": 0
+      }
+     ],
+     [
+      {
+       "path": 0,
+       "maxTier": 2
+      },
+      {
+       "path": 1,
+       "maxTier": 2
+      },
+      {
+       "path": 2,
+       "tier": 5
+      }
      ]
     ],
-    "note": "BAD takes damage like any MOAB-class; it is only immune to slows, stuns and knockback"
+    "note": "BAD takes damage like any MOAB-class; it is only immune to slows, stuns and knockback (synced with the game files, v56)"
    },
    "fortified": {
     "any": [
@@ -3595,7 +4304,8 @@
     "tier": 2
    },
    "radius": "alchemist range, buffs a few towers at a time",
-   "note": "Acidic Mixture Dip: buffed towers (Sharp, and Ice since v25) pop Lead. Does NOT give Black, so explosives still can't hurt DDTs"
+   "note": "Acidic Mixture Dip: buffed towers (Sharp, and Ice since v25) pop Lead. Does NOT give Black, so explosives still can't hurt DDTs. Game files: one dip every 10 s on one tower, good for 10 attacks (stacks to 30), so it is not permanent cover",
+   "temporary": true
   },
   {
    "grants": "camo",
@@ -3693,7 +4403,8 @@
     "level": 7
    },
    "radius": "totem range, 30-60 s",
-   "note": "Sacrificial Totem costs lives; L9 main attack also strips camo from non-MOABs"
+   "note": "Sacrificial Totem costs lives; L9 main attack also strips camo from non-MOABs. Game files: the totem lives 30 s (60 s from L16) on a 90 s cooldown and costs lives",
+   "temporary": true
   },
   {
    "grants": "camo",
@@ -3858,9 +4569,9 @@
    "lead": {
     "level": 1
    },
-   "note": "Explosive shells pop Lead; Black via L3 Armor Piercing Shells ability",
+   "note": "Explosive shells pop Lead; Black via L3 Armor Piercing Shells ability Black from L5: his machine gun is Sharp (L3 Armor Piercing Shells is an ability). Game files",
    "black": {
-    "level": 3
+    "level": 5
    }
   },
   "benjamin": {
@@ -3949,9 +4660,9 @@
     "level": null
    },
    "lead": {
-    "level": 8
+    "level": null
    },
-   "note": "Lightning never pops Lead/Purple. Camo via L3 potion item; Lead via L8 Gerry's Fire item"
+   "note": "Lightning never pops Lead/Purple. Camo via L3 potion item; Lead via L8 Gerry's Fire item No own attack pops Lead (his lightning is Energy); Gerry's Fire is a shop item. Game files"
   },
   "corvus": {
    "camo": {
@@ -3969,7 +4680,10 @@
    "lead": {
     "level": 2
    },
-   "note": "No camo of her own; L2 grenade launcher pops Lead (lasers from L13)"
+   "note": "No camo of her own; L2 grenade launcher pops Lead (lasers from L13) L2 grenade explosion pops Purple; her lasers can't. Game files",
+   "purple": {
+    "level": 2
+   }
   },
   "silas": {
    "camo": {

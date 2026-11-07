@@ -223,10 +223,48 @@ async function main() {
     await page.goto(origin + BASE + 'tools/xp/?tower=ninja', { waitUntil: 'networkidle' });
     ok(await page.evaluate(() => document.querySelector('.ti-tile[aria-pressed="true"]').textContent.indexOf('Ninja') === 0), 'old ?tower= links open the XP calculator on that tower');
 
+    // My profile: the Monkey Knowledge trees (0.10): toggle, prerequisite lock, turn-off cascade, keyboard, reload, 400px
+    for (const w of [1280, 400]) {
+      const mp = await browser.newPage({ viewport: { width: w, height: 900 } });
+      const merr = [];
+      mp.on('pageerror', (e) => merr.push(e.message));
+      await mp.goto(origin + BASE + 'tools/profile/', { waitUntil: 'networkidle' });
+      await mp.evaluate(() => localStorage.removeItem('mi-progress-v1'));
+      await mp.reload({ waitUntil: 'networkidle' });
+      const pressed = (id) => mp.getAttribute('#pf-mk-' + id, 'aria-pressed');
+      ok((await mp.$$('#prf-mk-tree .mk-tile')).length === 32 && (await mp.$$('#prf-mk-tree .mk-line')).length === 31, `${w}px MK: Primary tree shows 32 tiles and 31 prerequisite arrows`);
+      await mp.click('#pf-mk-poppy-blades', { force: true }); /* aria-disabled: still tappable, it says why */
+      ok(await pressed('poppy-blades') === 'false' && /Needs Hard Tacks/.test(await mp.textContent('#prf-mk-msg')), `${w}px MK: a node without its prerequisite stays off and says why`, await mp.textContent('#prf-mk-msg'));
+      await mp.click('#pf-mk-fast-tack-attacks');
+      await mp.click('#pf-mk-hard-tacks');
+      await mp.click('#pf-mk-poppy-blades');
+      ok(await pressed('fast-tack-attacks') === 'true' && await pressed('poppy-blades') === 'true', `${w}px MK: tapping turns nodes on in order`);
+      await mp.click('#pf-mk-fast-tack-attacks');
+      ok(await pressed('hard-tacks') === 'false' && await pressed('poppy-blades') === 'false' && /Also turned off Hard Tacks and Poppy Blades/.test(await mp.textContent('#prf-mk-msg')),
+        `${w}px MK: turning a node off turns off what needs it, and says so`, await mp.textContent('#prf-mk-msg'));
+      await mp.focus('#pf-mk-fast-tack-attacks');
+      await mp.keyboard.press('Enter');
+      await mp.keyboard.press('ArrowDown');
+      const focused = await mp.evaluate(() => document.activeElement && document.activeElement.id);
+      ok(await pressed('fast-tack-attacks') === 'true' && /^pf-mk-/.test(focused) && focused !== 'pf-mk-fast-tack-attacks', `${w}px MK: Enter toggles a tile, arrow keys move between tiles`, focused);
+      await mp.click('#pf-mkt-Support');
+      await mp.click('#pf-mk-flat-pack-buildings');
+      await mp.reload({ waitUntil: 'networkidle' });
+      ok(await pressed('fast-tack-attacks') === 'true', `${w}px MK: ticks survive a reload`);
+      await mp.click('#pf-mkt-Support');
+      ok(await pressed('flat-pack-buildings') === 'true' && /used by the tools|tower and upgrade discounts/.test(await mp.textContent('#prf-mk')), `${w}px MK: other trees keep their ticks; the summary names the discount`);
+      const ov = await mp.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
+      await mp.click('#pf-mkt-Primary');
+      const inner = await mp.evaluate(() => { const sc = document.getElementById('prf-mk-scroll'); return sc.scrollWidth - sc.clientWidth; });
+      ok(ov <= 0 && (w > 1000 || inner > 0), `${w}px MK: the page doesn't scroll sideways (the tree panel does when it must)`, { ov, inner });
+      ok(!merr.length, `${w}px MK: no page errors`, merr);
+      await mp.close();
+    }
+
     // My profile: Monkey Knowledge and Instas reach the Advisor
     await page.goto(origin + BASE + 'tools/profile/', { waitUntil: 'networkidle' });
-    await page.click('#prf-mk-sum');
-    await page.click('#pf-mk-more-cash');
+    await page.click('#pf-mkt-Primary');
+    await page.click('#pf-mk-all');
     await page.click('#prf-ins-sum');
     await page.click('#pf-ins-add');
     await page.goto(origin + BASE + 'tools/advisor/#map=logs&mode=hard&hero=auto&t=dart', { waitUntil: 'networkidle' });

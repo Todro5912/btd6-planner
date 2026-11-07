@@ -159,7 +159,11 @@ def t_fortified_matches_base():
 
 def t_bad_matches_moab():
     # BAD is MOAB-class: same damage rule (fandom/bloonswiki BAD page: immune to slows/stuns/knockback, not damage).
+    # Exception from the game files: Beast Handler's Giant Condor (0-0-4) carries MOABs but its attack filters out BADs
+    # (BeastHandler-004.json FilterOutTag Bad), so for beast BAD is a subset of MOAB.
     for tid, t in MODEL["towers"].items():
+        if tid == "beast":
+            continue
         check(t["bad"]["any"] == t["moab"]["any"], tid + " bad must equal moab")
 
 
@@ -211,7 +215,7 @@ def t_known_truths():
     check(can("bomb", "0-0-0", "lead"), "Bomb pops Lead by default [FD-LEAD]")
     check(not can("bomb", "2-0-4", "camo"), "Bomb has no camo outside Bomb Blitz ability [FD-CAMO x-x-5 passive]")
     check(not can("mortar", "0-0-0", "camo"), "Mortar 0-0-0 can't hit camo [FD-CAMO x-x-3; BW-FLR]")
-    check(not can("mortar", "0-0-1", "camo"), "Increased Accuracy gives no camo [FD Mortar page]")
+    check(can("mortar", "0-0-1", "camo") and not can("mortar", "0-0-0", "camo"), "Increased Accuracy (0-0-1) hits camo [game: MortarMonkey-001.json camo filter off; its text: 'enough to hit Camo Bloons']")
     check(can("mortar", "0-0-3", "camo"), "Signal Flare gives camo detection [BW-FLR]")
     check(can("mortar", "0-3-0", "black"), "Heavy Shells pop Black [FD Mortar page]")
     check(can("mortar", "0-0-0", "lead"), "Mortar pops Lead by default [FD-LEAD]")
@@ -262,11 +266,11 @@ def t_known_truths():
     check(can("desperado", "0-1-0", "camo") and can("desperado", "0-3-0", "lead"), "Eagle Eye camo, Deadeye Lead [BW-DESP]")
     check(can("skywarden", "0-2-0", "lead"), "Thundering Arc pops Lead since v57 [NK-57]")
     check(not can("beast", "0-0-0", "purple"), "Beast Handler staff can't pop Purple [FD-PURP]")
-    check(can("engineer", "0-3-0", "camo") and not can("engineer", "0-2-0", "camo"), "Engineer camo only via Cleansing Foam [FD-CAMO x-3-x]")
+    check(not can("engineer", "0-3-0", "camo"), "Cleansing Foam strips camo but deals no damage, so it's decamo support, not the Engineer's own camo [game: EngineerMonkey-030.json]")
     check(can("heli", "3-2-0", "ddt") and not can("heli", "0-2-3", "ddt"), "Heli 3-2-0 hits DDTs; MOAB Shove missiles are explosive [FD-LEAD, BW-DT]")
     check(not can("ace", "0-2-0", "ddt"), "Ace 0-2-0 pineapples are explosive: no DDT [BW-DT, V25]")
     check(can("buccaneer", "0-2-2", "ddt"), "Bucc 0-2-2 (Hot Shot fire + Crow's Nest) hits DDTs [FD-LEAD]")
-    check(not can("ninja", "0-0-3", "ddt"), "Flash Bomb is explosive: no DDT damage [V25, BW-DT]")
+    check(can("ninja", "0-0-3", "ddt"), "Flash Bomb's explosion is Normal damage, so a camo-seeing Ninja hits DDTs [game: NinjaMonkey-003.json imm 0]")
     # Fortified sanity
     for tid in ("dart", "sniper", "bomb", "ninja"):
         check(can(tid, "0-0-0", "fortified"), tid + " 0-0-0 damages fortified [FORT]")
@@ -325,9 +329,21 @@ def t_bloons():
     check(set(byid["lead"]["immunities"]) >= {"sharp", "cold", "energy"}, "bloons.json Lead immunities [BW-DT]")
 
 
+def t_synced_with_game():
+    # every tower rule matches the game files (data/game/towers.json), except the listed v57/semantic exceptions
+    import subprocess
+    root = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..")
+    r = subprocess.run([sys.executable, os.path.join(root, "tools", "game", "sync_popmodel.py"), "--check"], capture_output=True, text=True)
+    check(r.returncode == 0, "pop model in sync with the game files [tools/game/sync_popmodel.py --check] " + r.stdout[:300])
+    # the game-data tests run with this file, so the 7 standard test commands cover them
+    for name in ("bloons", "knowledge", "misc", "support", "towers"):
+        t = subprocess.run([sys.executable, os.path.join(root, "data", "_tests", "test_game_%s.py" % name)], capture_output=True, text=True)
+        check(t.returncode == 0, "data/_tests/test_game_%s.py passes %s" % (name, (t.stdout + t.stderr)[-300:] if t.returncode else ""))
+
+
 def main():
     for fn in (t_schema, t_fortified_matches_base, t_bad_matches_moab, t_derived_ddt_safe, t_known_truths,
-               t_heroes_levels, t_bloons):
+               t_heroes_levels, t_bloons, t_synced_with_game):
         fn()
     total = RESULTS["pass"] + len(RESULTS["fail"])
     for m in RESULTS["fail"]:

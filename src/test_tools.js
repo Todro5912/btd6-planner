@@ -77,7 +77,7 @@ ok(!/grants/.test(fs.readFileSync(path.join(ASSETS, 'tools-core.js'), 'utf8').re
   ok(P('tack', [3, 0, 0]).purple && !P('tack', [4, 0, 0]).purple, 'maxTier: Tack 3-0-0 pops Purple, Ring of Fire 4-0-0 does not');
   ok(!P('ice', [2, 0, 0]).ddt && P('ice', [4, 0, 0]).ddt, 'explicit DDT: Ice 2-0-0 can\'t hit DDTs (derived rule would say yes), 4-0-0 can');
   ok(!P('ace', [0, 2, 0]).ddt && P('ace', [5, 2, 0]).ddt, 'explicit DDT: Ace 0-2-0 no, 5-2-0 yes');
-  ok(!P('ninja', [0, 0, 3]).ddt && !P('ninja', [0, 0, 4]).ddt, 'explicit DDT: Ninja never alone (Sticky Bomb is a hint only)');
+  ok(P('ninja', [0, 0, 3]).ddt && !P('ninja', [0, 0, 2]).ddt, 'explicit DDT: Ninja hits DDTs from Flash Bomb (Normal explosion, game file), not before');
   ok(C.coverState(D, [{ uid: 1, id: 'ninja', x: [0, 0, 0], label: 'N' }, { uid: 2, id: 'village', x: [0, 3, 0], label: 'V' }], null).cov.ddt.length === 1, 'explicit DDT: Ninja inside an MIB Village hits DDTs');
   ok(C.coverState(D, [{ uid: 1, id: 'ace', x: [0, 2, 0], label: 'A' }, { uid: 2, id: 'village', x: [0, 2, 0], label: 'V' }], null).cov.ddt.length === 0, 'explicit DDT: Ace 0-2-0 + Radar still can\'t hit DDTs');
   ok(!P('bomb', [0, 0, 5]).camo && C.conditionalHints(pm, 'bomb', [0, 0, 5], 'camo').length === 1, 'conditional: Bomb Blitz is a hint, not camo coverage');
@@ -438,6 +438,7 @@ console.log('Type-to-search picker');
 }
 
 require(path.join(HERE, 'test_rules.js'))(ok, D, C);
+require(path.join(HERE, 'test_mk.js'))(ok, D, C);
 
 console.log('\n' + pass + ' passed, ' + fail + ' failed');
 

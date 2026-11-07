@@ -1,6 +1,7 @@
 {
- "about": "Monkey Knowledge nodes described in content/guides/monkey-knowledge.md (not the full 134-node tree). fx = effects the tools apply.",
+ "about": "All 134 Monkey Knowledge nodes, built by tools/game/build_mk.py from data/game/knowledge.json (game files v56.0). fx = effects the tools apply (use \"applied\") or carry for later (use \"noted\"). Ids are the game ids in kebab case.",
  "version": "57.4",
+ "gameData": "56.0",
  "trees": [
   "Primary",
   "Military",
@@ -11,248 +12,4248 @@
  ],
  "totalNodes": 134,
  "maxPoints": 138,
+ "maxPointsSource": "not in the game files; https://bloons.fandom.com/wiki/Monkey_Knowledge_(BTD6) (level 155 + achievements)",
+ "treeInfo": {
+  "Primary": {
+   "rows": 10,
+   "cols": 9,
+   "bands": [
+    0,
+    5,
+    8,
+    10
+   ],
+   "bandRows": [
+    0,
+    3,
+    5,
+    7
+   ],
+   "nodes": 32
+  },
+  "Military": {
+   "rows": 8,
+   "cols": 7,
+   "bands": [
+    0,
+    4,
+    8,
+    14
+   ],
+   "bandRows": [
+    0,
+    2,
+    3,
+    6
+   ],
+   "nodes": 30
+  },
+  "Magic": {
+   "rows": 7,
+   "cols": 6,
+   "bands": [
+    0,
+    4,
+    8
+   ],
+   "bandRows": [
+    0,
+    3,
+    5
+   ],
+   "nodes": 22
+  },
+  "Support": {
+   "rows": 6,
+   "cols": 6,
+   "bands": [
+    0,
+    3,
+    8,
+    14
+   ],
+   "bandRows": [
+    0,
+    2,
+    4,
+    5
+   ],
+   "nodes": 22
+  },
+  "Heroes": {
+   "rows": 7,
+   "cols": 3,
+   "bands": [
+    0,
+    3,
+    8
+   ],
+   "bandRows": [
+    0,
+    2,
+    4
+   ],
+   "nodes": 13
+  },
+  "Powers": {
+   "rows": 7,
+   "cols": 4,
+   "bands": [
+    0,
+    3,
+    10
+   ],
+   "bandRows": [
+    0,
+    2,
+    6
+   ],
+   "nodes": 15
+  }
+ },
  "nodes": [
   {
-   "id": "mo-monkey-money",
-   "name": "Mo' Monkey Money",
-   "tree": "Magic",
-   "effect": "+10% Monkey Money from wins and Daily Challenges"
-  },
-  {
-   "id": "monkey-education",
-   "name": "Monkey Education",
-   "tree": "Support",
-   "effect": "All towers and heroes earn 8% more XP",
-   "ptsNeeded": 3,
-   "mm": 0,
-   "fx": {
-    "xpMult": 1.08
-   }
-  },
-  {
-   "id": "elite-military-training",
-   "name": "Elite Military Training",
-   "tree": "Military",
-   "effect": "+1,000 XP once to every Military tower, and +5% Military XP",
+   "id": "fast-tack-attacks",
+   "gameId": "FastTackAttacks",
+   "name": "Fast Tack Attacks",
+   "tree": "Primary",
+   "effect": "Tack Shooter attack speed increased by 8%.",
+   "desc": "Tack Shooter attack speed increased by 8%.",
    "ptsNeeded": 0,
    "mm": 0,
+   "pre": [],
+   "layout": {
+    "row": 0,
+    "col": 1
+   },
+   "tags": [
+    "attacks"
+   ],
    "fx": {
-    "militaryXpMult": 1.05
-   }
+    "attack": [
+     {
+      "towers": [
+       "tack"
+      ],
+      "stat": "rate",
+      "pct": 0.08
+     }
+    ]
+   },
+   "use": "noted",
+   "source": "game file Knowledge/Primary/FastTackAttacks.json (v56.0)"
   },
   {
-   "id": "self-taught-heroes",
-   "name": "Self Taught Heroes",
-   "tree": "Heroes",
-   "effect": "Heroes earn XP 10% faster",
-   "ptsNeeded": 3,
+   "id": "increased-lifespan",
+   "gameId": "IncreasedLifespan",
+   "name": "Increased Lifespan",
+   "tree": "Primary",
+   "effect": "Longer projectile lifespan for Dart Monkey, Bomb Shooter, Tack Shooter and Glue Gunner.",
+   "desc": "Longer projectile lifespan for Dart Monkey, Bomb Shooter, Tack Shooter and Glue Gunner.",
+   "ptsNeeded": 0,
    "mm": 0,
+   "pre": [],
+   "layout": {
+    "row": 0,
+    "col": 4
+   },
+   "tags": [
+    "attacks"
+   ],
    "fx": {
-    "heroXpMult": 1.1
-   }
-  },
-  {
-   "id": "hero-favors",
-   "name": "Hero Favors",
-   "tree": "Heroes",
-   "effect": "Heroes 10% cheaper",
-   "ptsNeeded": 3,
-   "mm": 250,
-   "fx": {
-    "heroCostMult": 0.9
-   }
+    "attack": [
+     {
+      "towers": [
+       "bomb",
+       "dart",
+       "desperado",
+       "glue",
+       "tack"
+      ],
+      "stat": "lifespan",
+      "pct": 0.15
+     }
+    ]
+   },
+   "use": "noted",
+   "source": "game file Knowledge/Primary/IncreasedLifespan.json (v56.0)"
   },
   {
    "id": "extra-dart-pops",
+   "gameId": "ExtraDartPops",
    "name": "Extra Dart Pops",
    "tree": "Primary",
    "effect": "+1 pierce to Dart Monkeys",
+   "desc": "Dart Monkeys get +1 pierce to all shots.",
    "ptsNeeded": 0,
-   "mm": 0
-  },
-  {
-   "id": "naval-upgrades",
-   "name": "Naval Upgrades",
-   "tree": "Military",
-   "effect": "+1 pierce to Subs and Buccaneers",
-   "ptsNeeded": 0,
-   "mm": 0
-  },
-  {
-   "id": "farm-subsidy",
-   "name": "Farm Subsidy",
-   "tree": "Support",
-   "effect": "A small discount on your first Banana Farm"
-  },
-  {
-   "id": "first-last-line-of-defense",
-   "name": "First Last Line of Defense",
-   "tree": "Support",
-   "effect": "A small discount on your first Spike Factory"
-  },
-  {
-   "id": "more-cash",
-   "name": "More Cash",
-   "tree": "Primary",
-   "effect": "+$200 starting cash",
-   "ptsNeeded": 10,
-   "mm": 1000,
+   "mm": 0,
+   "pre": [],
+   "layout": {
+    "row": 0,
+    "col": 7
+   },
+   "tags": [
+    "attacks"
+   ],
    "fx": {
-    "startCash": 200
-   }
+    "attack": [
+     {
+      "towers": [
+       "dart"
+      ],
+      "stat": "pierce",
+      "add": 1
+     }
+    ]
+   },
+   "use": "noted",
+   "source": "game file Knowledge/Primary/ExtraDartPops.json (v56.0)"
   },
   {
-   "id": "bonus-monkey",
-   "name": "Bonus Monkey!",
+   "id": "poppy-blades",
+   "gameId": "PoppyBlades",
+   "name": "Poppy Blades",
    "tree": "Primary",
-   "effect": "A free Dart Monkey at the start (one free tower per game; or Bonus Glue Gunner)",
+   "effect": "Blade Shooter upgrade gets +2 pierce.",
+   "desc": "Blade Shooter upgrade gets +2 pierce.",
+   "ptsNeeded": 0,
+   "mm": 0,
+   "pre": [
+    "hard-tacks"
+   ],
+   "layout": {
+    "row": 2,
+    "col": 0
+   },
+   "tags": [
+    "attacks"
+   ],
+   "fx": {
+    "attack": [
+     {
+      "towers": [
+       "tack"
+      ],
+      "stat": "pierce",
+      "add": 2,
+      "when": {
+       "tack": "x-3+-x"
+      }
+     }
+    ]
+   },
+   "use": "noted",
+   "source": "game file Knowledge/Primary/PoppyBlades.json (v56.0)"
+  },
+  {
+   "id": "hard-tacks",
+   "gameId": "HardTacks",
+   "name": "Hard Tacks",
+   "tree": "Primary",
+   "effect": "Tack Shooter tacks can pop Frozen Bloons.",
+   "desc": "Tack Shooter tacks can pop Frozen Bloons.",
+   "ptsNeeded": 0,
+   "mm": 0,
+   "pre": [
+    "fast-tack-attacks"
+   ],
+   "layout": {
+    "row": 1,
+    "col": 0
+   },
+   "tags": [
+    "attacks"
+   ],
+   "fx": {
+    "attack": [
+     {
+      "towers": [
+       "tack"
+      ],
+      "stat": "canPop",
+      "props": [
+       "Frozen"
+      ]
+     }
+    ]
+   },
+   "use": "noted",
+   "source": "game file Knowledge/Primary/HardTacks.json (v56.0)"
+  },
+  {
+   "id": "fast-glue",
+   "gameId": "FastGlue",
+   "name": "Fast Glue",
+   "tree": "Primary",
+   "effect": "Glue Gunner 10% increased attack speed.",
+   "desc": "Glue Gunner 10% increased attack speed.",
+   "ptsNeeded": 0,
+   "mm": 0,
+   "pre": [
+    "fast-tack-attacks"
+   ],
+   "layout": {
+    "row": 1,
+    "col": 2
+   },
+   "tags": [
+    "attacks"
+   ],
+   "fx": {
+    "attack": [
+     {
+      "towers": [
+       "glue"
+      ],
+      "stat": "rate",
+      "pct": 0.1
+     }
+    ]
+   },
+   "use": "noted",
+   "source": "game file Knowledge/Primary/FastGlue.json (v56.0)"
+  },
+  {
+   "id": "fraggy-frags",
+   "gameId": "FraggyFrags",
+   "name": "Fraggy Frags",
+   "tree": "Primary",
+   "effect": "Frag bombs get 2 extra frags.",
+   "desc": "Frag bombs get 2 extra frags.",
+   "ptsNeeded": 0,
+   "mm": 0,
+   "pre": [
+    "increased-lifespan"
+   ],
+   "layout": {
+    "row": 1,
+    "col": 4
+   },
+   "tags": [
+    "attacks"
+   ],
+   "fx": {
+    "attack": [
+     {
+      "towers": [
+       "bomb"
+      ],
+      "stat": "projectiles",
+      "add": 2,
+      "when": {
+       "bomb": "x-x-2"
+      }
+     }
+    ]
+   },
+   "use": "noted",
+   "source": "game file Knowledge/Primary/FraggyFrags.json (v56.0)"
+  },
+  {
+   "id": "cheap-rangs",
+   "gameId": "CheapRangs",
+   "name": "Cheap 'Rangs",
+   "tree": "Primary",
+   "effect": "Base cost of Boomerang Thrower reduced by 50.",
+   "desc": "Base cost of Boomerang Thrower reduced by 50.",
+   "ptsNeeded": 0,
+   "mm": 0,
+   "pre": [
+    "increased-lifespan"
+   ],
+   "layout": {
+    "row": 1,
+    "col": 5
+   },
+   "tags": [
+    "prices"
+   ],
+   "fx": {
+    "towerCost": [
+     {
+      "towers": [
+       "boomerang"
+      ],
+      "flat": -50
+     }
+    ]
+   },
+   "use": "applied",
+   "source": "game file Knowledge/Primary/CheapRangs.json (v56.0)"
+  },
+  {
+   "id": "crossbow-reach",
+   "gameId": "CrossbowReach",
+   "name": "Crossbow Reach",
+   "tree": "Primary",
+   "effect": "Crossbow range increased.",
+   "desc": "Crossbow range increased.",
+   "ptsNeeded": 0,
+   "mm": 0,
+   "pre": [
+    "extra-dart-pops"
+   ],
+   "layout": {
+    "row": 1,
+    "col": 7
+   },
+   "tags": [
+    "attacks"
+   ],
+   "fx": {
+    "attack": [
+     {
+      "towers": [
+       "dart"
+      ],
+      "stat": "range",
+      "add": 3,
+      "when": {
+       "dart": "x-x-3+"
+      }
+     }
+    ]
+   },
+   "use": "noted",
+   "source": "game file Knowledge/Primary/CrossbowReach.json (v56.0)"
+  },
+  {
+   "id": "big-inferno",
+   "gameId": "BigInferno",
+   "name": "Big Inferno",
+   "tree": "Primary",
+   "effect": "Inferno Ring upgrade gets +3 burst radius.",
+   "desc": "Inferno Ring upgrade gets +3 burst radius.",
+   "ptsNeeded": 5,
+   "mm": 0,
+   "pre": [
+    "poppy-blades"
+   ],
+   "layout": {
+    "row": 3,
+    "col": 0
+   },
+   "tags": [
+    "attacks"
+   ],
+   "fx": {
+    "attack": [
+     {
+      "towers": [
+       "tack"
+      ],
+      "stat": "range",
+      "add": 3,
+      "when": {
+       "tack": "5+-x-x + paragon"
+      }
+     }
+    ]
+   },
+   "use": "noted",
+   "source": "game file Knowledge/Primary/BigInferno.json (v56.0)"
+  },
+  {
+   "id": "icy-chill",
+   "gameId": "IcyChill",
+   "name": "Icy Chill",
+   "tree": "Primary",
+   "effect": "Freeze radius slightly increased.",
+   "desc": "Freeze radius slightly increased.",
+   "ptsNeeded": 5,
+   "mm": 0,
+   "pre": [
+    "hard-tacks"
+   ],
+   "layout": {
+    "row": 3,
+    "col": 1
+   },
+   "tags": [
+    "attacks"
+   ],
+   "fx": {
+    "attack": [
+     {
+      "towers": [
+       "ice"
+      ],
+      "stat": "range",
+      "add": 3
+     },
+     {
+      "towers": [
+       "ice"
+      ],
+      "stat": "radius",
+      "add": 3
+     }
+    ]
+   },
+   "use": "noted",
+   "source": "game file Knowledge/Primary/IcyChill.json (v56.0)"
+  },
+  {
+   "id": "more-splatty-glue",
+   "gameId": "MoreSplattyGlue",
+   "name": "More Splatty Glue",
+   "tree": "Primary",
+   "effect": "Glue Splatter can affect 2 extra Bloons per shot.",
+   "desc": "Glue Splatter can affect 2 extra Bloons per shot.",
+   "ptsNeeded": 5,
+   "mm": 0,
+   "pre": [
+    "fast-glue"
+   ],
+   "layout": {
+    "row": 3,
+    "col": 2
+   },
+   "tags": [
+    "attacks"
+   ],
+   "fx": {
+    "attack": [
+     {
+      "towers": [
+       "glue"
+      ],
+      "stat": "pierce",
+      "add": 2,
+      "when": {
+       "glue": "x-2+-x"
+      }
+     }
+    ]
+   },
+   "use": "noted",
+   "source": "game file Knowledge/Primary/MoreSplattyGlue.json (v56.0)"
+  },
+  {
+   "id": "budget-clusters",
+   "gameId": "BudgetClusters",
+   "name": "Budget Clusters",
+   "tree": "Primary",
+   "effect": "Bomb Shooter's Cluster Bombs cost reduced by 100.",
+   "desc": "Bomb Shooter's Cluster Bombs cost reduced by 100.",
+   "ptsNeeded": 5,
+   "mm": 0,
+   "pre": [
+    "fraggy-frags"
+   ],
+   "layout": {
+    "row": 3,
+    "col": 4
+   },
+   "tags": [
+    "prices"
+   ],
+   "fx": {
+    "upgradeCost": [
+     {
+      "tower": "bomb",
+      "path": 2,
+      "tier": 3,
+      "flat": -100
+     }
+    ]
+   },
+   "use": "applied",
+   "source": "game file Knowledge/Primary/BudgetClusters.json (v56.0)"
+  },
+  {
+   "id": "extra-bounce",
+   "gameId": "ExtraBounce",
+   "name": "Extra Bounce",
+   "tree": "Primary",
+   "effect": "Increases Boomerang Ricochet pierce by 30.",
+   "desc": "Increases Boomerang Ricochet pierce by 30.",
+   "ptsNeeded": 5,
+   "mm": 0,
+   "pre": [
+    "cheap-rangs"
+   ],
+   "layout": {
+    "row": 3,
+    "col": 5
+   },
+   "tags": [
+    "attacks"
+   ],
+   "fx": {
+    "attack": [
+     {
+      "towers": [
+       "boomerang"
+      ],
+      "stat": "bounces",
+      "add": 30,
+      "when": {
+       "boomerang": "3+-x-x + paragon"
+      }
+     },
+     {
+      "towers": [
+       "boomerang"
+      ],
+      "stat": "pierce",
+      "add": 30,
+      "when": {
+       "boomerang": "3+-x-x + paragon"
+      }
+     }
+    ]
+   },
+   "use": "noted",
+   "source": "game file Knowledge/Primary/ExtraBounce.json (v56.0)"
+  },
+  {
+   "id": "4-and-4",
+   "gameId": "4And4",
+   "name": "4 and 4",
+   "tree": "Primary",
+   "effect": "Dart Monkey's triple shot gets 4 darts every 4th shot.",
+   "desc": "Dart Monkey's triple shot gets 4 darts every 4th shot.",
+   "ptsNeeded": 5,
+   "mm": 0,
+   "pre": [
+    "crossbow-reach"
+   ],
+   "layout": {
+    "row": 3,
+    "col": 7
+   },
+   "tags": [
+    "attacks"
+   ],
+   "fx": {
+    "attack": [
+     {
+      "towers": [
+       "dart"
+      ],
+      "stat": "projectiles",
+      "add": 1,
+      "everyNthShot": 4,
+      "when": {
+       "dart": "x-3+-x + paragon"
+      }
+     }
+    ]
+   },
+   "use": "noted",
+   "source": "game file Knowledge/Primary/4And4.json (v56.0)"
+  },
+  {
+   "id": "force-vs-force",
+   "gameId": "ForceVsForce",
+   "name": "Force vs Force",
+   "tree": "Primary",
+   "effect": "Juggernaut does +2 damage per shot to MOAB-Class Bloons.",
+   "desc": "Juggernaut does +2 damage per shot to MOAB-Class Bloons.",
+   "ptsNeeded": 5,
+   "mm": 0,
+   "pre": [
+    "crossbow-reach"
+   ],
+   "layout": {
+    "row": 3,
+    "col": 8
+   },
+   "tags": [
+    "attacks"
+   ],
+   "fx": {
+    "attack": [
+     {
+      "towers": [
+       "dart"
+      ],
+      "stat": "damageVs",
+      "tag": "Moabs",
+      "add": 2,
+      "when": {
+       "dart": "4+-x-x + paragon"
+      }
+     }
+    ]
+   },
+   "use": "noted",
+   "source": "game file Knowledge/Primary/ForceVsForce.json (v56.0)"
+  },
+  {
+   "id": "recurring-rangs",
+   "gameId": "RecurringRangs",
+   "name": "Recurring 'Rangs",
+   "tree": "Primary",
+   "effect": "Boomerangs that return to the Boomerang Monkey will be thrown a second time.",
+   "desc": "Boomerangs that return to the Boomerang Monkey will be thrown a second time.",
+   "ptsNeeded": 5,
+   "mm": 0,
+   "pre": [
+    "extra-bounce"
+   ],
+   "layout": {
+    "row": 4,
+    "col": 5
+   },
+   "tags": [
+    "attacks"
+   ],
+   "fx": {
+    "attack": [
+     {
+      "towers": [
+       "boomerang"
+      ],
+      "stat": "rethrow",
+      "variant": "Regular",
+      "when": [
+       0,
+       5,
+       0,
+       5,
+       0,
+       1
+      ]
+     },
+     {
+      "towers": [
+       "boomerang"
+      ],
+      "stat": "rethrow",
+      "variant": "Bigger",
+      "when": [
+       0,
+       5,
+       0,
+       5,
+       1,
+       3
+      ]
+     },
+     {
+      "towers": [
+       "boomerang"
+      ],
+      "stat": "rethrow",
+      "variant": "Kylie",
+      "when": [
+       0,
+       5,
+       0,
+       5,
+       3,
+       5
+      ]
+     }
+    ]
+   },
+   "use": "noted",
+   "source": "game file Knowledge/Primary/RecurringRangs.json (v56.0)"
+  },
+  {
+   "id": "so-cold",
+   "gameId": "SoCold",
+   "name": "So... Cold...",
+   "tree": "Primary",
+   "effect": "Ice Monkey's Permafrost upgrade slows by 60%.",
+   "desc": "Ice Monkey's Permafrost upgrade slows by 60%.",
+   "ptsNeeded": 8,
+   "mm": 250,
+   "pre": [
+    "icy-chill"
+   ],
+   "layout": {
+    "row": 5,
+    "col": 1
+   },
+   "tags": [
+    "attacks"
+   ],
+   "fx": {
+    "attack": [
+     {
+      "towers": [
+       "ice"
+      ],
+      "stat": "slow",
+      "mutation": "Permafrost",
+      "slowAdd": -0.1,
+      "durationPct": 0,
+      "when": {
+       "ice": "1+-x-x + paragon"
+      }
+     }
+    ]
+   },
+   "use": "noted",
+   "source": "game file Knowledge/Primary/SoCold.json (v56.0)"
+  },
+  {
+   "id": "aviation-grade-glue",
+   "gameId": "AviationGradeGlue",
+   "name": "Aviation Grade Glue",
+   "tree": "Primary",
+   "effect": "MOAB Glue slows more than normal.",
+   "desc": "MOAB Glue slows more than normal.",
+   "ptsNeeded": 8,
+   "mm": 250,
+   "pre": [
+    "more-splatty-glue"
+   ],
+   "layout": {
+    "row": 5,
+    "col": 2
+   },
+   "tags": [
+    "attacks"
+   ],
+   "fx": {
+    "attack": [
+     {
+      "towers": [
+       "glue"
+      ],
+      "stat": "slow",
+      "tag": "Moabs",
+      "slowMult": 2.2,
+      "when": {
+       "glue": "x-x-3+"
+      }
+     }
+    ]
+   },
+   "use": "noted",
+   "source": "game file Knowledge/Primary/AviationGradeGlue.json (v56.0)"
+  },
+  {
+   "id": "hard-press",
+   "gameId": "HardPress",
+   "name": "Hard Press",
+   "tree": "Primary",
+   "effect": "MOAB Press pushes back 30% further.",
+   "desc": "MOAB Press pushes back 30% further.",
+   "ptsNeeded": 8,
+   "mm": 250,
+   "pre": [
+    "extra-bounce"
+   ],
+   "layout": {
+    "row": 5,
+    "col": 6
+   },
+   "tags": [
+    "attacks"
+   ],
+   "fx": {
+    "attack": [
+     {
+      "towers": [
+       "boomerang"
+      ],
+      "stat": "pushBack",
+      "pct": 0.3
+     }
+    ]
+   },
+   "use": "noted",
+   "source": "game file Knowledge/Primary/HardPress.json (v56.0)"
+  },
+  {
+   "id": "master-double-cross",
+   "gameId": "MasterDoubleCross",
+   "name": "Master Double Cross",
+   "tree": "Primary",
+   "effect": "Allows you to have TWO Crossbow Masters.",
+   "desc": "Allows you to have TWO Crossbow Masters.",
+   "ptsNeeded": 8,
+   "mm": 250,
+   "pre": [
+    "4-and-4"
+   ],
+   "layout": {
+    "row": 5,
+    "col": 7
+   },
+   "tags": [
+    "other"
+   ],
+   "source": "game file Knowledge/Primary/MasterDoubleCross.json (v56.0)"
+  },
+  {
+   "id": "mega-mauler",
+   "gameId": "MegaMauler",
+   "name": "Mega Mauler",
+   "tree": "Primary",
+   "effect": "MOAB Mauler does more damage per hit.",
+   "desc": "MOAB Mauler does more damage per hit.",
+   "ptsNeeded": 8,
+   "mm": 250,
+   "pre": [
+    "aviation-grade-glue",
+    "hard-press"
+   ],
+   "layout": {
+    "row": 6,
+    "col": 2
+   },
+   "tags": [
+    "attacks"
+   ],
+   "fx": {
+    "attack": [
+     {
+      "towers": [
+       "bomb"
+      ],
+      "stat": "damageVs",
+      "tag": "Moabs",
+      "add": 2,
+      "when": {
+       "bomb": "x-3+-x"
+      }
+     }
+    ]
+   },
+   "use": "noted",
+   "source": "game file Knowledge/Primary/MegaMauler.json (v56.0)"
+  },
+  {
+   "id": "big-cryo-blast",
+   "gameId": "BigCryoBlast",
+   "name": "Big Cryo Blast",
+   "tree": "Primary",
+   "effect": "Cryo Cannon gets increased blast radius.",
+   "desc": "Cryo Cannon gets increased blast radius.",
    "ptsNeeded": 10,
-   "mm": 1000
+   "mm": 500,
+   "pre": [
+    "so-cold"
+   ],
+   "layout": {
+    "row": 7,
+    "col": 1
+   },
+   "tags": [
+    "attacks"
+   ],
+   "fx": {
+    "attack": [
+     {
+      "towers": [
+       "ice"
+      ],
+      "stat": "radius",
+      "add": 0,
+      "mult": 1.12,
+      "when": {
+       "ice": "x-x-3+"
+      }
+     }
+    ]
+   },
+   "use": "noted",
+   "source": "game file Knowledge/Primary/BigCryoBlast.json (v56.0)"
+  },
+  {
+   "id": "hypothermia",
+   "gameId": "Hypothermia",
+   "name": "Hypothermia",
+   "tree": "Primary",
+   "effect": "Snowstorm freezes Bloons for longer.",
+   "desc": "Snowstorm freezes Bloons for longer.",
+   "ptsNeeded": 10,
+   "mm": 500,
+   "pre": [
+    "so-cold"
+   ],
+   "layout": {
+    "row": 7,
+    "col": 2
+   },
+   "tags": [
+    "attacks"
+   ],
+   "fx": {
+    "attack": [
+     {
+      "towers": [
+       "ice"
+      ],
+      "stat": "freezeTime",
+      "mutation": "Snowstorm:Regular:Freeze",
+      "add": 1,
+      "when": {
+       "ice": "x-4+-x"
+      }
+     },
+     {
+      "towers": [
+       "ice"
+      ],
+      "stat": "freezeTime",
+      "mutation": "AbsoluteZero:Regular:Freeze",
+      "add": 1,
+      "when": {
+       "ice": "x-4+-x"
+      }
+     }
+    ]
+   },
+   "use": "noted",
+   "source": "game file Knowledge/Primary/Hypothermia.json (v56.0)"
+  },
+  {
+   "id": "cheaper-solution",
+   "gameId": "CheaperSolution",
+   "name": "Cheaper Solution",
+   "tree": "Primary",
+   "effect": "Bloon Liquefier cost reduced by 1000.",
+   "desc": "Bloon Liquefier cost reduced by 1000.",
+   "ptsNeeded": 10,
+   "mm": 500,
+   "pre": [
+    "aviation-grade-glue"
+   ],
+   "layout": {
+    "row": 7,
+    "col": 3
+   },
+   "tags": [
+    "prices"
+   ],
+   "fx": {
+    "upgradeCost": [
+     {
+      "tower": "glue",
+      "path": 0,
+      "tier": 4,
+      "flat": -1000
+     }
+    ]
+   },
+   "use": "applied",
+   "source": "game file Knowledge/Primary/CheaperSolution.json (v56.0)"
+  },
+  {
+   "id": "violent-impact",
+   "gameId": "ViolentImpact",
+   "name": "Violent Impact",
+   "tree": "Primary",
+   "effect": "Bomb Shooter's Bloon Impact stuns for 25% longer.",
+   "desc": "Bomb Shooter's Bloon Impact stuns for 25% longer.",
+   "ptsNeeded": 10,
+   "mm": 500,
+   "pre": [
+    "budget-clusters"
+   ],
+   "layout": {
+    "row": 7,
+    "col": 4
+   },
+   "tags": [
+    "attacks"
+   ],
+   "fx": {
+    "attack": [
+     {
+      "towers": [
+       "bomb"
+      ],
+      "stat": "slow",
+      "mutation": "Stun:Weak",
+      "slowAdd": 0,
+      "durationPct": 0.25
+     }
+    ]
+   },
+   "use": "noted",
+   "source": "game file Knowledge/Primary/ViolentImpact.json (v56.0)"
+  },
+  {
+   "id": "long-turbo",
+   "gameId": "LongTurbo",
+   "name": "Long Turbo",
+   "tree": "Primary",
+   "effect": "Boomerang Turbo Charge ability lasts 15 seconds.",
+   "desc": "Boomerang Turbo Charge ability lasts 15 seconds.",
+   "ptsNeeded": 10,
+   "mm": 500,
+   "pre": [
+    "hard-press"
+   ],
+   "layout": {
+    "row": 7,
+    "col": 6
+   },
+   "tags": [
+    "abilities"
+   ],
+   "source": "game file Knowledge/Primary/LongTurbo.json (v56.0)"
+  },
+  {
+   "id": "come-on-everybody",
+   "gameId": "ComeOnEverybody",
+   "name": "Come On Everybody!",
+   "tree": "Primary",
+   "effect": "Primary towers attack 5% faster if all are below tier 3, and cost 5% less if all are tier 3 or 4.",
+   "desc": "Primary towers attack 5% faster if all are below tier 3, and cost 5% less if all are tier 3 or 4.",
+   "ptsNeeded": 10,
+   "mm": 500,
+   "pre": [
+    "master-double-cross"
+   ],
+   "layout": {
+    "row": 7,
+    "col": 7
+   },
+   "tags": [
+    "attacks",
+    "prices"
+   ],
+   "source": "game file Knowledge/Primary/ComeOnEverybody.json (v56.0)"
+  },
+  {
+   "id": "bionic-augmentation",
+   "gameId": "BionicAugmentation",
+   "name": "Bionic Augmentation",
+   "tree": "Primary",
+   "effect": "While Turbo Charge is active, Bionic Boomerang is able to target Camo Bloons.",
+   "desc": "While Turbo Charge is active, Bionic Boomerang is able to target Camo Bloons.",
+   "ptsNeeded": 10,
+   "mm": 500,
+   "pre": [
+    "long-turbo"
+   ],
+   "layout": {
+    "row": 8,
+    "col": 6
+   },
+   "tags": [
+    "attacks"
+   ],
+   "fx": {
+    "attack": [
+     {
+      "towers": [
+       "boomerang"
+      ],
+      "stat": "camoDuringAbility",
+      "value": true,
+      "when": {
+       "boomerang": "x-4+-x"
+      }
+     }
+    ]
+   },
+   "use": "noted",
+   "source": "game file Knowledge/Primary/BionicAugmentation.json (v56.0)"
   },
   {
    "id": "bonus-glue-gunner",
+   "gameId": "BonusGlueGunner",
    "name": "Bonus Glue Gunner",
    "tree": "Primary",
    "effect": "A free Glue Gunner at the start (instead of Bonus Monkey!)",
+   "desc": "Start each game with 1 free Glue Gunner! (Only 1 free Monkey Tower per game)",
    "ptsNeeded": 10,
-   "mm": 1000
-  },
-  {
-   "id": "better-sell-deals",
-   "name": "Better Sell Deals",
-   "tree": "Support",
-   "effect": "All towers sell for 5% more",
-   "ptsNeeded": 8,
-   "mm": 500,
-   "fx": {
-    "sellAdd": 0.05
+   "mm": 1000,
+   "pre": [
+    "cheaper-solution"
+   ],
+   "layout": {
+    "row": 8,
+    "col": 3
    },
-   "source": "game file Knowledge/Support/BetterSellDeals.json (multiplier 0.05)"
-  },
-  {
-   "id": "veteran-monkey-training",
-   "name": "Veteran Monkey Training",
-   "tree": "Support",
-   "effect": "All towers reload 3% faster",
-   "ptsNeeded": 8,
-   "mm": 500
-  },
-  {
-   "id": "global-ability-cooldowns",
-   "name": "Global Ability Cooldowns",
-   "tree": "Support",
-   "effect": "Ability cooldowns -3%",
-   "ptsNeeded": 8,
-   "mm": 500
-  },
-  {
-   "id": "healthy-bananas",
-   "name": "Healthy Bananas",
-   "tree": "Support",
-   "effect": "Marketplace +1 life per round, Central Market +3",
-   "ptsNeeded": 8,
-   "mm": 500
-  },
-  {
-   "id": "empowered-heroes",
-   "name": "Empowered Heroes",
-   "tree": "Heroes",
-   "effect": "Heroes start at level 3",
-   "ptsNeeded": 8,
-   "mm": 500,
+   "tags": [
+    "prices"
+   ],
    "fx": {
-    "heroStartLevel": 3
-   }
+    "freeTower": "glue"
+   },
+   "use": "applied",
+   "source": "game file Knowledge/Primary/BonusGlueGunner.json (v56.0)"
   },
   {
-   "id": "mana-shield",
-   "name": "Mana Shield",
-   "tree": "Magic",
-   "effect": "Absorbs up to 25 lives, slowly recharges",
+   "id": "bonus-monkey",
+   "gameId": "BonusMonkey",
+   "name": "Bonus Monkey!",
+   "tree": "Primary",
+   "effect": "A free Dart Monkey at the start (one free tower per game; or Bonus Glue Gunner)",
+   "desc": "Start each game with 1 free Dart Monkey! (Only 1 free Monkey Tower per game)",
+   "ptsNeeded": 10,
+   "mm": 1000,
+   "pre": [
+    "come-on-everybody"
+   ],
+   "layout": {
+    "row": 8,
+    "col": 7
+   },
+   "tags": [
+    "prices"
+   ],
+   "fx": {
+    "freeTower": "dart"
+   },
+   "use": "applied",
+   "source": "game file Knowledge/Primary/BonusMonkey.json (v56.0)"
+  },
+  {
+   "id": "more-cash",
+   "gameId": "MoreCash",
+   "name": "More Cash",
+   "tree": "Primary",
+   "effect": "+$200 starting cash",
+   "desc": "Increase starting cash by 200.",
+   "ptsNeeded": 10,
+   "mm": 1000,
+   "pre": [
+    "bonus-glue-gunner",
+    "bonus-monkey"
+   ],
+   "layout": {
+    "row": 9,
+    "col": 3
+   },
+   "tags": [
+    "cash"
+   ],
+   "fx": {
+    "startCash": 200
+   },
+   "use": "applied",
+   "source": "game file Knowledge/Primary/MoreCash.json (v56.0)"
+  },
+  {
+   "id": "naval-upgrades",
+   "gameId": "NavalUpgrades",
+   "name": "Naval Upgrades",
+   "tree": "Military",
+   "effect": "+1 pierce to Subs and Buccaneers",
+   "desc": "Monkey Buccaneer and Monkey Sub get +1 pierce per shot.",
+   "ptsNeeded": 0,
+   "mm": 0,
+   "pre": [],
+   "layout": {
+    "row": 0,
+    "col": 0
+   },
+   "tags": [
+    "attacks"
+   ],
+   "fx": {
+    "attack": [
+     {
+      "towers": [
+       "buccaneer",
+       "sub"
+      ],
+      "stat": "pierce",
+      "add": 1
+     }
+    ]
+   },
+   "use": "noted",
+   "source": "game file Knowledge/Military/NavalUpgrades.json (v56.0)"
+  },
+  {
+   "id": "airforce-upgrades",
+   "gameId": "AirforceUpgrades",
+   "name": "Airforce Upgrades",
+   "tree": "Military",
+   "effect": "Monkey Aces and Heli Pilots of Tier 3 or higher get +1 pierce per shot.",
+   "desc": "Monkey Aces and Heli Pilots of Tier 3 or higher get +1 pierce per shot.",
+   "ptsNeeded": 0,
+   "mm": 0,
+   "pre": [],
+   "layout": {
+    "row": 0,
+    "col": 2
+   },
+   "tags": [
+    "attacks"
+   ],
+   "fx": {
+    "attack": [
+     {
+      "towers": [
+       "ace",
+       "heli"
+      ],
+      "stat": "pierce",
+      "add": 1,
+      "minTier": 3
+     }
+    ]
+   },
+   "use": "noted",
+   "source": "game file Knowledge/Military/AirforceUpgrades.json (v56.0)"
+  },
+  {
+   "id": "elite-military-training",
+   "gameId": "EliteMilitaryTraining",
+   "name": "Elite Military Training",
+   "tree": "Military",
+   "effect": "+1,000 XP once to every Military tower, and +5% Military XP",
+   "desc": "All Military Monkeys get a one-off +1000xp and earn xp in-game 5% faster permanently.",
+   "ptsNeeded": 0,
+   "mm": 0,
+   "pre": [],
+   "layout": {
+    "row": 0,
+    "col": 4
+   },
+   "tags": [
+    "xp"
+   ],
+   "fx": {
+    "militaryXpMult": 1.05
+   },
+   "use": "applied",
+   "source": "game file Knowledge/Military/EliteMilitaryTraining.json (v56.0)"
+  },
+  {
+   "id": "emergency-unlock",
+   "gameId": "EmergencyUnlock",
+   "name": "Emergency Unlock",
+   "tree": "Military",
+   "effect": "Activated ability: unlocks locked Dartling Gunners and boosts their swivel speed for a short time.",
+   "desc": "Activated ability: unlocks locked Dartling Gunners and boosts their swivel speed for a short time.",
+   "ptsNeeded": 0,
+   "mm": 0,
+   "pre": [],
+   "layout": {
+    "row": 0,
+    "col": 5
+   },
+   "tags": [
+    "abilities"
+   ],
+   "source": "game file Knowledge/Military/EmergencyUnlock.json (v56.0)"
+  },
+  {
+   "id": "big-bunch",
+   "gameId": "BigBunch",
+   "name": "Big Bunch",
+   "tree": "Military",
+   "effect": "Grape Shot shoots 6 grapes.",
+   "desc": "Grape Shot shoots 6 grapes.",
+   "ptsNeeded": 0,
+   "mm": 0,
+   "pre": [
+    "naval-upgrades"
+   ],
+   "layout": {
+    "row": 1,
+    "col": 0
+   },
+   "tags": [
+    "attacks"
+   ],
+   "fx": {
+    "attack": [
+     {
+      "towers": [
+       "buccaneer"
+      ],
+      "stat": "projectiles",
+      "add": 1,
+      "when": {
+       "buccaneer": "x-1+-x"
+      }
+     }
+    ]
+   },
+   "use": "noted",
+   "source": "game file Knowledge/Military/BigBunch.json (v56.0)"
+  },
+  {
+   "id": "accelerated-aerodarts",
+   "gameId": "AcceleratedAerodarts",
+   "name": "Accelerated Aerodarts",
+   "tree": "Military",
+   "effect": "Darts from Monkey Aces fly faster.",
+   "desc": "Darts from Monkey Aces fly faster.",
+   "ptsNeeded": 0,
+   "mm": 0,
+   "pre": [
+    "airforce-upgrades"
+   ],
+   "layout": {
+    "row": 1,
+    "col": 2
+   },
+   "tags": [
+    "attacks"
+   ],
+   "fx": {
+    "attack": [
+     {
+      "towers": [
+       "ace"
+      ],
+      "stat": "projectileSpeed",
+      "pct": 0.5
+     },
+     {
+      "towers": [
+       "ace"
+      ],
+      "stat": "turnRate",
+      "pct": 0.2
+     }
+    ]
+   },
+   "use": "noted",
+   "source": "game file Knowledge/Military/AcceleratedAerodarts.json (v56.0)"
+  },
+  {
+   "id": "ceramic-shock",
+   "gameId": "CeramicShock",
+   "name": "Ceramic Shock",
+   "tree": "Military",
+   "effect": "Sniper hits on Ceramic Bloons slow them down briefly.",
+   "desc": "Sniper hits on Ceramic Bloons slow them down briefly.",
+   "ptsNeeded": 0,
+   "mm": 0,
+   "pre": [
+    "elite-military-training"
+   ],
+   "layout": {
+    "row": 1,
+    "col": 4
+   },
+   "tags": [
+    "attacks"
+   ],
+   "fx": {
+    "attack": [
+     {
+      "towers": [
+       "sniper"
+      ],
+      "stat": "slow",
+      "tag": "Ceramic",
+      "speedMult": 0.3,
+      "duration": 0.6
+     }
+    ]
+   },
+   "use": "noted",
+   "source": "game file Knowledge/Military/CeramicShock.json (v56.0)"
+  },
+  {
+   "id": "extra-burny-stuff",
+   "gameId": "ExtraBurnyStuff",
+   "name": "Extra Burny Stuff",
+   "tree": "Military",
+   "effect": "Burny Stuff pops every second.",
+   "desc": "Burny Stuff pops every second.",
+   "ptsNeeded": 4,
+   "mm": 0,
+   "pre": [],
+   "layout": {
+    "row": 2,
+    "col": 6
+   },
+   "tags": [
+    "attacks"
+   ],
+   "fx": {
+    "attack": [
+     {
+      "towers": [
+       "mortar"
+      ],
+      "stat": "burnInterval",
+      "add": -0.25,
+      "damageAdd": 0,
+      "when": {
+       "mortar": "x-x-2+"
+      }
+     }
+    ]
+   },
+   "use": "noted",
+   "source": "game file Knowledge/Military/ExtraBurnyStuff.json (v56.0)"
+  },
+  {
+   "id": "breaking-ballistic",
+   "gameId": "BreakingBallistic",
+   "name": "Breaking Ballistic",
+   "tree": "Military",
+   "effect": "Ballistic Missiles do more damage to Ceramic Bloons.",
+   "desc": "Ballistic Missiles do more damage to Ceramic Bloons.",
+   "ptsNeeded": 4,
+   "mm": 0,
+   "pre": [
+    "naval-upgrades"
+   ],
+   "layout": {
+    "row": 2,
+    "col": 1
+   },
+   "tags": [
+    "attacks"
+   ],
+   "fx": {
+    "attack": [
+     {
+      "towers": [
+       "sub"
+      ],
+      "stat": "damageVs",
+      "tag": "Ceramic",
+      "add": 1,
+      "when": {
+       "sub": "x-3+-x"
+      }
+     }
+    ]
+   },
+   "use": "noted",
+   "source": "game file Knowledge/Military/BreakingBallistic.json (v56.0)"
+  },
+  {
+   "id": "faster-takedowns",
+   "gameId": "FasterTakedowns",
+   "name": "Faster Takedowns",
+   "tree": "Military",
+   "effect": "MOAB Takedown Ability has 5 second faster cooldown.",
+   "desc": "MOAB Takedown Ability has 5 second faster cooldown.",
+   "ptsNeeded": 4,
+   "mm": 0,
+   "pre": [
+    "big-bunch"
+   ],
+   "layout": {
+    "row": 2,
+    "col": 0
+   },
+   "tags": [
+    "abilities"
+   ],
+   "source": "game file Knowledge/Military/FasterTakedowns.json (v56.0)"
+  },
+  {
+   "id": "targeted-pineapples",
+   "gameId": "TargetedPineapples",
+   "name": "Targeted Pineapples",
+   "tree": "Military",
+   "effect": "Pineapples are only dropped near tracks.",
+   "desc": "Pineapples are only dropped near tracks.",
+   "ptsNeeded": 4,
+   "mm": 0,
+   "pre": [
+    "accelerated-aerodarts"
+   ],
+   "layout": {
+    "row": 2,
+    "col": 2
+   },
+   "tags": [
+    "attacks"
+   ],
+   "fx": {
+    "attack": [
+     {
+      "towers": [
+       "ace"
+      ],
+      "stat": "dropOnlyOverTrack",
+      "value": true,
+      "when": {
+       "ace": "x-1+-x"
+      }
+     }
+    ]
+   },
+   "use": "noted",
+   "source": "game file Knowledge/Military/TargetedPineapples.json (v56.0)"
+  },
+  {
+   "id": "rapid-razors",
+   "gameId": "RapidRazors",
+   "name": "Rapid Razors",
+   "tree": "Military",
+   "effect": "Razor Rotors pop Bloons faster.",
+   "desc": "Razor Rotors pop Bloons faster.",
+   "ptsNeeded": 4,
+   "mm": 0,
+   "pre": [
+    "airforce-upgrades"
+   ],
+   "layout": {
+    "row": 2,
+    "col": 3
+   },
+   "tags": [
+    "attacks"
+   ],
+   "fx": {
+    "attack": [
+     {
+      "towers": [
+       "heli"
+      ],
+      "stat": "rate",
+      "reduction": 0.15,
+      "when": {
+       "heli": "3+-x-x"
+      }
+     }
+    ]
+   },
+   "use": "noted",
+   "source": "game file Knowledge/Military/RapidRazors.json (v56.0)"
+  },
+  {
+   "id": "cheaper-maiming",
+   "gameId": "CheaperMaiming",
+   "name": "Cheaper Maiming",
+   "tree": "Military",
+   "effect": "Maim MOAB cost reduced by 1000.",
+   "desc": "Maim MOAB cost reduced by 1000.",
+   "ptsNeeded": 4,
+   "mm": 0,
+   "pre": [
+    "ceramic-shock"
+   ],
+   "layout": {
+    "row": 2,
+    "col": 4
+   },
+   "tags": [
+    "prices"
+   ],
+   "fx": {
+    "upgradeCost": [
+     {
+      "tower": "sniper",
+      "path": 0,
+      "tier": 4,
+      "flat": -1000
+     }
+    ]
+   },
+   "use": "applied",
+   "source": "game file Knowledge/Military/CheaperMaiming.json (v56.0)"
+  },
+  {
+   "id": "gorgon-storm",
+   "gameId": "GorgonStorm",
+   "name": "Gorgon Storm",
+   "tree": "Military",
+   "effect": "Hydra Rocket Storm stuns damaged Bloons for a short time.",
+   "desc": "Hydra Rocket Storm stuns damaged Bloons for a short time.",
+   "ptsNeeded": 4,
+   "mm": 0,
+   "pre": [
+    "emergency-unlock"
+   ],
+   "layout": {
+    "row": 2,
+    "col": 5
+   },
+   "tags": [
+    "attacks"
+   ],
+   "fx": {
+    "attack": [
+     {
+      "towers": [
+       "dartling"
+      ],
+      "stat": "stun",
+      "duration": 0.5,
+      "moabDuration": 0.1
+     }
+    ]
+   },
+   "use": "noted",
+   "source": "game file Knowledge/Military/GorgonStorm.json (v56.0)"
+  },
+  {
+   "id": "quad-burst",
+   "gameId": "QuadBurst",
+   "name": "Quad Burst",
+   "tree": "Military",
+   "effect": "Airburst Darts split into 4 instead of 3.",
+   "desc": "Airburst Darts split into 4 instead of 3.",
    "ptsNeeded": 8,
-   "mm": 1000
-  },
-  {
-   "id": "big-bloon-sabotage",
-   "name": "Big Bloon Sabotage",
-   "tree": "Military",
-   "effect": "MOAB-class bloons spawn partly damaged. A must for Freeplay",
-   "ptsNeeded": 14,
-   "mm": 1000
-  },
-  {
-   "id": "military-conscription",
-   "name": "Military Conscription",
-   "tree": "Military",
-   "effect": "The first Military tower each game costs two-thirds",
-   "ptsNeeded": 14,
-   "mm": 1000
-  },
-  {
-   "id": "bank-deposits",
-   "name": "Bank Deposits",
-   "tree": "Support",
-   "effect": "Tier 4+ Monkey Banks accept deposits",
-   "ptsNeeded": 14,
-   "mm": 1000
-  },
-  {
-   "id": "paragon-of-power",
-   "name": "Paragon of Power",
-   "tree": "Support",
-   "effect": "Paragons attack faster with no same-type tier 5 on the map",
-   "ptsNeeded": 14,
-   "mm": 1000
-  },
-  {
-   "id": "pre-game-prep",
-   "name": "Pre-game Prep",
-   "tree": "Powers",
-   "effect": "Free permanent Road Spikes at the end of the track",
-   "ptsNeeded": 3,
-   "mm": 250
-  },
-  {
-   "id": "monkeys-together-strong",
-   "name": "Monkeys Together Strong",
-   "tree": null,
-   "effect": "+5% hero XP per hero placed",
-   "group": "Economy and XP"
-  },
-  {
-   "id": "more-valuable-bananas",
-   "name": "More Valuable Bananas",
-   "tree": null,
-   "effect": "Valuable Bananas +30% instead of +25%",
-   "group": "Economy and XP"
-  },
-  {
-   "id": "bigger-banks",
-   "name": "Bigger Banks",
-   "tree": null,
-   "effect": "+$2,500 Monkey Bank capacity",
-   "group": "Economy and XP"
-  },
-  {
-   "id": "backroom-deals",
-   "name": "Backroom Deals",
-   "tree": null,
-   "effect": "IMF Loan +$1,000, repaid at 40%",
-   "group": "Economy and XP"
+   "mm": 250,
+   "pre": [
+    "breaking-ballistic"
+   ],
+   "layout": {
+    "row": 3,
+    "col": 1
+   },
+   "tags": [
+    "attacks"
+   ],
+   "fx": {
+    "attack": [
+     {
+      "towers": [
+       "sub"
+      ],
+      "stat": "projectiles",
+      "add": 1,
+      "when": {
+       "sub": "x-x-2+"
+      }
+     }
+    ]
+   },
+   "use": "noted",
+   "source": "game file Knowledge/Military/QuadBurst.json (v56.0)"
   },
   {
    "id": "trade-agreements",
+   "gameId": "TradeAgreements",
    "name": "Trade Agreements",
-   "tree": null,
+   "tree": "Military",
    "effect": "Merchantman +$20 a round",
-   "group": "Economy and XP"
+   "desc": "Merchantman generates +$20 per round.",
+   "ptsNeeded": 8,
+   "mm": 250,
+   "pre": [
+    "faster-takedowns"
+   ],
+   "layout": {
+    "row": 3,
+    "col": 0
+   },
+   "tags": [
+    "cash"
+   ],
+   "fx": {
+    "incomeAdd": [
+     {
+      "tower": "buccaneer",
+      "min": [
+       0,
+       0,
+       3
+      ],
+      "value": 20
+     }
+    ]
+   },
+   "use": "applied",
+   "source": "game file Knowledge/Military/TradeAgreements.json (v56.0)"
+  },
+  {
+   "id": "gun-coolant",
+   "gameId": "GunCoolant",
+   "name": "Gun Coolant",
+   "tree": "Military",
+   "effect": "Monkey Aces attack 10% faster.",
+   "desc": "Monkey Aces attack 10% faster.",
+   "ptsNeeded": 8,
+   "mm": 250,
+   "pre": [
+    "targeted-pineapples"
+   ],
+   "layout": {
+    "row": 3,
+    "col": 2
+   },
+   "tags": [
+    "attacks"
+   ],
+   "fx": {
+    "attack": [
+     {
+      "towers": [
+       "ace"
+      ],
+      "stat": "rate",
+      "pct": 0.1
+     }
+    ]
+   },
+   "use": "noted",
+   "source": "game file Knowledge/Military/GunCoolant.json (v56.0)"
+  },
+  {
+   "id": "paint-stripper",
+   "gameId": "PaintStripper",
+   "name": "Paint Stripper",
+   "tree": "Military",
+   "effect": "Mortar shattering shells removes Fortification from DDT Bloons.",
+   "desc": "Mortar shattering shells removes Fortification from DDT Bloons.",
+   "ptsNeeded": 8,
+   "mm": 250,
+   "pre": [
+    "extra-burny-stuff"
+   ],
+   "layout": {
+    "row": 3,
+    "col": 6
+   },
+   "tags": [
+    "attacks"
+   ],
+   "fx": {
+    "attack": [
+     {
+      "towers": [
+       "mortar"
+      ],
+      "stat": "removeFortified",
+      "tags": [
+       "Ddt"
+      ],
+      "when": {
+       "mortar": "x-x-3+"
+      }
+     }
+    ]
+   },
+   "use": "noted",
+   "source": "game file Knowledge/Military/PaintStripper.json (v56.0)"
+  },
+  {
+   "id": "cross-the-streams",
+   "gameId": "CrossTheStreams",
+   "name": "Cross the Streams",
+   "tree": "Military",
+   "effect": "Where Plasma or Doom beams cross on the track they create temporary plasma pools.",
+   "desc": "Where Plasma or Doom beams cross on the track they create temporary plasma pools.",
+   "ptsNeeded": 8,
+   "mm": 250,
+   "pre": [
+    "gorgon-storm"
+   ],
+   "layout": {
+    "row": 3,
+    "col": 5
+   },
+   "tags": [
+    "attacks"
+   ],
+   "source": "game file Knowledge/Military/CrossTheStreams.json (v56.0)"
+  },
+  {
+   "id": "charged-chinooks",
+   "gameId": "ChargedChinooks",
+   "name": "Charged Chinooks",
+   "tree": "Military",
+   "effect": "Chinook Activated Abilities give 25% more lives and cash.",
+   "desc": "Chinook Activated Abilities give 25% more lives and cash.",
+   "ptsNeeded": 8,
+   "mm": 500,
+   "pre": [
+    "rapid-razors"
+   ],
+   "layout": {
+    "row": 3,
+    "col": 3
+   },
+   "tags": [
+    "lives",
+    "cash"
+   ],
+   "fx": {
+    "lives": {
+     "what": "abilityLives",
+     "pct": 0.25
+    }
+   },
+   "use": "noted",
+   "source": "game file Knowledge/Military/ChargedChinooks.json (v56.0)"
+  },
+  {
+   "id": "aeronautic-subsidy",
+   "gameId": "AeronauticSubsidy",
+   "name": "Aeronautic Subsidy",
+   "tree": "Military",
+   "effect": "Monkey Ace tier 5 upgrades cost 10% less.",
+   "desc": "Monkey Ace tier 5 upgrades cost 10% less.",
+   "ptsNeeded": 8,
+   "mm": 500,
+   "pre": [
+    "gun-coolant"
+   ],
+   "layout": {
+    "row": 4,
+    "col": 2
+   },
+   "tags": [
+    "prices"
+   ],
+   "fx": {
+    "upgradeCost": [
+     {
+      "tower": "ace",
+      "path": 0,
+      "tier": 5,
+      "pct": -0.1
+     },
+     {
+      "tower": "ace",
+      "path": 1,
+      "tier": 5,
+      "pct": -0.1
+     },
+     {
+      "tower": "ace",
+      "path": 2,
+      "tier": 5,
+      "pct": -0.1
+     }
+    ]
+   },
+   "use": "applied",
+   "source": "game file Knowledge/Military/AeronauticSubsidy.json (v56.0)"
+  },
+  {
+   "id": "master-defender",
+   "gameId": "MasterDefender",
+   "name": "Master Defender",
+   "tree": "Military",
+   "effect": "Elite Defender has no cooldown.",
+   "desc": "Elite Defender has no cooldown.",
+   "ptsNeeded": 8,
+   "mm": 500,
+   "pre": [
+    "cheaper-maiming"
+   ],
+   "layout": {
+    "row": 3,
+    "col": 4
+   },
+   "tags": [
+    "abilities"
+   ],
+   "source": "game file Knowledge/Military/MasterDefender.json (v56.0)"
+  },
+  {
+   "id": "budget-battery",
+   "gameId": "BudgetBattery",
+   "name": "Budget Battery",
+   "tree": "Military",
+   "effect": "Artillery Battery cost reduced by 600.",
+   "desc": "Artillery Battery cost reduced by 600.",
+   "ptsNeeded": 8,
+   "mm": 500,
+   "pre": [
+    "paint-stripper"
+   ],
+   "layout": {
+    "row": 4,
+    "col": 6
+   },
+   "tags": [
+    "prices"
+   ],
+   "fx": {
+    "upgradeCost": [
+     {
+      "tower": "mortar",
+      "path": 1,
+      "tier": 4,
+      "flat": -600
+     }
+    ]
+   },
+   "use": "applied",
+   "source": "game file Knowledge/Military/BudgetBattery.json (v56.0)"
+  },
+  {
+   "id": "wingmonkey",
+   "gameId": "Wingmonkey",
+   "name": "Wingmonkey",
+   "tree": "Military",
+   "effect": "Advanced flight pathing that coordinates multiple Monkey Aces on staggered attack runs.",
+   "desc": "Advanced flight pathing that coordinates multiple Monkey Aces on staggered attack runs.",
+   "ptsNeeded": 8,
+   "mm": 500,
+   "pre": [
+    "aeronautic-subsidy"
+   ],
+   "layout": {
+    "row": 5,
+    "col": 2
+   },
+   "tags": [
+    "attacks"
+   ],
+   "fx": {
+    "attack": [
+     {
+      "towers": [
+       "ace"
+      ],
+      "stat": "flightPattern",
+      "pattern": "Wingmonkey",
+      "maxSpeed": 60
+     }
+    ]
+   },
+   "use": "noted",
+   "source": "game file Knowledge/Military/Wingmonkey.json (v56.0)"
+  },
+  {
+   "id": "flanking-maneuvers",
+   "gameId": "FlankingManeuvers",
+   "name": "Flanking Maneuvers",
+   "tree": "Military",
+   "effect": "Sniper, Monkey Sub, & Monkey Buccaneer attack 10% faster when set to 'Last' targeting priority.",
+   "desc": "Sniper, Monkey Sub, & Monkey Buccaneer attack 10% faster when set to 'Last' targeting priority.",
+   "ptsNeeded": 8,
+   "mm": 500,
+   "pre": [
+    "quad-burst",
+    "trade-agreements"
+   ],
+   "layout": {
+    "row": 4,
+    "col": 1
+   },
+   "tags": [
+    "attacks"
+   ],
+   "fx": {
+    "attack": [
+     {
+      "towers": [
+       "buccaneer",
+       "sniper",
+       "sub"
+      ],
+      "stat": "rate",
+      "pct": 0.1,
+      "whenTargeting": "Last"
+     }
+    ]
+   },
+   "use": "noted",
+   "source": "game file Knowledge/Military/FlankingManeuvers.json (v56.0)"
+  },
+  {
+   "id": "sub-admiral",
+   "gameId": "SubAdmiral",
+   "name": "Sub Admiral",
+   "tree": "Military",
+   "effect": "Sub Commander affects all Monkey Subs on screen.",
+   "desc": "Sub Commander affects all Monkey Subs on screen.",
+   "ptsNeeded": 14,
+   "mm": 1000,
+   "pre": [
+    "flanking-maneuvers"
+   ],
+   "layout": {
+    "row": 6,
+    "col": 1
+   },
+   "tags": [
+    "attacks"
+   ],
+   "fx": {
+    "attack": [
+     {
+      "towers": [
+       "sub"
+      ],
+      "stat": "buffRangeGlobal",
+      "value": true
+     }
+    ]
+   },
+   "use": "noted",
+   "source": "game file Knowledge/Military/SubAdmiral.json (v56.0)"
+  },
+  {
+   "id": "military-conscription",
+   "gameId": "MilitaryConscription",
+   "name": "Military Conscription",
+   "tree": "Military",
+   "effect": "The first Military tower each game costs two-thirds",
+   "desc": "Purchase price of first Military Monkey each game is two thirds the normal.",
+   "ptsNeeded": 14,
+   "mm": 1000,
+   "pre": [
+    "trade-agreements"
+   ],
+   "layout": {
+    "row": 6,
+    "col": 0
+   },
+   "tags": [
+    "prices",
+    "xp"
+   ],
+   "fx": {
+    "towerCost": [
+     {
+      "towers": [
+       "sniper",
+       "sub",
+       "buccaneer",
+       "ace",
+       "heli",
+       "mortar",
+       "dartling"
+      ],
+      "pct": -0.33,
+      "first": true
+     }
+    ]
+   },
+   "use": "applied",
+   "source": "game file Knowledge/Military/MilitaryConscription.json (v56.0)"
+  },
+  {
+   "id": "door-gunner",
+   "gameId": "DoorGunner",
+   "name": "Door Gunner",
+   "tree": "Military",
+   "effect": "Special Poperations Heli allows tier 4 and below Monkey Towers to attack Bloons while in transit.",
+   "desc": "Special Poperations Heli allows tier 4 and below Monkey Towers to attack Bloons while in transit.",
+   "ptsNeeded": 14,
+   "mm": 1000,
+   "pre": [
+    "charged-chinooks"
+   ],
+   "layout": {
+    "row": 6,
+    "col": 3
+   },
+   "tags": [
+    "abilities"
+   ],
+   "source": "game file Knowledge/Military/DoorGunner.json (v56.0)"
+  },
+  {
+   "id": "advanced-logistics",
+   "gameId": "AdvancedLogistics",
+   "name": "Advanced Logistics",
+   "tree": "Military",
+   "effect": "All Military Monkeys base costs reduced by 5%.",
+   "desc": "All Military Monkeys base costs reduced by 5%.",
+   "ptsNeeded": 14,
+   "mm": 1000,
+   "pre": [
+    "aeronautic-subsidy",
+    "door-gunner"
+   ],
+   "layout": {
+    "row": 7,
+    "col": 3
+   },
+   "tags": [
+    "prices"
+   ],
+   "fx": {
+    "towerCost": [
+     {
+      "towers": [
+       "sniper",
+       "sub",
+       "buccaneer",
+       "ace",
+       "heli",
+       "mortar",
+       "dartling"
+      ],
+      "pct": -0.05
+     }
+    ]
+   },
+   "use": "applied",
+   "source": "game file Knowledge/Military/AdvancedLogistics.json (v56.0)"
+  },
+  {
+   "id": "big-bloon-sabotage",
+   "gameId": "BigBloonSabotage",
+   "name": "Big Bloon Sabotage",
+   "tree": "Military",
+   "effect": "MOAB-class bloons spawn partly damaged. A must for Freeplay",
+   "desc": "All MOAB-Class Bloons spawn in a partially damaged state.",
+   "ptsNeeded": 14,
+   "mm": 1000,
+   "pre": [
+    "sub-admiral",
+    "master-defender"
+   ],
+   "layout": {
+    "row": 7,
+    "col": 1
+   },
+   "tags": [
+    "other"
+   ],
+   "fx": {
+    "blimpHpMult": 0.9
+   },
+   "use": "noted",
+   "source": "game file Knowledge/Military/BigBloonSabotage.json (v56.0)"
+  },
+  {
+   "id": "super-range",
+   "gameId": "SuperRange",
+   "name": "SUPER Range",
+   "tree": "Magic",
+   "effect": "Increased range for the Super Range upgrade.",
+   "desc": "Increased range for the Super Range upgrade.",
+   "ptsNeeded": 0,
+   "mm": 0,
+   "pre": [],
+   "layout": {
+    "row": 0,
+    "col": 0
+   },
+   "tags": [
+    "attacks"
+   ],
+   "fx": {
+    "attack": [
+     {
+      "towers": [
+       "super"
+      ],
+      "stat": "range",
+      "add": 3,
+      "when": {
+       "super": "x-1+-x"
+      }
+     }
+    ]
+   },
+   "use": "noted",
+   "source": "game file Knowledge/Magic/SuperRange.json (v56.0)"
+  },
+  {
+   "id": "magic-tricks",
+   "gameId": "MagicTricks",
+   "name": "Magic Tricks",
+   "tree": "Magic",
+   "effect": "Guided Magic and Intense Magic cost 25 less.",
+   "desc": "Guided Magic and Intense Magic cost 25 less.",
+   "ptsNeeded": 0,
+   "mm": 0,
+   "pre": [],
+   "layout": {
+    "row": 0,
+    "col": 2
+   },
+   "tags": [
+    "prices"
+   ],
+   "fx": {
+    "upgradeCost": [
+     {
+      "tower": "wizard",
+      "path": 0,
+      "tier": 1,
+      "flat": -25
+     },
+     {
+      "tower": "wizard",
+      "path": 2,
+      "tier": 1,
+      "flat": -25
+     }
+    ]
+   },
+   "use": "applied",
+   "source": "game file Knowledge/Magic/MagicTricks.json (v56.0)"
+  },
+  {
+   "id": "lingering-magic",
+   "gameId": "LingeringMagic",
+   "name": "Lingering Magic",
+   "tree": "Magic",
+   "effect": "Longer projectile lifespan for Wizard Monkey, Super Monkey, Skywarden, and Druid.",
+   "desc": "Longer projectile lifespan for Wizard Monkey, Super Monkey, Skywarden, and Druid.",
+   "ptsNeeded": 0,
+   "mm": 0,
+   "pre": [],
+   "layout": {
+    "row": 0,
+    "col": 4
+   },
+   "tags": [
+    "attacks"
+   ],
+   "fx": {
+    "attack": [
+     {
+      "towers": [
+       "druid",
+       "skywarden",
+       "super",
+       "wizard"
+      ],
+      "stat": "lifespan",
+      "pct": 0.2
+     }
+    ]
+   },
+   "use": "noted",
+   "source": "game file Knowledge/Magic/LingeringMagic.json (v56.0)"
+  },
+  {
+   "id": "cheaper-doubles",
+   "gameId": "CheaperDoubles",
+   "name": "Cheaper Doubles",
+   "tree": "Magic",
+   "effect": "Ninja Double Shot cost reduced by 100.",
+   "desc": "Ninja Double Shot cost reduced by 100.",
+   "ptsNeeded": 0,
+   "mm": 0,
+   "pre": [
+    "super-range"
+   ],
+   "layout": {
+    "row": 1,
+    "col": 0
+   },
+   "tags": [
+    "prices"
+   ],
+   "fx": {
+    "upgradeCost": [
+     {
+      "tower": "ninja",
+      "path": 0,
+      "tier": 3,
+      "flat": -100
+     }
+    ]
+   },
+   "use": "applied",
+   "source": "game file Knowledge/Magic/CheaperDoubles.json (v56.0)"
+  },
+  {
+   "id": "heavy-knockback",
+   "gameId": "HeavyKnockback",
+   "name": "Heavy Knockback",
+   "tree": "Magic",
+   "effect": "Bloons hit by Knockback from Super Monkey are knocked back slightly harder.",
+   "desc": "Bloons hit by Knockback from Super Monkey are knocked back slightly harder.",
+   "ptsNeeded": 0,
+   "mm": 0,
+   "pre": [
+    "super-range"
+   ],
+   "layout": {
+    "row": 1,
+    "col": 1
+   },
+   "tags": [
+    "attacks"
+   ],
+   "fx": {
+    "attack": [
+     {
+      "towers": [
+       "super"
+      ],
+      "stat": "knockback",
+      "pctAdd": 0.05
+     }
+    ]
+   },
+   "use": "noted",
+   "source": "game file Knowledge/Magic/HeavyKnockback.json (v56.0)"
+  },
+  {
+   "id": "hot-magic",
+   "gameId": "HotMagic",
+   "name": "Hot Magic",
+   "tree": "Magic",
+   "effect": "All Magic type towers can pop Frozen Bloons.",
+   "desc": "All Magic type towers can pop Frozen Bloons.",
+   "ptsNeeded": 0,
+   "mm": 0,
+   "pre": [
+    "lingering-magic"
+   ],
+   "layout": {
+    "row": 1,
+    "col": 4
+   },
+   "tags": [
+    "attacks"
+   ],
+   "fx": {
+    "attack": [
+     {
+      "towers": [
+       "alchemist",
+       "druid",
+       "mermonkey",
+       "ninja",
+       "skywarden",
+       "super",
+       "wizard"
+      ],
+      "stat": "canPop",
+      "props": [
+       "Frozen"
+      ]
+     }
+    ]
+   },
+   "use": "noted",
+   "source": "game file Knowledge/Magic/HotMagic.json (v56.0)"
+  },
+  {
+   "id": "speedy-brewing",
+   "gameId": "SpeedyBrewing",
+   "name": "Speedy Brewing",
+   "tree": "Magic",
+   "effect": "All Alchemist's potions have 5% faster reload time.",
+   "desc": "All Alchemist's potions have 5% faster reload time.",
+   "ptsNeeded": 0,
+   "mm": 0,
+   "pre": [
+    "magic-tricks"
+   ],
+   "layout": {
+    "row": 1,
+    "col": 2
+   },
+   "tags": [
+    "attacks"
+   ],
+   "fx": {
+    "attack": [
+     {
+      "towers": [
+       "alchemist"
+      ],
+      "stat": "rate",
+      "pct": 0.05
+     }
+    ]
+   },
+   "use": "noted",
+   "source": "game file Knowledge/Magic/SpeedyBrewing.json (v56.0)"
+  },
+  {
+   "id": "mo-monkey-money",
+   "gameId": "MoMonkeyMoney",
+   "name": "Mo' Monkey Money",
+   "tree": "Magic",
+   "effect": "+10% Monkey Money from wins and Daily Challenges",
+   "desc": "Earn 10% extra Monkey Money from game wins on any difficulty.",
+   "ptsNeeded": 0,
+   "mm": 0,
+   "pre": [
+    "speedy-brewing"
+   ],
+   "layout": {
+    "row": 2,
+    "col": 2
+   },
+   "tags": [
+    "other"
+   ],
+   "source": "game file Knowledge/Magic/MoMonkeyMoney.json (v56.0)"
+  },
+  {
+   "id": "diversion-tactics",
+   "gameId": "DiversionTactics",
+   "name": "Diversion Tactics",
+   "tree": "Magic",
+   "effect": "Increased chance to distract Bloons from Distraction upgrade.",
+   "desc": "Increased chance to distract Bloons from Distraction upgrade.",
+   "ptsNeeded": 4,
+   "mm": 0,
+   "pre": [
+    "cheaper-doubles"
+   ],
+   "layout": {
+    "row": 3,
+    "col": 0
+   },
+   "tags": [
+    "attacks"
+   ],
+   "fx": {
+    "attack": [
+     {
+      "towers": [
+       "ninja"
+      ],
+      "stat": "distractChance",
+      "add": 0.025
+     }
+    ]
+   },
+   "use": "noted",
+   "source": "game file Knowledge/Magic/DiversionTactics.json (v56.0)"
+  },
+  {
+   "id": "strike-down-the-false",
+   "gameId": "StrikeDownTheFalse",
+   "name": "Strike Down the False",
+   "tree": "Magic",
+   "effect": "Sun Avatar can pop Purple Bloons.",
+   "desc": "Sun Avatar can pop Purple Bloons.",
+   "ptsNeeded": 4,
+   "mm": 0,
+   "pre": [
+    "heavy-knockback"
+   ],
+   "layout": {
+    "row": 3,
+    "col": 1
+   },
+   "tags": [
+    "attacks"
+   ],
+   "fx": {
+    "attack": [
+     {
+      "towers": [
+       "super"
+      ],
+      "stat": "canPop",
+      "props": [
+       "Purple"
+      ],
+      "when": {
+       "super": "3+-x-x"
+      }
+     }
+    ]
+   },
+   "use": "noted",
+   "source": "game file Knowledge/Magic/StrikeDownTheFalse.json (v56.0)"
+  },
+  {
+   "id": "warm-oak",
+   "gameId": "WarmOak",
+   "name": "Warm Oak",
+   "tree": "Magic",
+   "effect": "Heart of Oak cost reduced by 100.",
+   "desc": "Heart of Oak cost reduced by 100.",
+   "ptsNeeded": 4,
+   "mm": 0,
+   "pre": [
+    "hot-magic"
+   ],
+   "layout": {
+    "row": 3,
+    "col": 4
+   },
+   "tags": [
+    "prices"
+   ],
+   "fx": {
+    "upgradeCost": [
+     {
+      "tower": "druid",
+      "path": 1,
+      "tier": 2,
+      "flat": -100
+     }
+    ]
+   },
+   "use": "applied",
+   "source": "game file Knowledge/Magic/WarmOak.json (v56.0)"
+  },
+  {
+   "id": "strong-tonic",
+   "gameId": "StrongTonic",
+   "name": "Strong Tonic",
+   "tree": "Magic",
+   "effect": "Transforming Tonic lasts longer.",
+   "desc": "Transforming Tonic lasts longer.",
+   "ptsNeeded": 4,
+   "mm": 0,
+   "pre": [
+    "speedy-brewing"
+   ],
+   "layout": {
+    "row": 3,
+    "col": 3
+   },
+   "tags": [
+    "attacks"
+   ],
+   "fx": {
+    "attack": [
+     {
+      "towers": [
+       "alchemist"
+      ],
+      "stat": "activeTime",
+      "add": 4,
+      "when": {
+       "alchemist": "x-4+-x"
+      }
+     },
+     {
+      "towers": [
+       "alchemist"
+      ],
+      "stat": "rangeFrames",
+      "add": 4,
+      "when": {
+       "alchemist": "x-4+-x"
+      }
+     }
+    ]
+   },
+   "use": "noted",
+   "source": "game file Knowledge/Magic/StrongTonic.json (v56.0)"
+  },
+  {
+   "id": "xray-ultra",
+   "gameId": "XrayUltra",
+   "name": "X-ray Ultra",
+   "tree": "Magic",
+   "effect": "Ultravision allows Super Monkeys to see through and fire through blocking objects.",
+   "desc": "Ultravision allows Super Monkeys to see through and fire through blocking objects.",
+   "ptsNeeded": 4,
+   "mm": 250,
+   "pre": [
+    "strike-down-the-false"
+   ],
+   "layout": {
+    "row": 4,
+    "col": 1
+   },
+   "tags": [
+    "attacks"
+   ],
+   "fx": {
+    "attack": [
+     {
+      "towers": [
+       "super"
+      ],
+      "stat": "ignoreBlockers",
+      "value": true,
+      "when": {
+       "super": "x-x-2+"
+      }
+     }
+    ]
+   },
+   "use": "noted",
+   "source": "game file Knowledge/Magic/XrayUltra.json (v56.0)"
+  },
+  {
+   "id": "arcane-impale",
+   "gameId": "ArcaneImpale",
+   "name": "Arcane Impale",
+   "tree": "Magic",
+   "effect": "Arcane Spike does extra damage to MOAB-Class and Ceramic Bloons.",
+   "desc": "Arcane Spike does extra damage to MOAB-Class and Ceramic Bloons.",
+   "ptsNeeded": 4,
+   "mm": 250,
+   "pre": [
+    "flame-jet"
+   ],
+   "layout": {
+    "row": 4,
+    "col": 5
+   },
+   "tags": [
+    "attacks"
+   ],
+   "fx": {
+    "attack": [
+     {
+      "towers": [
+       "wizard"
+      ],
+      "stat": "damageVs",
+      "tag": "Moabs",
+      "add": 1,
+      "when": {
+       "wizard": "4+-x-x + paragon"
+      }
+     },
+     {
+      "towers": [
+       "wizard"
+      ],
+      "stat": "damageVs",
+      "tag": "Ceramic",
+      "add": 1,
+      "when": {
+       "wizard": "4+-x-x + paragon"
+      }
+     }
+    ]
+   },
+   "use": "noted",
+   "source": "game file Knowledge/Magic/ArcaneImpale.json (v56.0)"
+  },
+  {
+   "id": "acid-stability",
+   "gameId": "AcidStability",
+   "name": "Acid Stability",
+   "tree": "Magic",
+   "effect": "Alchemists' acid pools last 5 seconds longer.",
+   "desc": "Alchemists' acid pools last 5 seconds longer.",
+   "ptsNeeded": 4,
+   "mm": 250,
+   "pre": [
+    "strong-tonic"
+   ],
+   "layout": {
+    "row": 4,
+    "col": 3
+   },
+   "tags": [
+    "attacks"
+   ],
+   "fx": {
+    "attack": [
+     {
+      "towers": [
+       "alchemist"
+      ],
+      "stat": "poolLifespan",
+      "add": 5,
+      "when": {
+       "alchemist": "x-x-2+"
+      }
+     }
+    ]
+   },
+   "use": "noted",
+   "source": "game file Knowledge/Magic/AcidStability.json (v56.0)"
+  },
+  {
+   "id": "cold-front",
+   "gameId": "ColdFront",
+   "name": "Cold Front",
+   "tree": "Magic",
+   "effect": "Ball Lightning's additional lightning bolts also freeze Bloons.",
+   "desc": "Ball Lightning's additional lightning bolts also freeze Bloons.",
+   "ptsNeeded": 4,
+   "mm": 250,
+   "pre": [
+    "warm-oak"
+   ],
+   "layout": {
+    "row": 4,
+    "col": 4
+   },
+   "tags": [
+    "attacks"
+   ],
+   "fx": {
+    "attack": [
+     {
+      "towers": [
+       "druid"
+      ],
+      "stat": "freeze",
+      "layers": 4,
+      "duration": 1.5,
+      "moabs": false,
+      "when": {
+       "druid": "4+-x-x + paragon"
+      }
+     }
+    ]
+   },
+   "use": "noted",
+   "source": "game file Knowledge/Magic/ColdFront.json (v56.0)"
+  },
+  {
+   "id": "flame-jet",
+   "gameId": "FlameJet",
+   "name": "Flame Jet",
+   "tree": "Magic",
+   "effect": "Dragon's Breath flame projectiles move much faster.",
+   "desc": "Dragon's Breath flame projectiles move much faster.",
+   "ptsNeeded": 4,
+   "mm": 0,
+   "pre": [
+    "magic-tricks",
+    "hot-magic"
+   ],
+   "layout": {
+    "row": 3,
+    "col": 5
+   },
+   "tags": [
+    "attacks"
+   ],
+   "fx": {
+    "attack": [
+     {
+      "towers": [
+       "wizard"
+      ],
+      "stat": "projectileSpeed",
+      "pct": 0.5,
+      "when": {
+       "wizard": "x-3+-x"
+      }
+     }
+    ]
+   },
+   "use": "noted",
+   "source": "game file Knowledge/Magic/FlameJet.json (v56.0)"
+  },
+  {
+   "id": "deadly-tranquility",
+   "gameId": "DeadlyTranquility",
+   "name": "Deadly Tranquility",
+   "tree": "Magic",
+   "effect": "Bloonjitsu and Grandmaster Ninja get an extra shuriken per throw.",
+   "desc": "Bloonjitsu and Grandmaster Ninja get an extra shuriken per throw.",
+   "ptsNeeded": 8,
+   "mm": 500,
+   "pre": [
+    "diversion-tactics"
+   ],
+   "layout": {
+    "row": 5,
+    "col": 0
+   },
+   "tags": [
+    "attacks"
+   ],
+   "fx": {
+    "attack": [
+     {
+      "towers": [
+       "ninja"
+      ],
+      "stat": "projectiles",
+      "add": 1,
+      "when": {
+       "ninja": "4+-x-x + paragon"
+      }
+     }
+    ]
+   },
+   "use": "noted",
+   "source": "game file Knowledge/Magic/DeadlyTranquility.json (v56.0)"
+  },
+  {
+   "id": "there-can-be-only-one",
+   "gameId": "ThereCanBeOnlyOne",
+   "name": "There Can Be Only One",
+   "tree": "Magic",
+   "effect": "There can be only one.",
+   "desc": "There can be only one.",
+   "ptsNeeded": 8,
+   "mm": 500,
+   "pre": [
+    "xray-ultra"
+   ],
+   "layout": {
+    "row": 5,
+    "col": 1
+   },
+   "tags": [
+    "attacks"
+   ],
+   "fx": {
+    "attack": [
+     {
+      "towers": [
+       "super"
+      ],
+      "stat": "thereCanBeOnlyOne",
+      "value": true,
+      "when": {
+       "super": "5+-x-x"
+      }
+     }
+    ]
+   },
+   "use": "noted",
+   "source": "game file Knowledge/Magic/ThereCanBeOnlyOne.json (v56.0)"
+  },
+  {
+   "id": "vine-rupture",
+   "gameId": "VineRupture",
+   "name": "Vine Rupture",
+   "tree": "Magic",
+   "effect": "Grants Spirit of the Forest Druid a new ability to burst all track vines, doing big damage to all non-Lead Bloons. New vines will regrow after each Rupture.",
+   "desc": "Grants Spirit of the Forest Druid a new ability to burst all track vines, doing big damage to all non-Lead Bloons. New vines will regrow after each Rupture.",
+   "ptsNeeded": 8,
+   "mm": 500,
+   "pre": [
+    "cold-front"
+   ],
+   "layout": {
+    "row": 5,
+    "col": 4
+   },
+   "tags": [
+    "abilities"
+   ],
+   "source": "game file Knowledge/Magic/VineRupture.json (v56.0)"
+  },
+  {
+   "id": "mana-shield",
+   "gameId": "ManaShield",
+   "name": "Mana Shield",
+   "tree": "Magic",
+   "effect": "Absorbs up to 25 lives, slowly recharges",
+   "desc": "Creates a special shield that absorbs up to 25 lives for free. Recharges slowly each round if no Bloons leak.",
+   "ptsNeeded": 8,
+   "mm": 1000,
+   "pre": [
+    "arcane-impale"
+   ],
+   "layout": {
+    "row": 5,
+    "col": 5
+   },
+   "tags": [
+    "lives"
+   ],
+   "fx": {
+    "lives": {
+     "what": "shield",
+     "start": 25,
+     "max": 25,
+     "perRound": 5
+    }
+   },
+   "use": "noted",
+   "source": "game file Knowledge/Magic/ManaShield.json (v56.0)"
+  },
+  {
+   "id": "tiny-tornadoes",
+   "gameId": "TinyTornadoes",
+   "name": "Tiny Tornadoes",
+   "tree": "Magic",
+   "effect": "Druid tornadoes spawn 3 smaller tornadoes when they expire.",
+   "desc": "Druid tornadoes spawn 3 smaller tornadoes when they expire.",
+   "ptsNeeded": 8,
+   "mm": 1000,
+   "pre": [
+    "deadly-tranquility",
+    "cold-front",
+    "vine-rupture"
+   ],
+   "layout": {
+    "row": 6,
+    "col": 3
+   },
+   "tags": [
+    "attacks"
+   ],
+   "fx": {
+    "attack": [
+     {
+      "towers": [
+       "druid"
+      ],
+      "stat": "newEffect",
+      "what": "tiny tornadoes"
+     }
+    ]
+   },
+   "use": "noted",
+   "source": "game file Knowledge/Magic/TinyTornadoes.json (v56.0)"
+  },
+  {
+   "id": "flat-pack-buildings",
+   "gameId": "FlatPackBuildings",
+   "name": "Flat Pack Buildings",
+   "tree": "Support",
+   "effect": "Farm and Village cost 2% less and sell for 2% more.",
+   "desc": "Farm and Village cost 2% less and sell for 2% more.",
+   "ptsNeeded": 0,
+   "mm": 0,
+   "pre": [],
+   "layout": {
+    "row": 0,
+    "col": 0
+   },
+   "tags": [
+    "cash",
+    "prices"
+   ],
+   "fx": {
+    "sellAddFor": {
+     "farm": 0.02,
+     "village": 0.02
+    },
+    "towerCost": [
+     {
+      "towers": [
+       "farm",
+       "village"
+      ],
+      "pct": -0.02
+     }
+    ]
+   },
+   "use": "applied",
+   "source": "game file Knowledge/Support/FlatPackBuildings.json (v56.0)"
+  },
+  {
+   "id": "one-more-spike",
+   "gameId": "OneMoreSpike",
+   "name": "One More Spike",
+   "tree": "Support",
+   "effect": "Spike Factory stacks get +1 spike.",
+   "desc": "Spike Factory stacks get +1 spike.",
+   "ptsNeeded": 0,
+   "mm": 0,
+   "pre": [],
+   "layout": {
+    "row": 0,
+    "col": 2
+   },
+   "tags": [
+    "attacks"
+   ],
+   "fx": {
+    "attack": [
+     {
+      "towers": [
+       "spike"
+      ],
+      "stat": "pierce",
+      "add": 1
+     }
+    ]
+   },
+   "use": "noted",
+   "source": "game file Knowledge/Support/OneMoreSpike.json (v56.0)"
+  },
+  {
+   "id": "insider-trades",
+   "gameId": "InsiderTrades",
+   "name": "Insider Trades",
+   "tree": "Support",
+   "effect": "Monkey Business discount increases by 2%.",
+   "desc": "Monkey Business discount increases by 2%.",
+   "ptsNeeded": 0,
+   "mm": 0,
+   "pre": [
+    "flat-pack-buildings"
+   ],
+   "layout": {
+    "row": 1,
+    "col": 0
+   },
+   "tags": [
+    "prices"
+   ],
+   "source": "game file Knowledge/Support/InsiderTrades.json (v56.0)"
+  },
+  {
+   "id": "more-valuable-bananas",
+   "gameId": "MoreValuableBananas",
+   "name": "More Valuable Bananas",
+   "tree": "Support",
+   "effect": "Valuable Bananas +30% instead of +25%",
+   "desc": "Valuable Bananas upgrade increases to 30%.",
+   "ptsNeeded": 0,
+   "mm": 0,
+   "pre": [
+    "flat-pack-buildings"
+   ],
+   "layout": {
+    "row": 1,
+    "col": 1
+   },
+   "tags": [
+    "cash"
+   ],
+   "fx": {
+    "bananaValueAdd": 0.05
+   },
+   "use": "applied",
+   "source": "game file Knowledge/Support/MoreValuableBananas.json (v56.0)"
+  },
+  {
+   "id": "first-last-line-of-defense",
+   "gameId": "FirstLastLineOfDefense",
+   "name": "First Last Line of Defense",
+   "tree": "Support",
+   "effect": "A small discount on your first Spike Factory",
+   "desc": "Purchase price of first Spike Factory each game is $150 less.",
+   "ptsNeeded": 0,
+   "mm": 0,
+   "pre": [
+    "one-more-spike"
+   ],
+   "layout": {
+    "row": 1,
+    "col": 2
+   },
+   "tags": [
+    "prices"
+   ],
+   "fx": {
+    "towerCost": [
+     {
+      "towers": [
+       "spike"
+      ],
+      "flat": -150,
+      "first": true
+     }
+    ]
+   },
+   "use": "applied",
+   "source": "game file Knowledge/Support/FirstLastLineOfDefense.json (v56.0)"
+  },
+  {
+   "id": "monkey-education",
+   "gameId": "MonkeyEducation",
+   "name": "Monkey Education",
+   "tree": "Support",
+   "effect": "All towers and heroes earn 8% more XP",
+   "desc": "All Monkeys XP earn rate increased by 8%.",
+   "ptsNeeded": 3,
+   "mm": 0,
+   "pre": [],
+   "layout": {
+    "row": 2,
+    "col": 4
+   },
+   "tags": [
+    "xp"
+   ],
+   "fx": {
+    "xpMult": 1.08
+   },
+   "use": "applied",
+   "source": "game file Knowledge/Support/MonkeyEducation.json (v56.0)"
+  },
+  {
+   "id": "bigger-banks",
+   "gameId": "BiggerBanks",
+   "name": "Bigger Banks",
+   "tree": "Support",
+   "effect": "+$2,500 Monkey Bank capacity",
+   "desc": "Monkey Banks can hold 2500 extra money.",
+   "ptsNeeded": 3,
+   "mm": 0,
+   "pre": [
+    "insider-trades"
+   ],
+   "layout": {
+    "row": 2,
+    "col": 0
+   },
+   "tags": [
+    "cash"
+   ],
+   "fx": {
+    "bankCapAdd": 2500
+   },
+   "use": "noted",
+   "source": "game file Knowledge/Support/BiggerBanks.json (v56.0)"
+  },
+  {
+   "id": "farm-subsidy",
+   "gameId": "FarmSubsidy",
+   "name": "Farm Subsidy",
+   "tree": "Support",
+   "effect": "A small discount on your first Banana Farm",
+   "desc": "First Banana Farm each game costs 100 less.",
+   "ptsNeeded": 3,
+   "mm": 0,
+   "pre": [
+    "more-valuable-bananas"
+   ],
+   "layout": {
+    "row": 2,
+    "col": 1
+   },
+   "tags": [
+    "prices"
+   ],
+   "fx": {
+    "towerCost": [
+     {
+      "towers": [
+       "farm"
+      ],
+      "flat": -100,
+      "first": true
+     }
+    ]
+   },
+   "use": "applied",
+   "source": "game file Knowledge/Support/FarmSubsidy.json (v56.0)"
+  },
+  {
+   "id": "vigilant-sentries",
+   "gameId": "VigilantSentries",
+   "name": "Vigilant Sentries",
+   "tree": "Support",
+   "effect": "Sentry Turrets last longer than normal.",
+   "desc": "Sentry Turrets last longer than normal.",
+   "ptsNeeded": 3,
+   "mm": 0,
+   "pre": [
+    "one-more-spike"
+   ],
+   "layout": {
+    "row": 2,
+    "col": 3
+   },
+   "tags": [
+    "attacks"
+   ],
+   "fx": {
+    "attack": [
+     {
+      "towers": [
+       "engineer"
+      ],
+      "stat": "subTowerLifespan",
+      "add": 2
+     }
+    ]
+   },
+   "use": "noted",
+   "source": "game file Knowledge/Support/VigilantSentries.json (v56.0)"
+  },
+  {
+   "id": "very-shreddy",
+   "gameId": "VeryShreddy",
+   "name": "Very Shreddy",
+   "tree": "Support",
+   "effect": "MOAB SHREDR spikes do +1 extra damage to MOAB-Class Bloons.",
+   "desc": "MOAB SHREDR spikes do +1 extra damage to MOAB-Class Bloons.",
+   "ptsNeeded": 3,
+   "mm": 250,
+   "pre": [
+    "first-last-line-of-defense"
+   ],
+   "layout": {
+    "row": 2,
+    "col": 2
+   },
+   "tags": [
+    "attacks"
+   ],
+   "fx": {
+    "attack": [
+     {
+      "towers": [
+       "spike"
+      ],
+      "stat": "damageVs",
+      "tag": "Moabs",
+      "add": 1,
+      "when": {
+       "spike": "x-3+-x"
+      }
+     }
+    ]
+   },
+   "use": "noted",
+   "source": "game file Knowledge/Support/VeryShreddy.json (v56.0)"
+  },
+  {
+   "id": "backroom-deals",
+   "gameId": "BackroomDeals",
+   "name": "Backroom Deals",
+   "tree": "Support",
+   "effect": "IMF Loan +$1,000, repaid at 40%",
+   "desc": "IMF Loan grants $1000 more and repay rate is 40%.",
+   "ptsNeeded": 3,
+   "mm": 250,
+   "pre": [
+    "bigger-banks"
+   ],
+   "layout": {
+    "row": 3,
+    "col": 0
+   },
+   "tags": [
+    "cash"
+   ],
+   "fx": {
+    "loanAdd": 1000
+   },
+   "use": "noted",
+   "source": "game file Knowledge/Support/BackroomDeals.json (v56.0)"
   },
   {
    "id": "inland-revenue-streams",
+   "gameId": "InlandRevenueStreams",
    "name": "Inland Revenue Streams",
-   "tree": null,
+   "tree": "Support",
    "effect": "Monkey Town pop cash +60% instead of +50%",
-   "group": "Economy and XP"
+   "desc": "Monkey Town cash bonus increased by 10%.",
+   "ptsNeeded": 3,
+   "mm": 250,
+   "pre": [
+    "farm-subsidy"
+   ],
+   "layout": {
+    "row": 3,
+    "col": 1
+   },
+   "tags": [
+    "cash"
+   ],
+   "fx": {
+    "townPopCashAdd": 0.1
+   },
+   "use": "noted",
+   "source": "game file Knowledge/Support/InlandRevenueStreams.json (v56.0)"
+  },
+  {
+   "id": "to-arms",
+   "gameId": "ToArms",
+   "name": "To ARMS!",
+   "tree": "Support",
+   "effect": "Call to Arms duration increased by 3 seconds.",
+   "desc": "Call to Arms duration increased by 3 seconds.",
+   "ptsNeeded": 3,
+   "mm": 250,
+   "pre": [
+    "monkey-education"
+   ],
+   "layout": {
+    "row": 3,
+    "col": 4
+   },
+   "tags": [
+    "abilities"
+   ],
+   "source": "game file Knowledge/Support/ToArms.json (v56.0)"
+  },
+  {
+   "id": "thicker-foams",
+   "gameId": "ThickerFoams",
+   "name": "Thicker Foams",
+   "tree": "Support",
+   "effect": "Cleansing Foam can hit 3 more Bloons before expiring.",
+   "desc": "Cleansing Foam can hit 3 more Bloons before expiring.",
+   "ptsNeeded": 3,
+   "mm": 250,
+   "pre": [
+    "vigilant-sentries"
+   ],
+   "layout": {
+    "row": 3,
+    "col": 3
+   },
+   "tags": [
+    "attacks"
+   ],
+   "fx": {
+    "attack": [
+     {
+      "towers": [
+       "engineer"
+      ],
+      "stat": "pierce",
+      "add": 3,
+      "when": {
+       "engineer": "x-3+-x"
+      }
+     }
+    ]
+   },
+   "use": "noted",
+   "source": "game file Knowledge/Support/ThickerFoams.json (v56.0)"
+  },
+  {
+   "id": "better-sell-deals",
+   "gameId": "BetterSellDeals",
+   "name": "Better Sell Deals",
+   "tree": "Support",
+   "effect": "All towers sell for 5% more",
+   "desc": "All Monkeys sell for 5% more.",
+   "ptsNeeded": 8,
+   "mm": 500,
+   "pre": [
+    "backroom-deals"
+   ],
+   "layout": {
+    "row": 4,
+    "col": 0
+   },
+   "tags": [
+    "cash"
+   ],
+   "fx": {
+    "sellAdd": 0.05
+   },
+   "use": "applied",
+   "source": "game file Knowledge/Support/BetterSellDeals.json (v56.0); game file Knowledge/Support/BetterSellDeals.json (multiplier 0.05)"
+  },
+  {
+   "id": "hi-value-mines",
+   "gameId": "HiValueMines",
+   "name": "Hi-Value Mines",
+   "tree": "Support",
+   "effect": "Spiked Mines cost reduced by 1500.",
+   "desc": "Spiked Mines cost reduced by 1500.",
+   "ptsNeeded": 8,
+   "mm": 500,
+   "pre": [
+    "very-shreddy"
+   ],
+   "layout": {
+    "row": 4,
+    "col": 2
+   },
+   "tags": [
+    "prices"
+   ],
+   "fx": {
+    "upgradeCost": [
+     {
+      "tower": "spike",
+      "path": 0,
+      "tier": 4,
+      "flat": -1500
+     }
+    ]
+   },
+   "use": "applied",
+   "source": "game file Knowledge/Support/HiValueMines.json (v56.0)"
+  },
+  {
+   "id": "veteran-monkey-training",
+   "gameId": "VeteranMonkeyTraining",
+   "name": "Veteran Monkey Training",
+   "tree": "Support",
+   "effect": "All towers reload 3% faster",
+   "desc": "All Monkeys reload time reduced by 3%.",
+   "ptsNeeded": 8,
+   "mm": 500,
+   "pre": [
+    "to-arms"
+   ],
+   "layout": {
+    "row": 4,
+    "col": 4
+   },
+   "tags": [
+    "attacks"
+   ],
+   "fx": {
+    "reloadMult": 0.97
+   },
+   "use": "noted",
+   "source": "game file Knowledge/Support/VeteranMonkeyTraining.json (v56.0)"
+  },
+  {
+   "id": "global-ability-cooldowns",
+   "gameId": "GlobalAbilityCooldowns",
+   "name": "Global Ability Cooldowns",
+   "tree": "Support",
+   "effect": "Ability cooldowns -3%",
+   "desc": "All Ability cooldowns for all Monkeys reduced by 3%.",
+   "ptsNeeded": 8,
+   "mm": 500,
+   "pre": [
+    "to-arms"
+   ],
+   "layout": {
+    "row": 4,
+    "col": 5
+   },
+   "tags": [
+    "abilities"
+   ],
+   "source": "game file Knowledge/Support/GlobalAbilityCooldowns.json (v56.0)"
+  },
+  {
+   "id": "big-traps",
+   "gameId": "BigTraps",
+   "name": "Big Traps",
+   "tree": "Support",
+   "effect": "Bloon Trap can hold 30 more RBE.",
+   "desc": "Bloon Trap can hold 30 more RBE.",
+   "ptsNeeded": 8,
+   "mm": 500,
+   "pre": [
+    "thicker-foams"
+   ],
+   "layout": {
+    "row": 4,
+    "col": 3
+   },
+   "tags": [
+    "attacks"
+   ],
+   "fx": {
+    "attack": [
+     {
+      "towers": [
+       "engineer"
+      ],
+      "stat": "trapCapacity",
+      "add": 30,
+      "when": {
+       "engineer": "x-x-4+"
+      }
+     }
+    ]
+   },
+   "use": "noted",
+   "source": "game file Knowledge/Support/BigTraps.json (v56.0)"
+  },
+  {
+   "id": "healthy-bananas",
+   "gameId": "HealthyBananas",
+   "name": "Healthy Bananas",
+   "tree": "Support",
+   "effect": "Marketplace +1 life per round, Central Market +3",
+   "desc": "Marketplaces now produce 1 life per round and Central Markets produce 3.",
+   "ptsNeeded": 8,
+   "mm": 500,
+   "pre": [
+    "inland-revenue-streams"
+   ],
+   "layout": {
+    "row": 4,
+    "col": 1
+   },
+   "tags": [
+    "lives"
+   ],
+   "fx": {
+    "lives": {
+     "what": "perRound",
+     "marketplace": 1,
+     "centralMarket": 3
+    }
+   },
+   "use": "noted",
+   "source": "game file Knowledge/Support/HealthyBananas.json (v56.0)"
+  },
+  {
+   "id": "bank-deposits",
+   "gameId": "BankDeposits",
+   "name": "Bank Deposits",
+   "tree": "Support",
+   "effect": "Tier 4+ Monkey Banks accept deposits",
+   "desc": "Tier 4 and above Monkey Banks can take deposits from available in game cash.",
+   "ptsNeeded": 14,
+   "mm": 1000,
+   "pre": [
+    "better-sell-deals"
+   ],
+   "layout": {
+    "row": 5,
+    "col": 0
+   },
+   "tags": [
+    "cash"
+   ],
+   "source": "game file Knowledge/Support/BankDeposits.json (v56.0)"
+  },
+  {
+   "id": "paragon-of-power",
+   "gameId": "ParagonOfPower",
+   "name": "Paragon of Power",
+   "tree": "Support",
+   "effect": "Paragons attack faster with no same-type tier 5 on the map",
+   "desc": "Paragons attack faster if there are no Tier 5 of the same tower.",
+   "ptsNeeded": 14,
+   "mm": 1000,
+   "pre": [
+    "veteran-monkey-training"
+   ],
+   "layout": {
+    "row": 5,
+    "col": 4
+   },
+   "tags": [
+    "attacks"
+   ],
+   "source": "game file Knowledge/Support/ParagonOfPower.json (v56.0)"
+  },
+  {
+   "id": "heroic-reach",
+   "gameId": "HeroicReach",
+   "name": "Heroic Reach",
+   "tree": "Heroes",
+   "effect": "All heroes get slightly increased range.",
+   "desc": "All heroes get slightly increased range.",
+   "ptsNeeded": 0,
+   "mm": 0,
+   "pre": [],
+   "layout": {
+    "row": 0,
+    "col": 0
+   },
+   "tags": [
+    "attacks"
+   ],
+   "fx": {
+    "attack": [
+     {
+      "towers": [
+       "heroes"
+      ],
+      "stat": "range",
+      "add": 2
+     }
+    ]
+   },
+   "use": "noted",
+   "source": "game file Knowledge/Heroes/HeroicReach.json (v56.0)"
+  },
+  {
+   "id": "more-splody",
+   "gameId": "MoreSplody",
+   "name": "More 'Splody",
+   "tree": "Heroes",
+   "effect": "Heroes' explosives get +2 pierce per shot.",
+   "desc": "Heroes' explosives get +2 pierce per shot.",
+   "ptsNeeded": 0,
+   "mm": 0,
+   "pre": [],
+   "layout": {
+    "row": 0,
+    "col": 1
+   },
+   "tags": [
+    "attacks"
+   ],
+   "fx": {
+    "attack": [
+     {
+      "towers": [
+       "heroes"
+      ],
+      "stat": "pierce",
+      "add": 2
+     }
+    ]
+   },
+   "use": "noted",
+   "source": "game file Knowledge/Heroes/MoreSplody.json (v56.0)"
+  },
+  {
+   "id": "ability-discipline",
+   "gameId": "AbilityDiscipline",
+   "name": "Ability Discipline",
+   "tree": "Heroes",
+   "effect": "Hero level 10 Ability cooldowns reduced by 10%.",
+   "desc": "Hero level 10 Ability cooldowns reduced by 10%.",
+   "ptsNeeded": 0,
+   "mm": 0,
+   "pre": [],
+   "layout": {
+    "row": 0,
+    "col": 2
+   },
+   "tags": [
+    "abilities"
+   ],
+   "source": "game file Knowledge/Heroes/AbilityDiscipline.json (v56.0)"
+  },
+  {
+   "id": "heroic-velocity",
+   "gameId": "HeroicVelocity",
+   "name": "Heroic Velocity",
+   "tree": "Heroes",
+   "effect": "All Heroes' projectile speeds increased slightly.",
+   "desc": "All Heroes' projectile speeds increased slightly.",
+   "ptsNeeded": 0,
+   "mm": 0,
+   "pre": [
+    "heroic-reach"
+   ],
+   "layout": {
+    "row": 1,
+    "col": 0
+   },
+   "tags": [
+    "attacks"
+   ],
+   "fx": {
+    "attack": [
+     {
+      "towers": [
+       "heroes"
+      ],
+      "stat": "projectileSpeed",
+      "pct": 0.15
+     }
+    ]
+   },
+   "use": "noted",
+   "source": "game file Knowledge/Heroes/HeroicVelocity.json (v56.0)"
+  },
+  {
+   "id": "scholarships",
+   "gameId": "Scholarships",
+   "name": "Scholarships",
+   "tree": "Heroes",
+   "effect": "Hero training costs reduced by 10%.",
+   "desc": "Hero training costs reduced by 10%.",
+   "ptsNeeded": 0,
+   "mm": 0,
+   "pre": [
+    "more-splody"
+   ],
+   "layout": {
+    "row": 1,
+    "col": 1
+   },
+   "tags": [
+    "prices"
+   ],
+   "fx": {
+    "heroLevelCostMult": 0.9
+   },
+   "use": "noted",
+   "source": "game file Knowledge/Heroes/Scholarships.json (v56.0)"
+  },
+  {
+   "id": "quick-hands",
+   "gameId": "QuickHands",
+   "name": "Quick Hands",
+   "tree": "Heroes",
+   "effect": "Makes all heroes attack 4% faster.",
+   "desc": "Makes all heroes attack 4% faster.",
+   "ptsNeeded": 3,
+   "mm": 0,
+   "pre": [
+    "heroic-velocity"
+   ],
+   "layout": {
+    "row": 2,
+    "col": 0
+   },
+   "tags": [
+    "attacks"
+   ],
+   "fx": {
+    "attack": [
+     {
+      "towers": [
+       "heroes"
+      ],
+      "stat": "rate",
+      "pct": 0.04
+     }
+    ]
+   },
+   "use": "noted",
+   "source": "game file Knowledge/Heroes/QuickHands.json (v56.0)"
+  },
+  {
+   "id": "self-taught-heroes",
+   "gameId": "SelfTaughtHeroes",
+   "name": "Self Taught Heroes",
+   "tree": "Heroes",
+   "effect": "Heroes earn XP 10% faster",
+   "desc": "Heroes earn XP 10% faster.",
+   "ptsNeeded": 3,
+   "mm": 0,
+   "pre": [
+    "scholarships"
+   ],
+   "layout": {
+    "row": 2,
+    "col": 1
+   },
+   "tags": [
+    "xp"
+   ],
+   "fx": {
+    "heroXpMult": 1.1
+   },
+   "use": "applied",
+   "source": "game file Knowledge/Heroes/SelfTaughtHeroes.json (v56.0)"
+  },
+  {
+   "id": "ability-mastery",
+   "gameId": "AbilityMastery",
+   "name": "Ability Mastery",
+   "tree": "Heroes",
+   "effect": "At level 20, Heroes' level 3 Ability cooldown reduced by 30%.",
+   "desc": "At level 20, Heroes' level 3 Ability cooldown reduced by 30%.",
+   "ptsNeeded": 3,
+   "mm": 0,
+   "pre": [
+    "ability-discipline"
+   ],
+   "layout": {
+    "row": 2,
+    "col": 2
+   },
+   "tags": [
+    "abilities"
+   ],
+   "source": "game file Knowledge/Heroes/AbilityMastery.json (v56.0)"
+  },
+  {
+   "id": "hero-favors",
+   "gameId": "HeroFavors",
+   "name": "Hero Favors",
+   "tree": "Heroes",
+   "effect": "Heroes 10% cheaper",
+   "desc": "Heroes' base cost reduced by 10%.",
+   "ptsNeeded": 3,
+   "mm": 250,
+   "pre": [
+    "self-taught-heroes",
+    "quick-hands"
+   ],
+   "layout": {
+    "row": 3,
+    "col": 0
+   },
+   "tags": [
+    "prices"
+   ],
+   "fx": {
+    "heroCostMult": 0.9
+   },
+   "use": "applied",
+   "source": "game file Knowledge/Heroes/HeroFavors.json (v56.0)"
+  },
+  {
+   "id": "empowered-heroes",
+   "gameId": "EmpoweredHeroes",
+   "name": "Empowered Heroes",
+   "tree": "Heroes",
+   "effect": "Heroes start at level 3",
+   "desc": "Heroes start each game at level 3.",
+   "ptsNeeded": 8,
+   "mm": 500,
+   "pre": [
+    "hero-favors"
+   ],
+   "layout": {
+    "row": 4,
+    "col": 0
+   },
+   "tags": [
+    "xp"
+   ],
+   "fx": {
+    "heroStartLevel": 3
+   },
+   "use": "applied",
+   "source": "game file Knowledge/Heroes/EmpoweredHeroes.json (v56.0)"
+  },
+  {
+   "id": "big-bloon-blueprints",
+   "gameId": "BigBloonBlueprints",
+   "name": "Big Bloon Blueprints",
+   "tree": "Heroes",
+   "effect": "Heroes do +1 extra damage to MOAB-Class Bloons with their base attack.",
+   "desc": "Heroes do +1 extra damage to MOAB-Class Bloons with their base attack.",
+   "ptsNeeded": 8,
+   "mm": 500,
+   "pre": [
+    "ability-mastery"
+   ],
+   "layout": {
+    "row": 4,
+    "col": 2
+   },
+   "tags": [
+    "attacks"
+   ],
+   "fx": {
+    "attack": [
+     {
+      "towers": [
+       "heroes"
+      ],
+      "stat": "damageVs",
+      "tag": "Moabs",
+      "add": 1
+     }
+    ]
+   },
+   "use": "noted",
+   "source": "game file Knowledge/Heroes/BigBloonBlueprints.json (v56.0)"
+  },
+  {
+   "id": "monkeys-together-strong",
+   "gameId": "MonkeysTogetherStrong",
+   "name": "Monkeys Together Strong",
+   "tree": "Heroes",
+   "effect": "+5% hero XP per hero placed",
+   "desc": "Heroes receive 5% more experience per each Hero placed.",
+   "ptsNeeded": 8,
+   "mm": 1000,
+   "pre": [
+    "empowered-heroes"
+   ],
+   "layout": {
+    "row": 5,
+    "col": 0
+   },
+   "tags": [
+    "xp"
+   ],
+   "fx": {
+    "heroXpPerHero": 0.05
+   },
+   "use": "applied",
+   "source": "game file Knowledge/Heroes/MonkeysTogetherStrong.json (v56.0)"
+  },
+  {
+   "id": "weak-point",
+   "gameId": "WeakPoint",
+   "name": "Weak Point",
+   "tree": "Heroes",
+   "effect": "All Heroes deal +1 damage to Ceramic & Fortified Bloons.",
+   "desc": "All Heroes deal +1 damage to Ceramic & Fortified Bloons.",
+   "ptsNeeded": 8,
+   "mm": 1000,
+   "pre": [
+    "monkeys-together-strong",
+    "big-bloon-blueprints"
+   ],
+   "layout": {
+    "row": 6,
+    "col": 0
+   },
+   "tags": [
+    "attacks"
+   ],
+   "fx": {
+    "attack": [
+     {
+      "towers": [
+       "heroes"
+      ],
+      "stat": "damageVs",
+      "tag": "Fortified",
+      "add": 1
+     },
+     {
+      "towers": [
+       "heroes"
+      ],
+      "stat": "damageVs",
+      "tag": "Ceramic",
+      "add": 1
+     }
+    ]
+   },
+   "use": "noted",
+   "source": "game file Knowledge/Heroes/WeakPoint.json (v56.0)"
+  },
+  {
+   "id": "bigger-camo-trap",
+   "gameId": "BiggerCamoTrap",
+   "name": "Bigger Camo Trap",
+   "tree": "Powers",
+   "effect": "Camo Trap lasts for 600 Bloons.",
+   "desc": "Camo Trap lasts for 600 Bloons.",
+   "ptsNeeded": 0,
+   "mm": 0,
+   "pre": [],
+   "layout": {
+    "row": 0,
+    "col": 0
+   },
+   "tags": [
+    "powers"
+   ],
+   "source": "game file Knowledge/Powers/BiggerCamoTrap.json (v56.0)"
+  },
+  {
+   "id": "just-one-more",
+   "gameId": "JustOneMore",
+   "name": "Just One More",
+   "tree": "Powers",
+   "effect": "Road Spike piles have 21 spikes in them.",
+   "desc": "Road Spike piles have 21 spikes in them.",
+   "ptsNeeded": 0,
+   "mm": 0,
+   "pre": [],
+   "layout": {
+    "row": 0,
+    "col": 1
+   },
+   "tags": [
+    "powers"
+   ],
+   "source": "game file Knowledge/Powers/JustOneMore.json (v56.0)"
+  },
+  {
+   "id": "cheaper-lakes",
+   "gameId": "CheaperLakes",
+   "name": "Cheaper Lakes",
+   "tree": "Powers",
+   "effect": "Portable Lake costs 40 Monkey Money.",
+   "desc": "Portable Lake costs 40 Monkey Money.",
+   "ptsNeeded": 0,
+   "mm": 0,
+   "pre": [],
+   "layout": {
+    "row": 0,
+    "col": 2
+   },
+   "tags": [
+    "powers"
+   ],
+   "source": "game file Knowledge/Powers/CheaperLakes.json (v56.0)"
+  },
+  {
+   "id": "mauling-moab-mines",
+   "gameId": "MaulingMoabMines",
+   "name": "Mauling MOAB Mines",
+   "tree": "Powers",
+   "effect": "MOAB mine does extra damage.",
+   "desc": "MOAB mine does extra damage.",
+   "ptsNeeded": 0,
+   "mm": 0,
+   "pre": [
+    "bigger-camo-trap"
+   ],
+   "layout": {
+    "row": 1,
+    "col": 0
+   },
+   "tags": [
+    "powers"
+   ],
+   "source": "game file Knowledge/Powers/MaulingMoabMines.json (v56.0)"
+  },
+  {
+   "id": "longer-dart-time",
+   "gameId": "LongerDartTime",
+   "name": "Longer Time Stop",
+   "tree": "Powers",
+   "effect": "Time Stop lasts longer than normal.",
+   "desc": "Time Stop lasts longer than normal.",
+   "ptsNeeded": 0,
+   "mm": 0,
+   "pre": [
+    "just-one-more"
+   ],
+   "layout": {
+    "row": 1,
+    "col": 1
+   },
+   "tags": [
+    "powers"
+   ],
+   "source": "game file Knowledge/Powers/LongerDartTime.json (v56.0)"
+  },
+  {
+   "id": "budget-pontoons",
+   "gameId": "BudgetPontoons",
+   "name": "Budget Pontoons",
+   "tree": "Powers",
+   "effect": "Pontoon costs 40 Monkey Money.",
+   "desc": "Pontoon costs 40 Monkey Money.",
+   "ptsNeeded": 0,
+   "mm": 0,
+   "pre": [
+    "cheaper-lakes"
+   ],
+   "layout": {
+    "row": 1,
+    "col": 2
+   },
+   "tags": [
+    "powers"
+   ],
+   "source": "game file Knowledge/Powers/BudgetPontoons.json (v56.0)"
+  },
+  {
+   "id": "supersize-glue-trap",
+   "gameId": "SupersizeGlueTrap",
+   "name": "Supersize Glue Trap",
+   "tree": "Powers",
+   "effect": "Glue Trap can slow MOAB-Class Bloons, though the bigger the Bloon, the more glue is used up.",
+   "desc": "Glue Trap can slow MOAB-Class Bloons, though the bigger the Bloon, the more glue is used up.",
+   "ptsNeeded": 3,
+   "mm": 0,
+   "pre": [
+    "mauling-moab-mines"
+   ],
+   "layout": {
+    "row": 2,
+    "col": 0
+   },
+   "tags": [
+    "powers"
+   ],
+   "source": "game file Knowledge/Powers/SupersizeGlueTrap.json (v56.0)"
+  },
+  {
+   "id": "longer-boosts",
+   "gameId": "LongerBoosts",
+   "name": "Longer Boosts",
+   "tree": "Powers",
+   "effect": "Monkey Boost lasts longer.",
+   "desc": "Monkey Boost lasts longer.",
+   "ptsNeeded": 3,
+   "mm": 0,
+   "pre": [
+    "longer-dart-time"
+   ],
+   "layout": {
+    "row": 2,
+    "col": 1
+   },
+   "tags": [
+    "powers"
+   ],
+   "source": "game file Knowledge/Powers/LongerBoosts.json (v56.0)"
+  },
+  {
+   "id": "pre-game-prep",
+   "gameId": "PreGamePrep",
+   "name": "Pre-game Prep",
+   "tree": "Powers",
+   "effect": "Free permanent Road Spikes at the end of the track",
+   "desc": "Start each game with a pile of permanent Road Spikes at the end of the track.",
+   "ptsNeeded": 3,
+   "mm": 250,
+   "pre": [
+    "longer-boosts"
+   ],
+   "layout": {
+    "row": 3,
+    "col": 1
+   },
+   "tags": [
+    "powers"
+   ],
+   "source": "game file Knowledge/Powers/PreGamePrep.json (v56.0)"
+  },
+  {
+   "id": "fit-farmers",
+   "gameId": "FitFarmers",
+   "name": "Fit Farmers",
+   "tree": "Powers",
+   "effect": "Monkey Farmers have larger radius.",
+   "desc": "Monkey Farmers have larger radius.",
+   "ptsNeeded": 3,
+   "mm": 250,
+   "pre": [
+    "powerful-monkey-storm"
+   ],
+   "layout": {
+    "row": 4,
+    "col": 2
+   },
+   "tags": [
+    "powers"
+   ],
+   "source": "game file Knowledge/Powers/FitFarmers.json (v56.0)"
+  },
+  {
+   "id": "ambush-tech",
+   "gameId": "AmbushTech",
+   "name": "Ambush Tech",
+   "tree": "Powers",
+   "effect": "Techbot gains a targeting option to trigger only when Bloons enter a specific track area.",
+   "desc": "Techbot gains a targeting option to trigger only when Bloons enter a specific track area.",
+   "ptsNeeded": 3,
+   "mm": 250,
+   "pre": [
+    "supersize-glue-trap"
+   ],
+   "layout": {
+    "row": 3,
+    "col": 0
+   },
+   "tags": [
+    "powers"
+   ],
+   "source": "game file Knowledge/Powers/AmbushTech.json (v56.0)"
+  },
+  {
+   "id": "budget-cash-drops",
+   "gameId": "BudgetCashDrops",
+   "name": "Budget Cash Drops",
+   "tree": "Powers",
+   "effect": "Cash Drops cost 20 Monkey Money less.",
+   "desc": "Cash Drops cost 20 Monkey Money less.",
+   "ptsNeeded": 3,
+   "mm": 500,
+   "pre": [
+    "fit-farmers"
+   ],
+   "layout": {
+    "row": 5,
+    "col": 2
+   },
+   "tags": [
+    "powers"
+   ],
+   "source": "game file Knowledge/Powers/BudgetCashDrops.json (v56.0)"
+  },
+  {
+   "id": "supa-thrive",
+   "gameId": "SupaThrive",
+   "name": "Supa-Thrive",
+   "tree": "Powers",
+   "effect": "Thrive adds 30% instead of 25%.",
+   "desc": "Thrive adds 30% instead of 25%.",
+   "ptsNeeded": 3,
+   "mm": 500,
+   "pre": [
+    "fit-farmers"
+   ],
+   "layout": {
+    "row": 5,
+    "col": 3
+   },
+   "tags": [
+    "powers"
+   ],
+   "source": "game file Knowledge/Powers/SupaThrive.json (v56.0)"
+  },
+  {
+   "id": "powerful-monkey-storm",
+   "gameId": "PowerfulMonkeyStorm",
+   "name": "Powerful Monkey Storm",
+   "tree": "Powers",
+   "effect": "Super Monkey Storm does more damage.",
+   "desc": "Super Monkey Storm does more damage.",
+   "ptsNeeded": 3,
+   "mm": 0,
+   "pre": [
+    "budget-pontoons",
+    "longer-boosts"
+   ],
+   "layout": {
+    "row": 3,
+    "col": 2
+   },
+   "tags": [
+    "powers"
+   ],
+   "source": "game file Knowledge/Powers/PowerfulMonkeyStorm.json (v56.0)"
+  },
+  {
+   "id": "grand-prix-spree",
+   "gameId": "GrandPrixSpree",
+   "name": "Grand Prix Spree",
+   "tree": "Powers",
+   "effect": "Monkey Money cost to enter Races is reduced by 10%.",
+   "desc": "Monkey Money cost to enter Races is reduced by 10%.",
+   "ptsNeeded": 10,
+   "mm": 1000,
+   "pre": [
+    "budget-cash-drops"
+   ],
+   "layout": {
+    "row": 6,
+    "col": 2
+   },
+   "tags": [
+    "other"
+   ],
+   "source": "game file Knowledge/Powers/GrandPrixSpree.json (v56.0)"
   }
  ]
 }
