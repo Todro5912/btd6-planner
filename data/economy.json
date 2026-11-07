@@ -4,7 +4,8 @@
   "generated": "2026-11-05",
   "currency": "Medium dollars unless noted",
   "script": "data/econ_calc.py",
-  "chapter": "08-Economy-Numbers-Predictions.md"
+  "chapter": "08-Economy-Numbers-Predictions.md",
+  "farmCrossSource": "farmCross: every Banana Farm crosspath from the game files (btd6-game-data v56 Towers/BananaFarm): bananas or crates per round x value x (1 + Valuable Bananas bonus) + flat end-of-round cash (Monkey Wall Street). Banks (x-3-x+) deposit this into the bank instead (interest and capacity not modelled). sellAdd = Banana Salvage's extra sell rate."
  },
  "incomeSources": [
   {
@@ -245,13 +246,10 @@
    "tower": "Monkey Buccaneer",
    "code": "0-0-5 Trade Empire",
    "cost": 31850,
-   "incomePerRound": 500,
-   "payback": 63.7,
+   "incomePerRound": 800,
+   "payback": 39.8,
    "chimpsLegal": false,
-   "notes": "own base income {unverified}, at least $500 assumed; +$20 per Favored Trades and +$10 per Merchantman on the map (max 20 boats)",
-   "_src": {
-    "notes": "own base income unverified (>= $500 assumed); +$20 per Favored Trades and +$10 per Merchantman on the map (max 20 boats)"
-   }
+   "notes": "own income $800 per round (game file MonkeyBuccaneer-005 cashPerRound 800); +$20 per Favored Trades and +$10 per Merchantman on the map (max 20 boats)"
   },
   {
    "id": "supply-drop",
@@ -292,12 +290,22 @@
   {
    "id": "jungles-bounty",
    "tower": "Druid",
-   "code": "1-4-0 Jungle's Bounty",
+   "code": "0-4-0 Jungle's Bounty",
    "cost": 7300,
    "incomePerRound": 120,
    "payback": 60.8,
    "chimpsLegal": false,
    "notes": "Passive end-of-round income since v53.0 (the old cash ability was replaced by Vine Crush; base $320 -> $120): +$10..$120 per Banana Farm in range by farm tier, +1 life/round, cap $10,000"
+  },
+  {
+   "id": "spirit-of-the-forest",
+   "tower": "Druid",
+   "code": "0-5-0 Spirit of the Forest",
+   "cost": null,
+   "incomePerRound": 1120,
+   "payback": null,
+   "chimpsLegal": false,
+   "notes": "Jungle's Bounty's $120 plus $1,000 per round (game file Druid-050 PerRoundCashBonusTowerModel 1000)"
   },
   {
    "id": "bloon-trap",
@@ -1728,5 +1736,327 @@
    "pop": 1334.6,
    "bonus": 200
   }
- ]
+ ],
+ "farmCross": {
+  "000": {
+   "income": 80.0,
+   "sellAdd": 0.0,
+   "bank": false
+  },
+  "001": {
+   "income": 80.0,
+   "sellAdd": 0.0,
+   "bank": false
+  },
+  "002": {
+   "income": 80.0,
+   "sellAdd": 0.1,
+   "bank": false
+  },
+  "003": {
+   "income": 320.0,
+   "sellAdd": 0.1,
+   "bank": false
+  },
+  "004": {
+   "income": 1120.0,
+   "sellAdd": 0.1,
+   "bank": false
+  },
+  "005": {
+   "income": 5120.0,
+   "sellAdd": 0.1,
+   "bank": false
+  },
+  "010": {
+   "income": 80.0,
+   "sellAdd": 0.0,
+   "bank": false
+  },
+  "011": {
+   "income": 80.0,
+   "sellAdd": 0.0,
+   "bank": false
+  },
+  "012": {
+   "income": 80.0,
+   "sellAdd": 0.1,
+   "bank": false
+  },
+  "013": {
+   "income": 320.0,
+   "sellAdd": 0.1,
+   "bank": false
+  },
+  "014": {
+   "income": 1120.0,
+   "sellAdd": 0.1,
+   "bank": false
+  },
+  "015": {
+   "income": 5120.0,
+   "sellAdd": 0.1,
+   "bank": false
+  },
+  "020": {
+   "income": 100.0,
+   "sellAdd": 0.0,
+   "bank": false
+  },
+  "021": {
+   "income": 100.0,
+   "sellAdd": 0.0,
+   "bank": false
+  },
+  "022": {
+   "income": 100.0,
+   "sellAdd": 0.1,
+   "bank": false
+  },
+  "023": {
+   "income": 400.0,
+   "sellAdd": 0.1,
+   "bank": false
+  },
+  "024": {
+   "income": 1400.0,
+   "sellAdd": 0.1,
+   "bank": false
+  },
+  "025": {
+   "income": 5400.0,
+   "sellAdd": 0.1,
+   "bank": false
+  },
+  "030": {
+   "income": 225.0,
+   "sellAdd": 0.0,
+   "bank": true
+  },
+  "031": {
+   "income": 225.0,
+   "sellAdd": 0.0,
+   "bank": true
+  },
+  "032": {
+   "income": 225.0,
+   "sellAdd": 0.1,
+   "bank": true
+  },
+  "040": {
+   "income": 225.0,
+   "sellAdd": 0.0,
+   "bank": true
+  },
+  "041": {
+   "income": 225.0,
+   "sellAdd": 0.0,
+   "bank": true
+  },
+  "042": {
+   "income": 225.0,
+   "sellAdd": 0.1,
+   "bank": true
+  },
+  "050": {
+   "income": 225.0,
+   "sellAdd": 0.0,
+   "bank": true
+  },
+  "051": {
+   "income": 225.0,
+   "sellAdd": 0.0,
+   "bank": true
+  },
+  "052": {
+   "income": 225.0,
+   "sellAdd": 0.1,
+   "bank": true
+  },
+  "100": {
+   "income": 120.0,
+   "sellAdd": 0.0,
+   "bank": false
+  },
+  "101": {
+   "income": 120.0,
+   "sellAdd": 0.0,
+   "bank": false
+  },
+  "102": {
+   "income": 120.0,
+   "sellAdd": 0.1,
+   "bank": false
+  },
+  "103": {
+   "income": 360.0,
+   "sellAdd": 0.1,
+   "bank": false
+  },
+  "104": {
+   "income": 1260.0,
+   "sellAdd": 0.1,
+   "bank": false
+  },
+  "105": {
+   "income": 5260.0,
+   "sellAdd": 0.1,
+   "bank": false
+  },
+  "110": {
+   "income": 120.0,
+   "sellAdd": 0.0,
+   "bank": false
+  },
+  "120": {
+   "income": 150.0,
+   "sellAdd": 0.0,
+   "bank": false
+  },
+  "130": {
+   "income": 275.0,
+   "sellAdd": 0.0,
+   "bank": true
+  },
+  "140": {
+   "income": 275.0,
+   "sellAdd": 0.0,
+   "bank": true
+  },
+  "150": {
+   "income": 275.0,
+   "sellAdd": 0.0,
+   "bank": true
+  },
+  "200": {
+   "income": 160.0,
+   "sellAdd": 0.0,
+   "bank": false
+  },
+  "201": {
+   "income": 160.0,
+   "sellAdd": 0.0,
+   "bank": false
+  },
+  "202": {
+   "income": 160.0,
+   "sellAdd": 0.1,
+   "bank": false
+  },
+  "203": {
+   "income": 400.0,
+   "sellAdd": 0.1,
+   "bank": false
+  },
+  "204": {
+   "income": 1400.0,
+   "sellAdd": 0.1,
+   "bank": false
+  },
+  "205": {
+   "income": 5400.0,
+   "sellAdd": 0.1,
+   "bank": false
+  },
+  "210": {
+   "income": 160.0,
+   "sellAdd": 0.0,
+   "bank": false
+  },
+  "220": {
+   "income": 200.0,
+   "sellAdd": 0.0,
+   "bank": false
+  },
+  "230": {
+   "income": 325.0,
+   "sellAdd": 0.0,
+   "bank": true
+  },
+  "240": {
+   "income": 325.0,
+   "sellAdd": 0.0,
+   "bank": true
+  },
+  "250": {
+   "income": 325.0,
+   "sellAdd": 0.0,
+   "bank": true
+  },
+  "300": {
+   "income": 320.0,
+   "sellAdd": 0.0,
+   "bank": false
+  },
+  "301": {
+   "income": 320.0,
+   "sellAdd": 0.0,
+   "bank": false
+  },
+  "302": {
+   "income": 320.0,
+   "sellAdd": 0.1,
+   "bank": false
+  },
+  "310": {
+   "income": 320.0,
+   "sellAdd": 0.0,
+   "bank": false
+  },
+  "320": {
+   "income": 400.0,
+   "sellAdd": 0.0,
+   "bank": false
+  },
+  "400": {
+   "income": 1500.0,
+   "sellAdd": 0.0,
+   "bank": false
+  },
+  "401": {
+   "income": 1500.0,
+   "sellAdd": 0.0,
+   "bank": false
+  },
+  "402": {
+   "income": 1500.0,
+   "sellAdd": 0.1,
+   "bank": false
+  },
+  "410": {
+   "income": 1500.0,
+   "sellAdd": 0.0,
+   "bank": false
+  },
+  "420": {
+   "income": 1875.0,
+   "sellAdd": 0.0,
+   "bank": false
+  },
+  "500": {
+   "income": 6000.0,
+   "sellAdd": 0.0,
+   "bank": false
+  },
+  "501": {
+   "income": 6000.0,
+   "sellAdd": 0.0,
+   "bank": false
+  },
+  "502": {
+   "income": 6000.0,
+   "sellAdd": 0.1,
+   "bank": false
+  },
+  "510": {
+   "income": 6000.0,
+   "sellAdd": 0.0,
+   "bank": false
+  },
+  "520": {
+   "income": 7500.0,
+   "sellAdd": 0.0,
+   "bank": false
+  }
+ }
 }

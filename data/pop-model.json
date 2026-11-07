@@ -362,10 +362,20 @@
       {
        "path": 2,
        "tier": 2
+      },
+      {
+       "path": 2,
+       "maxTier": 2
+      }
+     ],
+     [
+      {
+       "path": 0,
+       "tier": 5
       }
      ]
     ],
-    "note": "Frag Bombs: the sharp frags (only) pop Black"
+    "note": "Frag Bombs (exactly x-x-2): the sharp frags pop Black. Cluster Bombs (x-x-3+) replace them with explosions, which can't. Bloon Crush (5-x-x) pops Black"
    },
    "white": {
     "any": [
@@ -380,10 +390,20 @@
       {
        "path": 2,
        "tier": 2
+      },
+      {
+       "path": 2,
+       "maxTier": 2
+      }
+     ],
+     [
+      {
+       "path": 0,
+       "tier": 5
       }
      ]
     ],
-    "note": "Frag Bombs frags only"
+    "note": "same as Black"
    },
    "frozen": {
     "any": [
@@ -458,7 +478,8 @@
     "https://bloons.fandom.com/wiki/Lead-Popping_Power (BTD6 lead table)",
     "https://bloons.fandom.com/wiki/Camo_Bloon/Strategies (BTD6 camo table)",
     "https://www.bloonswiki.com/Sharp (BTD6 damage-type bitflag table)",
-    "https://www.bloonswiki.com/Camo_Bloon_(BTD6) (towers without detection phase through camo)"
+    "https://www.bloonswiki.com/Camo_Bloon_(BTD6) (towers without detection phase through camo)",
+    "btd6-game-data v56 export: damage immuneBloonProperties per projectile (Monkey Intel 0.9.1 audit)"
    ]
   },
   "tack": {
@@ -497,9 +518,15 @@
        "path": 0,
        "maxTier": 3
       }
+     ],
+     [
+      {
+       "path": 0,
+       "tier": 5
+      }
      ]
     ],
-    "note": "Ring of Fire / Inferno Ring (4-x-x+) are Fire and lose Purple; Hot Shots still pops it"
+    "note": "Ring of Fire (4-x-x) is Fire and loses Purple; Inferno Ring's meteor (5-x-x) pops it again"
    },
    "black": {
     "any": [
@@ -570,7 +597,8 @@
     "https://bloons.fandom.com/wiki/Lead-Popping_Power (BTD6 lead table)",
     "https://bloons.fandom.com/wiki/Camo_Bloon/Strategies (BTD6 camo table)",
     "https://bloons.fandom.com/wiki/Purple_Bloon (BTD6 immune list)",
-    "https://steamdb.info/patchnotes/6537293 (BTD6 v25.0 damage-type rework notes)"
+    "https://steamdb.info/patchnotes/6537293 (BTD6 v25.0 damage-type rework notes)",
+    "btd6-game-data v56 export: damage immuneBloonProperties per projectile (Monkey Intel 0.9.1 audit)"
    ]
   },
   "ice": {
@@ -638,19 +666,31 @@
     "any": [
      [
       {
+       "path": 0,
+       "tier": 3
+      }
+     ],
+     [
+      {
        "path": 2,
-       "tier": 5
+       "tier": 4
       }
      ]
     ],
-    "note": "Cold/Glacier can't pop White. Icicle Impale is the only own upgrade that pops it; Silas L5/L13 or MIB fix it"
+    "note": "Cold/Glacier can't pop White. Ice Shards (3-x-x) and Icicles (x-x-4+) can"
    },
    "zebra": {
     "any": [
      [
       {
+       "path": 0,
+       "tier": 3
+      }
+     ],
+     [
+      {
        "path": 2,
-       "tier": 5
+       "tier": 4
       }
      ]
     ],
@@ -744,7 +784,8 @@
     "https://bloons.fandom.com/wiki/Ice_Monkey_(BTD6)",
     "https://bloons.fandom.com/wiki/Lead-Popping_Power (BTD6 lead table)",
     "https://bloons.fandom.com/wiki/Camo_Bloon/Strategies (BTD6 camo table)",
-    "https://www.bloonswiki.com/Sharp (BTD6 damage-type bitflag table)"
+    "https://www.bloonswiki.com/Sharp (BTD6 damage-type bitflag table)",
+    "btd6-game-data v56 export: damage immuneBloonProperties per projectile (Monkey Intel 0.9.1 audit)"
    ]
   },
   "glue": {
@@ -916,9 +957,21 @@
        "path": 1,
        "tier": 3
       }
+     ],
+     [
+      {
+       "path": 0,
+       "tier": 3
+      }
+     ],
+     [
+      {
+       "path": 2,
+       "tier": 5
+      }
      ]
     ],
-    "note": "Deadeye rifle. towers.json's old Big Iron lead tag is not confirmed by the wiki and is not counted"
+    "note": "Deadeye rifle; 3-x-x and x-x-5 attacks (game damage flags)"
    },
    "purple": {
     "any": [
@@ -998,7 +1051,8 @@
    ],
    "confidence": "medium",
    "sources": [
-    "https://www.bloonswiki.com/Desperado_(BTD6)"
+    "https://www.bloonswiki.com/Desperado_(BTD6)",
+    "btd6-game-data v56 export: damage immuneBloonProperties per projectile (Monkey Intel 0.9.1 audit)"
    ]
   },
   "sniper": {
@@ -1300,20 +1354,15 @@
        "path": 1,
        "tier": 2
       }
+     ],
+     [
+      {
+       "path": 0,
+       "tier": 4
+      }
      ]
     ],
-    "note": "Hot Shot (fire grapes)",
-    "conditional": [
-     {
-      "req": [
-       {
-        "path": 0,
-        "tier": 5
-       }
-      ],
-      "note": "Carrier Flagship: listed for DDTs only"
-     }
-    ]
+    "note": "Hot Shot (fire grapes); Aircraft Carrier planes (4-x-x+)"
    },
    "purple": {
     "any": [
@@ -1402,7 +1451,8 @@
    "sources": [
     "https://bloons.fandom.com/wiki/Lead-Popping_Power (BTD6 lead table)",
     "https://bloons.fandom.com/wiki/Camo_Bloon/Strategies (BTD6 camo table)",
-    "https://bloons.fandom.com/wiki/Purple_Bloon (BTD6 immune list)"
+    "https://bloons.fandom.com/wiki/Purple_Bloon (BTD6 immune list)",
+    "btd6-game-data v56 export: damage immuneBloonProperties per projectile (Monkey Intel 0.9.1 audit)"
    ]
   },
   "ace": {
@@ -1434,11 +1484,11 @@
      [
       {
        "path": 0,
-       "tier": 5
+       "tier": 3
       }
      ]
     ],
-    "note": "Exploding Pineapple (unreliable, explosive), Spectre, Sky Shredder"
+    "note": "Exploding Pineapple (unreliable, explosive), Spectre, Fighter Plane missiles (3-x-x+)"
    },
    "purple": {
     "any": [
@@ -1559,7 +1609,8 @@
    "sources": [
     "https://bloons.fandom.com/wiki/Lead-Popping_Power (BTD6 lead table)",
     "https://bloons.fandom.com/wiki/Camo_Bloon/Strategies (BTD6 camo table)",
-    "https://steamcommunity.com/app/960090/discussions/0/2970650017894287895"
+    "https://steamcommunity.com/app/960090/discussions/0/2970650017894287895",
+    "btd6-game-data v56 export: damage immuneBloonProperties per projectile (Monkey Intel 0.9.1 audit)"
    ]
   },
   "heli": {
@@ -1587,15 +1638,20 @@
        "path": 2,
        "tier": 3
       }
-     ],
-     [
-      {
-       "path": 1,
-       "tier": 5
-      }
      ]
     ],
-    "note": "Razor Rotors; MOAB Shove missiles; Special Poperations marine"
+    "note": "Razor Rotors; MOAB Shove missiles. Special Poperations (0-5-x) marine is an ability, so it is listed as conditional",
+    "conditional": [
+     {
+      "req": [
+       {
+        "path": 1,
+        "tier": 5
+       }
+      ],
+      "note": "Special Poperations marine (ability)"
+     }
+    ]
    },
    "purple": {
     "any": [
@@ -1638,13 +1694,19 @@
        "path": 2,
        "tier": 3
       }
-     ],
-     [
-      {
-       "path": 1,
-       "tier": 5
-      }
      ]
+    ],
+    "note": "Razor Rotors; MOAB Shove missiles. Special Poperations (0-5-x) marine is an ability, so it is listed as conditional",
+    "conditional": [
+     {
+      "req": [
+       {
+        "path": 1,
+        "tier": 5
+       }
+      ],
+      "note": "Special Poperations marine (ability)"
+     }
     ]
    },
    "moab": {
@@ -1706,7 +1768,8 @@
    "sources": [
     "https://bloons.fandom.com/wiki/Heli_Pilot_(BTD6)",
     "https://bloons.fandom.com/wiki/Lead-Popping_Power (BTD6 lead table)",
-    "https://bloons.fandom.com/wiki/Camo_Bloon/Strategies (BTD6 camo table)"
+    "https://bloons.fandom.com/wiki/Camo_Bloon/Strategies (BTD6 camo table)",
+    "btd6-game-data v56 export: damage immuneBloonProperties per projectile (Monkey Intel 0.9.1 audit)"
    ]
   },
   "mortar": {
@@ -2039,12 +2102,18 @@
     "any": [
      [
       {
+       "path": 1,
+       "tier": 1
+      }
+     ],
+     [
+      {
        "path": 2,
        "tier": 4
       }
      ]
     ],
-    "note": "Only via Necromancer undead bloons (needs bloons popped nearby). All other Wizard attacks are Energy/Fire/Plasma",
+    "note": "Fireball (x-1-x+) explodes with Explosion damage, which pops Purple. Necromancer undead bloons too. The bolts are Energy (no Purple)",
     "conditional": [
      {
       "req": [
@@ -2121,7 +2190,8 @@
     "https://bloons.fandom.com/wiki/Lead-Popping_Power (BTD6 lead table)",
     "https://bloons.fandom.com/wiki/Camo_Bloon/Strategies (BTD6 camo table)",
     "https://bloons.fandom.com/wiki/Purple_Bloon (BTD6 immune list)",
-    "https://bloons.fandom.com/wiki/Necromancer:_Unpopped_Army"
+    "https://bloons.fandom.com/wiki/Necromancer:_Unpopped_Army",
+    "btd6-game-data v56 export: damage immuneBloonProperties per projectile (Monkey Intel 0.9.1 audit)"
    ]
   },
   "super": {
@@ -2160,20 +2230,15 @@
        "path": 2,
        "tier": 4
       }
+     ],
+     [
+      {
+       "path": 1,
+       "tier": 4
+      }
      ]
     ],
-    "note": "Plasma Blasts; Dark Champion",
-    "conditional": [
-     {
-      "req": [
-       {
-        "path": 1,
-        "tier": 4
-       }
-      ],
-      "note": "Tech Terror ability"
-     }
-    ]
+    "note": "Plasma Blasts; Dark Champion; Tech Terror (0-4-x) shoots Plasma"
    },
    "purple": {
     "any": [
@@ -2288,7 +2353,8 @@
     "https://bloons.fandom.com/wiki/Purple-Popping_Power",
     "https://bloons.fandom.com/wiki/Energy",
     "https://bloons.fandom.com/wiki/Lead-Popping_Power (BTD6 lead table)",
-    "https://bloons.fandom.com/wiki/Camo_Bloon/Strategies (BTD6 camo table)"
+    "https://bloons.fandom.com/wiki/Camo_Bloon/Strategies (BTD6 camo table)",
+    "btd6-game-data v56 export: damage immuneBloonProperties per projectile (Monkey Intel 0.9.1 audit)"
    ]
   },
   "ninja": {
@@ -2683,16 +2749,24 @@
    "white": {
     "any": [
      [
-      "base"
+      {
+       "path": 1,
+       "maxTier": 2
+      }
      ]
-    ]
+    ],
+    "note": "x-3-x and up attacks are Cold, which can't pop White"
    },
    "zebra": {
     "any": [
      [
-      "base"
+      {
+       "path": 1,
+       "maxTier": 2
+      }
      ]
-    ]
+    ],
+    "note": "same as White"
    },
    "frozen": {
     "any": [
@@ -2733,7 +2807,8 @@
    "sources": [
     "https://www.bloonswiki.com/Mermonkey_(BTD6)",
     "https://bloons.fandom.com/wiki/Mermonkey",
-    "https://bloons.fandom.com/wiki/Purple_Bloon (BTD6 immune list)"
+    "https://bloons.fandom.com/wiki/Purple_Bloon (BTD6 immune list)",
+    "btd6-game-data v56 export: damage immuneBloonProperties per projectile (Monkey Intel 0.9.1 audit)"
    ]
   },
   "skywarden": {
@@ -2762,10 +2837,13 @@
    "purple": {
     "any": [
      [
-      "base"
+      {
+       "path": 1,
+       "maxTier": 0
+      }
      ]
     ],
-    "note": "arrows; Thundering Arc itself is Plasma"
+    "note": "the base arrows are Sharp. The middle path (Storm's Pulse and up) shoots Energy/Plasma, which can't pop Purple"
    },
    "black": {
     "any": [
@@ -2843,7 +2921,8 @@
    ],
    "confidence": "low",
    "sources": [
-    "Ninja Kiwi v56/v57 Steam announcements (store.steampowered.com/oldnews, appid 960090)"
+    "Ninja Kiwi v56/v57 Steam announcements (store.steampowered.com/oldnews, appid 960090)",
+    "btd6-game-data v56 export: damage immuneBloonProperties per projectile (Monkey Intel 0.9.1 audit)"
    ]
   },
   "farm": {
@@ -3534,7 +3613,8 @@
     "level": 5
    },
    "radius": "global while the spell lasts",
-   "note": "Vision spell (temporary, costs mana); level from the fandom camo table"
+   "note": "Vision spell (temporary, costs mana); level from the fandom camo table",
+   "temporary": true
   },
   {
    "grants": "camo",
@@ -3556,7 +3636,8 @@
     "level": 4
    },
    "radius": "Gwendolin range, 8 s after each trigger",
-   "note": "Heat It Up: towers hit pop Lead and Frozen for 8 s; triggers every ~40 shots"
+   "note": "Heat It Up: towers hit pop Lead and Frozen for 8 s; triggers every ~40 shots",
+   "temporary": true
   },
   {
    "grants": "frozen",
@@ -3565,7 +3646,8 @@
     "level": 4
    },
    "radius": "Gwendolin range, temporary",
-   "note": "Heat It Up"
+   "note": "Heat It Up",
+   "temporary": true
   },
   {
    "grants": "black",
@@ -3587,7 +3669,8 @@
    "only": [
     "sub",
     "buccaneer"
-   ]
+   ],
+   "temporary": true
   },
   {
    "grants": "lead",
@@ -3600,7 +3683,8 @@
    "only": [
     "sub",
     "buccaneer"
-   ]
+   ],
+   "temporary": true
   },
   {
    "grants": "camo",
@@ -3618,7 +3702,8 @@
     "level": 3
    },
    "radius": "one tower, 5 rounds",
-   "note": "See Invisibility Potion shop item"
+   "note": "See Invisibility Potion shop item",
+   "temporary": true
   },
   {
    "grants": "white",
@@ -3834,9 +3919,9 @@
     "level": 5
    },
    "lead": {
-    "level": 10
+    "level": 20
    },
-   "note": "Own drones see camo at L5, UAV gives every tower camo at L8. Lead only via the L10 UCAV ability (permanent at L20)"
+   "note": "Own drones see camo at L5, UAV gives every tower camo at L8. Lead: the L10 UCAV ability only; his own attacks pop Lead from L20 (game files)"
   },
   "sauda": {
    "camo": {
@@ -3870,12 +3955,12 @@
   },
   "corvus": {
    "camo": {
-    "level": 5
+    "level": null
    },
    "lead": {
-    "level": 1
+    "level": null
    },
-   "note": "Camo via Vision spell (L5); Lead only while the Spear spell is active. Low confidence"
+   "note": "Game files: his Spirit attack can't pop Lead (Lead + Purple immune) and can't see camo at any level. Camo (Vision) and Lead (Spear) come only from spells that cost mana, so they are not counted as permanent"
   },
   "rosalia": {
    "camo": {

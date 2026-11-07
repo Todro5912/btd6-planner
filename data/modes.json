@@ -120,7 +120,11 @@
    "noPopCash": true,
    "noEndOfRoundCash": true,
    "noFastTrack": true,
-   "bloonMods": "Uses standard rounds 31-60 at Easy speed"
+   "bloonMods": "Uses standard rounds 31-60 at Easy speed",
+   "lockedTowers": [
+    "farm"
+   ],
+   "lockedTowersSource": "game file Mods/Deflation.json: LockTowerModModel BananaFarm"
   },
   "rewardMM": {
    "Beginner": 75,
@@ -281,7 +285,7 @@
   "startCashWithMoreCashMK": 850,
   "lives": 150,
   "startRound": 1,
-  "endRound": 70,
+  "endRound": 60,
   "costMult": 1.0,
   "cashMult": 1,
   "bloonSpeedMult": 1.1,
@@ -313,7 +317,7 @@
   "unlockReq": "Beat Military Only.",
   "xpBaseTotal": 87100,
   "totalCashNoIncome": null,
-  "notes": "Randomly generated rounds (500+ bloon groups) with NO break between rounds: the next round spawns once the previous one finishes spawning. Ground objects (spikes) persist. Leads from R20, Camo from R19, Ceramics from R33, MOABs from R41, BFBs 51, ZOMGs 61, DDTs 81. End-of-round cash exists (added in a later update). Events/odyssey use fixed seeds. Leaving and re-entering lowers difficulty. The win round is round 70 or round 60 {unverified}.",
+  "notes": "Randomly generated rounds (500+ bloon groups) with NO break between rounds: the next round spawns once the previous one finishes spawning. Ground objects (spikes) persist. Leads from R20, Camo from R19, Ceramics from R33, MOABs from R41, BFBs 51, ZOMGs 61, DDTs 81. End-of-round cash exists (added in a later update). Events/odyssey use fixed seeds. Leaving and re-entering lowers difficulty. Win round: 60, from the game file Mods/Apopalypse.json (EndRoundModModel round 60).",
   "inferred": [
    "endRound 70 from bloonswiki version-history line (undated); fandom article and a 2022 guide say 60 - UNRESOLVED, see endRoundAlt",
    "startCash 650: fandom More Cash page says $650 'on most game modes' (only Half Cash $325 and Deflation $20,000 differ); no page names this mode explicitly",
@@ -323,8 +327,9 @@
   ],
   "endRoundAlt": 60,
   "_src": {
-   "notes": "Randomly generated rounds (500+ bloon groups) with NO break between rounds: the next round spawns once the previous one finishes spawning. Ground objects (spikes) persist. Leads from R20, Camo from R19, Ceramics from R33, MOABs from R41, BFBs 51, ZOMGs 61, DDTs 81. End-of-round cash exists (added in a later update). Events/odyssey use fixed seeds. Leaving and re-entering lowers difficulty. Win round DISPUTED: bloonswiki's (undated, unversioned) update-history line says \"Completing round 70 now counts as beating the mode\"; the fandom Apopalypse (BTD6) article says victory is \"popping all bloons spawned from Round 1 to Round 60\", and a 2022 guide says 60 rounds. Unresolved 2026-11-05."
-  }
+   "notes": "Randomly generated rounds (500+ bloon groups) with NO break between rounds: the next round spawns once the previous one finishes spawning. Ground objects (spikes) persist. Leads from R20, Camo from R19, Ceramics from R33, MOABs from R41, BFBs 51, ZOMGs 61, DDTs 81. End-of-round cash exists (added in a later update). Events/odyssey use fixed seeds. Leaving and re-entering lowers difficulty. Win round: 60, from the game file Mods/Apopalypse.json (EndRoundModModel round 60)."
+  },
+  "endRoundSource": "game file Mods/Apopalypse.json: EndRoundModModel round 60 (btd6-game-data v56)"
  },
  {
   "id": "reverse",

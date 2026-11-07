@@ -2857,7 +2857,7 @@
   "water": "little",
   "losBlockers": "some",
   "removables": [],
-  "paths": 2,
+  "paths": 3,
   "trackLength": 16.6,
   "trackClass": "medium",
   "rbsHard": [
@@ -2995,8 +2995,8 @@
     "field": "paths",
     "index": 2,
     "other": "2 entrances, 2 exits, 3 lanes all active",
-    "source": "kept Index count; the 3 lanes are listed in rbs.lanes",
-    "kept": "index",
+    "source": "3 lanes run at once, and the Index measures 3 lanes (rbs.lanes); the Index path count (2) counts entrances",
+    "kept": "bloonswiki",
     "_src": {
      "other": "bloonswiki: 2 entrances, 2 exits, 3 lanes all active (lanes = 3)"
     }

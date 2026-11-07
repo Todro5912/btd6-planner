@@ -34,8 +34,8 @@ All prices are Medium unless a column says otherwise. **(calc)** marks derived n
 | 51–60 | 50% |
 | 61–85 | 20% |
 | 86–100 | 10% |
-| 101–120 | 8% |
-| 121–140 | 5% |
+| 101–120 | 5% |
+| 121–140 | 4% |
 | 141+ | 2% |
 
 What the cut means (calc): rounds 1–50 pay about $31k of pop cash for 33k RBE. Rounds 86–100 throw 1.48 million RBE at you and pay about $54k. A Ceramic popped on R40 is worth about 10× one popped on R90.
@@ -92,7 +92,7 @@ Medium prices, every banana collected, no MK. Payback = cost ÷ income per round
 | [Benjamin](/heroes/benjamin/) | Level 2–7 | $1,200 | $140 | 8.6 | Best value per dollar at low level |
 | [Monkey Buccaneer](/monkeys/buccaneer/) | 0-0-3 Merchantman | $3,350 | $200 | 16.8 | +$20 with Trade Agreements MK |
 | Monkey Buccaneer | 0-0-4 Favored Trades | $8,850 | $500 | 17.7 | +4% sell value per stack to towers in range, max +12% |
-| Monkey Buccaneer | 0-0-5 Trade Empire | $31,850 | ≥$500 | – | Own base income unverified; +$20 per Favored Trades, +$10 per Merchantman (max 20 boats) |
+| Monkey Buccaneer | 0-0-5 Trade Empire | $31,850 | $800 | ≈39.8 | $800 of its own (game file); +$20 per Favored Trades, +$10 per Merchantman (max 20 boats) |
 | [Sniper Monkey](/monkeys/sniper/) | 0-4-0 Supply Drop | $10,750 | ≈$550 | ≈19.5 | $1,100 crate per 90s; crates per round unverified |
 | [Alchemist](/monkeys/alchemist/) | 0-0-3 Lead to Gold | $2,650 | varies | – | +$50 per Lead it pops (R28: $300, R59: $2,500) |
 | Alchemist | 0-0-4 Rubber to Gold | $5,400 | varies | – | +100% pop cash on affected bloons; cut by the late pop-cash reduction since 57.1 |
@@ -102,7 +102,7 @@ Medium prices, every banana collected, no MK. Payback = cost ÷ income per round
 | Monkey Village | 0-0-4 Monkey City | $15,200 | varies | – | +20% to income towers in range, free Dart each round |
 | Monkey Village | 0-0-5 Monkeyopolis | $5,000 per farm absorbed | ≥$1,200 | – | Replaces the farms it absorbs; crate formula unverified |
 
-Benjamin's cash by level: $90 at L1, $140 at L2–7, $250 at L8–10, $1,000 at L11–14, $2,500 at L15–16, $5,000 at L17–20. One older fan source lists 100/150/250/300/500/800 instead (unverified in game).
+Benjamin's cash by level: $90 at L1, $140 at L2–7, $250 at L8–10, $1,000 at L11–14, $2,500 at L15–16, $5,000 at L17–20. The amounts match the game's files.
 
 Not income: Ezili, Pat Fusty, Mermonkey and Dart Spike-o-pult.
 
@@ -172,7 +172,7 @@ Two discount Villages are never the best choice: by the time two beat one, three
 | Better Sell Deals MK | +5% |
 | Favored Trades (Buccaneer 0-0-4) | +4% per stack in range, up to +12% |
 | Flat Pack Buildings MK | +2%, Farms and Villages only |
-| Banana Salvage (Farm x-x-2) | +10% on that farm (unverified) |
+| Banana Salvage (Farm x-x-2) | +10% on that farm (80% in all) |
 | Cap | 95% |
 | Lych boss on screen | Halved to 35% |
 | CHIMPS | No selling |

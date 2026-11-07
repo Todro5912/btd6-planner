@@ -117,7 +117,7 @@ Base values, fortified in brackets. Only the outer layer's HP counts before it p
 | Tower | Upgrades |
 |---|---|
 | [Bomb Shooter](/monkeys/bomb/) | MOAB Mauler (0-3-x), MOAB Assassin (0-4-x, ability one-shots small blimps), MOAB Eliminator (0-5-x) |
-| [Sniper Monkey](/monkeys/sniper/) | Large Calibre (2-x-x), Deadly Precision (3-x-x), Maim MOAB (4-x-x, stun), Cripple MOAB (5-x-x) |
+| [Sniper Monkey](/monkeys/sniper/) | Large Caliber (2-x-x), Deadly Precision (3-x-x), Maim MOAB (4-x-x, stun), Cripple MOAB (5-x-x) |
 | [Monkey Buccaneer](/monkeys/buccaneer/) | Destroyer (3-x-x), Carrier Flagship (5-x-x), Monkey Pirates hook (0-4-x) |
 | [Boomerang Monkey](/monkeys/boomerang/) | MOAB Press (0-0-4, stall), MOAB Domination (0-0-5), Glaive Lord (5-x-x) |
 | [Spike Factory](/monkeys/spike/) | MOAB SHREDR (0-3-x), Spike Storm (0-4-x), Perma-Spike (0-0-5) |

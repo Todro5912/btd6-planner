@@ -1593,7 +1593,7 @@
      },
      {
       "tier": 2,
-      "name": "Large Calibre",
+      "name": "Large Caliber",
       "cost": 1300,
       "xp": 800,
       "_grants_deprecated": [],
@@ -1769,7 +1769,7 @@
     },
     {
      "code": "2-5-0",
-     "name": "Elite Sniper w/ Large Calibre",
+     "name": "Elite Sniper w/ Large Caliber",
      "use": "Elite Sniper damage build",
      "popular": true
     },
@@ -1793,7 +1793,7 @@
     },
     {
      "code": "2-0-5",
-     "name": "Elite Defender w/ Large Calibre",
+     "name": "Elite Defender w/ Large Caliber",
      "use": "Tier 1 Bosses and R97/R100",
      "popular": true
     }
@@ -2508,7 +2508,7 @@
      {
       "tier": 3,
       "name": "Razor Rotors",
-      "cost": 1850,
+      "cost": 1450,
       "xp": 2700,
       "_grants_deprecated": [
        "lead",
@@ -2520,7 +2520,7 @@
      {
       "tier": 4,
       "name": "Apache Dartship",
-      "cost": 19600,
+      "cost": 20000,
       "xp": 20000,
       "_grants_deprecated": [
        "moab"
@@ -2616,7 +2616,7 @@
        "moab",
        "slow"
       ],
-      "effect": "Pushes back or slows MOAB-class",
+      "effect": "Pushes back or slows MOAB-class (not ZOMGs since v57.0)",
       "damageType": "explosion",
       "damageTypeNote": "missiles"
      },
@@ -3235,7 +3235,7 @@
       "tier": 1,
       "name": "Intense Magic",
       "cost": 300,
-      "xp": null,
+      "xp": 140,
       "_grants_deprecated": [],
       "effect": "Bigger, stronger bolts"
      },
@@ -4338,7 +4338,7 @@
       "tier": 1,
       "name": "Echosense Precision",
       "cost": 200,
-      "xp": 150,
+      "xp": 120,
       "_grants_deprecated": [
        "camo"
       ],
@@ -4446,7 +4446,7 @@
       "tier": 1,
       "name": "Aerial Attunement",
       "cost": 140,
-      "xp": null,
+      "xp": 150,
       "_grants_deprecated": [
        "buff"
       ],
@@ -4459,7 +4459,7 @@
       "tier": 2,
       "name": "Zephyr Sense",
       "cost": 175,
-      "xp": null,
+      "xp": 550,
       "_grants_deprecated": [
        "camo"
       ],
@@ -4506,7 +4506,7 @@
       "tier": 1,
       "name": "Storm's Pulse",
       "cost": 175,
-      "xp": null,
+      "xp": 175,
       "_grants_deprecated": [],
       "effect": "Thunder pulse"
      },
@@ -4514,7 +4514,7 @@
       "tier": 2,
       "name": "Thundering Arc",
       "cost": 275,
-      "xp": null,
+      "xp": 650,
       "_grants_deprecated": [
        "lead"
       ],
@@ -4568,7 +4568,7 @@
       "tier": 1,
       "name": "Shatterpoint",
       "cost": 150,
-      "xp": null,
+      "xp": 200,
       "_grants_deprecated": [],
       "effect": "Ice path tier 1"
      },
@@ -4576,7 +4576,7 @@
       "tier": 2,
       "name": "Icebore",
       "cost": 250,
-      "xp": null,
+      "xp": 500,
       "_grants_deprecated": [],
       "effect": "Ice path tier 2"
      },
@@ -4783,7 +4783,7 @@
       "tier": 2,
       "name": "Banana Salvage",
       "cost": 400,
-      "xp": null,
+      "xp": 950,
       "_grants_deprecated": [],
       "effect": "+10% sellback"
      },
@@ -5758,7 +5758,7 @@
    "xpCurve": 1.0,
    "added": null,
    "camo": "level 5",
-   "lead": "no (arrows can't pop Lead or Frozen at any level; no DDTs without support)",
+   "lead": "level 7 (every 3rd arrow explodes, which pops Lead; every 2nd from L17). His normal arrows are Sharp and never pop Lead or Frozen",
    "roles": [
     "early",
     "generalist"
@@ -5937,7 +5937,7 @@
    "xpCurve": 1.425,
    "added": null,
    "camo": "level 7 (Naval Tactics gives Camo to affected towers from L8)",
-   "lead": "pistol is Sharp (no); mines {unverified}",
+   "lead": "level 1 (sea mines explode, which pops Lead). Her pistol is Sharp",
    "roles": [
     "water",
     "buff"
@@ -5946,7 +5946,8 @@
    "beginnerTier": "C",
    "_src": {
     "lead": "pistol is Sharp (no); mines: unverified"
-   }
+   },
+   "waterOnly": true
   },
   {
    "id": "etienne",
@@ -5957,7 +5958,7 @@
    "xpCurve": 1.0,
    "added": null,
    "camo": "level 5 (own drones); level 8 UAV = global Camo for every tower",
-   "lead": "no via drone darts (Sharp); later attacks {unverified}",
+   "lead": "level 20 (own attacks). From level 10 the UCAV ability pops Lead while it lasts",
    "roles": [
     "camo",
     "support"
@@ -6032,8 +6033,8 @@
    "unlockLevel": 35,
    "xpCurve": 1.425,
    "added": null,
-   "camo": "no by default (Vision spell grants it temporarily)",
-   "lead": "no (Spirit can't damage Lead or Purple)",
+   "camo": "no by default (the Vision spell grants it while it lasts)",
+   "lead": "no by default (Spirit can't damage Lead or Purple; the Spear spell can)",
    "roles": [
     "micro",
     "chimps",
@@ -6051,7 +6052,7 @@
    "xpCurve": 1.425,
    "added": "43.0",
    "camo": "none by default {unverified}",
-   "lead": "yes (lasers pop Lead)",
+   "lead": "level 2 (grenade launcher; lasers from L13)",
    "roles": [
     "carry",
     "ace-heli"
@@ -6130,14 +6131,5 @@
   "v57 price changes NOT re-verified on 2026-11-05: Glue Splatter $650 and Glue Strike $4,500 (bloonswiki pages, which appear to be cached pre-v57, show $970 and $4,000), and the seven Skywarden price changes. The v57 patch notes (Steam, bloonswiki 'Version 57.0', fandom 'Balance changes/Version 57.x') all refused to load. The v56 changes (Tack x3, Snowstorm $4,750, Pirate Lord $29,000) WERE confirmed via the changelog.gg copy of the Steam notes.",
   "Line of sight: Sniper Monkey IS blocked by line-of-sight obstacles (bloonswiki 'Line of sight' page: Snipers 'can attack to any location in the map as long they are not impeded by line of sight blockers'; Strategy:Sniper Monkey: 'they need line of sight to land shots'). Chapter 05 §3.3 lists Snipers as LoS-ignoring; that is wrong. Whether S.P.I.D.E.R. Monkey ignores LoS (chapter 03 says 'full-map line of sight') is unverified: its page failed to load."
  ],
- "missingXp": [
-  "Wizard Monkey: Intense Magic",
-  "Skywarden: Aerial Attunement",
-  "Skywarden: Zephyr Sense",
-  "Skywarden: Storm's Pulse",
-  "Skywarden: Thundering Arc",
-  "Skywarden: Shatterpoint",
-  "Skywarden: Icebore",
-  "Banana Farm: Banana Salvage"
- ]
+ "missingXp": []
 }

@@ -125,9 +125,9 @@
    "ptsNeeded": 8,
    "mm": 500,
    "fx": {
-    "sellAdd": 0.05,
-    "unverified": true
-   }
+    "sellAdd": 0.05
+   },
+   "source": "game file Knowledge/Support/BetterSellDeals.json (multiplier 0.05)"
   },
   {
    "id": "veteran-monkey-training",

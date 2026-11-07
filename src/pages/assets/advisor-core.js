@@ -84,6 +84,13 @@
 
   /* opts: {mapId, modeId, heroId ('' | 'auto' | id), towers: [id], force: {id: [a,b,c]}, unlocked: {id: [a,b,c]} (only use these tiers),
            fx: C.profileFx(...) (your Monkey Knowledge), ownsHero: (id) => bool, instas: [{t, x, n}] (place these for free)} */
+  /* "Pick for me": the map's best hero you own that can go on this map, else Quincy, else the map's best.
+     advisor.js uses the same function for the label, so the label always names the hero the plan uses. */
+  C.autoHero = function (D, map, own) {
+    own = typeof own === 'function' ? own : () => true;
+    const list = C.mapHeroes(D, map && map.id).filter((h) => !C.heroIssue(D, map, h));
+    return list.find((h) => own(h.id)) || (own('quincy') ? C.hero(D, 'quincy') : null) || list[0] || C.hero(D, 'quincy');
+  };
   C.advise = function (D, opts) {
     const mode = C.mode(D, opts.modeId) || C.mode(D, 'medium');
     const map = C.map(D, opts.mapId) || D.maps[0];
@@ -102,8 +109,8 @@
     if (opts.heroId === 'auto') {
       /* the map's best hero you own (My profile), else the map's best */
       const own = typeof opts.ownsHero === 'function' ? opts.ownsHero : () => true;
+      hero = C.autoHero(D, map, own);
       const list = C.mapHeroes(D, map.id);
-      hero = list.find((h) => own(h.id)) || (own('quincy') ? C.hero(D, 'quincy') : null) || list[0] || C.hero(D, 'quincy');
       heroWhy = 'best hero for ' + map.name + (list[0] && hero !== list[0] && !own(list[0].id) ? ' that you own (' + list[0].name + ' is the top pick)' : '');
     } else if (opts.heroId) { hero = C.hero(D, opts.heroId); heroWhy = 'your pick'; }
     const heroCost = hero ? C.price(hero.cost * (fx ? fx.heroCostMult : 1), mult) || 0 : 0;

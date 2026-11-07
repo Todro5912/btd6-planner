@@ -81,7 +81,7 @@ The verdicts on this page are predictions from the cash numbers. None was play-t
 | | |
 |---|---|
 | Best for | After R100, Insta rewards at R200 and R300, Paragon fuel |
-| Cash curve | Almost all tower income. Pop cash is 8% at R101–120, 5% at R121–140 and 2% from R141 |
+| Cash curve | Almost all tower income. Pop cash is 5% at R101–120, 4% at R121–140 and 2% from R141 |
 | Template | Farm hard before R100 (BRF spam, Banana Central, Monkeyopolis, Overclocks on farms), then convert into Paragons, Ultraboost, Homeland Defense and Permanent Brew. Big Bloon Sabotage MK on |
 | Risks | MOAB-class HP ramps +15% per round from about R125 and +35% from R151. BADs can't be slowed or stunned |
 

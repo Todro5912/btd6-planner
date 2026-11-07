@@ -178,23 +178,26 @@ def collect():
         tt = pick(t, ['id', 'name', 'class', 'baseCost', 'waterOnly', 'paragon'])
         tt['paths'] = [[pick(u, ['tier', 'name', 'cost', 'xp']) for u in (p or [])] for p in (t.get('paths') or [])]
         tower_list.append(tt)
-    heroes = [pick(h, ['id', 'name', 'cost', 'xpCurve', 'camo', 'lead', 'bestFor', 'beginnerTier', 'unlockLevel', 'mmUnlock']) for h in towers.get('heroes', []) or []]
-    rk = ['round', 'xp', 'cash', 'threats', 'composition', 'danger', 'notes']
+    heroes = [pick(h, ['id', 'name', 'cost', 'waterOnly', 'xpCurve', 'camo', 'lead', 'bestFor', 'beginnerTier', 'unlockLevel', 'mmUnlock']) for h in towers.get('heroes', []) or []]
+    rk = ['round', 'xp', 'cash', 'cashPop', 'rbe', 'threats', 'composition', 'danger', 'notes']
     data = {
         'meta': {'version': towers.get('version'), 'popSource': pop_source, 'popVersion': (pop or {}).get('version'),
                  'heroLevelsSource': 'data' if hero_levels else 'estimate'},
         'towers': tower_list,
         'heroes': heroes,
         'maps': [dict(pick(m, ['id', 'name', 'difficulty', 'water', 'losBlockers']),
-                      **({'rbs': (m.get('rbs') or {}).get('avg'), 'lanes': len((m.get('rbs') or {}).get('lanes') or []) or 1}
+                      **({'rbs': (m.get('rbs') or {}).get('avg'),
+                          # lanes = the BTD6 Index path count (paths), not the number of lane measurements in rbs.lanes
+                          'lanes': m.get('paths') if isinstance(m.get('paths'), int) and m.get('paths') > 0 else 1}
                          if isinstance(m.get('rbs'), dict) and (m.get('rbs') or {}).get('avg') else {})) for m in maps],
         'modes': [pick(m, ['id', 'name', 'base', 'startCash', 'lives', 'startRound', 'endRound', 'costMult', 'cashMult',
-                           'roundSet', 'allowedClasses', 'rules', 'medal']) for m in modes],
+                           'roundSet', 'allowedClasses', 'rules', 'medal', 'bloonSpeedMult']) for m in modes],
         'rounds': {k: [pick(r, rk) for r in rounds.get(k, []) or []] for k in ('standard', 'abr')},
         'strats': {s['mapId']: pick(s, ['strongTowers', 'avoidTowers', 'heroes']) for s in strats if s.get('mapId')},
         'guides': {g['towerId']: pick(g, ['xpAllUpgrades', 'xpParagon', 'farm', 'bestCrosspaths', 'buyTiming', 'lacks'])
                    for g in guides if g.get('towerId')},
         'income': [pick(s, ['tower', 'code', 'incomePerRound', 'chimpsLegal']) for s in econ.get('incomeSources', []) or []],
+        'farmCross': econ.get('farmCross') or {},
         'pop': pop,
         'heroLevels': hero_levels,
         'presets': parse_presets(strats, tower_list, heroes),

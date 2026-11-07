@@ -9,11 +9,11 @@
    "51-60": 0.5,
    "61-85": 0.2,
    "86-100": 0.1,
-   "101-120": 0.08,
-   "121-140": 0.05,
+   "101-120": 0.05,
+   "121-140": 0.04,
    "141+": 0.02
   },
-  "popCashMultiplierNote": "101-120 = 8% and 121-140 = 5% per the v53.0 patch notes (\"5% -> 8%\", \"2% -> 5%\"; 'final freeplay income cut pushed back 20 rounds') and the bloonswiki Freeplay page (re-checked 2026-11-05). The bloonswiki Rounds/ABR tables still compute 101-140 at 5%/4%; their figures are kept as cashPopWikiTable for rounds 101-140. Rounds 1-100 cash columns follow the bloonswiki Rounds (BTD6) table exactly.",
+  "popCashMultiplierNote": "101-120 = 5%, 121-140 = 4%, 141+ = 2%: the game's own IncomeSets/DefaultIncomeSet.json (BTD Mod Helper game-data export, v56) has thresholds 120 -> 0.05 and 140 -> 0.04. v53 raised them to 8%/5%; an undocumented v54 change set them back (Bloons Wiki v54.0 update history). Fixed in Monkey Intel 0.9.1. Rounds 1-100 follow the bloonswiki Rounds (BTD6) table exactly.",
   "cumulativeFields": {
    "cumCash": "Sum of cash for rounds 1..r (Easy/Medium/Primary/Military/Reverse start at R1). Excludes starting cash.",
    "cumCashFromR3": "Sum for rounds 3..r: Hard Standard, Magic Monkeys Only, Double HP MOABs, Half Cash (halve it), ABR (use the abr array).",
@@ -23,7 +23,7 @@
   "freeplayModifiers": "From R81: Super Ceramics (60 HP, 1 child per layer), MOAB-class HP ramp (+2%/round 81-100, +5% 101-124, +15% 125-150) and speed ramp. These are already included in rbe for rounds 81-140.",
   "easyRound40": "On Easy the R40 MOAB has 2/3 HP (133), so its RBE is 549 not 616.",
   "xpFormula": "20r+20 (r<=20); 40(r-20)+420 (21-50); 90(r-50)+1620 (51+). Base, before map multiplier (x1/1.1/1.2/1.3) or Monkey Education. Freeplay rounds pay 30% (to R100) / 10% (R101+).",
-  "danger": "0-3 heuristic: 3 = community-listed killer/milestone rounds, 2 = notable property or MOAB-class check, 1 = moderate, 0 = trivial. Rounds 81-140 not hand-rated default to 2, or 3 if RBE >= 400k, a BAD, or 20+ Fortified DDTs. Opinion, not game data.",
+  "danger": "0-3 heuristic: 3 = run-enders: the owner's list (24, 28, 33, 37, 40, 45, 63, 76, 78, 90, 95, 98, 99, 100) plus community killer rounds (75). This field is the one source for every \"run-ender\" label on the site, 2 = notable property or MOAB-class check, 1 = moderate, 0 = trivial. Rounds 81-140 not hand-rated default to 2, or 3 if RBE >= 400k, a BAD, or 20+ Fortified DDTs. Opinion, not game data.",
   "validation": "Every composition was checked against its RBE and pop cash with an independent bloon model (HP, children, fortified, R81+ super ceramics and MOAB ramp): all 140 Standard and 140 ABR rounds reproduce the wiki RBE and pop cash exactly.",
   "abrCumulative": "In the abr array use cumCashFromR3 (ABR starts at R3); cumCash (from R1) only applies to custom challenges.",
   "abrNote": "ABR is played on Hard from R3; normal win at R80, R81-140 are optional freeplay. Impoppable and CHIMPS use the STANDARD rounds, not ABR. ABR R1-2 exist only in custom challenges.",
@@ -538,7 +538,7 @@
     "1 Camo Green",
     "20 Blue"
    ],
-   "danger": 2,
+   "danger": 3,
    "notes": "First in this round set: camo. FIRST CAMO (1 Camo Green). Need camo detection (Dart 0-0-2, Sniper 0-1-0, Ninja) or Spike Factory spikes. A plain Mortar can't hit it: it needs Signal Flare (0-0-3)."
   },
   {
@@ -624,7 +624,7 @@
    "groups": [
     "6 Lead"
    ],
-   "danger": 2,
+   "danger": 3,
    "notes": "First in this round set: lead. FIRST LEAD (6 Leads). Sharp attacks cannot pop lead."
   },
   {
@@ -736,7 +736,7 @@
     "20 Camo Red",
     "13 Camo Yellow"
    ],
-   "danger": 2,
+   "danger": 3,
    "notes": "Bigger camo test: 20 Camo Reds + 13 Camo Yellows."
   },
   {
@@ -830,7 +830,7 @@
     "10 Zebra",
     "7 Camo White"
    ],
-   "danger": 1,
+   "danger": 3,
    "notes": ""
   },
   {
@@ -1017,7 +1017,7 @@
     "180 Pink",
     "4 Fortified Lead"
    ],
-   "danger": 2,
+   "danger": 3,
    "notes": "First in this round set: fortified. First Camo Purples and first Fortified bloons (Fortified Leads)."
   },
   {
@@ -1792,7 +1792,7 @@
    "groups": [
     "60 Regrow Ceramic"
    ],
-   "danger": 2,
+   "danger": 3,
    "notes": "60 tightly packed Regrow Ceramics: burst AoE; Grow Blocker helps."
   },
   {
@@ -2123,7 +2123,7 @@
     "50 Fortified Camo Regrow Lead",
     "3 DDT"
    ],
-   "danger": 2,
+   "danger": 3,
    "notes": "First in this round set: ddt. FIRST DDTs (3) behind 50 Fortified Camo Regrow Leads. DDT = camo + lead + black properties, fast."
   },
   {
@@ -2378,14 +2378,14 @@
   {
    "round": 101,
    "xp": 6210,
-   "cash": 1101.8,
-   "cashPop": 900.8,
+   "cash": 764.0,
+   "cashPop": 563.0,
    "cashBonus": 201,
-   "cumCash": 180096.2,
-   "cumCashFromR3": 179838.2,
-   "cumCashFromR6": 179361.2,
+   "cumCash": 179758.4,
+   "cumCashFromR3": 179500.4,
+   "cumCashFromR6": 179023.4,
    "rbe": 20020,
-   "popCashMult": 0.08,
+   "popCashMult": 0.05,
    "threats": [
     "purple",
     "fortified",
@@ -2400,20 +2400,19 @@
     "200 Purple"
    ],
    "danger": 2,
-   "notes": "Freeplay from here on Standard rounds (XP cut by 90% in freeplay after 100). Pop cash 8% (v53+).",
-   "cashPopWikiTable": 563.0
+   "notes": "Freeplay from here on Standard rounds (XP cut by 90% in freeplay after 100). Pop cash 8% (v53+)."
   },
   {
    "round": 102,
    "xp": 6300,
-   "cash": 3800.72,
-   "cashPop": 3598.72,
+   "cash": 2451.2,
+   "cashPop": 2249.2,
    "cashBonus": 202,
-   "cumCash": 183896.92,
-   "cumCashFromR3": 183638.92,
-   "cumCashFromR6": 183161.92,
+   "cumCash": 182209.6,
+   "cumCashFromR3": 181951.6,
+   "cumCashFromR6": 181474.6,
    "rbe": 199826,
-   "popCashMult": 0.08,
+   "popCashMult": 0.05,
    "threats": [
     "camo",
     "lead",
@@ -2433,20 +2432,19 @@
     "3 Fortified BFB"
    ],
    "danger": 2,
-   "notes": "",
-   "cashPopWikiTable": 2249.2
+   "notes": ""
   },
   {
    "round": 103,
    "xp": 6390,
-   "cash": 9750.84,
-   "cashPop": 9547.84,
+   "cash": 6170.4,
+   "cashPop": 5967.4,
    "cashBonus": 203,
-   "cumCash": 193647.76,
-   "cumCashFromR3": 193389.76,
-   "cumCashFromR6": 192912.76,
+   "cumCash": 188380.0,
+   "cumCashFromR3": 188122.0,
+   "cumCashFromR6": 187645.0,
    "rbe": 507908,
-   "popCashMult": 0.08,
+   "popCashMult": 0.05,
    "threats": [
     "purple",
     "fortified",
@@ -2463,20 +2461,19 @@
     "68 Purple"
    ],
    "danger": 3,
-   "notes": "",
-   "cashPopWikiTable": 5967.4
+   "notes": ""
   },
   {
    "round": 104,
    "xp": 6480,
-   "cash": 12024.0,
-   "cashPop": 11820.0,
+   "cash": 7591.5,
+   "cashPop": 7387.5,
    "cashBonus": 204,
-   "cumCash": 205671.76,
-   "cumCashFromR3": 205413.76,
-   "cumCashFromR6": 204936.76,
+   "cumCash": 195971.5,
+   "cumCashFromR3": 195713.5,
+   "cumCashFromR6": 195236.5,
    "rbe": 387472,
-   "popCashMult": 0.08,
+   "popCashMult": 0.05,
    "threats": [
     "lead",
     "purple",
@@ -2503,20 +2500,19 @@
     "25 MOAB"
    ],
    "danger": 2,
-   "notes": "",
-   "cashPopWikiTable": 7387.5
+   "notes": ""
   },
   {
    "round": 105,
    "xp": 6570,
-   "cash": 6919.0,
-   "cashPop": 6714.0,
+   "cash": 4401.25,
+   "cashPop": 4196.25,
    "cashBonus": 205,
-   "cumCash": 212590.76,
-   "cumCashFromR3": 212332.76,
-   "cumCashFromR6": 211855.76,
+   "cumCash": 200372.75,
+   "cumCashFromR3": 200114.75,
+   "cumCashFromR6": 199637.75,
    "rbe": 152340,
-   "popCashMult": 0.08,
+   "popCashMult": 0.05,
    "threats": [
     "lead",
     "fortified",
@@ -2531,20 +2527,19 @@
     "300 Fortified Ceramic"
    ],
    "danger": 2,
-   "notes": "",
-   "cashPopWikiTable": 4196.25
+   "notes": ""
   },
   {
    "round": 106,
    "xp": 6660,
-   "cash": 3040.64,
-   "cashPop": 2834.64,
+   "cash": 1977.65,
+   "cashPop": 1771.65,
    "cashBonus": 206,
-   "cumCash": 215631.4,
-   "cumCashFromR3": 215373.4,
-   "cumCashFromR6": 214896.4,
+   "cumCash": 202350.4,
+   "cumCashFromR3": 202092.4,
+   "cumCashFromR6": 201615.4,
    "rbe": 113376,
-   "popCashMult": 0.08,
+   "popCashMult": 0.05,
    "threats": [
     "camo",
     "lead",
@@ -2562,20 +2557,19 @@
     "12 DDT"
    ],
    "danger": 3,
-   "notes": "",
-   "cashPopWikiTable": 1771.65
+   "notes": ""
   },
   {
    "round": 107,
    "xp": 6750,
-   "cash": 6060.92,
-   "cashPop": 5853.92,
+   "cash": 3865.7,
+   "cashPop": 3658.7,
    "cashBonus": 207,
-   "cumCash": 221692.32,
-   "cumCashFromR3": 221434.32,
-   "cumCashFromR6": 220957.32,
+   "cumCash": 206216.1,
+   "cumCashFromR3": 205958.1,
+   "cumCashFromR6": 205481.1,
    "rbe": 447384,
-   "popCashMult": 0.08,
+   "popCashMult": 0.05,
    "threats": [
     "camo",
     "purple",
@@ -2590,20 +2584,19 @@
     "10 Fortified ZOMG"
    ],
    "danger": 3,
-   "notes": "",
-   "cashPopWikiTable": 3658.7
+   "notes": ""
   },
   {
    "round": 108,
    "xp": 6840,
-   "cash": 9481.52,
-   "cashPop": 9273.52,
+   "cash": 6003.95,
+   "cashPop": 5795.95,
    "cashBonus": 208,
-   "cumCash": 231173.84,
-   "cumCashFromR3": 230915.84,
-   "cumCashFromR6": 230438.84,
+   "cumCash": 212220.05,
+   "cumCashFromR3": 211962.05,
+   "cumCashFromR6": 211485.05,
    "rbe": 643088,
-   "popCashMult": 0.08,
+   "popCashMult": 0.05,
    "threats": [
     "fortified",
     "zomg"
@@ -2614,20 +2607,19 @@
     "10 Fortified ZOMG"
    ],
    "danger": 3,
-   "notes": "",
-   "cashPopWikiTable": 5795.95
+   "notes": ""
   },
   {
    "round": 109,
    "xp": 6930,
-   "cash": 12111.8,
-   "cashPop": 11902.8,
+   "cash": 7648.25,
+   "cashPop": 7439.25,
    "cashBonus": 209,
-   "cumCash": 243285.64,
-   "cumCashFromR3": 243027.64,
-   "cumCashFromR6": 242550.64,
+   "cumCash": 219868.3,
+   "cumCashFromR3": 219610.3,
+   "cumCashFromR6": 219133.3,
    "rbe": 552345,
-   "popCashMult": 0.08,
+   "popCashMult": 0.05,
    "threats": [
     "purple",
     "fortified",
@@ -2645,20 +2637,19 @@
     "15 Fortified MOAB"
    ],
    "danger": 3,
-   "notes": "",
-   "cashPopWikiTable": 7439.25
+   "notes": ""
   },
   {
    "round": 110,
    "xp": 7020,
-   "cash": 4174.4,
-   "cashPop": 3964.4,
+   "cash": 2687.75,
+   "cashPop": 2477.75,
    "cashBonus": 210,
-   "cumCash": 247460.04,
-   "cumCashFromR3": 247202.04,
-   "cumCashFromR6": 246725.04,
+   "cumCash": 222556.05,
+   "cumCashFromR3": 222298.05,
+   "cumCashFromR6": 221821.05,
    "rbe": 141410,
-   "popCashMult": 0.08,
+   "popCashMult": 0.05,
    "threats": [
     "camo",
     "lead",
@@ -2675,20 +2666,19 @@
     "6 Fortified DDT"
    ],
    "danger": 2,
-   "notes": "",
-   "cashPopWikiTable": 2477.75
+   "notes": ""
   },
   {
    "round": 111,
    "xp": 7110,
-   "cash": 15341.48,
-   "cashPop": 15130.48,
+   "cash": 9667.55,
+   "cashPop": 9456.55,
    "cashBonus": 211,
-   "cumCash": 262801.52,
-   "cumCashFromR3": 262543.52,
-   "cumCashFromR6": 262066.52,
+   "cumCash": 232223.6,
+   "cumCashFromR3": 231965.6,
+   "cumCashFromR6": 231488.6,
    "rbe": 949472,
-   "popCashMult": 0.08,
+   "popCashMult": 0.05,
    "threats": [
     "fortified",
     "zomg"
@@ -2700,20 +2690,19 @@
     "5 ZOMG"
    ],
    "danger": 3,
-   "notes": "",
-   "cashPopWikiTable": 9456.55
+   "notes": ""
   },
   {
    "round": 112,
    "xp": 7200,
-   "cash": 4146.08,
-   "cashPop": 3934.08,
+   "cash": 2670.8,
+   "cashPop": 2458.8,
    "cashBonus": 212,
-   "cumCash": 266947.6,
-   "cumCashFromR3": 266689.6,
-   "cumCashFromR6": 266212.6,
+   "cumCash": 234894.4,
+   "cumCashFromR3": 234636.4,
+   "cumCashFromR6": 234159.4,
    "rbe": 261648,
-   "popCashMult": 0.08,
+   "popCashMult": 0.05,
    "threats": [
     "camo",
     "lead",
@@ -2727,20 +2716,19 @@
     "21 Fortified DDT"
    ],
    "danger": 3,
-   "notes": "",
-   "cashPopWikiTable": 2458.8
+   "notes": ""
   },
   {
    "round": 113,
    "xp": 7290,
-   "cash": 4967.4,
-   "cashPop": 4754.4,
+   "cash": 3184.5,
+   "cashPop": 2971.5,
    "cashBonus": 213,
-   "cumCash": 271915.0,
-   "cumCashFromR3": 271657.0,
-   "cumCashFromR6": 271180.0,
+   "cumCash": 238078.9,
+   "cumCashFromR3": 237820.9,
+   "cumCashFromR6": 237343.9,
    "rbe": 231102,
-   "popCashMult": 0.08,
+   "popCashMult": 0.05,
    "threats": [
     "camo",
     "fortified",
@@ -2756,20 +2744,19 @@
     "42 Fortified Ceramic"
    ],
    "danger": 2,
-   "notes": "",
-   "cashPopWikiTable": 2971.5
+   "notes": ""
   },
   {
    "round": 114,
    "xp": 7380,
-   "cash": 8844.64,
-   "cashPop": 8630.64,
+   "cash": 5608.15,
+   "cashPop": 5394.15,
    "cashBonus": 214,
-   "cumCash": 280759.64,
-   "cumCashFromR3": 280501.64,
-   "cumCashFromR6": 280024.64,
+   "cumCash": 243687.05,
+   "cumCashFromR3": 243429.05,
+   "cumCashFromR6": 242952.05,
    "rbe": 483416,
-   "popCashMult": 0.08,
+   "popCashMult": 0.05,
    "threats": [
     "camo",
     "lead",
@@ -2791,20 +2778,19 @@
     "3 Fortified ZOMG"
    ],
    "danger": 3,
-   "notes": "",
-   "cashPopWikiTable": 5394.15
+   "notes": ""
   },
   {
    "round": 115,
    "xp": 7470,
-   "cash": 8845.64,
-   "cashPop": 8630.64,
+   "cash": 5609.15,
+   "cashPop": 5394.15,
    "cashBonus": 215,
-   "cumCash": 289605.28,
-   "cumCashFromR3": 289347.28,
-   "cumCashFromR6": 288870.28,
+   "cumCash": 249296.2,
+   "cumCashFromR3": 249038.2,
+   "cumCashFromR6": 248561.2,
    "rbe": 492396,
-   "popCashMult": 0.08,
+   "popCashMult": 0.05,
    "threats": [
     "camo",
     "lead",
@@ -2826,20 +2812,19 @@
     "36 Fortified MOAB"
    ],
    "danger": 3,
-   "notes": "",
-   "cashPopWikiTable": 5394.15
+   "notes": ""
   },
   {
    "round": 116,
    "xp": 7560,
-   "cash": 6508.64,
-   "cashPop": 6292.64,
+   "cash": 4148.9,
+   "cashPop": 3932.9,
    "cashBonus": 216,
-   "cumCash": 296113.92,
-   "cumCashFromR3": 295855.92,
-   "cumCashFromR6": 295378.92,
+   "cumCash": 253445.1,
+   "cumCashFromR3": 253187.1,
+   "cumCashFromR6": 252710.1,
    "rbe": 575600,
-   "popCashMult": 0.08,
+   "popCashMult": 0.05,
    "threats": [
     "purple",
     "fortified",
@@ -2855,20 +2840,19 @@
     "200 Purple"
    ],
    "danger": 3,
-   "notes": "",
-   "cashPopWikiTable": 3932.9
+   "notes": ""
   },
   {
    "round": 117,
    "xp": 7650,
-   "cash": 1728.6,
-   "cashPop": 1511.6,
+   "cash": 1161.75,
+   "cashPop": 944.75,
    "cashBonus": 217,
-   "cumCash": 297842.52,
-   "cumCashFromR3": 297584.52,
-   "cumCashFromR6": 297107.52,
+   "cumCash": 254606.85,
+   "cumCashFromR3": 254348.85,
+   "cumCashFromR6": 253871.85,
    "rbe": 75010,
-   "popCashMult": 0.08,
+   "popCashMult": 0.05,
    "threats": [
     "camo",
     "lead",
@@ -2882,20 +2866,19 @@
     "18 Fortified DDT"
    ],
    "danger": 2,
-   "notes": "",
-   "cashPopWikiTable": 944.75
+   "notes": ""
   },
   {
    "round": 118,
    "xp": 7740,
-   "cash": 6989.36,
-   "cashPop": 6771.36,
+   "cash": 4450.1,
+   "cashPop": 4232.1,
    "cashBonus": 218,
-   "cumCash": 304831.88,
-   "cumCashFromR3": 304573.88,
-   "cumCashFromR6": 304096.88,
+   "cumCash": 259056.95,
+   "cumCashFromR3": 258798.95,
+   "cumCashFromR6": 258321.95,
    "rbe": 398784,
-   "popCashMult": 0.08,
+   "popCashMult": 0.05,
    "threats": [
     "camo",
     "lead",
@@ -2909,20 +2892,19 @@
     "30 Fortified DDT"
    ],
    "danger": 3,
-   "notes": "",
-   "cashPopWikiTable": 4232.1
+   "notes": ""
   },
   {
    "round": 119,
    "xp": 7830,
-   "cash": 3422.04,
-   "cashPop": 3203.04,
+   "cash": 2220.9,
+   "cashPop": 2001.9,
    "cashBonus": 219,
-   "cumCash": 308253.92,
-   "cumCashFromR3": 307995.92,
-   "cumCashFromR6": 307518.92,
+   "cumCash": 261277.85,
+   "cumCashFromR3": 261019.85,
+   "cumCashFromR6": 260542.85,
    "rbe": 319020,
-   "popCashMult": 0.08,
+   "popCashMult": 0.05,
    "threats": [
     "bad"
    ],
@@ -2932,20 +2914,19 @@
     "1 BAD"
    ],
    "danger": 3,
-   "notes": "",
-   "cashPopWikiTable": 2001.9
+   "notes": ""
   },
   {
    "round": 120,
    "xp": 7920,
-   "cash": 8272.48,
-   "cashPop": 8052.48,
+   "cash": 5252.8,
+   "cashPop": 5032.8,
    "cashBonus": 220,
-   "cumCash": 316526.4,
-   "cumCashFromR3": 316268.4,
-   "cumCashFromR6": 315791.4,
+   "cumCash": 266530.65,
+   "cumCashFromR3": 266272.65,
+   "cumCashFromR6": 265795.65,
    "rbe": 431808,
-   "popCashMult": 0.08,
+   "popCashMult": 0.05,
    "threats": [
     "fortified",
     "moab",
@@ -2959,20 +2940,19 @@
     "24 Fortified MOAB"
    ],
    "danger": 3,
-   "notes": "",
-   "cashPopWikiTable": 5032.8
+   "notes": ""
   },
   {
    "round": 121,
    "xp": 8010,
-   "cash": 3652.2,
-   "cashPop": 3431.2,
+   "cash": 2965.96,
+   "cashPop": 2744.96,
    "cashBonus": 221,
-   "cumCash": 320178.6,
-   "cumCashFromR3": 319920.6,
-   "cumCashFromR6": 319443.6,
+   "cumCash": 269496.61,
+   "cumCashFromR3": 269238.61,
+   "cumCashFromR6": 268761.61,
    "rbe": 516500,
-   "popCashMult": 0.05,
+   "popCashMult": 0.04,
    "threats": [
     "fortified",
     "moab",
@@ -2986,20 +2966,19 @@
     "6 Fortified ZOMG"
    ],
    "danger": 3,
-   "notes": "Pop cash 5% (v53+).",
-   "cashPopWikiTable": 2744.96
+   "notes": "Pop cash 5% (v53+)."
   },
   {
    "round": 122,
    "xp": 8100,
-   "cash": 4875.75,
-   "cashPop": 4653.75,
+   "cash": 3945.0,
+   "cashPop": 3723.0,
    "cashBonus": 222,
-   "cumCash": 325054.35,
-   "cumCashFromR3": 324796.35,
-   "cumCashFromR6": 324319.35,
+   "cumCash": 273441.61,
+   "cumCashFromR3": 273183.61,
+   "cumCashFromR6": 272706.61,
    "rbe": 386730,
-   "popCashMult": 0.05,
+   "popCashMult": 0.04,
    "threats": [
     "lead",
     "fortified",
@@ -3014,20 +2993,19 @@
     "75 Fortified Lead"
    ],
    "danger": 2,
-   "notes": "",
-   "cashPopWikiTable": 3723.0
+   "notes": ""
   },
   {
    "round": 123,
    "xp": 8190,
-   "cash": 6473.4,
-   "cashPop": 6250.4,
+   "cash": 5223.32,
+   "cashPop": 5000.32,
    "cashBonus": 223,
-   "cumCash": 331527.75,
-   "cumCashFromR3": 331269.75,
-   "cumCashFromR6": 330792.75,
+   "cumCash": 278664.93,
+   "cumCashFromR3": 278406.93,
+   "cumCashFromR6": 277929.93,
    "rbe": 629936,
-   "popCashMult": 0.05,
+   "popCashMult": 0.04,
    "threats": [
     "fortified",
     "moab",
@@ -3039,20 +3017,19 @@
     "200 MOAB"
    ],
    "danger": 3,
-   "notes": "",
-   "cashPopWikiTable": 5000.32
+   "notes": ""
   },
   {
    "round": 124,
    "xp": 8280,
-   "cash": 5942.75,
-   "cashPop": 5718.75,
+   "cash": 4799.0,
+   "cashPop": 4575.0,
    "cashBonus": 224,
-   "cumCash": 337470.5,
-   "cumCashFromR3": 337212.5,
-   "cumCashFromR6": 336735.5,
+   "cumCash": 283463.93,
+   "cumCashFromR3": 283205.93,
+   "cumCashFromR6": 282728.93,
    "rbe": 738600,
-   "popCashMult": 0.05,
+   "popCashMult": 0.04,
    "threats": [
     "fortified",
     "bfb"
@@ -3062,20 +3039,19 @@
     "75 Fortified BFB"
    ],
    "danger": 3,
-   "notes": "",
-   "cashPopWikiTable": 4575.0
+   "notes": ""
   },
   {
    "round": 125,
    "xp": 8370,
-   "cash": 11033.7,
-   "cashPop": 10808.7,
+   "cash": 8871.96,
+   "cashPop": 8646.96,
    "cashBonus": 225,
-   "cumCash": 348504.2,
-   "cumCashFromR3": 348246.2,
-   "cumCashFromR6": 347769.2,
+   "cumCash": 292335.89,
+   "cumCashFromR3": 292077.89,
+   "cumCashFromR6": 291600.89,
    "rbe": 939624,
-   "popCashMult": 0.05,
+   "popCashMult": 0.04,
    "threats": [
     "moab",
     "bfb",
@@ -3103,20 +3079,19 @@
     "3 MOAB"
    ],
    "danger": 3,
-   "notes": "",
-   "cashPopWikiTable": 8646.96
+   "notes": ""
   },
   {
    "round": 126,
    "xp": 8460,
-   "cash": 2112.3,
-   "cashPop": 1886.3,
+   "cash": 1735.04,
+   "cashPop": 1509.04,
    "cashBonus": 226,
-   "cumCash": 350616.5,
-   "cumCashFromR3": 350358.5,
-   "cumCashFromR6": 349881.5,
+   "cumCash": 294070.93,
+   "cumCashFromR3": 293812.93,
+   "cumCashFromR6": 293335.93,
    "rbe": 141778,
-   "popCashMult": 0.05,
+   "popCashMult": 0.04,
    "threats": [
     "camo",
     "lead",
@@ -3130,20 +3105,19 @@
     "99 DDT"
    ],
    "danger": 2,
-   "notes": "",
-   "cashPopWikiTable": 1509.04
+   "notes": ""
   },
   {
    "round": 127,
    "xp": 8550,
-   "cash": 2971.4,
-   "cashPop": 2744.4,
+   "cash": 2422.52,
+   "cashPop": 2195.52,
    "cashBonus": 227,
-   "cumCash": 353587.9,
-   "cumCashFromR3": 353329.9,
-   "cumCashFromR6": 352852.9,
+   "cumCash": 296493.45,
+   "cumCashFromR3": 296235.45,
+   "cumCashFromR6": 295758.45,
    "rbe": 178248,
-   "popCashMult": 0.05,
+   "popCashMult": 0.04,
    "threats": [
     "moab",
     "bfb"
@@ -3154,20 +3128,19 @@
     "24 BFB"
    ],
    "danger": 2,
-   "notes": "",
-   "cashPopWikiTable": 2195.52
+   "notes": ""
   },
   {
    "round": 128,
    "xp": 8640,
-   "cash": 4208.45,
-   "cashPop": 3980.45,
+   "cash": 3412.36,
+   "cashPop": 3184.36,
    "cashBonus": 228,
-   "cumCash": 357796.35,
-   "cumCashFromR3": 357538.35,
-   "cumCashFromR6": 357061.35,
+   "cumCash": 299905.81,
+   "cumCashFromR3": 299647.81,
+   "cumCashFromR6": 299170.81,
    "rbe": 322048,
-   "popCashMult": 0.05,
+   "popCashMult": 0.04,
    "threats": [
     "camo",
     "lead",
@@ -3183,20 +3156,19 @@
     "30 BFB"
    ],
    "danger": 3,
-   "notes": "",
-   "cashPopWikiTable": 3184.36
+   "notes": ""
   },
   {
    "round": 129,
    "xp": 8730,
-   "cash": 5258.4,
-   "cashPop": 5029.4,
+   "cash": 4252.52,
+   "cashPop": 4023.52,
    "cashBonus": 229,
-   "cumCash": 363054.75,
-   "cumCashFromR3": 362796.75,
-   "cumCashFromR6": 362319.75,
+   "cumCash": 304158.33,
+   "cumCashFromR3": 303900.33,
+   "cumCashFromR6": 303423.33,
    "rbe": 826792,
-   "popCashMult": 0.05,
+   "popCashMult": 0.04,
    "threats": [
     "camo",
     "lead",
@@ -3219,20 +3191,19 @@
     "3 DDT"
    ],
    "danger": 3,
-   "notes": "",
-   "cashPopWikiTable": 4023.52
+   "notes": ""
   },
   {
    "round": 130,
    "xp": 8820,
-   "cash": 4116.2,
-   "cashPop": 3886.2,
+   "cash": 3338.96,
+   "cashPop": 3108.96,
    "cashBonus": 230,
-   "cumCash": 367170.95,
-   "cumCashFromR3": 366912.95,
-   "cumCashFromR6": 366435.95,
+   "cumCash": 307497.29,
+   "cumCashFromR3": 307239.29,
+   "cumCashFromR6": 306762.29,
    "rbe": 307968,
-   "popCashMult": 0.05,
+   "popCashMult": 0.04,
    "threats": [
     "camo",
     "lead",
@@ -3257,20 +3228,19 @@
     "48 Fortified MOAB"
    ],
    "danger": 2,
-   "notes": "",
-   "cashPopWikiTable": 3108.96
+   "notes": ""
   },
   {
    "round": 131,
    "xp": 8910,
-   "cash": 5721.9,
-   "cashPop": 5490.9,
+   "cash": 4623.72,
+   "cashPop": 4392.72,
    "cashBonus": 231,
-   "cumCash": 372892.85,
-   "cumCashFromR3": 372634.85,
-   "cumCashFromR6": 372157.85,
+   "cumCash": 312121.01,
+   "cumCashFromR3": 311863.01,
+   "cumCashFromR6": 311386.01,
    "rbe": 1461456,
-   "popCashMult": 0.05,
+   "popCashMult": 0.04,
    "threats": [
     "fortified",
     "zomg"
@@ -3280,20 +3250,19 @@
     "18 Fortified ZOMG"
    ],
    "danger": 3,
-   "notes": "",
-   "cashPopWikiTable": 4392.72
+   "notes": ""
   },
   {
    "round": 132,
    "xp": 9000,
-   "cash": 7613.2,
-   "cashPop": 7381.2,
+   "cash": 6136.96,
+   "cashPop": 5904.96,
    "cashBonus": 232,
-   "cumCash": 380506.05,
-   "cumCashFromR3": 380248.05,
-   "cumCashFromR6": 379771.05,
+   "cumCash": 318257.97,
+   "cumCashFromR3": 317999.97,
+   "cumCashFromR6": 317522.97,
    "rbe": 1268688,
-   "popCashMult": 0.05,
+   "popCashMult": 0.04,
    "threats": [
     "camo",
     "purple",
@@ -3312,20 +3281,19 @@
     "100 Camo Purple"
    ],
    "danger": 3,
-   "notes": "",
-   "cashPopWikiTable": 5904.96
+   "notes": ""
   },
   {
    "round": 133,
    "xp": 9090,
-   "cash": 7915.35,
-   "cashPop": 7682.35,
+   "cash": 6378.88,
+   "cashPop": 6145.88,
    "cashBonus": 233,
-   "cumCash": 388421.4,
-   "cumCashFromR3": 388163.4,
-   "cumCashFromR6": 387686.4,
+   "cumCash": 324636.85,
+   "cumCashFromR3": 324378.85,
+   "cumCashFromR6": 323901.85,
    "rbe": 1153341,
-   "popCashMult": 0.05,
+   "popCashMult": 0.04,
    "threats": [
     "fortified",
     "moab",
@@ -3351,20 +3319,19 @@
     "3 ZOMG"
    ],
    "danger": 3,
-   "notes": "",
-   "cashPopWikiTable": 6145.88
+   "notes": ""
   },
   {
    "round": 134,
    "xp": 9180,
-   "cash": 3284.0,
-   "cashPop": 3050.0,
+   "cash": 2674.0,
+   "cashPop": 2440.0,
    "cashBonus": 234,
-   "cumCash": 391705.4,
-   "cumCashFromR3": 391447.4,
-   "cumCashFromR6": 390970.4,
+   "cumCash": 327310.85,
+   "cumCashFromR3": 327052.85,
+   "cumCashFromR6": 326575.85,
    "rbe": 374840,
-   "popCashMult": 0.05,
+   "popCashMult": 0.04,
    "threats": [
     "fortified",
     "bfb"
@@ -3378,20 +3345,19 @@
     "4 BFB"
    ],
    "danger": 2,
-   "notes": "",
-   "cashPopWikiTable": 2440.0
+   "notes": ""
   },
   {
    "round": 135,
    "xp": 9270,
-   "cash": 4905.75,
-   "cashPop": 4670.75,
+   "cash": 3971.6,
+   "cashPop": 3736.6,
    "cashBonus": 235,
-   "cumCash": 396611.15,
-   "cumCashFromR3": 396353.15,
-   "cumCashFromR6": 395876.15,
+   "cumCash": 331282.45,
+   "cumCashFromR3": 331024.45,
+   "cumCashFromR6": 330547.45,
    "rbe": 1386840,
-   "popCashMult": 0.05,
+   "popCashMult": 0.04,
    "threats": [
     "camo",
     "lead",
@@ -3408,20 +3374,19 @@
     "7 Fortified DDT"
    ],
    "danger": 3,
-   "notes": "",
-   "cashPopWikiTable": 3736.6
+   "notes": ""
   },
   {
    "round": 136,
    "xp": 9360,
-   "cash": 3894.8,
-   "cashPop": 3658.8,
+   "cash": 3163.04,
+   "cashPop": 2927.04,
    "cashBonus": 236,
-   "cumCash": 400505.95,
-   "cumCashFromR3": 400247.95,
-   "cumCashFromR6": 399770.95,
+   "cumCash": 334445.49,
+   "cumCashFromR3": 334187.49,
+   "cumCashFromR6": 333710.49,
    "rbe": 402624,
-   "popCashMult": 0.05,
+   "popCashMult": 0.04,
    "threats": [
     "fortified",
     "moab",
@@ -3433,20 +3398,19 @@
     "24 BFB"
    ],
    "danger": 3,
-   "notes": "",
-   "cashPopWikiTable": 2927.04
+   "notes": ""
   },
   {
    "round": 137,
    "xp": 9450,
-   "cash": 8472.3,
-   "cashPop": 8235.3,
+   "cash": 6825.24,
+   "cashPop": 6588.24,
    "cashBonus": 237,
-   "cumCash": 408978.25,
-   "cumCashFromR3": 408720.25,
-   "cumCashFromR6": 408243.25,
+   "cumCash": 341270.73,
+   "cumCashFromR3": 341012.73,
+   "cumCashFromR6": 340535.73,
    "rbe": 1143984,
-   "popCashMult": 0.05,
+   "popCashMult": 0.04,
    "threats": [
     "moab",
     "bfb",
@@ -3459,20 +3423,19 @@
     "48 MOAB"
    ],
    "danger": 3,
-   "notes": "",
-   "cashPopWikiTable": 6588.24
+   "notes": ""
   },
   {
    "round": 138,
    "xp": 9540,
-   "cash": 2638.3,
-   "cashPop": 2400.3,
+   "cash": 2158.24,
+   "cashPop": 1920.24,
    "cashBonus": 238,
-   "cumCash": 411616.55,
-   "cumCashFromR3": 411358.55,
-   "cumCashFromR6": 410881.55,
+   "cumCash": 343428.97,
+   "cumCashFromR3": 343170.97,
+   "cumCashFromR6": 342693.97,
    "rbe": 442872,
-   "popCashMult": 0.05,
+   "popCashMult": 0.04,
    "threats": [
     "camo",
     "lead",
@@ -3489,20 +3452,19 @@
     "12 DDT"
    ],
    "danger": 3,
-   "notes": "",
-   "cashPopWikiTable": 1920.24
+   "notes": ""
   },
   {
    "round": 139,
    "xp": 9630,
-   "cash": 5058.65,
-   "cashPop": 4819.65,
+   "cash": 4094.72,
+   "cashPop": 3855.72,
    "cashBonus": 239,
-   "cumCash": 416675.2,
-   "cumCashFromR3": 416417.2,
-   "cumCashFromR6": 415940.2,
+   "cumCash": 347523.69,
+   "cumCashFromR3": 347265.69,
+   "cumCashFromR6": 346788.69,
    "rbe": 401346,
-   "popCashMult": 0.05,
+   "popCashMult": 0.04,
    "threats": [
     "fortified",
     "moab"
@@ -3520,20 +3482,19 @@
     "18 Fortified MOAB"
    ],
    "danger": 3,
-   "notes": "",
-   "cashPopWikiTable": 3855.72
+   "notes": ""
   },
   {
    "round": 140,
    "xp": 9720,
-   "cash": 1574.6,
-   "cashPop": 1334.6,
+   "cash": 1307.68,
+   "cashPop": 1067.68,
    "cashBonus": 240,
-   "cumCash": 418249.8,
-   "cumCashFromR3": 417991.8,
-   "cumCashFromR6": 417514.8,
+   "cumCash": 348831.37,
+   "cumCashFromR3": 348573.37,
+   "cumCashFromR6": 348096.37,
    "rbe": 645440,
-   "popCashMult": 0.05,
+   "popCashMult": 0.04,
    "threats": [
     "fortified",
     "bad"
@@ -3544,8 +3505,7 @@
     "1 BAD"
    ],
    "danger": 3,
-   "notes": "Fortified BAD (200,000 HP outer at ramp x5.0) + BAD. Last preset round; rounds 141+ are randomly generated (except 163, 200, 263).",
-   "cashPopWikiTable": 1067.68
+   "notes": "Fortified BAD (200,000 HP outer at ramp x5.0) + BAD. Last preset round; rounds 141+ are randomly generated (except 163, 200, 263)."
   }
  ],
  "abr": [
@@ -5897,13 +5857,13 @@
   {
    "round": 101,
    "xp": 6210,
-   "cash": 2035.0,
-   "cashPop": 1834.0,
+   "cash": 1347.25,
+   "cashPop": 1146.25,
    "cashBonus": 201,
-   "cumCash": 194684.2,
-   "cumCashFromR3": 194406.2,
+   "cumCash": 193996.45,
+   "cumCashFromR3": 193718.45,
    "rbe": 73980,
-   "popCashMult": 0.08,
+   "popCashMult": 0.05,
    "threats": [
     "camo",
     "lead",
@@ -5922,19 +5882,18 @@
     "100 Fortified Lead"
    ],
    "danger": 2,
-   "notes": "",
-   "cashPopWikiTable": 1146.25
+   "notes": ""
   },
   {
    "round": 102,
    "xp": 6300,
-   "cash": 5997.2,
-   "cashPop": 5795.2,
+   "cash": 3824.0,
+   "cashPop": 3622.0,
    "cashBonus": 202,
-   "cumCash": 200681.4,
-   "cumCashFromR3": 200403.4,
+   "cumCash": 197820.45,
+   "cumCashFromR3": 197542.45,
    "rbe": 219680,
-   "popCashMult": 0.08,
+   "popCashMult": 0.05,
    "threats": [
     "camo",
     "lead",
@@ -5952,19 +5911,18 @@
     "3 ZOMG"
    ],
    "danger": 2,
-   "notes": "",
-   "cashPopWikiTable": 3622.0
+   "notes": ""
   },
   {
    "round": 103,
    "xp": 6390,
-   "cash": 10204.44,
-   "cashPop": 10001.44,
+   "cash": 6453.9,
+   "cashPop": 6250.9,
    "cashBonus": 203,
-   "cumCash": 210885.84,
-   "cumCashFromR3": 210607.84,
+   "cumCash": 204274.35,
+   "cumCashFromR3": 203996.35,
    "rbe": 538256,
-   "popCashMult": 0.08,
+   "popCashMult": 0.05,
    "threats": [
     "camo",
     "lead",
@@ -5983,19 +5941,18 @@
     "6 Fortified DDT"
    ],
    "danger": 3,
-   "notes": "",
-   "cashPopWikiTable": 6250.9
+   "notes": ""
   },
   {
    "round": 104,
    "xp": 6480,
-   "cash": 13632.0,
-   "cashPop": 13428.0,
+   "cash": 8596.5,
+   "cashPop": 8392.5,
    "cashBonus": 204,
-   "cumCash": 224517.84,
-   "cumCashFromR3": 224239.84,
+   "cumCash": 212870.85,
+   "cumCashFromR3": 212592.85,
    "rbe": 447744,
-   "popCashMult": 0.08,
+   "popCashMult": 0.05,
    "threats": [
     "lead",
     "purple",
@@ -6022,19 +5979,18 @@
     "25 Fortified MOAB"
    ],
    "danger": 3,
-   "notes": "",
-   "cashPopWikiTable": 8392.5
+   "notes": ""
   },
   {
    "round": 105,
    "xp": 6570,
-   "cash": 5943.0,
-   "cashPop": 5738.0,
+   "cash": 3791.25,
+   "cashPop": 3586.25,
    "cashBonus": 205,
-   "cumCash": 230460.84,
-   "cumCashFromR3": 230182.84,
+   "cumCash": 216662.1,
+   "cumCashFromR3": 216384.1,
    "rbe": 199406,
-   "popCashMult": 0.08,
+   "popCashMult": 0.05,
    "threats": [
     "lead",
     "fortified",
@@ -6049,19 +6005,18 @@
     "300 Fortified Ceramic"
    ],
    "danger": 2,
-   "notes": "",
-   "cashPopWikiTable": 3586.25
+   "notes": ""
   },
   {
    "round": 106,
    "xp": 6660,
-   "cash": 4108.32,
-   "cashPop": 3902.32,
+   "cash": 2644.95,
+   "cashPop": 2438.95,
    "cashBonus": 206,
-   "cumCash": 234569.16,
-   "cumCashFromR3": 234291.16,
+   "cumCash": 219307.05,
+   "cumCashFromR3": 219029.05,
    "rbe": 179136,
-   "popCashMult": 0.08,
+   "popCashMult": 0.05,
    "threats": [
     "camo",
     "lead",
@@ -6081,19 +6036,18 @@
     "12 Fortified DDT"
    ],
    "danger": 3,
-   "notes": "",
-   "cashPopWikiTable": 2438.95
+   "notes": ""
   },
   {
    "round": 107,
    "xp": 6750,
-   "cash": 5903.08,
-   "cashPop": 5696.08,
+   "cash": 3767.05,
+   "cashPop": 3560.05,
    "cashBonus": 207,
-   "cumCash": 240472.24,
-   "cumCashFromR3": 240194.24,
+   "cumCash": 223074.1,
+   "cumCashFromR3": 222796.1,
    "rbe": 480386,
-   "popCashMult": 0.08,
+   "popCashMult": 0.05,
    "threats": [
     "camo",
     "lead",
@@ -6109,19 +6063,18 @@
     "10 Fortified ZOMG"
    ],
    "danger": 3,
-   "notes": "",
-   "cashPopWikiTable": 3560.05
+   "notes": ""
   },
   {
    "round": 108,
    "xp": 6840,
-   "cash": 12410.0,
-   "cashPop": 12202.0,
+   "cash": 7834.25,
+   "cashPop": 7626.25,
    "cashBonus": 208,
-   "cumCash": 252882.24,
-   "cumCashFromR3": 252604.24,
+   "cumCash": 230908.35,
+   "cumCashFromR3": 230630.35,
    "rbe": 820880,
-   "popCashMult": 0.08,
+   "popCashMult": 0.05,
    "threats": [
     "fortified",
     "zomg"
@@ -6132,19 +6085,18 @@
     "12 Fortified ZOMG"
    ],
    "danger": 3,
-   "notes": "",
-   "cashPopWikiTable": 7626.25
+   "notes": ""
   },
   {
    "round": 109,
    "xp": 6930,
-   "cash": 17603.0,
-   "cashPop": 17394.0,
+   "cash": 11080.25,
+   "cashPop": 10871.25,
    "cashBonus": 209,
-   "cumCash": 270485.24,
-   "cumCashFromR3": 270207.24,
+   "cumCash": 241988.6,
+   "cumCashFromR3": 241710.6,
    "rbe": 833580,
-   "popCashMult": 0.08,
+   "popCashMult": 0.05,
    "threats": [
     "camo",
     "lead",
@@ -6165,19 +6117,18 @@
     "15 Fortified MOAB"
    ],
    "danger": 3,
-   "notes": "",
-   "cashPopWikiTable": 10871.25
+   "notes": ""
   },
   {
    "round": 110,
    "xp": 7020,
-   "cash": 6370.16,
-   "cashPop": 6160.16,
+   "cash": 4060.1,
+   "cashPop": 3850.1,
    "cashBonus": 210,
-   "cumCash": 276855.4,
-   "cumCashFromR3": 276577.4,
+   "cumCash": 246048.7,
+   "cumCashFromR3": 245770.7,
    "rbe": 242864,
-   "popCashMult": 0.08,
+   "popCashMult": 0.05,
    "threats": [
     "camo",
     "lead",
@@ -6194,19 +6145,18 @@
     "9 Fortified DDT"
    ],
    "danger": 3,
-   "notes": "",
-   "cashPopWikiTable": 3850.1
+   "notes": ""
   },
   {
    "round": 111,
    "xp": 7110,
-   "cash": 15859.24,
-   "cashPop": 15648.24,
+   "cash": 9991.15,
+   "cashPop": 9780.15,
    "cashBonus": 211,
-   "cumCash": 292714.64,
-   "cumCashFromR3": 292436.64,
+   "cumCash": 256039.85,
+   "cumCashFromR3": 255761.85,
    "rbe": 960336,
-   "popCashMult": 0.08,
+   "popCashMult": 0.05,
    "threats": [
     "camo",
     "lead",
@@ -6221,19 +6171,18 @@
     "33 DDT"
    ],
    "danger": 3,
-   "notes": "",
-   "cashPopWikiTable": 9780.15
+   "notes": ""
   },
   {
    "round": 112,
    "xp": 7200,
-   "cash": 3383.76,
-   "cashPop": 3171.76,
+   "cash": 2194.35,
+   "cashPop": 1982.35,
    "cashBonus": 212,
-   "cumCash": 296098.4,
-   "cumCashFromR3": 295820.4,
+   "cumCash": 258234.2,
+   "cumCashFromR3": 257956.2,
    "rbe": 232848,
-   "popCashMult": 0.08,
+   "popCashMult": 0.05,
    "threats": [
     "camo",
     "lead",
@@ -6249,19 +6198,18 @@
     "1 BAD"
    ],
    "danger": 3,
-   "notes": "",
-   "cashPopWikiTable": 1982.35
+   "notes": ""
   },
   {
    "round": 113,
    "xp": 7290,
-   "cash": 4815.4,
-   "cashPop": 4602.4,
+   "cash": 3089.5,
+   "cashPop": 2876.5,
    "cashBonus": 213,
-   "cumCash": 300913.8,
-   "cumCashFromR3": 300635.8,
+   "cumCash": 261323.7,
+   "cumCashFromR3": 261045.7,
    "rbe": 238792,
-   "popCashMult": 0.08,
+   "popCashMult": 0.05,
    "threats": [
     "camo",
     "fortified",
@@ -6277,19 +6225,18 @@
     "42 Fortified Ceramic"
    ],
    "danger": 2,
-   "notes": "",
-   "cashPopWikiTable": 2876.5
+   "notes": ""
   },
   {
    "round": 114,
    "xp": 7380,
-   "cash": 8844.64,
-   "cashPop": 8630.64,
+   "cash": 5608.15,
+   "cashPop": 5394.15,
    "cashBonus": 214,
-   "cumCash": 309758.44,
-   "cumCashFromR3": 309480.44,
+   "cumCash": 266931.85,
+   "cumCashFromR3": 266653.85,
    "rbe": 682496,
-   "popCashMult": 0.08,
+   "popCashMult": 0.05,
    "threats": [
     "camo",
     "lead",
@@ -6311,19 +6258,18 @@
     "3 Fortified ZOMG"
    ],
    "danger": 3,
-   "notes": "",
-   "cashPopWikiTable": 5394.15
+   "notes": ""
   },
   {
    "round": 115,
    "xp": 7470,
-   "cash": 15341.88,
-   "cashPop": 15126.88,
+   "cash": 9669.3,
+   "cashPop": 9454.3,
    "cashBonus": 215,
-   "cumCash": 325100.32,
-   "cumCashFromR3": 324822.32,
+   "cumCash": 276601.15,
+   "cumCashFromR3": 276323.15,
    "rbe": 640162,
-   "popCashMult": 0.08,
+   "popCashMult": 0.05,
    "threats": [
     "camo",
     "lead",
@@ -6344,19 +6290,18 @@
     "54 MOAB"
    ],
    "danger": 3,
-   "notes": "",
-   "cashPopWikiTable": 9454.3
+   "notes": ""
   },
   {
    "round": 116,
    "xp": 7560,
-   "cash": 10413.28,
-   "cashPop": 10197.28,
+   "cash": 6589.3,
+   "cashPop": 6373.3,
    "cashBonus": 216,
-   "cumCash": 335513.6,
-   "cumCashFromR3": 335235.6,
+   "cumCash": 283190.45,
+   "cumCashFromR3": 282912.45,
    "rbe": 503016,
-   "popCashMult": 0.08,
+   "popCashMult": 0.05,
    "threats": [
     "camo",
     "purple",
@@ -6372,19 +6317,18 @@
     "200 Camo Purple"
    ],
    "danger": 3,
-   "notes": "",
-   "cashPopWikiTable": 6373.3
+   "notes": ""
   },
   {
    "round": 117,
    "xp": 7650,
-   "cash": 3488.6,
-   "cashPop": 3271.6,
+   "cash": 2261.75,
+   "cashPop": 2044.75,
    "cashBonus": 217,
-   "cumCash": 339002.2,
-   "cumCashFromR3": 338724.2,
+   "cumCash": 285452.2,
+   "cumCashFromR3": 285174.2,
    "rbe": 105260,
-   "popCashMult": 0.08,
+   "popCashMult": 0.05,
    "threats": [
     "camo",
     "lead",
@@ -6399,19 +6343,18 @@
     "18 Fortified DDT"
    ],
    "danger": 2,
-   "notes": "",
-   "cashPopWikiTable": 2044.75
+   "notes": ""
   },
   {
    "round": 118,
    "xp": 7740,
-   "cash": 8057.04,
-   "cashPop": 7839.04,
+   "cash": 5117.4,
+   "cashPop": 4899.4,
    "cashBonus": 218,
-   "cumCash": 347059.24,
-   "cumCashFromR3": 346781.24,
+   "cumCash": 290569.6,
+   "cumCashFromR3": 290291.6,
    "rbe": 776544,
-   "popCashMult": 0.08,
+   "popCashMult": 0.05,
    "threats": [
     "fortified",
     "moab",
@@ -6425,19 +6368,18 @@
     "1 BAD"
    ],
    "danger": 3,
-   "notes": "",
-   "cashPopWikiTable": 4899.4
+   "notes": ""
   },
   {
    "round": 119,
    "xp": 7830,
-   "cash": 8271.48,
-   "cashPop": 8052.48,
+   "cash": 5251.8,
+   "cashPop": 5032.8,
    "cashBonus": 219,
-   "cumCash": 355330.72,
-   "cumCashFromR3": 355052.72,
+   "cumCash": 295821.4,
+   "cumCashFromR3": 295543.4,
    "rbe": 806328,
-   "popCashMult": 0.08,
+   "popCashMult": 0.05,
    "threats": [
     "fortified",
     "moab",
@@ -6451,19 +6393,18 @@
     "24 Fortified MOAB"
    ],
    "danger": 3,
-   "notes": "",
-   "cashPopWikiTable": 5032.8
+   "notes": ""
   },
   {
    "round": 120,
    "xp": 7920,
-   "cash": 3423.04,
-   "cashPop": 3203.04,
+   "cash": 2221.9,
+   "cashPop": 2001.9,
    "cashBonus": 220,
-   "cumCash": 358753.76,
-   "cumCashFromR3": 358475.76,
+   "cumCash": 298043.3,
+   "cumCashFromR3": 297765.3,
    "rbe": 432480,
-   "popCashMult": 0.08,
+   "popCashMult": 0.05,
    "threats": [
     "fortified",
     "bad"
@@ -6474,19 +6415,18 @@
     "1 Fortified BAD"
    ],
    "danger": 3,
-   "notes": "",
-   "cashPopWikiTable": 2001.9
+   "notes": ""
   },
   {
    "round": 121,
    "xp": 8010,
-   "cash": 5367.8,
-   "cashPop": 5146.8,
+   "cash": 4338.44,
+   "cashPop": 4117.44,
    "cashBonus": 221,
-   "cumCash": 364121.56,
-   "cumCashFromR3": 363843.56,
+   "cumCash": 302381.74,
+   "cumCashFromR3": 302103.74,
    "rbe": 391695,
-   "popCashMult": 0.05,
+   "popCashMult": 0.04,
    "threats": [
     "moab",
     "bfb",
@@ -6499,19 +6439,18 @@
     "9 ZOMG"
    ],
    "danger": 2,
-   "notes": "",
-   "cashPopWikiTable": 4117.44
+   "notes": ""
   },
   {
    "round": 122,
    "xp": 8100,
-   "cash": 6780.75,
-   "cashPop": 6558.75,
+   "cash": 5469.0,
+   "cashPop": 5247.0,
    "cashBonus": 222,
-   "cumCash": 370902.31,
-   "cumCashFromR3": 370624.31,
+   "cumCash": 307850.74,
+   "cumCashFromR3": 307572.74,
    "rbe": 369730,
-   "popCashMult": 0.05,
+   "popCashMult": 0.04,
    "threats": [
     "camo",
     "lead",
@@ -6528,19 +6467,18 @@
     "75 Fortified Camo Lead"
    ],
    "danger": 2,
-   "notes": "",
-   "cashPopWikiTable": 5247.0
+   "notes": ""
   },
   {
    "round": 123,
    "xp": 8190,
-   "cash": 5938.0,
-   "cashPop": 5715.0,
+   "cash": 4795.0,
+   "cashPop": 4572.0,
    "cashBonus": 223,
-   "cumCash": 376840.31,
-   "cumCashFromR3": 376562.31,
+   "cumCash": 312645.74,
+   "cumCashFromR3": 312367.74,
    "rbe": 561600,
-   "popCashMult": 0.05,
+   "popCashMult": 0.04,
    "threats": [
     "camo",
     "lead",
@@ -6554,19 +6492,18 @@
     "200 Fortified MOAB"
    ],
    "danger": 3,
-   "notes": "",
-   "cashPopWikiTable": 4572.0
+   "notes": ""
   },
   {
    "round": 124,
    "xp": 8280,
-   "cash": 6935.1,
-   "cashPop": 6711.1,
+   "cash": 5592.88,
+   "cashPop": 5368.88,
    "cashBonus": 224,
-   "cumCash": 383775.41,
-   "cumCashFromR3": 383497.41,
+   "cumCash": 318238.62,
+   "cumCashFromR3": 317960.62,
    "rbe": 667744,
-   "popCashMult": 0.05,
+   "popCashMult": 0.04,
    "threats": [
     "zomg"
    ],
@@ -6575,19 +6512,18 @@
     "22 ZOMG"
    ],
    "danger": 3,
-   "notes": "",
-   "cashPopWikiTable": 5368.88
+   "notes": ""
   },
   {
    "round": 125,
    "xp": 8370,
-   "cash": 8000.7,
-   "cashPop": 7775.7,
+   "cash": 6445.56,
+   "cashPop": 6220.56,
    "cashBonus": 225,
-   "cumCash": 391776.11,
-   "cumCashFromR3": 391498.11,
+   "cumCash": 324684.18,
+   "cumCashFromR3": 324406.18,
    "rbe": 981096,
-   "popCashMult": 0.05,
+   "popCashMult": 0.04,
    "threats": [
     "camo",
     "lead",
@@ -6618,19 +6554,18 @@
     "6 Fortified MOAB"
    ],
    "danger": 3,
-   "notes": "",
-   "cashPopWikiTable": 6220.56
+   "notes": ""
   },
   {
    "round": 126,
    "xp": 8460,
-   "cash": 4012.15,
-   "cashPop": 3786.15,
+   "cash": 3254.92,
+   "cashPop": 3028.92,
    "cashBonus": 226,
-   "cumCash": 395788.26,
-   "cumCashFromR3": 395510.26,
+   "cumCash": 327939.1,
+   "cumCashFromR3": 327661.1,
    "rbe": 283920,
-   "popCashMult": 0.05,
+   "popCashMult": 0.04,
    "threats": [
     "camo",
     "lead",
@@ -6649,19 +6584,18 @@
     "33 DDT"
    ],
    "danger": 2,
-   "notes": "",
-   "cashPopWikiTable": 3028.92
+   "notes": ""
   },
   {
    "round": 127,
    "xp": 8550,
-   "cash": 2513.9,
-   "cashPop": 2286.9,
+   "cash": 2056.52,
+   "cashPop": 1829.52,
    "cashBonus": 227,
-   "cumCash": 398302.16,
-   "cumCashFromR3": 398024.16,
+   "cumCash": 329995.62,
+   "cumCashFromR3": 329717.62,
    "rbe": 243900,
-   "popCashMult": 0.05,
+   "popCashMult": 0.04,
    "threats": [
     "fortified",
     "moab",
@@ -6673,19 +6607,18 @@
     "18 Fortified BFB"
    ],
    "danger": 2,
-   "notes": "",
-   "cashPopWikiTable": 1829.52
+   "notes": ""
   },
   {
    "round": 128,
    "xp": 8640,
-   "cash": 5340.95,
-   "cashPop": 5112.95,
+   "cash": 4318.36,
+   "cashPop": 4090.36,
    "cashBonus": 228,
-   "cumCash": 403643.11,
-   "cumCashFromR3": 403365.11,
+   "cumCash": 334313.98,
+   "cumCashFromR3": 334035.98,
    "rbe": 505408,
-   "popCashMult": 0.05,
+   "popCashMult": 0.04,
    "threats": [
     "camo",
     "bfb",
@@ -6698,19 +6631,18 @@
     "30 BFB"
    ],
    "danger": 3,
-   "notes": "",
-   "cashPopWikiTable": 4090.36
+   "notes": ""
   },
   {
    "round": 129,
    "xp": 8730,
-   "cash": 5585.55,
-   "cashPop": 5356.55,
+   "cash": 4514.24,
+   "cashPop": 4285.24,
    "cashBonus": 229,
-   "cumCash": 409228.66,
-   "cumCashFromR3": 408950.66,
+   "cumCash": 338828.22,
+   "cumCashFromR3": 338550.22,
    "rbe": 897412,
-   "popCashMult": 0.05,
+   "popCashMult": 0.04,
    "threats": [
     "camo",
     "lead",
@@ -6728,19 +6660,18 @@
     "30 DDT"
    ],
    "danger": 3,
-   "notes": "",
-   "cashPopWikiTable": 4285.24
+   "notes": ""
   },
   {
    "round": 130,
    "xp": 8820,
-   "cash": 4688.9,
-   "cashPop": 4458.9,
+   "cash": 3797.12,
+   "cashPop": 3567.12,
    "cashBonus": 230,
-   "cumCash": 413917.56,
-   "cumCashFromR3": 413639.56,
+   "cumCash": 342625.34,
+   "cumCashFromR3": 342347.34,
    "rbe": 414888,
-   "popCashMult": 0.05,
+   "popCashMult": 0.04,
    "threats": [
     "camo",
     "lead",
@@ -6766,19 +6697,18 @@
     "24 BFB"
    ],
    "danger": 3,
-   "notes": "",
-   "cashPopWikiTable": 3567.12
+   "notes": ""
   },
   {
    "round": 131,
    "xp": 8910,
-   "cash": 2232.9,
-   "cashPop": 2001.9,
+   "cash": 1832.52,
+   "cashPop": 1601.52,
    "cashBonus": 231,
-   "cumCash": 416150.46,
-   "cumCashFromR3": 415872.46,
+   "cumCash": 344457.86,
+   "cumCashFromR3": 344179.86,
    "rbe": 479700,
-   "popCashMult": 0.05,
+   "popCashMult": 0.04,
    "threats": [
     "bad"
    ],
@@ -6787,19 +6717,18 @@
     "3 BAD"
    ],
    "danger": 3,
-   "notes": "",
-   "cashPopWikiTable": 1601.52
+   "notes": ""
   },
   {
    "round": 132,
    "xp": 9000,
-   "cash": 8581.9,
-   "cashPop": 8349.9,
+   "cash": 6911.92,
+   "cashPop": 6679.92,
    "cashBonus": 232,
-   "cumCash": 424732.36,
-   "cumCashFromR3": 424454.36,
+   "cumCash": 351369.78,
+   "cumCashFromR3": 351091.78,
    "rbe": 1364256,
-   "popCashMult": 0.05,
+   "popCashMult": 0.04,
    "threats": [
     "camo",
     "lead",
@@ -6819,19 +6748,18 @@
     "27 DDT"
    ],
    "danger": 3,
-   "notes": "",
-   "cashPopWikiTable": 6679.92
+   "notes": ""
   },
   {
    "round": 133,
    "xp": 9090,
-   "cash": 8258.25,
-   "cashPop": 8025.25,
+   "cash": 6653.2,
+   "cashPop": 6420.2,
    "cashBonus": 233,
-   "cumCash": 432990.61,
-   "cumCashFromR3": 432712.61,
+   "cumCash": 358022.98,
+   "cumCashFromR3": 357744.98,
    "rbe": 1190997,
-   "popCashMult": 0.05,
+   "popCashMult": 0.04,
    "threats": [
     "fortified",
     "moab",
@@ -6858,19 +6786,18 @@
     "3 ZOMG"
    ],
    "danger": 3,
-   "notes": "",
-   "cashPopWikiTable": 6420.2
+   "notes": ""
   },
   {
    "round": 134,
    "xp": 9180,
-   "cash": 3741.5,
-   "cashPop": 3507.5,
+   "cash": 3040.0,
+   "cashPop": 2806.0,
    "cashBonus": 234,
-   "cumCash": 436732.11,
-   "cumCashFromR3": 436454.11,
+   "cumCash": 361062.98,
+   "cumCashFromR3": 360784.98,
    "rbe": 517808,
-   "popCashMult": 0.05,
+   "popCashMult": 0.04,
    "threats": [
     "fortified",
     "bfb"
@@ -6887,19 +6814,18 @@
     "1 BFB"
    ],
    "danger": 3,
-   "notes": "",
-   "cashPopWikiTable": 2806.0
+   "notes": ""
   },
   {
    "round": 135,
    "xp": 9270,
-   "cash": 6240.25,
-   "cashPop": 6005.25,
+   "cash": 5039.2,
+   "cashPop": 4804.2,
    "cashBonus": 235,
-   "cumCash": 442972.36,
-   "cumCashFromR3": 442694.36,
+   "cumCash": 366102.18,
+   "cumCashFromR3": 365824.18,
    "rbe": 1783080,
-   "popCashMult": 0.05,
+   "popCashMult": 0.04,
    "threats": [
     "camo",
     "lead",
@@ -6916,19 +6842,18 @@
     "9 Fortified DDT"
    ],
    "danger": 3,
-   "notes": "",
-   "cashPopWikiTable": 4804.2
+   "notes": ""
   },
   {
    "round": 136,
    "xp": 9360,
-   "cash": 3894.8,
-   "cashPop": 3658.8,
+   "cash": 3163.04,
+   "cashPop": 2927.04,
    "cashBonus": 236,
-   "cumCash": 446867.16,
-   "cumCashFromR3": 446589.16,
+   "cumCash": 369265.22,
+   "cumCashFromR3": 368987.22,
    "rbe": 476544,
-   "popCashMult": 0.05,
+   "popCashMult": 0.04,
    "threats": [
     "fortified",
     "moab",
@@ -6940,19 +6865,18 @@
     "24 Fortified BFB"
    ],
    "danger": 3,
-   "notes": "",
-   "cashPopWikiTable": 2927.04
+   "notes": ""
   },
   {
    "round": 137,
    "xp": 9450,
-   "cash": 5021.95,
-   "cashPop": 4784.95,
+   "cash": 4064.96,
+   "cashPop": 3827.96,
    "cashBonus": 237,
-   "cumCash": 451889.11,
-   "cumCashFromR3": 451611.11,
+   "cumCash": 373330.18,
+   "cumCashFromR3": 373052.18,
    "rbe": 1334052,
-   "popCashMult": 0.05,
+   "popCashMult": 0.04,
    "threats": [
     "fortified",
     "moab",
@@ -6968,19 +6892,18 @@
     "24 Fortified MOAB"
    ],
    "danger": 3,
-   "notes": "",
-   "cashPopWikiTable": 3827.96
+   "notes": ""
   },
   {
    "round": 138,
    "xp": 9540,
-   "cash": 3534.2,
-   "cashPop": 3296.2,
+   "cash": 2874.96,
+   "cashPop": 2636.96,
    "cashBonus": 238,
-   "cumCash": 455423.31,
-   "cumCashFromR3": 455145.31,
+   "cumCash": 376205.14,
+   "cumCashFromR3": 375927.14,
    "rbe": 792696,
-   "popCashMult": 0.05,
+   "popCashMult": 0.04,
    "threats": [
     "camo",
     "lead",
@@ -6999,19 +6922,18 @@
     "21 Fortified DDT"
    ],
    "danger": 3,
-   "notes": "",
-   "cashPopWikiTable": 2636.96
+   "notes": ""
   },
   {
    "round": 139,
    "xp": 9630,
-   "cash": 19530.25,
-   "cashPop": 19291.25,
+   "cash": 15672.0,
+   "cashPop": 15433.0,
    "cashBonus": 239,
-   "cumCash": 474953.56,
-   "cumCashFromR3": 474675.56,
+   "cumCash": 391877.14,
+   "cumCashFromR3": 391599.14,
    "rbe": 2708759,
-   "popCashMult": 0.05,
+   "popCashMult": 0.04,
    "threats": [
     "fortified",
     "bfb"
@@ -7029,19 +6951,18 @@
     "18 Fortified BFB"
    ],
    "danger": 3,
-   "notes": "",
-   "cashPopWikiTable": 15433.0
+   "notes": ""
   },
   {
    "round": 140,
    "xp": 9720,
-   "cash": 3576.5,
-   "cashPop": 3336.5,
+   "cash": 2909.2,
+   "cashPop": 2669.2,
    "cashBonus": 240,
-   "cumCash": 478530.06,
-   "cumCashFromR3": 478252.06,
+   "cumCash": 394786.34,
+   "cumCashFromR3": 394508.34,
    "rbe": 1935200,
-   "popCashMult": 0.05,
+   "popCashMult": 0.04,
    "threats": [
     "fortified",
     "bad"
@@ -7054,8 +6975,7 @@
     "1 Fortified BAD"
    ],
    "danger": 3,
-   "notes": "5 BADs, 4 of them Fortified. Last preset ABR round.",
-   "cashPopWikiTable": 2669.2
+   "notes": "5 BADs, 4 of them Fortified. Last preset ABR round."
   }
  ]
 }

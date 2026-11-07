@@ -4,6 +4,7 @@
   'use strict';
   const MI = window.MonkeyIntel;
   const C = MI.core, U = MI.ui, h = U.h;
+  const num = (v, d) => (typeof v === 'number' && isFinite(v) ? v : d);
   const D = U.data();
   const root = document.getElementById('sim-root');
   if (!root) return;
@@ -200,8 +201,17 @@
   function answer() {
     const f = sim.first;
     const cashBad = sim.steps.find((s) => s.short);
+    const extra = [];
+    if (sim.randomRounds) extra.push(h('p', { class: 'ti-alert-s' }, sim.mode.name + ' has random rounds. This uses the standard rounds as a stand-in, so treat every round here as a rough guide.'));
+    if (sim.badSteps.length) extra.push(h('p', { class: 'ti-alert-s' }, ['Not counted: ', U.rchip(sim.badSteps[0].r), ' ' + sim.badSteps[0].label + ' (' + sim.badSteps[0].flags.find((x) => x.k === 'bad').t + ')' + (sim.badSteps.length > 1 ? ' and ' + (sim.badSteps.length - 1) + ' more step' + (sim.badSteps.length > 2 ? 's' : '') + ' marked in red below' : '') + '.']));
+    if (!f && sim.lostAt) {
+      /* no single round shows a problem, but small leaks add up and your lives run out */
+      const kids = [h('p', { class: 'ti-alert-t' }, 'Lives run out around R' + sim.lostAt), h('p', { class: 'ti-alert-s' }, 'No single round leaks much, but the small leaks add up. Add popping power before R' + sim.lostAt + '.')].concat(extra);
+      kids.push(livesLine());
+      return h('section', { class: 'ti-alert', 'aria-label': 'First problem' }, kids);
+    }
     if (!f) {
-      const kids = [h('p', { class: 'ti-alert-t' }, 'Covered to R' + sim.end), h('p', { class: 'ti-alert-s' }, 'Every bloon type in this mode has an answer in your build, in time.')];
+      const kids = [h('p', { class: 'ti-alert-t' }, 'Covered to R' + sim.end), h('p', { class: 'ti-alert-s' }, 'Every bloon type in this mode has an answer in your build, in time.')].concat(extra);
       if (sim.unknown.length) kids.push(h('p', { class: 'ti-alert-s' }, 'Not counted (no pop data yet): ' + sim.unknown.map((id) => C.tower(D, id).name).join(', ') + '.'));
       if (cashBad) kids.push(h('p', { class: 'ti-alert-s' }, ['But you can\'t afford every step: ', U.rchip(cashBad.r), ' ' + cashBad.label + ' is short by ' + C.money(cashBad.short) + '.']));
       if (sim.lives != null) kids.push(livesLine());
@@ -210,7 +220,7 @@
     const kids = [
       h('p', { class: 'ti-alert-t' }, 'R' + f.round + ': ' + f.text),
       h('p', { class: 'ti-alert-s' }, [f.composition ? 'R' + f.round + ' is ' + f.composition + '. ' : '', 'You have ', U.money(f.bank), ' at the start of that round.']),
-    ];
+    ].concat(extra);
     if (sim.unknown.length) kids.push(h('p', { class: 'ti-alert-s' }, 'Not counted (no pop data yet): ' + sim.unknown.map((id) => C.tower(D, id).name).join(', ') + '.'));
     if (sim.lives != null) kids.push(livesLine());
     kids.push(fixBlock(f));
@@ -220,7 +230,8 @@
   function livesLine() {
     const lost = sim.livesStart - (sim.lostAt ? 0 : sim.lives);
     const txt = sim.lostAt ? 'You run out of lives around R' + sim.lostAt + '. ' : lost > 0 ? 'About ' + C.int(lost) + ' of your ' + sim.livesStart + ' lives leak by R' + sim.end + '. ' : 'Enough popping power for every round: no lives lost. ';
-    return h('p', { class: 'ti-alert-s' }, [txt, U.badge('calc', 'estimate'), ' ', h('a', { href: '../../guides/leak-check/' }, 'how it works')]);
+    const rough = sim.lostAt && sim.lostAt >= C.ROUGH_FROM ? 'From R' + C.ROUGH_FROM + ' this over-predicts leaks (no abilities or sub-towers yet). ' : '';
+    return h('p', { class: 'ti-alert-s' }, [txt, rough, U.badge('calc', 'estimate'), ' ', h('a', { href: '../../guides/leak-check/' }, 'how it works')]);
   }
   function fixBlock(pr) {
     const ul = U.fixList(pr.fixes, { hints: pr.hints, hintLabel: pr.estimate ? 'Good to know' : null, empty: pr.estimate ? 'Nothing cheap fixes it on its own: add more towers or upgrades.' : null });
@@ -283,7 +294,7 @@
     /* coverage strip */
     rows.forEach((x) => {
       const needs = Object.keys(x.need).length > 0;
-      const leaks = x.leak != null && x.leakInfo && x.leak > Math.max(1, 0.02 * x.leakInfo.rbe);
+      const leaks = x.leakInfo && C.leakIsProblem(x.leak, x.leakInfo.rbe, sim.livesStart);
       const cls = !needs ? 'cov-none' : x.missing.length || leaks ? 'cov-bad' : 'cov-ok';
       const rc = svg('rect', { class: cls, x: L + (x.r - sim.start) * col + 1, y: covY, width: col - 2, height: covH });
       rc.appendChild(svg('title', {}, 'R' + x.r + ': ' + (x.missing.length ? 'missing ' + x.missing.map((p) => C.NEED_LABEL[p]).join(', ') : leaks ? 'about ' + x.leak + ' of ' + x.leakInfo.rbe + ' RBE leaks (estimate)' : needs ? 'covered' : 'nothing new') + (x.lives != null ? ' · ' + x.lives + ' lives' : '') + (x.heroLevel ? ' · hero L' + x.heroLevel + ' (est.)' : '')));
@@ -440,7 +451,10 @@
         kids.push(U.field('Tower', U.select(live.map((i) => ({ value: i.uid, label: i.label })), s.ref, (v) => { s.ref = v; render(); })));
         const inst = live.find((i) => i.uid === s.ref);
         const inv = sim.steps.filter((o) => o.inst === inst.label && (o.op === 'place' || o.op === 'up') && o.r <= s.r).reduce((a, o) => a + o.cost, 0);
-        kids.push(h('p', { class: 'ti-note' }, ['Sells for ', U.money(Math.round(inv * C.SELL_RATE)), ' (70% of ', U.money(inv), ').']));
+        /* same rule as the Simulator: an Insta's value counts, Monkey Knowledge and Banana Salvage raise the rate */
+        const worth = inv + (inst.insta ? num(inst.instaValue, 0) : 0);
+        const rate = C.sellRateFor(D, num(sim.sellRate, C.SELL_RATE), inst.id, C.xAt(sim.steps, inst, s.r));
+        kids.push(h('p', { class: 'ti-note' }, ['Sells for ', U.money(Math.round(worth * rate)), ' (' + Math.round(rate * 100) + '% of ', U.money(worth), inst.insta ? ', its value as an Insta' : '', ').']));
         ready = true;
       }
     }

@@ -20,7 +20,10 @@
 
   function handleHash() {
     const q = {};
-    String(location.hash || '').replace(/^#/, '').split('&').forEach((kv) => { const i = kv.indexOf('='); if (i > 0) q[kv.slice(0, i)] = decodeURIComponent(kv.slice(i + 1)); });
+    String(location.hash || '').replace(/^#/, '').split('&').forEach((kv) => {
+      const i = kv.indexOf('=');
+      if (i > 0) { try { q[kv.slice(0, i)] = decodeURIComponent(kv.slice(i + 1)); } catch (e) { /* malformed link: ignore that part */ } }
+    });
     if (q.add) {
       const m = q.add.match(/^([a-z]+)\.(paragon|all|u(\d)(\d))$/);
       const t = m && C.tower(D, m[1]);

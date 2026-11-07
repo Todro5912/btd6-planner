@@ -581,7 +581,7 @@
   "unlockOrder": [
    "1-0-0 FMJ (120) and 0-1-0 NVG (200)",
    "Bouncing Bullet 0-3-0 (2,500 + 800)",
-   "Large Calibre/Deadly Precision (800 + 3,500)",
+   "Large Caliber/Deadly Precision (800 + 3,500)",
    "Maim MOAB (10,500)",
    "Semi-Auto/Full Auto (2,750 + 10,000)",
    "Elite Defender (30,000)",
@@ -1098,7 +1098,7 @@
   "towerId": "wizard",
   "name": "Wizard Monkey",
   "class": "Magic",
-  "xpAllUpgrades": 143290,
+  "xpAllUpgrades": 143280,
   "xpParagon": 1000000,
   "farm": {
    "map": "Dark Castle",
@@ -1486,7 +1486,7 @@
   "towerId": "mermonkey",
   "name": "Mermonkey",
   "class": "Magic",
-  "xpAllUpgrades": 242210,
+  "xpAllUpgrades": 242180,
   "xpParagon": null,
   "farm": {
    "map": "Dark Castle",
@@ -1627,7 +1627,7 @@
   "towerId": "farm",
   "name": "Banana Farm",
   "class": "Support",
-  "xpAllUpgrades": 222650,
+  "xpAllUpgrades": 223000,
   "xpParagon": null,
   "farm": {
    "map": "Infernal or Dark Castle (Expert)",

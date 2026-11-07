@@ -129,97 +129,181 @@
     return { base, fort, camo: /camo/.test(s), regrow: /regrow/.test(s) };
   };
   /* one round, one set of attackers: [{power entry, label, camo: can it hit camo, lead: can it hit lead}] */
+  /* ---- bloon physics used by the leak check (game facts, see content/guides/bloons.md) ---- */
+  /* layer tree: [shell HP, children]. From R81 Ceramics are Super Ceramics (60 HP) and every non-blimp bloon has one child */
+  const TREE = { red: [1, []], blue: [1, ['red']], green: [1, ['blue']], yellow: [1, ['green']], pink: [1, ['yellow']],
+    black: [1, ['pink', 'pink']], white: [1, ['pink', 'pink']], purple: [1, ['pink', 'pink']], zebra: [1, ['black', 'white']],
+    lead: [1, ['black', 'black']], rainbow: [1, ['zebra', 'zebra']], ceramic: [10, ['rainbow', 'rainbow']] };
+  const node = (t, late, fort) => {
+    const e = TREE[t] || TREE.red;
+    let hp = t === 'ceramic' && late ? 60 : e[0];
+    if (fort) hp = t === 'lead' ? 4 : t === 'ceramic' ? hp * 2 : hp;
+    return [hp, late ? e[1].slice(0, 1) : e[1]];
+  };
+  /* hits needed to clear one bloon with damage d per hit. Leftover damage carries into every child (Bloons Wiki "Damage") */
+  const hitMemo = {};
+  C.hitsToClear = function (t, d, late, fort) {
+    d = Math.max(1, Math.min(400, Math.round(num(d, 1) * 4) / 4));
+    const key = t + '|' + d + '|' + (late ? 1 : 0) + (fort ? 1 : 0);
+    if (hitMemo[key] != null) return hitMemo[key];
+    const g = (bt, free, f) => {
+      const [hp, kids] = node(bt, late, f);
+      let hits = 0, over;
+      if (free >= hp) over = free - hp;
+      else { const k = Math.ceil((hp - free) / d - 1e-9); hits = k; over = k * d - (hp - free); }
+      kids.forEach((c) => { hits += g(c, over, false); });
+      return hits;
+    };
+    hitMemo[key] = g(t, 0, fort);
+    return hitMemo[key];
+  };
+  const rbeMemo = {};
+  C.rbeOf = function (t, late, fort) {
+    const key = t + (late ? 1 : 0) + (fort ? 1 : 0);
+    if (rbeMemo[key] != null) return rbeMemo[key];
+    const [hp, kids] = node(t, late, fort);
+    rbeMemo[key] = hp + kids.reduce((a, c) => a + C.rbeOf(c, late, false), 0);
+    return rbeMemo[key];
+  };
+  /* freeplay ramps (from R81): blimp HP and every bloon's speed */
+  C.blimpHpMult = (r) => (r <= 80 ? 1 : r <= 100 ? 1 + 0.02 * (r - 80) : r <= 124 ? 1.4 + 0.05 * (r - 100) : r <= 150 ? 2.6 + 0.15 * (r - 124) : r <= 250 ? 6.5 + 0.35 * (r - 150) : 41.5 + (r - 250));
+  C.speedMult = (r) => (r <= 80 ? 1 : r <= 100 ? 1 + 0.02 * (r - 80) : r <= 150 ? 1.6 + 0.02 * (r - 101) : r <= 200 ? 3 + 0.02 * (r - 151) : 4.5);
+  C.BLIMP_KIDS = { moab: [['ceramic', 4]], bfb: [['moab', 4]], zomg: [['bfb', 4]], ddt: [['ceramic', 4]], bad: [['zomg', 2], ['ddt', 3]] };
   C.leakRound = function (D, mode, map, r, list) {
     const pw = D.power || {};
     const groups = arr(arr(pw.rounds)[r - 1]);
     const row = C.roundRow(D, mode, r);
     if (!groups.length || !row || (mode && mode.roundSet === 'abr')) return null;
-    const speed = pw.bloonSpeed || {};
-    let n = 0, t0 = Infinity, t1 = 0, rbe = 0, vSum = 0, dSum = 0, camoRbe = 0, leadRbe = 0;
-    const blimps = [];
+    const late = r >= 81;
+    /* every bloon moves faster on Medium (x1.1) and Hard/CHIMPS (x1.25), game: GlobalSpeedModModel; and from R81 */
+    const vMult = num(mode && mode.bloonSpeedMult, 1) * C.speedMult(r);
+    const speedOf = (t) => num((pw.bloonSpeed || {})[t], 25) * vMult;
+    const hpMult = C.blimpHpMult(r) * (mode && mode.id === 'double-hp-moabs' ? 2 : 1);
+    let t0 = Infinity, t1 = 0, rbe = 0;
+    const stream = {}; /* 'type|fort|camo' -> count */
+    const addStream = (t, c, fort, camo) => { const k = t + '|' + (fort ? 1 : 0) + '|' + (camo ? 1 : 0); stream[k] = (stream[k] || 0) + c; };
+    const blimpsIn = [];
     groups.forEach(([name, count, start, dur]) => {
       const b = bloonType(name);
-      const e = num(C.BLOON_RBE[b.base], 1) * count;
       t0 = Math.min(t0, start); t1 = Math.max(t1, start + dur);
-      rbe += e;
-      if (C.BLIMP_HP[b.base]) { blimps.push({ type: b.base, count, start, dur, hp: C.BLIMP_HP[b.base] * (b.fort ? 2 : 1), rbe: C.BLOON_RBE[b.base], v: num(speed[b.base], 25), camo: b.camo || b.base === 'ddt' }); return; }
-      n += count;
-      vSum += num(speed[b.base], 25) * count;
-      dSum += num(C.BLOON_DEPTH[b.base], 1) * count;
-      if (b.camo) camoRbe += e;
-      if (b.base === 'lead') leadRbe += e;
+      if (C.BLIMP_HP[b.base]) { blimpsIn.push({ type: b.base, count, dur, fort: b.fort, camo: b.camo || b.base === 'ddt', reach: 1 }); return; }
+      addStream(b.base, count, b.fort, b.camo);
     });
-    const scale = rbe > 0 && num(row.rbe, 0) > 0 ? row.rbe / rbe : 1; /* freeplay ramps, fortified layers, Easy R40 */
-    const total = rbe * scale;
     const dur = Math.max(1, t1 - t0);
     const track = map && map.rbs ? map.rbs * 25 : 30 * 25;
     const lanes = map && map.lanes ? map.lanes : 1;
     const tinFor = (R, sp) => (R >= 900 ? track / sp : Math.min(track / sp, C.POWER_SPOT * 2 * R / sp));
-    /* MOAB-class first: each shell has to die inside the towers' reach, or it leaks whole (lives = its RBE) */
-    let leak = 0, freed = 0;
+    /* blimps: each shell must die inside the towers' reach, or it leaks whole (lives = its RBE). A killed blimp's
+       children spawn where it died, so they only get the reach that was left */
+    const bMemo = {};
+    const blimpRbe = (t, fort, late2) => {
+      const key = t + (fort ? 1 : 0);
+      if (bMemo[key] != null) return bMemo[key];
+      const kids = arr(C.BLIMP_KIDS[t]);
+      const hp = C.BLIMP_HP[t] * (fort ? 2 : 1) * hpMult;
+      bMemo[key] = hp + kids.reduce((a, [k, c]) => a + c * (C.BLIMP_HP[k] ? blimpRbe(k, fort, late2) : C.rbeOf(k, late2, fort)), 0);
+      return bMemo[key];
+    };
+    let leak = 0;
     const blimpOut = [];
-    blimps.forEach((b) => {
+    const queue = blimpsIn.slice();
+    const ORDER = ['bad', 'zomg', 'bfb', 'ddt', 'moab'];
+    queue.sort((a, b) => ORDER.indexOf(a.type) - ORDER.indexOf(b.type));
+    let guard = 0;
+    while (queue.length && guard++ < 200) {
+      const b = queue.shift();
+      const hp = C.BLIMP_HP[b.type] * (b.fort ? 2 : 1) * hpMult;
+      const v = speedOf(b.type);
       let dmg = 0, over = 0;
       list.forEach((it) => {
         const e = it.power;
-        if (!e || !(e.m > 0) || (b.camo && it.camo === false)) return;
+        if (!e || !(e.m > 0) || (b.camo && it.camo === false) || (b.type === 'ddt' && (it.lead === false || it.black === false))) return;
         const bf = it.buff || {};
         const m = e.m * num(bf.hits, 1) * (1 + num(bf.dmg, 0) * 0.5);
-        const tin = tinFor(num(e.r, 40) * num(bf.range, 1), b.v);
+        const tin = tinFor(num(e.r, 40) * num(bf.range, 1), v) * b.reach;
         dmg += m * tin; /* what one blimp takes on its way past */
         over += m * (b.dur + tin); /* what the whole group can take */
       });
-      /* each blimp must die in reach (0% of them at 70% of its HP, all at 130%: placement varies), and the group
-         can't take more than the towers' damage over its spawn time */
-      const each = Math.max(0, Math.min(1, (dmg / b.hp - 0.7) / 0.6));
-      const killed = Math.min(b.count * each, over / b.hp);
-      leak += (b.count - killed) * b.rbe * scale;
-      const inside = killed * (b.rbe * scale - b.hp);
-      freed += inside; /* what's inside joins the normal stream, as Ceramics (or a BAD's ZOMGs and DDTs, roughly) */
-      const kids = inside / C.BLOON_RBE.ceramic;
-      n += kids; vSum += num(speed.ceramic, 62.5) * kids; dSum += C.BLOON_DEPTH.ceramic * kids;
-      blimpOut.push({ type: b.type, count: b.count, killed, dmg: Math.round(dmg), hp: b.hp });
+      /* 0% of them die at 70% of their HP in reach, all at 130% (placement varies): an estimate */
+      const each = Math.max(0, Math.min(1, (dmg / hp - 0.7) / 0.6));
+      const killed = Math.min(b.count * each, over / hp);
+      leak += (b.count - killed) * blimpRbe(b.type, b.fort, late);
+      const left = dmg > 0 ? Math.max(0, 1 - hp / dmg) : 0; /* share of the reach left when it died */
+      arr(C.BLIMP_KIDS[b.type]).forEach(([k, c]) => {
+        if (killed <= 0) return;
+        if (C.BLIMP_HP[k]) queue.push({ type: k, count: killed * c, dur: b.dur, fort: b.fort, camo: b.camo || k === 'ddt', reach: b.reach * left, child: true });
+        else addStream(k, killed * c, b.fort, b.camo || b.type === 'ddt');
+      });
+      queue.sort((a, q) => ORDER.indexOf(a.type) - ORDER.indexOf(q.type));
+      if (!b.child) blimpOut.push({ type: b.type, count: b.count, killed, dmg: Math.round(dmg), hp: Math.round(hp) });
+    }
+    /* the stream: every non-blimp bloon, plus what popped blimps released */
+    let n = 0, vSum = 0, streamRbe = 0, camoRbe = 0, leadShell = 0;
+    const kinds = Object.keys(stream).map((k) => { const [t, f, c] = k.split('|'); return { t, fort: f === '1', camo: c === '1', n: stream[k] }; });
+    kinds.forEach((g) => {
+      const e = C.rbeOf(g.t, late, g.fort) * g.n;
+      n += g.n; vSum += speedOf(g.t) * g.n; streamRbe += e;
+      if (g.camo) camoRbe += e;
+      else if (g.t === 'lead') leadShell += node('lead', late, g.fort)[0] * g.n; /* only the Lead shell needs a Lead popper */
     });
+    const total0 = streamRbe + blimpsIn.reduce((a, b) => a + b.count * blimpRbe(b.type, b.fort, late), 0);
+    /* the round table's RBE is the reference; our bloon model reproduces it to within rounding (fortified, R81+) */
+    const scale = total0 > 0 && num(row.rbe, 0) > 0 ? row.rbe / total0 : 1;
+    const total = total0 * scale;
+    leak *= scale;
     const v = n ? vSum / n : 25;
-    const depth = n ? dSum / n : 1;
-    const streamRbe = Math.max(0, total - blimps.reduce((acc, b) => acc + b.count * b.rbe * scale, 0) + freed);
     const lambda = n / dur; /* bloons spawned per second */
+    /* RBE removed per hit with d damage (leftover damage carries into children) */
+    const perHitMemo = {};
+    const perHit = (d) => {
+      const key = Math.round(d * 4);
+      if (perHitMemo[key] != null) return perHitMemo[key];
+      let R = 0, H = 0;
+      kinds.forEach((g) => { R += C.rbeOf(g.t, late, g.fort) * g.n; H += C.hitsToClear(g.t, d, late, g.fort) * g.n; });
+      perHitMemo[key] = H > 0 ? R / H : 1;
+      return perHitMemo[key];
+    };
     let pops = 0;
     const per = [];
-    /* an Ice Monkey's frozen bloons can't be popped by Sharp attacks (darts, tacks, Quincy...) until they thaw */
     let frozenShare = 0;
     const rawPops = (e, hitsOnly, bf) => {
       let p = 0;
       bf = bf || {};
       arr(e.a).forEach(([R0, dmg0, hs0]) => {
-        const dmg = hitsOnly ? 1 : dmg0 + num(bf.dmg, 0);
+        const dmg = dmg0 + num(bf.dmg, 0);
         const R = R0 >= 900 ? R0 : R0 * num(bf.range, 1);
         const hs = bf.hits ? hs0.map((h) => h * bf.hits) : hs0;
         const tin = tinFor(R, v);
         const k = lambda * tin / lanes;
         const present = 1 - Math.exp(-k);
         const nIn = Math.max(1, k / Math.max(present, 1e-6));
-        p += C.hitsAt(hs, nIn) * Math.min(dmg, depth) * present * (dur + tin);
+        p += C.hitsAt(hs, nIn) * (hitsOnly ? 1 : perHit(dmg)) * present * (dur + tin);
       });
       return p;
     };
-    /* share of the bloons an Ice Monkey reaches; most of them are frozen while they pass the towers next to it */
+    /* an Ice Monkey's frozen bloons can't be popped by Sharp attacks (darts, tacks, Quincy...) until they thaw */
     list.forEach((it) => { if (it.freezes && it.power) frozenShare += rawPops(it.power, true) / Math.max(1, n); });
-    frozenShare = Math.min(0.85, frozenShare * 0.65); /* tuned on one real game: lone 2-2-0 Ice + Quincy, Glacial Trail Hard, 16 lives at R13 */
+    frozenShare = Math.min(0.85, frozenShare * C.FREEZE_FIT);
     list.forEach((it) => {
       const e = it.power;
       if (!e) return;
       let p = rawPops(e, false, it.buff);
-      const hit = Math.max(0, 1 - (it.camo === false ? camoRbe / Math.max(1, rbe) : 0) - (it.lead === false ? leadRbe / Math.max(1, rbe) : 0));
-      p *= hit;
+      const blocked = (it.camo === false ? camoRbe : 0) + (it.lead === false ? leadShell : 0);
+      p *= Math.max(0, 1 - blocked / Math.max(1, streamRbe));
       if (frozenShare > 0 && !it.freezes && it.frozen === false) p *= 1 - frozenShare;
+      p *= scale;
       per.push({ label: it.label, pops: Math.round(p) });
       pops += p;
     });
-    leak += Math.max(0, streamRbe - pops);
+    leak += Math.max(0, streamRbe * scale - pops);
     return { r, rbe: Math.round(total), popped: Math.round(Math.max(0, total - leak)), leak: Math.round(Math.min(total, leak)), share: total > 0 ? Math.max(0, 1 - leak / total) : 1,
-      dur, perSec: Math.round(lambda * 10) / 10, depth, per, blimps: blimpOut, power: Math.round(pops), frozenShare };
+      dur, perSec: Math.round(lambda * 10) / 10, depth: perHit(1), per, blimps: blimpOut, power: Math.round(pops), frozenShare };
   };
+  /* Ice freezing factor, fitted to one real game (lone 2-2-0 Ice + Quincy, Glacial Trail Hard, 16 lives at R13). Estimate */
+  /* from this round the check flags leaks in builds that win real games (2TC CHIMPS wins: 7% leak at R76, 26% at R80,
+     85% at R98), so the tools label it rough. Measured 2026-11-07, see CHANGELOG 0.9.1 */
+  C.ROUGH_FROM = 76;
+  C.FREEZE_FIT = 0.63; /* 14 lives at R13 with this model; it is a steep curve: 0.60 gives 28, 0.65 gives 4 */
   /* the attackers of one moment, for C.leakRound: towers [{uid, id, x, label}] and the hero {id, level, label} */
   C.powerList = function (D, insts, hero) {
     const pm = D.pop || {};
@@ -228,12 +312,12 @@
       const e = C.powerOf(D, i.id, i.x);
       if (!e) return;
       const own = C.towerProps(pm, i.id, i.x);
-      out.push({ uid: i.uid, id: i.id, x: i.x, label: i.label, power: e, camo: !!own.camo, lead: !!own.lead, frozen: !!own.frozen, freezes: i.id === 'ice' });
+      out.push({ uid: i.uid, id: i.id, x: i.x, label: i.label, power: e, camo: !!own.camo, lead: !!own.lead, black: !!own.black, frozen: !!own.frozen, freezes: i.id === 'ice' });
     });
     if (hero) {
       const e = C.heroPowerOf(D, hero.id, hero.level);
       const hp = C.heroProps(pm, hero.id, hero.level);
-      if (e) out.push({ uid: 'hero', id: hero.id, label: hero.label || hero.id, power: e, camo: !!hp.camo, lead: !!hp.lead, frozen: !!hp.lead, hero: true });
+      if (e) out.push({ uid: 'hero', id: hero.id, label: hero.label || hero.id, power: e, camo: !!hp.camo, lead: !!hp.lead, black: pm.heroes && pm.heroes[hero.id] && pm.heroes[hero.id].black ? !!hp.black : true, frozen: !!hp.frozen, hero: true });
     }
     /* buffs (values from the game's models, v56), assumed to reach every tower: placing them centrally is the norm.
        Village: +10% range, 2-x-x attacks 15% faster, 3-x-x Primary +1 pierce and +10% range.
@@ -253,7 +337,7 @@
   /* camo support (a Village 0-2-0, Shimmer...) lets towers hit camo: take it from the coverage state */
   C.powerWithSupport = function (list, st) {
     const has = (p, label) => arr(st && st.cov && st.cov[p]).some((l) => l === label || l.indexOf(label + ' + ') === 0);
-    list.forEach((it) => { if (st) { it.camo = has('camo', it.label); it.lead = has('lead', it.label); } });
+    list.forEach((it) => { if (st) { it.camo = has('camo', it.label); it.lead = has('lead', it.label); it.black = has('black', it.label); } });
     return list;
   };
   /* what to buy when a round leaks: the cheapest pops. Upgrades of what you have and new towers, by leak removed per $ */
@@ -294,7 +378,17 @@
       .map((c) => Object.assign(c, { leftLives: c.left }));
   };
 
-  C.popCashMult = (r) => (r <= 50 ? 1 : r <= 60 ? 0.5 : r <= 85 ? 0.2 : r <= 100 ? 0.1 : r <= 120 ? 0.08 : 0.05);
+  /* freeplay pop cash (game: IncomeSets/DefaultIncomeSet.json) */
+  /* is this leak a problem? Over 2% of the round, or any leak worth 10% of your starting lives
+     (in CHIMPS and Impoppable, with 1 life, that's any leak at all) */
+  C.leakIsProblem = (leak, rbe, livesStart) => leak != null && leak >= 1 && (leak > Math.max(1, 0.02 * num(rbe, 0)) || leak >= 0.1 * num(livesStart, 100));
+  C.popCashMult = (r) => (r <= 50 ? 1 : r <= 60 ? 0.5 : r <= 85 ? 0.2 : r <= 100 ? 0.1 : r <= 120 ? 0.05 : r <= 140 ? 0.04 : 0.02);
+  /* pop cash per leaked RBE this round: the round's own pop cash over its RBE (a MOAB pays $381 for 616 RBE) */
+  C.popCashPerRbe = function (row, r) {
+    const pop = num(row && row.cashPop, NaN), rbe = num(row && row.rbe, NaN);
+    if (pop >= 0 && rbe > 0) return pop / rbe;
+    return C.popCashMult(r);
+  };
   /* ---------- crosspaths ---------- */
   C.code = (x) => arr(x).map((v) => num(v, 0)).join('-');
   C.parseCode = function (s) {
@@ -387,13 +481,17 @@
     const spec = e && e[prop];
     return arr(spec && spec.conditional).filter((c) => c && arr(c.req).every((r) => C.reqHolds(r, x))).map((c) => c.note);
   };
-  C.hintsFor = function (D, insts, prop) {
+  C.hintsFor = function (D, insts, prop, hero) {
     const pm = D.pop || {};
     const out = [];
-    arr(insts).forEach((i) => C.conditionalHints(pm, i.id, i.x, prop).forEach((n) => {
-      const t = i.label + ': ' + n;
-      if (out.indexOf(t) < 0) out.push(t);
-    }));
+    const add = (t) => { if (out.indexOf(t) < 0) out.push(t); };
+    arr(insts).forEach((i) => C.conditionalHints(pm, i.id, i.x, prop).forEach((n) => add(i.label + ': ' + n)));
+    /* temporary support (spells, short buffs): it helps, but don't count on it */
+    arr(pm.supportFixes).forEach((f) => {
+      if (!f.temporary || f.grants !== prop) return;
+      const on = C.isHeroFix(f) ? !!hero && hero.id === f.source && C.reqHolds(f.req, null, hero.level) : arr(insts).some((i) => i.id === f.source && C.reqHolds(f.req, i.x));
+      if (on) add((C.isHeroFix(f) ? (hero.label || hero.id) : f.source) + ': ' + f.note + ' (temporary, not counted)');
+    });
     return out;
   };
   C.heroProps = function (pm, id, level) {
@@ -460,6 +558,7 @@
   C.activeFixes = function (D, insts, hero) {
     const pm = D.pop || {};
     return arr(pm.supportFixes).filter((f) => {
+      if (f.temporary) return false; /* spells, short buffs, one-tower potions: shown as hints, never as cover */
       if (C.isHeroFix(f)) return !!hero && hero.id === f.source && C.reqHolds(f.req, null, hero.level);
       return insts.some((i) => i.id === f.source && C.reqHolds(f.req, i.x));
     });
@@ -579,11 +678,17 @@
   };
 
   /* ---------- legality of placing a tower ---------- */
+  /* a hero that can't go on this map (Brickell is water-only) */
+  C.heroIssue = function (D, map, h) {
+    if (h && h.waterOnly && map && map.water === 'none') return map.name + ' has no water';
+    return null;
+  };
   C.placeIssue = function (D, mode, map, t) {
     if (!t) return 'unknown tower';
     const allowed = mode && Array.isArray(mode.allowedClasses) ? mode.allowedClasses : null;
     if (allowed && allowed.indexOf(t.class) < 0) return mode.name + ' allows ' + allowed.join(', ') + ' towers only';
     if (t.id === 'farm' && mode && mode.rules && mode.rules.noIncomeTowers) return 'Banana Farms are banned in ' + mode.name;
+    if (mode && mode.rules && arr(mode.rules.lockedTowers).indexOf(t.id) >= 0) return t.name + ' is locked in ' + mode.name;
     if (t.waterOnly && map && map.water === 'none') return map.name + ' has no water';
     return null;
   };
@@ -667,18 +772,41 @@
 
   /* ---------- income (farms etc.) ---------- */
   const INCOME_TOWER = { 'Banana Farm': 'farm', 'Monkey Buccaneer': 'buccaneer', 'Sniper Monkey': 'sniper', 'Alchemist': 'alchemist', 'Druid': 'druid', 'Engineer Monkey': 'engineer', 'Monkey Village': 'village' };
+  /* the crosspath at the start of an income code: "4-2-0 Banana Research Facility" -> [4, 2, 0] */
+  C.leadCode = function (s) {
+    const m = String(s || '').match(/^\s*(\d)-(\d)-(\d)(?:\s|$)/);
+    return m ? [+m[1], +m[2], +m[3]] : null;
+  };
+  /* a farm crosspath from the game files (data/economy.json farmCross): {income, sellAdd, bank} */
+  C.farmAt = (D, x) => ((D && D.farmCross) || {})[arr(x).map((v) => num(v, 0)).join('')] || null;
   C.incomeFor = function (D, mode, id, x) {
     const rules = (mode && mode.rules) || {};
-    if (rules.noIncome) return 0;
+    if (rules.noIncome || rules.noIncomeTowers) return 0; /* Deflation; CHIMPS: no farms, income upgrades pay nothing */
     let best = 0;
-    arr(D.income).forEach((s) => {
-      if (INCOME_TOWER[s.tower] !== id) return;
-      if (rules.noIncomeTowers && s.chimpsLegal === false) return;
-      if (rules.noIncomeTowers) return; /* CHIMPS: income upgrades pay nothing */
-      const c = C.parseCode(s.code);
-      if (c && C.geq(x, c)) best = Math.max(best, num(s.incomePerRound, 0));
-    });
+    const farm = id === 'farm' ? C.farmAt(D, x) : null;
+    if (farm) best = num(farm.income, 0);
+    else {
+      arr(D.income).forEach((s) => {
+        if (INCOME_TOWER[s.tower] !== id) return;
+        const c = C.leadCode(s.code);
+        if (c && C.geq(x, c)) best = Math.max(best, num(s.incomePerRound, 0));
+      });
+    }
     return best * (rules.incomeHalved ? 0.5 : 1);
+  };
+  /* Benjamin's cash per round by level (game: PerRoundCashBonusTowerModel; level bands from data/economy.json) */
+  C.BENJAMIN_CASH = [[1, 90], [2, 140], [8, 250], [11, 1000], [15, 2500], [17, 5000]];
+  C.heroIncome = function (mode, heroId, level) {
+    const rules = (mode && mode.rules) || {};
+    if (heroId !== 'benjamin' || rules.noIncome || rules.noIncomeTowers) return 0;
+    let v = 0;
+    C.BENJAMIN_CASH.forEach(([l, c]) => { if (num(level, 1) >= l) v = c; });
+    return v * (rules.incomeHalved ? 0.5 : 1);
+  };
+  /* sell rate for one tower: the mode's rate, Monkey Knowledge, Banana Salvage (farms x-x-2+ sell for 10% more) */
+  C.sellRateFor = function (D, rate, id, x) {
+    const farm = id === 'farm' ? C.farmAt(D, x) : null;
+    return Math.min(0.95, rate + (farm ? num(farm.sellAdd, 0) : 0));
   };
 
   /* ---------- the simulator ---------- */
@@ -693,7 +821,9 @@
     const fx = C.fxFor(plan.fx, mode); /* your Monkey Knowledge (My profile), off in CHIMPS */
     const players = C.players(plan.players);
     const base = C.baseCash(D, mode, players);
-    if (fx && fx.startCash) Object.keys(base).forEach((k) => { base[k] += fx.startCash / players; });
+    /* More Cash: +$200, halved in Half Cash (Bloons Wiki "More Cash"); Deflation keeps the full $200 */
+    const moreCash = fx && fx.startCash ? fx.startCash * (rules.noIncome ? 1 : num(mode.cashMult, 1)) / players : 0;
+    if (moreCash) Object.keys(base).forEach((k) => { base[k] += moreCash; });
     const sellRate = num(rules.sellRate, C.SELL_RATE) + (fx ? fx.sellAdd : 0);
     const heroOpts = C.heroOpts(fx);
     const instaLeft = Object.assign({}, plan.instas || {}); /* 'dart.204' -> how many you own */
@@ -724,6 +854,7 @@
           const h = C.hero(D, s.h);
           if (!h) { res.flags.push({ k: 'bad', t: 'unknown hero' }); }
           else if (hero) { res.flags.push({ k: 'bad', t: 'only one hero per game' }); res.label = 'Place ' + h.name; }
+          else if (C.heroIssue(D, map, h)) { res.flags.push({ k: 'bad', t: C.heroIssue(D, map, h) }); res.label = 'Place ' + h.name; }
           else {
             res.cost = C.price(h.cost * (fx ? fx.heroCostMult : 1), mult) || 0;
             hero = { id: h.id, placed: r, name: h.name };
@@ -755,7 +886,7 @@
             res.label = (s.insta ? 'Insta ' : 'Place ') + inst.label + (x.some((v) => v > 0) ? ' at ' + C.code(x) : '');
             res.towerId = t.id; res.x = x; res.inst = inst.label;
             const issue = C.placeIssue(D, mode, map, t);
-            if (issue) res.flags.push({ k: 'bad', t: issue });
+            if (issue) { res.flags.push({ k: 'bad', t: issue + ' (not counted)' }); inst.illegal = true; }
             if (arr(strat.avoidTowers).indexOf(t.id) >= 0) res.flags.push({ k: 'warn', t: 'weak on this map' });
             if (plan.unlocked && plan.unlocked[t.id] && !C.geq(plan.unlocked[t.id], x)) res.flags.push({ k: 'warn', t: 'you haven\'t unlocked ' + C.code(x) + ' yet' });
           }
@@ -781,7 +912,7 @@
           else if (rules.noSelling) { res.flags.push({ k: 'bad', t: 'no selling in ' + mode.name }); res.label = 'Sell ' + inst.label; }
           else {
             /* an Insta sells like a bought tower: its value counts, though it cost you nothing */
-            res.refund = Math.round((inst.invested + (inst.insta ? num(inst.instaValue, 0) : 0)) * sellRate);
+            res.refund = Math.round((inst.invested + (inst.insta ? num(inst.instaValue, 0) : 0)) * C.sellRateFor(D, sellRate, inst.id, inst.x));
             inst.soldAt = r;
             res.label = 'Sell ' + inst.label;
             res.towerId = inst.id; res.inst = inst.label;
@@ -792,7 +923,7 @@
         out.push(res);
       }
       /* state during round r */
-      const live = Object.keys(insts).map((k) => insts[k]).filter((i) => i.placedAt <= r && i.soldAt == null);
+      const live = Object.keys(insts).map((k) => insts[k]).filter((i) => i.placedAt <= r && i.soldAt == null && !i.illegal);
       let hl = null;
       if (hero) {
         hl = plan.heroLevel != null && plan.heroLevel >= 1 ? Math.min(20, Math.round(plan.heroLevel)) : Math.max(1, C.heroLevelAt(D, hero.id, hero.placed, r, map && map.difficulty, heroOpts));
@@ -810,9 +941,10 @@
         threats: row ? arr(row.threats) : [], composition: row ? row.composition : '', note: row ? row.notes : '',
         live: live.map((i) => i.uid), unknown: st.unknown, bonuses: st.bonuses, cov: st.cov });
       /* leaked layers pay no pop cash (counted from the next round on) */
-      if (lk && lk.leak > 0 && !plan.keepLeakCash && !(rules.noIncome || rules.noPopCash)) lostCash += lk.leak * C.popCashMult(r) * num(mode.cashMult, 1) / players;
+      if (lk && lk.leak > 0 && !plan.keepLeakCash && !(rules.noIncome || rules.noPopCash)) lostCash += lk.leak * C.popCashPerRbe(row, r) * num(mode.cashMult, 1) / players;
       /* end of round: income, paid into the next round */
       live.forEach((i) => { income += C.incomeFor(D, mode, i.id, i.x); });
+      if (hero) income += C.heroIncome(mode, hero.id, hl);
     }
     /* steps after the last round */
     while (si < steps.length) { const s = steps[si++]; out.push({ uid: s.uid, r: s.r, op: s.op, cost: 0, refund: 0, flags: [{ k: 'bad', t: 'after the last round (R' + b + ')' }], label: s.op, bank: null }); }
@@ -844,11 +976,11 @@
         else open = null;
       });
     });
-    /* rounds that leak: not enough pop power (estimate). Small leaks (under 2% of the round, 1 life) are ignored. */
+    /* rounds that leak: not enough pop power (estimate). Small leaks are ignored, unless your lives can't take them (C.leakIsProblem) */
     {
       let open = null;
       rows.forEach((x) => {
-        const bad = x.leak != null && x.leak > Math.max(1, 0.02 * x.leakInfo.rbe) && !x.missing.length;
+        const bad = x.leakInfo && C.leakIsProblem(x.leak, x.leakInfo.rbe, num(mode.lives, 100)) && !x.missing.length;
         if (bad && !open) { open = { prop: 'power', round: x.r, last: x.r, rounds: 1, lives: x.leak }; problems.push(open); }
         else if (bad) { open.last = x.r; open.rounds++; open.lives += x.leak; }
         else open = null;
@@ -869,6 +1001,7 @@
       pr.fixes.forEach((f) => { f.affordable = pr.bank != null && f.cost <= pr.bank + 0.5; });
       pr.hints = [];
       if (x.leakInfo.frozenShare > 0.05) pr.hints.push('Your Ice Monkey freezes bloons, and Sharp attacks (darts, tacks, Quincy) can\'t pop frozen bloons. Place them apart, or use towers that pop frozen bloons.');
+      if (pr.round >= C.ROUGH_FROM) pr.hints.push('From R' + C.ROUGH_FROM + ' the leak check over-predicts leaks: it doesn\'t count abilities or sub-towers yet, and builds that win in real games often show leaks here. Treat this as a warning, not a verdict.');
       pr.hints.push('Estimate from each tower\'s damage, pierce and attack speed vs the round\'s bloons. Placement, abilities and buffs change it.');
     });
     problems.forEach((pr) => {
@@ -879,16 +1012,17 @@
       pr.bank = x.avail;
       pr.fixes = C.fixesFor({ D, mode, map, insts: live, hero: hero && hero.placed <= pr.round ? { id: hero.id, level: x.heroLevel, label: hero.name } : null, heroPlaced: hero ? hero.placed : null, heroOpts, strong: arr(strat.strongTowers) }, pr.prop, 3);
       pr.fixes.forEach((f) => { f.affordable = pr.bank != null && f.cost <= pr.bank + 0.5; });
-      pr.hints = C.hintsFor(D, live, pr.prop);
+      pr.hints = C.hintsFor(D, live, pr.prop, hero && hero.placed <= pr.round ? { id: hero.id, level: x.heroLevel, label: hero.name } : null);
       pr.composition = x.composition;
     });
     const unknown = {};
     rows.forEach((x) => x.unknown.forEach((u) => { unknown[u] = true; }));
     return {
       mode, map, start: a, end: b, players, rows, steps: out, problems, first: problems[0] || null,
+      badSteps: out.filter((o) => o.flags.some((f) => f.k === 'bad')), randomRounds: mode.roundSet === 'random',
       lives: rows.length && rows[rows.length - 1].lives != null ? rows[rows.length - 1].lives : null, livesStart: num(mode.lives, 100), lostAt,
       leakTotal: rows.reduce((acc, x) => acc + (x.leak || 0), 0),
-      spent, refunds, income, insts: instList, hero, unknown: Object.keys(unknown),
+      spent, refunds, income, insts: instList, hero, unknown: Object.keys(unknown), sellRate,
       endBank: rows.length ? rows[rows.length - 1].bank : 0,
       xp: C.runXp(D, mode, map, out, instList, a, b, plan),
     };
@@ -947,9 +1081,10 @@
   C.checkDefence = function (D, opts) {
     const mode = C.mode(D, opts.modeId) || C.mode(D, 'medium');
     const map = C.map(D, opts.mapId) || null;
-    const r0 = Math.max(1, Math.round(num(opts.round, C.modeRange(mode)[0])));
+    const [ma, mb] = C.modeRange(mode);
+    const r0 = Math.max(ma, Math.min(mb, Math.round(num(opts.round, ma)))); /* the mode's own rounds only */
     const span = num(opts.span, 15);
-    const end = Math.min(140, r0 + span - 1);
+    const end = Math.min(mb, r0 + span - 1);
     const counts = {};
     const insts = arr(opts.towers).map((t, i) => {
       const tw = C.tower(D, t.id);
@@ -973,7 +1108,7 @@
         threats.push(seen[p]);
       });
     }
-    threats.forEach((t) => { t.fixes = C.fixesFor({ D, mode, map, insts, hero, heroPlaced: null }, t.prop, 3); t.hints = C.hintsFor(D, insts, t.prop); });
+    threats.forEach((t) => { t.fixes = C.fixesFor({ D, mode, map, insts, hero, heroPlaced: null }, t.prop, 3); t.hints = C.hintsFor(D, insts, t.prop, hero); });
     /* enough pop power? (estimate) the first round of the span that leaks, when every type is covered */
     let leak = null;
     if (!threats.length && (insts.length || hero)) {
@@ -983,14 +1118,14 @@
         const lk = C.leakRound(D, mode, map, r, list);
         if (!lk) continue;
         lost += lk.leak;
-        if (!leak && lk.leak > Math.max(1, 0.02 * lk.rbe)) {
+        if (!leak && C.leakIsProblem(lk.leak, lk.rbe, num(mode.lives, 100))) {
           const row = C.roundRow(D, mode, r);
           leak = { prop: 'power', round: r, rounds: [r], estimate: true, composition: row ? row.composition : '', leakInfo: lk,
             text: 'not enough popping power: about ' + lk.leak + ' of ' + lk.rbe + ' RBE gets through' };
           leak.fixes = C.powerFixes(D, mode, map, r, insts, hero, st, 3);
           leak.hints = lk.frozenShare > 0.05 ? ['Your Ice Monkey freezes bloons, and Sharp attacks can\'t pop frozen bloons.'] : [];
           leak.hints.push('Estimate from each tower\'s damage, pierce and attack speed. Placement, abilities and buffs change it.');
-        } else if (leak && lk.leak > Math.max(1, 0.02 * lk.rbe)) leak.rounds.push(r);
+        } else if (leak && C.leakIsProblem(lk.leak, lk.rbe, num(mode.lives, 100))) leak.rounds.push(r);
       }
       if (leak) { leak.lives = lost; threats.push(leak); }
     }
@@ -1161,22 +1296,31 @@
     let uid = 0;
     const placed = [];
     const mk = () => 's' + (++uid);
-    if (q.b) q.b.split('_').forEach((tok) => {
+    /* two passes: "u2" and "s2" mean the 2nd tower by placing round over ALL places in the link (as encodePlan
+       numbers them), so read every place first, then resolve upgrades and sells */
+    const toks = q.b ? q.b.split('_') : [];
+    const parsed = toks.map((tok) => {
       let m;
-      if ((m = tok.match(/^(\d{1,3})h([a-z]+)$/)) && C.hero(D, m[2])) plan.steps.push({ uid: mk(), r: +m[1], op: 'hero', h: m[2] });
-      else if ((m = tok.match(/^(\d{1,3})([pi])([a-z]+)(?:\.(\d)(\d)(\d))?$/)) && C.tower(D, m[3])) {
+      if ((m = tok.match(/^(\d{1,3})h([a-z]+)$/)) && C.hero(D, m[2])) return { uid: mk(), r: +m[1], op: 'hero', h: m[2] };
+      if ((m = tok.match(/^(\d{1,3})([pi])([a-z]+)(?:\.(\d)(\d)(\d))?$/)) && C.tower(D, m[3])) {
         const x = m[4] != null ? [+m[4], +m[5], +m[6]] : [0, 0, 0];
         const s = { uid: mk(), r: +m[1], op: 'place', t: m[3], x: C.validCross(x) ? x : [0, 0, 0] };
         if (m[2] === 'i') s.insta = true;
-        plan.steps.push(s);
         placed.push(s);
-      } else if ((m = tok.match(/^(\d{1,3})u(\d+)\.(\d)(\d)(\d)$/))) {
-        const ref = placed.slice().sort((p, q2) => p.r - q2.r)[+m[2] - 1];
-        if (ref) plan.steps.push({ uid: mk(), r: +m[1], op: 'up', ref: ref.uid, x: [+m[3], +m[4], +m[5]] });
-      } else if ((m = tok.match(/^(\d{1,3})s(\d+)$/))) {
-        const ref = placed.slice().sort((p, q2) => p.r - q2.r)[+m[2] - 1];
-        if (ref) plan.steps.push({ uid: mk(), r: +m[1], op: 'sell', ref: ref.uid });
+        return s;
       }
+      if ((m = tok.match(/^(\d{1,3})u(\d+)\.(\d)(\d)(\d)$/))) return { pending: 'up', r: +m[1], n: +m[2], x: [+m[3], +m[4], +m[5]] };
+      if ((m = tok.match(/^(\d{1,3})s(\d+)$/))) return { pending: 'sell', r: +m[1], n: +m[2] };
+      return null;
+    });
+    const byRound = placed.slice().sort((p, q2) => p.r - q2.r);
+    parsed.forEach((s) => {
+      if (!s) return;
+      if (!s.pending) { plan.steps.push(s); return; }
+      const ref = byRound[s.n - 1];
+      if (!ref) return;
+      if (s.pending === 'up') plan.steps.push({ uid: mk(), r: s.r, op: 'up', ref: ref.uid, x: s.x });
+      else plan.steps.push({ uid: mk(), r: s.r, op: 'sell', ref: ref.uid });
     });
     /* old planner links: #tower=<id>&hero=<id> */
     const mode = C.mode(D, plan.modeId || 'medium');

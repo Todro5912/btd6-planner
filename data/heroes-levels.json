@@ -116,8 +116,8 @@
    {
     "name": "Concussive Shell",
     "level": 3,
-    "cooldown": 15,
-    "note": "wiki text says 16s; 11s from L15"
+    "cooldown": 16,
+    "note": "11s from L15 (game file (btd6-game-data v56, AbilityModel.cooldown))"
    },
    {
     "name": "Artillery Command",
@@ -294,7 +294,7 @@
     "name": "Heartstopper",
     "level": 3,
     "cooldown": 45,
-    "note": "40s L12, 30s L14"
+    "note": "40s from L12 (game file (btd6-game-data v56, AbilityModel.cooldown))"
    },
    {
     "name": "Sacrificial Totem",
@@ -483,8 +483,8 @@
    {
     "name": "Drone Swarm",
     "level": 3,
-    "cooldown": 80,
-    "note": "55s L6, 50s L16"
+    "cooldown": 70,
+    "note": "55s L6, 50s L16 (game file (btd6-game-data v56, AbilityModel.cooldown))"
    },
    {
     "name": "UCAV",
@@ -494,7 +494,7 @@
    }
   ],
   "camoLevel": 5,
-  "leadLevel": 10,
+  "leadLevel": 20,
   "notes": "Cost cut from $850 to $650. The L8 UAV replaces a Radar Scanner. Own drones see camo at L5, UAV gives every tower camo at L8. Lead only via the L10 UCAV ability (permanent at L20)",
   "sources": [
    "https://www.bloonswiki.com/Etienne_(BTD6)",
@@ -572,7 +572,8 @@
    {
     "name": "Psychic Blast",
     "level": 3,
-    "cooldown": 40
+    "cooldown": 45,
+    "note": "game file (btd6-game-data v56, AbilityModel.cooldown)"
    },
    {
     "name": "Psionic Scream",
@@ -640,9 +641,9 @@
     "note": "spellbook; per-spell levels not retrieved"
    }
   ],
-  "camoLevel": 5,
-  "leadLevel": 1,
-  "notes": "Level table could not be read this session (fandom and bloonswiki Corvus pages failed). $1,325. Highest-skill hero. Low confidence. Camo via Vision spell (L5); Lead only while the Spear spell is active. Low confidence",
+  "camoLevel": null,
+  "leadLevel": null,
+  "notes": "$1,325. Highest-skill hero: his spells cost mana. Camo (Vision, L5) and Lead (Spear) come only from spells, so the tools don't count them as permanent (checked in the game files).",
   "sources": [
    "https://bloons.fandom.com/wiki/Camo_Bloon/Strategies",
    "https://bloons.fandom.com/wiki/Lead-Popping_Power"
@@ -668,7 +669,7 @@
    "15": "Laser MOAB bonus +30",
    "16": "Shorter ability cooldowns",
    "17": "Adrenaline cap 40%",
-   "18": "Flight Boost 25s",
+   "18": "Flight Boost 35s",
    "19": "Grenade clusters; laser 15 + 45 MOAB",
    "20": "Anti-Bloon cheaper nearby; 90 missiles"
   },
@@ -683,7 +684,7 @@
     "name": "Flight Boost",
     "level": 7,
     "cooldown": 45,
-    "note": "25s from L18"
+    "note": "35s from L18 (game file (btd6-game-data v56, AbilityModel.cooldown))"
    },
    {
     "name": "Kinetic Charge",
@@ -777,7 +778,8 @@
    {
     "name": "Transformation",
     "level": 3,
-    "cooldown": null
+    "cooldown": 20,
+    "note": "game file (btd6-game-data v56, AbilityModel.cooldown)"
    },
    {
     "name": "Reposition",

@@ -266,6 +266,21 @@ async function main() {
     await page.click('#adv-pl-3');
     ok(/pl=3/.test(await page.evaluate(() => location.hash)) && /pl=3/.test(await page.getAttribute('#adv-to-sim', 'href')), 'Advisor: co-op setting carries into the Simulator link');
 
+    // 0.9.1: illegal steps are called out, out-of-order share links load right, bad goal links don't blank the page
+    await page.evaluate(() => localStorage.removeItem('mi-sim-v1'));
+    await page.goto(origin + BASE + 'tools/simulator/#map=logs&mode=primary-only&b=1pdart_5psniper.110', { waitUntil: 'networkidle' });
+    ok(/Not counted:.*Sniper/.test(await page.textContent('[aria-label="Result"], [aria-label="First problem"]')), 'Simulator: a Sniper in Primary Only is called out as not counted');
+    await page.evaluate(() => localStorage.removeItem('mi-sim-v1'));
+    await page.goto(origin + BASE + 'tools/simulator/#map=monkey-meadow&mode=medium&b=10pdart_11psniper_12u2.002_3pboomerang', { waitUntil: 'networkidle' });
+    const placed = await page.textContent('#sim-root');
+    ok(/Dart #1 to 0-0-2|Dart #1[^#]*0-0-2/.test(placed) && !/Sniper #1 to 0-0-2/.test(placed), 'Simulator: an out-of-order share link upgrades the Dart, not the Sniper');
+    const gerr = [];
+    const gp = await browser.newPage({ viewport: { width: 400, height: 860 } });
+    gp.on('pageerror', (e) => gerr.push(e.message));
+    await gp.goto(origin + BASE + 'tools/goals/#g=%E0%A4%A', { waitUntil: 'networkidle' });
+    ok(!gerr.length && (await gp.textContent('main')).length > 100, 'My goals: a malformed link doesn\'t blank the page', gerr);
+    await gp.close();
+
     // /planner/ redirects to the simulator and keeps the hash
     await page.goto(origin + BASE + 'planner/#map=dark-castle&mode=chimps&tower=dart', { waitUntil: 'networkidle' });
     ok(/tools\/simulator\//.test(page.url()), '/planner/ redirects to /tools/simulator/', page.url());

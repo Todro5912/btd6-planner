@@ -41,7 +41,7 @@ Each mode unlocks the next on the same map. Sub-modes use their parent difficult
 - **Starting cash** with the More Cash MK: +$200 ($850), $425 in Half Cash, $20,200 in Deflation, unchanged in CHIMPS.
 - **Sell rate** is 70% everywhere selling is allowed. The Lych boss halves it to 35% while on screen.
 - **End-of-round cash** is $100 + the round number in every mode except Deflation.
-- **Pop cash** falls to 50% at R51, 20% at R61, 10% at R86, 8% at R101, 5% at R121 and 2% at R141.
+- **Pop cash** falls to 50% at R51, 20% at R61, 10% at R86, 5% at R101, 4% at R121 and 2% at R141.
 
 ## Medals and borders
 

@@ -57,8 +57,27 @@ TOOL_OUTPUT = re.compile(r'^tools/(?:index\.html|(?!fixtures/)[a-z0-9-]+/index\.
 GENERATED_DIRS = ['quick', 'rounds', 'monkeys', 'heroes', 'maps', 'guides', 'tools/<slug>', 'patch', 'about',
                   'records', 'a-z', 'planner', 'assets']
 
-# The rounds players name when they ask "what kills runs" (owner list, research 1.1 B3 and 3.6).
-DANGER_ROUNDS = [24, 28, 33, 37, 40, 45, 63, 76, 78, 90, 95, 98, 99, 100]
+# Run-enders: rounds 1-100 with danger 3 in data/rounds.json (owner list + community killers). One source for every
+# "run-ender" label: round pages, the rounds table and the Simulator all read the same field.
+def _danger_rounds():
+    try:
+        with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'data', 'rounds.json'), encoding='utf-8') as f:
+            rows = json.load(f).get('standard', [])
+        return [r['round'] for r in rows if r.get('round', 999) <= 100 and (r.get('danger') or 0) >= 3]
+    except (OSError, ValueError):
+        return [24, 28, 33, 37, 40, 45, 63, 75, 76, 78, 90, 95, 98, 99, 100]
+DANGER_ROUNDS = _danger_rounds()
+
+
+def clip_words(text, n):
+    """Cut text to at most n characters at a word break, with an ellipsis when it was cut."""
+    text = str(text or '')
+    if len(text) <= n:
+        return text
+    cut = text[:n - 1]
+    if ' ' in cut:
+        cut = cut[:cut.rfind(' ')]
+    return cut.rstrip(' ,;:') + '…'
 # Tool pages written by the tools stream (C3). Order = menu order.
 TOOLS = [('advisor', 'Strategy Advisor', 'I know my monkeys, not how to use them: crosspaths, a build order and the gaps.'),
          ('simulator', 'Simulator', 'Strategy lab: invent a build and test it round by round, cash and leaks included.'),
@@ -1348,8 +1367,8 @@ def main():
          intro=Markup(rounds_intro) if rounds_intro else None, g=rounds_entry,
          related=related_links(rounds_entry['related'], '../'),
          about=about(c, ['wiki', 'cq', 'nk'], ['Cash is pop cash plus the end-of-round bonus (100 + the round number), with no '
-                     'income towers, Monkey Knowledge or Double Cash.', 'Freeplay pop-cash rates for rounds 101-140 (8% and 5%) '
-                     'follow the v53.0 patch notes.']))
+                     'income towers, Monkey Knowledge or Double Cash.', 'Freeplay pop-cash rates for rounds 101-140 (5% and 4%) '
+                     'come from the game\'s own income table.']))
     round_about = about(c, ['wiki', 'cq'], ['"What you need by now" lists every Bloon property that has appeared in rounds '
                                            '1 to this one, so a defence that handles them all is ready for this round.'])
     for rm in c.round_models:
@@ -1395,9 +1414,9 @@ def main():
     # ---- search index + A-Z
     entries = []
     for q in cards:
-        entries.append({'t': q['title'], 'k': 'Quick', 'u': q['url'], 's': q['rule_plain'][:90]})
+        entries.append({'t': q['title'], 'k': 'Quick', 'u': q['url'], 's': clip_words(q['rule_plain'], 90)})
     for t in tools:
-        entries.append({'t': t['name'], 'k': 'Tool', 'u': t['url'], 's': t['desc'][:90]})
+        entries.append({'t': t['name'], 'k': 'Tool', 'u': t['url'], 's': clip_words(t['desc'], 90)})
     for tm in c.tower_models:
         t = tm['t']
         entries.append({'t': t['name'], 'k': 'Tower', 'u': tm['url'], 's': f"{t.get('class')} · {money(t.get('baseCost'))}"})
@@ -1414,10 +1433,10 @@ def main():
         entries.append({'t': mm['m']['name'], 'k': 'Map', 'u': mm['url'], 's': mm['m']['difficulty']})
     for g in all_guides:
         entries.append({'t': g['title'], 'k': 'Guide' if g['group'] != 'Reference' else 'Reference', 'u': g['url'],
-                        's': g['summary'][:80]})
+                        's': clip_words(g['summary'], 80)})
     for r in c.rounds['standard']:
         n = r['round']
-        comp = (r.get('composition') or '')[:70]
+        comp = clip_words(r.get('composition') or '', 70)
         entries.append({'t': f"Round {n}", 'k': 'Round', 'u': f"rounds/{n}/" if n <= 100 else f"rounds/#r{n}", 's': comp, 'x': f"r{n}"})
     # glossary terms, bosses and modes
     gl = next((g for g in guides if g['slug'] == 'glossary'), None)

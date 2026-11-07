@@ -18,7 +18,7 @@ related:
 
 Have camo detection by R24, lead popping by R28 and a MOAB answer before R40 starts. After that the big checks are R63 (ceramic rush), R78 (camo ceramics), R90 and R95 (DDTs), R98 (highest RBE) and R100 (the BAD).
 
-Cash figures are cumulative pop cash plus end-of-round bonus from R1, without the $650 start (calc). Hard starts at R3 and Impoppable / CHIMPS at R6, so subtract about $260 or $900.
+Cash figures are cumulative pop cash plus end-of-round bonus from R1, without the $650 start (calc). Hard starts at R3 and Impoppable / CHIMPS at R6, so subtract $258 or $735.
 
 ## Standard rounds 1–100
 
@@ -26,7 +26,7 @@ Cash figures are cumulative pop cash plus end-of-round bonus from R1, without th
 |---|---|---|---|
 | **22** | 16 White | Immune to freezing | Any non-ice damage |
 | **24** | 1 Camo Green, 20 Blue | **First camo** | Camo detection: Dart 0-0-2, Ninja, Sniper 0-1-0, or a Spike Factory (spikes see camo). A plain Mortar or Bomb can't hit it |
-| **25** | 25 Regrow Yellow, 10 Purple | First Purple and Regrow | Anything except Wizard, Super Monkey lasers/plasma, Ring of Fire or Laser Cannon |
+| **25** | 25 Regrow Yellow, 10 Purple | First Purple (Regrow starts at R17) | Anything except Wizard, Super Monkey lasers/plasma, Ring of Fire or Laser Cannon |
 | **28** | 6 Lead (about $6.9k earned by now) | **First Lead** | A lead popper: any Bomb ($375), Sniper 1-0-0, Wizard 0-1-0 |
 | **33** | 20 Camo Red, 13 Camo Yellow | Bigger camo test | Real camo coverage; one Dart won't do |
 | **37** | 25 Black, 25 White, 15 Lead, 10 Zebra, 7 Camo White | Every property at once | Lead popping plus non-explosive damage plus a little camo |
@@ -108,7 +108,7 @@ Prices are Medium totals for the whole crosspath (tower plus upgrades). Multiply
 
 **R40: 1 MOAB, 200 HP.** Any damage works; you just need enough of it focused on one target.
 - Bomb 0-3-0 MOAB Mauler: $2,025
-- Sniper 2-0-0 Large Calibre: $2,000 (2-1-0 for $2,250 adds camo)
+- Sniper 2-0-0 Large Caliber: $2,000 (2-1-0 for $2,250 adds camo)
 - Alchemist 0-2-0 Perishing Potions: $1,275 (bonus MOAB damage; supports your other towers)
 
 **R45: 10 Camo Purple, 4 Fortified Lead, 180 Pink.** Camo, Lead and no-magic all at once. Fortified Leads just have 4 HP.

@@ -83,7 +83,8 @@ ok(!/grants/.test(fs.readFileSync(path.join(ASSETS, 'tools-core.js'), 'utf8').re
   ok(!P('bomb', [0, 0, 5]).camo && C.conditionalHints(pm, 'bomb', [0, 0, 5], 'camo').length === 1, 'conditional: Bomb Blitz is a hint, not camo coverage');
   ok(C.checkDefence(D, { modeId: 'hard', round: 20, towers: [{ id: 'bomb', x: [0, 0, 5] }], span: 15 }).threats.some((t) => t.prop === 'camo' && t.hints.length === 1), 'defence check: camo still flagged for Bomb 0-0-5, with the Bomb Blitz hint attached');
   const tackFix = C.fixesFor({ D, mode: mode('hard'), map: null, insts: [{ uid: 1, id: 'tack', x: [4, 0, 0], label: 'Tack' }], hero: null }, 'purple', 3);
-  ok(tackFix.every((f) => !(f.towerId === 'tack' && f.x[0] >= 4)), 'fixes never suggest a crosspath that breaks a maxTier rule', tackFix);
+  ok(tackFix.every((f) => !(f.towerId === 'tack' && f.x[0] === 4)), 'fixes never suggest a crosspath that breaks a maxTier rule (Ring of Fire 4-x-x stays Fire)', tackFix);
+  ok(P('tack', [5, 0, 0]).purple && !P('tack', [4, 0, 0]).purple, 'Inferno Ring\'s meteor pops Purple again (game damage flags)');
   ok(C.coverState(D, [{ uid: 1, id: 'dart', x: [0, 0, 0], label: 'D' }], { id: 'obyn', level: 8, label: 'Obyn' }).cov.camo.length === 0, 'Obyn L8 camo only helps Druids and Skywardens');
 }
 
@@ -435,6 +436,8 @@ console.log('Type-to-search picker');
   ok(U.comboScore({ label: 'Dark Castle' }, 'dark c') > U.comboScore({ label: 'Dark Dungeons' }, 'dark c'), 'combo ranks the closer name first');
   ok(U.comboScore({ label: "Dan D'Monke" }, 'dan d') > 0, 'apostrophes are ignored');
 }
+
+require(path.join(HERE, 'test_rules.js'))(ok, D, C);
 
 console.log('\n' + pass + ' passed, ' + fail + ' failed');
 

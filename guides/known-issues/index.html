@@ -15,8 +15,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Luckiest+Guy&family=Rubik:wght@400;500;700&display=swap">
-<link rel="stylesheet" href="../../assets/site.css?v=0.9.0">
-<script src="../../assets/progress.js?v=0.9.0" defer></script>
+<link rel="stylesheet" href="../../assets/site.css?v=0.9.1">
+<script src="../../assets/progress.js?v=0.9.1" defer></script>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 44'%3E%3Cellipse cx='20' cy='18' rx='14' ry='16' fill='%23E2412E' stroke='%231C1A17' stroke-width='3'/%3E%3Cpath d='M17 34h6l-3 4z' fill='%23E2412E' stroke='%231C1A17' stroke-width='2.5'/%3E%3C/svg%3E">
 </head>
 <body class="">
@@ -71,11 +71,21 @@
 <p class="lede">What in this site&#39;s 57.4 data is still unconfirmed, and the quick in-game checks that would settle each item.</p><div class="guide-layout">
   <nav class="toc panel" aria-labelledby="tocH">
     <h2 class="panel-h" id="tocH">On this page</h2>
-    <ol><li><a href="#money-and-income">Money and income</a></li><li><a href="#modes">Modes</a></li><li><a href="#towers-and-xp">Towers and XP</a></li><li><a href="#the-sniper-xp-farm">The Sniper XP farm</a></li><li><a href="#maps">Maps</a></li><li><a href="#settled-recently">Settled recently</a></li></ol>
+    <ol><li><a href="#settled-in-091">Settled in 0.9.1</a></li><li><a href="#money-and-income">Money and income</a></li><li><a href="#modes">Modes</a></li><li><a href="#towers-and-xp">Towers and XP</a></li><li><a href="#the-sniper-xp-farm">The Sniper XP farm</a></li><li><a href="#maps">Maps</a></li><li><a href="#settled-recently">Settled recently</a></li></ol>
   </nav>
   <article class="prose">
     <p>These are the facts our sources couldn't settle. Each one is marked "(unverified)" or "(calc)" where it appears on the site. Most take a few minutes to check in game.</p>
 <p><strong>How to help:</strong> run the check, note the in-game value and your game version (57.4 or later), and open an issue on the project's GitHub page. A screenshot helps.</p>
+<h2 id="settled-in-091">Settled in 0.9.1</h2>
+<p>The game's own files (the BTD Mod Helper export, game version 56) settled these:</p>
+<ul>
+<li><strong>Apopalypse</strong> ends at R60.</li>
+<li><strong>Benjamin</strong> pays $90, $140, $250, $1,000, $2,500 and $5,000 per round as he levels.</li>
+<li><strong>Heli Pilot:</strong> Razor Rotors costs $1,450 and Apache Dartship $20,000.</li>
+<li><strong>Trade Empire</strong> pays $800 a round of its own. <strong>Banana Salvage</strong> farms sell for 80%.</li>
+<li><strong>XP:</strong> every Skywarden upgrade, Intense Magic (140) and Banana Salvage (950) now have their XP cost.</li>
+<li><strong>Deflation</strong> starts with 200 lives and locks Banana Farms.</li>
+</ul>
 <h2 id="money-and-income">Money and income</h2>
 <div class="table-wrap"><table>
 <thead>
@@ -91,11 +101,6 @@
 <td>Sources conflict. Plan as if it pays nothing</td>
 <td>CHIMPS game, Alchemist 0-0-3 on R28 or R37 (Lead rounds). Watch its cash counter (added in v57)</td>
 </tr>
-<tr id="g-benjamin-income-per-level">
-<td><strong>Benjamin income per level</strong></td>
-<td>$90 / 140 / 250 / 1,000 / 2,500 / 5,000; one older source says 100 / 150 / 250 / 300 / 500 / 800</td>
-<td>Easy game: note his end-of-round cash at levels 1, 2, 8 and 11</td>
-</tr>
 <tr id="g-mm-for-sub-modes-and-chimps">
 <td><strong>MM for sub-modes and CHIMPS</strong></td>
 <td>Assumed to pay the parent difficulty's row; CHIMPS = Impoppable. Advanced Medium / Hard / Impoppable cells are ×3 of Beginner (calc)</td>
@@ -103,7 +108,7 @@
 </tr>
 <tr id="g-income-models">
 <td><strong>Income models</strong></td>
-<td>Monkey Bank interest/deposit order, Supply Drop crates per round, Trade Empire base income, Banana Salvage sell bonus, Elite Sniper crate value</td>
+<td>Monkey Bank interest/deposit order, Supply Drop crates per round, Elite Sniper crate value</td>
 <td>Record cash before and after a few rounds in a Medium game</td>
 </tr>
 <tr id="g-easy-price-ties">
@@ -128,15 +133,10 @@
 </tr>
 </thead>
 <tbody>
-<tr id="g-apopalypse-win-round">
-<td><strong>Apopalypse win round</strong></td>
-<td>R60 or R70</td>
-<td>Play Apopalypse and see which round shows the victory screen</td>
-</tr>
 <tr id="g-deflation-details">
 <td><strong>Deflation details</strong></td>
-<td>70% sell rate, 200 lives, and whether Easy's R40 MOAB HP cut applies</td>
-<td>Sell a tower in Deflation and compare the refund; read the starting lives; check the R40 MOAB's HP</td>
+<td>70% sell rate, and whether Easy's R40 MOAB HP cut applies</td>
+<td>Sell a tower in Deflation and compare the refund; check the R40 MOAB's HP</td>
 </tr>
 </tbody>
 </table></div>
@@ -150,20 +150,10 @@
 </tr>
 </thead>
 <tbody>
-<tr id="g-missing-xp-values">
-<td><strong>Missing XP values</strong></td>
-<td>Skywarden tier 1–2 upgrades (6), Intense Magic, Banana Salvage</td>
-<td>Read the XP cost on the Monkeys menu upgrade screen</td>
-</tr>
 <tr id="g-single-source-v57-prices">
 <td><strong>Single-source v57 prices</strong></td>
 <td>Glue Splatter $650, Glue Strike $4,500, seven Skywarden changes</td>
 <td>Read the Medium price in a Medium game or Sandbox</td>
-</tr>
-<tr id="g-heli-pilot-tier-34-split">
-<td><strong><a href="../../monkeys/heli/">Heli Pilot</a> tier 3/4 split</strong></td>
-<td>Razor Rotors $1,850 + Apache Dartship $19,600; another source says $1,450 + $20,000. Same $21,450 total</td>
-<td>Read Razor Rotors' Medium price</td>
 </tr>
 <tr id="g-v57-damage-changes">
 <td><strong>v57 damage changes</strong></td>
@@ -257,7 +247,7 @@
 <li><strong>Snipers need line of sight.</strong> Infernal has no LoS blockers (BTD6 Index), with 19.3 RBS on each lane.</li>
 <li><strong>Rubber to Gold</strong> pays nothing in CHIMPS since 57.1.</li>
 <li><strong>Desperado</strong> is a Primary tower.</li>
-<li><strong>Freeplay pop cash</strong> is 8% for R101–120 and 5% for R121–140 (v53).</li>
+<li><strong>Freeplay pop cash</strong> is 5% for R101–120 and 4% for R121–140. That's the game's own income table. v53 raised it to 8% and 5%, and v54 quietly set it back.</li>
 <li><strong>Ship Capture</strong> is an Advanced map.</li>
 <li><strong>Lost Crevasse</strong> has 2 entrances and 2 exits feeding 3 lanes. <strong>Skates'</strong> three houses are one $500 purchase. <strong>Bloody Puddles</strong> has a $1,000 jeep and a $500 jeep-and-rocks.</li>
 </ul>
@@ -291,7 +281,7 @@
     </nav>
     <div class="foot-legal">
       <p class="disclaimer"><b>Unofficial fan site.</b> Not affiliated with or endorsed by Ninja Kiwi. Bloons and Bloons TD 6 are their trademarks. No game art is used here.</p>
-      <p>Data: BTD6 v57.4, updated 2026-11-05 · Site 0.9.0 · Sources: <a href="https://www.bloonswiki.com/" rel="noopener">Bloons Wiki</a> (CC BY-SA), <a href="https://btd6index.win/" rel="noopener">BTD6 Index</a>, <a href="https://github.com/hemisemidemipresent/cyberquincy" rel="noopener">Cyber Quincy</a>, <a href="https://github.com/Btd6ModHelper/btd6-game-data" rel="noopener">BTD Mod Helper game data</a>, Ninja Kiwi patch notes.</p>
+      <p>Data: BTD6 v57.4, updated 2026-11-05 · Site 0.9.1 · Sources: <a href="https://www.bloonswiki.com/" rel="noopener">Bloons Wiki</a> (CC BY-SA), <a href="https://btd6index.win/" rel="noopener">BTD6 Index</a>, <a href="https://github.com/hemisemidemipresent/cyberquincy" rel="noopener">Cyber Quincy</a>, <a href="https://github.com/Btd6ModHelper/btd6-game-data" rel="noopener">BTD Mod Helper game data</a>, Ninja Kiwi patch notes.</p>
       <div class="seg theme-toggle" role="radiogroup" aria-label="Colour theme" hidden>
         <button type="button" role="radio" data-theme-set="auto" aria-checked="true">Auto</button>
         <button type="button" role="radio" data-theme-set="light" aria-checked="false">Light</button>
@@ -312,7 +302,7 @@
     <p class="search-hint" id="searchHint"><kbd>↑</kbd><kbd>↓</kbd> move · <kbd>Enter</kbd> open · <kbd>Esc</kbd> close</p>
   </form>
 </dialog>
-<script src="../../assets/search-core.js?v=0.9.0" defer></script>
-<script src="../../assets/site.js?v=0.9.0" defer></script>
+<script src="../../assets/search-core.js?v=0.9.1" defer></script>
+<script src="../../assets/site.js?v=0.9.1" defer></script>
 </body>
 </html>
