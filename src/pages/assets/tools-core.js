@@ -63,7 +63,7 @@
     return row && row.round === r ? row : list.find((x) => x.round === r) || null;
   };
   /* Co-op (Bloons Wiki, unverified in game): each player starts with $50 less per player in the match
-     (2 players: -$100), except Deflation, which splits the start cash; all pop cash and end-of-round bonuses
+     (2 players: -$100; checked in the game's co-op files), except Deflation (see C.coopStart); all pop cash and end-of-round bonuses
      are split evenly, and so is More Cash. Tower income (farms) goes to its owner. */
   C.PLAYERS_MAX = 4;
   C.players = (n) => Math.max(1, Math.min(C.PLAYERS_MAX, Math.round(num(n, 1))));
@@ -71,7 +71,10 @@
     const n = C.players(players);
     const start = num(mode && mode.startCash, 650);
     if (n === 1) return start;
-    return mode && mode.id === 'deflation' ? Math.floor(start / n) : Math.max(0, start - 50 * n);
+    /* Deflation co-op: the team starts with $24,000 / $25,500 / $28,000 for 2/3/4 players, split evenly
+       (game: Mods/CoopDeflationCash2-4.json). Standard co-op files (1,100 / 1,500 / 1,800) match start - $50 per player */
+    if (mode && mode.id === 'deflation') return Math.floor({ 2: 24000, 3: 25500, 4: 28000 }[n] / n);
+    return Math.max(0, start - 50 * n);
   };
   /* Cash at the START of round r from bloons alone: startCash + cashMult x sum(cash of rounds a..r-1).
      players > 1: your share in co-op (see C.coopStart). */
@@ -97,7 +100,7 @@
      its attacks as [range, damage, bloon-hits per second with 1/2/4/8/16/32 bloons in range], plus damage per second
      to one MOAB-class (m) or Ceramic (c). For a round we work out how many bloons are in range at once (spawn rate x
      time in range), how long each tower is busy, and how many layers that pops, against the round's RBE.
-     Lives lost = RBE that gets through, like the game. Not modelled: abilities, Village / Alchemist buffs, sub-towers,
+     Lives lost follow the game's round table (data/game/rounds.json). Permanent sub-towers are in tower-power.json. Not modelled: abilities,
      targeting, exact placement (C.POWER_SPOT says how much track a tower sees). */
   C.POWER_SPOT = 1.6; /* a decent spot sees this many range-widths of track (bends, loops) */
   C.BLOON_RBE = { red: 1, blue: 2, green: 3, yellow: 4, pink: 5, black: 11, white: 11, purple: 11, lead: 23, zebra: 23, rainbow: 47, ceramic: 104, moab: 616, bfb: 3164, zomg: 16656, ddt: 816, bad: 55760 };
@@ -311,7 +314,7 @@
   /* Ice freezing factor, fitted to one real game (lone 2-2-0 Ice + Quincy, Glacial Trail Hard, 16 lives at R13). Estimate */
   /* from this round the check flags leaks in builds that win real games (2TC CHIMPS wins: 7% leak at R76, 26% at R80,
      85% at R98), so the tools label it rough. Measured 2026-11-07, see CHANGELOG 0.9.1 */
-  C.ROUGH_FROM = 76;
+  C.ROUGH_FROM = 76; /* 0.9.2 (game-file tower stats): 2TC wins flagged 3.5% at R70, 12% R76, 37% R80, 98% R98 */
   C.FREEZE_FIT = 0.63; /* 14 lives at R13 with this model; it is a steep curve: 0.60 gives 28, 0.65 gives 4 */
   /* the attackers of one moment, for C.leakRound: towers [{uid, id, x, label}] and the hero {id, level, label} */
   C.powerList = function (D, insts, hero, fx) {
@@ -1107,7 +1110,7 @@
       pr.fixes.forEach((f) => { f.affordable = pr.bank != null && f.cost <= pr.bank + 0.5; });
       pr.hints = [];
       if (x.leakInfo.frozenShare > 0.05) pr.hints.push('Your Ice Monkey freezes bloons, and Sharp attacks (darts, tacks, Quincy) can\'t pop frozen bloons. Place them apart, or use towers that pop frozen bloons.');
-      if (pr.round >= C.ROUGH_FROM) pr.hints.push('From R' + C.ROUGH_FROM + ' the leak check over-predicts leaks: it doesn\'t count abilities or sub-towers yet, and builds that win in real games often show leaks here. Treat this as a warning, not a verdict.');
+      if (pr.round >= C.ROUGH_FROM) pr.hints.push('From R' + C.ROUGH_FROM + ' the leak check over-predicts leaks: it doesn\'t count abilities yet, and builds that win in real games often show leaks here. Treat this as a warning, not a verdict.');
       pr.hints.push('Estimate from each tower\'s damage, pierce and attack speed vs the round\'s bloons. Placement, abilities and buffs change it.');
     });
     problems.forEach((pr) => {

@@ -145,4 +145,11 @@ module.exports = function (ok, D, C) {
     ok(l13 >= 6 && l13 <= 26, 'calibration: lone 2-2-0 Ice + Quincy on Glacial Trail Hard has about 16 lives at R13 (real game: 16)', l13);
   }
 
+  console.log('Co-op start cash (game: Mods/Coop*Cash files)');
+  {
+    const d = C.mode(D, 'deflation'), m = C.mode(D, 'medium');
+    ok(C.coopStart(d, 2) === 12000 && C.coopStart(d, 3) === 8500 && C.coopStart(d, 4) === 7000, 'Deflation co-op: $12,000 / $8,500 / $7,000 each (team $24,000 / $25,500 / $28,000)');
+    ok(C.coopStart(m, 2) === 550 && C.coopStart(m, 3) === 500 && C.coopStart(m, 4) === 450, 'standard co-op: $550 / $500 / $450 each (team $1,100 / $1,500 / $1,800)');
+  }
+
 };

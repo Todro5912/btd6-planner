@@ -168,8 +168,11 @@
 
   /* ---------- Monkey Knowledge: the game's six trees ---------- */
   /* Rows follow the point gates (data/monkey-knowledge.json layout, from the game files), arrows are prerequisites.
-     A node needs every node it has an arrow from, and enough points already spent in its tree (the game's rule).
-     Monkey Education and Elite Military Training live in settings.me / settings.emt; everything else in profile.mk. */
+     A node needs one of the nodes it has an arrow from, and enough points already spent in its tree. "One of" is our
+     reading, not checked in game: the files list prerequisites but not whether all of them are needed. "One of" can't
+     lock you out of a node you own in game; "all of" could, so we use it until it's checked. */
+  const preMet = (on, n) => !(n.pre || []).length || n.pre.some((p) => on[p]);
+  /* Monkey Education and Elite Military Training live in settings.me / settings.emt; everything else in profile.mk. */
   const MK_TREES = (D.mkMeta && D.mkMeta.trees) || ['Primary', 'Military', 'Magic', 'Support', 'Heroes', 'Powers'];
   const MK = {};
   (D.mk || []).forEach((n) => { MK[n.id] = n; });
@@ -192,10 +195,9 @@
   const spentIn = (on, tree, except) => Object.keys(on).filter((k) => MK[k] && MK[k].tree === tree && k !== except).length;
   /* why a node can't be turned on yet (null = it can) */
   function mkBlock(on, n) {
-    const miss = (n.pre || []).filter((p) => !on[p]);
     const have = spentIn(on, n.tree, n.id);
     const parts = [];
-    if (miss.length) parts.push(list(miss.map(mkName)));
+    if (!preMet(on, n)) parts.push(n.pre.length === 1 ? mkName(n.pre[0]) : n.pre.map(mkName).join(' or '));
     if (have < (n.ptsNeeded || 0)) parts.push((n.ptsNeeded - have) + ' more point' + (n.ptsNeeded - have === 1 ? '' : 's') + ' in ' + n.tree);
     return parts.length ? 'Needs ' + parts.join(' and ') + ' first.' : null;
   }
@@ -224,7 +226,7 @@
         changed = false;
         Object.keys(on).forEach((k) => {
           const m = MK[k];
-          const preBad = (m.pre || []).some((p) => !on[p]);
+          const preBad = !preMet(on, m);
           const ptsBad = ptsOk[k] && spentIn(on, m.tree, k) < (m.ptsNeeded || 0);
           if (preBad || ptsBad) { delete on[k]; gone.push(m.name); changed = true; }
         });
@@ -314,7 +316,7 @@
     g.nodes.forEach((n) => {
       const isOn = !!on[n.id];
       const why = isOn ? null : mkBlock(on, n);
-      const orphan = isOn && (n.pre || []).some((p) => !on[p]);
+      const orphan = isOn && !preMet(on, n);
       const label = n.name + (isOn ? ', on' : why ? ', locked. ' + why : ', off') + (n.use === 'applied' ? ' Used by the tools.' : '');
       box.appendChild(h('button', {
         type: 'button', id: 'pf-mk-' + n.id, class: 'mk-tile' + (isOn ? ' on' : '') + (why ? ' locked' : '') + (orphan ? ' orphan' : '') + (mkUi.sel === n.id ? ' sel' : ''),
@@ -344,7 +346,7 @@
       h('p', { class: 'mk-info-h' }, [h('b', null, n.name), ' ', h('span', { class: 'tag mk-st ' + (on[n.id] ? 'mk-st-on' : '') }, on[n.id] ? 'on' : why ? 'locked' : 'off'), ' ', use]),
       h('p', { class: 'mk-info-d' }, n.effect),
       h('p', { class: 'ti-note' }, [(n.ptsNeeded ? n.ptsNeeded + ' pts in ' + n.tree : 'No points needed') + (n.mm ? ' · ' + C.int(n.mm) + ' MM' : ' · free'),
-        (n.pre || []).length ? ' · needs ' + list(n.pre.map(mkName)) : '', kids.length ? ' · leads to ' + list(kids) : '']),
+        (n.pre || []).length ? ' · needs ' + (n.pre.length === 1 ? mkName(n.pre[0]) : n.pre.map(mkName).join(' or ')) : '', kids.length ? ' · leads to ' + list(kids) : '']),
       why ? h('p', { class: 'ti-note mk-why' }, why) : null,
     ]);
   }
@@ -357,7 +359,7 @@
     const tree = mkUi.tree;
     const treeNodes = (D.mk || []).filter((n) => n.tree === tree);
     const mmIn = treeNodes.filter((n) => on[n.id]).reduce((m, n) => m + (n.mm || 0), 0);
-    const orphans = Object.keys(on).filter((k) => (MK[k].pre || []).some((p) => !on[p]));
+    const orphans = Object.keys(on).filter((k) => !preMet(on, MK[k]));
     const tabs = h('div', { class: 'mk-tabs', role: 'tablist', 'aria-label': 'Monkey Knowledge trees' }, MK_TREES.map((t) => {
       const sel = t === tree;
       return h('button', { type: 'button', role: 'tab', id: 'pf-mkt-' + t, class: 'mk-tab mk-c-' + t.toLowerCase() + (sel ? ' on' : ''), 'aria-selected': String(sel), 'aria-controls': 'prf-mk-tree', tabindex: sel ? '0' : '-1',
@@ -372,7 +374,7 @@
         h('label', { class: 'check' }, [h('input', { type: 'checkbox', id: 'pf-mk-on', checked: pr.mkOn ? true : null, onchange: (e) => { P.setProfile({ mkOn: e.target.checked }); render(); } }), 'Use my Monkey Knowledge in the tools']),
         h('span', { class: 'ti-note' }, pr.mkOn ? (sum.length ? 'Tools apply: ' + sum.join(', ') + '.' : 'Nothing ticked changes cash, prices or XP yet.') : 'Off: the tools plan as if you had none.'),
       ]),
-      h('p', { class: 'ti-note' }, 'Tap a node to turn it on. It needs the nodes its arrows come from, and the points shown on its row already spent in that tree. Turning one off also turns off what needs it. A yellow dot marks the ones the Simulator and Advisor use.'),
+      h('p', { class: 'ti-note' }, 'Tap a node to turn it on. It needs a node its arrows come from, and the points shown on its row already spent in that tree. Turning one off also turns off what needs it. A yellow dot marks the ones the Simulator and Advisor use.'),
       orphans.length ? h('p', { class: 'ti-note mk-why' }, orphans.length + ' ticked node' + (orphans.length === 1 ? ' is' : 's are') + ' missing what ' + (orphans.length === 1 ? 'it needs' : 'they need') + ' (saved before the full tree): ' + list(orphans.slice(0, 5).map(mkName).concat(orphans.length > 5 ? [(orphans.length - 5) + ' more'] : [])) + '. Tick the nodes above ' + (orphans.length === 1 ? 'it' : 'them') + '.') : null,
       tabs,
       h('div', { class: 'mk-panel mk-c-' + tree.toLowerCase(), role: 'tabpanel', id: 'prf-mk-tree', 'aria-labelledby': 'pf-mkt-' + tree }, [

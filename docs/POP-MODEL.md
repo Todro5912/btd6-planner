@@ -118,6 +118,12 @@ MIB grants Lead, Purple, Black, White, Zebra and Frozen. Its path includes Radar
 
 `{"camo": {"level": n | null}, "lead": {"level": n | null}, "note": ...}`, plus `purple`, `black` or `white` where they matter. `null` means never on the hero's own attacks. Ability-only or item-only routes are explained in `note` and repeated in `supportFixes` when they buff other towers. `heroes-levels.json` holds the same `camoLevel` and `leadLevel` (a test enforces this).
 
+## Synced with the game files (0.9.2)
+
+The tower rules now follow the game's own files. `data/game/towers.json` (built by `tools/game/extract_towers.py` from the [BTD Mod Helper export](https://github.com/Btd6ModHelper/btd6-game-data), v56) says which bloon properties each crosspath's permanent attacks can damage: direct hits, sub-projectiles, burns, passives and sub-towers that stay. Abilities, spells and temple sacrifices don't count.
+
+`python3 tools/game/sync_popmodel.py` rewrites every rule that disagrees, and `--check` (run by the test file) fails if one drifts. A few rules are kept on purpose and listed in the script's `KEEP` table with the reason: v57 changes the v56 files predate (Skywarden, Supply Drop, Desert Phantom), and spikes, which pop the camo bloons that run over them.
+
 ## Extending the model
 
 **New tower:**

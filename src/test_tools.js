@@ -70,7 +70,8 @@ ok(!/grants/.test(fs.readFileSync(path.join(ASSETS, 'tools-core.js'), 'utf8').re
   ok(mib.cov.black.length === 1 && mib.cov.ddt.length === 1, 'Bomb + MIB Village: black and DDT covered');
   ok(C.coverState(D, [{ uid: 1, id: 'village', x: [0, 3, 0], label: 'Village' }], null).cov.pop.length === 0, 'a Village alone attacks nothing');
   const acid = C.coverState(D, [{ uid: 1, id: 'dart', x: [0, 0, 2], label: 'Dart' }, { uid: 2, id: 'alchemist', x: [2, 0, 0], label: 'Alch' }], null);
-  ok(acid.cov.ddt.length === 1, 'Dart 0-0-2 + Alchemist acid (lead) reaches DDT');
+  ok(acid.cov.ddt.length === 0 && acid.cov.lead.every((l) => !/Dart/.test(l)), 'Alchemist Acid Dip is temporary (one tower every 10 s, 10 attacks: game files), so it never counts as Lead or DDT cover');
+  ok(C.hintsFor(D, [{ uid: 1, id: 'dart', x: [0, 0, 2], label: 'Dart' }, { uid: 2, id: 'alchemist', x: [2, 0, 0], label: 'Alch' }], 'lead').some((t) => /temporary/.test(t)), 'Acid Dip still shows as a Lead hint');
   ok(C.coverState(D, [], { id: 'quincy', level: 4, label: 'Quincy' }).cov.camo.length === 0 && C.coverState(D, [], { id: 'quincy', level: 5, label: 'Quincy' }).cov.camo.length === 1, 'hero levels: Quincy camo from level 5');
   ok(C.coverState(D, [{ uid: 1, id: 'dart', x: [0, 0, 0], label: 'D' }], { id: 'etienne', level: 8, label: 'Etienne' }).cov.camo.length === 2, 'Etienne L8 UAV gives every tower camo');
   /* POP-MODEL.md extensions: maxTier, explicit ddt, conditional = hint only */
@@ -381,12 +382,12 @@ console.log('Progress store and goals');
   const code2 = P.exportCode(); P.reset(); P.importCode(code2);
   ok(P.get().profile.mk['more-cash'] && P.get().profile.instas.length === 1, 'the backup code carries your profile');
   ok(D.mk.length >= 25 && D.mk.every((n) => n.id && n.name && n.effect), 'Monkey Knowledge list ships with the tools');
-  /* co-op: start $50 less per player (Deflation splits it), pop cash and round bonuses split evenly */
+  /* co-op: start $50 less per player (Deflation: the game's team total, split), pop cash and round bonuses split evenly */
   {
     const hard = C.mode(D, 'hard');
     const solo = C.simulate(D, { mapId: 'monkey-meadow', modeId: 'hard', steps: [] });
     const duo = C.simulate(D, { mapId: 'monkey-meadow', modeId: 'hard', players: 2, steps: [] });
-    ok(duo.rows[0].bank === hard.startCash - 100 && C.coopStart(C.mode(D, 'deflation'), 2) === C.mode(D, 'deflation').startCash / 2, 'co-op start cash: -$50 per player, Deflation split');
+    ok(duo.rows[0].bank === hard.startCash - 100 && C.coopStart(C.mode(D, 'deflation'), 2) === 12000, 'co-op start cash: -$50 per player; Deflation $12,000 each for two (game files)');
     const r = 13 - solo.start;
     ok(Math.abs((duo.rows[r].bank - duo.rows[0].bank) * 2 - (solo.rows[r].bank - solo.rows[0].bank)) < 1, 'co-op splits pop cash and round bonuses evenly');
     ok(C.decodePlan(D, C.encodePlan({ mapId: 'monkey-meadow', modeId: 'hard', players: 3, steps: [] })).players === 3 && C.decodeAdvice(D, C.encodeAdvice({ mapId: 'monkey-meadow', modeId: 'hard', heroId: '', towers: ['dart'], force: {}, players: 4 })).players === 4, 'players survive share links');

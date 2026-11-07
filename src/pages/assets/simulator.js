@@ -230,7 +230,7 @@
   function livesLine() {
     const lost = sim.livesStart - (sim.lostAt ? 0 : sim.lives);
     const txt = sim.lostAt ? 'You run out of lives around R' + sim.lostAt + '. ' : lost > 0 ? 'About ' + C.int(lost) + ' of your ' + sim.livesStart + ' lives leak by R' + sim.end + '. ' : 'Enough popping power for every round: no lives lost. ';
-    const rough = sim.lostAt && sim.lostAt >= C.ROUGH_FROM ? 'From R' + C.ROUGH_FROM + ' this over-predicts leaks (no abilities or sub-towers yet). ' : '';
+    const rough = sim.lostAt && sim.lostAt >= C.ROUGH_FROM ? 'From R' + C.ROUGH_FROM + ' this over-predicts leaks (no abilities yet). ' : '';
     return h('p', { class: 'ti-alert-s' }, [txt, rough, U.badge('calc', 'estimate'), ' ', h('a', { href: '../../guides/leak-check/' }, 'how it works')]);
   }
   function fixBlock(pr) {

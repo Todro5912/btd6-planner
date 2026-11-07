@@ -41,7 +41,12 @@ static/                 site.css and scripts, copied to assets/: site.js (theme,
                         prices.js, maps.js, rounds.js, sort.js
 src/pages/*.body.html   tool pages (simulator, xp, defence), wrapped into /tools/<slug>/ (assets -> assets/tools/)
 src/build_tools.py      builds the tools' data bundle (tools-data.js, synergy-rules.js); build_site.py runs it first
-data/pop-model.json     the single source of truth for "can it pop X" (docs/POP-MODEL.md); required, no fallback
+data/pop-model.json     the single source of truth for "can it pop X" (docs/POP-MODEL.md); required, no fallback;
+                        synced with the game files by tools/game/sync_popmodel.py
+data/game/*.json        mined from the game's own files (BTD Mod Helper export, v56): towers (attacks, sub-towers),
+                        support (abilities, buffs), knowledge (134 MK nodes), bloons + rounds, misc (powers, Geraldo,
+                        paragons, modes). Built by tools/game/extract_*.py --gd <export>; tests in data/_tests/test_game_*.py
+data/tower-power.json   leak-check stats per crosspath, built by tools/build_power.py from the same export
 tools/build_site.py     builds the whole site into the repo root
 tools/mi_lib.py         pop-model maths, crosspath rules, strategy text -> steps and links
 tools/consistency_check.py  proves every "can it pop X" evaluator agrees with the pop model
@@ -56,13 +61,15 @@ All links are relative, so the site works under the GitHub Pages base path `/btd
 
 ## Build and test
 
+Rebuilding from the game files (only when the export changes) needs a checkout of https://github.com/Btd6ModHelper/btd6-game-data: run `tools/game/extract_*.py --gd PATH`, `tools/build_power.py PATH`, `tools/game/build_mk.py` and `tools/game/sync_popmodel.py`. The normal build doesn't need it.
+
 Needs Python 3 with `markdown` and `jinja2` (`pip install --break-system-packages markdown jinja2`), and Node with `playwright` for the browser checks.
 
 ```bash
 python3 tools/build_site.py              # build the whole site (about 1 s)
 python3 tools/check_site.py              # links, anchors, titles, search index, stray "(" in buttons,
                                          # 3+ fixes per quick card, no 450+ char paragraphs, search words
-python3 data/_tests/test_pop_model.py    # pop model schema and known truths
+python3 data/_tests/test_pop_model.py    # pop model schema, known truths, sync with the game files, data/game tests
 node src/test_tools.js --browser         # simulator, XP, defence and synergy logic + headless tool pages
 python3 tools/consistency_check.py       # data tests, site build, tools and the built pickers agree (--all: every crosspath)
 node tools/test_site.js                  # browser checks at 1280px and 400px under /btd6-planner/

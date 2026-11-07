@@ -15,8 +15,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Luckiest+Guy&family=Rubik:wght@400;500;700&display=swap">
-<link rel="stylesheet" href="../../assets/site.css?v=0.9.1">
-<script src="../../assets/progress.js?v=0.9.1" defer></script>
+<link rel="stylesheet" href="../../assets/site.css?v=0.9.2">
+<script src="../../assets/progress.js?v=0.9.2" defer></script>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 44'%3E%3Cellipse cx='20' cy='18' rx='14' ry='16' fill='%23E2412E' stroke='%231C1A17' stroke-width='3'/%3E%3Cpath d='M17 34h6l-3 4z' fill='%23E2412E' stroke='%231C1A17' stroke-width='2.5'/%3E%3C/svg%3E">
 </head>
 <body class="">
@@ -76,20 +76,20 @@
   <article class="prose">
     <p>The tools check two things every round. First, <strong>can</strong> something you have pop each bloon type: camo, Lead, Purple, MOABs and the rest. Second, do your towers pop <strong>enough</strong>. The second is the leak check. It's an estimate, marked "estimate" wherever it shows.</p>
 <h2 id="what-it-uses">What it uses</h2>
-<p><strong>Your towers' real stats.</strong> Every crosspath's damage, pierce, attack speed, range and sub-projectiles (explosions, fragments, burn) come from the game's own tower models. We read them from the <a href="https://github.com/Btd6ModHelper/btd6-game-data" rel="noopener">BTD Mod Helper game data export</a> (game version 56). Hero stats come from the same place, level by level.</p>
-<p><strong>The round's bloons.</strong> For each round we take every bloon group, its spawn time and its speed, from the <a href="https://www.bloonswiki.com/Rounds_(BTD6)" rel="noopener">Bloons Wiki round set</a>. The round's RBE (total layers) comes from our rounds data.</p>
+<p><strong>Your towers' real stats.</strong> Every crosspath's damage, pierce, attack speed, range and sub-projectiles (explosions, fragments, burn) come from the game's own tower models. So do sub-towers that stay on the map: sentries, Carrier planes, pets and drones. We read them from the <a href="https://github.com/Btd6ModHelper/btd6-game-data" rel="noopener">BTD Mod Helper game data export</a> (game version 56). Hero stats come from the same place, level by level.</p>
+<p><strong>The round's bloons.</strong> For each round we take every bloon group, its spawn time and its speed. They come from the game's round sets, standard and ABR, and match the <a href="https://www.bloonswiki.com/Rounds_(BTD6)" rel="noopener">Bloons Wiki round set</a> group for group. Our bloon model rebuilds every round's RBE exactly.</p>
 <p><strong>Game rules that change a round.</strong> Bloons are 10% faster on Medium and 25% faster on Hard and CHIMPS. From R81 every bloon speeds up, blimps get more HP each round, and Ceramics become Super Ceramics. Double HP MOABs doubles blimp HP.</p>
 <h2 id="how-it-works-it-out">How it works it out</h2>
 <ol>
 <li><strong>How many bloons are in range at once.</strong> The round's spawn rate times how long a bloon takes to cross the tower's range. Fast rounds bunch up, so high-pierce towers do better on them.</li>
 <li><strong>How much each tower pops.</strong> Its hits per second at that crowd size, times the layers each hit takes off, times the time the round is passing. Leftover damage carries into the children, like in the game, so a 20-damage hit clears a whole Ceramic. Explosions only reach the bloons near the target.</li>
 <li><strong>MOAB-class bloons.</strong> Each blimp has to lose its shell HP while it's in your towers' reach. If it doesn't, it leaks whole. A popped BFB drops 4 MOABs where it died, and those only get the reach that's left.</li>
-<li><strong>What gets through.</strong> The round's RBE minus what your towers pop. That's also the lives you lose, as in the game. Leaked layers pay no pop cash, so the Simulator takes that money off later rounds.</li>
+<li><strong>What gets through.</strong> The round's RBE minus what your towers pop. Lives follow the game's own table: up to R80 one RBE is one life, and from R81 a leak costs less than its RBE, because blimps don't charge their extra HP. Leaked layers pay no pop cash, so the Simulator takes that money off later rounds.</li>
 </ol>
 <h2 id="what-it-counts-and-what-it-doesnt">What it counts and what it doesn't</h2>
 <p><strong>Counted:</strong></p>
 <ul>
-<li>Every attack of every crosspath, including sub-projectiles.</li>
+<li>Every attack of every crosspath, including sub-projectiles and sub-towers that stay on the map.</li>
 <li>Camo and Lead: a tower that can't hit them doesn't pop them.</li>
 <li>Village buffs: range, Jungle Drums attack speed, and Primary Training. They're assumed to reach every tower.</li>
 <li>Alchemist Berserker Brew.</li>
@@ -97,22 +97,22 @@
 </ul>
 <p><strong>Not counted:</strong></p>
 <ul>
-<li>Abilities.</li>
-<li>Sub-towers: sentries, Phoenix, drones, pets.</li>
+<li>Abilities, and towers an ability makes (Marines, Lord Phoenix, Drone Swarm, UCAV).</li>
+<li>Sun Temple sacrifices.</li>
 <li>Targeting priorities.</li>
 <li>Where you place towers. A tower is assumed to see about 1.6 range-widths of track, which is a decent spot with a bend. A great spot on a loop does better, and a bad one does worse.</li>
-<li>Every other buff, and Monkey Knowledge that changes attacks.</li>
+<li>Every other buff. From Monkey Knowledge only Big Bloon Sabotage (blimps 10% less HP) and Veteran Monkey Training (3% faster reload) are counted.</li>
 <li>Regrow.</li>
-<li>Short support effects: Gwendolin's Heat It Up, Corvus's spells, Geraldo's potions and Brickell's Naval Tactics. They show as hints, never as cover.</li>
+<li>Short support effects: Gwendolin's Heat It Up, Alchemist's Acid Dip, Ezili's totem, Corvus's spells, Geraldo's potions and Brickell's Naval Tactics. They show as hints, never as cover.</li>
 </ul>
 <h2 id="how-we-tuned-it">How we tuned it</h2>
 <p>We checked it against real games:</p>
 <ul>
 <li><strong>One base Dart Monkey</strong> pops Rounds 1 to 3 on Monkey Meadow and starts leaking at Round 4.</li>
 <li><strong>A 2-2-0 Ice Monkey with Quincy</strong> on Glacial Trail Hard was down to 16 lives at Round 13. The check gives 14. The Ice freezing factor behind it is a steep estimate: a small change moves the answer a lot.</li>
-<li><strong>1,481 real CHIMPS wins with two towers</strong> from the BTD6 Index. Each one lost no lives. Up to R63 the check agrees: at most 2.4% of them show a leak. From R76 it doesn't. It shows leaks in 7% of them at R76, 26% at R80 and 85% at R98.</li>
+<li><strong>1,481 real CHIMPS wins with two towers</strong> from the BTD6 Index. Each one lost no lives. Up to R70 the check agrees: at most 3.5% of them show a leak. From R76 it doesn't. It shows leaks in 12% of them at R76, 37% at R80 and 98% at R98.</li>
 </ul>
-<p>So from R76 the tools say the check is rough. Treat a late leak as a warning, not a verdict. The fix (bloon groups over time, abilities and sub-towers) is the next big piece of work.</p>
+<p>Those late numbers went up in 0.9.2. The tower stats are now right, and some towers had been counted far too strong before: a Buccaneer 0-4-0 as 90 times its real MOAB damage. So from R76 the tools say the check is rough. Treat a late leak as a warning, not a verdict. The fix (bloon groups over time, and abilities) is the next big piece of work.</p>
 <p>If the check says you're fine and you leak, or the other way round, please report it with your build and the round. That's how it gets better.</p>
   </article>
 </div>
@@ -142,7 +142,7 @@
     </nav>
     <div class="foot-legal">
       <p class="disclaimer"><b>Unofficial fan site.</b> Not affiliated with or endorsed by Ninja Kiwi. Bloons and Bloons TD 6 are their trademarks. No game art is used here.</p>
-      <p>Data: BTD6 v57.4, updated 2026-11-05 · Site 0.9.1 · Sources: <a href="https://www.bloonswiki.com/" rel="noopener">Bloons Wiki</a> (CC BY-SA), <a href="https://btd6index.win/" rel="noopener">BTD6 Index</a>, <a href="https://github.com/hemisemidemipresent/cyberquincy" rel="noopener">Cyber Quincy</a>, <a href="https://github.com/Btd6ModHelper/btd6-game-data" rel="noopener">BTD Mod Helper game data</a>, Ninja Kiwi patch notes.</p>
+      <p>Data: BTD6 v57.4, updated 2026-11-05 · Site 0.9.2 · Sources: <a href="https://www.bloonswiki.com/" rel="noopener">Bloons Wiki</a> (CC BY-SA), <a href="https://btd6index.win/" rel="noopener">BTD6 Index</a>, <a href="https://github.com/hemisemidemipresent/cyberquincy" rel="noopener">Cyber Quincy</a>, <a href="https://github.com/Btd6ModHelper/btd6-game-data" rel="noopener">BTD Mod Helper game data</a>, Ninja Kiwi patch notes.</p>
       <div class="seg theme-toggle" role="radiogroup" aria-label="Colour theme" hidden>
         <button type="button" role="radio" data-theme-set="auto" aria-checked="true">Auto</button>
         <button type="button" role="radio" data-theme-set="light" aria-checked="false">Light</button>
@@ -163,7 +163,7 @@
     <p class="search-hint" id="searchHint"><kbd>↑</kbd><kbd>↓</kbd> move · <kbd>Enter</kbd> open · <kbd>Esc</kbd> close</p>
   </form>
 </dialog>
-<script src="../../assets/search-core.js?v=0.9.1" defer></script>
-<script src="../../assets/site.js?v=0.9.1" defer></script>
+<script src="../../assets/search-core.js?v=0.9.2" defer></script>
+<script src="../../assets/site.js?v=0.9.2" defer></script>
 </body>
 </html>

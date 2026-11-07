@@ -257,6 +257,12 @@ async function main() {
       await mp.click('#pf-mkt-Primary');
       const inner = await mp.evaluate(() => { const sc = document.getElementById('prf-mk-scroll'); return sc.scrollWidth - sc.clientWidth; });
       ok(ov <= 0 && (w > 1000 || inner > 0), `${w}px MK: the page doesn't scroll sideways (the tree panel does when it must)`, { ov, inner });
+      /* a node with two arrows needs one of them (our reading; "all of" could lock you out of a node you own) */
+      await mp.evaluate(() => window.MonkeyIntel.progress.update((x) => { x.profile.mk = { 'magic-tricks': true, 'speedy-brewing': true, 'mo-monkey-money': true, 'super-range': true }; }));
+      await mp.reload({ waitUntil: 'networkidle' });
+      await mp.click('#pf-mkt-Magic');
+      await mp.click('#pf-mk-flame-jet');
+      ok(await pressed('flame-jet') === 'true', `${w}px MK: Flame Jet turns on with Magic Tricks alone (one of its two arrows)`, await mp.textContent('#prf-mk-msg'));
       ok(!merr.length, `${w}px MK: no page errors`, merr);
       await mp.close();
     }

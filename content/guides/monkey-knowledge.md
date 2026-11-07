@@ -42,7 +42,7 @@ Take Mo' Monkey Money, Monkey Education and Elite Military Training first. All t
 
 | # | MK | Tree | Pts / MM | Effect |
 |---|---|---|---|---|
-| 1 | Lingering Magic → Speedy Brewing → **Mo' Monkey Money** | Magic | 0 / 0 | +10% MM from wins and Daily Challenges |
+| 1 | Magic Tricks → Speedy Brewing → **Mo' Monkey Money** | Magic | 0 / 0 | +10% MM from game wins on any difficulty |
 | 2 | **Monkey Education** | Support | 3 / 0 | All towers and heroes earn 8% more XP |
 | 3 | **Elite Military Training** | Military | 0 / 0 | +1,000 XP once to every Military tower, and +5% Military XP |
 | 4 | Self Taught Heroes | Heroes | 3 / 0 | Heroes earn XP 10% faster |
