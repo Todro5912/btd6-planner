@@ -233,7 +233,7 @@
     return '../simulator/#' + C.encodePlan(Object.assign({}, res.plan, { steps: res.plan.steps.concat([step]) }));
   }
   function fixBlock(pr) {
-    const ul = U.fixList(pr.fixes, { hints: pr.hints });
+    const ul = U.fixList(pr.fixes, { hints: pr.hints, hintLabel: pr.estimate ? 'Good to know' : null, empty: pr.estimate ? 'Nothing cheap fixes it on its own: add more towers or upgrades.' : null });
     const m = mode(), mp = map();
     Array.prototype.forEach.call(ul.children, (li, i) => {
       const f = pr.fixes[i];
@@ -265,7 +265,7 @@
       const ul = h('ol', { class: 'ti-problems' });
       sim.problems.forEach((p) => {
         ul.appendChild(h('li', { class: 'ti-prob' }, [
-          h('div', { class: 'ti-prob-h' }, [U.rchip(p.round, 'ti-r-danger'), h('span', { class: 'ti-prob-t' }, p.text.charAt(0).toUpperCase() + p.text.slice(1)),
+          h('div', { class: 'ti-prob-h' }, [U.rchip(p.round, 'ti-r-danger'), h('span', { class: 'ti-prob-t' }, [p.text.charAt(0).toUpperCase() + p.text.slice(1), p.estimate ? ' ' : null, p.estimate ? U.badge('calc', 'estimate') : null]),
             h('span', { class: 'ti-prob-n' }, p.rounds > 1 ? p.rounds + ' rounds need it, to R' + p.last : '')]),
           fixBlock(p),
         ]));
@@ -281,7 +281,7 @@
         h('ul', { class: 'bullets' }, res.unusable.map((u) => h('li', null, [u.name + ': ' + u.issue + '. ', h('button', { type: 'button', class: 'btn btn-small', onclick: () => toggle(u.id) }, 'Remove')])))]));
     }
     if (!body.length) {
-      body.push(h('p', { class: 'ti-note ti-panel-b', style: 'margin-top:10px' }, 'No gaps. Your monkeys can hit every bloon type in this mode, in time. That means they can hit them, not that they do enough damage: check the key rounds below in the Simulator.'));
+      body.push(h('p', { class: 'ti-note ti-panel-b', style: 'margin-top:10px' }, 'No gaps. Your monkeys can hit every bloon type in this mode, in time, and the leak check (an estimate) says they pop enough. Placement still matters: check the key rounds in the Simulator.'));
     }
     const n = (sim ? sim.problems.length : 0) + res.leftovers.length + res.unusable.length;
     return h('section', { class: 'panel', 'aria-labelledby': 'adv-gaps-h' }, [h('h2', { class: 'panel-h', id: 'adv-gaps-h' }, ['Gaps and what to add', h('small', null, n ? n + ' to fix' : 'none')])].concat(body));

@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.9.0 (2026-11-07)
+- **Leak check: do your towers pop enough?** Until now the tools only checked that something could hit each bloon type. Now every round is also checked for popping power (an estimate), from the game's own tower models (damage, pierce, attack speed, range and sub-projectiles for every crosspath and hero level, via the BTD Mod Helper game data export, v56) against each round's bloon groups, spawn times and speeds. It counts camo and Lead, MOAB shells (a blimp that isn't killed in reach leaks whole), Village and Berserker Brew buffs, and Ice Monkeys freezing bloons that Sharp attacks then can't pop. Not counted: abilities, sub-towers, targeting, placement.
+- **Simulator**: "Not enough popping power" problems with fixes ranked by the leak they remove per dollar, lives counted down round by round ("You run out of lives around R13"), a Lives stat, leaking rounds red on the timeline. Leaked bloons pay no pop cash, so later rounds have less money.
+- **Strategy Advisor** gaps and **Check my defence** show the same check. New guide: How the leak check works.
+- `data/tower-power.json`, built by `tools/build_power.py`.
+
 ## 0.8.1 (2026-11-07)
 - **Co-op**: a Players setting (Solo, 2, 3 or 4) in the Simulator and Strategy Advisor. Your cash is your share: start $50 less per player (Deflation splits the start cash), and 1/n of pop cash, round bonuses and More Cash (Bloons Wiki, unverified in game). Farms still pay their owner. Share links keep it (`pl=2`).
 - **Every fix has an action**: Advisor gaps get "Add to my picks" or "Add in the Simulator" (the buy lands at the round you can pay for it); leftovers get "Use a cheaper crosspath"; "Can't use here" gets Remove; Check my defence gets Add and Upgrade on each fix; every Pairs well list adds the tower or hero.

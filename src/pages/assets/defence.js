@@ -58,7 +58,8 @@
     const kids = [head];
     res.threats.forEach((t, i) => {
       kids.push(h('p', { class: 'ti-alert-t', style: i ? 'font-size:clamp(20px,4vw,28px);margin-top:6px' : null }, 'R' + t.round + ': ' + t.text));
-      kids.push(h('p', { class: 'ti-alert-s' }, 'R' + t.round + ' is ' + t.composition + (t.rounds.length > 1 ? '. ' + t.rounds.length + ' of the next 15 rounds need it.' : '.')));
+      if (t.estimate) kids.push(h('p', { class: 'ti-alert-s' }, ['R' + t.round + ' is ' + t.composition + '. ' + (t.rounds.length > 1 ? t.rounds.length + ' of the next 15 rounds leak, ' + (t.lives >= mode().lives ? 'enough to end your game' : 'about ' + C.int(t.lives) + ' lives in all') + '. ' : ''), U.badge('calc', 'estimate')]));
+      else kids.push(h('p', { class: 'ti-alert-s' }, 'R' + t.round + ' is ' + t.composition + (t.rounds.length > 1 ? '. ' + t.rounds.length + ' of the next 15 rounds need it.' : '.')));
       kids.push(fixBlock(t));
     });
     if (res.state.unknown.length) kids.push(h('p', { class: 'ti-alert-s' }, 'Not counted (no pop data yet): ' + res.state.unknown.map((id) => C.tower(D, id).name).join(', ') + '.'));
@@ -74,7 +75,7 @@
     render();
   }
   function fixBlock(t) {
-    const ul = U.fixList(t.fixes, { hints: t.hints });
+    const ul = U.fixList(t.fixes, { hints: t.hints, hintLabel: t.estimate ? 'Good to know' : null, empty: t.estimate ? 'Nothing cheap fixes it on its own: add more towers or upgrades.' : null });
     Array.prototype.forEach.call(ul.children, (li, i) => {
       const f = t.fixes[i];
       if (!f || f.kind === 'hero') return;

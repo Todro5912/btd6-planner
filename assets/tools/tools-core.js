@@ -13,7 +13,7 @@
   /* Properties a round can demand. 'pop' = anything that attacks at all. Fortified is extra HP, never a need. */
   C.NEEDS = ['pop', 'camo', 'lead', 'purple', 'black', 'white', 'zebra', 'moab', 'ddt', 'bad'];
   C.POP_PROPS = ['camo', 'lead', 'purple', 'black', 'white', 'zebra', 'frozen', 'moab', 'bad', 'fortified'];
-  C.NEED_LABEL = { pop: 'Bloons', camo: 'Camo', lead: 'Lead', purple: 'Purple', black: 'Black', white: 'White', zebra: 'Zebra', moab: 'MOAB', ddt: 'DDT', bad: 'BAD' };
+  C.NEED_LABEL = { pop: 'Bloons', camo: 'Camo', lead: 'Lead', purple: 'Purple', black: 'Black', white: 'White', zebra: 'Zebra', moab: 'MOAB', ddt: 'DDT', bad: 'BAD', power: 'Pop power' };
   C.NEED_TEXT = {
     pop: 'bloons leak, you have nothing placed that attacks',
     camo: 'camo leaks, you have nothing that sees camo',
@@ -92,6 +92,209 @@
     return out;
   };
 
+  /* ---------- pop power: can the build pop ENOUGH, not just hit every type (estimate) ----------
+     data/tower-power.json (built by tools/build_power.py from the game's own tower models, v56) gives each crosspath
+     its attacks as [range, damage, bloon-hits per second with 1/2/4/8/16/32 bloons in range], plus damage per second
+     to one MOAB-class (m) or Ceramic (c). For a round we work out how many bloons are in range at once (spawn rate x
+     time in range), how long each tower is busy, and how many layers that pops, against the round's RBE.
+     Lives lost = RBE that gets through, like the game. Not modelled: abilities, Village / Alchemist buffs, sub-towers,
+     targeting, exact placement (C.POWER_SPOT says how much track a tower sees). */
+  C.POWER_SPOT = 1.6; /* a decent spot sees this many range-widths of track (bends, loops) */
+  C.BLOON_RBE = { red: 1, blue: 2, green: 3, yellow: 4, pink: 5, black: 11, white: 11, purple: 11, lead: 23, zebra: 23, rainbow: 47, ceramic: 104, moab: 616, bfb: 3164, zomg: 16656, ddt: 816, bad: 55760 };
+  C.BLOON_DEPTH = { red: 1, blue: 2, green: 3, yellow: 4, pink: 5, black: 6, white: 6, purple: 6, lead: 7, zebra: 7, rainbow: 8, ceramic: 18 };
+  C.BLIMP_HP = { moab: 200, bfb: 700, zomg: 4000, ddt: 400, bad: 20000 };
+  const CROWD = [1, 2, 4, 8, 16, 32];
+  C.powerOf = function (D, id, x) {
+    const pw = (D.power || {}).towers;
+    return pw && pw[id] ? pw[id][arr(x).join('')] || null : null;
+  };
+  C.heroPowerOf = function (D, id, level) {
+    const pw = (D.power || {}).heroes;
+    if (!pw || !pw[id]) return null;
+    for (let l = Math.max(1, Math.min(20, Math.round(num(level, 1)))); l >= 1; l--) if (pw[id][String(l)]) return pw[id][String(l)];
+    return null;
+  };
+  /* bloon-hits per second at n bloons in range (log interpolation between the sampled crowds) */
+  C.hitsAt = function (hs, n) {
+    if (n <= 1) return hs[0] * Math.max(0, n);
+    for (let i = 1; i < CROWD.length; i++) {
+      if (n <= CROWD[i]) { const t = Math.log(n / CROWD[i - 1]) / Math.log(CROWD[i] / CROWD[i - 1]); return hs[i - 1] + (hs[i] - hs[i - 1]) * t; }
+    }
+    return hs[CROWD.length - 1];
+  };
+  const bloonType = (name) => {
+    const s = String(name || '').toLowerCase();
+    const fort = /fortified/.test(s);
+    const base = s.replace(/(regrow|camo|fortified)/g, '');
+    return { base, fort, camo: /camo/.test(s), regrow: /regrow/.test(s) };
+  };
+  /* one round, one set of attackers: [{power entry, label, camo: can it hit camo, lead: can it hit lead}] */
+  C.leakRound = function (D, mode, map, r, list) {
+    const pw = D.power || {};
+    const groups = arr(arr(pw.rounds)[r - 1]);
+    const row = C.roundRow(D, mode, r);
+    if (!groups.length || !row || (mode && mode.roundSet === 'abr')) return null;
+    const speed = pw.bloonSpeed || {};
+    let n = 0, t0 = Infinity, t1 = 0, rbe = 0, vSum = 0, dSum = 0, camoRbe = 0, leadRbe = 0;
+    const blimps = [];
+    groups.forEach(([name, count, start, dur]) => {
+      const b = bloonType(name);
+      const e = num(C.BLOON_RBE[b.base], 1) * count;
+      t0 = Math.min(t0, start); t1 = Math.max(t1, start + dur);
+      rbe += e;
+      if (C.BLIMP_HP[b.base]) { blimps.push({ type: b.base, count, start, dur, hp: C.BLIMP_HP[b.base] * (b.fort ? 2 : 1), rbe: C.BLOON_RBE[b.base], v: num(speed[b.base], 25), camo: b.camo || b.base === 'ddt' }); return; }
+      n += count;
+      vSum += num(speed[b.base], 25) * count;
+      dSum += num(C.BLOON_DEPTH[b.base], 1) * count;
+      if (b.camo) camoRbe += e;
+      if (b.base === 'lead') leadRbe += e;
+    });
+    const scale = rbe > 0 && num(row.rbe, 0) > 0 ? row.rbe / rbe : 1; /* freeplay ramps, fortified layers, Easy R40 */
+    const total = rbe * scale;
+    const dur = Math.max(1, t1 - t0);
+    const track = map && map.rbs ? map.rbs * 25 : 30 * 25;
+    const lanes = map && map.lanes ? map.lanes : 1;
+    const tinFor = (R, sp) => (R >= 900 ? track / sp : Math.min(track / sp, C.POWER_SPOT * 2 * R / sp));
+    /* MOAB-class first: each shell has to die inside the towers' reach, or it leaks whole (lives = its RBE) */
+    let leak = 0, freed = 0;
+    const blimpOut = [];
+    blimps.forEach((b) => {
+      let dmg = 0, over = 0;
+      list.forEach((it) => {
+        const e = it.power;
+        if (!e || !(e.m > 0) || (b.camo && it.camo === false)) return;
+        const bf = it.buff || {};
+        const m = e.m * num(bf.hits, 1) * (1 + num(bf.dmg, 0) * 0.5);
+        const tin = tinFor(num(e.r, 40) * num(bf.range, 1), b.v);
+        dmg += m * tin; /* what one blimp takes on its way past */
+        over += m * (b.dur + tin); /* what the whole group can take */
+      });
+      /* each blimp must die in reach (0% of them at 70% of its HP, all at 130%: placement varies), and the group
+         can't take more than the towers' damage over its spawn time */
+      const each = Math.max(0, Math.min(1, (dmg / b.hp - 0.7) / 0.6));
+      const killed = Math.min(b.count * each, over / b.hp);
+      leak += (b.count - killed) * b.rbe * scale;
+      const inside = killed * (b.rbe * scale - b.hp);
+      freed += inside; /* what's inside joins the normal stream, as Ceramics (or a BAD's ZOMGs and DDTs, roughly) */
+      const kids = inside / C.BLOON_RBE.ceramic;
+      n += kids; vSum += num(speed.ceramic, 62.5) * kids; dSum += C.BLOON_DEPTH.ceramic * kids;
+      blimpOut.push({ type: b.type, count: b.count, killed, dmg: Math.round(dmg), hp: b.hp });
+    });
+    const v = n ? vSum / n : 25;
+    const depth = n ? dSum / n : 1;
+    const streamRbe = Math.max(0, total - blimps.reduce((acc, b) => acc + b.count * b.rbe * scale, 0) + freed);
+    const lambda = n / dur; /* bloons spawned per second */
+    let pops = 0;
+    const per = [];
+    /* an Ice Monkey's frozen bloons can't be popped by Sharp attacks (darts, tacks, Quincy...) until they thaw */
+    let frozenShare = 0;
+    const rawPops = (e, hitsOnly, bf) => {
+      let p = 0;
+      bf = bf || {};
+      arr(e.a).forEach(([R0, dmg0, hs0]) => {
+        const dmg = hitsOnly ? 1 : dmg0 + num(bf.dmg, 0);
+        const R = R0 >= 900 ? R0 : R0 * num(bf.range, 1);
+        const hs = bf.hits ? hs0.map((h) => h * bf.hits) : hs0;
+        const tin = tinFor(R, v);
+        const k = lambda * tin / lanes;
+        const present = 1 - Math.exp(-k);
+        const nIn = Math.max(1, k / Math.max(present, 1e-6));
+        p += C.hitsAt(hs, nIn) * Math.min(dmg, depth) * present * (dur + tin);
+      });
+      return p;
+    };
+    /* share of the bloons an Ice Monkey reaches; most of them are frozen while they pass the towers next to it */
+    list.forEach((it) => { if (it.freezes && it.power) frozenShare += rawPops(it.power, true) / Math.max(1, n); });
+    frozenShare = Math.min(0.85, frozenShare * 0.65); /* tuned on one real game: lone 2-2-0 Ice + Quincy, Glacial Trail Hard, 16 lives at R13 */
+    list.forEach((it) => {
+      const e = it.power;
+      if (!e) return;
+      let p = rawPops(e, false, it.buff);
+      const hit = Math.max(0, 1 - (it.camo === false ? camoRbe / Math.max(1, rbe) : 0) - (it.lead === false ? leadRbe / Math.max(1, rbe) : 0));
+      p *= hit;
+      if (frozenShare > 0 && !it.freezes && it.frozen === false) p *= 1 - frozenShare;
+      per.push({ label: it.label, pops: Math.round(p) });
+      pops += p;
+    });
+    leak += Math.max(0, streamRbe - pops);
+    return { r, rbe: Math.round(total), popped: Math.round(Math.max(0, total - leak)), leak: Math.round(Math.min(total, leak)), share: total > 0 ? Math.max(0, 1 - leak / total) : 1,
+      dur, perSec: Math.round(lambda * 10) / 10, depth, per, blimps: blimpOut, power: Math.round(pops), frozenShare };
+  };
+  /* the attackers of one moment, for C.leakRound: towers [{uid, id, x, label}] and the hero {id, level, label} */
+  C.powerList = function (D, insts, hero) {
+    const pm = D.pop || {};
+    const out = [];
+    insts.forEach((i) => {
+      const e = C.powerOf(D, i.id, i.x);
+      if (!e) return;
+      const own = C.towerProps(pm, i.id, i.x);
+      out.push({ uid: i.uid, id: i.id, x: i.x, label: i.label, power: e, camo: !!own.camo, lead: !!own.lead, frozen: !!own.frozen, freezes: i.id === 'ice' });
+    });
+    if (hero) {
+      const e = C.heroPowerOf(D, hero.id, hero.level);
+      const hp = C.heroProps(pm, hero.id, hero.level);
+      if (e) out.push({ uid: 'hero', id: hero.id, label: hero.label || hero.id, power: e, camo: !!hp.camo, lead: !!hp.lead, frozen: !!hp.lead, hero: true });
+    }
+    /* buffs (values from the game's models, v56), assumed to reach every tower: placing them centrally is the norm.
+       Village: +10% range, 2-x-x attacks 15% faster, 3-x-x Primary +1 pierce and +10% range.
+       Alchemist Berserker Brew: 3-x-x +1 damage, +2 pierce, +10% speed and range; 4-x-x +3 pierce, +15% (not on Farms/Alchemists). */
+    const vil = insts.filter((i) => i.id === 'village').reduce((m, i) => Math.max(m, num(i.x[0], 0)), -1);
+    const alch = insts.filter((i) => i.id === 'alchemist').reduce((m, i) => Math.max(m, num(i.x[0], 0)), -1);
+    out.forEach((it) => {
+      const t = C.tower(D, it.id);
+      const primary = t && t.class === 'Primary';
+      const bf = { hits: 1, dmg: 0, range: 1 };
+      if (vil >= 0) { bf.range *= 1.1; if (vil >= 2) bf.hits /= 0.85; if (vil >= 3 && primary) { bf.hits *= 1.15; bf.range *= 1.1; } }
+      if (alch >= 3 && it.id !== 'alchemist') { const big = alch >= 4; bf.dmg += 1; bf.hits *= (big ? 1.15 : 1.1) * (big ? 1.35 : 1.25); bf.range *= big ? 1.15 : 1.1; }
+      if (vil >= 0 || alch >= 3) it.buff = bf;
+    });
+    return out;
+  };
+  /* camo support (a Village 0-2-0, Shimmer...) lets towers hit camo: take it from the coverage state */
+  C.powerWithSupport = function (list, st) {
+    const has = (p, label) => arr(st && st.cov && st.cov[p]).some((l) => l === label || l.indexOf(label + ' + ') === 0);
+    list.forEach((it) => { if (st) { it.camo = has('camo', it.label); it.lead = has('lead', it.label); } });
+    return list;
+  };
+  /* what to buy when a round leaks: the cheapest pops. Upgrades of what you have and new towers, by leak removed per $ */
+  C.powerFixes = function (D, mode, map, r, insts, hero, st, limit) {
+    const mult = num(mode.costMult, 1);
+    const base = C.leakRound(D, mode, map, r, C.powerWithSupport(C.powerList(D, insts, hero), st));
+    if (!base || base.leak <= 0) return [];
+    const tryList = (list2) => { const x = C.leakRound(D, mode, map, r, C.powerWithSupport(C.powerList(D, list2, hero), C.coverState(D, list2, hero))); return x ? x.leak : base.leak; };
+    const cands = [];
+    insts.forEach((i, idx) => {
+      const t = C.tower(D, i.id);
+      if (!t) return;
+      [0, 1, 2].forEach((pth) => {
+        const x = i.x.slice();
+        x[pth]++;
+        if (!C.validCross(x) || x[pth] > 5) return;
+        const list2 = insts.map((j, k) => (k === idx ? Object.assign({}, j, { x }) : j));
+        const left = tryList(list2);
+        if (left >= base.leak) return;
+        cands.push({ kind: 'upgrade', uid: i.uid, towerId: i.id, label: i.label, from: i.x.slice(), x, cost: C.upgradeCost(t, i.x, x, mult), name: C.topName(t, x), left });
+      });
+    });
+    arr(D.towers).forEach((t) => {
+      if (C.placeIssue(D, mode, map, t)) return;
+      [[0, 0, 0], [0, 0, 1], [1, 0, 0], [0, 1, 0], [0, 0, 2], [2, 0, 0], [0, 2, 0], [2, 0, 2], [0, 2, 2], [2, 2, 0], [3, 0, 0], [0, 3, 0], [0, 0, 3]].forEach((x) => {
+        if (!C.powerOf(D, t.id, x)) return;
+        const add = { uid: 'new', id: t.id, x, label: t.name };
+        const left = tryList(insts.concat([add]));
+        if (left >= base.leak) return;
+        cands.push({ kind: 'new', towerId: t.id, label: t.name, x, cost: C.placeCost(t, x, mult), name: C.topName(t, x), left });
+      });
+    });
+    /* fixes that stop the leak first, cheapest; then the most leak removed per $ */
+    cands.forEach((c) => { c.fixes = c.left <= 0; c.value = (base.leak - c.left) / Math.max(1, c.cost); });
+    cands.sort((a, b) => (b.fixes - a.fixes) || (b.fixes ? a.cost - b.cost : b.value - a.value));
+    const seen = {};
+    return cands.filter((c) => { const k = c.kind + c.towerId; if (seen[k]) return false; seen[k] = true; return true; }).slice(0, limit || 3)
+      .map((c) => Object.assign(c, { leftLives: c.left }));
+  };
+
+  C.popCashMult = (r) => (r <= 50 ? 1 : r <= 60 ? 0.5 : r <= 85 ? 0.2 : r <= 100 ? 0.1 : r <= 120 ? 0.08 : 0.05);
   /* ---------- crosspaths ---------- */
   C.code = (x) => arr(x).map((v) => num(v, 0)).join('-');
   C.parseCode = function (s) {
@@ -505,6 +708,9 @@
     const rows = [];
     const out = [];
     let si = 0;
+    let lives = num(mode.lives, 100);
+    let lostAt = null; /* the round your lives run out (estimate) */
+    let lostCash = 0; /* pop cash you don't get because those bloons leaked */
     for (let r = a; r <= b; r++) {
       const spent0 = spent, ref0 = refunds;
       while (si < steps.length && steps[si].r < a) {
@@ -582,7 +788,7 @@
           }
         }
         spent += res.cost; refunds += res.refund;
-        res.bank = base[r] + income + refunds - spent;
+        res.bank = base[r] + income + refunds - spent - lostCash;
         out.push(res);
       }
       /* state during round r */
@@ -595,10 +801,16 @@
       const row = C.roundRow(D, mode, r);
       const need = C.roundNeeds(row);
       const missing = C.missingFor(st, need);
-      rows.push({ r, avail: base[r] + income + ref0 - spent0,
-        bank: base[r] + income + refunds - spent, need, missing, heroLevel: hl, danger: row ? num(row.danger, 0) : 0,
+      /* pop power (estimate): how much of the round gets through, and the lives it costs */
+      const lk = plan.noPower ? null : C.leakRound(D, mode, map, r, C.powerWithSupport(C.powerList(D, live.map((i) => ({ uid: i.uid, id: i.id, x: i.x, label: i.label })), hero ? { id: hero.id, level: hl, label: hero.name } : null), st));
+      if (lk) lives = Math.max(0, lives - lk.leak);
+      if (lk && lives <= 0 && lostAt == null) lostAt = r;
+      rows.push({ r, leak: lk ? lk.leak : null, leakInfo: lk, lives: lk ? Math.round(lives) : null, avail: base[r] + income + ref0 - spent0 - lostCash,
+        bank: base[r] + income + refunds - spent - lostCash, need, missing, heroLevel: hl, danger: row ? num(row.danger, 0) : 0,
         threats: row ? arr(row.threats) : [], composition: row ? row.composition : '', note: row ? row.notes : '',
         live: live.map((i) => i.uid), unknown: st.unknown, bonuses: st.bonuses, cov: st.cov });
+      /* leaked layers pay no pop cash (counted from the next round on) */
+      if (lk && lk.leak > 0 && !plan.keepLeakCash && !(rules.noIncome || rules.noPopCash)) lostCash += lk.leak * C.popCashMult(r) * num(mode.cashMult, 1) / players;
       /* end of round: income, paid into the next round */
       live.forEach((i) => { income += C.incomeFor(D, mode, i.id, i.x); });
     }
@@ -632,8 +844,35 @@
         else open = null;
       });
     });
+    /* rounds that leak: not enough pop power (estimate). Small leaks (under 2% of the round, 1 life) are ignored. */
+    {
+      let open = null;
+      rows.forEach((x) => {
+        const bad = x.leak != null && x.leak > Math.max(1, 0.02 * x.leakInfo.rbe) && !x.missing.length;
+        if (bad && !open) { open = { prop: 'power', round: x.r, last: x.r, rounds: 1, lives: x.leak }; problems.push(open); }
+        else if (bad) { open.last = x.r; open.rounds++; open.lives += x.leak; }
+        else open = null;
+      });
+    }
     problems.sort((p, q) => (p.round - q.round) || (C.NEEDS.indexOf(p.prop) - C.NEEDS.indexOf(q.prop)));
     problems.forEach((pr) => {
+      if (pr.prop !== 'power') return;
+      const x = rows[pr.round - a];
+      const live = instList.filter((i) => x.live.indexOf(i.uid) >= 0).map((i) => ({ uid: i.uid, id: i.id, x: C.xAt(out, i, pr.round), label: i.label }));
+      const h = hero && hero.placed <= pr.round ? { id: hero.id, level: x.heroLevel, label: hero.name } : null;
+      pr.estimate = true;
+      pr.text = 'not enough popping power: about ' + x.leak + ' of ' + x.leakInfo.rbe + ' RBE gets through';
+      pr.bank = x.avail;
+      pr.composition = x.composition;
+      pr.leakInfo = x.leakInfo;
+      pr.fixes = C.powerFixes(D, mode, map, pr.round, live, h, C.coverState(D, live, h), 3);
+      pr.fixes.forEach((f) => { f.affordable = pr.bank != null && f.cost <= pr.bank + 0.5; });
+      pr.hints = [];
+      if (x.leakInfo.frozenShare > 0.05) pr.hints.push('Your Ice Monkey freezes bloons, and Sharp attacks (darts, tacks, Quincy) can\'t pop frozen bloons. Place them apart, or use towers that pop frozen bloons.');
+      pr.hints.push('Estimate from each tower\'s damage, pierce and attack speed vs the round\'s bloons. Placement, abilities and buffs change it.');
+    });
+    problems.forEach((pr) => {
+      if (pr.prop === 'power') return;
       const x = rows[pr.round - a];
       const live = instList.filter((i) => x.live.indexOf(i.uid) >= 0).map((i) => ({ uid: i.uid, id: i.id, x: C.xAt(out, i, pr.round), label: i.label }));
       pr.text = C.NEED_TEXT[pr.prop];
@@ -647,6 +886,8 @@
     rows.forEach((x) => x.unknown.forEach((u) => { unknown[u] = true; }));
     return {
       mode, map, start: a, end: b, players, rows, steps: out, problems, first: problems[0] || null,
+      lives: rows.length && rows[rows.length - 1].lives != null ? rows[rows.length - 1].lives : null, livesStart: num(mode.lives, 100), lostAt,
+      leakTotal: rows.reduce((acc, x) => acc + (x.leak || 0), 0),
       spent, refunds, income, insts: instList, hero, unknown: Object.keys(unknown),
       endBank: rows.length ? rows[rows.length - 1].bank : 0,
       xp: C.runXp(D, mode, map, out, instList, a, b, plan),
@@ -733,6 +974,26 @@
       });
     }
     threats.forEach((t) => { t.fixes = C.fixesFor({ D, mode, map, insts, hero, heroPlaced: null }, t.prop, 3); t.hints = C.hintsFor(D, insts, t.prop); });
+    /* enough pop power? (estimate) the first round of the span that leaks, when every type is covered */
+    let leak = null;
+    if (!threats.length && (insts.length || hero)) {
+      const list = C.powerWithSupport(C.powerList(D, insts, hero), st);
+      let lost = 0;
+      for (let r = r0; r <= end; r++) {
+        const lk = C.leakRound(D, mode, map, r, list);
+        if (!lk) continue;
+        lost += lk.leak;
+        if (!leak && lk.leak > Math.max(1, 0.02 * lk.rbe)) {
+          const row = C.roundRow(D, mode, r);
+          leak = { prop: 'power', round: r, rounds: [r], estimate: true, composition: row ? row.composition : '', leakInfo: lk,
+            text: 'not enough popping power: about ' + lk.leak + ' of ' + lk.rbe + ' RBE gets through' };
+          leak.fixes = C.powerFixes(D, mode, map, r, insts, hero, st, 3);
+          leak.hints = lk.frozenShare > 0.05 ? ['Your Ice Monkey freezes bloons, and Sharp attacks can\'t pop frozen bloons.'] : [];
+          leak.hints.push('Estimate from each tower\'s damage, pierce and attack speed. Placement, abilities and buffs change it.');
+        } else if (leak && lk.leak > Math.max(1, 0.02 * lk.rbe)) leak.rounds.push(r);
+      }
+      if (leak) { leak.lives = lost; threats.push(leak); }
+    }
     return { mode, map, round: r0, end, threats, nextDanger, state: st, insts, hero };
   };
 

@@ -359,7 +359,7 @@
       s.why = s.why.filter((p, j) => s.why.indexOf(p) === j);
       s.due = s.why.filter((p) => p === 'income' || (first[p] != null && s.r >= first[p] - 12)).map((p) => ({ prop: p, by: p === 'income' ? null : first[p] }));
     });
-    const plan = { mapId: map.id, modeId: mode.id, heroLevel: null, players, me: !!(fx && fx.me), emt: !!(fx && fx.emt), fx: opts.fx || null,
+    const plan = { mapId: map.id, modeId: mode.id, heroLevel: null, players, keepLeakCash: true, me: !!(fx && fx.me), emt: !!(fx && fx.emt), fx: opts.fx || null,
       steps: steps.map((s) => (s.op === 'hero' ? { uid: s.uid, r: s.r, op: 'hero', h: s.h } : s.op === 'place' ? Object.assign({ uid: s.uid, r: s.r, op: 'place', t: s.t, x: s.x.slice() }, s.insta ? { insta: true } : {}) : { uid: s.uid, r: s.r, op: 'up', ref: s.ref, x: s.x.slice() })) };
     const sim = C.simulate(D, plan);
     const bankAfter = {};

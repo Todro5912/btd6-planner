@@ -204,6 +204,7 @@
       const kids = [h('p', { class: 'ti-alert-t' }, 'Covered to R' + sim.end), h('p', { class: 'ti-alert-s' }, 'Every bloon type in this mode has an answer in your build, in time.')];
       if (sim.unknown.length) kids.push(h('p', { class: 'ti-alert-s' }, 'Not counted (no pop data yet): ' + sim.unknown.map((id) => C.tower(D, id).name).join(', ') + '.'));
       if (cashBad) kids.push(h('p', { class: 'ti-alert-s' }, ['But you can\'t afford every step: ', U.rchip(cashBad.r), ' ' + cashBad.label + ' is short by ' + C.money(cashBad.short) + '.']));
+      if (sim.lives != null) kids.push(livesLine());
       return h('section', { class: 'ti-alert ' + (cashBad ? 'ti-alert-warn' : 'ti-alert-ok'), 'aria-label': 'Result' }, kids);
     }
     const kids = [
@@ -211,11 +212,18 @@
       h('p', { class: 'ti-alert-s' }, [f.composition ? 'R' + f.round + ' is ' + f.composition + '. ' : '', 'You have ', U.money(f.bank), ' at the start of that round.']),
     ];
     if (sim.unknown.length) kids.push(h('p', { class: 'ti-alert-s' }, 'Not counted (no pop data yet): ' + sim.unknown.map((id) => C.tower(D, id).name).join(', ') + '.'));
+    if (sim.lives != null) kids.push(livesLine());
     kids.push(fixBlock(f));
     return h('section', { class: 'ti-alert', 'aria-label': 'First problem' }, kids);
   }
+  /* lives over the run, from the pop-power estimate */
+  function livesLine() {
+    const lost = sim.livesStart - (sim.lostAt ? 0 : sim.lives);
+    const txt = sim.lostAt ? 'You run out of lives around R' + sim.lostAt + '. ' : lost > 0 ? 'About ' + C.int(lost) + ' of your ' + sim.livesStart + ' lives leak by R' + sim.end + '. ' : 'Enough popping power for every round: no lives lost. ';
+    return h('p', { class: 'ti-alert-s' }, [txt, U.badge('calc', 'estimate'), ' ', h('a', { href: '../../guides/leak-check/' }, 'how it works')]);
+  }
   function fixBlock(pr) {
-    const ul = U.fixList(pr.fixes, { hints: pr.hints });
+    const ul = U.fixList(pr.fixes, { hints: pr.hints, hintLabel: pr.estimate ? 'Good to know' : null, empty: pr.estimate ? 'Nothing cheap fixes it on its own: add more towers or upgrades.' : null });
     Array.prototype.forEach.call(ul.children, (li, i) => {
       const fx = pr.fixes[i];
       if (!fx || fx.kind === 'hero') return;
@@ -275,9 +283,10 @@
     /* coverage strip */
     rows.forEach((x) => {
       const needs = Object.keys(x.need).length > 0;
-      const cls = !needs ? 'cov-none' : x.missing.length ? 'cov-bad' : 'cov-ok';
+      const leaks = x.leak != null && x.leakInfo && x.leak > Math.max(1, 0.02 * x.leakInfo.rbe);
+      const cls = !needs ? 'cov-none' : x.missing.length || leaks ? 'cov-bad' : 'cov-ok';
       const rc = svg('rect', { class: cls, x: L + (x.r - sim.start) * col + 1, y: covY, width: col - 2, height: covH });
-      rc.appendChild(svg('title', {}, 'R' + x.r + ': ' + (x.missing.length ? 'missing ' + x.missing.map((p) => C.NEED_LABEL[p]).join(', ') : needs ? 'covered' : 'nothing new') + (x.heroLevel ? ' · hero L' + x.heroLevel + ' (est.)' : '')));
+      rc.appendChild(svg('title', {}, 'R' + x.r + ': ' + (x.missing.length ? 'missing ' + x.missing.map((p) => C.NEED_LABEL[p]).join(', ') : leaks ? 'about ' + x.leak + ' of ' + x.leakInfo.rbe + ' RBE leaks (estimate)' : needs ? 'covered' : 'nothing new') + (x.lives != null ? ' · ' + x.lives + ' lives' : '') + (x.heroLevel ? ' · hero L' + x.heroLevel + ' (est.)' : '')));
       g.appendChild(rc);
     });
     /* x labels */
@@ -306,6 +315,7 @@
       stat('Left at the end', C.money(sim.endBank)),
       stat('Steps you can\'t afford', String(short.length), short.length ? 'first: R' + short[0].r : 'none'),
       stat('First leak', sim.first ? 'R' + sim.first.round : 'none', sim.first ? C.NEED_LABEL[sim.first.prop] : ''),
+      sim.lives != null ? stat('Lives at the end', sim.lostAt ? '0' : String(sim.lives), sim.lostAt ? 'out of lives at R' + sim.lostAt + ' (estimate)' : 'of ' + sim.livesStart + ' (estimate)') : null,
     ]);
     return h('section', { class: 'panel', 'aria-labelledby': 'sim-tl-h' }, head.concat([stats, wrap, legend]));
   }
@@ -464,7 +474,7 @@
     const ul = h('ol', { class: 'ti-problems' });
     sim.problems.forEach((p) => {
       ul.appendChild(h('li', { class: 'ti-prob' }, [
-        h('div', { class: 'ti-prob-h' }, [U.rchip(p.round, 'ti-r-danger'), h('span', { class: 'ti-prob-t' }, p.text.charAt(0).toUpperCase() + p.text.slice(1)),
+        h('div', { class: 'ti-prob-h' }, [U.rchip(p.round, 'ti-r-danger'), h('span', { class: 'ti-prob-t' }, [p.text.charAt(0).toUpperCase() + p.text.slice(1), p.estimate ? ' ' : null, p.estimate ? U.badge('calc', 'estimate') : null]),
           h('span', { class: 'ti-prob-n' }, p.rounds > 1 ? p.rounds + ' rounds need it, to R' + p.last : '')]),
         fixBlock(p),
       ]));

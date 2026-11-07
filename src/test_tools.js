@@ -94,12 +94,12 @@ ok(chimpsCash[6] === 650, 'CHIMPS starts with $650 at R6');
 const hard = C.baseCash(D, mode('hard')), half = C.baseCash(D, mode('half-cash'));
 ok(Math.abs((half[81] - 325) * 2 - (hard[81] - 650)) < 1e-6, 'Half Cash earns exactly half of Hard');
 ok(C.baseCash(D, mode('deflation'))[60] === 20000, 'Deflation stays at $20,000');
-const r1 = C.simulate(D, { mapId: 'logs', modeId: 'chimps', steps: [] });
+const r1 = C.simulate(D, { mapId: 'logs', modeId: 'chimps', noPower: true, steps: [] });
 ok(r1.rows.length === 95 && r1.rows[0].r === 6 && r1.rows[94].r === 100, 'CHIMPS timeline runs R6 to R100');
 ok(Math.abs(r1.rows.find((x) => x.r === 40).avail - 16250) < 1e-6, 'simulator row R40 avail = $16,250 with no buys');
 uid = 0;
 const s1 = place(6, 'sniper');
-const sim2 = C.simulate(D, { mapId: 'logs', modeId: 'chimps', steps: [s1, up(10, s1, [0, 1, 0])] });
+const sim2 = C.simulate(D, { mapId: 'logs', modeId: 'chimps', noPower: true, steps: [s1, up(10, s1, [0, 1, 0])] });
 ok(sim2.steps[0].cost === 380 && sim2.steps[1].cost === 270, 'Sniper $380 + Night Vision $270 at CHIMPS (Hard) prices', sim2.steps.map((s) => s.cost));
 ok(Math.abs(sim2.rows.find((x) => x.r === 40).bank - (16250 - 650)) < 1e-6, 'cash after buys at R40 = $16,250 − $650');
 const big = place(6, 'super');
@@ -123,7 +123,7 @@ ok(noSell.steps[1].refund === 0 && noSell.steps[1].flags.some((f) => /no selling
 
 console.log('First uncovered round');
 uid = 0;
-const dartOnly = C.simulate(D, { mapId: 'logs', modeId: 'chimps', steps: [place(6, 'dart')] });
+const dartOnly = C.simulate(D, { mapId: 'logs', modeId: 'chimps', noPower: true, steps: [place(6, 'dart')] });
 const probs = dartOnly.problems.map((p) => p.prop + '@' + p.round);
 console.log('    Dart-only CHIMPS: ' + probs.join(', '));
 ok(dartOnly.first && dartOnly.first.prop === 'camo' && dartOnly.first.round === 24, 'Dart-only CHIMPS: first problem is camo at R24', dartOnly.first);
@@ -136,10 +136,10 @@ const kinds = camoFix.map((f) => ({ upgrade: 0, new: 1, support: 2, hero: 3 }[f.
 ok(kinds.every((k, i) => i === 0 || k >= kinds[i - 1]), 'fixes ordered: your towers, then new towers, then support');
 uid = 0;
 const d2 = place(6, 'dart');
-const fixed = C.simulate(D, { mapId: 'logs', modeId: 'chimps', steps: [d2, up(20, d2, [0, 0, 2]), place(25, 'bomb')] });
+const fixed = C.simulate(D, { mapId: 'logs', modeId: 'chimps', noPower: true, steps: [d2, up(20, d2, [0, 0, 2]), place(25, 'bomb')] });
 ok(fixed.first && fixed.first.prop === 'ddt' && fixed.first.round === 90, 'adding Dart 0-0-2 and a Bomb moves the first problem to DDT at R90', fixed.first && fixed.first.prop + '@' + fixed.first.round);
 uid = 0;
-const late = C.simulate(D, { mapId: 'logs', modeId: 'chimps', steps: [place(6, 'dart'), place(30, 'ninja')] });
+const late = C.simulate(D, { mapId: 'logs', modeId: 'chimps', noPower: true, steps: [place(6, 'dart'), place(30, 'ninja')] });
 ok(late.first.prop === 'camo' && late.first.round === 24 && late.first.last < 30, 'a camo answer bought at R30 still leaves R24 flagged, and the span stops before R30');
 const empty = C.simulate(D, { mapId: 'monkey-meadow', modeId: 'medium', steps: [] });
 ok(empty.problems.length === 1 && empty.first.prop === 'pop' && empty.first.round === 1, 'empty build: one problem, "nothing placed" at R1');
@@ -200,7 +200,7 @@ ok(C.decodePlan(D, '#map=nope&mode=sandbox-easy&b=6pnotatower_x').steps.length =
 
 console.log('Presets ("known starts")');
 const pi = C.presetPlan(D, 'infernal');
-const simI = C.simulate(D, pi);
+const simI = C.simulate(D, Object.assign({ noPower: true }, pi));
 ok(pi && pi.presetSpent === 133760 && simI.spent === 133760, 'Infernal start replays to the map page\'s $133,760 total', simI.spent);
 ok(simI.steps.every((s) => !s.short), 'Infernal start is affordable at every step');
 ok(Object.keys(D.presets).length >= 5, Object.keys(D.presets).length + ' maps have a parsed known start');
@@ -257,7 +257,7 @@ console.log('Strategy Advisor');
   ok(r0.picks.length === 0 && r0.steps.length === 0, 'no picks -> no plan');
   const r1 = adv({ mapId: 'logs', modeId: 'chimps', heroId: 'quincy', towers: ['dart', 'boomerang', 'village', 'alchemist'] });
   ok(r1.picks.length === 4 && r1.picks.every((p) => C.validCross(p.x)), 'every pick gets a legal end crosspath', r1.picks.map((p) => p.x));
-  ok(r1.gaps.length === 0, 'Logs CHIMPS Dart/Boomerang/Village/Alch + Quincy: no gaps', r1.gaps.map((g) => g.prop + '@' + g.round));
+  ok(r1.gaps.filter((g) => g.prop !== 'power').length === 0, 'Logs CHIMPS Dart/Boomerang/Village/Alch + Quincy: no coverage gaps', r1.gaps.map((g) => g.prop + '@' + g.round));
   ok(r1.sim.steps.every((s) => !s.short && !s.flags.some((f) => f.k === 'bad')), 'every step of the order is affordable and legal in the simulator', r1.sim.steps.filter((s) => s.flags.length));
   ok(r1.spent <= r1.budget + 1 && r1.spent > r1.budget * 0.5, 'CHIMPS plan spends most of the budget without going over', [r1.spent, r1.budget]);
   ok(r1.steps[0].r === 6 && r1.steps[0].op === 'place', 'first buy is a tower on the first round (R6)', r1.steps[0]);
@@ -392,6 +392,36 @@ console.log('Progress store and goals');
     ok(C.advise(D, { mapId: 'monkey-meadow', modeId: 'hard', heroId: '', towers: ['dart', 'ice'], force: {}, players: 2 }).plan.players === 2, 'the Advisor plans with your co-op share');
   }
   delete global.localStorage;
+}
+
+console.log('Pop power (leak check, estimate)');
+{
+  ok(D.power && D.power.towers && D.towers.every((t) => ['farm', 'village', 'glue'].indexOf(t.id) >= 0 || C.powerOf(D, t.id, [0, 0, 0]) || C.powerOf(D, t.id, [0, 0, 1])), 'every attacking tower has power data from the game models');
+  ok(Object.keys(D.power.heroes || {}).length >= 15 && arr140(D.power.rounds), '17 heroes by level and 140 rounds of bloon groups ship');
+  function arr140(x) { return Array.isArray(x) && x.length === 140; }
+  const L = (mapId, modeId, r, list) => C.leakRound(D, C.mode(D, modeId), C.map(D, mapId), r, C.powerList(D, list.map((x, i) => ({ uid: 'u' + i, id: x[0], x: x[1], label: x[0] })), null));
+  const dart = [['dart', [0, 0, 0]]];
+  ok([1, 2, 3].every((r) => L('monkey-meadow', 'easy', r, dart).leak === 0) && L('monkey-meadow', 'easy', 4, dart).leak > 0, 'one base Dart pops R1-3 on Monkey Meadow and leaks at R4');
+  ok(L('monkey-meadow', 'medium', 10, [['dart', [0, 0, 0]], ['dart', [0, 0, 0]]]).leak === 0, 'two Darts hold R10');
+  const ice = L('glacial-trail', 'hard', 13, [['ice', [2, 2, 0]]]);
+  ok(ice.leak > ice.rbe * 0.3, 'a lone 2-2-0 Ice Monkey leaks a lot of R13 on Hard', ice.leak + '/' + ice.rbe);
+  const withDart = C.leakRound(D, C.mode(D, 'hard'), C.map(D, 'glacial-trail'), 13, C.powerList(D, [{ uid: 'a', id: 'ice', x: [2, 2, 0], label: 'Ice' }, { uid: 'b', id: 'dart', x: [0, 0, 0], label: 'Dart' }], null));
+  ok(withDart.frozenShare > 0.3 && withDart.per[1].pops < L('glacial-trail', 'hard', 13, dart).per[0].pops, 'Sharp attacks pop less next to an Ice Monkey (frozen bloons)');
+  const moab = L('logs', 'medium', 40, [['dart', [0, 0, 0]]]);
+  ok(moab.blimps.length === 1 && moab.blimps[0].killed === 0 && moab.leak >= 600, 'R40: one base Dart can\'t kill the MOAB, so it leaks whole (616)', moab.leak);
+  let u = 0;
+  const pl = (r, t, x) => ({ uid: 'p' + (++u), r, op: 'place', t, x: x || [0, 0, 0] });
+  const one = C.simulate(D, { mapId: 'monkey-meadow', modeId: 'medium', steps: [pl(1, 'dart')] });
+  const pw = one.problems.find((p) => p.prop === 'power');
+  ok(pw && pw.round === 4 && pw.estimate && pw.fixes.length > 0, 'Simulator: one Dart flags a pop-power problem at R4 with fixes', pw && pw.round);
+  ok(one.lives < one.livesStart && one.rows[0].lives === one.livesStart, 'Simulator counts lives down from the mode\'s start');
+  const fx = pw.fixes[0];
+  const fixedSim = C.simulate(D, { mapId: 'monkey-meadow', modeId: 'medium', steps: [pl(1, 'dart'), C.fixStep(one, fx, pw.round)].map((st, i) => Object.assign({ uid: st.uid || 'fx' + i }, st)) });
+  ok(fixedSim.rows.find((x) => x.r === 4).leak < one.rows.find((x) => x.r === 4).leak, 'adding the first pop-power fix cuts the R4 leak');
+  const quiet = C.simulate(D, { mapId: 'monkey-meadow', modeId: 'medium', noPower: true, steps: [pl(1, 'dart')] });
+  ok(one.rows[20].bank < quiet.rows[20].bank, 'leaked bloons pay no pop cash');
+  const dfn = C.checkDefence(D, { modeId: 'medium', round: 4, towers: [{ id: 'dart', x: [0, 0, 0] }] });
+  ok(dfn.threats.some((t) => t.prop === 'power' && t.round === 4 && t.fixes.length), 'Check my defence: one Dart at R4 shows the pop-power gap');
 }
 
 console.log('Type-to-search picker');

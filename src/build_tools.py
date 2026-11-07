@@ -185,7 +185,9 @@ def collect():
                  'heroLevelsSource': 'data' if hero_levels else 'estimate'},
         'towers': tower_list,
         'heroes': heroes,
-        'maps': [pick(m, ['id', 'name', 'difficulty', 'water', 'losBlockers']) for m in maps],
+        'maps': [dict(pick(m, ['id', 'name', 'difficulty', 'water', 'losBlockers']),
+                      **({'rbs': (m.get('rbs') or {}).get('avg'), 'lanes': len((m.get('rbs') or {}).get('lanes') or []) or 1}
+                         if isinstance(m.get('rbs'), dict) and (m.get('rbs') or {}).get('avg') else {})) for m in maps],
         'modes': [pick(m, ['id', 'name', 'base', 'startCash', 'lives', 'startRound', 'endRound', 'costMult', 'cashMult',
                            'roundSet', 'allowedClasses', 'rules', 'medal']) for m in modes],
         'rounds': {k: [pick(r, rk) for r in rounds.get(k, []) or []] for k in ('standard', 'abr')},
@@ -199,6 +201,7 @@ def collect():
         'synergy': rules,
         'mk': [pick(n, ['id', 'name', 'tree', 'group', 'effect', 'ptsNeeded', 'mm', 'fx']) for n in mk.get('nodes', []) or []],
         'mkMeta': pick(mk, ['totalNodes', 'maxPoints', 'trees']),
+        'power': load(os.path.join(DATA, 'tower-power.json'), {}) or {},
     }
     for m in data['modes']:
         if isinstance(m.get('rules'), dict):
@@ -211,7 +214,7 @@ def collect():
             return [strip(v) for v in o]
         return o
     data['_tips'] = map_tips(strats)
-    keep = {k: data.pop(k) for k in ('pop', 'heroLevels', 'synergy')}  # contract files ship whole (C1 uses 'source')
+    keep = {k: data.pop(k) for k in ('pop', 'heroLevels', 'synergy', 'power')}  # contract files ship whole (C1 uses 'source')
     data = strip(data)
     data.update(keep)
     return data
