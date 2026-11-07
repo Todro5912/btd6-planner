@@ -15,7 +15,9 @@
     "invisible bloons",
     "cant see bloons",
     "towers not shooting",
-    "why wont my towers shoot"
+    "why wont my towers shoot",
+    "camo fix",
+    "fix camo"
    ]
   },
   {
@@ -30,7 +32,9 @@
     "grey bloons",
     "gray bloons",
     "metal bloons",
-    "darts bounce off"
+    "darts bounce off",
+    "lead fix",
+    "fix lead"
    ]
   },
   {
@@ -410,6 +414,21 @@
     "hero",
     "best hero",
     "which hero"
+   ]
+  },
+  {
+   "target": "tools/profile/",
+   "terms": [
+    "insta",
+    "instas",
+    "insta monkey",
+    "insta monkeys",
+    "my instas",
+    "my profile",
+    "my unlocks",
+    "monkey knowledge tree",
+    "mk tree",
+    "heroes i own"
    ]
   }
  ]

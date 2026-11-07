@@ -122,7 +122,13 @@
       var p = x.prices ? ' <span class="pk-sp">' + esc(money(x.prices[diff])) + '</span>' : '';
       var tag = x.kind === 'avoid' ? '<span class="tag tag-danger">avoid</span> ' : '';
       var unv = x.unverified ? ' <span class="badge badge-unverified">unverified</span>' : '';
-      return '<li>' + tag + who + (x.code ? ' <code class="xcode">' + esc(x.code) + '</code>' : '') + p + unv + (x.why ? '<span class="pk-why">' + esc(x.why) + '</span>' : '') + '</li>';
+      /* every pairing gets an action: plan a game with both in the Strategy Advisor */
+      var plan = '';
+      if (x.kind !== 'avoid' && x.url) {
+        var isHero = /^heroes\//.test(x.url), oid = x.url.split('/')[1];
+        if (oid && oid !== D.id) plan = ' <a class="pk-plan" href="' + esc(ROOT + 'tools/advisor/#' + (isHero ? 'hero=' + oid + '&t=' + D.id : 'hero=auto&t=' + D.id + ',' + oid)) + '">Plan with both</a>';
+      }
+      return '<li>' + tag + who + (x.code ? ' <code class="xcode">' + esc(x.code) + '</code>' : '') + p + unv + plan + (x.why ? '<span class="pk-why">' + esc(x.why) + '</span>' : '') + '</li>';
     }).join('');
     synSrc.textContent = source;
   }

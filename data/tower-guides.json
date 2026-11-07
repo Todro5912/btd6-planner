@@ -1491,14 +1491,17 @@
   "farm": {
    "map": "Dark Castle",
    "mode": "Expert Deflation",
-   "setup": "1x Mermonkey 0-4-2; 3x Mermonkey 0-3-2",
+   "setup": "2x Mermonkey 0-3-2; 1x Mermonkey 4-0-2",
    "helpers": "hero Admiral Brickell ($765 Easy, no XP share)",
    "xpPerRun": 64514,
    "runsToT5": 4,
    "runsToParagon": null,
    "runsToT5Base": 5,
    "runsToParagonBase": null,
-   "monoDeflation": "yes"
+   "monoDeflation": "yes",
+   "_src": {
+    "changed": "0.10: was 1x 0-4-2 + 3x 0-3-2. That mix had no White, Zebra or Purple popper (middle-path Mermonkeys deal cold damage; data/game/towers.json), so R31 Whites and R32 Purples leaked. Abyssal Warrior 4-0-2 pops them; the 0-3-2s keep Lead. Same XP (all Mermonkey), $12,315 Easy."
+   }
   },
   "unlockOrder": [
    "0-0-1 Echosense (150) + 0-0-2 Network (670)",
@@ -1555,14 +1558,17 @@
   "farm": {
    "map": "Dark Castle",
    "mode": "Expert Deflation",
-   "setup": "1x Skywarden 2-4-0; 3x Skywarden 2-3-0; 2x Skywarden 3-2-0",
+   "setup": "1x Skywarden 2-4-0; 2x Skywarden 2-3-0; 1x Skywarden 2-0-4",
    "helpers": "hero Obyn Greenfoot ($555 Easy, no XP share)",
    "xpPerRun": 64514,
    "runsToT5": 3,
    "runsToParagon": null,
    "runsToT5Base": 3,
    "runsToParagonBase": null,
-   "monoDeflation": "yes"
+   "monoDeflation": "yes",
+   "_src": {
+    "changed": "0.10: was 1x 2-4-0 + 3x 2-3-0 + 2x 3-2-0. No crosspath in that mix pops Purple (data/game/towers.json), so R32 Purples leaked. A 2-0-4 pops Purple; the 2-x-0s keep Lead. Same XP (all Skywarden), $17,760 Easy."
+   }
   },
   "unlockOrder": [
    "2-0-0 Zephyr Sense (camo)",

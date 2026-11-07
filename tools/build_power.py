@@ -109,6 +109,10 @@ def reach(p, n, R):
         return float(n)
     travel = num(p.get('speed')) * life if p.get('move') == 'straight' else 0.0
     cover = max(r * 2, 0.7 * travel)
+    if p.get('_line'):
+        # a beam (LineProjectileEmission: Ray of Doom, Desperado rifle) runs the length of the range: it crosses about
+        # half of the track in reach (estimate)
+        cover = max(cover, R)
     return 1 + (n - 1) * min(1.0, cover / (2 * R))
 
 
@@ -179,32 +183,78 @@ def tag_dmg(p, tags, states=()):
 
 
 class Acc:
-    """rows {(R, dmg): [hits/s at each crowd]}, plus single-target MOAB / Ceramic dps"""
+    """rows {(R, dmg, immunity bits, dmg vs Ceramic): [[hits/s at each crowd], pierce]}, single-target MOAB / Ceramic
+    dps (MOAB split by immunity bits: mb), and crowd control (cc: freeze, stun, slow, maim)"""
 
     def __init__(self):
         self.rows = {}
         self.m = 0.0
+        self.mb = {}
         self.c = 0.0
         self.dot_m = {}
         self.dot_c = {}
+        self.cc = {}
+        self.mcrowd = [0.0] * len(CROWD)
+        self.dot_mc = {}
         self.flags = set()
 
-    def add_row(self, R, d, hs, scale=1.0):
+    def add_row(self, R, d, hs, scale=1.0, imm=0, pierce=1.0, dc=None):
         if d <= 0 or not any(hs):
             return
-        key = (round(min(R, 9999.0), 1), round(d, 2))
-        row = self.rows.setdefault(key, [0.0] * len(CROWD))
+        dc = d if dc is None else dc
+        key = (round(min(R, 9999.0), 1), round(d, 2), int(imm), round(dc, 2))
+        row = self.rows.setdefault(key, [[0.0] * len(CROWD), 0.0])
+        for i, h in enumerate(hs):
+            row[0][i] += h * scale
+        row[1] = max(row[1], pierce)
+
+    def add_m(self, dps, hps, imm, scale=1.0):
+        if dps <= 0:
+            return
+        e = self.mb.setdefault(int(imm), [0.0, 0.0])
+        e[0] += dps * scale
+        e[1] += hps * scale
+        self.m += dps * scale
+
+    def add_cc(self, R, kind, mult, dur, hs, moab, scale=1.0):
+        if (max(dur) if isinstance(dur, tuple) else dur) <= 0 or not any(hs):
+            return
+        key = (round(min(R, 9999.0), 1), kind, round(mult, 3), dur if isinstance(dur, tuple) else round(min(dur, 60.0), 2), int(moab))
+        row = self.cc.setdefault(key, [0.0] * len(CROWD))
         for i, h in enumerate(hs):
             row[i] += h * scale
 
     def merge(self, other, scale):
-        for (R, d), hs in other.rows.items():
-            self.add_row(R, d, hs, scale)
-        self.m += other.total_m() * scale
+        for (R, d, imm, dc), (hs, pc) in other.rows.items():
+            self.add_row(R, d, hs, scale, imm, pc, dc)
+        for imm, (dps, hps) in other.mb_all().items():
+            self.add_m(dps, hps, imm, scale)
         self.c += other.total_c() * scale
+        for (R, k, mu, du, mo), hs in other.cc.items():
+            self.add_cc(R, k, mu, du, hs, mo, scale)
+        oc = other.mc_all()
+        for i in range(len(CROWD)):
+            self.mcrowd[i] += oc[i] * scale
+
+    def mc_all(self):
+        """MOAB damage per second with 1, 2, 4... blimps in range (pierce reaching several blimps)"""
+        out = list(self.mcrowd)
+        for key, (dps, hps, imm) in self.dot_m.items():
+            row = self.dot_mc.get(key)
+            for i in range(len(CROWD)):
+                out[i] += row[i] if row else dps
+        return out
+
+    def mb_all(self):
+        out = {k: list(v) for k, v in self.mb.items()}
+        for (dps, hps, imm) in self.dot_m.values():
+            e = out.setdefault(int(imm), [0.0, 0.0])
+            e[0] += dps
+            e[1] += hps
+        return out
 
     def total_m(self):
-        return self.m + sum(self.dot_m.values())
+        return self.m + sum(v[0] for v in self.dot_m.values())
 
     def total_c(self):
         return self.c + sum(self.dot_c.values())
@@ -221,6 +271,57 @@ def near_burst(p):
     return False
 
 
+def eff_bits(p):
+    """immunity bits of one projectile's damage: its own type (decoded from DamageModel), a ChangeDamageType, minus what it bypasses"""
+    bits = int(p['setImm']) if 'setImm' in p else node_bits(p)
+    bits &= ~int(p.get('bypass', 0))
+    ig = p.get('ignoreImm')
+    if ig and ig.get('chance', 0) >= 1:
+        bits &= ~int(ig['bits'])
+    return bits
+
+
+def dot_imm(f):
+    if 'imm' in f:
+        return int(f['imm'])
+    return TYPE_BITS.get(f.get('type'), 0)
+
+
+def crowd_control(acc, a, p, R, hits, single, moab_ok):
+    """freeze / stun / slow / MOAB maim this node puts on the bloons it hits, as applications per second (the leak
+    check stops or slows that share of the bloons in the tower's reach for the effect's duration). Estimate."""
+    fx = p.get('fx') or []
+    moab_slow = None
+    for f in fx:
+        if f.get('k') == 'slowMod' and f.get('tag') == 'Moabs':
+            moab_slow = 1.0 if f.get('immune') else num(f.get('mult'), 1.0)
+    for f in fx:
+        k = f.get('k')
+        if k == 'freeze':
+            mo = bool(f.get('moabs')) and moab_ok
+            fm = 1.0
+            for g in fx:
+                if g.get('k') == 'freezeMod' and 'Ceramic' in (g.get('tags') or []):
+                    fm = num(g.get('mult'), 1.0)
+            ch = num(f.get('chance'), 1.0) if 'chance' in f else 1.0
+            acc.add_cc(R, 'f', round(fm, 2), num(f.get('dur')), [h * ch for h in hits], mo)
+        elif k in ('stun', 'slow'):
+            mult = num(f.get('mult'), 1.0)
+            if mult >= 1.0 or f.get('bloons'):
+                continue
+            only_moab = f.get('tag') == 'Moabs'
+            mo = moab_ok and (moab_slow is None or moab_slow < 1.0) and not X.blocked(p, ('Moab', 'Moabs'))
+            kind = 't' if mult <= 0 else 's'
+            if only_moab:
+                acc.add_cc(R, kind, mult, num(f.get('dur')), [single] * len(CROWD), 2)
+            else:
+                acc.add_cc(R, kind, mult, num(f.get('dur')), hits, 1 if mo else 0)
+        elif k == 'maim' and moab_ok:
+            durs = tuple(round(num(f.get(t)), 2) for t in ('moab', 'bfb', 'zomg', 'ddt', 'bad'))
+            if any(durs):
+                acc.add_cc(R, 'm', num(f.get('mult')), durs, [single] * len(CROWD), 2)
+
+
 def walk_node(acc, a, p, R, rate_fn, single_rate, depth=0, attack_moab_ok=True, states=()):
     """p: projectile; rate_fn(i) = projectiles/s of this node at crowd i that actually find bloons;
     single_rate = projectiles/s of this node that hit the one big target (MOAB / Ceramic)"""
@@ -229,15 +330,26 @@ def walk_node(acc, a, p, R, rate_fn, single_rate, depth=0, attack_moab_ok=True, 
     hits = []
     for i, n in enumerate(CROWD):
         pierce = num(p.get('pierce'), 1.0)
+        # RefreshPierceModel (Wall of Fire, Blooncineration fire): the pierce comes back every interval of its life
+        rp = num(p.get('refreshPierceEvery'))
+        if rp > 0 and num(p.get('life')) > rp:
+            pierce *= min(20.0, num(p.get('life')) / rp)
         h = min(max(pierce, 1.0), reach(p, n, R) * rehits(p))
         hits.append(rate_fn(i) * h)
     d = plain_dmg(p, states)
+    imm = eff_bits(p)
     if d > 0 and not X.blocked(a, ('Red',)):
-        acc.add_row(R, d, hits)
+        dc = tag_dmg(p, ('Ceramic',), states) if not X.blocked(a, ('Ceramic',)) else 0.0
+        acc.add_row(R, d, hits, 1.0, imm, min(num(p.get('pierce'), 1.0), 1000.0) * rehits(p), dc)
     # single target: a projectile that stays (rehits) hits the same MOAB again, up to its pierce
     rep = min(rehits(p), max(1.0, num(p.get('pierce'), 1.0)))
     if attack_moab_ok:
-        acc.m += single_rate * rep * tag_dmg(p, ('Moab', 'Moabs'), states)
+        dm = tag_dmg(p, ('Moab', 'Moabs'), states)
+        acc.add_m(single_rate * rep * dm, single_rate * rep, imm)
+        if dm > 0:
+            for i in range(len(CROWD)):
+                acc.mcrowd[i] += max(single_rate * rep, hits[i]) * dm
+    crowd_control(acc, a, p, R, hits, single_rate * rep, attack_moab_ok)
     if not X.blocked(a, ('Ceramic',)):
         acc.c += single_rate * rep * tag_dmg(p, ('Ceramic',), states)
     # DoT: refreshes per bloon
@@ -253,12 +365,15 @@ def walk_node(acc, a, p, R, rate_fn, single_rate, depth=0, attack_moab_ok=True, 
             for i, n in enumerate(CROWD):
                 holders = min(float(n), hits[i] * dur)
                 dhs.append(holders / every)
-            acc.add_row(R, f['dmg'], dhs)
+            acc.add_row(R, f['dmg'], dhs, 1.0, dot_imm(f), 1e3, f['dmg'])
         key = (f.get('id'), f['dmg'], every)
         if single_rate > 0:
             cap = per_bloon if single_rate * dur >= 1 else f['dmg'] * max(1, f.get('ticks') or 1) * single_rate
             if attack_moab_ok and not X.blocked(f, ('Moab', 'Moabs')) and not X.blocked(p, ('Moab', 'Moabs')):
-                acc.dot_m[key] = max(acc.dot_m.get(key, 0.0), cap)
+                if cap > acc.dot_m.get(key, (0.0,))[0]:
+                    acc.dot_m[key] = (cap, cap / f['dmg'], dot_imm(f))
+                    # with n blimps in reach, the burn sits on as many as the attack reaches within its duration
+                    acc.dot_mc[key] = [cap * max(1.0, min(float(n), max(single_rate, hits[i]) * dur)) for i, n in enumerate(CROWD)]
             if not X.blocked(f, ('Ceramic',)) and not X.blocked(p, ('Ceramic',)):
                 acc.dot_c[key] = max(acc.dot_c.get(key, 0.0), cap)
     # children
@@ -301,12 +416,13 @@ def walk_attack(acc, a, rng_fallback):
             continue
         n = max(1, int(num(w.get('n'), 1)))
         em, arc = w.get('em'), num(w.get('arc'))
-        shots = [(w['p'], sps, n, em, arc)]
+        p0 = dict(w['p'], _line=True) if em == 'LineProjectile' else w['p']
+        shots = [(p0, sps, n, em, arc)]
         alt = w.get('alt')
         if alt and alt.get('p') and num(alt.get('every')) > 0:
             k = num(alt['every'])
             volleys = sps / n
-            shots = [(w['p'], sps * (k - 1) / k, n, em, arc), (alt['p'], volleys / k * num(alt.get('n'), 1), int(num(alt.get('n'), 1)), None, num(alt.get('arc')))]
+            shots = [(p0, sps * (k - 1) / k, n, em, arc), (alt['p'], volleys / k * num(alt.get('n'), 1), int(num(alt.get('n'), 1)), None, num(alt.get('arc')))]
         bs = w.get('bonusShot')
         if bs and bs.get('p') and num(bs.get('every')) > 0:
             shots.append((bs['p'], sps / n / num(bs['every']), 1, None, 0))
@@ -334,11 +450,35 @@ def zone_dot(acc, a, p, moab_ok):
         if f.get('k') != 'dot' or num(f.get('dmg')) <= 0:
             continue
         every = num(f.get('every')) or 1.0
-        acc.add_row(9999.0, f['dmg'], [float(n) / every for n in CROWD])
+        acc.add_row(9999.0, f['dmg'], [float(n) / every for n in CROWD], 1.0, dot_imm(f), 1e3, f['dmg'])
         if moab_ok:
-            acc.dot_m[('zone', p.get('id'))] = f['dmg'] / every
+            acc.dot_m[('zone', p.get('id'))] = (f['dmg'] / every, 1.0 / every, dot_imm(f))
+            acc.dot_mc[('zone', p.get('id'))] = [f['dmg'] / every * n for n in CROWD]
         acc.dot_c[('zone', p.get('id'))] = f['dmg'] / every
         acc.ranges_extra = getattr(acc, 'ranges_extra', []) + [9999.0]
+
+
+def slow_zones(rec):
+    """zones that slow every bloon in them (Ice Arctic Wind, Silas) or shove blimps back (Heli MOAB Shove), as
+    [radius, speed x for bloons (1 = none), speed x for [MOAB, BFB, ZOMG, DDT, BAD], immunity-like bits of bloons it skips
+    (1 Lead, 4 White/Zebra)]"""
+    out = []
+    rng = num(rec.get('range'))
+    for z in rec.get('zones') or []:
+        R = rng if z.get('rangeLinked') else num(z.get('r'))
+        if R <= 0:
+            continue
+        excl = z.get('excl') or []
+        if z.get('k') == 'slowZone':
+            sp = num(z.get('speed'), 1.0)
+            moab = 1.0 if 'Moabs' in excl else sp
+            skip = (1 if 'Lead' in excl else 0) | (4 if ('Ice' in excl or 'White' in excl) else 0)
+            out.append([round(R, 1), sp, [moab, moab, moab, moab, 1.0 if 'Moabs' in excl else sp], skip])
+        elif z.get('k') == 'moabShove':
+            # MOAB Shove: blimps in reach move at this share of their speed (negative = pushed back); DDT as MOAB, BAD not
+            m, b, zg = num(z.get('moab'), 1.0), num(z.get('bfb'), 1.0), num(z.get('zomg'), 1.0)
+            out.append([round(R, 1), 1.0, [m, b, zg, m, 1.0], 0])
+    return out
 
 
 def own_attacks(rec):
@@ -409,16 +549,158 @@ def summarize(rec):
     acc = tower_acc(rec)
     if not acc.rows and acc.total_m() <= 0:
         return None, []
-    a_out = [[R, d, [round(h, 3) for h in hs]] for (R, d), hs in sorted(acc.rows.items()) if any(hs)]
+    a_out = []
+    for (R, d, imm, dc), (hs, pc) in sorted(acc.rows.items()):
+        if not any(hs):
+            continue
+        row = [R, d, [round(h, 3) for h in hs], imm, round(min(pc, 1000.0), 1)]
+        if dc != d:
+            row.append(dc)
+        a_out.append(row)
     finite = [R for R in acc.ranges if R < 900]
     rr = num(rec.get('range'))
     res = {'r': round(max(finite) if finite else min(max(acc.ranges or [rr]), 9999.0), 1), 'a': a_out,
            'm': round(acc.total_m(), 2), 'c': round(acc.total_c(), 2)}
+    mb = [[round(dps, 2), imm, round(hps, 3)] for imm, (dps, hps) in sorted(acc.mb_all().items()) if dps > 0.005]
+    if mb and not (len(mb) == 1 and mb[0][1] == 0):
+        res['mb'] = mb
+    elif mb:
+        res['mh'] = mb[0][2]
+    mc = acc.mc_all()
+    if mc[0] > 0 and any(v > 1.05 * mc[0] for v in mc[1:]):
+        res['mc'] = [round(max(1.0, v / mc[0]), 2) for v in mc[1:]]
+
+    if acc.cc:
+        res['cc'] = [[R, k, mu, list(du) if isinstance(du, tuple) else du, [round(h, 3) for h in hs], mo]
+                     for (R, k, mu, du, mo), hs in sorted(acc.cc.items(), key=lambda kv: str(kv[0])) if any(hs)]
     if rec.get('global') or (acc.ranges and not finite):
         res['g'] = 1
+    sz = slow_zones(rec)
+    if sz:
+        res['sz'] = sz
     if 'nomoab' in acc.flags and res['m'] == 0:
         res['f'] = ['nomoab']
     return res, acc.subs_used
+
+
+ABILITY_SKIP_TRIGGERS = ('IsPassive', 'activateOnPreLeak', 'activateOnLeak', 'activateOnLivesLost', 'activateOnRoundEnd')
+
+
+def acc_out(acc):
+    """an Acc as the compact {a, m, mb|mh, cc} the browser reads (no range fields)"""
+    res, _ = summarize_acc(acc)
+    return res
+
+
+def summarize_acc(acc):
+    if not acc.rows and acc.total_m() <= 0:
+        return None, []
+    a_out = []
+    for (R, d, imm, dc), (hs, pc) in sorted(acc.rows.items()):
+        if any(hs):
+            row = [R, d, [round(h, 3) for h in hs], imm, round(min(pc, 1000.0), 1)]
+            if dc != d:
+                row.append(dc)
+            a_out.append(row)
+    res = {'a': a_out, 'm': round(acc.total_m(), 2)}
+    mb = [[round(dps, 2), imm, round(hps, 3)] for imm, (dps, hps) in sorted(acc.mb_all().items()) if dps > 0.005]
+    if mb and not (len(mb) == 1 and mb[0][1] == 0):
+        res['mb'] = mb
+    elif mb:
+        res['mh'] = mb[0][2]
+    mc = acc.mc_all()
+    if mc[0] > 0 and any(v > 1.05 * mc[0] for v in mc[1:]):
+        res['mc'] = [round(max(1.0, v / mc[0]), 2) for v in mc[1:]]
+
+    if acc.cc:
+        res['cc'] = [[R, k, mu, list(du) if isinstance(du, tuple) else du, [round(h, 3) for h in hs], mo]
+                     for (R, k, mu, du, mo), hs in sorted(acc.cc.items(), key=lambda kv: str(kv[0])) if any(hs)]
+    return res, []
+
+
+def abilities_of(ex, raw, src, rng, own_rows):
+    """the activated abilities of one crosspath / hero level, for the leak check's "abilities used on cooldown" pass.
+    Each entry: n name, cd cooldown s, d seconds it acts (0 = one instant volley), and what it adds while active:
+    a/m/mb/cc like an attack (per second; per activation when d = 0), t = [cooldown multiplier, extra damage] on the
+    tower's own attacks (TurboModel), u = extra damage on own attacks (DamageUpModel), oc / cta = buffs the engine
+    gives other towers (Overclock, Call to Arms). Abilities that only trigger on a leak, on lives lost or at round end
+    are left out (estimate)."""
+    out = []
+    cx = X.Ctx(ex, src)
+    cx.spell_names = set()
+    for b in raw.get('behaviors') or []:
+        if X.short(b) != 'AbilityModel':
+            continue
+        if any(b.get(k) for k in ABILITY_SKIP_TRIGGERS):
+            continue
+        cd = num(b.get('cooldown')) or num(b.get('cooldownFrames')) / 60.0
+        if cd <= 0:
+            continue
+        ab = {'n': b.get('displayName') or (b.get('name') or '').replace('AbilityModel_', ''), 'cd': round(cd, 2)}
+        acc = Acc()
+        dur = 0.0
+        for bb in b.get('behaviors') or []:
+            t = X.short(bb)
+            life = num(bb.get('lifespan')) or num(bb.get('lifespanFrames')) / 60.0 or num(bb.get('duration')) or num(bb.get('durationFrames')) / 60.0
+            if t == 'ActivateAttackModel':
+                one = bool(bb.get('isOneShot')) or life <= 0
+                for am in bb.get('attacks') or []:
+                    dec = X.attack(am, cx)
+                    if one:
+                        for w in dec.get('weapons') or []:
+                            # fires once on activation: one volley (n projectiles x burst) delivered at once
+                            w['sps'] = num(w.get('n'), 1.0) * num((w.get('burst') or {}).get('n'), 1.0)
+                    walk_attack(acc, dec, rng)
+                    for w in dec.get('weapons') or []:
+                        for node, _ in X.tree_nodes(w.get('p')):
+                            for tr in node.get('towers') or []:
+                                st = SUBS.get(tr['ref']) or ex.subtowers.get(tr['ref'])
+                                if st and num(st.get('life')) > 0:
+                                    sub = tower_acc(st, 1)
+                                    acc.merge(sub, num(w.get('n'), 1.0))
+                                    dur = max(dur, min(num(st.get('life')), cd))
+                if not one:
+                    dur = max(dur, life)
+            elif t == 'MoabBarrageModel' and isinstance(bb.get('damageOverTimeModel'), dict):
+                # Churchill: missiles burn up to `targets` blimps for the duration; counted on one blimp (estimate)
+                dm = bb['damageOverTimeModel']
+                iv = num(dm.get('interval')) or 0.5
+                acc.add_m(num(dm.get('damage')) / iv, 1.0 / iv, int(num(dm.get('immuneBloonProperties'))))
+                dur = max(dur, num(bb.get('durationFrames')) / 60.0)
+            elif t in ('CreateProjectileOnAbilityActivateModel', 'PlaceProjectileAtModel') and isinstance(bb.get('projectile') or bb.get('projectileModel'), dict):
+                pr = X.projectile(bb.get('projectile') or bb.get('projectileModel'), cx)
+                if pr:
+                    walk_node(acc, {}, pr, rng or 9999.0, (lambda i: 1.0), 1.0)
+            elif t in ('AbilityCreateTowerModel', 'UCAVModel'):
+                tm = bb.get('towerModel') or bb.get('ucavTowerModel')
+                if isinstance(tm, dict):
+                    ref = ex.subtower(tm, cx, via='ability')
+                    SUBS.update(ex.subtowers)
+                    st = SUBS.get(ref['ref'])
+                    tl = num(bb.get('towerLifetime')) or num(bb.get('duration')) or num((st or {}).get('life'))
+                    if st and tl > 0:
+                        acc.merge(tower_acc(st, 1), 1.0)
+                        dur = max(dur, min(tl, cd))
+            elif t == 'TurboModel':
+                ab['t'] = [num(bb.get('multiplier'), 1.0), num(bb.get('extraDamage'))]
+                dur = max(dur, life)
+            elif t == 'DamageUpModel':
+                ab['u'] = num(bb.get('additionalDamage'))
+                dur = max(dur, life)
+            elif t == 'OverclockModel':
+                ab['oc'] = [num(bb.get('rateModifier'), 1.0), life, [num(x, 1.0) for x in bb.get('tierBasedDurationMultiplier') or []]]
+            elif t == 'OverclockPermanentModel':
+                ab['ocp'] = [num(bb.get('rateModifier'), 1.0), int(num(bb.get('maxStacks')))]
+            elif t == 'CallToArmsModel':
+                ab['cta'] = [num(bb.get('multiplier'), 1.0), life]
+        body = acc_out(acc)
+        if body:
+            ab.update(body)
+        if not body and not any(k in ab for k in ('t', 'u', 'oc', 'cta')):
+            continue
+        ab['d'] = round(dur, 2)
+        out.append(ab)
+    return out
 
 
 def load(path):
@@ -458,9 +740,14 @@ def main():
             f = os.path.join(gd, 'Towers', folder, folder + ('' if code == '000' else '-' + code) + '.json')
             if not os.path.exists(f):
                 continue
-            rec = ex.describe(load(f), os.path.relpath(f, gd))
+            raw = load(f)
+            rec = ex.describe(raw, os.path.relpath(f, gd))
             SUBS.update(ex.subtowers)
             s, used = summarize(rec)
+            abl = abilities_of(ex, raw, os.path.relpath(f, gd), num(rec.get('range')), s)
+            if abl:
+                s = s or {'r': round(num(rec.get('range')), 1), 'a': [], 'm': 0, 'c': 0}
+                s['ab'] = abl
             if s:
                 rows[code] = s
             if used:
@@ -473,9 +760,14 @@ def main():
             f = os.path.join(gd, 'Towers', folder, folder + ('' if n == 1 else ' ' + str(n)) + '.json')
             if not os.path.exists(f):
                 continue
-            rec = ex.describe(load(f), os.path.relpath(f, gd))
+            raw = load(f)
+            rec = ex.describe(raw, os.path.relpath(f, gd))
             SUBS.update(ex.subtowers)
             s, used = summarize(rec)
+            abl = abilities_of(ex, raw, os.path.relpath(f, gd), num(rec.get('range')), s)
+            if abl:
+                s = s or {'r': round(num(rec.get('range')), 1), 'a': [], 'm': 0, 'c': 0}
+                s['ab'] = abl
             if s:
                 lv[str(n)] = s
             if used:

@@ -1,4 +1,4 @@
-/* Monkey Intel: XP and progression calculator (slug: xp). Needs tools-data, tools-core, tools-ui.
+/* Monkey Intel: XP and progression calculator (slug: xp). Needs tools-data, tools-core, goals-core, tools-ui.
    Reads and writes your unlocks in the shared progress store (progress.js), so My goals, the Advisor and the Simulator agree. */
 (function () {
   'use strict';
@@ -28,8 +28,10 @@
   });
   /* your saved unlocks for this tower win over the calculator's own memory */
   /* Monkey Education / Elite Military Training are part of My profile */
-  if (P) { const set = P.get().settings; st.me = set.me !== false; st.emt = !!set.emt; }
-  const saveMk = () => { if (P) P.update((x) => { x.settings.me = st.me; x.settings.emt = st.emt; }); };
+  /* the hardest map tier and the tower's banked XP too, so this page and My goals give the same answer */
+  if (P) { const set = P.get().settings; st.me = set.me === true; st.emt = !!set.emt; st.maxTier = set.maxTier || st.maxTier; }
+  const saveMk = () => { if (P) P.update((x) => { x.settings.me = st.me; x.settings.emt = st.emt; x.settings.maxTier = st.maxTier; }); };
+  const bankOf = (id) => { const m = mine(id); return m ? m.bank || 0 : 0; };
   const loadMine = () => { const m = mine(st.towerId); if (m && m.set) st.unlocked = m.u.slice(); };
   loadMine();
   const save = () => U.store.set(KEY, st);
@@ -38,28 +40,34 @@
 
   function current() {
     const t = C.tower(D, st.towerId);
-    let unlocked = st.unlocked, unspent = 0;
+    let unlocked = st.unlocked, unspent = 0, bank = 0;
     if (st.useXp) { const u = C.unlockedFromXp(t, st.xp); unlocked = u.unlocked; unspent = u.unspent; }
+    else { bank = bankOf(t.id); unspent = bank; } /* XP you banked in My goals counts towards the next unlock */
     let target = st.target;
     if (target.kind === 'paragon' && !t.paragon) target = { kind: 'all' };
     if (target.kind === 'upgrade' && !(target.path >= 0 && target.tier >= 1)) target = { kind: 'all' };
-    return { t, unlocked, unspent, target, plan: C.xpPlan(D, t.id, unlocked, target, unspent) };
+    const plan = C.xpPlan(D, t.id, unlocked, target, unspent);
+    /* the Paragon is already yours (My profile / My goals): nothing left, the same as the goal card */
+    if (target.kind === 'paragon' && P && P.tower(t.id).p && !st.useXp) { plan.steps = []; plan.need = 0; plan.done = true; }
+    return { t, unlocked, unspent, bank, target, plan };
   }
 
   function render() {
     save();
     const cur = current();
+    const snap = U.snapFocus();
     U.clear(root);
     root.appendChild(pickPanel(cur));
     root.appendChild(answerBlock(cur));
     root.appendChild(orderPanel(cur));
     root.appendChild(farmPanel(cur));
     root.appendChild(rulesPanel());
+    U.restoreFocus(snap, root);
   }
 
   function pickPanel(cur) {
     const t = cur.t;
-    const grid = U.towerGrid(D, { label: 'Pick a tower', pressed: (x) => x.id === st.towerId, cost: null,
+    const grid = U.towerGrid(D, { label: 'Pick a tower', key: 'xpc-t', pressed: (x) => x.id === st.towerId, cost: null,
       onpick: (x) => { st.towerId = x.id; st.unlocked = [0, 0, 0]; loadMine(); if (st.target.kind === 'upgrade') st.target = { kind: x.paragon ? 'paragon' : 'all' }; render(); } });
     /* clickable 3x5 pips */
     const pipRows = h('div', { class: 'ti-paths', role: 'group', 'aria-label': 'Unlocked upgrades' });
@@ -69,7 +77,7 @@
         const on = cur.unlocked[p] >= k;
         const isTarget = cur.target.kind === 'upgrade' && cur.target.path === p && cur.target.tier === k;
         row.appendChild(h('button', {
-          type: 'button', class: 'ti-pip' + (on ? ' on' : '') + (k === 5 ? ' t5' : '') + (isTarget ? ' target' : ''),
+          type: 'button', id: 'xpc-pip-' + p + k, class: 'ti-pip' + (on ? ' on' : '') + (k === 5 ? ' t5' : '') + (isTarget ? ' target' : ''),
           'aria-pressed': String(on), 'aria-label': C.upgradeName(t, p, k) + (on ? ', unlocked' : ', locked'),
           title: C.upgradeName(t, p, k), disabled: st.useXp ? true : null,
           onclick: () => { loadMine(); st.unlocked = st.unlocked.slice(); st.unlocked[p] = st.unlocked[p] === k ? k - 1 : k; saveMine(); render(); },
@@ -81,8 +89,8 @@
     const xpIn = h('input', { class: 'ti-input', type: 'number', min: '0', step: '100', inputmode: 'numeric', value: String(st.xp), 'aria-label': 'Total XP earned on this tower', style: 'width:10em' });
     xpIn.addEventListener('change', () => { st.xp = Math.max(0, parseInt(xpIn.value, 10) || 0); render(); });
     const modeSeg = h('div', { class: 'seg', role: 'radiogroup', 'aria-label': 'How to enter progress' }, [
-      h('button', { type: 'button', role: 'radio', 'aria-checked': String(!st.useXp), onclick: () => { st.useXp = false; render(); } }, 'Tap upgrades'),
-      h('button', { type: 'button', role: 'radio', 'aria-checked': String(st.useXp), onclick: () => { st.useXp = true; render(); } }, 'Enter total XP'),
+      h('button', { type: 'button', role: 'radio', id: 'xpc-in-tap', 'aria-checked': String(!st.useXp), onclick: () => { st.useXp = false; render(); } }, 'Tap upgrades'),
+      h('button', { type: 'button', role: 'radio', id: 'xpc-in-xp', 'aria-checked': String(st.useXp), onclick: () => { st.useXp = true; render(); } }, 'Enter total XP'),
     ]);
     const targets = [{ value: 'all', label: 'All tier 5s' }];
     if (t.paragon) targets.unshift({ value: 'paragon', label: 'Paragon: ' + t.paragon.name });
@@ -90,8 +98,8 @@
     const tv = cur.target.kind === 'upgrade' ? 'u' + cur.target.path + cur.target.tier : cur.target.kind;
     const tsel = U.select(targets, tv, (v) => { st.target = v[0] === 'u' ? { kind: 'upgrade', path: +v[1], tier: +v[2] } : { kind: v }; render(); }, { id: 'xpc-target' });
     const mk = h('div', { class: 'ti-row' }, [
-      h('label', { class: 'check' }, [h('input', { type: 'checkbox', checked: st.me ? true : null, onchange: (e) => { st.me = e.target.checked; saveMk(); render(); } }), 'Monkey Education (+8%)']),
-      t.class === 'Military' ? h('label', { class: 'check' }, [h('input', { type: 'checkbox', checked: st.emt ? true : null, onchange: (e) => { st.emt = e.target.checked; saveMk(); render(); } }), 'Elite Military Training (+5%)']) : null,
+      h('label', { class: 'check' }, [h('input', { type: 'checkbox', id: 'xpc-me', checked: st.me ? true : null, onchange: (e) => { st.me = e.target.checked; saveMk(); render(); } }), 'Monkey Education (+8%)' + (P && P.get().settings.me == null ? ': not set, counted as off' : '')]),
+      t.class === 'Military' ? h('label', { class: 'check' }, [h('input', { type: 'checkbox', id: 'xpc-emt', checked: st.emt ? true : null, onchange: (e) => { st.emt = e.target.checked; saveMk(); render(); } }), 'Elite Military Training (+5%)']) : null,
     ]);
     return h('section', { class: 'panel', 'aria-labelledby': 'xpc-pick-h' }, [
       h('h2', { class: 'panel-h', id: 'xpc-pick-h' }, 'Your tower'),
@@ -104,26 +112,27 @@
     ]);
   }
 
-  function farms(cur) {
-    return C.farmTable(D, cur.t.id, { me: st.me, emt: st.emt, need: cur.plan.need });
-  }
+  /* the same farm and XP a run as My goals (goals-core C.goalFarm) */
+  function farmOf(cur) { return C.goalFarm(D, cur.t.id, cur.plan.need, { me: st.me, emt: st.emt, maxTier: st.maxTier }); }
+  function farms(cur) { return farmOf(cur).rows; }
   function answerBlock(cur) {
     const p = cur.plan;
     if (p.noParagon) return h('section', { class: 'ti-alert ti-alert-warn' }, [h('p', { class: 'ti-alert-t' }, cur.t.name + ' has no Paragon'), h('p', { class: 'ti-alert-s' }, 'Pick "All tier 5s" instead.')]);
     if (p.done) return h('section', { class: 'ti-alert ti-alert-ok' }, [h('p', { class: 'ti-alert-t' }, 'Already unlocked'), h('p', { class: 'ti-alert-s' }, 'You have ' + p.targetName + '. Pick another target.')]);
-    const rows = farms(cur);
-    const best = C.farmPick(rows, st.maxTier);
-    const g = (D.guides || {})[cur.t.id] || {};
-    const mapName = g.farm && g.farm.map && best && best.modeId === 'deflation' && st.maxTier === 'Expert' ? g.farm.map : null;
-    const sentence = best ? 'Play ' + best.tier + ' ' + best.modeName + (mapName ? ' (e.g. ' + mapName + ')' : '') + ' with only ' + cur.t.name + 's: ' +
-      C.int(best.xp) + ' XP a run, so ' + best.runs + ' run' + (best.runs === 1 ? '' : 's') + ', about ' + hours(best.totalMin) + '.' : '';
+    const gf = farmOf(cur);
+    const best = gf.best;
+    const mapName = gf.guide ? C.map(D, gf.guide.mapId).name : null;
+    const sentence = best ? 'Play ' + best.tier + ' ' + best.modeName + (mapName ? ' on ' + mapName : '') + ' with ' + gf.who + ': ' +
+      C.int(gf.perRun) + ' XP a run, so ' + gf.runs + ' run' + (gf.runs === 1 ? '' : 's') + ', about ' + hours(gf.minutes) + '.' : '';
     const kids = [
       h('p', { class: 'ti-lbl', style: 'color:inherit' }, 'XP to ' + p.targetName),
       h('p', { class: 'ti-bignum' }, C.int(p.need)),
       h('p', { class: 'ti-pick' }, sentence),
     ];
+    if (cur.bank > 0) kids.push(h('p', { class: 'ti-alert-s' }, ['After the ' + C.int(cur.bank) + ' XP banked on ' + cur.t.name.replace(/ Monkey$/, '') + ' in ', h('a', { href: '../goals/' }, 'My goals'), '.']));
+    if (best) kids.push(h('p', { class: 'ti-alert-s' }, ['Hardest maps you have: ' + st.maxTier + ' (from ', h('a', { href: '../profile/' }, 'My profile'), '; change it below).']));
     if (p.unknown) kids.push(h('p', { class: 'ti-alert-s' }, [p.unknown + ' upgrade' + (p.unknown > 1 ? 's have' : ' has') + ' unknown XP and count as 0 ', U.badge('unverified')]));
-    if (cur.unspent > 0) kids.push(h('p', { class: 'ti-alert-s' }, C.int(cur.unspent) + ' XP of what you entered is not spent yet and is taken off.'));
+    if (cur.unspent > 0 && !cur.bank) kids.push(h('p', { class: 'ti-alert-s' }, C.int(cur.unspent) + ' XP of what you entered is not spent yet and is taken off.'));
     if (P) {
       const t = cur.t, tg = cur.target;
       const add = tg.kind === 'upgrade' ? t.id + '.u' + tg.path + tg.tier : t.id + '.' + tg.kind;
@@ -154,25 +163,27 @@
   }
 
   function farmPanel(cur) {
-    const rows = farms(cur).filter((r) => r.tier === st.maxTier);
-    const best = C.farmPick(farms(cur), st.maxTier);
+    const gf = farmOf(cur);
+    const rows = gf.rows.filter((r) => r.tier === st.maxTier);
+    const best = gf.best;
     const tierSeg = h('div', { class: 'seg', role: 'radiogroup', 'aria-label': 'Hardest maps you have unlocked' }, C.TIERS.map((tr) =>
-      h('button', { type: 'button', role: 'radio', 'aria-checked': String(st.maxTier === tr), onclick: () => { st.maxTier = tr; render(); } }, tr)));
+      h('button', { type: 'button', role: 'radio', id: 'xpc-tier-' + tr, 'aria-checked': String(st.maxTier === tr), onclick: () => { st.maxTier = tr; saveMk(); render(); } }, tr)));
     const ease = ['', 'Easy', 'Easy', 'Medium', 'Hard', 'Very hard'];
     const tb = h('tbody');
     rows.slice(0, 14).forEach((r) => {
       const isBest = best && r.modeId === best.modeId && r.tier === best.tier;
+      const guide = isBest && gf.guide && gf.share < 0.995; /* the guide's farm: its helpers take part of the XP */
       tb.appendChild(h('tr', { class: isBest ? 'ti-tbl-best' : null }, [
-        h('th', { scope: 'row' }, [r.tier + ' ' + r.modeName, h('br'), h('span', { class: 'ti-mono', style: 'font-size:12px' }, 'R' + r.rounds[0] + '–' + r.rounds[1])]),
-        h('td', { class: 'n' }, C.int(r.xp)),
-        h('td', { class: 'n' }, r.runs != null ? String(r.runs) : '–'),
+        h('th', { scope: 'row' }, [r.tier + ' ' + r.modeName, guide ? ' (guide farm)' : '', h('br'), h('span', { class: 'ti-mono', style: 'font-size:12px' }, 'R' + r.rounds[0] + '–' + r.rounds[1])]),
+        h('td', { class: 'n' }, C.int(guide ? gf.perRun : r.xp)),
+        h('td', { class: 'n' }, guide ? String(gf.runs) : r.runs != null ? String(r.runs) : '–'),
         h('td', { class: 'n hide-s' }, '~' + Math.round(r.minutes) + ' min'),
-        h('td', { class: 'n' }, r.totalMin != null ? hours(r.totalMin) : '–'),
+        h('td', { class: 'n' }, guide ? hours(gf.minutes) : r.totalMin != null ? hours(r.totalMin) : '–'),
         h('td', { class: 'hide-s' }, ease[r.ease] + (r.mk ? '' : ', no MK')),
       ]));
     });
     return h('section', { class: 'panel', 'aria-labelledby': 'xpc-farm-h' }, [
-      h('h2', { class: 'panel-h', id: 'xpc-farm-h' }, ['Farms ranked', h('small', null, 'XP per run with only this tower')]),
+      h('h2', { class: 'panel-h', id: 'xpc-farm-h' }, ['Farms ranked', h('small', null, 'XP per run with only this tower (the guide farm: with its helpers)')]),
       h('div', { class: 'ti-panel-b ti-field', style: 'margin-bottom:10px' }, [h('span', null, 'Hardest maps you have unlocked'), tierSeg]),
       h('div', { class: 'table-wrap table-flat', style: 'margin:0 14px' }, h('table', { class: 'tbl' }, [
         h('thead', null, h('tr', null, [h('th', null, 'Farm'), h('th', { class: 'n' }, 'XP / run'), h('th', { class: 'n' }, 'Runs'), h('th', { class: 'n hide-s' }, 'Per run'), h('th', { class: 'n' }, 'Total time'), h('th', { class: 'hide-s' }, 'To win')])),

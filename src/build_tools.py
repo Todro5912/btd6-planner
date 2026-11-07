@@ -193,6 +193,9 @@ def collect():
         return rows
 
     def game_power(pw):
+        # the browser needs the numbers, not the build notes (data/tower-power.json keeps those)
+        meta = pw.get('_meta') or {}
+        pw['_meta'] = {k: meta[k] for k in ('source', 'gameVersion', 'crowd', 'note') if k in meta}
         abr = game_rounds.get('abr') or []
         if abr:
             pw['roundsAbr'] = [[[b, c, round(st, 3), round(max(0.05, en - st), 3)] for b, c, st, en, _sp in g['groups']] for g in abr]

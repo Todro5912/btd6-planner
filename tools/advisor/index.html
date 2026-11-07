@@ -15,8 +15,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Luckiest+Guy&family=Rubik:wght@400;500;700&display=swap">
-<link rel="stylesheet" href="../../assets/site.css?v=0.9.2">
-<script src="../../assets/progress.js?v=0.9.2" defer></script>
+<link rel="stylesheet" href="../../assets/site.css?v=0.10.0">
+<script src="../../assets/progress.js?v=0.10.0" defer></script>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 44'%3E%3Cellipse cx='20' cy='18' rx='14' ry='16' fill='%23E2412E' stroke='%231C1A17' stroke-width='3'/%3E%3Cpath d='M17 34h6l-3 4z' fill='%23E2412E' stroke='%231C1A17' stroke-width='2.5'/%3E%3C/svg%3E">
 </head>
 <body class="is-tool tool-advisor">
@@ -40,7 +40,7 @@
       <kbd aria-hidden="true">/</kbd>
     </form>
     <a class="searchbtn" href="../../a-z/" data-search-open aria-haspopup="dialog" aria-label="Search (press /)"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="10" cy="10" r="6.5" fill="none" stroke="currentColor" stroke-width="3"/><path d="M15 15l6 6" stroke="currentColor" stroke-width="3.4" stroke-linecap="square"/></svg></a>
-    <a class="menubtn mebtn" href="../../tools/profile/" aria-label="My profile"><svg class="ico" viewBox="0 0 40 40" aria-hidden="true" focusable="false"><path d="M6 32L27 11" stroke="var(--ink)" stroke-width="5"/><path d="M6 32L27 11" stroke="var(--wood)" stroke-width="2"/><path d="M24 6l10 0 0 10z" fill="var(--panel)" stroke="var(--ink)" stroke-width="3" stroke-linejoin="round"/><path d="M4 28l8 8M8 26l6 6" stroke="var(--ink)" stroke-width="3"/></svg><span class="sl">Me</span></a>
+    <a class="menubtn mebtn" href="../../tools/profile/" aria-label="My profile"><svg class="ico" viewBox="0 0 40 40" aria-hidden="true" focusable="false"><circle cx="8" cy="18" r="5.5" fill="var(--wood)" stroke="var(--ink)" stroke-width="3"/><circle cx="32" cy="18" r="5.5" fill="var(--wood)" stroke="var(--ink)" stroke-width="3"/><circle cx="20" cy="19" r="13" fill="var(--wood)" stroke="var(--ink)" stroke-width="3"/><ellipse cx="20" cy="23" rx="8.5" ry="7" fill="var(--paper)" stroke="var(--ink)" stroke-width="2.5"/><circle cx="15.5" cy="15.5" r="2" fill="var(--ink)"/><circle cx="24.5" cy="15.5" r="2" fill="var(--ink)"/><path d="M16.5 25c2 2 5 2 7 0" fill="none" stroke="var(--ink)" stroke-width="2.4" stroke-linecap="round"/></svg><span class="sl">Me</span></a>
     <details class="menu more-menu" data-menu>
       <summary class="menubtn" aria-label="More pages"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="3"/></svg><span class="sl">More</span></summary>
       <ul class="menu-list menu-right">
@@ -66,21 +66,31 @@
 <li><span aria-current="page">Strategy Advisor</span></li>
 </ol></nav>
 <link rel="stylesheet" href="../../assets/tools/tools.css">
+<style>
+  #adv-busy { position: sticky; top: 8px; z-index: 5; margin: 0 0 8px; padding: 6px 12px; border: var(--line) solid var(--ink); border-radius: var(--r);
+    background: var(--banana); color: var(--ink); font-weight: 700; box-shadow: var(--lift); width: fit-content; }
+  #adv-root.adv-busy > section { opacity: .55; transition: opacity 120ms; }
+  .adv-more > summary { padding: 8px 12px; font-weight: 700; }
+  .ti-fixes li .ti-fix-a { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  .ti-fix-n { display: block; font-size: 13px; }
+  .adv-extra { white-space: nowrap; }
+</style>
 <div class="ti" id="adv" data-tool="advisor">
   <div class="ti-head">
     <div>
       <h1 class="h1">Strategy Advisor</h1>
-      <p class="ti-sub">You know which monkeys you want, but not how to use them. Pick them here. You get each one's crosspath and job, a round-by-round build order, the gaps to fix and tips for the map.</p>
+      <p class="ti-sub">You know which monkeys you want, but not how to use them. Pick them here. You get each one's crosspath and job, a round-by-round build order checked in the Simulator, what breaks and what to add, and tips for the map.</p>
     </div>
   </div>
   <noscript><p class="ti-note">The Strategy Advisor needs JavaScript.</p></noscript>
-  <div id="adv-root" class="ti" aria-live="polite"></div>
+  <p id="adv-busy" role="status" hidden>Re-planning…</p>
+  <div id="adv-root" class="ti" aria-live="polite" aria-busy="true"></div>
   <details class="about-data">
     <summary>About this advice</summary>
     <div class="about-b">
-      <p>End crosspaths come from each tower's best crosspaths on its guide page. They are picked together so your team can hit every bloon property the mode sends (camo, lead, purple, black, white, MOAB-class, DDT, BAD) and so the total fits the cash the mode pays by about 88% of the way through. When cash is short, a cheaper tier of the same path is allowed.</p>
-      <p>The build order buys what each round needs first: the cheapest step towards your end crosspaths that answers the next threat, in time for the round it first appears. Everything else is bought cheapest-first, but only while every upcoming need can still be paid for. Banana Farms are bought early so they pay back. The order is then run through the Simulator, so the cash, the leaks and the fixes are the Simulator's own.</p>
-      <p>Coverage means a tower <em>can</em> hit a bloon type, not that it has enough damage, and support is assumed to be in range. Use the key rounds and the Simulator to check the hard rounds. Calculated from the site's data, not play-tested.</p>
+      <p>End crosspaths come from each tower's best crosspaths on its guide page and the map page's own plan. They are picked together so your team can hit every bloon property the mode sends and the total fits the cash the mode pays by about 88% of the way through. When cash is short, a cheaper tier of the same path is allowed.</p>
+      <p>The build order is played round by round with the Simulator's own rules: its cash (leaked bloons pay no pop cash), its lives and its leak check. Each bloon type gets an answer by the round it first shows up. When a round coming up would leak, the order buys damage first: the cheapest buy from your picks that stops it, more tiers or another copy, saving up when it can pay in time.</p>
+      <p>When nothing your picks can afford holds a round, it says so and shows where it breaks and why. The leak check is an estimate: placement, abilities and targeting change it, and from R76 it over-predicts leaks. Calculated from the site's data, not play-tested.</p>
     </div>
   </details>
 </div>
@@ -113,7 +123,7 @@
     </nav>
     <div class="foot-legal">
       <p class="disclaimer"><b>Unofficial fan site.</b> Not affiliated with or endorsed by Ninja Kiwi. Bloons and Bloons TD 6 are their trademarks. No game art is used here.</p>
-      <p>Data: BTD6 v57.4, updated 2026-11-05 · Site 0.9.2 · Sources: <a href="https://www.bloonswiki.com/" rel="noopener">Bloons Wiki</a> (CC BY-SA), <a href="https://btd6index.win/" rel="noopener">BTD6 Index</a>, <a href="https://github.com/hemisemidemipresent/cyberquincy" rel="noopener">Cyber Quincy</a>, <a href="https://github.com/Btd6ModHelper/btd6-game-data" rel="noopener">BTD Mod Helper game data</a>, Ninja Kiwi patch notes.</p>
+      <p>Data: BTD6 v57.4, updated 2026-11-05 · Site 0.10.0 · Sources: <a href="https://www.bloonswiki.com/" rel="noopener">Bloons Wiki</a> (CC BY-SA), <a href="https://btd6index.win/" rel="noopener">BTD6 Index</a>, <a href="https://github.com/hemisemidemipresent/cyberquincy" rel="noopener">Cyber Quincy</a>, <a href="https://github.com/Btd6ModHelper/btd6-game-data" rel="noopener">BTD Mod Helper game data</a>, Ninja Kiwi patch notes.</p>
       <div class="seg theme-toggle" role="radiogroup" aria-label="Colour theme" hidden>
         <button type="button" role="radio" data-theme-set="auto" aria-checked="true">Auto</button>
         <button type="button" role="radio" data-theme-set="light" aria-checked="false">Light</button>
@@ -134,7 +144,7 @@
     <p class="search-hint" id="searchHint"><kbd>↑</kbd><kbd>↓</kbd> move · <kbd>Enter</kbd> open · <kbd>Esc</kbd> close</p>
   </form>
 </dialog>
-<script src="../../assets/search-core.js?v=0.9.2" defer></script>
-<script src="../../assets/site.js?v=0.9.2" defer></script>
+<script src="../../assets/search-core.js?v=0.10.0" defer></script>
+<script src="../../assets/site.js?v=0.10.0" defer></script>
 </body>
 </html>

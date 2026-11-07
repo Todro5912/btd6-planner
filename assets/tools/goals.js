@@ -13,6 +13,7 @@
   const pick = { tower: 'dart', target: 'paragon' };
   let flash = null; /* {id, text}: a line shown on one card after an action */
   let focusId = null;
+  let fullMsg = false; /* the page keeps P.GOALS_MAX goals: say so instead of dropping your oldest */
 
   const towerOpts = () => ['Primary', 'Military', 'Magic', 'Support'].map((cl) => ({ group: cl, items: D.towers.filter((t) => t.class === cl).map((t) => ({ value: t.id, label: t.name, keys: t.paragon ? 'paragon ' + t.paragon.name : '' })) }));
   const KIND = { paragon: 'Paragon', all: 'Every tier 5', upgrade: 'One upgrade' };
@@ -29,7 +30,7 @@
       const t = m && C.tower(D, m[1]);
       if (t) {
         const g = m[2] === 'paragon' ? { tower: t.id, kind: t.paragon ? 'paragon' : 'all' } : m[2] === 'all' ? { tower: t.id, kind: 'all' } : { tower: t.id, kind: 'upgrade', path: +m[3], tier: +m[4] };
-        if (g.kind !== 'upgrade' || (g.path <= 2 && g.tier >= 1 && g.tier <= 5)) focusId = P.addGoal(g);
+        if (g.kind !== 'upgrade' || (g.path <= 2 && g.tier >= 1 && g.tier <= 5)) { focusId = P.addGoal(g); if (!focusId) fullMsg = true; }
         pick.tower = t.id;
       }
     }
@@ -42,10 +43,11 @@
     const s = P.get();
     const views = s.goals.map((g) => C.goalView(D, g, s.towers[g.tower], s.settings)).filter(Boolean);
     views.forEach((v) => P.cacheGoal(v.g.id, { name: v.name, tower: v.t.name, pct: v.pct, done: v.complete, next: v.next ? v.next.name : '', runs: v.runsLeft,
-      total: v.total, remaining: v.remaining, perRun: v.best ? v.best.xp : 0 }));
-    /* keep focus and open panels across the re-render */
-    const fid = document.activeElement && document.activeElement.id;
+      total: v.total, remaining: v.remaining, perRun: v.perRun }));
+    /* keep focus (without reopening a picker) and open panels across the re-render */
+    const snap = U.snapFocus();
     U.clear(root);
+    if (fullMsg) root.appendChild(h('p', { class: 'ti-notice', role: 'status' }, ['You track ' + s.goals.length + ' goals, the most this page keeps. Clear one you have finished (or stop tracking one) to add another. ', h('button', { type: 'button', class: 'btn btn-small', onclick: () => { fullMsg = false; render(); } }, 'OK')]));
     if (!views.length) root.appendChild(addPanel(true));
     views.forEach((v) => root.appendChild(goalCard(v, s)));
     if (views.length) root.appendChild(addPanel(false));
@@ -55,11 +57,8 @@
     if (focusId) {
       const el = document.getElementById('goal-' + focusId);
       focusId = null;
-      if (el) setTimeout(() => el.scrollIntoView({ block: 'start' }), 0);
-    } else if (fid) {
-      const el = document.getElementById(fid);
-      if (el && el.focus) el.focus({ preventScroll: true });
-    }
+      if (el) setTimeout(() => { el.scrollIntoView({ block: 'start' }); const hd = el.querySelector('.panel-h'); if (hd) { hd.setAttribute('tabindex', '-1'); hd.focus({ preventScroll: true }); } }, 0);
+    } else U.restoreFocus(snap, root);
   }
   const openPanels = {};
   function keepOpen(d, key) {
@@ -80,6 +79,7 @@
       const v = pick.target;
       const g = v === 'paragon' || v === 'all' ? { tower: t.id, kind: v } : { tower: t.id, kind: 'upgrade', path: +v[1], tier: +v[2] };
       focusId = P.addGoal(g);
+      if (!focusId) fullMsg = true;
       render();
     };
     const plan = C.xpPlan(D, t.id, P.tower(t.id).u, pick.target[0] === 'u' ? { kind: 'upgrade', path: +pick.target[1], tier: +pick.target[2] } : { kind: pick.target }, P.tower(t.id).bank);
@@ -94,7 +94,7 @@
         h('span', { class: 'ti-note' }, plan && plan.need ? C.int(plan.need) + ' XP to go from what you have now' : 'Already unlocked'),
       ]),
       h('div', null, [h('p', { class: 'ti-lbl' }, 'Quickest Paragons to aim for'),
-        h('p', { class: 'ti-quick' }, quick.map((x) => h('button', { type: 'button', class: 'tag ti-tipchip', onclick: () => { focusId = P.addGoal({ tower: x.t.id, kind: 'paragon' }); render(); } }, '+ ' + x.t.paragon.name + ' · ' + Math.round(x.xp / 1000) + 'k XP')))]),
+        h('p', { class: 'ti-quick' }, quick.map((x) => h('button', { type: 'button', class: 'tag ti-tipchip', 'data-fk': 'gls-q-' + x.t.id, onclick: () => { focusId = P.addGoal({ tower: x.t.id, kind: 'paragon' }); if (!focusId) fullMsg = true; render(); } }, '+ ' + x.t.paragon.name + ' · ' + Math.round(x.xp / 1000) + 'k XP')))]),
     ]);
     if (first) return h('section', { class: 'panel', 'aria-labelledby': 'gls-add-h' }, [h('h2', { class: 'panel-h', id: 'gls-add-h' }, ['What do you want to unlock?', h('small', null, 'start a goal')]), body]);
     return keepOpen(h('details', { class: 'panel ti-details' }, [h('summary', { class: 'panel-h panel-h-light', id: 'gls-add-sum' }, ['Add another goal', h('small', null, 'tap to open')]), h('div', { style: 'padding-top:10px' }, body)]), 'add');
@@ -156,7 +156,7 @@
       kids.push(h('dl', { class: 'stats gl-stats' }, [
         stat('XP banked', C.int(v.bank), 'on ' + t.name.replace(/ Monkey$/, '')),
         stat('Still to earn', C.int(v.need), v.need ? 'after spending the bank' : 'the bank covers it'),
-        stat('Runs left', v.runsLeft ? String(v.runsLeft) : '0', v.best ? v.best.tier + ' ' + v.best.modeName : ''),
+        stat('Runs left', v.runsLeft ? String(v.runsLeft) : '0', v.best ? v.best.tier + ' ' + v.best.modeName + ', ' + C.int(v.perRun) + ' XP a run' : ''),
         stat('Time left', hours(v.minutesLeft), 'fast-forward estimate'),
       ]));
       kids.push(logRow(v));
@@ -174,7 +174,7 @@
       }
       kids.push(h('p', { class: 'ti-note gl-have' }, ['Already have the next one in your game? ',
         h('button', { type: 'button', class: 'linkbtn', onclick: () => { const n = C.unlockStep(P.tower(t.id), v.next, true); if (n) { P.setTower(t.id, n); flash = { id, text: 'Marked ' + v.next.name + ' as unlocked.' }; render(); } } }, 'Mark it unlocked'),
-        ' (no XP spent). Or set every tier at once in the ', h('a', { href: '../xp/#tower=' + t.id }, 'XP calculator'), '.']));
+        ' (no XP spent). Or set every tier you have in ', h('a', { href: '../profile/#tower=' + t.id }, 'My profile'), '.']));
     }
     kids.push(h('p', { class: 'ti-note gl-foot' }, [h('a', { href: towerUrl(t.id) }, t.name + ' page'), ' · ',
       h('button', { type: 'button', class: 'linkbtn', onclick: () => { if (window.confirm('Stop tracking ' + v.name + '? Your unlocks and banked XP stay.')) { P.removeGoal(id); render(); } } }, 'Stop tracking')]));
@@ -197,18 +197,23 @@
     const rows = v.farms.slice().sort((a, b) => b.xp - a.xp).slice(0, 8);
     const best = v.best;
     const def = best ? best.modeId : rows[0] && rows[0].modeId;
-    const sel = U.select(rows.map((r) => ({ value: r.modeId, label: r.tier + ' ' + r.modeName + ' · ' + C.int(r.xp) + ' XP' + (best && r.modeId === best.modeId ? ' (best)' : '') })), def, () => {}, { 'aria-label': 'Which run did you play?' });
+    const xpOf = (r) => (best && r.modeId === best.modeId && r.tier === best.tier ? v.perRun : r.xp); /* the guide's farm shares XP with its helpers */
+    const sel = U.select(rows.map((r) => ({ value: r.modeId, label: r.tier + ' ' + r.modeName + ' · ' + C.int(xpOf(r)) + ' XP' + (best && r.modeId === best.modeId ? ' (best)' : '') })), def, () => {}, { 'aria-label': 'Which run did you play?', id: 'gl-run-' + v.g.id });
     const xpIn = h('input', { class: 'ti-input', type: 'number', min: '0', step: '100', inputmode: 'numeric', placeholder: 'XP from the end screen', 'aria-label': 'XP earned this run', style: 'width:12em' });
-    const logIt = (xp, label) => { P.logRun(t.id, xp, label); flash = { id: v.g.id, text: '+' + C.int(xp) + ' XP banked on ' + t.name.replace(/ Monkey$/, '') + '.' }; render(); };
+    const logIt = (xp, label) => {
+      const ok = P.logRun(t.id, xp, label);
+      flash = { id: v.g.id, text: ok === false ? 'Not saved: this browser blocks storage (a private window?).' : '+' + C.int(xp) + ' XP banked on ' + t.name.replace(/ Monkey$/, '') + '.' };
+      render();
+    };
     return h('div', { class: 'gl-log' }, [
       h('p', { class: 'ti-lbl' }, 'Played a run?'),
       h('div', { class: 'ti-row' }, [
         h('div', { class: 'ti-field ti-grow' }, [h('span', null, 'Run'), sel]),
-        h('button', { type: 'button', class: 'btn btn-grass', id: 'gl-logbtn-' + v.g.id, onclick: () => { const r = rows.find((x) => x.modeId === sel.value); if (r) logIt(r.xp, r.tier + ' ' + r.modeName); } }, 'Log a run'),
+        h('button', { type: 'button', class: 'btn btn-grass', id: 'gl-logbtn-' + v.g.id, onclick: () => { const r = rows.find((x) => x.modeId === sel.value); if (r) logIt(Math.round(xpOf(r)), r.tier + ' ' + r.modeName); } }, 'Log a run'),
       ]),
       h('div', { class: 'ti-row' }, [
         h('div', { class: 'ti-field' }, [h('span', null, 'Or the exact XP'), xpIn]),
-        h('button', { type: 'button', class: 'btn', onclick: () => { const x = parseInt(xpIn.value, 10); if (x > 0) logIt(x, 'Exact XP'); } }, 'Add XP'),
+        h('button', { type: 'button', class: 'btn', id: 'gl-addxp-' + v.g.id, onclick: () => { const x = parseInt(xpIn.value, 10); if (x > 0) logIt(x, 'Exact XP'); } }, 'Add XP'),
       ]),
     ]);
   }
@@ -220,7 +225,8 @@
     const acts = [];
     if (fp && tier === 'Expert') {
       acts.push(h('a', { class: 'btn btn-small btn-sky', href: '../simulator/#' + C.encodePlan(fp) }, 'Open the farm in the Simulator'));
-      acts.push(h('span', { class: 'ti-note' }, fp.label + (fp.xpPerRun ? ', about ' + C.int(fp.xpPerRun) + ' XP a run' : '')));
+      /* the same XP a run as "Runs left" (goals-core C.goalFarm) */
+      acts.push(h('span', { class: 'ti-note' }, fp.label + (v.farm.guide ? ', about ' + C.int(v.perRun) + ' XP a run (its helpers take ' + Math.round((1 - v.farm.share) * 100) + '%)' : '')));
     }
     if (best) {
       const mp = fp && tier === 'Expert' ? C.map(D, fp.mapId) : C.farmMap(D, t.id, best.tier);
@@ -236,8 +242,8 @@
       const t = C.tower(D, id), p = s.towers[id];
       return h('li', null, [h('a', { href: towerUrl(id) }, t.name), ' ', U.x(p.u), p.p ? h('span', { class: 'tag tag-banana' }, 'Paragon') : null,
         p.bank ? h('span', { class: 'ti-note' }, ' · ' + C.int(p.bank) + ' XP banked') : null,
-        ' ', h('a', { class: 'ti-note', href: '../xp/#tower=' + id }, 'edit')]);
-    })) : h('p', { class: 'ti-note' }, 'Nothing yet. Start a goal, or set what you have unlocked in the XP calculator.');
+        ' ', h('a', { class: 'ti-note ti-tap', href: '../profile/#tower=' + id, 'aria-label': 'Edit ' + t.name + ' unlocks in My profile' }, 'edit')]);
+    })) : h('p', { class: 'ti-note' }, ['Nothing yet. Start a goal, or set what you have unlocked in ', h('a', { href: '../profile/' }, 'My profile'), '.']);
     return h('section', { class: 'panel', 'aria-labelledby': 'gls-tw-h' }, [h('h2', { class: 'panel-h', id: 'gls-tw-h' }, ['Your unlocks', h('small', null, 'the Advisor and Simulator use these')]), h('div', { class: 'ti-panel-b', style: 'padding-top:10px' }, body)]);
   }
   function logPanel(s) {
@@ -261,7 +267,7 @@
       h('summary', { class: 'panel-h panel-h-light', id: 'gls-set-sum' }, ['Settings and backup', h('small', null, 'tap to open')]),
       h('div', { class: 'ti-panel-b ti', style: 'padding-top:10px' }, [
         h('div', { class: 'ti-row' }, [
-          h('label', { class: 'check' }, [h('input', { type: 'checkbox', id: 'gls-me', checked: s.settings.me ? true : null, onchange: (e) => set('me', e.target.checked) }), 'Monkey Education (+8%)']),
+          h('label', { class: 'check' }, [h('input', { type: 'checkbox', id: 'gls-me', checked: s.settings.me === true ? true : null, onchange: (e) => set('me', e.target.checked) }), 'Monkey Education (+8%)' + (s.settings.me == null ? ': not set, counted as off' : '')]),
           h('label', { class: 'check' }, [h('input', { type: 'checkbox', id: 'gls-emt', checked: s.settings.emt ? true : null, onchange: (e) => set('emt', e.target.checked) }), 'Elite Military Training (Military +5%)']),
         ]),
         h('div', { class: 'ti-field' }, [h('span', null, 'Hardest maps you have unlocked'), tierSeg]),

@@ -85,7 +85,7 @@ TOOLS = [('advisor', 'Strategy Advisor', 'I know my monkeys, not how to use them
          ('xp', 'XP calculator', 'I have this much XP and want that upgrade: how many games of what.'),
          ('defence', 'Check my defence', 'Your towers and round: the next threats you can\'t pop, each with a fix.'),
          ('profile', 'My profile', 'Your unlocks, Paragons, heroes, Monkey Knowledge and Insta Monkeys: every tool uses them.')]
-TOOL_ICON = {'advisor': 'book', 'simulator': 'plan', 'goals': 'yes', 'xp': 'xp', 'defence': 'round', 'profile': 'monkey'}
+TOOL_ICON = {'advisor': 'book', 'simulator': 'plan', 'goals': 'yes', 'xp': 'xp', 'defence': 'round', 'profile': 'me'}
 TOOL_DOOR = {'advisor': 'door-grass', 'simulator': 'door-sky', 'goals': 'door-banana', 'xp': 'door-wood', 'defence': 'door-grass', 'profile': 'door-sky'}
 # Footer and overflow menu.
 MORE_LINKS = [('Records', 'records/'), ('Patch notes', 'patch/'), ('Known issues', 'guides/known-issues/'),
@@ -769,6 +769,50 @@ def round_models(c):
     return out
 
 
+RESEARCH_BITS = [
+    (re.compile(r'\s*\(synced with the game files, v\d+\)'), ''),
+    (re.compile(r'\s*\(game damage flags\)'), ''),
+    (re.compile(r';?\s*level from the fandom camo table'), ''),
+    (re.compile(r',?\s*so the derived rule would wrongly pass [0-9x-]+'), ''),
+    (re.compile(r'\bderived rule would (?:wrongly )?pass [0-9x-]+(?:, but|:)\s*', re.I), ''),
+    (re.compile(r"\s*towers\.json's old [^.]*?wiki table\.?", re.I), ''),
+    (re.compile(r'\bGame files: ', re.I), ''),
+]
+RESEARCH_SENT = re.compile(r'derived rule|towers\.json|wiki table', re.I)
+
+
+def tidy_why(up, why, code=None):
+    """Player copy for a quick-card fix note.
+    1. The note often repeats the upgrade name the row already shows: "Zephyr Sense (Wind path detects camo)" next to
+       "Zephyr Sense" becomes "Wind path detects camo" (only for "Name (...)" and "Name: ..." notes).
+    2. Research asides from the pop model ("synced with the game files, v56", "the derived rule would wrongly pass ...")
+       are for the data, not the player: those bits and sentences are dropped here; the data keeps them."""
+    if not why:
+        return why
+    m = re.search(r'derived rule would (?:wrongly )?pass ([0-9x-]+)', why, re.I)
+    if m and code and re.fullmatch(m.group(1).replace('x', '[0-9]'), code):
+        return None  # the note argues against the very crosspath this row lists: it predates the 0.9.2 game-file sync
+    for name in ([up] + up.split(' + ')) if up else []:
+        name = name.strip()
+        if not name or not why.lower().startswith(name.lower()):
+            continue
+        rest = why[len(name):]
+        if rest.startswith(' (') and rest.endswith(')') and rest.count('(') == 1:
+            rest = rest[2:-1]
+        elif rest.startswith(': '):
+            rest = rest[2:]
+        else:
+            continue
+        why = rest[:1].upper() + rest[1:]
+        break
+    for rx, rep in RESEARCH_BITS:
+        why = rx.sub(rep, why)
+    sents = re.split(r'(?<=[.!?])\s+', why.strip())
+    keep = [x[:1].upper() + x[1:] for x in sents if x and not RESEARCH_SENT.search(x)]
+    why = ' '.join(keep).strip().rstrip(';,. ')
+    return why or None
+
+
 def quick_cards(c, root_unused=None):
     """content/quick/*.md -> cards with fixes generated from the pop model and towers.json (C5)."""
     qdir = os.path.join(CONTENT, 'quick')
@@ -800,7 +844,7 @@ def quick_cards(c, root_unused=None):
             elif len(props) == 1:
                 why = c.pop.note(tid, props[0]) if sum(cross) else None
             rows.append({'tm': tm, 'cross': cross, 'code': code_of(cross), 'up': c.cross_name(tid, cross),
-                         'prices': c.cross_prices(tid, cross), 'why': why, 'kind': 'tower',
+                         'prices': c.cross_prices(tid, cross), 'why': tidy_why(c.cross_name(tid, cross), why, code_of(cross)), 'kind': 'tower',
                          'url': tm['url'] + (f'#u-{max(range(3), key=lambda i: cross[i]) + 1}-{max(cross)}' if sum(cross) else '')})
         rows.sort(key=lambda x: (x['prices']['medium'], x['tm']['t']['name']))
         if mode == 'bonus' and len(rows) < 3:
@@ -840,14 +884,14 @@ def quick_cards(c, root_unused=None):
                     continue
                 support.append({'kind': 'hero', 'name': hm['h']['name'], 'url': hm['url'], 'code': None,
                                 'up': f"level {req.get('level')}", 'prices': hm['prices'],
-                                'why': g['notes'][0] if g['notes'] else None})
+                                'why': tidy_why(None, g['notes'][0] if g['notes'] else None)})
             elif src in c.tm_by and 'path' in req:
                 cross = [0, 0, 0]
                 cross[int(req['path'])] = int(req['tier'])
                 support.append({'kind': 'support', 'tm': c.tm_by[src], 'name': c.tm_by[src]['t']['name'],
                                 'url': c.tm_by[src]['url'] + f"#u-{int(req['path']) + 1}-{int(req['tier'])}",
                                 'code': code_of(cross), 'up': c.cross_name(src, cross),
-                                'prices': c.cross_prices(src, cross), 'why': g['notes'][0] if g['notes'] else None})
+                                'prices': c.cross_prices(src, cross), 'why': tidy_why(c.cross_name(src, cross), g['notes'][0] if g['notes'] else None, code_of(cross))})
         support.sort(key=lambda x: (x['kind'] == 'hero', x['prices']['medium']))
         heroes = []
         if need <= {'camo', 'lead'}:

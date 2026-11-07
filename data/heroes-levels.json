@@ -120,6 +120,12 @@
     "note": "11s from L15 (game file (btd6-game-data v56, AbilityModel.cooldown))"
    },
    {
+    "name": "Target Focus",
+    "level": 7,
+    "cooldown": 45,
+    "note": "lasts 15 s (StrikerJones 7.json, game file (btd6-game-data v56, data/game/support.json))"
+   },
+   {
     "name": "Artillery Command",
     "level": 10,
     "cooldown": 80
@@ -440,6 +446,12 @@
     "cooldown": 50
    },
    {
+    "name": "Blast Chain",
+    "level": 7,
+    "cooldown": 45,
+    "note": "15 s, sea mines fire 4x faster (cooldown x0.25; v57: x0.2) (AdmiralBrickell 7.json, game file (btd6-game-data v56, data/game/support.json))"
+   },
+   {
     "name": "Mega Mine",
     "level": 10,
     "cooldown": 60,
@@ -638,7 +650,25 @@
     "name": "Spells (mana)",
     "level": 1,
     "cooldown": null,
-    "note": "spellbook; per-spell levels not retrieved"
+    "note": "Spells cost mana (unlock level, mana, cooldown s): Spear L1 100; Nourishment L1 cd 60; Repel L1 150, cd 45; Echo L3 300, cd 55; Haste L3 50, cd 5; Soul Barrier L4 40, cd 60; Trample L4 180, cd 45; Frostbound L5 220, cd 60; Aggression L5 50; Vision L5 170, cd 30 (15 s camo); Ember L6 150, cd 45; Malevolence L7 60; Ancestral Might L7 550, cd 90; Storm L8 120; Recovery L10 140, cd 30; Overload L13 620, cd 90 (game file (btd6-game-data v56, data/game/support.json))"
+   },
+   {
+    "name": "Soul Harvest",
+    "level": 3,
+    "cooldown": 40,
+    "note": "0.5 s shorter each level: 36.5 s at L10, 31.5 s at L20 (game file (btd6-game-data v56, data/game/support.json))"
+   },
+   {
+    "name": "Spirit Walk",
+    "level": 7,
+    "cooldown": 20,
+    "note": "game file (btd6-game-data v56, data/game/support.json)"
+   },
+   {
+    "name": "Dark Ritual",
+    "level": 10,
+    "cooldown": 90,
+    "note": "game file (btd6-game-data v56, data/game/support.json)"
    }
   ],
   "camoLevel": null,
@@ -779,30 +809,43 @@
     "name": "Transformation",
     "level": 3,
     "cooldown": 20,
-    "note": "game file (btd6-game-data v56, AbilityModel.cooldown)"
+    "note": "lasts 9 s (game file, btd6-game-data v56, AbilityModel.cooldown)"
+   },
+   {
+    "name": "Magic Barrier",
+    "level": 5,
+    "cooldown": 12,
+    "note": "passive: triggers on its own when a bloon is about to leak (game file (btd6-game-data v56, data/game/support.json))"
    },
    {
     "name": "Reposition",
     "level": 7,
-    "cooldown": 30
+    "cooldown": 30,
+    "note": "15s from L17 (game file (btd6-game-data v56, data/game/support.json): Teleport)"
    },
    {
     "name": "Volant Strike",
     "level": 7,
     "cooldown": 30,
-    "note": "Macaque form"
+    "note": "Macaque form; 15s from L17 (game file (btd6-game-data v56, data/game/support.json): LeapingSmash)"
    },
    {
     "name": "Rabble Rouser",
     "level": 10,
     "cooldown": 60,
-    "note": "45s from L17"
+    "note": "45s from L17; lasts 10 s (game file (btd6-game-data v56, data/game/support.json): Battlecry)"
    },
    {
     "name": "Berserk Frenzy",
     "level": 10,
-    "cooldown": null,
-    "note": "Macaque form"
+    "cooldown": 60,
+    "note": "Macaque form (game file (btd6-game-data v56, data/game/support.json): Warcry)"
+   },
+   {
+    "name": "Quick Thinking",
+    "level": 12,
+    "cooldown": 60,
+    "note": "passive: triggers on its own when a bloon is about to leak (game file (btd6-game-data v56, data/game/support.json))"
    }
   ],
   "camoLevel": null,

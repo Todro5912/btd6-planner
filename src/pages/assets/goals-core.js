@@ -18,10 +18,34 @@
     if (g.kind === 'upgrade') return C.upgradeName(t, g.path, g.tier) || t.name + ' upgrade';
     return 'Every ' + t.name.replace(/ Monkey$/, '') + ' tier 5';
   };
+  /* where to farm a goal and how much XP a run pays: the one figure My goals and the XP calculator both show.
+     settings: {me, emt, maxTier} from My profile (me must be true to count Monkey Education).
+     When the tower guide's farm is the pick (Expert map, same mode), its helpers take part of the XP: the guide's
+     xpPerRun is worked out with Monkey Education (and Elite Military Training for Military), so its share of that
+     solo figure is applied to yours. Otherwise the run is "only this tower" and takes all of it. */
+  C.goalFarm = function (D, towerId, need, settings) {
+    settings = settings || {};
+    const t = C.tower(D, towerId);
+    const tier = C.TIERS.indexOf(settings.maxTier) >= 0 ? settings.maxTier : 'Expert';
+    const me = settings.me === true, emt = !!settings.emt;
+    const rows = C.farmTable(D, towerId, { me, emt, need });
+    const best = C.farmPick(rows, tier);
+    const fp = C.farmPlan(D, towerId);
+    let share = 1, guide = null;
+    if (best && fp && fp.xpPerRun > 0 && tier === 'Expert' && fp.modeId === best.modeId) {
+      const ref = C.farmTable(D, towerId, { me: true, emt: true, need: 0 }).find((r) => r.modeId === best.modeId && r.tier === 'Expert');
+      if (ref && ref.xp > 0) { share = Math.min(1, fp.xpPerRun / ref.xp); guide = fp; }
+    }
+    const perRun = best ? Math.round(best.xp * share) : 0;
+    const runs = need > 0 && perRun > 0 ? Math.ceil(need / perRun) : 0;
+    return { tier, rows, best, fp, guide, share, perRun, runs, minutes: best ? runs * best.minutes : 0,
+      who: guide && share < 0.995 ? 'the guide\'s farm (its helpers take ' + Math.round((1 - share) * 100) + '% of the XP)' : 'only ' + (t ? t.name + 's' : 'this tower') };
+  };
   /* everything the goal card needs, from the tower's progress and the settings ({me, emt, maxTier}) */
   C.goalView = function (D, g, prog, settings) {
     const t = C.tower(D, g.tower);
     if (!t) return null;
+    if (g.kind === 'upgrade' && !([0, 1, 2].indexOf(g.path) >= 0 && g.tier >= 1 && g.tier <= 5)) return null; /* no path: not a goal */
     settings = settings || {};
     prog = prog || { u: [0, 0, 0], p: false, bank: 0 };
     const target = C.goalTarget(g);
@@ -36,19 +60,17 @@
     const need = Math.max(0, remaining - bank); /* XP still to earn */
     const earned = total - remaining + Math.min(bank, remaining);
     const complete = left.steps.length === 0; /* not remaining === 0: some upgrades cost 0 XP */
-    const rows = C.farmTable(D, t.id, { me: settings.me !== false, emt: !!settings.emt, need });
-    const tier = C.TIERS.indexOf(settings.maxTier) >= 0 ? settings.maxTier : 'Expert';
-    const best = C.farmPick(rows, tier);
+    const gf = C.goalFarm(D, t.id, need, settings);
+    const tier = gf.tier, best = gf.best, perRun = gf.perRun;
     const next = left.steps[0] || null;
-    const perRun = best ? best.xp : 0;
-    const runsLeft = need > 0 && perRun > 0 ? Math.ceil(need / perRun) : 0;
+    const runsLeft = gf.runs;
     const nextNeed = next ? Math.max(0, next.xp - bank) : 0;
     return {
       t, g, target, name: C.goalName(D, g), u, p: !!prog.p, bank, total, remaining, need, earned,
       pct: complete ? 100 : Math.min(99.9, 100 * earned / total), complete,
       steps: left.steps, next, canUnlock: !!next && bank >= next.xp, nextNeed,
       runsNext: nextNeed > 0 && perRun > 0 ? Math.ceil(nextNeed / perRun) : 0,
-      runsLeft, minutesLeft: best ? runsLeft * best.minutes : 0, best, farms: rows.filter((r) => r.tier === tier), unknown: left.unknown,
+      runsLeft, minutesLeft: best ? runsLeft * best.minutes : 0, best, perRun, farm: gf, farms: gf.rows.filter((r) => r.tier === tier), unknown: left.unknown,
       milestone: complete ? 'Unlocked' : earned / total >= 0.75 ? 'Nearly there' : earned / total >= 0.5 ? 'Halfway' : earned / total >= 0.25 ? 'A quarter done' : '',
     };
   };

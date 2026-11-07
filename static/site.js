@@ -37,6 +37,8 @@
   var menus = Array.prototype.slice.call(document.querySelectorAll('[data-menu]'));
   menus.forEach(function (m) {
     m.addEventListener('toggle', function () { if (m.open) menus.forEach(function (o) { if (o !== m) o.open = false; }); });
+    /* keyboard: tabbing out of an open menu closes it */
+    m.addEventListener('focusout', function (e) { if (m.open && e.relatedTarget && !m.contains(e.relatedTarget)) m.open = false; });
   });
   document.addEventListener('click', function (e) { menus.forEach(function (m) { if (m.open && !m.contains(e.target)) m.open = false; }); });
   document.addEventListener('keydown', function (e) {

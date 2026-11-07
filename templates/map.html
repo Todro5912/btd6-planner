@@ -23,7 +23,7 @@
   <span class="glance-l"><b>{{ m.paths }}</b> lane{{ 's' if m.paths != 1 }}</span>
   {% if m.easiness %}<span class="glance-e" title="How easy the map plays, 5 is easiest">Easiness <b>{{ m.easiness }}</b>/5</span>{% endif %}
   <span class="glance-facts">water: {{ m.water }} · line of sight: {{ 'clear' if m.losBlockers == 'none' else m.losBlockers }}{% if not m.medals %} · no medals{% endif %}{{ unv('water amount' in uv or 'water location' in uv) }}</span>
-  <span class="glance-btn head-acts"><a class="btn btn-small btn-grass" href="{{ root }}tools/advisor/#map={{ m.id }}&amp;hero=auto">Plan this map</a> <a class="btn btn-small" href="{{ root }}tools/simulator/#map={{ m.id }}">Open in Simulator</a></span>
+  <span class="glance-btn head-acts"><a class="btn btn-small btn-grass" href="{{ root }}tools/advisor/#map={{ m.id }}&amp;hero=auto">Plan this map</a> <a class="btn btn-small" href="{{ root }}tools/simulator/#map={{ m.id }}">Open in Simulator</a> <a class="btn btn-small" href="{{ root }}tools/defence/#map={{ m.id }}">Check my defence</a></span>
 </div>
 {% if m.special or m.notes %}<p class="lede">{{ m.special|rich }}{{ unv('special' in uv) }}{% if m.special and m.notes %} {% endif %}{{ m.notes|rich }}</p>{% endif %}
 

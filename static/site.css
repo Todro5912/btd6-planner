@@ -946,3 +946,14 @@ td .btn-small { white-space: nowrap; }
 }
 @media (max-width: 370px) { .tab { padding: 4px 5px; font-size: 13px; letter-spacing: -.01em; } .tabs { gap: 4px; } .caret { margin-left: 0; } }
 @media (max-width: 340px) { .tab { padding: 4px 4px; font-size: 12.5px; } .tabs { gap: 3px; } .top-in { padding-left: 10px; padding-right: 10px; } }
+
+/* 0.9.3: header buttons and small buttons are at least 44px tall on a phone (tap targets) */
+@media (max-width: 720px) {
+  .tab, .searchbtn, .menubtn { min-height: 44px; }
+  .btn-small { min-height: 44px; }
+  .seg > button { min-height: 44px; }
+  .maker { min-height: 32px; }
+}
+.diff-note { display: inline-block; margin-left: 8px; font-size: 12.5px; color: var(--muted); }
+.pk-plan { font-size: 13.5px; font-weight: 700; margin-left: auto; }
+@media (max-width: 720px) { .pk-plan { display: inline-flex; align-items: center; min-height: 44px; } }

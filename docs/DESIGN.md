@@ -61,6 +61,16 @@ The site should feel like it belongs next to BTD6: chunky, tactile and bright. I
 | `.more` + `.more-btn` | Chunky expander. Use it for anything expert (records, build orders, proof lists). |
 | `.btn-cream` | Cream button on wood (footer). |
 
+## Tool patterns added in 0.9.3
+
+| Class / rule | What it is |
+|---|---|
+| `.ti-notice` | A paper box above a tool's result after a link or another tool changed your game: one plain sentence and two buttons ("Back to my build" / "Add it to my build instead", "Use that game" / "Keep my build"). Every change it makes has an Undo. A link never wipes saved work. |
+| `.ti-dock` (`U.resultDock`) | Phones only (≤720px): a slim bar fixed to the bottom with the result in one line ("R37: lead leaks · cheapest fix $1,050") and a See button. It shows only while the result box is off screen. Fixed fills with dark text (danger `#FF6B57`, ok `#5CC46B`, banana), the same in both themes. |
+| Focus and place (`U.snapFocus` / `U.restoreFocus`) | The tools rebuild on every edit. The control you used keeps focus (stable `data-fk` keys, a `data-fkb` fallback) and stays under your finger: the page scrolls by the difference. A picker that gets focus back this way doesn't reopen. |
+| Tap targets | On phones every button, chip, segment and pip is at least 44px tall (pips: a 44px button around the small skewed pip you see). Links inside a sentence get padding instead, so the lines don't spread. |
+| Icons | Drawn here, never from the game. The "Me" button is a simple monkey face (`ui.icon('me')`). |
+
 **Copy rules:** body text max ~65ch. Long strategy text becomes 3–6 steps; semicolon chains split into separate steps. Cash in bold, round numbers as chips, tower names as links. Facts that aren't up for debate (immunities, first rounds) are stated plainly in the card rule, never hedged.
 
 ## Information architecture (0.5: 5 tabs + search + More)

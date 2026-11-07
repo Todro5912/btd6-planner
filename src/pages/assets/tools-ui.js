@@ -128,7 +128,7 @@
       placeholder: attrs.placeholder || 'Type to search', 'aria-label': attrs['aria-label'] || null,
     });
     input.value = cur ? cur.label : '';
-    const list = U.h('ul', { class: 'ti-combo-list', id: listId, role: 'listbox', hidden: true });
+    const list = U.h('ul', { class: 'ti-combo-list', id: listId, role: 'listbox', hidden: true, tabindex: '-1' }); /* a scrolling list is a tab stop in Chrome: not this one */
     const wrap = U.h('div', { class: 'ti-combo' + (attrs.class ? ' ' + attrs.class : '') }, [input, U.h('span', { class: 'ti-combo-caret', 'aria-hidden': 'true' }), list]);
     let shown = [];
     let active = -1;
@@ -232,7 +232,7 @@
         const issue = opts.issue ? opts.issue(t) : null;
         const hints = opts.hint ? opts.hint(t) : [];
         const b = U.h('button', {
-          type: 'button', class: 'ti-tile cls-' + cl, 'aria-pressed': opts.pressed ? String(!!opts.pressed(t)) : null,
+          type: 'button', class: 'ti-tile cls-' + cl, 'aria-pressed': opts.pressed ? String(!!opts.pressed(t)) : null, 'data-fk': (opts.key || 'tile') + '-' + t.id,
           disabled: issue ? true : null, title: issue || null,
           onclick: () => opts.onpick(t),
         }, [
@@ -255,11 +255,12 @@
       for (let k = 1; k <= 5; k++) pips.appendChild(U.h('span', { class: 'ti-pip' + (x[p] >= k ? ' on' : '') + (k === 5 ? ' t5' : '') }));
       const nm = x[p] > 0 ? C.upgradeName(t, p, x[p]) : 'Path ' + (p + 1) + ': none';
       const min = opts.min ? opts.min[p] : 0;
+      const k = (opts.key || 'px') + '-p' + p;
       wrap.appendChild(U.h('div', { class: 'ti-path' }, [
-        U.h('button', { type: 'button', class: 'ti-sbtn', 'aria-label': 'Path ' + (p + 1) + ' down', disabled: x[p] <= min ? true : null,
+        U.h('button', { type: 'button', class: 'ti-sbtn', 'aria-label': 'Path ' + (p + 1) + ' down', 'data-fk': k + '-dn', 'data-fkb': k + '-up', disabled: x[p] <= min ? true : null,
           onclick: () => onchange(C.setPath(x, p, x[p] - 1)) }, '−'),
         U.h('div', { class: 'ti-path-mid' }, [pips, U.h('span', { class: 'ti-path-name' }, nm)]),
-        U.h('button', { type: 'button', class: 'ti-sbtn', 'aria-label': 'Path ' + (p + 1) + ' up', disabled: x[p] >= 5 ? true : null,
+        U.h('button', { type: 'button', class: 'ti-sbtn', 'aria-label': 'Path ' + (p + 1) + ' up', 'data-fk': k + '-up', 'data-fkb': k + '-dn', disabled: x[p] >= 5 ? true : null,
           onclick: () => {
             const nx = C.setPath(x, p, x[p] + 1);
             if (opts.min && !C.geq(nx, opts.min)) return; /* would undo bought tiers */
@@ -320,6 +321,9 @@
     return Object.keys(out).length ? out : null;
   };
 
+  /* Monkey Education is true / false / null (not set yet). The engine counts anything but false as on, so the tools pass
+     this: on only when you set it. */
+  U.mkSettings = (st) => ({ me: !!(st && st.me === true), emt: !!(st && st.emt), maxTier: st && st.maxTier });
   /* your profile for the tools: Monkey Knowledge effects, heroes you own, Insta inventory. Safe without progress.js. */
   U.me = function (D) {
     const P = MI.progress;
@@ -327,11 +331,11 @@
     if (!P) return { fx: null, ownsHero: () => true, instas: [], instaMap: null, profile: null, summary: [], has: false };
     const s = P.get();
     const pr = s.profile;
-    const fx = C.profileFx(D, pr, s.settings);
+    const fx = C.profileFx(D, pr, U.mkSettings(s.settings));
     const instaMap = {};
     pr.instas.forEach((i) => { const k = i.t + '.' + i.x.join(''); instaMap[k] = (instaMap[k] || 0) + i.n; });
     const ownsHero = (id) => !pr.heroes || pr.heroes[id] !== false;
-    return { fx, ownsHero, instas: pr.instas, instaMap, profile: pr, settings: s.settings, summary: C.fxSummary(fx),
+    return { fx, ownsHero, instas: pr.instas, instaMap, profile: pr, settings: s.settings, summary: C.fxSummary(fx), meUnset: s.settings.me == null,
       missing: pr.missing || {}, has: !!(Object.keys(pr.mk).length || pr.instas.length || pr.heroes || Object.keys(pr.missing).length || pr.level != null) };
   };
   /* one line under "Your game": what your profile changes in this mode */
@@ -339,25 +343,126 @@
     const C = MI.core;
     if (!MI.progress) return null;
     const href = '../profile/';
-    if (!me.has && !me.summary.length) return U.h('p', { class: 'ti-note ti-prof' }, ['Set your Monkey Knowledge, heroes and Insta Monkeys in ', U.h('a', { href }, 'My profile'), ' and the tools will use them.']);
-    if (!C.mkActive(mode)) return U.h('p', { class: 'ti-note ti-prof' }, [mode.name + ' turns Monkey Knowledge off, so ', U.h('a', { href }, 'your profile'), '\'s bonuses don\'t apply here.']);
+    if (!me.has && !me.summary.length) return U.h('p', { class: 'ti-note ti-prof' }, ['Set your Monkey Knowledge, heroes and Insta Monkeys in ', U.h('a', { href }, 'My profile'), ' and the tools will use them. Until then they plan with none (no Monkey Education).']);
+    if (!C.mkActive(mode)) return U.h('p', { class: 'ti-note ti-prof' }, [mode.name + ' turns Monkey Knowledge off, so the bonuses in ', U.h('a', { href }, 'your profile'), ' don\'t apply here.']);
     const bits = me.summary.length ? me.summary.join(', ') : 'no Monkey Knowledge that changes cash or heroes';
-    return U.h('p', { class: 'ti-note ti-prof' }, [U.h('span', { class: 'tag tag-sky' }, 'Your profile'), ' ' + bits + (me.fx && me.fx.unverified ? ' ' : ''), me.fx && me.fx.unverified ? U.badge('unverified') : null, ' · ', U.h('a', { href }, 'edit')]);
+    return U.h('p', { class: 'ti-note ti-prof' }, [U.h('span', { class: 'tag tag-sky' }, 'Your profile'), ' ' + bits + (me.meUnset ? ' (Monkey Education not set: counted as off)' : '') + (me.fx && me.fx.unverified ? ' ' : ''), me.fx && me.fx.unverified ? U.badge('unverified') : null, ' · ', U.h('a', { href, class: 'ti-tap' }, 'edit')]);
   };
+
+  /* ---------- focus and place across a re-render ----------
+     The tools rebuild their root on every edit. Before: U.snapFocus() remembers the control you used (its data-fk key or id,
+     or the button you just tapped: phones don't focus buttons) and where it sat on screen. After: U.restoreFocus(snap, root)
+     focuses the new copy without scrolling, then scrolls by the difference so that control stays under your finger.
+     A control that is gone or disabled hands over to its data-fkb fallback, then to the nearest panel heading. */
+  let lastTap = null;
+  if (typeof document !== 'undefined' && document.addEventListener) {
+    document.addEventListener('pointerdown', (e) => {
+      const el = e.target && e.target.closest ? e.target.closest('button, a, input, select, summary, [tabindex]') : null;
+      lastTap = el ? { el, t: Date.now() } : null;
+    }, true);
+  }
+  const keyOf = (el) => (el && el.getAttribute ? el.getAttribute('data-fk') || el.id || null : null);
+  U.snapFocus = function () {
+    if (typeof document === 'undefined') return null;
+    let el = document.activeElement;
+    if ((!el || el === document.body) && lastTap && Date.now() - lastTap.t < 1500) el = lastTap.el;
+    if (!el || el === document.body || !el.getBoundingClientRect) return null;
+    const key = keyOf(el);
+    if (!key) return null;
+    return { key, fb: el.getAttribute('data-fkb'), y: el.getBoundingClientRect().top, focused: document.activeElement === el };
+  };
+  const findKey = (root, k) => {
+    if (!k) return null;
+    const esc = (v) => (window.CSS && CSS.escape ? CSS.escape(v) : v.replace(/["\\]/g, '\\$&'));
+    return root.querySelector('[data-fk="' + esc(k) + '"]') || document.getElementById(k);
+  };
+  U.restoreFocus = function (snap, root) {
+    if (!snap || !root) return null;
+    let el = findKey(root, snap.key);
+    if (!el || el.disabled || el.hidden) el = findKey(root, snap.fb) || el;
+    if (el && el.disabled) el = (el.parentNode && el.parentNode.querySelector('button:not([disabled])')) || null;
+    if (!el) {
+      el = root.querySelector('.panel-h[tabindex], .ti-alert[tabindex]');
+      if (!el) return null;
+    }
+    const y0 = snap.y;
+    if (el.classList && el.classList.contains('ti-combo-in')) el.dataset.quiet = '1'; /* don't reopen the list */
+    if (snap.focused || document.activeElement === document.body || !document.activeElement) {
+      try { el.focus({ preventScroll: true }); } catch (e) { /* old browser */ }
+      if (el.dataset && el.dataset.quiet) delete el.dataset.quiet;
+    }
+    const dy = el.getBoundingClientRect().top - y0;
+    if (Math.abs(dy) > 2 && !root.dataset.noAnchor) window.scrollBy(0, dy);
+    return el;
+  };
+  /* rebuild root with build(), keeping focus and place */
+  U.rerender = function (root, build) {
+    const snap = U.snapFocus();
+    build();
+    U.restoreFocus(snap, root);
+  };
+
+  /* ---------- the result, kept in reach on a phone ----------
+     A slim bar fixed to the bottom of the screen with the result in one line. It shows only on narrow screens and only
+     while the result box itself is out of view, so it never covers what you are reading. Tap it to jump to the result. */
+  let dock = null, dockObs = null, dockTarget = null, dockSeen = true;
+  U.resultDock = function (target, info) {
+    if (typeof document === 'undefined' || !target) return;
+    if (!dock) {
+      dock = U.h('button', { type: 'button', class: 'ti-dock', id: 'ti-dock', hidden: true, 'aria-live': 'polite' }, [U.h('span', { class: 'ti-dock-t' }), U.h('span', { class: 'ti-dock-go' }, 'See')]);
+      dock.addEventListener('click', () => {
+        if (!dockTarget) return;
+        dockTarget.scrollIntoView({ block: 'start', behavior: window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+        if (!dockTarget.hasAttribute('tabindex')) dockTarget.setAttribute('tabindex', '-1');
+        try { dockTarget.focus({ preventScroll: true }); } catch (e) { /* ignore */ }
+      });
+      document.body.appendChild(dock);
+    }
+    dock.className = 'ti-dock ti-dock-' + (info.tone || 'bad');
+    dock.firstChild.textContent = info.text;
+    dock.setAttribute('aria-label', info.text + '. Show the result');
+    if (dockObs) dockObs.disconnect();
+    dockTarget = target;
+    const sync = () => { dock.hidden = dockSeen; document.body.classList.toggle('has-dock', !dockSeen); };
+    if (typeof IntersectionObserver === 'undefined') { dockSeen = true; sync(); return; }
+    dockObs = new IntersectionObserver((ents) => { ents.forEach((e) => { dockSeen = e.isIntersecting; }); sync(); }, { threshold: 0 });
+    dockObs.observe(target);
+  };
+
+  /* " · cheapest fix $280" for the dock line */
+  U.cheapestFix = function (fixes) {
+    const c = (fixes || []).filter((f) => f.kind !== 'hero' && f.cost > 0).map((f) => f.cost);
+    return c.length ? ' · cheapest fix ' + MI.core.money(Math.min.apply(null, c)) : '';
+  };
+  /* problem text from the engine: big numbers get separators, "RBE" links to the glossary (first time only) */
+  U.probText = function (s, opts) {
+    const out = [];
+    let linked = !!(opts && opts.noLink);
+    String(s || '').replace(/\b\d{4,}\b/g, (n) => (+n).toLocaleString('en-US')).split(/(\bRBE\b)/).forEach((part) => {
+      if (part === 'RBE' && !linked) { linked = true; out.push(U.h('a', { href: '../../guides/glossary/#g-rbe', class: 'ti-rbe', title: 'Red Bloon Equivalent: how many single pops it takes to clear the bloons and all their children' }, 'RBE')); }
+      else if (part) out.push(part);
+    });
+    return out;
+  };
+  /* "RBE" in one short line, for result boxes that show it */
+  U.rbeNote = () => U.h('p', { class: 'ti-alert-s ti-rbe-note' }, ['RBE (Red Bloon Equivalent) is how many single pops it takes to clear a round. ', U.h('a', { href: '../../guides/glossary/#g-rbe' }, 'Glossary')]);
 
   U.fixList = function (fixes, opts) {
     const C = MI.core;
     const ul = U.h('ul', { class: 'ti-fixes' });
-    const kind = { upgrade: 'Upgrade a tower you have', new: 'Add a tower', support: 'Add support', hero: 'Your hero' };
+    const kind = { upgrade: 'Upgrade a tower you have', new: 'Add a tower', support: 'Add support', hero: 'Your hero', pair: 'Two buys together' };
     fixes.forEach((f) => {
       let label, cost;
       if (f.kind === 'hero') {
         label = [f.label + ' handles it from level ' + f.level + (f.round ? ', about ' : '')].concat(f.round ? [U.rchip(f.round, 'ti-r-plain')] : []);
         cost = U.h('span', { class: 'ti-fix-c' }, [U.h('small', null, 'estimate')]);
       } else {
-        label = f.kind === 'upgrade'
-          ? [f.label + ' to ', U.x(f.x), f.name ? ' (' + f.name + ')' : '']
-          : [f.towerId ? U.h('a', { href: U.towerHref(f.towerId) }, f.label) : f.label, ' ', U.x(f.x), f.name ? ' (' + f.name + ')' : ''];
+        label = f.kind === 'pair'
+          ? [].concat(...(f.parts || []).map((p, i) => [i ? ' + ' : '', p.kind === 'upgrade' ? p.label + ' to ' : (p.towerId ? U.h('a', { href: U.towerHref(p.towerId) }, p.label) : p.label) + ' ', U.x(p.x)]))
+          : f.kind === 'upgrade'
+            ? [f.label + ' to ', U.x(f.x), f.name ? ' (' + f.name + ')' : '']
+            : [f.towerId ? U.h('a', { href: U.towerHref(f.towerId) }, f.label) : f.label, ' ', U.x(f.x), f.name ? ' (' + f.name + ')' : ''];
+        if (f.note) label = label.concat([U.h('small', { class: 'ti-fix-note' }, ' ' + f.note)]);
         cost = U.h('span', { class: 'ti-fix-c' }, [U.money(f.cost), f.affordable === false ? U.h('small', null, 'more than you have') : f.affordable ? U.h('small', null, 'you can afford it') : null]);
       }
       ul.appendChild(U.h('li', null, [U.h('span', null, [U.h('span', { class: 'ti-fix-k' }, kind[f.kind] || ''), U.h('span', { class: 'ti-fix-l' }, label)]), cost]));
@@ -387,7 +492,7 @@
           U.h('span', { class: 'ti-sug-l' }, s.kind === 'avoid' ? s.name : [s.name + ' ', s.x ? U.h('span', { class: 'ti-x' }, s.x) : null]),
           U.h('br'), U.h('span', { class: 'ti-sug-w' }, s.why),
           s.pairsWith && s.pairsWith.length ? U.h('span', { class: 'ti-sug-p' }, [U.h('br'), 'Pairs with your ' + s.pairsWith.join(', ')]) : null,
-          onAdd && U.sugBuild(s) ? U.h('span', { class: 'ti-fix-a', style: 'justify-content:flex-start' }, U.h('button', { type: 'button', class: 'btn btn-small btn-grass', onclick: () => onAdd(U.sugBuild(s), s) }, (U.sugBuild(s).hero ? 'Use ' : 'Add ') + s.name.replace(/ Monkey$/, ''))) : null,
+          onAdd && U.sugBuild(s) ? U.h('span', { class: 'ti-fix-a', style: 'justify-content:flex-start' }, U.h('button', { type: 'button', class: 'btn btn-small btn-grass', 'data-fk': 'sug-' + (s.tower || s.hero) + '-' + (s.x || ''), 'data-fkb': 'sug-panel', onclick: () => onAdd(U.sugBuild(s), s) }, (U.sugBuild(s).hero ? 'Use ' : 'Add ') + s.name.replace(/ Monkey$/, ''))) : null,
         ]),
         s.unverified ? U.badge('unverified') : U.h('span'),
       ]));

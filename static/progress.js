@@ -7,9 +7,10 @@
   var KEY = 'mi-progress-v1';
   var MI = root.MonkeyIntel = root.MonkeyIntel || {};
   var TIERS = ['Beginner', 'Intermediate', 'Advanced', 'Expert'];
+  var GOALS_MAX = 60;
 
   function blank() {
-    return { v: 1, towers: {}, goals: [], log: [], recent: [], plans: {}, settings: { me: true, emt: false, maxTier: 'Expert' }, game: null, profile: blankProfile() };
+    return { v: 1, towers: {}, goals: [], log: [], recent: [], plans: {}, settings: { me: null, emt: false, maxTier: 'Expert', meV: 2 }, game: null, profile: blankProfile() };
   }
   /* My profile: player level, Monkey Money, heroes owned (null = not told us = all), towers you don't have yet,
      Monkey Knowledge nodes (Monkey Education and Elite Military Training live in settings.me / settings.emt), Insta Monkeys */
@@ -41,16 +42,25 @@
       while (u.length < 3) u.push(0);
       b.towers[id] = { u: u, p: !!t.p, bank: Math.max(0, Math.round(+t.bank || 0)), set: t.set === true };
     });
-    b.goals = Array.isArray(s.goals) ? s.goals.filter(function (g) { return g && g.id && g.tower && g.kind; }).slice(0, 30) : [];
+    /* an "upgrade" goal needs a path (0-2) and a tier (1-5): without them it would read as done */
+    b.goals = Array.isArray(s.goals) ? s.goals.filter(function (g) {
+      if (!g || !g.id || !g.tower || ['paragon', 'all', 'upgrade'].indexOf(g.kind) < 0) return false;
+      return g.kind !== 'upgrade' || ([0, 1, 2].indexOf(g.path) >= 0 && [1, 2, 3, 4, 5].indexOf(g.tier) >= 0);
+    }).slice(0, GOALS_MAX) : [];
     b.log = Array.isArray(s.log) ? s.log.slice(0, 60) : [];
     b.recent = Array.isArray(s.recent) ? s.recent.filter(function (r) { return r && r.u && r.t; }).slice(0, 12) : [];
     b.plans = s.plans && typeof s.plans === 'object' ? s.plans : {};
     if (s.settings && typeof s.settings === 'object') {
-      b.settings.me = s.settings.me !== false;
+      /* Monkey Education: true / false / null (not set yet: the tools assume you don't have it). Before 0.9.3 it
+         defaulted to on, so an old "on" only counts when you had also ticked Monkey Knowledge yourself. */
+      var me = s.settings.me;
+      if (s.settings.meV === 2) b.settings.me = me === true ? true : me === false ? false : null;
+      else b.settings.me = me === false ? false : me === true && s.profile && s.profile.mk && Object.keys(s.profile.mk).length ? true : null;
       b.settings.emt = !!s.settings.emt;
       b.settings.maxTier = TIERS.indexOf(s.settings.maxTier) >= 0 ? s.settings.maxTier : 'Expert';
     }
     b.game = s.game && typeof s.game === 'object' ? s.game : null;
+    if (b.game) b.game = { mapId: b.game.mapId, modeId: b.game.modeId, heroId: b.game.heroId, players: b.game.players, ts: +b.game.ts || 0, from: b.game.from };
     b.profile = cleanProfile(s.profile);
     return b;
   }
@@ -61,7 +71,8 @@
     KEY: KEY,
     get: read,
     save: function (s) { try { root.localStorage.setItem(KEY, JSON.stringify(clean(s))); return true; } catch (e) { return false; } },
-    update: function (fn) { var s = read(); fn(s); P.save(s); return s; },
+    update: function (fn) { var s = read(); fn(s); P.saved = P.save(s); return s; },
+    saved: true, /* did the last update reach localStorage? (private windows and blocked storage say no) */
     tower: function (id) { var t = read().towers[id]; return t ? { u: t.u.slice(), p: t.p, bank: t.bank, set: t.set } : { u: [0, 0, 0], p: false, bank: 0, set: false }; },
     setTower: function (id, patch) {
       return P.update(function (s) {
@@ -75,13 +86,17 @@
         refreshViews(s, id);
       });
     },
+    GOALS_MAX: GOALS_MAX,
+    lastError: null,
     goalKey: function (g) { return g.tower + '.' + (g.kind === 'upgrade' ? 'u' + g.path + g.tier : g.kind); },
     addGoal: function (g) {
       var id = null;
+      P.lastError = null;
       P.update(function (s) {
         var key = P.goalKey(g);
         var have = s.goals.find(function (x) { return P.goalKey(x) === key; });
         if (have) { id = have.id; return; }
+        if (s.goals.length >= GOALS_MAX) { id = null; P.lastError = 'full'; return; }
         id = 'g' + Date.now().toString(36) + Math.floor(Math.random() * 1e4).toString(36);
         s.goals.unshift({ id: id, tower: g.tower, kind: g.kind, path: g.path, tier: g.tier, added: Date.now() });
         /* a goal alone says nothing about what you have unlocked: set stays false until you enter or unlock tiers */
@@ -95,7 +110,7 @@
     /* keep the cached summary roughly right when XP is banked elsewhere (the goals page recomputes it exactly) */
     logRun: function (tower, xp, label) {
       xp = Math.max(0, Math.round(+xp || 0));
-      if (!xp) return;
+      if (!xp) return false;
       P.update(function (s) {
         var t = s.towers[tower] || { u: [0, 0, 0], p: false, bank: 0, set: false };
         t.bank = (t.bank || 0) + xp;
@@ -104,6 +119,7 @@
         s.log = s.log.slice(0, 60);
         refreshViews(s, tower);
       });
+      return P.saved; /* true only when it was saved */
     },
     undoRun: function (rid) {
       P.update(function (s) {
@@ -131,7 +147,15 @@
       });
     },
     setPlan: function (tool, info) { P.update(function (s) { info.ts = Date.now(); s.plans[tool] = info; }); },
-    setGame: function (g) { P.update(function (s) { s.game = { mapId: g.mapId, modeId: g.modeId, heroId: g.heroId }; }); },
+    /* the last game you set up in any tool: map, mode, hero, players. A tool that doesn't know the players keeps the old value. */
+    setGame: function (g) {
+      P.update(function (s) {
+        var old = s.game || {};
+        var same = old.mapId === g.mapId && old.modeId === g.modeId && old.heroId === g.heroId && (g.players === undefined || old.players === g.players);
+        s.game = { mapId: g.mapId, modeId: g.modeId, heroId: g.heroId, players: g.players !== undefined ? g.players : old.players,
+          ts: same && old.ts ? old.ts : Date.now(), from: same && old.from ? old.from : g.from };
+      });
+    },
     exportCode: function () {
       var s = read();
       var slim = { v: 1, towers: s.towers, goals: s.goals.map(function (g) { return { id: g.id, tower: g.tower, kind: g.kind, path: g.path, tier: g.tier, added: g.added }; }), settings: s.settings, log: s.log.slice(0, 20), profile: s.profile };

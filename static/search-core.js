@@ -33,10 +33,12 @@
     if (!s) return 0;
     return s + (KIND_BOOST[e.k] || 0);
   }
+  /* words a player types around the real question: "how do i beat 63", "lead fix", "best way to pop camo" */
+  var STOP = {};
+  'a an and are best beat can cant do does fix fixes for get help how i in is it me my of on pop pops stop the to vs way what which with you'.split(' ').forEach(function (w) { STOP[w] = 1; });
   function create(entries) {
     var list = (entries || []).map(prep);
-    function search(raw, limit) {
-      var q = norm(raw); if (!q) return [];
+    function run(q) {
       var qs = q.split(' '), out = [];
       var m = q.match(ROUND);
       list.forEach(function (e) {
@@ -46,6 +48,21 @@
         else s = score(e, q, qs);
         if (s > 0) out.push([s, e]);
       });
+      return out;
+    }
+    function search(raw, limit) {
+      var q = norm(raw); if (!q) return [];
+      var out = run(q);
+      /* nothing for the whole phrase: drop the filler words, then try each strong word on its own */
+      var core = q.split(' ').filter(function (w) { return !STOP[w]; });
+      if (!out.length && core.length && core.join(' ') !== q) out = run(core.join(' '));
+      if (!out.length && core.length > 1) {
+        var best = {};
+        core.filter(function (w) { return w.length >= 3 || /^\d+$/.test(w); }).forEach(function (w) {
+          run(w).forEach(function (x) { var k = x[1].u; if (!best[k] || best[k][0] < x[0]) best[k] = [x[0] * 0.8, x[1]]; });
+        });
+        out = Object.keys(best).map(function (k) { return best[k]; });
+      }
       out.sort(function (a, b) { return b[0] - a[0] || a[1].t.length - b[1].t.length; });
       var seen = {}, res = [];
       for (var i = 0; i < out.length && res.length < (limit || 12); i++) {

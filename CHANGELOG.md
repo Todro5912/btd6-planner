@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.10.0 (2026-11-08)
+The leak check is rebuilt, the Advisor plans for popping power, and the tools carry your game from one to the next.
+- **Leak check, now a timeline.** Each round plays out: bloon groups spawn at their real times and speeds and move down a track as long as the map. Every attack fires at its real rate, with its pierce and damage type. Children appear where the parent popped, and blimps drop theirs where they died. It also counts freezes, stuns, slows, MOAB Shove, and Glacial Trail freezing your towers. Against 1,481 real two-tower CHIMPS wins it now wrongly shows a leak in 3.5% of them at R80 (0.9.2: 37%) and 43% at R98 (98%). Up to R80 it stays under 4%. From R86 the tools still call it rough.
+- **Abilities and buffs from the game files.** Abilities count as used when they're ready. Berserker Brew has its real uptime, Primary Training adds pierce and range, and Village and Alchemist buffs reach the strongest towers nearby (an estimate, as placement is unknown). The result shows a range from a great spot to a bad one, and the leak without abilities.
+- **The Simulator checks leaks in the background**, so edits stay quick on a phone. It shows "Checking leaks…" until it's done.
+- **The Strategy Advisor plans for popping power.** It buys damage before the round that would leak, while staying affordable. It uses the same cash and lives as the Simulator, so "Open in Simulator" shows the same game. It says plainly where a plan breaks and why, instead of "Covered".
+- **Fixes:** the search covers every upgrade of every tower you have, new towers and pairs. They're ranked by leak removed per dollar and timed to the earliest round you can pay that's still in time. Labels name what you buy ("Druid #1: buy Druidic Reach (1-0-1), $110"). Adding a fix keeps your later upgrades. Every fix line has a button or says why not.
+- **Your game carries between tools:** map, mode, hero and players follow you from the Advisor to the Simulator to Check my defence. Check my defence has a map picker and uses your Monkey Knowledge. Links never wipe a saved build or your Advisor picks without a way back, and Start over can be undone.
+- **The Simulator's Add uses the Advisor's rules:** a pair of buys adds both, a later planned upgrade keeps the fix's tiers, and steps you can no longer pay for move to the first round you can.
+- **On a phone:** the result stays in reach after an edit, focus stays where you tapped, tap targets are at least 44 px, and long pages are shorter.
+- **Monkey Knowledge:** a node with two arrows needs both (checked in game). Monkey Education starts unset instead of on, and it's one switch for every tool.
+- **My goals and the XP calculator agree** on the same goal. Goals are never deleted to make room.
+- **Data:** hero abilities filled in from the game files (Striker, Brickell, Dan, Corvus). The Mermonkey and Skywarden XP farms had no Purple popper; both are replaced.
+- **Map page CHIMPS plans** load in the Simulator as "the map page's CHIMPS plan", not "the known start". They were worked out from strategy text, not played, and the Simulator now says where its own check thinks they break.
+- **Known limits:** an Advisor plan with 8 towers on a Hard map can take about half a second on a slow phone. Most map page CHIMPS plans break early in our check (some open with one base tower at R6); they need real games to settle.
+
 ## 0.9.2 (2026-11-07)
 The game's own files, mined in full (BTD Mod Helper export, game v56): towers, sub-towers, abilities, buffs, Monkey Knowledge, bloons, rounds, bosses, powers, Geraldo's shop, paragons and modes. They live in `data/game/`, built by `tools/game/` scripts, with tests.
 - **Monkey Knowledge trees** in My profile: all 134 nodes in the game's six trees, rows by points, prerequisite arrows, tap to toggle. A node with two arrows needs one of them: the files don't say whether it's one or all, and "one" can't lock you out of a node you own. About 20 more nodes now change the tools' prices, cash, income, sell value and hero XP, from the game's numbers: Bonus Monkey, Cheap 'Rangs, Military Conscription, the 12 upgrade discounts, Trade Agreements, More Valuable Bananas, Monkeys Together Strong and more. Big Bloon Sabotage and Veteran Monkey Training feed the leak check.

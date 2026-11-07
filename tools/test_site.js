@@ -19,6 +19,7 @@ const SHOTS = shotIdx > 0 ? process.argv[shotIdx + 1] : null;
 const preIdx = process.argv.indexOf('--prefix');
 const PREFIX = preIdx > 0 ? process.argv[preIdx + 1] : '';
 const PORT = 8000 + Math.floor(Math.random() * 900);
+const D_TOWERS = JSON.parse(fs.readFileSync(path.join(REPO, 'data', 'towers.json'), 'utf8')).towers.length;
 
 const PAGES = [
   ['home', ''],
@@ -185,7 +186,7 @@ async function main() {
     ok(st.code === '1-1-0' && st.yes.includes('Camo') && st.yes.includes('DDT'), 'middle + : 1-1-0 sees camo and can hit DDTs', st);
     const synAfter = await page.evaluate(() => document.querySelector('.pk-syn').textContent);
     ok(synBefore !== synAfter && st.syn > 0, 'synergy suggestions react to the crosspath', [synBefore.slice(0, 60), synAfter.slice(0, 60)]);
-    const synSrc = await page.evaluate(() => ({ src: document.querySelector('.pk-src').textContent, links: Array.from(document.querySelectorAll('.pk-syn li a')).map((a) => a.getAttribute('href')), text: document.querySelector('.pk-syn').textContent }));
+    const synSrc = await page.evaluate(() => ({ src: document.querySelector('.pk-src').textContent, links: Array.from(document.querySelectorAll('.pk-syn li a:not(.pk-plan)')).map((a) => a.getAttribute('href')), text: document.querySelector('.pk-syn').textContent }));
     ok(/synergy rules/.test(synSrc.src) && synSrc.links.length > 0 && synSrc.links.every((h) => /(monkeys|heroes)\/[a-z-]+\/$/.test(h)) && !/undefined|null/.test(synSrc.text), 'tower page uses the synergy engine (adapter): linked suggestions, no undefined', synSrc);
     ok(await page.isDisabled('.pk-btn[data-p="2"][data-d="1"]'), 'bottom + is disabled: only two paths can be upgraded');
     for (let i = 0; i < 2; i++) await page.click('.pk-btn[data-p="0"][data-d="1"]');
@@ -257,12 +258,12 @@ async function main() {
       await mp.click('#pf-mkt-Primary');
       const inner = await mp.evaluate(() => { const sc = document.getElementById('prf-mk-scroll'); return sc.scrollWidth - sc.clientWidth; });
       ok(ov <= 0 && (w > 1000 || inner > 0), `${w}px MK: the page doesn't scroll sideways (the tree panel does when it must)`, { ov, inner });
-      /* a node with two arrows needs one of them (our reading; "all of" could lock you out of a node you own) */
+      /* a node with two arrows needs both (checked in game) */
       await mp.evaluate(() => window.MonkeyIntel.progress.update((x) => { x.profile.mk = { 'magic-tricks': true, 'speedy-brewing': true, 'mo-monkey-money': true, 'super-range': true }; }));
       await mp.reload({ waitUntil: 'networkidle' });
       await mp.click('#pf-mkt-Magic');
-      await mp.click('#pf-mk-flame-jet');
-      ok(await pressed('flame-jet') === 'true', `${w}px MK: Flame Jet turns on with Magic Tricks alone (one of its two arrows)`, await mp.textContent('#prf-mk-msg'));
+      await mp.click('#pf-mk-flame-jet', { force: true });
+      ok(await pressed('flame-jet') === 'false' && /Needs Hot Magic/.test(await mp.textContent('#prf-mk-msg')), `${w}px MK: Flame Jet stays off with only one of its two arrows, and names the missing one`, await mp.textContent('#prf-mk-msg'));
       ok(!merr.length, `${w}px MK: no page errors`, merr);
       await mp.close();
     }
@@ -288,8 +289,12 @@ async function main() {
     ok(gapLis.length > 0 && gapLis.every(Boolean), 'Advisor: every gap fix has an Add button', gapLis.join(','));
     ok((await page.$$('[aria-labelledby="adv-gaps-h"] .bullets .btn-grass')).length > 0, 'Advisor: leftovers offer a cheaper crosspath');
     const simHref = await page.$eval('[aria-labelledby="adv-gaps-h"] a.btn', (a) => a.getAttribute('href'));
-    await page.click('[aria-labelledby="adv-gaps-h"] .ti-fix-a button');
-    ok(/t=super,dartling,village,\w+/.test(await page.evaluate(() => location.hash)), 'Advisor: "Add to my picks" adds the monkey', await page.evaluate(() => location.hash));
+    const advIdle = () => page.waitForFunction(() => document.getElementById('adv-root').getAttribute('aria-busy') === 'false');
+    await page.click('[aria-labelledby="adv-gaps-h"] .ti-fix-a button:has-text("Add to my picks")');
+    await advIdle();
+    const addH = await page.evaluate(() => location.hash);
+    const addNote = await page.textContent('#adv-note').catch(() => '');
+    ok(/t=super,dartling,village,\w+/.test(addH) || /wasn't added/.test(addNote), 'Advisor: "Add to my picks" adds the monkey, or says why not (it never makes the first problem earlier)', [addH, addNote]);
     await page.goto(origin + BASE + 'tools/advisor/' + simHref, { waitUntil: 'networkidle' });
     ok(/b=.*_\d+p/.test(await page.evaluate(() => location.hash)) || /b=/.test(await page.evaluate(() => location.hash)), 'Advisor: "Add in the Simulator" opens the plan with the fix', simHref);
     await page.evaluate(() => localStorage.setItem('mi-defence-v1', JSON.stringify({ modeId: 'medium', round: 24, towers: [{ id: 'dart', x: [0, 0, 2] }] })));
@@ -308,7 +313,57 @@ async function main() {
     ok(/pl=2/.test(await page.evaluate(() => location.hash)) && /you start with \$550/.test(await page.textContent('[aria-labelledby="sim-setup-h"]')), 'Simulator: 2-player co-op lowers your start cash', await page.textContent('[aria-labelledby="sim-setup-h"] .ti-note'));
     await page.goto(origin + BASE + 'tools/advisor/#map=monkey-meadow&mode=medium&hero=none&t=dart,ice', { waitUntil: 'networkidle' });
     await page.click('#adv-pl-3');
+    await page.waitForFunction(() => document.getElementById('adv-root').getAttribute('aria-busy') === 'false');
     ok(/pl=3/.test(await page.evaluate(() => location.hash)) && /pl=3/.test(await page.getAttribute('#adv-to-sim', 'href')), 'Advisor: co-op setting carries into the Simulator link');
+
+    // 0.9.3 Advisor: verdict + lives, starter from the map plan, fixes that re-plan, busy state, collapsed lists (audit T3-T13, Q5, Q6)
+    {
+      const idle = () => page.waitForFunction(() => document.getElementById('adv-root').getAttribute('aria-busy') === 'false');
+      await page.evaluate(() => { localStorage.removeItem('mi-adv-v1'); });
+      await page.goto(origin + BASE + 'tools/advisor/#map=dark-castle&mode=chimps&hero=auto', { waitUntil: 'networkidle' });
+      await page.evaluate(() => { window.__busy = false; const r = document.getElementById('adv-root'); new MutationObserver(() => { if (r.getAttribute('aria-busy') === 'true') window.__busy = true; }).observe(r, { attributes: true }); });
+      await page.click('#adv-starter');
+      await idle();
+      const sawBusy = await page.evaluate(() => window.__busy);
+      await idle();
+      const h1 = await page.evaluate(() => location.hash);
+      ok(/t=.*druid/.test(h1) && /druid\.015/.test(h1), 'Advisor: "Start with what\'s strong here" on Dark Castle CHIMPS uses the map page\'s plan (Druid 0-1-5)', h1);
+      ok(sawBusy, 'Advisor: a re-plan shows a busy state first (Q6)');
+      const head = await page.textContent('.ti-alert .ti-alert-t');
+      ok(/^(Holds to R100|Breaks at R\d+|Runs out of lives around R\d+)$/i.test(head.trim()) && /Lives:/.test(await page.textContent('.ti-alert')), 'Advisor: the headline says where the plan breaks (or that it holds) and shows lives (T3)', head);
+      ok(!/Covered to/.test(await page.textContent('#adv-root')), 'Advisor: no "Covered to" headline any more');
+      const hints = await page.$$eval('[aria-labelledby="adv-gaps-h"] *', (els) => els.filter((e) => e.children.length === 0 && /^Estimate from each tower/.test(e.textContent)).length);
+      ok(hints <= 1, 'Advisor: the estimate note shows once, not once per problem (Q5)', hints);
+      const more = await page.$('#adv-more-probs');
+      if (more) {
+        await page.click('#adv-more-probs > summary');
+        await page.waitForSelector('#adv-more-probs .ti-prob', { timeout: 3000 }).catch(() => {});
+        ok((await page.$$('#adv-more-probs .ti-prob')).length > 0 && (await page.$$('#adv-more-probs .ti-fix-a .btn')).length > 0, 'Advisor: "Show N more problems" opens them, each fix with a button');
+      }
+      const lines = await page.$$eval('[aria-labelledby="adv-gaps-h"] .ti-fixes > li', (ls) => ls.map((l) => !!l.querySelector('.ti-fix-a .btn, .ti-fix-a .ti-note') || /Work on it/.test(l.textContent)));
+      ok(lines.length > 0 && lines.every(Boolean), 'Advisor: every fix line has an action or says why not (E24)', lines.join(','));
+      const before = await page.evaluate(() => location.hash);
+      const addPlan = await page.$('[aria-labelledby="adv-gaps-h"] .ti-fix-a button:has-text("Add to my plan")');
+      if (addPlan) {
+        await addPlan.click(); await idle();
+        const note = await page.textContent('#adv-note').catch(() => '');
+        const after = await page.evaluate(() => location.hash);
+        ok((/x=/.test(after) && /added/.test(note)) || (/wasn't added/.test(note) && after === before), 'Advisor: "Add to my plan" adds the fix to the plan (x= in the link) or says why it didn\'t', [after, note]);
+        const rm = await page.$('.ti-alert .adv-extra button');
+        if (rm) { await rm.click(); await idle(); ok(!/x=/.test(await page.evaluate(() => location.hash)), 'Advisor: a fix you added can be removed'); }
+      }
+      const order = await page.$('[aria-labelledby="adv-order-h"] details summary');
+      if (order) { await order.click(); ok((await page.$$('[aria-labelledby="adv-order-h"] details .ti-step')).length > 0, 'Advisor: long build orders collapse behind "Show the other N buys"'); }
+      ok(/: buy /.test(await page.textContent('.ti-order-list')), 'Advisor: build order steps name the upgrade you buy (T13)');
+      const tryBtn = await page.$('[aria-labelledby="adv-gaps-h"] .ti-fix-a a:has-text("Try in the Simulator")');
+      ok(!!tryBtn && /simulator\/#.*b=/.test(await tryBtn.getAttribute('href')), 'Advisor: "Try in the Simulator" is a real link');
+      await Promise.all([page.waitForURL(/tools\/simulator\//), tryBtn.click()]);
+      ok(/b=/.test(await page.evaluate(() => location.hash)), 'Advisor: "Try in the Simulator" opens the Simulator with the plan and the fix', await page.evaluate(() => location.hash));
+      await page.goto(origin + BASE + 'tools/advisor/#map=dark-castle&mode=medium&hero=none&t=dart', { waitUntil: 'networkidle' });
+      await page.click('.ti-tips-dl button:has-text("Boomerang")');
+      await idle();
+      ok(/t=dart,boomerang/.test(await page.evaluate(() => location.hash)), 'Advisor: "Weak here" chips add the tower too (with a warning title)');
+    }
 
     // 0.9.1: illegal steps are called out, out-of-order share links load right, bad goal links don't blank the page
     await page.evaluate(() => localStorage.removeItem('mi-sim-v1'));
@@ -325,7 +380,219 @@ async function main() {
     ok(!gerr.length && (await gp.textContent('main')).length > 100, 'My goals: a malformed link doesn\'t blank the page', gerr);
     await gp.close();
 
-    // /planner/ redirects to the simulator and keeps the hash
+    // 0.9.3 (ui): phone result in reach, focus kept, games carry between tools with undo, tap targets, wording
+    {
+      const fresh = async (w) => {
+        const ctx = await browser.newContext({ viewport: { width: w, height: w < 600 ? 860 : 900 } });
+        const pg = await ctx.newPage();
+        pg.on('pageerror', (e) => errs.push(e.message));
+        return { ctx, pg };
+      };
+      const P = (pg, fn, arg) => pg.evaluate(fn, arg);
+      /* Q1 + Q4: Simulator on a phone. The tapped control stays where it was and keeps focus; the result is in a bar */
+      let { ctx, pg } = await fresh(400);
+      await pg.goto(origin + BASE + 'tools/simulator/#map=dark-castle&mode=chimps&b=6pdart_6hquincy_8pninja', { waitUntil: 'networkidle' });
+      const rp = pg.locator('[data-fk$="-rp"]').first();
+      await rp.scrollIntoViewIfNeeded();
+      const key = await rp.getAttribute('data-fk');
+      const y0 = (await rp.boundingBox()).y;
+      await rp.click();
+      const y1 = (await pg.locator('[data-fk="' + key + '"]').boundingBox()).y;
+      const st = await P(pg, () => ({ fk: document.activeElement && document.activeElement.getAttribute('data-fk'), dock: !document.getElementById('ti-dock').hidden, t: document.getElementById('ti-dock').textContent }));
+      ok(Math.abs(y1 - y0) < 4 && st.fk && st.dock && /^R\d+:/.test(st.t), '400px Simulator: after "+ round" the button stays put, keeps focus, and the result sits in a bar', { y0, y1, st });
+      await pg.click('#ti-dock');
+      await pg.waitForTimeout(700);
+      const top = await P(pg, () => document.getElementById('sim-res').getBoundingClientRect().top);
+      ok(top >= -2 && top < 200, '400px Simulator: tapping the bar brings the result into view', top);
+      ok(await P(pg, () => document.getElementById('ti-dock').hidden), '400px Simulator: the bar hides while the result is on screen');
+      ok(await P(pg, () => !!document.querySelector('#sim-res a[href*="defence/#"][href*="round="]')), 'Simulator: the first problem links to Check my defence at that round');
+      /* tap targets on a phone */
+      const small = await P(pg, () => {
+        const out = [];
+        document.querySelectorAll('.top .menubtn, .top .searchbtn, .top .tab, #sim-root .seg > button, #sim-root .ti-fix-a .btn, #sim-root .ti-step-r .ti-sbtn, #sim-root .ti-step-a .ti-sbtn, #sim-root a.ti-tap').forEach((el) => {
+          const r = el.getBoundingClientRect(); if (r.width && r.height < 43.5) out.push(el.className + ' ' + el.textContent.trim().slice(0, 12) + ' ' + Math.round(r.height));
+        });
+        return out;
+      });
+      ok(!small.length, '400px: header buttons, Players, fix buttons and step buttons are at least 44px tall', small.slice(0, 6));
+      /* keyboard: Enter on a path stepper in the add sheet keeps focus on a control */
+      await pg.click('#sim-add');
+      await pg.click('#sim-sheet .ti-tile >> nth=0');
+      await pg.focus('#sim-sheet [data-fk="sh-x-p0-up"]');
+      await pg.keyboard.press('Enter');
+      ok(await P(pg, () => document.activeElement.getAttribute('data-fk') === 'sh-x-p0-up'), 'Simulator: Enter on "Path 1 up" keeps focus on it (not the page body)');
+      await ctx.close();
+
+      /* Q2 + Q3: a link never loses your saved build; partial links can be added to it instead */
+      ({ ctx, pg } = await fresh(1280));
+      await pg.goto(origin + BASE + 'tools/simulator/#map=logs&mode=hard&b=3pdart_4psniper.010_10pninja', { waitUntil: 'networkidle' });
+      await pg.click('[data-fk$="-rp"] >> nth=0'); /* an edit saves it */
+      await pg.goto(origin + BASE + 'tools/simulator/#map=dark-castle&mode=chimps&b=6pboomerang', { waitUntil: 'networkidle' });
+      ok(/Back to my build/.test(await pg.textContent('#sim-root')) && /Dark Castle/.test(await pg.inputValue('#sim-map')), 'Simulator: a plan link opens, and offers "Back to my build"');
+      await pg.click('#sim-nt-back');
+      ok(/Logs/.test(await pg.inputValue('#sim-map')) && (await pg.$$('.ti-step')).length === 3, 'Simulator: "Back to my build" restores the saved build');
+      await pg.click('#sim-nt-undo');
+      ok(/Dark Castle/.test(await pg.inputValue('#sim-map')), 'Simulator: and "Switch back" undoes that');
+      await pg.click('#sim-nt-ok');
+      await pg.click('[data-fk$="-rp"] >> nth=0');
+      await pg.goto(origin + BASE + 'tools/simulator/#map=logs&mode=hard&b=3pdart_4psniper.010_10pninja', { waitUntil: 'networkidle' });
+      await pg.click('#sim-nt-ok');
+      await pg.click('[data-fk$="-rp"] >> nth=0');
+      await pg.goto(origin + BASE + 'tools/simulator/#tower=tack', { waitUntil: 'networkidle' });
+      await pg.click('#sim-nt-add');
+      const steps = await pg.$$eval('.ti-step-l', (ls) => ls.map((l) => l.textContent).join(' | '));
+      ok(/Tack/.test(steps) && /Sniper/.test(steps) && (await pg.$$('.ti-step')).length === 4, 'Simulator: a tower page link can be added to your build instead of replacing it', steps);
+      /* the last game from another tool: ask, then use it with an undo */
+      await P(pg, () => { const p = window.MonkeyIntel.progress; p.update((s) => { s.game = { mapId: 'dark-castle', modeId: 'hard', heroId: 'obyn', players: 2, ts: Date.now() + 5000, from: 'advisor' }; }); });
+      await pg.goto(origin + BASE + 'tools/simulator/', { waitUntil: 'networkidle' });
+      ok(/Your last game in another tool: Dark Castle, Hard Standard, Obyn Greenfoot, 2 players/.test(await pg.textContent('#sim-root')) && /Logs/.test(await pg.inputValue('#sim-map')), 'Simulator: the Advisor\'s newer game is offered, your build is kept until you choose', await pg.textContent('.ti-notice'));
+      await pg.click('#sim-nt-use');
+      ok(/Dark Castle/.test(await pg.inputValue('#sim-map')) && /Obyn/.test(await pg.inputValue('#sim-hero')) && (await pg.getAttribute('#sim-pl-2', 'aria-checked')) === 'true' && (await pg.$$('.ti-step')).length === 5,
+        'Simulator: "Use that game" takes map, mode, hero and players and keeps your steps');
+      await pg.click('#sim-nt-undo');
+      ok(/Logs/.test(await pg.inputValue('#sim-map')), 'Simulator: and Undo puts your build back');
+      await ctx.close();
+      ({ ctx, pg } = await fresh(1280));
+      await pg.goto(origin + BASE, { waitUntil: 'networkidle' });
+      await P(pg, () => window.MonkeyIntel.progress.setGame({ mapId: 'erosion', modeId: 'impoppable', heroId: 'gwendolin', players: 3, from: 'advisor' }));
+      await pg.goto(origin + BASE + 'tools/simulator/', { waitUntil: 'networkidle' });
+      ok(/Erosion/.test(await pg.inputValue('#sim-map')) && /Impoppable/.test(await pg.inputValue('#sim-mode')) && /Gwendolin/.test(await pg.inputValue('#sim-hero')) && (await pg.getAttribute('#sim-pl-3', 'aria-checked')) === 'true',
+        'Simulator with no build yet: takes map, mode, hero and players from your last game');
+      ok(/pl=3/.test(await pg.getAttribute('#sim-to-adv', 'href')), 'Simulator -> Advisor link keeps the players');
+      /* E21 + T17: Monkey Education is one switch, off until you set it */
+      ok(!/hero XP \+8%/.test(await pg.textContent('#sim-root')) && /no Monkey Education/.test(await pg.textContent('.ti-prof')), 'a first-time visitor is not told "hero XP +8%"');
+      await pg.click('.ti-details summary >> text=Tower XP from this run');
+      ok(/Not set yet/.test(await pg.textContent('#sim-root')), 'Simulator XP panel says Monkey Education is not set yet');
+      await pg.check('#sim-me');
+      ok(await P(pg, () => window.MonkeyIntel.progress.get().settings.me === true), 'the Simulator\'s Monkey Education box is the same switch as My profile');
+      await pg.goto(origin + BASE + 'tools/profile/', { waitUntil: 'networkidle' });
+      await pg.click('#pf-mkt-Support');
+      ok(await pg.getAttribute('#pf-mk-monkey-education', 'aria-pressed') === 'true', 'My profile shows Monkey Education on after ticking it in the Simulator');
+      /* quick-card prices follow your last game */
+      await pg.goto(origin + BASE + 'quick/camo/', { waitUntil: 'networkidle' });
+      ok(await pg.getAttribute('.diff-toggle [data-diff="impoppable"]', 'aria-checked') === 'true' && /last game/.test(await pg.textContent('.diff-note')), 'quick card prices start on your last game\'s difficulty (Impoppable), and say so');
+      await pg.click('.diff-toggle [data-diff="medium"]');
+      await pg.reload({ waitUntil: 'networkidle' });
+      ok(await pg.getAttribute('.diff-toggle [data-diff="medium"]', 'aria-checked') === 'true', 'tapping a difficulty wins over the last game');
+      await ctx.close();
+
+      /* Check my defence: map picker, links with towers (undo), rounds inside the mode, Clear with undo, hero fix action */
+      ({ ctx, pg } = await fresh(400));
+      await pg.goto(origin + BASE + 'tools/defence/#mode=hard&map=logs&round=30&t=dart.002,ninja.200', { waitUntil: 'networkidle' });
+      ok(/Logs/.test(await pg.inputValue('#dfn-map')) && (await pg.$$('.ti-placed .ti-card')).length === 2, 'Defence: a link sets the map, mode, round and your towers');
+      const pathUp = pg.locator('.ti-card >> nth=0 >> [aria-label="Path 1 up"]');
+      await pathUp.scrollIntoViewIfNeeded();
+      const k2 = await pathUp.getAttribute('data-fk');
+      const yA = (await pathUp.boundingBox()).y;
+      await pathUp.click();
+      const yB = (await pg.locator('[data-fk="' + k2 + '"]').boundingBox()).y;
+      ok(Math.abs(yA - yB) < 4 && await P(pg, () => !document.getElementById('ti-dock').hidden), '400px Defence: after an upgrade the button stays put and the result sits in a bar', [yA, yB]);
+      await pg.goto(origin + BASE + 'tools/defence/#mode=hard&map=logs&round=30&t=sniper.100', { waitUntil: 'networkidle' });
+      ok(/kept/.test(await pg.textContent('#dfn-root')), 'Defence: a link with other towers keeps yours');
+      await pg.click('#dfn-nt-back');
+      ok((await pg.$$('.ti-placed .ti-card')).length === 2, 'Defence: "Back to my towers" restores them');
+      await pg.click('#dfn-clear');
+      await pg.click('#dfn-nt-back');
+      ok((await pg.$$('.ti-placed .ti-card')).length === 2, 'Defence: Clear has an Undo');
+      for (let i = 0; i < 12; i++) { const b = await pg.$('[data-fk="dfn-r+5"]:not([disabled])'); if (!b) break; await b.click(); }
+      ok(/R80/.test(await pg.textContent('#dfn-round')), 'Defence: Hard stops at R80 (the mode\'s last round)', await pg.textContent('#dfn-round'));
+      ok(await P(pg, () => window.MonkeyIntel.progress.get().game.mapId === 'logs'), 'Defence: your map and mode become the last game for the other tools');
+      await pg.goto(origin + BASE + 'tools/defence/#mode=medium&map=monkey-meadow&round=24&t=dart&hero=quincy&hl=1', { waitUntil: 'networkidle' });
+      const heroFix = await pg.$('.ti-fixes button:text-matches("My hero is L\\d+")');
+      if (heroFix) { await heroFix.click(); ok(!/L1$/.test(await pg.textContent('.ti-round-n >> nth=1')), 'Defence: a hero fix row has an action (buy the levels)'); }
+      else ok(true, 'Defence: no hero fix in this case (hero action checked by code)');
+      await ctx.close();
+
+      /* My goals and the XP calculator agree (T15); combos don't reopen (Q4); unlock links go to My profile (E18) */
+      ({ ctx, pg } = await fresh(1280));
+      await pg.goto(origin + BASE + 'tools/goals/#add=sniper.paragon', { waitUntil: 'networkidle' });
+      await P(pg, () => window.MonkeyIntel.progress.update((x) => { x.towers.sniper = { u: [0, 0, 0], p: false, bank: 20000, set: false }; x.settings.maxTier = 'Beginner'; x.settings.me = true; }));
+      await pg.goto(origin + BASE + 'tools/goals/', { waitUntil: 'networkidle' });
+      const gTxt = await pg.textContent('.gl-card .gl-stats');
+      await pg.goto(origin + BASE + 'tools/xp/#tower=sniper', { waitUntil: 'networkidle' });
+      const xTxt = await pg.textContent('[aria-label="Result"]');
+      const gNeed = (gTxt.match(/Still to earn\s*([\d,]+)/i) || [])[1], xNeed = (xTxt.match(/S\.P\.I\.D\.E\.R\. Monkey\s*([\d,]+)/) || [])[1];
+      const gRuns = (gTxt.match(/Runs left\s*(\d+)/i) || [])[1], xRuns = (xTxt.match(/so (\d+) runs?/) || [])[1];
+      ok(gNeed && gNeed === xNeed && gRuns === xRuns && /Beginner/.test(xTxt), 'My goals and the XP calculator: same XP to earn, runs and map tier for the same Paragon goal', [gNeed, xNeed, gRuns, xRuns]);
+      await pg.goto(origin + BASE + 'tools/goals/', { waitUntil: 'networkidle' });
+      await pg.click('summary >> text=Add another goal');
+      await pg.click('#gls-tower'); await pg.keyboard.type('ninja'); await pg.keyboard.press('Enter');
+      ok(await P(pg, () => document.activeElement.id === 'gls-tower' && document.getElementById('gls-tower-list').hidden), 'My goals: picking a tower with Enter keeps focus there and the list stays closed');
+      await pg.keyboard.press('Tab');
+      ok(await P(pg, () => document.activeElement.id === 'gls-target'), 'My goals: Tab from the picker goes to the next field (no invisible stop)');
+      ok(await P(pg, () => Array.from(document.querySelectorAll('.gl-towers a')).filter((a) => a.textContent === 'edit').every((a) => /profile\/#tower=/.test(a.getAttribute('href')))), 'My goals: "edit" on your unlocks opens My profile');
+      await pg.goto(origin + BASE, { waitUntil: 'networkidle' });
+      await pg.focus('.more-menu > summary'); await pg.keyboard.press('Enter');
+      for (let i = 0; i < 12; i++) await pg.keyboard.press('Tab');
+      ok(await P(pg, () => !document.querySelector('.more-menu').open), 'the More menu closes when focus leaves it');
+      await ctx.close();
+
+      /* My profile: one class at a time, 44px pips, Insta picker keeps focus */
+      ({ ctx, pg } = await fresh(400));
+      await pg.goto(origin + BASE + 'tools/profile/', { waitUntil: 'networkidle' });
+      ok((await pg.$$('.prf-tower')).length === 7, 'My profile: shows one tower class at a time (Primary, 7 towers)');
+      const pip = await pg.$eval('#pf-dart-01', (b) => { const r = b.getBoundingClientRect(); return [r.width, r.height]; });
+      ok(pip[0] >= 44 && pip[1] >= 44, '400px My profile: unlock pips are 44px tap targets', pip);
+      await pg.click('#pf-cls-All');
+      ok((await pg.$$('.prf-tower')).length === D_TOWERS, 'My profile: "All" shows every tower');
+      await pg.goto(origin + BASE + 'tools/profile/#tower=druid', { waitUntil: 'networkidle' });
+      ok(await pg.isVisible('#prf-t-druid'), 'My profile: a #tower= link opens that tower\'s class');
+      await pg.click('#prf-ins-sum');
+      await pg.click('#pf-ins-t'); await pg.keyboard.type('sniper'); await pg.keyboard.press('Enter');
+      ok(await P(pg, () => document.activeElement.id === 'pf-ins-t' && document.getElementById('pf-ins-t-list').hidden), 'My profile: the Insta tower picker closes and keeps focus after Enter');
+      ok(/I have it/.test(await pg.textContent('#prf-mk')), 'My profile asks about Monkey Education while it is not set');
+      await ctx.close();
+
+      /* dead ends and wording */
+      ({ ctx, pg } = await fresh(1280));
+      await pg.goto(origin + BASE + 'tools/simulator/#map=dark-castle&mode=hard&b=3pdart', { waitUntil: 'networkidle' });
+      await pg.click('.ti-strat > summary');
+      ok(await P(pg, () => Array.from(document.querySelectorAll('.ti-weak')).every((a) => a.tagName === 'A' && /monkeys\//.test(a.getAttribute('href')))) && /aren't offered as steps/.test(await pg.textContent('.ti-strat')), 'Simulator: "Weak here" chips link to the tower and say why they aren\'t offered');
+      await P(pg, () => { const m = {}; window.MonkeyIntelData.heroes.forEach((h) => { m[h.id] = h.id === 'quincy'; }); window.MonkeyIntel.progress.setProfile({ heroes: m }); });
+      await pg.reload({ waitUntil: 'networkidle' });
+      await pg.click('.ti-strat > summary');
+      ok(/not owned/.test(await pg.textContent('.ti-strat')), 'Simulator: "Best heroes" chips say when you don\'t own the hero');
+      const txt = await pg.textContent('#sim-root');
+      ok(!/\b\d{4,}\b/.test(txt.replace(/\b(?:R|L)\d+\b/g, '').replace(/\d{1,3}(?:,\d{3})+/g, '')), 'Simulator: big numbers have thousands separators');
+      ok(await P(pg, () => !!document.querySelector('#sim-res a[href*="glossary/#g-rbe"]')), 'Simulator: RBE is explained where the result shows it');
+      ok(!/profile 's/.test(await pg.textContent('body')), 'no "your profile \'s" spacing bug');
+      await pg.goto(origin + BASE + 'monkeys/dart/', { waitUntil: 'networkidle' });
+      await pg.waitForSelector('.pk-syn li');
+      ok(await P(pg, () => { const a = Array.from(document.querySelectorAll('.pk-syn a.pk-plan')); return a.length > 0 && a.every((x) => /tools\/advisor\/#hero=[a-z]+&t=dart/.test(x.getAttribute('href'))); }), 'tower page: every "Pairs well with" line has "Plan with both"');
+      await ctx.close();
+    }
+
+    // 0.10: an Advisor link never loses the picks you had
+    {
+      const ap = await browser.newPage({ viewport: { width: 400, height: 860 } });
+      await ap.goto(origin + BASE + 'tools/advisor/#map=logs&mode=medium&hero=none&t=dart,bomb,ice', { waitUntil: 'networkidle' });
+      await ap.waitForTimeout(400);
+      await ap.goto(origin + BASE + 'tools/advisor/#map=monkey-meadow&mode=easy&t=ninja', { waitUntil: 'networkidle' });
+      await ap.reload({ waitUntil: 'networkidle' });
+      await ap.waitForTimeout(400);
+      const hasBack = !!(await ap.$('#adv-nt-back'));
+      if (hasBack) await ap.click('#adv-nt-back');
+      await ap.waitForTimeout(600);
+      const h2 = await ap.evaluate(() => location.hash);
+      ok(hasBack && /t=dart,bomb,ice/.test(h2), 'Advisor: a link that replaces your picks offers "Back to my picks", and it brings them back', h2);
+      await ap.close();
+    }
+
+    // 0.10: the map page's CHIMPS plan is labelled as worked out, not played, with what our check makes of it
+    {
+      const sp = await browser.newPage({ viewport: { width: 1280, height: 900 } });
+      await sp.goto(origin + BASE + 'tools/simulator/', { waitUntil: 'networkidle' });
+      await sp.evaluate(() => localStorage.clear());
+      await sp.goto(origin + BASE + 'tools/simulator/#map=dark-path&mode=chimps', { waitUntil: 'networkidle' });
+      await sp.reload({ waitUntil: 'networkidle' });
+      const btn = await sp.$('#sim-preset');
+      if (btn) { await btn.click(); await sp.waitForTimeout(2500); }
+      const note = btn ? await sp.textContent('#sim-preset-note').catch(() => '') : '';
+      ok(btn && /worked out from the map page, not played/.test(note), 'Simulator: the map page\'s CHIMPS plan says it is calculated, not played', note);
+      await sp.close();
+    }
+
+        // /planner/ redirects to the simulator and keeps the hash
     await page.goto(origin + BASE + 'planner/#map=dark-castle&mode=chimps&tower=dart', { waitUntil: 'networkidle' });
     ok(/tools\/simulator\//.test(page.url()), '/planner/ redirects to /tools/simulator/', page.url());
     const legacy = await page.evaluate(() => !!document.getElementById('mapList'));

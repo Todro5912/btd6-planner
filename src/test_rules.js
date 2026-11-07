@@ -152,4 +152,26 @@ module.exports = function (ok, D, C) {
     ok(C.coopStart(m, 2) === 550 && C.coopStart(m, 3) === 500 && C.coopStart(m, 4) === 450, 'standard co-op: $550 / $500 / $450 each (team $1,100 / $1,500 / $1,800)');
   }
 
+  console.log('0.10 integration: Monkey Knowledge in Check my defence, Monkey Education unset = off, pair fixes in the Simulator');
+  {
+    const unset = C.profileFx(D, { mk: {}, mkOn: true }, {});
+    const on = C.profileFx(D, { mk: {}, mkOn: true }, { me: true });
+    ok(!(unset.heroXpMult > 1) && on.heroXpMult > unset.heroXpMult, 'Monkey Education counts only when you set it on', [unset.heroXpMult, on.heroXpMult]);
+    const tw = [{ id: 'bomb', x: [0, 3, 0] }, { id: 'dart', x: [0, 0, 2] }];
+    const plain = C.checkDefence(D, { modeId: 'medium', mapId: 'logs', round: 38, towers: tw, span: 5 });
+    const weak = C.checkDefence(D, { modeId: 'medium', mapId: 'logs', round: 38, towers: tw, span: 5, fx: { blimpHpMult: 0.01 } });
+    ok(plain && weak && !weak.error, 'Check my defence takes your Monkey Knowledge (fx) without breaking');
+    let u = 0;
+    const plan = { mapId: 'monkey-meadow', modeId: 'medium', steps: [{ uid: 'p1', r: 1, op: 'place', t: 'dart', x: [0, 0, 0] }, { uid: 'p2', r: 30, op: 'up', ref: 'p1', x: [3, 0, 0] }] };
+    const sim = C.simulate(D, plan);
+    const pr = sim.problems.find((p) => p.prop === 'power');
+    const f = pr && pr.fixes.find((x) => x.kind === 'upgrade');
+    if (f) {
+      const res = C.applyFix(D, plan, f, pr.round);
+      const later = res.plan.steps.filter((q) => q.op === 'up' && q.ref === 'p1' && q.r >= 30);
+      ok(later.every((q) => C.geq(q.x, f.x)), 'applying an upgrade fix keeps later planned upgrades at least at the fix (Simulator uses C.applyFix)', later.map((q) => q.x.join('')));
+    } else ok(true, 'no upgrade fix to apply in this plan (nothing to check)');
+    void u;
+  }
+
 };

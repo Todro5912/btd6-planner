@@ -16,10 +16,12 @@
   let flash = null;
   let jump = null;
   const openPanels = { towers: true, mk: true };
+  /* Towers and upgrades: one class at a time keeps the page short on a phone (remembered in this browser) */
+  let clsTab = (() => { try { const v = localStorage.getItem('mi-prf-cls'); return CLASSES.concat(['All']).indexOf(v) >= 0 ? v : 'Primary'; } catch (e) { return 'Primary'; } })();
 
   function render() {
     const s = P.get();
-    const fid = document.activeElement && document.activeElement.id;
+    const snap = U.snapFocus();
     U.clear(root);
     root.appendChild(youPanel(s));
     root.appendChild(towersPanel(s));
@@ -31,10 +33,7 @@
       const el = document.getElementById(jump);
       jump = null;
       if (el) setTimeout(() => el.scrollIntoView({ block: 'start' }), 0);
-    } else if (fid) {
-      const el = document.getElementById(fid);
-      if (el && el.focus) el.focus({ preventScroll: true });
-    }
+    } else U.restoreFocus(snap, root); /* keeps the control you used, and doesn't reopen a picker */
   }
   function keepOpen(d, key) {
     if (openPanels[key]) d.open = true;
@@ -64,7 +63,7 @@
     const t5 = D.towers.reduce((n, t) => n + (s.towers[t.id] && s.towers[t.id].set ? s.towers[t.id].u.filter((v) => v === 5).length : 0), 0);
     const paras = D.towers.filter((t) => t.paragon && s.towers[t.id] && s.towers[t.id].p).length;
     const heroes = D.heroes.filter((x) => !pr.heroes || pr.heroes[x.id] !== false).length;
-    const mkOn = Object.keys(pr.mk).length + (s.settings.me ? 1 : 0) + (s.settings.emt ? 1 : 0);
+    const mkOn = Object.keys(pr.mk).length + (s.settings.me === true ? 1 : 0) + (s.settings.emt ? 1 : 0);
     const instaN = pr.instas.reduce((n, i) => n + i.n, 0);
     return h('section', { class: 'panel', 'aria-labelledby': 'prf-you-h' }, [
       h('h2', { class: 'panel-h', id: 'prf-you-h' }, [h('span', { id: 'prf-you-t' }, pr.name ? pr.name : 'You'), h('small', null, 'saved in this browser')]),
@@ -120,10 +119,15 @@
     ]);
   }
   function towersPanel(s) {
-    const body = CLASSES.map((cl) => h('div', { class: 'prf-class' }, [
-      h('p', { class: 'ti-lbl' }, cl),
+    const setN = (cl) => D.towers.filter((t) => (cl === 'All' || t.class === cl) && s.towers[t.id] && s.towers[t.id].set).length;
+    const allN = (cl) => D.towers.filter((t) => cl === 'All' || t.class === cl).length;
+    const tabs = h('div', { class: 'seg prf-cls-tabs', role: 'radiogroup', 'aria-label': 'Tower class' }, CLASSES.concat(['All']).map((cl) =>
+      h('button', { type: 'button', role: 'radio', id: 'pf-cls-' + cl, 'aria-checked': String(clsTab === cl), onclick: () => { clsTab = cl; try { localStorage.setItem('mi-prf-cls', cl); } catch (e) { /* ignore */ } render(); } },
+        [cl, h('small', { class: 'ti-num' }, setN(cl) + '/' + allN(cl))])));
+    const body = [tabs].concat(CLASSES.filter((cl) => clsTab === 'All' || clsTab === cl).map((cl) => h('div', { class: 'prf-class' }, [
+      clsTab === 'All' ? h('p', { class: 'ti-lbl' }, cl) : null,
       h('ul', { class: 'ti-placed prf-towers' }, D.towers.filter((t) => t.class === cl).map((t) => towerCard(t, s))),
-    ]));
+    ])));
     return keepOpen(h('details', { class: 'panel ti-details', id: 'prf-towers' }, [
       h('summary', { class: 'panel-h', id: 'prf-towers-sum' }, ['Towers and upgrades', h('small', null, 'tap the pips you have unlocked')]),
       h('div', { class: 'ti-panel-b ti', style: 'padding-top:10px' }, [
@@ -168,10 +172,9 @@
 
   /* ---------- Monkey Knowledge: the game's six trees ---------- */
   /* Rows follow the point gates (data/monkey-knowledge.json layout, from the game files), arrows are prerequisites.
-     A node needs one of the nodes it has an arrow from, and enough points already spent in its tree. "One of" is our
-     reading, not checked in game: the files list prerequisites but not whether all of them are needed. "One of" can't
-     lock you out of a node you own in game; "all of" could, so we use it until it's checked. */
-  const preMet = (on, n) => !(n.pre || []).length || n.pre.some((p) => on[p]);
+     A node needs every node it has an arrow from (checked in game by the site owner, 2026-11-07), and enough points already
+     spent in its tree. */
+  const preMet = (on, n) => (n.pre || []).every((p) => on[p]);
   /* Monkey Education and Elite Military Training live in settings.me / settings.emt; everything else in profile.mk. */
   const MK_TREES = (D.mkMeta && D.mkMeta.trees) || ['Primary', 'Military', 'Magic', 'Support', 'Heroes', 'Powers'];
   const MK = {};
@@ -188,7 +191,7 @@
   function mkState(s) {
     const on = {};
     Object.keys(s.profile.mk).forEach((k) => { if (s.profile.mk[k] && MK[k]) on[k] = true; });
-    if (s.settings.me !== false) on['monkey-education'] = true;
+    if (s.settings.me === true) on['monkey-education'] = true; /* null = not set yet: off */
     if (s.settings.emt) on['elite-military-training'] = true;
     return on;
   }
@@ -197,14 +200,15 @@
   function mkBlock(on, n) {
     const have = spentIn(on, n.tree, n.id);
     const parts = [];
-    if (!preMet(on, n)) parts.push(n.pre.length === 1 ? mkName(n.pre[0]) : n.pre.map(mkName).join(' or '));
+    if (!preMet(on, n)) parts.push(list(n.pre.filter((p) => !on[p]).map(mkName)));
     if (have < (n.ptsNeeded || 0)) parts.push((n.ptsNeeded - have) + ' more point' + (n.ptsNeeded - have === 1 ? '' : 's') + ' in ' + n.tree);
     return parts.length ? 'Needs ' + parts.join(' and ') + ' first.' : null;
   }
-  function mkSave(on) {
+  /* meTouched: Monkey Education itself (or the whole Support tree) was changed; otherwise "not set yet" stays not set */
+  function mkSave(on, meTouched) {
     const m = {};
     Object.keys(on).forEach((k) => { if (on[k] && k !== 'monkey-education' && k !== 'elite-military-training') m[k] = true; });
-    P.update((x) => { x.settings.me = !!on['monkey-education']; x.settings.emt = !!on['elite-military-training']; x.profile.mk = m; });
+    P.update((x) => { x.settings.me = on['monkey-education'] ? true : meTouched || x.settings.me != null ? false : null; x.settings.emt = !!on['elite-military-training']; x.profile.mk = m; });
   }
   /* turn a node on or off; turning off also turns off what needs it (its arrows, or the points it gave) */
   function mkToggle(id) {
@@ -233,7 +237,7 @@
       }
       mkUi.msg = n.name + ' off.' + (gone.length ? ' Also turned off ' + list(gone) + ': ' + (gone.length === 1 ? 'it needs' : 'they need') + ' it.' : '');
     }
-    mkSave(on);
+    mkSave(on, id === 'monkey-education' || !on['monkey-education'] && P.get().settings.me === true);
     render();
   }
   function mkFillTree(tree, v) {
@@ -241,7 +245,7 @@
     (D.mk || []).forEach((n) => { if (n.tree === tree) { if (v) on[n.id] = true; else delete on[n.id]; } });
     mkUi.msg = v ? 'All of ' + tree + ' on.' : tree + ' cleared.';
     mkUi.sel = null;
-    mkSave(on);
+    mkSave(on, tree === 'Support');
     render();
   }
   /* pixel geometry of one tree: rows grow by the point gates above them */
@@ -346,14 +350,14 @@
       h('p', { class: 'mk-info-h' }, [h('b', null, n.name), ' ', h('span', { class: 'tag mk-st ' + (on[n.id] ? 'mk-st-on' : '') }, on[n.id] ? 'on' : why ? 'locked' : 'off'), ' ', use]),
       h('p', { class: 'mk-info-d' }, n.effect),
       h('p', { class: 'ti-note' }, [(n.ptsNeeded ? n.ptsNeeded + ' pts in ' + n.tree : 'No points needed') + (n.mm ? ' · ' + C.int(n.mm) + ' MM' : ' · free'),
-        (n.pre || []).length ? ' · needs ' + (n.pre.length === 1 ? mkName(n.pre[0]) : n.pre.map(mkName).join(' or ')) : '', kids.length ? ' · leads to ' + list(kids) : '']),
+        (n.pre || []).length ? ' · needs ' + list(n.pre.map(mkName)) : '', kids.length ? ' · leads to ' + list(kids) : '']),
       why ? h('p', { class: 'ti-note mk-why' }, why) : null,
     ]);
   }
   function mkPanel(s) {
     const pr = s.profile;
     const on = mkState(s);
-    const fx = C.profileFx(D, pr, s.settings);
+    const fx = C.profileFx(D, pr, U.mkSettings(s.settings));
     const sum = C.fxSummary(fx);
     const total = Object.keys(on).length;
     const tree = mkUi.tree;
@@ -374,7 +378,11 @@
         h('label', { class: 'check' }, [h('input', { type: 'checkbox', id: 'pf-mk-on', checked: pr.mkOn ? true : null, onchange: (e) => { P.setProfile({ mkOn: e.target.checked }); render(); } }), 'Use my Monkey Knowledge in the tools']),
         h('span', { class: 'ti-note' }, pr.mkOn ? (sum.length ? 'Tools apply: ' + sum.join(', ') + '.' : 'Nothing ticked changes cash, prices or XP yet.') : 'Off: the tools plan as if you had none.'),
       ]),
-      h('p', { class: 'ti-note' }, 'Tap a node to turn it on. It needs a node its arrows come from, and the points shown on its row already spent in that tree. Turning one off also turns off what needs it. A yellow dot marks the ones the Simulator and Advisor use.'),
+      h('p', { class: 'ti-note' }, 'Tap a node to turn it on. It needs every node its arrows come from, and the points shown on its row already spent in that tree. Turning one off also turns off what needs it. A yellow dot marks the ones the Simulator and Advisor use.'),
+      s.settings.me == null ? h('div', { class: 'ti-notice', id: 'prf-me-unset' }, [h('p', null, 'Monkey Education (Support tree, +8% XP) isn\'t set yet, so every tool counts it as off. Do you have it?'),
+        h('div', { class: 'ti-share' }, [
+          h('button', { type: 'button', class: 'btn btn-small btn-grass', id: 'pf-me-yes', 'data-fkb': 'pf-mk-on', onclick: () => { P.update((x) => { x.settings.me = true; }); mkUi.msg = 'Monkey Education on.'; render(); } }, 'I have it'),
+          h('button', { type: 'button', class: 'btn btn-small', id: 'pf-me-no', 'data-fkb': 'pf-mk-on', onclick: () => { P.update((x) => { x.settings.me = false; }); mkUi.msg = 'Monkey Education off.'; render(); } }, 'I don\'t')])]) : null,
       orphans.length ? h('p', { class: 'ti-note mk-why' }, orphans.length + ' ticked node' + (orphans.length === 1 ? ' is' : 's are') + ' missing what ' + (orphans.length === 1 ? 'it needs' : 'they need') + ' (saved before the full tree): ' + list(orphans.slice(0, 5).map(mkName).concat(orphans.length > 5 ? [(orphans.length - 5) + ' more'] : [])) + '. Tick the nodes above ' + (orphans.length === 1 ? 'it' : 'them') + '.') : null,
       tabs,
       h('div', { class: 'mk-panel mk-c-' + tree.toLowerCase(), role: 'tabpanel', id: 'prf-mk-tree', 'aria-labelledby': 'pf-mkt-' + tree }, [
@@ -448,6 +456,6 @@
 
   if (/(^#|&)mk(=|&|$)/.test(String(location.hash || ''))) jump = 'prf-mk';
   const q = String(location.hash || '').match(/tower=([a-z]+)/);
-  if (q && C.tower(D, q[1])) { openPanels.towers = true; jump = 'prf-t-' + q[1]; }
+  if (q && C.tower(D, q[1])) { openPanels.towers = true; jump = 'prf-t-' + q[1]; if (clsTab !== 'All') clsTab = C.tower(D, q[1]).class; }
   render();
 })();
