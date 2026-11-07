@@ -1,0 +1,27 @@
+
+<link rel="stylesheet" href="{{BASE}}static/tools/tools.css">
+<div class="ti" id="prf" data-tool="profile">
+  <div class="ti-head">
+    <div>
+      <h1 class="h1">My profile</h1>
+      <p class="ti-sub">Tell the site what you have in your game: unlocked upgrades and Paragons, the heroes you own, your Monkey Knowledge and your Insta Monkeys. The Advisor, Simulator, My goals and the XP calculator all use it. Saved in this browser only.</p>
+    </div>
+  </div>
+  <noscript><p class="ti-note">My profile needs JavaScript.</p></noscript>
+  <div id="prf-root" class="ti" aria-live="polite"></div>
+  <details class="about-data">
+    <summary>About this data</summary>
+    <div class="about-b">
+      <p>The Monkey Knowledge list is the nodes our Monkey Knowledge guide describes, not the full 134-node tree.</p>
+      <p>Only some of them change what the tools work out: More Cash (+$200 start), Hero Favors (heroes 10% cheaper), Empowered Heroes (heroes start at level 3), Self Taught Heroes and Monkey Education (hero and tower XP), Elite Military Training (Military XP) and Better Sell Deals (sell value). They are switched off in modes that ignore Monkey Knowledge, such as CHIMPS. The others are kept here for your own record.</p>
+      <p>Insta Monkeys are placed for free in the Simulator and the Advisor, and are blocked in modes that ban them. Unlock costs, hero unlock levels and Monkey Money prices come from the tower and hero data.</p>
+      <p>Everything is stored in this browser (localStorage). Use the backup code to move it to another device.</p>
+    </div>
+  </details>
+</div>
+<script src="{{BASE}}static/tools/tools-data.js" defer></script>
+<script src="{{BASE}}static/tools/tools-core.js" defer></script>
+<script src="{{BASE}}static/tools/advisor-core.js" defer></script>
+<script src="{{BASE}}static/tools/goals-core.js" defer></script>
+<script src="{{BASE}}static/tools/tools-ui.js" defer></script>
+<script src="{{BASE}}static/tools/profile.js" defer></script>

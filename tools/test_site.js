@@ -35,7 +35,7 @@ const PAGES = [
   ['records', 'records/'],
 ];
 // tool pages are written by another stream; test whichever exist
-for (const slug of ['advisor', 'simulator', 'xp', 'defence']) {
+for (const slug of ['advisor', 'simulator', 'goals', 'xp', 'defence', 'profile']) {
   if (fs.existsSync(path.join(REPO, 'tools', slug, 'index.html'))) PAGES.push(['tool-' + slug, 'tools/' + slug + '/']);
 }
 
@@ -117,7 +117,8 @@ async function main() {
     await page.keyboard.press('Escape');
     await page.click('.tools-menu > summary');
     const toolLinks = await page.evaluate(() => Array.from(document.querySelectorAll('.tools-menu[open] .menu-list a')).map((a) => a.getAttribute('href')));
-    ok(toolLinks.length === 4 && toolLinks.every((h) => /tools\/(advisor|simulator|xp|defence)\/$/.test(h)), 'Tools menu lists advisor, simulator, xp and defence', toolLinks);
+    ok(toolLinks.length === 6 && toolLinks.every((h) => /tools\/(advisor|simulator|goals|xp|defence|profile)\/$/.test(h)), 'Tools menu lists advisor, simulator, goals, xp, defence and profile', toolLinks);
+    ok(await page.evaluate(() => !!document.querySelector('.top a.mebtn[href$="tools/profile/"]')), 'header has the "Me" profile button');
     ok(await page.evaluate(() => !!document.querySelector('.planband a[href$="tools/advisor/"]') && !!document.querySelector('.planband a[href$="tools/simulator/"]')), 'home "Plan a run" band links the Advisor and the Simulator');
     await page.mouse.click(5, 600);
     ok(!(await page.evaluate(() => document.querySelector('.tools-menu').open)), 'clicking outside closes the Tools menu');
@@ -201,6 +202,38 @@ async function main() {
     await page.goto(origin + BASE + 'maps/logs/', { waitUntil: 'networkidle' });
     ok(await page.evaluate(() => { const d = document.querySelector('.build-more'); return !!d && !d.open && /not play-tested/.test(d.querySelector('summary').textContent); }), 'map: build order collapsed, "calculated, not play-tested"');
     ok(await page.evaluate(() => !document.querySelector('.expert-more').open), 'map: expert data collapsed');
+
+    // 0.7 progress: a tower page's goal button starts a goal; logging a run banks XP; home picks it up; search shows recents
+    await page.goto(origin + BASE + 'monkeys/dart/', { waitUntil: 'networkidle' });
+    await page.click('.head-acts a[href*="tools/goals/#add=dart.paragon"]');
+    await page.waitForSelector('.gl-card');
+    ok(/Apex Plasma Master/.test(await page.textContent('.gl-card .panel-h')), 'tower page "Go for" button starts the Paragon goal');
+    await page.click('.gl-log .btn-grass');
+    ok(/XP banked/.test(await page.textContent('.gl-flash')), 'logging a run banks XP');
+    await page.click('.gl-unlock');
+    ok(/Unlocked/.test(await page.textContent('.gl-flash')), 'banked XP unlocks the next upgrade');
+    await page.goto(origin + BASE + 'monkeys/dart/', { waitUntil: 'networkidle' });
+    ok(await page.evaluate(() => { const b = document.querySelector('[data-my-tower]'); return b && !b.hidden && /Apex Plasma Master/.test(b.textContent); }), 'tower page shows your progress on it');
+    await page.goto(origin + BASE, { waitUntil: 'networkidle' });
+    ok(await page.evaluate(() => { const c = document.querySelector('[data-continue]'); return c && !c.hidden && !!c.querySelector('.mi-goal') && /Dart Monkey/.test(c.textContent); }), 'home "Pick up where you left off" shows the goal and recent pages');
+    await page.keyboard.press('/');
+    await page.waitForFunction(() => document.querySelectorAll('#searchList li[data-i]').length > 0, null, { timeout: 5000 }).catch(() => {});
+    ok(await page.evaluate(() => /Recent/.test(document.getElementById('searchList').textContent)), 'empty search shows recently viewed pages');
+    await page.keyboard.press('Escape');
+    await page.goto(origin + BASE + 'tools/xp/?tower=ninja', { waitUntil: 'networkidle' });
+    ok(await page.evaluate(() => document.querySelector('.ti-tile[aria-pressed="true"]').textContent.indexOf('Ninja') === 0), 'old ?tower= links open the XP calculator on that tower');
+
+    // My profile: Monkey Knowledge and Instas reach the Advisor
+    await page.goto(origin + BASE + 'tools/profile/', { waitUntil: 'networkidle' });
+    await page.click('#prf-mk-sum');
+    await page.click('#pf-mk-more-cash');
+    await page.click('#prf-ins-sum');
+    await page.click('#pf-ins-add');
+    await page.goto(origin + BASE + 'tools/advisor/#map=logs&mode=hard&hero=auto&t=dart', { waitUntil: 'networkidle' });
+    ok(/\+\$200 start/.test(await page.textContent('.ti-prof')), 'Advisor shows your Monkey Knowledge (+$200 start)');
+    ok(/Insta Dart/.test(await page.textContent('.ti-order-list')), 'Advisor starts the plan with your Insta Dart');
+    await page.goto(origin + BASE + 'tools/advisor/#map=logs&mode=chimps&hero=auto&t=dart', { waitUntil: 'networkidle' });
+    ok(/turns Monkey Knowledge off/.test(await page.textContent('.ti-prof')) && !/Insta Dart/.test(await page.textContent('.ti-order-list')), 'CHIMPS: no Monkey Knowledge, no Instas');
 
     // /planner/ redirects to the simulator and keeps the hash
     await page.goto(origin + BASE + 'planner/#map=dark-castle&mode=chimps&tower=dart', { waitUntil: 'networkidle' });

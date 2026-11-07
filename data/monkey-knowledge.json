@@ -1,0 +1,258 @@
+{
+ "about": "Monkey Knowledge nodes described in content/guides/monkey-knowledge.md (not the full 134-node tree). fx = effects the tools apply.",
+ "version": "57.4",
+ "trees": [
+  "Primary",
+  "Military",
+  "Magic",
+  "Support",
+  "Heroes",
+  "Powers"
+ ],
+ "totalNodes": 134,
+ "maxPoints": 138,
+ "nodes": [
+  {
+   "id": "mo-monkey-money",
+   "name": "Mo' Monkey Money",
+   "tree": "Magic",
+   "effect": "+10% Monkey Money from wins and Daily Challenges"
+  },
+  {
+   "id": "monkey-education",
+   "name": "Monkey Education",
+   "tree": "Support",
+   "effect": "All towers and heroes earn 8% more XP",
+   "ptsNeeded": 3,
+   "mm": 0,
+   "fx": {
+    "xpMult": 1.08
+   }
+  },
+  {
+   "id": "elite-military-training",
+   "name": "Elite Military Training",
+   "tree": "Military",
+   "effect": "+1,000 XP once to every Military tower, and +5% Military XP",
+   "ptsNeeded": 0,
+   "mm": 0,
+   "fx": {
+    "militaryXpMult": 1.05
+   }
+  },
+  {
+   "id": "self-taught-heroes",
+   "name": "Self Taught Heroes",
+   "tree": "Heroes",
+   "effect": "Heroes earn XP 10% faster",
+   "ptsNeeded": 3,
+   "mm": 0,
+   "fx": {
+    "heroXpMult": 1.1
+   }
+  },
+  {
+   "id": "hero-favors",
+   "name": "Hero Favors",
+   "tree": "Heroes",
+   "effect": "Heroes 10% cheaper",
+   "ptsNeeded": 3,
+   "mm": 250,
+   "fx": {
+    "heroCostMult": 0.9
+   }
+  },
+  {
+   "id": "extra-dart-pops",
+   "name": "Extra Dart Pops",
+   "tree": "Primary",
+   "effect": "+1 pierce to Dart Monkeys",
+   "ptsNeeded": 0,
+   "mm": 0
+  },
+  {
+   "id": "naval-upgrades",
+   "name": "Naval Upgrades",
+   "tree": "Military",
+   "effect": "+1 pierce to Subs and Buccaneers",
+   "ptsNeeded": 0,
+   "mm": 0
+  },
+  {
+   "id": "farm-subsidy",
+   "name": "Farm Subsidy",
+   "tree": "Support",
+   "effect": "A small discount on your first Banana Farm"
+  },
+  {
+   "id": "first-last-line-of-defense",
+   "name": "First Last Line of Defense",
+   "tree": "Support",
+   "effect": "A small discount on your first Spike Factory"
+  },
+  {
+   "id": "more-cash",
+   "name": "More Cash",
+   "tree": "Primary",
+   "effect": "+$200 starting cash",
+   "ptsNeeded": 10,
+   "mm": 1000,
+   "fx": {
+    "startCash": 200
+   }
+  },
+  {
+   "id": "bonus-monkey",
+   "name": "Bonus Monkey!",
+   "tree": "Primary",
+   "effect": "A free Dart Monkey at the start (one free tower per game; or Bonus Glue Gunner)",
+   "ptsNeeded": 10,
+   "mm": 1000
+  },
+  {
+   "id": "bonus-glue-gunner",
+   "name": "Bonus Glue Gunner",
+   "tree": "Primary",
+   "effect": "A free Glue Gunner at the start (instead of Bonus Monkey!)",
+   "ptsNeeded": 10,
+   "mm": 1000
+  },
+  {
+   "id": "better-sell-deals",
+   "name": "Better Sell Deals",
+   "tree": "Support",
+   "effect": "All towers sell for 5% more",
+   "ptsNeeded": 8,
+   "mm": 500,
+   "fx": {
+    "sellAdd": 0.05,
+    "unverified": true
+   }
+  },
+  {
+   "id": "veteran-monkey-training",
+   "name": "Veteran Monkey Training",
+   "tree": "Support",
+   "effect": "All towers reload 3% faster",
+   "ptsNeeded": 8,
+   "mm": 500
+  },
+  {
+   "id": "global-ability-cooldowns",
+   "name": "Global Ability Cooldowns",
+   "tree": "Support",
+   "effect": "Ability cooldowns -3%",
+   "ptsNeeded": 8,
+   "mm": 500
+  },
+  {
+   "id": "healthy-bananas",
+   "name": "Healthy Bananas",
+   "tree": "Support",
+   "effect": "Marketplace +1 life per round, Central Market +3",
+   "ptsNeeded": 8,
+   "mm": 500
+  },
+  {
+   "id": "empowered-heroes",
+   "name": "Empowered Heroes",
+   "tree": "Heroes",
+   "effect": "Heroes start at level 3",
+   "ptsNeeded": 8,
+   "mm": 500,
+   "fx": {
+    "heroStartLevel": 3
+   }
+  },
+  {
+   "id": "mana-shield",
+   "name": "Mana Shield",
+   "tree": "Magic",
+   "effect": "Absorbs up to 25 lives, slowly recharges",
+   "ptsNeeded": 8,
+   "mm": 1000
+  },
+  {
+   "id": "big-bloon-sabotage",
+   "name": "Big Bloon Sabotage",
+   "tree": "Military",
+   "effect": "MOAB-class bloons spawn partly damaged. A must for Freeplay",
+   "ptsNeeded": 14,
+   "mm": 1000
+  },
+  {
+   "id": "military-conscription",
+   "name": "Military Conscription",
+   "tree": "Military",
+   "effect": "The first Military tower each game costs two-thirds",
+   "ptsNeeded": 14,
+   "mm": 1000
+  },
+  {
+   "id": "bank-deposits",
+   "name": "Bank Deposits",
+   "tree": "Support",
+   "effect": "Tier 4+ Monkey Banks accept deposits",
+   "ptsNeeded": 14,
+   "mm": 1000
+  },
+  {
+   "id": "paragon-of-power",
+   "name": "Paragon of Power",
+   "tree": "Support",
+   "effect": "Paragons attack faster with no same-type tier 5 on the map",
+   "ptsNeeded": 14,
+   "mm": 1000
+  },
+  {
+   "id": "pre-game-prep",
+   "name": "Pre-game Prep",
+   "tree": "Powers",
+   "effect": "Free permanent Road Spikes at the end of the track",
+   "ptsNeeded": 3,
+   "mm": 250
+  },
+  {
+   "id": "monkeys-together-strong",
+   "name": "Monkeys Together Strong",
+   "tree": null,
+   "effect": "+5% hero XP per hero placed",
+   "group": "Economy and XP"
+  },
+  {
+   "id": "more-valuable-bananas",
+   "name": "More Valuable Bananas",
+   "tree": null,
+   "effect": "Valuable Bananas +30% instead of +25%",
+   "group": "Economy and XP"
+  },
+  {
+   "id": "bigger-banks",
+   "name": "Bigger Banks",
+   "tree": null,
+   "effect": "+$2,500 Monkey Bank capacity",
+   "group": "Economy and XP"
+  },
+  {
+   "id": "backroom-deals",
+   "name": "Backroom Deals",
+   "tree": null,
+   "effect": "IMF Loan +$1,000, repaid at 40%",
+   "group": "Economy and XP"
+  },
+  {
+   "id": "trade-agreements",
+   "name": "Trade Agreements",
+   "tree": null,
+   "effect": "Merchantman +$20 a round",
+   "group": "Economy and XP"
+  },
+  {
+   "id": "inland-revenue-streams",
+   "name": "Inland Revenue Streams",
+   "tree": null,
+   "effect": "Monkey Town pop cash +60% instead of +50%",
+   "group": "Economy and XP"
+  }
+ ]
+}

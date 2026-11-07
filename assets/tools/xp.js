@@ -1,4 +1,5 @@
-/* Monkey Intel: XP and progression calculator (slug: xp). Needs tools-data, tools-core, tools-ui. */
+/* Monkey Intel: XP and progression calculator (slug: xp). Needs tools-data, tools-core, tools-ui.
+   Reads and writes your unlocks in the shared progress store (progress.js), so My goals, the Advisor and the Simulator agree. */
 (function () {
   'use strict';
   const MI = window.MonkeyIntel;
@@ -8,6 +9,8 @@
   if (!root) return;
   const KEY = 'mi-xp-v1';
   const saved = U.store.get(KEY) || {};
+  const P = MI.progress || null;
+  const mine = (id) => (P ? P.tower(id) : null);
   const st = {
     towerId: saved.towerId && C.tower(D, saved.towerId) ? saved.towerId : 'sniper',
     unlocked: Array.isArray(saved.unlocked) ? saved.unlocked : [0, 0, 0],
@@ -18,11 +21,20 @@
     emt: !!saved.emt,
     maxTier: C.TIERS.indexOf(saved.maxTier) >= 0 ? saved.maxTier : 'Expert',
   };
-  String(location.hash || '').replace(/^#/, '').split('&').forEach((kv) => {
+  /* #tower=<id> (and ?tower=<id> from older links) */
+  String(location.hash || '').replace(/^#/, '').split('&').concat(String(location.search || '').replace(/^\?/, '').split('&')).forEach((kv) => {
     const [k, v] = kv.split('=');
     if (k === 'tower' && C.tower(D, v)) { st.towerId = v; st.unlocked = [0, 0, 0]; st.useXp = false; }
   });
+  /* your saved unlocks for this tower win over the calculator's own memory */
+  /* Monkey Education / Elite Military Training are part of My profile */
+  if (P) { const set = P.get().settings; st.me = set.me !== false; st.emt = !!set.emt; }
+  const saveMk = () => { if (P) P.update((x) => { x.settings.me = st.me; x.settings.emt = st.emt; }); };
+  const loadMine = () => { const m = mine(st.towerId); if (m && m.set) st.unlocked = m.u.slice(); };
+  loadMine();
   const save = () => U.store.set(KEY, st);
+  /* only a tap on the unlock pips writes to the shared store (so a stale tab can't put old tiers back) */
+  const saveMine = () => { if (P) P.setTower(st.towerId, { u: st.unlocked.slice() }); };
 
   function current() {
     const t = C.tower(D, st.towerId);
@@ -48,7 +60,7 @@
   function pickPanel(cur) {
     const t = cur.t;
     const grid = U.towerGrid(D, { label: 'Pick a tower', pressed: (x) => x.id === st.towerId, cost: null,
-      onpick: (x) => { st.towerId = x.id; st.unlocked = [0, 0, 0]; if (st.target.kind === 'upgrade') st.target = { kind: x.paragon ? 'paragon' : 'all' }; render(); } });
+      onpick: (x) => { st.towerId = x.id; st.unlocked = [0, 0, 0]; loadMine(); if (st.target.kind === 'upgrade') st.target = { kind: x.paragon ? 'paragon' : 'all' }; render(); } });
     /* clickable 3x5 pips */
     const pipRows = h('div', { class: 'ti-paths', role: 'group', 'aria-label': 'Unlocked upgrades' });
     for (let p = 0; p < 3; p++) {
@@ -60,7 +72,7 @@
           type: 'button', class: 'ti-pip' + (on ? ' on' : '') + (k === 5 ? ' t5' : '') + (isTarget ? ' target' : ''),
           'aria-pressed': String(on), 'aria-label': C.upgradeName(t, p, k) + (on ? ', unlocked' : ', locked'),
           title: C.upgradeName(t, p, k), disabled: st.useXp ? true : null,
-          onclick: () => { st.unlocked = st.unlocked.slice(); st.unlocked[p] = st.unlocked[p] === k ? k - 1 : k; render(); },
+          onclick: () => { loadMine(); st.unlocked = st.unlocked.slice(); st.unlocked[p] = st.unlocked[p] === k ? k - 1 : k; saveMine(); render(); },
         }));
       }
       const nm = cur.unlocked[p] ? C.upgradeName(t, p, cur.unlocked[p]) : 'nothing yet';
@@ -78,8 +90,8 @@
     const tv = cur.target.kind === 'upgrade' ? 'u' + cur.target.path + cur.target.tier : cur.target.kind;
     const tsel = U.select(targets, tv, (v) => { st.target = v[0] === 'u' ? { kind: 'upgrade', path: +v[1], tier: +v[2] } : { kind: v }; render(); }, { id: 'xpc-target' });
     const mk = h('div', { class: 'ti-row' }, [
-      h('label', { class: 'check' }, [h('input', { type: 'checkbox', checked: st.me ? true : null, onchange: (e) => { st.me = e.target.checked; render(); } }), 'Monkey Education (+8%)']),
-      t.class === 'Military' ? h('label', { class: 'check' }, [h('input', { type: 'checkbox', checked: st.emt ? true : null, onchange: (e) => { st.emt = e.target.checked; render(); } }), 'Elite Military Training (+5%)']) : null,
+      h('label', { class: 'check' }, [h('input', { type: 'checkbox', checked: st.me ? true : null, onchange: (e) => { st.me = e.target.checked; saveMk(); render(); } }), 'Monkey Education (+8%)']),
+      t.class === 'Military' ? h('label', { class: 'check' }, [h('input', { type: 'checkbox', checked: st.emt ? true : null, onchange: (e) => { st.emt = e.target.checked; saveMk(); render(); } }), 'Elite Military Training (+5%)']) : null,
     ]);
     return h('section', { class: 'panel', 'aria-labelledby': 'xpc-pick-h' }, [
       h('h2', { class: 'panel-h', id: 'xpc-pick-h' }, 'Your tower'),
@@ -112,6 +124,12 @@
     ];
     if (p.unknown) kids.push(h('p', { class: 'ti-alert-s' }, [p.unknown + ' upgrade' + (p.unknown > 1 ? 's have' : ' has') + ' unknown XP and count as 0 ', U.badge('unverified')]));
     if (cur.unspent > 0) kids.push(h('p', { class: 'ti-alert-s' }, C.int(cur.unspent) + ' XP of what you entered is not spent yet and is taken off.'));
+    if (P) {
+      const t = cur.t, tg = cur.target;
+      const add = tg.kind === 'upgrade' ? t.id + '.u' + tg.path + tg.tier : t.id + '.' + tg.kind;
+      kids.push(h('div', { class: 'ti-share' }, [h('a', { class: 'btn btn-grass', id: 'xpc-goal', href: '../goals/#add=' + add }, 'Track this as a goal'),
+        h('span', { class: 'ti-alert-s' }, 'Log runs and watch the bar fill. Your unlocks above are saved for every tool.')]));
+    }
     return h('section', { class: 'ti-alert ti-alert-warn', 'aria-label': 'Result' }, kids);
   }
   function hours(min) {

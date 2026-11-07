@@ -293,6 +293,43 @@
     }));
   };
 
+  /* tool pages live at /tools/<slug>/: tower pages are two folders up */
+  U.towerHref = (id) => '../../monkeys/' + id + '/';
+  /* your unlocks from My goals / the XP calculator, as {towerId: [a,b,c]} (only towers you have set) */
+  U.myUnlocks = function () {
+    const P = MI.progress;
+    if (!P) return null;
+    const s = P.get();
+    const out = {};
+    Object.keys(s.towers).forEach((id) => { if (s.towers[id].set) out[id] = s.towers[id].u.slice(); });
+    return Object.keys(out).length ? out : null;
+  };
+
+  /* your profile for the tools: Monkey Knowledge effects, heroes you own, Insta inventory. Safe without progress.js. */
+  U.me = function (D) {
+    const P = MI.progress;
+    const C = MI.core;
+    if (!P) return { fx: null, ownsHero: () => true, instas: [], instaMap: null, profile: null, summary: [], has: false };
+    const s = P.get();
+    const pr = s.profile;
+    const fx = C.profileFx(D, pr, s.settings);
+    const instaMap = {};
+    pr.instas.forEach((i) => { const k = i.t + '.' + i.x.join(''); instaMap[k] = (instaMap[k] || 0) + i.n; });
+    const ownsHero = (id) => !pr.heroes || pr.heroes[id] !== false;
+    return { fx, ownsHero, instas: pr.instas, instaMap, profile: pr, settings: s.settings, summary: C.fxSummary(fx),
+      missing: pr.missing || {}, has: !!(Object.keys(pr.mk).length || pr.instas.length || pr.heroes || Object.keys(pr.missing).length || pr.level != null) };
+  };
+  /* one line under "Your game": what your profile changes in this mode */
+  U.profileLine = function (D, mode, me) {
+    const C = MI.core;
+    if (!MI.progress) return null;
+    const href = '../profile/';
+    if (!me.has && !me.summary.length) return U.h('p', { class: 'ti-note ti-prof' }, ['Set your Monkey Knowledge, heroes and Insta Monkeys in ', U.h('a', { href }, 'My profile'), ' and the tools will use them.']);
+    if (!C.mkActive(mode)) return U.h('p', { class: 'ti-note ti-prof' }, [mode.name + ' turns Monkey Knowledge off, so ', U.h('a', { href }, 'your profile'), '\'s bonuses don\'t apply here.']);
+    const bits = me.summary.length ? me.summary.join(', ') : 'no Monkey Knowledge that changes cash or heroes';
+    return U.h('p', { class: 'ti-note ti-prof' }, [U.h('span', { class: 'tag tag-sky' }, 'Your profile'), ' ' + bits + (me.fx && me.fx.unverified ? ' ' : ''), me.fx && me.fx.unverified ? U.badge('unverified') : null, ' · ', U.h('a', { href }, 'edit')]);
+  };
+
   U.fixList = function (fixes, opts) {
     const C = MI.core;
     const ul = U.h('ul', { class: 'ti-fixes' });
@@ -305,7 +342,7 @@
       } else {
         label = f.kind === 'upgrade'
           ? [f.label + ' to ', U.x(f.x), f.name ? ' (' + f.name + ')' : '']
-          : [f.label + ' ', U.x(f.x), f.name ? ' (' + f.name + ')' : ''];
+          : [f.towerId ? U.h('a', { href: U.towerHref(f.towerId) }, f.label) : f.label, ' ', U.x(f.x), f.name ? ' (' + f.name + ')' : ''];
         cost = U.h('span', { class: 'ti-fix-c' }, [U.money(f.cost), f.affordable === false ? U.h('small', null, 'more than you have') : f.affordable ? U.h('small', null, 'you can afford it') : null]);
       }
       ul.appendChild(U.h('li', null, [U.h('span', null, [U.h('span', { class: 'ti-fix-k' }, kind[f.kind] || ''), U.h('span', { class: 'ti-fix-l' }, label)]), cost]));

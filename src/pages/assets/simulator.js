@@ -16,10 +16,14 @@
   const newUid = () => 'u' + (++uidN) + Date.now().toString(36).slice(-3);
   let sheet = null; /* add-step sheet state: {op, r, t, x, ref} */
   let presetLoaded = false;
-  let stratOpen = null; /* map-ideas panel: null = open until the build has a few steps */
+  let stratOpen = null;
+  let me = { fx: null, instas: [], instaMap: null, ownsHero: () => true }; /* map-ideas panel: null = open until the build has a few steps */
 
+  const P = MI.progress || null;
   function loadInitial() {
     const hash = location.hash || '';
+    const g = P && P.get().game; /* the last game you set up in any tool */
+    if (g && !U.store.get(KEY)) { if (g.mapId && C.map(D, g.mapId)) plan.mapId = g.mapId; if (g.modeId && C.mode(D, g.modeId) && !C.isSandbox(C.mode(D, g.modeId))) plan.modeId = g.modeId; }
     if (/[#&](map|mode|b|tower|hero)=/.test(hash)) {
       const p = C.decodePlan(D, hash);
       plan.mapId = p.mapId || plan.mapId;
@@ -43,6 +47,10 @@
     const hash = C.encodePlan(plan);
     try { history.replaceState(null, '', '#' + hash); } catch (e) { /* file:// or sandbox */ }
     U.store.set(KEY, { hash, me: plan.me, emt: plan.emt });
+    if (P) {
+      P.setGame({ mapId: plan.mapId, modeId: plan.modeId });
+      if (plan.steps.length) P.setPlan('simulator', { hash, label: (map() ? map().name : plan.mapId) + ', ' + (mode() ? mode().name : plan.modeId) + ', ' + plan.steps.length + ' step' + (plan.steps.length === 1 ? '' : 's') });
+    }
   }
   const mode = () => C.mode(D, plan.modeId);
   const map = () => C.map(D, plan.mapId);
@@ -96,6 +104,10 @@
   function update() { persist(); render(); }
 
   function render() {
+    plan.unlocked = U.myUnlocks(); /* flags steps above what you have unlocked (not part of the share link) */
+    me = U.me(D); /* My profile: Monkey Knowledge cash/hero effects and your Insta inventory */
+    plan.fx = me.fx;
+    plan.instas = me.instaMap;
     sim = C.simulate(D, plan);
     U.clear(root);
     const pv = U.previewNote(D);
@@ -116,7 +128,7 @@
     const kids = [
       U.field('Map', U.combo(U.mapOptions(D), plan.mapId, (v) => { plan.mapId = v; update(); }, { id: 'sim-map' }), 'ti-grow'),
       U.field('Mode', U.combo(U.modeOptions(D), plan.modeId, (v) => { plan.modeId = v; plan.steps.forEach((s) => { s.r = clampR(s.r); }); update(); }, { id: 'sim-mode' }), 'ti-grow'),
-      U.field('Hero', U.combo(U.heroOptions(D), heroStep ? heroStep.h : '', setHero, { id: 'sim-hero' }), 'ti-grow'),
+      U.field('Hero', U.combo(U.heroOptions(D).map((o) => (o.value && !me.ownsHero(o.value) ? Object.assign({}, o, { label: o.label + ' (not owned)' }) : o)), heroStep ? heroStep.h : '', setHero, { id: 'sim-hero' }), 'ti-grow'),
     ];
     if (heroStep) {
       const lvl = h('input', { class: 'ti-input', type: 'number', min: '1', max: '20', inputmode: 'numeric', placeholder: 'auto', value: plan.heroLevel != null ? String(plan.heroLevel) : '', 'aria-label': 'Hero level override', style: 'width:6.5em' });
@@ -128,7 +140,7 @@
       ', start ', U.money(m.startCash), ', prices ×' + m.costMult + (m.rules && m.rules.noSelling ? ', no selling' : '') + (m.rules && m.rules.noIncomeTowers ? ', no farms' : ''),
       heroStep && sim.rows.length ? ['. Hero level ', plan.heroLevel != null ? 'set to ' + plan.heroLevel : 'is an estimate', U.badge('calc', plan.heroLevel != null ? 'manual' : 'estimate')] : null,
     ]);
-    const body = [h('div', { class: 'ti-row' }, kids), facts];
+    const body = [h('div', { class: 'ti-row' }, kids), facts, U.profileLine(D, m, me)];
     body.push(h('div', { class: 'ti-share' }, [
       h('button', { type: 'button', class: 'btn btn-small', onclick: (e) => copyLink(e.currentTarget) }, 'Copy share link'),
       plan.steps.length ? h('button', { type: 'button', class: 'btn btn-small', onclick: () => { if (window.confirm('Clear every step?')) { plan.steps = []; plan.heroLevel = null; update(); } } }, 'Start over') : null,
@@ -388,12 +400,18 @@
         hint: (t) => [].concat(arr(st.strongTowers).indexOf(t.id) >= 0 ? [{ cls: 'strong', text: 'Strong' }] : [],
           arr(st.avoidTowers).indexOf(t.id) >= 0 ? [{ cls: 'avoid', text: 'Avoid' }] : [],
           pairIds.indexOf(t.id) >= 0 ? [{ cls: 'pair', text: 'Pairs' }] : []),
-        onpick: (t) => { s.t = t.id; s.x = [0, 0, 0]; render(); },
+        onpick: (t) => { s.t = t.id; s.x = [0, 0, 0]; s.insta = false; render(); },
       }));
       if (s.t) {
         const t = C.tower(D, s.t);
-        kids.push(h('div', { class: 'ti-field' }, [h('span', null, t.name + ' starts at'), U.pathSteppers(t, s.x, (nx) => { s.x = nx; render(); })]));
-        cost = C.placeCost(t, s.x, mult);
+        const mine = (me.instas || []).filter((i) => i.t === t.id);
+        if (mine.length && !(m.rules && m.rules.noInsta)) {
+          kids.push(h('div', { class: 'ti-field' }, [h('span', null, 'From your Insta Monkeys (free)'), h('div', { class: 'ti-share' }, mine.map((i) =>
+            h('button', { type: 'button', class: 'tag ti-tipchip' + (s.insta && s.x.join('') === i.x.join('') ? ' tag-banana' : ''), 'aria-pressed': String(!!(s.insta && s.x.join('') === i.x.join(''))),
+              onclick: () => { s.x = i.x.slice(); s.insta = true; render(); } }, 'Insta ' + C.code(i.x) + ' ×' + i.n)))]));
+        }
+        kids.push(h('div', { class: 'ti-field' }, [h('span', null, t.name + (s.insta ? ' (Insta) at' : ' starts at')), U.pathSteppers(t, s.x, (nx) => { s.x = nx; s.insta = false; render(); })]));
+        cost = s.insta ? 0 : C.placeCost(t, s.x, mult);
         ready = true;
       }
     } else if (s.op === 'up') {
@@ -441,7 +459,7 @@
   function commitSheet() {
     const s = sheet;
     sheet = null;
-    if (s.op === 'place' && s.t) addStep({ op: 'place', t: s.t, x: s.x.slice(), r: s.r });
+    if (s.op === 'place' && s.t) addStep(Object.assign({ op: 'place', t: s.t, x: s.x.slice(), r: s.r }, s.insta ? { insta: true } : {}));
     else if (s.op === 'up' && s.ref) addStep({ op: 'up', ref: s.ref, x: s.x.slice(), r: s.r });
     else if (s.op === 'sell' && s.ref) addStep({ op: 'sell', ref: s.ref, r: s.r });
     else render();
@@ -497,6 +515,14 @@
       opts,
       ids.length ? h('div', { class: 'table-wrap table-flat' }, h('table', { class: 'tbl' }, [h('thead', null, h('tr', null, [h('th', null, 'Tower'), h('th', { class: 'n' }, 'XP this run'), h('th', { class: 'n' }, 'Share')])), tb])) : h('p', { class: 'ti-note' }, 'No towers yet.'),
       x.lost > 0 ? h('p', { class: 'ti-note' }, C.int(x.lost) + ' XP is lost on rounds where nothing is built.') : null,
+      P && ids.length ? h('div', { class: 'ti-share' }, [
+        h('button', { type: 'button', class: 'btn btn-small btn-grass', id: 'sim-log-xp', onclick: (e) => {
+          ids.forEach((id) => P.logRun(id, Math.round(x.perTower[id].xp), 'Simulator: ' + (map() ? map().name : '') + ' ' + mode().name));
+          e.currentTarget.textContent = 'Logged to My goals';
+          e.currentTarget.disabled = true;
+        } }, 'I played this: log the XP to My goals'),
+        h('a', { class: 'ti-note', href: '../goals/' }, 'My goals'),
+      ]) : null,
       h('p', { class: 'ti-note' }, h('a', { href: '../xp/' }, 'Plan a full unlock in the XP calculator')),
     ]);
     return h('details', { class: 'panel ti-details' }, [h('summary', { class: 'panel-h panel-h-light' }, ['Tower XP from this run', h('small', null, 'tap to open')]), body]);

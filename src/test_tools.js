@@ -292,6 +292,97 @@ console.log('Strategy Advisor');
   ok(Object.keys(TIPS).every((k) => !TIPS[k].chimps.some((s) => /\[\$|spent \$/.test(s))), 'map tips leave the bracketed build orders out');
 }
 
+console.log('Progress store and goals');
+{
+  const mem = {};
+  global.localStorage = { getItem: (k) => (k in mem ? mem[k] : null), setItem: (k, v) => { mem[k] = String(v); }, removeItem: (k) => { delete mem[k]; } };
+  global.btoa = (s) => Buffer.from(s, 'binary').toString('base64');
+  global.atob = (s) => Buffer.from(s, 'base64').toString('binary');
+  require(path.join(HERE, '..', 'static', 'progress.js'));
+  const P = global.MonkeyIntel.progress;
+  require(path.join(ASSETS, 'goals-core.js'));
+  const gid = P.addGoal({ tower: 'dart', kind: 'paragon' });
+  ok(P.addGoal({ tower: 'dart', kind: 'paragon' }) === gid && P.get().goals.length === 1, 'the same goal is only added once');
+  ok(P.tower('dart').set === false, 'adding a goal does not claim you have 0-0-0 unlocked');
+  let v = C.goalView(D, P.get().goals[0], P.tower('dart'), P.get().settings);
+  ok(v.total === 622300 && v.pct === 0 && v.next && v.runsLeft > 0, 'Apex Plasma Master from zero: 622,300 XP, runs left counted', [v.total, v.runsLeft]);
+  P.logRun('dart', 64514, 'test');
+  v = C.goalView(D, P.get().goals[0], P.tower('dart'), P.get().settings);
+  ok(P.tower('dart').bank === 64514 && Math.abs(v.earned - 64514) < 1 && v.canUnlock, 'a logged run banks XP and counts towards the goal');
+  let n = P.tower('dart'), k = 0;
+  while (k < 30) { const vv = C.goalView(D, P.get().goals[0], n, P.get().settings); if (!vv.canUnlock) break; n = C.unlockStep(n, vv.next); k++; }
+  P.setTower('dart', n);
+  v = C.goalView(D, P.get().goals[0], P.tower('dart'), P.get().settings);
+  ok(k > 0 && Math.abs(v.earned - 64514) < 1 && v.bank < v.next.xp, 'spending the bank keeps the progress the same and stops when it runs out', [k, v.bank]);
+  ok(P.tower('dart').set === true, 'unlocking from the bank records your unlocks');
+  const code = P.exportCode();
+  P.reset();
+  ok(P.get().goals.length === 0 && P.importCode(code) && P.get().goals.length === 1 && P.tower('dart').u.join('') === n.u.join(''), 'backup code restores goals and unlocks');
+  ok(!P.importCode('nonsense') && !P.importCode('MI1.@@@'), 'a bad backup code is refused');
+  ok(P.importCode(code.slice(0, 20) + '\n  ' + code.slice(20)), 'a backup code split across lines still works');
+  const rid = P.get().log[0].id;
+  const before = P.tower('dart').bank;
+  P.undoRun(rid);
+  ok(P.get().log.length === 0 && P.tower('dart').bank === Math.max(0, before - 64514), 'undo takes the run back off the bank');
+  P.logRun('dart', 1000, 'a'); P.logRun('sniper', 5000, 'b');
+  const dRun = P.get().log.find((r) => r.tower === 'dart');
+  const dBank = P.tower('dart').bank;
+  P.undoRun(dRun.id);
+  ok(P.tower('sniper').bank === 5000 && P.tower('dart').bank === dBank - 1000 && P.tower('sniper').set === false, 'undo removes the right run even in the same millisecond; logging XP does not set unlocks');
+  const zero = C.goalView(D, { tower: 'dart', kind: 'upgrade', path: 0, tier: 1 }, { u: [0, 0, 0], p: false, bank: 0 }, {});
+  ok(!zero.complete && zero.next, 'a 0-XP upgrade goal is not "unlocked" until you unlock it');
+  const done = C.goalView(D, { tower: 'dart', kind: 'paragon' }, { u: [5, 5, 5], p: true, bank: 0 }, {});
+  ok(done.complete && done.pct === 100 && !done.next, 'Paragon unlocked = goal complete');
+  const up = C.goalView(D, { tower: 'sniper', kind: 'upgrade', path: 0, tier: 4 }, { u: [2, 0, 0], p: false, bank: 0 }, {});
+  ok(up.steps.length === 2 && up.steps.every((s) => s.path === 0), 'an upgrade goal only counts that path');
+  let farmBad = [];
+  D.towers.forEach((t) => {
+    const f = C.farmPlan(D, t.id);
+    if (!f) return;
+    const sim = C.simulate(D, f);
+    if (sim.steps.some((s) => s.short || s.flags.some((x) => x.k === 'bad'))) farmBad.push(t.id);
+  });
+  ok(farmBad.length === 0 && C.farmPlan(D, 'dart').steps.filter((s) => s.op === 'place').length === 7, 'every guide farm opens in the Simulator as an affordable, legal build', farmBad);
+  ok(C.paragonsByXp(D)[0].t.id === 'dart', 'quickest Paragon is Apex Plasma Master');
+  const capped = C.advise(D, { mapId: 'logs', modeId: 'chimps', heroId: '', towers: ['dart', 'boomerang'], unlocked: { dart: [2, 0, 2] } });
+  const dp = capped.picks.find((p) => p.id === 'dart');
+  ok(dp && C.geq([2, 0, 2], dp.x) && dp.limited, 'Advisor keeps a tower to the tiers you have unlocked', dp && dp.x);
+  const lk = C.simulate(D, { mapId: 'logs', modeId: 'chimps', unlocked: { dart: [0, 0, 2] }, steps: [{ uid: 'a', r: 6, op: 'place', t: 'dart', x: [0, 0, 0] }, { uid: 'b', r: 10, op: 'up', ref: 'a', x: [2, 0, 2] }] });
+  ok(lk.steps[1].flags.some((f) => /unlocked/.test(f.t)) && !lk.steps[0].flags.length, 'Simulator flags an upgrade you have not unlocked');
+  /* My profile */
+  P.setProfile({ mk: { 'more-cash': true, 'hero-favors': true, 'empowered-heroes': true }, instas: [{ t: 'dart', x: [0, 2, 3], n: 1 }] });
+  const fx = C.profileFx(D, P.get().profile, { me: true });
+  ok(fx.startCash === 200 && Math.abs(fx.heroCostMult - 0.9) < 1e-9 && fx.heroStartLevel === 3 && fx.me, 'profile Monkey Knowledge -> +$200, heroes 10% cheaper, start level 3');
+  ok(C.profileFx(D, Object.assign({}, P.get().profile, { mkOn: false }), { me: true }) === null, 'MK switched off -> no effects');
+  const base0 = C.simulate(D, { mapId: 'logs', modeId: 'hard', steps: [] });
+  const withFx = C.simulate(D, { mapId: 'logs', modeId: 'hard', steps: [{ uid: 'h', r: 3, op: 'hero', h: 'quincy' }], fx });
+  ok(Math.abs(withFx.rows[0].avail - base0.rows[0].avail - 200) < 1e-6, 'More Cash adds $200 to every round in the Simulator');
+  ok(withFx.steps[0].cost === C.price(C.hero(D, 'quincy').cost * 0.9, C.mode(D, 'hard').costMult), 'Hero Favors makes the hero 10% cheaper');
+  ok(withFx.rows[0].heroLevel >= 3, 'Empowered Heroes: hero starts at level 3');
+  const chimpsFx = C.simulate(D, { mapId: 'logs', modeId: 'chimps', steps: [], fx });
+  ok(Math.abs(chimpsFx.rows[0].avail - C.simulate(D, { mapId: 'logs', modeId: 'chimps', steps: [] }).rows[0].avail) < 1e-6, 'CHIMPS ignores Monkey Knowledge');
+  const ins = C.simulate(D, { mapId: 'logs', modeId: 'hard', instas: { 'dart.023': 1 }, steps: [{ uid: 'a', r: 3, op: 'place', t: 'dart', x: [0, 2, 3], insta: true }, { uid: 'b', r: 3, op: 'place', t: 'dart', x: [0, 2, 3], insta: true }] });
+  ok(ins.steps[0].cost === 0 && !ins.steps[0].flags.length && ins.steps[1].flags.some((f) => /inventory/.test(f.t)), 'an Insta is free, and a second one you don\'t own is flagged');
+  ok(C.simulate(D, { mapId: 'logs', modeId: 'chimps', steps: [{ uid: 'a', r: 6, op: 'place', t: 'dart', x: [0, 0, 0], insta: true }] }).steps[0].flags.some((f) => f.k === 'bad'), 'Instas are blocked in CHIMPS');
+  const enc = C.encodePlan({ mapId: 'logs', modeId: 'hard', steps: [{ uid: 'a', r: 3, op: 'place', t: 'dart', x: [0, 2, 3], insta: true }] });
+  ok(/3idart\.023/.test(enc) && C.decodePlan(D, '#' + enc).steps[0].insta === true, 'Insta steps survive the share link', enc);
+  const adv = C.advise(D, { mapId: 'logs', modeId: 'hard', heroId: 'auto', towers: ['dart'], fx, instas: P.get().profile.instas, ownsHero: (id) => id !== C.mapHeroes(D, 'logs')[0].id });
+  ok(adv.instaSaved > 0 && adv.steps[0].insta && adv.hero.id !== C.mapHeroes(D, 'logs')[0].id, 'Advisor uses your Insta and picks a hero you own', [adv.instaSaved, adv.hero && adv.hero.id]);
+  const fx2 = C.profileFx(D, { mk: { 'more-cash': true }, mkOn: true }, { me: true });
+  const adv2 = C.advise(D, { mapId: 'monkey-meadow', modeId: 'medium', heroId: '', towers: ['dart', 'sniper', 'ninja'], fx: fx2, instas: [{ t: 'dart', x: [0, 0, 2], n: 1 }] });
+  const cost = {}; adv2.sim.steps.forEach((o) => { cost[o.uid] = o.cost; });
+  ok(adv2.steps.every((st) => cost[st.uid] === st.cost) && adv2.steps.filter((st) => st.insta).every((st) => st.cost === 0 && st.x.join('') === '002'), 'Advisor Insta steps stay free and separate: its costs match the Simulator', adv2.steps.filter((st) => cost[st.uid] !== st.cost));
+  const sold = C.simulate(D, { mapId: 'logs', modeId: 'hard', steps: [{ uid: 'a', r: 3, op: 'place', t: 'dart', x: [0, 2, 3], insta: true }, { uid: 'b', r: 5, op: 'sell', ref: 'a' }] });
+  ok(sold.steps[1].refund === Math.round(C.placeCost(C.tower(D, 'dart'), [0, 2, 3], C.mode(D, 'hard').costMult) * 0.7), 'selling an Insta pays its sell value');
+  P.setProfile({ instas: [{ t: 'dart', x: [5, 5, 5], n: 2 }, { t: 'dart', x: [0, 0, 1], n: 0 }, { t: 'sniper', x: [0, 2, 4], n: 3 }] });
+  ok(P.get().profile.instas.length === 1 && P.get().profile.instas[0].t === 'sniper', 'impossible crosspaths and empty counts are dropped from the Insta inventory');
+  P.setProfile({ instas: [{ t: 'dart', x: [0, 2, 3], n: 1 }] });
+  const code2 = P.exportCode(); P.reset(); P.importCode(code2);
+  ok(P.get().profile.mk['more-cash'] && P.get().profile.instas.length === 1, 'the backup code carries your profile');
+  ok(D.mk.length >= 25 && D.mk.every((n) => n.id && n.name && n.effect), 'Monkey Knowledge list ships with the tools');
+  delete global.localStorage;
+}
+
 console.log('Type-to-search picker');
 {
   const ui = {};
@@ -319,7 +410,7 @@ async function browser() {
     const body = fs.readFileSync(path.join(HERE, 'pages', f), 'utf8').split('{{BASE}}static/tools/').join('file://' + ASSETS + '/');
     if (/\{\{/.test(body)) errors.push(slug + ': unreplaced template tag');
     const file = path.join(tmp, slug + '.smoke.html');
-    fs.writeFileSync(file, '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="stylesheet" href="file://' + css + '"></head><body><main class="wrap wrap-wide">' + body + '</main></body></html>');
+    fs.writeFileSync(file, '<!doctype html><html lang="en" data-root="./"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="stylesheet" href="file://' + css + '"><script src="file://' + path.join(HERE, '..', 'static', 'progress.js') + '" defer></script></head><body><main class="wrap wrap-wide">' + body + '</main></body></html>');
     for (const w of [400, 1280]) {
       const page = await b.newPage({ viewport: { width: w, height: 900 } });
       page.on('console', (m) => { if (m.type() === 'error' || m.type() === 'warning') errors.push(slug + ' ' + w + 'px console.' + m.type() + ': ' + m.text()); });
@@ -338,6 +429,16 @@ async function browser() {
         if (!/Dark Castle/.test(await page.inputValue('#adv-map'))) errors.push('advisor ' + w + 'px: typing "dark c" + Enter did not pick Dark Castle');
         await page.selectOption('.ti-role select >> nth=0', { index: 1 });
         if (!(await page.$('#adv-to-sim'))) errors.push('advisor ' + w + 'px: no "Open in Simulator" link');
+      } else if (slug === 'profile') {
+        await page.click('#pf-dart-all');
+        await page.click('#pf-h-quincy');
+        await page.click('#prf-ins-sum'); await page.click('#pf-ins-add');
+        if (!/Dart Monkey/.test(await page.textContent('.prf-instas'))) errors.push('profile ' + w + 'px: Insta not added');
+      } else if (slug === 'goals') {
+        await page.click('#gls-add');
+        await page.click('.gl-log .btn-grass');
+        await page.click('.gl-unlock');
+        if (!(await page.$('.gl-flash'))) errors.push('goals ' + w + 'px: no confirmation after unlocking');
       } else if (slug === 'defence') {
         await page.click('.ti-tile >> nth=0'); await page.click('.ti-tile >> nth=6');
         await page.click('.ti-card >> nth=0 >> [aria-label="Path 3 up"]');
@@ -350,7 +451,7 @@ async function browser() {
       if (overflow > 0) errors.push(slug + ' ' + w + 'px: page scrolls sideways by ' + overflow + 'px');
       const txt = await page.evaluate(() => document.querySelector('main').innerText);
       if (/NaN|undefined|\[object/.test(txt)) errors.push(slug + ' ' + w + 'px: NaN/undefined in the page text');
-      if (!(await page.$('.ti-alert'))) errors.push(slug + ' ' + w + 'px: no result block');
+      if (!(await page.$(slug === 'goals' ? '.gl-card' : slug === 'profile' ? '.prf-tower' : '.ti-alert'))) errors.push(slug + ' ' + w + 'px: no result block');
       if (process.argv.includes('--shots')) await page.screenshot({ path: path.join(tmp, slug + '-' + w + '.png'), fullPage: true });
       await page.close();
     }

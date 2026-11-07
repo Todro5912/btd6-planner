@@ -73,10 +73,15 @@
   function search(raw) { return core ? core.search(raw, 12) : []; }
 
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  /* empty box: the pages you opened last (saved in this browser by progress.js) */
+  function recents() {
+    var P = window.MonkeyIntel && window.MonkeyIntel.progress;
+    return P ? P.get().recent.slice(0, 8).map(function (r) { return { t: r.t, k: 'Recent · ' + r.k, u: r.u }; }) : [];
+  }
   function render() {
-    results = search(input.value);
+    results = input.value.trim() ? search(input.value) : recents();
     active = results.length ? 0 : -1;
-    if (!input.value.trim()) list.innerHTML = '';
+    if (!input.value.trim() && !results.length) list.innerHTML = '';
     else if (!results.length) list.innerHTML = '<li class="r-empty" role="option" aria-disabled="true" aria-selected="false">Nothing matches. Try a shorter word.</li>';
     else list.innerHTML = results.map(function (e, i) {
       return '<li role="option" id="sr' + i + '" aria-selected="' + (i === active) + '" data-i="' + i + '"><span class="r-t">' + esc(e.t) + '</span><span class="r-k">' + esc(e.k) + '</span>' + (e.s ? '<span class="r-s">' + esc(e.s) + '</span>' : '') + '</li>';

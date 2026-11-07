@@ -82,25 +82,32 @@
     return out;
   };
 
-  /* opts: {mapId, modeId, heroId ('' | 'auto' | id), towers: [id], force: {id: [a,b,c]}} */
+  /* opts: {mapId, modeId, heroId ('' | 'auto' | id), towers: [id], force: {id: [a,b,c]}, unlocked: {id: [a,b,c]} (only use these tiers),
+           fx: C.profileFx(...) (your Monkey Knowledge), ownsHero: (id) => bool, instas: [{t, x, n}] (place these for free)} */
   C.advise = function (D, opts) {
     const mode = C.mode(D, opts.modeId) || C.mode(D, 'medium');
     const map = C.map(D, opts.mapId) || D.maps[0];
     const [a, b] = C.modeRange(mode);
     const mult = num(mode.costMult, 1);
+    const fx = C.fxFor(opts.fx, mode);
     const base = C.baseCash(D, mode);
+    if (fx && fx.startCash) Object.keys(base).forEach((k) => { base[k] += fx.startCash; });
     const pm = D.pop || {};
     const force = opts.force || {};
+    const heroOpts = C.heroOpts(fx);
 
     /* hero */
     let hero = null, heroWhy = '';
     if (opts.heroId === 'auto') {
-      hero = C.mapHeroes(D, map.id)[0] || C.hero(D, 'quincy');
-      heroWhy = 'best hero for ' + map.name;
+      /* the map's best hero you own (My profile), else the map's best */
+      const own = typeof opts.ownsHero === 'function' ? opts.ownsHero : () => true;
+      const list = C.mapHeroes(D, map.id);
+      hero = list.find((h) => own(h.id)) || (own('quincy') ? C.hero(D, 'quincy') : null) || list[0] || C.hero(D, 'quincy');
+      heroWhy = 'best hero for ' + map.name + (list[0] && hero !== list[0] && !own(list[0].id) ? ' that you own (' + list[0].name + ' is the top pick)' : '');
     } else if (opts.heroId) { hero = C.hero(D, opts.heroId); heroWhy = 'your pick'; }
-    const heroCost = hero ? C.price(hero.cost, mult) || 0 : 0;
+    const heroCost = hero ? C.price(hero.cost * (fx ? fx.heroCostMult : 1), mult) || 0 : 0;
     const heroGuess = Math.min(b, a + 3);
-    const heroAt = (r) => (hero && r >= heroGuess ? { id: hero.id, label: hero.name, level: Math.max(1, C.heroLevelAt(D, hero.id, heroGuess, r, map.difficulty)) } : null);
+    const heroAt = (r) => (hero && r >= heroGuess ? { id: hero.id, label: hero.name, level: Math.max(1, C.heroLevelAt(D, hero.id, heroGuess, r, map.difficulty, heroOpts)) } : null);
 
     const first = C.needRounds(D, mode);
     const needProps = C.NEEDS.filter((p) => first[p] != null && p !== 'pop');
@@ -115,9 +122,22 @@
       const issue = C.placeIssue(D, mode, map, t);
       if (issue) { unusable.push({ id, name: t.name, issue }); return; }
       if (picks.length >= C.ADVISE_MAX) return;
-      const cands = C.endCandidates(D, id, needProps);
+      let cands = C.endCandidates(D, id, needProps);
+      const lim = opts.unlocked && Array.isArray(opts.unlocked[id]) ? opts.unlocked[id] : null;
+      let limited = false;
+      if (lim) {
+        /* only what you have unlocked: cap every candidate at your tiers (a capped path counts as a cheaper version) */
+        const seenX = {};
+        cands = cands.map((c) => {
+          const x = c.x.map((v, q) => Math.min(v, num(lim[q], 0)));
+          const changed = x.join('') !== c.x.join('');
+          if (changed) limited = true;
+          return { x, rank: c.rank + (changed ? 2 : 0), use: changed ? '' : c.use, trimmed: c.trimmed || changed };
+        }).filter((c) => { const k = c.x.join(''); if (!C.validCross(c.x) || seenX[k]) return false; seenX[k] = 1; return true; });
+        if (!cands.length) cands = [{ x: [0, 0, 0], rank: 5, use: '', trimmed: true }];
+      }
       const f = force[id] && C.validCross(force[id]) ? force[id].slice() : null;
-      picks.push({ id, t, name: t.name, label: t.name.replace(/ Monkey$/, ''), cands, forced: f });
+      picks.push({ id, t, name: t.name, label: t.name.replace(/ Monkey$/, ''), cands, forced: f, limited, lim });
     });
     const res = { mode, map, hero, heroWhy, heroCost, start: a, end: b, picks: [], unusable, steps: [], plan: null, sim: null, leftovers: [], gaps: [], needs: {} };
     if (!picks.length) return res;
@@ -248,6 +268,29 @@
     }
     const owned = picks.map(() => null);
     let heroRound = null;
+    /* Insta Monkeys you own: the best one for each pick (not past its end crosspath) is placed free on the first round */
+    const instaUsed = picks.map(() => null);
+    const preBuys = [];
+    if (arr(opts.instas).length && !(mode.rules && mode.rules.noInsta)) {
+      const left = arr(opts.instas).map((x) => Object.assign({}, x));
+      picks.forEach((pk, i) => {
+        let best = null;
+        left.forEach((ins) => {
+          if (ins.t !== pk.id || !(ins.n > 0) || !C.validCross(ins.x) || !C.geq(finals[i], ins.x)) return;
+          const save = C.placeCost(pk.t, ins.x, mult);
+          if (!best || save > best.save) best = { ins, save };
+        });
+        if (!best) return;
+        best.ins.n--;
+        instaUsed[i] = { x: best.ins.x.slice(), save: best.save };
+        owned[i] = best.ins.x.slice();
+        atoms.forEach((at) => {
+          if (at.i !== i || at.kind === 'hero') return;
+          if (at.kind === 'place' || at.tier <= best.ins.x[at.path]) { at.bought = a; at.cost = 0; }
+        });
+        preBuys.push({ r: a, at: atoms.find((at) => at.i === i && at.kind === 'place'), x: best.ins.x.slice(), insta: true });
+      });
+    }
     const ready = (at) => {
       if (at.bought) return false;
       if (at.kind === 'place' || at.kind === 'hero') return true;
@@ -255,7 +298,7 @@
       return !!x && x[at.path] === at.tier - 1;
     };
     let spent = 0, income = 0;
-    const buys = [];
+    const buys = preBuys.slice();
     for (let r = a; r <= b; r++) {
       for (;;) {
         const cash = base[r] + income - spent;
@@ -301,11 +344,11 @@
     buys.forEach((by) => {
       const at = by.at;
       if (at.kind === 'hero') { steps.push({ uid: 'h1', r: by.r, op: 'hero', h: hero.id, why: at.why.slice(), cost: at.cost }); return; }
-      const k = by.r + ':' + at.i;
+      const k = by.r + ':' + at.i + (by.insta ? ':insta' : ''); /* a free Insta never absorbs a paid upgrade */
       const prev = keyOf[k];
       if (prev) { prev.x = by.x.slice(); prev.why = prev.why.concat(at.why); prev.cost += at.cost; return; }
       let st;
-      if (at.kind === 'place') { placeUid[at.i] = 'p' + at.i; st = { uid: 'p' + at.i, r: by.r, op: 'place', t: picks[at.i].id, x: by.x.slice(), i: at.i, why: at.why.slice(), cost: at.cost }; }
+      if (at.kind === 'place') { placeUid[at.i] = 'p' + at.i; st = { uid: 'p' + at.i, r: by.r, op: 'place', t: picks[at.i].id, x: by.x.slice(), i: at.i, why: at.why.slice(), cost: at.cost, insta: !!by.insta }; }
       else st = { uid: 'u' + steps.length, r: by.r, op: 'up', ref: placeUid[at.i], x: by.x.slice(), i: at.i, why: at.why.slice(), cost: at.cost };
       keyOf[k] = st;
       steps.push(st);
@@ -315,8 +358,8 @@
       s.why = s.why.filter((p, j) => s.why.indexOf(p) === j);
       s.due = s.why.filter((p) => p === 'income' || (first[p] != null && s.r >= first[p] - 12)).map((p) => ({ prop: p, by: p === 'income' ? null : first[p] }));
     });
-    const plan = { mapId: map.id, modeId: mode.id, heroLevel: null, me: false, emt: false,
-      steps: steps.map((s) => (s.op === 'hero' ? { uid: s.uid, r: s.r, op: 'hero', h: s.h } : s.op === 'place' ? { uid: s.uid, r: s.r, op: 'place', t: s.t, x: s.x.slice() } : { uid: s.uid, r: s.r, op: 'up', ref: s.ref, x: s.x.slice() })) };
+    const plan = { mapId: map.id, modeId: mode.id, heroLevel: null, me: !!(fx && fx.me), emt: !!(fx && fx.emt), fx: opts.fx || null,
+      steps: steps.map((s) => (s.op === 'hero' ? { uid: s.uid, r: s.r, op: 'hero', h: s.h } : s.op === 'place' ? Object.assign({ uid: s.uid, r: s.r, op: 'place', t: s.t, x: s.x.slice() }, s.insta ? { insta: true } : {}) : { uid: s.uid, r: s.r, op: 'up', ref: s.ref, x: s.x.slice() })) };
     const sim = C.simulate(D, plan);
     const bankAfter = {};
     sim.steps.forEach((o) => { bankAfter[o.uid] = o.bank; });
@@ -341,6 +384,7 @@
         id: pk.id, name: pk.name, label: pk.label, x, xName: C.topName(pk.t, x), cost: C.placeCost(pk.t, x, mult),
         own: C.POP_PROPS.filter((p) => own[p]).concat(own.ddt ? ['ddt'] : []), gives,
         use: (exact && exact.use) || (parent ? parent.use : ''), trimmedFrom: parent ? parent.x : null, forced: !!pk.forced,
+        limited: !!pk.limited, lockedForYou: !!(pk.lim && !C.geq(pk.lim, x)),
         jobs: jobs[i].slice().sort((p, q) => p.round - q.round),
         placedAt: placed ? placed.r : null, doneAt: complete ? doneAt : null, complete,
         options: pk.cands.filter((c) => !c.trimmed).map((c) => ({ x: c.x, use: c.use, name: C.topName(pk.t, c.x), cost: C.placeCost(pk.t, c.x, mult) })),
@@ -348,6 +392,9 @@
       };
     });
     res.heroJobs = heroJobs;
+    res.fx = fx;
+    res.instaSaved = instaUsed.reduce((s2, u) => s2 + (u ? u.save : 0), 0);
+    res.picks.forEach((p, i) => { p.insta = instaUsed[i]; });
     res.heroRound = heroRound;
     res.steps = steps;
     res.plan = plan;
@@ -373,6 +420,8 @@
     if (arr(st.towers).length) parts.push('t=' + st.towers.join(','));
     const f = Object.keys(st.force || {}).filter((k) => st.towers.indexOf(k) >= 0).map((k) => k + '.' + st.force[k].join(''));
     if (f.length) parts.push('f=' + f.join(','));
+    if (st.mine) parts.push('mine=1');
+    if (st.noInsta) parts.push('noinsta=1');
     return parts.join('&');
   };
   C.decodeAdvice = function (D, hash) {
@@ -381,7 +430,7 @@
       const i = kv.indexOf('=');
       if (i > 0) q[decodeURIComponent(kv.slice(0, i))] = decodeURIComponent(kv.slice(i + 1));
     });
-    const st = { towers: [], force: {} };
+    const st = { towers: [], force: {}, mine: q.mine === '1', noInsta: q.noinsta === '1' };
     if (q.map && C.map(D, q.map)) st.mapId = q.map;
     if (q.mode && C.mode(D, q.mode) && !C.isSandbox(C.mode(D, q.mode))) st.modeId = q.mode;
     if (q.hero === 'auto' || (q.hero && C.hero(D, q.hero))) st.heroId = q.hero;

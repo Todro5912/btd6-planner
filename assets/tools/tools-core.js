@@ -310,17 +310,56 @@
     return lvl;
   };
   /* level during round r for a hero placed at round p (XP from completed rounds p..r-1) */
-  C.heroLevelAt = function (D, heroId, placedRound, r, mapDifficulty) {
+  /* opts (from your profile's Monkey Knowledge): {xpMult: hero XP multiplier, startLevel: e.g. 3 with Empowered Heroes} */
+  C.heroLevelAt = function (D, heroId, placedRound, r, mapDifficulty, opts) {
     if (r < placedRound) return 0;
     const table = C.heroXpTable(D, heroId);
-    const m = C.TIER_XP_MULT[mapDifficulty] || 1;
-    let xp = 0;
+    const m = (C.TIER_XP_MULT[mapDifficulty] || 1) * num(opts && opts.xpMult, 1);
+    const startLevel = Math.max(1, Math.min(20, num(opts && opts.startLevel, 1)));
+    let xp = table[startLevel] || 0;
     for (let k = placedRound; k < r; k++) xp += C.roundXp(k) * m;
-    return C.heroLevelFromXp(table, xp);
+    return Math.max(startLevel, C.heroLevelFromXp(table, xp));
   };
-  C.heroRoundForLevel = function (D, heroId, placedRound, level, mapDifficulty, lastRound) {
-    for (let r = placedRound; r <= (lastRound || 140); r++) if (C.heroLevelAt(D, heroId, placedRound, r, mapDifficulty) >= level) return r;
+  C.heroRoundForLevel = function (D, heroId, placedRound, level, mapDifficulty, lastRound, opts) {
+    for (let r = placedRound; r <= (lastRound || 140); r++) if (C.heroLevelAt(D, heroId, placedRound, r, mapDifficulty, opts) >= level) return r;
     return null;
+  };
+
+  /* ---------- your profile (My profile page): Monkey Knowledge effects the tools model ---------- */
+  /* profile: progress.js profile; settings: {me, emt}. Returns null when you switched MK off. Modes with noMK ignore it (simulate checks). */
+  C.profileFx = function (D, profile, settings) {
+    if (profile && profile.mkOn === false) return null;
+    const on = Object.assign({}, (profile && profile.mk) || {});
+    if (settings && settings.me !== false) on['monkey-education'] = true;
+    if (settings && settings.emt) on['elite-military-training'] = true;
+    const fx = { startCash: 0, heroCostMult: 1, sellAdd: 0, heroXpMult: 1, heroStartLevel: 1, me: false, emt: false, nodes: [], unverified: false };
+    arr(D.mk).forEach((n) => {
+      if (!on[n.id] || !n.fx) return;
+      const f = n.fx;
+      if (f.startCash) fx.startCash += f.startCash;
+      if (f.heroCostMult) fx.heroCostMult *= f.heroCostMult;
+      if (f.sellAdd) fx.sellAdd += f.sellAdd;
+      if (f.heroXpMult) fx.heroXpMult *= f.heroXpMult;
+      if (f.xpMult) { fx.heroXpMult *= f.xpMult; fx.me = true; }
+      if (f.militaryXpMult) fx.emt = true;
+      if (f.heroStartLevel) fx.heroStartLevel = Math.max(fx.heroStartLevel, f.heroStartLevel);
+      if (f.unverified) fx.unverified = true;
+      fx.nodes.push(n.name);
+    });
+    return fx;
+  };
+  /* the fx that apply in this mode (CHIMPS and other no-MK modes: none) */
+  C.fxFor = (fx, mode) => (fx && C.mkActive(mode) ? fx : null);
+  C.heroOpts = (fx) => (fx ? { xpMult: fx.heroXpMult, startLevel: fx.heroStartLevel } : null);
+  C.fxSummary = function (fx) {
+    if (!fx) return [];
+    const out = [];
+    if (fx.startCash) out.push('+$' + fx.startCash + ' start');
+    if (fx.heroCostMult < 1) out.push('heroes ' + Math.round((1 - fx.heroCostMult) * 100) + '% cheaper');
+    if (fx.sellAdd) out.push('sell +' + Math.round(fx.sellAdd * 100) + '%');
+    if (fx.heroStartLevel > 1) out.push('heroes start at level ' + fx.heroStartLevel);
+    if (fx.heroXpMult > 1.0001) out.push('hero XP +' + Math.round((fx.heroXpMult - 1) * 100) + '%');
+    return out;
   };
 
   /* ---------- legality of placing a tower ---------- */
@@ -396,7 +435,7 @@
     if (hero && pm.heroes && pm.heroes[hero.id] && prop !== 'pop') {
       const lv = prop === 'ddt' ? null : C.heroPropLevel(pm, hero.id, prop);
       if (lv != null && lv > num(hero.level, 0)) {
-        const at = ctx.heroPlaced != null ? C.heroRoundForLevel(D, hero.id, ctx.heroPlaced, lv, map && map.difficulty) : null;
+        const at = ctx.heroPlaced != null ? C.heroRoundForLevel(D, hero.id, ctx.heroPlaced, lv, map && map.difficulty, null, ctx.heroOpts) : null;
         res.hero.push({ kind: 'hero', heroId: hero.id, label: hero.label || hero.id, level: lv, round: at, cost: 0 });
       }
     }
@@ -434,9 +473,13 @@
     const map = C.map(D, plan.mapId);
     const [a, b] = C.modeRange(mode);
     const mult = num(mode.costMult, 1);
-    const base = C.baseCash(D, mode);
     const rules = mode.rules || {};
-    const sellRate = num(rules.sellRate, C.SELL_RATE);
+    const fx = C.fxFor(plan.fx, mode); /* your Monkey Knowledge (My profile), off in CHIMPS */
+    const base = C.baseCash(D, mode);
+    if (fx && fx.startCash) Object.keys(base).forEach((k) => { base[k] += fx.startCash; });
+    const sellRate = num(rules.sellRate, C.SELL_RATE) + (fx ? fx.sellAdd : 0);
+    const heroOpts = C.heroOpts(fx);
+    const instaLeft = Object.assign({}, plan.instas || {}); /* 'dart.204' -> how many you own */
     const strat = (D.strats || {})[plan.mapId] || {};
     const steps = arr(plan.steps).map((s, i) => Object.assign({ i }, s));
     steps.sort((p, q) => (p.r - q.r) || (p.i - q.i));
@@ -462,7 +505,7 @@
           if (!h) { res.flags.push({ k: 'bad', t: 'unknown hero' }); }
           else if (hero) { res.flags.push({ k: 'bad', t: 'only one hero per game' }); res.label = 'Place ' + h.name; }
           else {
-            res.cost = C.price(h.cost, mult) || 0;
+            res.cost = C.price(h.cost * (fx ? fx.heroCostMult : 1), mult) || 0;
             hero = { id: h.id, placed: r, name: h.name };
             res.label = 'Place ' + h.name;
             res.heroId = h.id;
@@ -475,14 +518,26 @@
             counts[t.id] = (counts[t.id] || 0) + 1;
             const inst = { uid: s.uid, id: t.id, x, invested: 0, placedAt: r, soldAt: null, n: counts[t.id], ord: ++order, name: t.name };
             inst.label = t.name.replace(/ Monkey$/, '') + ' #' + inst.n;
-            res.cost = C.placeCost(t, x, mult);
+            res.cost = s.insta ? 0 : C.placeCost(t, x, mult);
             inst.invested = res.cost;
+            if (s.insta) {
+              inst.insta = true;
+              inst.instaValue = C.placeCost(t, x, mult);
+              res.insta = true;
+              if (rules.noInsta) res.flags.push({ k: 'bad', t: 'no Insta Monkeys in ' + mode.name });
+              else if (plan.instas) {
+                const key = t.id + '.' + x.join('');
+                if (!(instaLeft[key] > 0)) res.flags.push({ k: 'warn', t: 'not in your Insta inventory' });
+                else instaLeft[key]--;
+              }
+            }
             insts[s.uid] = inst;
-            res.label = 'Place ' + inst.label + (x.some((v) => v > 0) ? ' at ' + C.code(x) : '');
+            res.label = (s.insta ? 'Insta ' : 'Place ') + inst.label + (x.some((v) => v > 0) ? ' at ' + C.code(x) : '');
             res.towerId = t.id; res.x = x; res.inst = inst.label;
             const issue = C.placeIssue(D, mode, map, t);
             if (issue) res.flags.push({ k: 'bad', t: issue });
             if (arr(strat.avoidTowers).indexOf(t.id) >= 0) res.flags.push({ k: 'warn', t: 'weak on this map' });
+            if (plan.unlocked && plan.unlocked[t.id] && !C.geq(plan.unlocked[t.id], x)) res.flags.push({ k: 'warn', t: 'you haven\'t unlocked ' + C.code(x) + ' yet' });
           }
         } else if (s.op === 'up') {
           const inst = insts[s.ref];
@@ -498,13 +553,15 @@
             res.label = inst.label + ' to ' + C.code(s.x);
             res.name = C.topName(t, s.x);
             res.towerId = inst.id; res.x = s.x.slice(); res.inst = inst.label;
+            if (plan.unlocked && plan.unlocked[inst.id] && !C.geq(plan.unlocked[inst.id], s.x)) res.flags.push({ k: 'warn', t: 'you haven\'t unlocked ' + C.code(s.x) + ' yet' });
           }
         } else if (s.op === 'sell') {
           const inst = insts[s.ref];
           if (!inst || inst.placedAt > r || inst.soldAt != null) { res.flags.push({ k: 'bad', t: 'nothing to sell' }); res.label = 'Sell'; }
           else if (rules.noSelling) { res.flags.push({ k: 'bad', t: 'no selling in ' + mode.name }); res.label = 'Sell ' + inst.label; }
           else {
-            res.refund = Math.round(inst.invested * sellRate);
+            /* an Insta sells like a bought tower: its value counts, though it cost you nothing */
+            res.refund = Math.round((inst.invested + (inst.insta ? num(inst.instaValue, 0) : 0)) * sellRate);
             inst.soldAt = r;
             res.label = 'Sell ' + inst.label;
             res.towerId = inst.id; res.inst = inst.label;
@@ -518,7 +575,7 @@
       const live = Object.keys(insts).map((k) => insts[k]).filter((i) => i.placedAt <= r && i.soldAt == null);
       let hl = null;
       if (hero) {
-        hl = plan.heroLevel != null && plan.heroLevel >= 1 ? Math.min(20, Math.round(plan.heroLevel)) : Math.max(1, C.heroLevelAt(D, hero.id, hero.placed, r, map && map.difficulty));
+        hl = plan.heroLevel != null && plan.heroLevel >= 1 ? Math.min(20, Math.round(plan.heroLevel)) : Math.max(1, C.heroLevelAt(D, hero.id, hero.placed, r, map && map.difficulty, heroOpts));
       }
       const st = C.coverState(D, live.map((i) => ({ uid: i.uid, id: i.id, x: i.x, label: i.label })), hero ? { id: hero.id, level: hl, label: hero.name } : null);
       const row = C.roundRow(D, mode, r);
@@ -567,7 +624,7 @@
       const live = instList.filter((i) => x.live.indexOf(i.uid) >= 0).map((i) => ({ uid: i.uid, id: i.id, x: C.xAt(out, i, pr.round), label: i.label }));
       pr.text = C.NEED_TEXT[pr.prop];
       pr.bank = x.avail;
-      pr.fixes = C.fixesFor({ D, mode, map, insts: live, hero: hero && hero.placed <= pr.round ? { id: hero.id, level: x.heroLevel, label: hero.name } : null, heroPlaced: hero ? hero.placed : null, strong: arr(strat.strongTowers) }, pr.prop, 3);
+      pr.fixes = C.fixesFor({ D, mode, map, insts: live, hero: hero && hero.placed <= pr.round ? { id: hero.id, level: x.heroLevel, label: hero.name } : null, heroPlaced: hero ? hero.placed : null, heroOpts, strong: arr(strat.strongTowers) }, pr.prop, 3);
       pr.fixes.forEach((f) => { f.affordable = pr.bank != null && f.cost <= pr.bank + 0.5; });
       pr.hints = C.hintsFor(D, live, pr.prop);
       pr.composition = x.composition;
@@ -791,7 +848,7 @@
     });
     arr(plan.steps).forEach((s) => {
       if (s.op === 'hero') toks.push(s.r + 'h' + s.h);
-      else if (s.op === 'place') toks.push(s.r + 'p' + s.t + (s.x && s.x.some((v) => v > 0) ? '.' + s.x.join('') : ''));
+      else if (s.op === 'place') toks.push(s.r + (s.insta ? 'i' : 'p') + s.t + (s.x && s.x.some((v) => v > 0) ? '.' + s.x.join('') : ''));
       else if (s.op === 'up' && ord[s.ref]) toks.push(s.r + 'u' + ord[s.ref] + '.' + arr(s.x).join(''));
       else if (s.op === 'sell' && ord[s.ref]) toks.push(s.r + 's' + ord[s.ref]);
     });
@@ -815,9 +872,10 @@
     if (q.b) q.b.split('_').forEach((tok) => {
       let m;
       if ((m = tok.match(/^(\d{1,3})h([a-z]+)$/)) && C.hero(D, m[2])) plan.steps.push({ uid: mk(), r: +m[1], op: 'hero', h: m[2] });
-      else if ((m = tok.match(/^(\d{1,3})p([a-z]+)(?:\.(\d)(\d)(\d))?$/)) && C.tower(D, m[2])) {
-        const x = m[3] != null ? [+m[3], +m[4], +m[5]] : [0, 0, 0];
-        const s = { uid: mk(), r: +m[1], op: 'place', t: m[2], x: C.validCross(x) ? x : [0, 0, 0] };
+      else if ((m = tok.match(/^(\d{1,3})([pi])([a-z]+)(?:\.(\d)(\d)(\d))?$/)) && C.tower(D, m[3])) {
+        const x = m[4] != null ? [+m[4], +m[5], +m[6]] : [0, 0, 0];
+        const s = { uid: mk(), r: +m[1], op: 'place', t: m[3], x: C.validCross(x) ? x : [0, 0, 0] };
+        if (m[2] === 'i') s.insta = true;
         plan.steps.push(s);
         placed.push(s);
       } else if ((m = tok.match(/^(\d{1,3})u(\d+)\.(\d)(\d)(\d)$/))) {

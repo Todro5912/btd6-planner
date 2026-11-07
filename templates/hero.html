@@ -12,7 +12,10 @@
     <div><dt>Cost</dt><dd class="num">{{ ui.price(hm.prices) }}</dd></div>
     <div><dt>Unlock</dt><dd>{% if h.unlockLevel %}level {{ h.unlockLevel }}{% if h.mmUnlock %} or {{ h.mmUnlock|num }} MM{% endif %}{% else %}free{% endif %}</dd></div>
   </dl>
-  <a class="btn btn-grass" href="{{ root }}tools/simulator/#hero={{ h.id }}">Open in Simulator</a>
+  <div class="head-acts">
+    <a class="btn btn-grass" href="{{ root }}tools/advisor/#hero={{ h.id }}{% if hm.recommended %}&amp;map={{ hm.recommended[0].id }}{% endif %}">Plan a game with {{ h.name }}</a>
+    <a class="btn" href="{{ root }}tools/simulator/#hero={{ h.id }}">Open in Simulator</a>
+  </div>
 </div>
 {% if h.bestFor %}<p class="lede">{{ h.bestFor|rich }}</p>{% endif %}
 

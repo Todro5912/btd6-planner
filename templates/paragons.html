@@ -13,7 +13,7 @@
 <h2 class="h2" id="paragons">Paragons</h2>
 <div class="table-wrap">
 <table class="tbl">
-  <thead><tr><th scope="col">Paragon</th><th scope="col">Tower</th><th scope="col" class="n">Price</th><th scope="col" class="n">Paragon XP</th><th scope="col" class="n">XP from zero</th></tr></thead>
+  <thead><tr><th scope="col">Paragon</th><th scope="col">Tower</th><th scope="col" class="n">Price</th><th scope="col" class="n">Paragon XP</th><th scope="col" class="n">XP from zero</th><th scope="col"><span class="sr-only">Track</span></th></tr></thead>
   <tbody>
   {% for tm in ctx.tower_models if tm.paragon %}
   <tr>
@@ -22,6 +22,7 @@
     <td class="n">{{ ui.price(tm.paragon.prices) }}</td>
     <td class="n">{{ tm.paragon.xp|num }}</td>
     <td class="n"><b>{{ tm.paragon.total|num }}</b></td>
+    <td><a class="btn btn-small btn-banana" href="{{ root }}tools/goals/#add={{ tm.t.id }}.paragon">Go for it</a></td>
   </tr>
   {% endfor %}
   </tbody>

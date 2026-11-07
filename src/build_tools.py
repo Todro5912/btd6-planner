@@ -165,6 +165,7 @@ def collect():
     guides = load(os.path.join(DATA, 'tower-guides.json'), []) or []
     econ = load(os.path.join(DATA, 'economy.json'), {}) or {}
     rules = load(os.path.join(DATA, 'synergy-rules.json'), {}) or {}
+    mk = load(os.path.join(DATA, 'monkey-knowledge.json'), {}) or {}
 
     pop = require('pop-model.json')
     if pop.get('_fixture') or not pop.get('towers'):
@@ -177,7 +178,7 @@ def collect():
         tt = pick(t, ['id', 'name', 'class', 'baseCost', 'waterOnly', 'paragon'])
         tt['paths'] = [[pick(u, ['tier', 'name', 'cost', 'xp']) for u in (p or [])] for p in (t.get('paths') or [])]
         tower_list.append(tt)
-    heroes = [pick(h, ['id', 'name', 'cost', 'xpCurve', 'camo', 'lead', 'bestFor', 'beginnerTier']) for h in towers.get('heroes', []) or []]
+    heroes = [pick(h, ['id', 'name', 'cost', 'xpCurve', 'camo', 'lead', 'bestFor', 'beginnerTier', 'unlockLevel', 'mmUnlock']) for h in towers.get('heroes', []) or []]
     rk = ['round', 'xp', 'cash', 'threats', 'composition', 'danger', 'notes']
     data = {
         'meta': {'version': towers.get('version'), 'popSource': pop_source, 'popVersion': (pop or {}).get('version'),
@@ -196,6 +197,8 @@ def collect():
         'heroLevels': hero_levels,
         'presets': parse_presets(strats, tower_list, heroes),
         'synergy': rules,
+        'mk': [pick(n, ['id', 'name', 'tree', 'group', 'effect', 'ptsNeeded', 'mm', 'fx']) for n in mk.get('nodes', []) or []],
+        'mkMeta': pick(mk, ['totalNodes', 'maxPoints', 'trees']),
     }
     for m in data['modes']:
         if isinstance(m.get('rules'), dict):

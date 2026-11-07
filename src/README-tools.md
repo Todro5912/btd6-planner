@@ -6,6 +6,9 @@ Three tool pages plus a synergy engine, built to contract C3 in `docs/CONTRACTS.
 |---|---|---|
 | `simulator` | `pages/simulator.body.html` + `assets/simulator.js` | The planner grown into a round timeline: timed build steps, cash curve, coverage per round, first leak in big text, problems with priced fixes, synergy hints, known starts, XP-per-run (collapsed). |
 | `xp` | `pages/xp.body.html` + `assets/xp.js` | Progression: tap unlocked pips (or enter total XP), pick an upgrade / all tier 5s / Paragon, get XP needed, unlock order and ranked farms. |
+| `advisor` | `pages/advisor.body.html` + `assets/advisor.js` | Strategy Advisor: map, mode, hero and your monkeys in; end crosspaths + jobs, a build order by round, gaps and map tips out. Logic in `assets/advisor-core.js` (pure). Optional `unlocked` caps crosspaths at your tiers. |
+| `goals` | `pages/goals.body.html` + `assets/goals.js` | My goals: Paragon / tier 5 / upgrade goals on top of the shared progress store (`static/progress.js`). Logic in `assets/goals-core.js` (goalView, unlockStep, farmPlan, paragonsByXp). |
+| `profile` | `pages/profile.body.html` + `assets/profile.js` | My profile ("Me" in the header): unlocks + Paragons per tower, towers not unlocked, heroes owned, Monkey Knowledge (`data/monkey-knowledge.json`), Insta inventory, level, MM. `C.profileFx` turns ticked MK into tool effects; `plan.fx` / `opts.fx` apply them (off when the mode has `noMK`). |
 | `defence` | `pages/defence.body.html` + `assets/defence.js` | "Check my defence": mode, round, towers with path steppers, optional hero and level. Shows the next uncovered threats in the next 15 rounds with the cheapest fixes. |
 
 ## Files
@@ -21,6 +24,10 @@ Three tool pages plus a synergy engine, built to contract C3 in `docs/CONTRACTS.
 | `test_tools.js` | Node tests; `--browser [--shots]` adds the playwright smoke test. |
 
 The old planner (`template.html`, `logic.js`, `build.py`, `test_logic.js`) was retired in 0.5.
+
+## Shared progress (0.7)
+
+`static/progress.js` loads on every page (in `<head>`, so it runs before the tool scripts) and exposes `window.MonkeyIntel.progress`: per-tower `{u, p, bank, set}`, goals (with a cached `view` for the home page), the run log, recent pages, last plans per tool, the last game setup and settings. localStorage key `mi-progress-v1`; `exportCode()` / `importCode()` move it between devices. Tool pages read it through `U.myUnlocks()`; they all work without it (the smoke-test shell loads it too).
 
 ## Data flow
 

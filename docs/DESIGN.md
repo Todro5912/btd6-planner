@@ -71,10 +71,11 @@ The site should feel like it belongs next to BTD6: chunky, tactile and bright. I
 | Monkeys | /monkeys/ | sub-tabs Towers · Heroes · Paragons; detail pages /monkeys/<tower-id>/ and /heroes/<hero-id>/ |
 | Maps | /maps/ | 90 maps filterable by difficulty, water and LoS; detail pages /maps/<map-id>/ |
 | Guides | /guides/ | guides, the general Hard plan, Reference (Rounds, Bloons, Modes, MK, Glossary); /rounds/ and /rounds/<n>/ |
-| Tools ▾ | /tools/ | Simulator /tools/simulator/, XP calculator /tools/xp/, Check my defence /tools/defence/ (pages from `src/pages/`, C3) |
+| Tools ▾ | /tools/ | Strategy Advisor /tools/advisor/, Simulator /tools/simulator/, My goals /tools/goals/, XP calculator /tools/xp/, Check my defence /tools/defence/ (pages from `src/pages/`, C3) |
 | More (☰ and footer) | | Records /records/, Patch notes /patch/, Known issues, About /about/, A–Z /a-z/ |
 
 - `/planner/` redirects to `/tools/simulator/` keeping the hash; `/guides/rounds/` redirects to `/rounds/`.
 - **Search** in the header: "/" or typing in the header box opens the panel. It searches quick cards, tools, towers, upgrades, heroes, paragons, maps, guides, rounds, glossary terms, bosses and modes, plus the player words in `data/search-synonyms.json`.
 - **Every detail page has** a breadcrumb, the game-version stamp, an "Open in Simulator" link (`#map=`, `#tower=`, `#hero=`) and "About this data" at the foot.
+- **Your progress (0.7):** goals, unlocks and recent pages live in the browser (`static/progress.js`). Home shows "Pick up where you left off"; tower pages show what you have unlocked; every tool reads the same store. Progress bars are the one place a filled bar is used: ink outline, grass fill, 999px radius like the round chips.
 - **Footer:** "Made by Todro5912" in display type with GitHub, Report an error and About buttons; More and Tools link lists; the unofficial disclaimer, data version, sources and the theme toggle.

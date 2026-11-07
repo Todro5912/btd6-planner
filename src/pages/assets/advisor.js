@@ -10,13 +10,19 @@
   const KEY = 'mi-adv-v1';
   const arr = (v) => (Array.isArray(v) ? v : []);
 
-  let st = { mapId: 'monkey-meadow', modeId: 'medium', heroId: 'auto', towers: [], force: {} };
+  let st = { mapId: 'monkey-meadow', modeId: 'medium', heroId: 'auto', towers: [], force: {}, mine: false };
+  const P = MI.progress || null;
   let res = null;
+  let me = { fx: null, ownsHero: () => true, instas: [], missing: {} };
 
   function loadInitial() {
     const hash = location.hash || '';
     const saved = U.store.get(KEY);
-    const src = /[#&](map|mode|t)=/.test(hash) ? hash : saved && saved.hash ? saved.hash : null;
+    const fromLink = /[#&](map|mode|t|hero)=/.test(hash);
+    /* a link from another page only says part of the game: fill the rest from the last game you set up anywhere */
+    const g = P && P.get().game;
+    if (g) { if (g.mapId && C.map(D, g.mapId)) st.mapId = g.mapId; if (g.modeId && C.mode(D, g.modeId)) st.modeId = g.modeId; }
+    const src = fromLink ? hash : saved && saved.hash ? saved.hash : null;
     if (!src) return;
     const p = C.decodeAdvice(D, src);
     st.mapId = p.mapId || st.mapId;
@@ -24,11 +30,17 @@
     if (p.heroId !== undefined) st.heroId = p.heroId;
     st.towers = p.towers;
     st.force = p.force;
+    st.mine = !!p.mine;
+    st.noInsta = !!p.noInsta;
   }
   function persist() {
     const hash = C.encodeAdvice(st);
     try { history.replaceState(null, '', '#' + hash); } catch (e) { /* file:// or sandbox */ }
     U.store.set(KEY, { hash });
+    if (P) {
+      P.setGame({ mapId: st.mapId, modeId: st.modeId, heroId: st.heroId });
+      if (st.towers.length) P.setPlan('advisor', { hash, label: (map() ? map().name : st.mapId) + ', ' + (mode() ? mode().name : st.modeId) + ', ' + st.towers.length + ' monkey' + (st.towers.length === 1 ? '' : 's') });
+    }
   }
   const mode = () => C.mode(D, st.modeId);
   const map = () => C.map(D, st.mapId);
@@ -36,7 +48,10 @@
   function update() { persist(); render(); }
 
   function render() {
-    res = C.advise(D, { mapId: st.mapId, modeId: st.modeId, heroId: st.heroId, towers: st.towers, force: st.force });
+    const mineAll = U.myUnlocks();
+    me = U.me(D);
+    res = C.advise(D, { mapId: st.mapId, modeId: st.modeId, heroId: st.heroId, towers: st.towers, force: st.force, unlocked: st.mine ? mineAll : null,
+      fx: me.fx, ownsHero: me.ownsHero, instas: st.noInsta ? [] : me.instas });
     U.clear(root);
     root.appendChild(gamePanel());
     root.appendChild(picksPanel());
@@ -52,7 +67,8 @@
   /* ---------- inputs ---------- */
   function heroOpts() {
     const best = C.mapHeroes(D, st.mapId)[0];
-    return [{ value: 'auto', label: 'Pick for me' + (best ? ' (' + best.name + ')' : ''), keys: 'auto best' }].concat(U.heroOptions(D));
+    const own = C.mapHeroes(D, st.mapId).find((x) => me.ownsHero(x.id)) || best;
+    return [{ value: 'auto', label: 'Pick for me' + (own ? ' (' + own.name + ')' : ''), keys: 'auto best' }].concat(U.heroOptions(D).map((o) => (o.value && !me.ownsHero(o.value) ? Object.assign({}, o, { label: o.label + ' (not owned)' }) : o)));
   }
   function gamePanel() {
     const m = mode();
@@ -65,7 +81,16 @@
     const facts = h('p', { class: 'ti-note' }, [m.name + ': ', U.rchip(a, 'ti-r-plain'), ' to ', U.rchip(b, 'ti-r-plain'), ', start ', U.money(m.startCash),
       ', prices ×' + m.costMult + (m.rules && m.rules.noSelling ? ', no selling' : '') + (m.rules && m.rules.noIncomeTowers ? ', no farms' : '') + '.']);
     return h('section', { class: 'panel', 'aria-labelledby': 'adv-game-h' }, [h('h2', { class: 'panel-h', id: 'adv-game-h' }, 'Your game'),
-      h('div', { class: 'ti-panel-b ti' }, [h('div', { class: 'ti-row' }, kids), facts])]);
+      h('div', { class: 'ti-panel-b ti' }, [h('div', { class: 'ti-row' }, kids), facts, U.profileLine(D, m, me)])]);
+  }
+  function instaRow() {
+    if (!me.instas || !me.instas.length) return null;
+    const m = mode();
+    if (m.rules && m.rules.noInsta) return h('p', { class: 'ti-note' }, 'No Insta Monkeys in ' + m.name + '.');
+    return h('div', { class: 'ti-share ti-mine' }, [
+      h('label', { class: 'check' }, [h('input', { type: 'checkbox', id: 'adv-insta', checked: st.noInsta ? null : true, onchange: (e) => { st.noInsta = !e.target.checked; update(); } }), 'Use my Insta Monkeys']),
+      h('span', { class: 'ti-note' }, st.noInsta ? 'Off: the plan pays for every tower.' : res && res.instaSaved ? 'Saves ' + C.money(res.instaSaved) + ' in this plan.' : 'None of your Instas fit these picks.'),
+    ]);
   }
   function toggle(id) {
     const i = st.towers.indexOf(id);
@@ -81,10 +106,19 @@
       pressed: (t) => st.towers.indexOf(t.id) >= 0,
       issue: (t) => C.placeIssue(D, m, mp, t) || (full && st.towers.indexOf(t.id) < 0 ? 'Up to ' + C.ADVISE_MAX + ' monkeys' : null),
       cost: (t) => C.price(t.baseCost, m.costMult),
-      hint: (t) => [].concat(arr(s.strongTowers).indexOf(t.id) >= 0 ? [{ cls: 'strong', text: 'Strong' }] : [], arr(s.avoidTowers).indexOf(t.id) >= 0 ? [{ cls: 'avoid', text: 'Avoid' }] : []),
+      hint: (t) => [].concat(arr(s.strongTowers).indexOf(t.id) >= 0 ? [{ cls: 'strong', text: 'Strong' }] : [], arr(s.avoidTowers).indexOf(t.id) >= 0 ? [{ cls: 'avoid', text: 'Avoid' }] : [],
+        me.missing && me.missing[t.id] ? [{ cls: 'avoid', text: 'Not unlocked' }] : [],
+        me.instas && me.instas.some((i) => i.t === t.id) ? [{ cls: 'pair', text: 'Insta' }] : []),
       onpick: (t) => toggle(t.id),
     });
     const strongOk = arr(s.strongTowers).filter((id) => { const t = C.tower(D, id); return t && !C.placeIssue(D, m, mp, t); });
+    const mineAll = U.myUnlocks();
+    const tracked = mineAll ? st.towers.filter((id) => mineAll[id]) : [];
+    const mineRow = P ? h('div', { class: 'ti-share ti-mine' }, mineAll ? [
+      h('label', { class: 'check' }, [h('input', { type: 'checkbox', id: 'adv-mine', checked: st.mine ? true : null, onchange: (e) => { st.mine = e.target.checked; update(); } }), 'Only use upgrades I\'ve unlocked']),
+      h('span', { class: 'ti-note' }, st.mine ? (tracked.length ? 'Using your unlocks for ' + tracked.map((id) => C.tower(D, id).name.replace(/ Monkey$/, '')).join(', ') + '. Others: everything.' : 'None of your picks has saved unlocks yet.') : ''),
+      h('a', { class: 'ti-note', href: '../goals/' }, 'Your unlocks'),
+    ] : [h('span', { class: 'ti-note' }, ['Haven\'t unlocked every tier 5? Save your unlocks in the ', h('a', { href: '../xp/' }, 'XP calculator'), ' or ', h('a', { href: '../goals/' }, 'My goals'), ' and the Advisor can stick to them.'])]) : null;
     const bar = h('div', { class: 'ti-share' }, [
       h('span', { class: 'ti-note' }, [h('b', null, String(st.towers.length)), ' picked · up to ' + C.ADVISE_MAX]),
       st.towers.length ? h('button', { type: 'button', class: 'btn btn-small', onclick: () => { st.towers = []; st.force = {}; update(); } }, 'Clear') : null,
@@ -92,7 +126,7 @@
     ]);
     const legend = h('p', { class: 'ti-note' }, [h('span', { class: 'ti-hint ti-hint-strong' }, 'Strong'), ' strong on this map · ', h('span', { class: 'ti-hint ti-hint-avoid' }, 'Avoid'), ' weak here. Tap to pick, tap again to drop.']);
     return h('section', { class: 'panel', 'aria-labelledby': 'adv-picks-h' }, [h('h2', { class: 'panel-h', id: 'adv-picks-h' }, ['Your monkeys', h('small', null, 'the ones you want to use')]),
-      h('div', { class: 'ti-panel-b ti' }, [legend, grid, bar])]);
+      h('div', { class: 'ti-panel-b ti' }, [legend, grid, bar, mineRow, instaRow()])]);
   }
 
   /* ---------- result ---------- */
@@ -138,10 +172,12 @@
       const sel = U.select([{ value: '', label: 'Let the advisor choose' }].concat(p.options.map((o) => ({ value: o.x.join(''), label: C.code(o.x) + (o.name ? ' ' + o.name : '') + ' · ' + C.money(o.cost) }))),
         p.forced ? p.x.join('') : '', (v) => { if (v) st.force[p.id] = v.split('').map(Number); else delete st.force[p.id]; update(); }, { 'aria-label': 'End crosspath for ' + p.name });
       ul.appendChild(h('li', { class: 'ti-card ti-role' }, [
-        h('div', { class: 'ti-card-h' }, [h('span', { class: 'ti-card-t' }, p.name), h('span', { class: 'ti-role-c' }, U.money(p.cost))]),
+        h('div', { class: 'ti-card-h' }, [h('a', { class: 'ti-card-t', href: U.towerHref(p.id) }, p.name), h('span', { class: 'ti-role-c' }, U.money(p.cost))]),
         h('div', { class: 'ti-role-x' }, [h('span', { class: 'ti-x ti-x-big' }, C.code(p.x)), h('span', { class: 'ti-role-n' }, p.xName || 'Base tower')]),
         U.pathPips(t, p.x),
         p.use ? h('p', { class: 'ti-role-u' }, [p.trimmedFrom ? 'Cheaper tier of ' + C.code(p.trimmedFrom) + ': ' : '', p.use]) : null,
+        p.limited ? h('p', { class: 'ti-note' }, ['Kept to what you have unlocked. ', h('a', { href: '../goals/#add=' + p.id + '.all' }, 'Go for its tier 5s')]) : null,
+        p.insta ? h('p', { class: 'ti-role-u' }, [h('span', { class: 'tag tag-sky' }, 'Insta'), ' Start with your ', U.x(p.insta.x), ' Insta Monkey: saves ', U.money(p.insta.save), '.']) : null,
         jobs.length ? h('p', { class: 'ti-role-j' }, [h('b', null, 'Job: '), jobs.join(' · ')]) : h('p', { class: 'ti-role-j' }, [h('b', null, 'Job: '), 'damage and back-up']),
         h('p', { class: 'ti-role-p' }, [h('span', { class: 'ti-lbl' }, 'Hits'), ' '].concat(p.own.filter((x) => ['camo', 'lead', 'purple', 'black', 'white', 'moab', 'ddt'].indexOf(x) >= 0).map((x) => h('span', { class: 'pop pop-y' }, PROP(x))),
           p.own.length ? [] : [h('span', { class: 'ti-note' }, 'nothing on its own: a support tower')])),
@@ -168,7 +204,7 @@
     const ol = h('ol', { class: 'ti-steps ti-order-list' });
     res.steps.forEach((s) => {
       const label = s.op === 'hero' ? 'Place ' + s.label
-        : s.op === 'place' ? ['Place ' + s.label, s.x.some((v) => v > 0) ? [' at ', U.x(s.x)] : null]
+        : s.op === 'place' ? [(s.insta ? 'Insta ' : 'Place ') + s.label, s.x.some((v) => v > 0) ? [' at ', U.x(s.x)] : null, s.insta ? ' (free)' : null]
           : [s.label + ' to ', U.x(s.x)];
       const sub = [C.money(s.cost)];
       if (s.name && s.op !== 'hero') sub.push(s.name);

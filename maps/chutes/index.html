@@ -13,7 +13,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Luckiest+Guy&family=Rubik:wght@400;500;700&display=swap">
-<link rel="stylesheet" href="../../assets/site.css?v=0.5.0">
+<link rel="stylesheet" href="../../assets/site.css?v=0.8.0">
+<script src="../../assets/progress.js?v=0.8.0" defer></script>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 44'%3E%3Cellipse cx='20' cy='18' rx='14' ry='16' fill='%23E2412E' stroke='%231C1A17' stroke-width='3'/%3E%3Cpath d='M17 34h6l-3 4z' fill='%23E2412E' stroke='%231C1A17' stroke-width='2.5'/%3E%3C/svg%3E">
 </head>
 <body class="">
@@ -37,6 +38,7 @@
       <kbd aria-hidden="true">/</kbd>
     </form>
     <a class="searchbtn" href="../../a-z/" data-search-open aria-haspopup="dialog" aria-label="Search (press /)"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="10" cy="10" r="6.5" fill="none" stroke="currentColor" stroke-width="3"/><path d="M15 15l6 6" stroke="currentColor" stroke-width="3.4" stroke-linecap="square"/></svg></a>
+    <a class="menubtn mebtn" href="../../tools/profile/" aria-label="My profile"><svg class="ico" viewBox="0 0 40 40" aria-hidden="true" focusable="false"><path d="M6 32L27 11" stroke="var(--ink)" stroke-width="5"/><path d="M6 32L27 11" stroke="var(--wood)" stroke-width="2"/><path d="M24 6l10 0 0 10z" fill="var(--panel)" stroke="var(--ink)" stroke-width="3" stroke-linejoin="round"/><path d="M4 28l8 8M8 26l6 6" stroke="var(--ink)" stroke-width="3"/></svg><span class="sl">Me</span></a>
     <details class="menu more-menu" data-menu>
       <summary class="menubtn" aria-label="More pages"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="3"/></svg><span class="sl">More</span></summary>
       <ul class="menu-list menu-right">
@@ -50,7 +52,7 @@
       <details class="menu tools-menu" data-menu>
         <summary class="tab">Tools<span class="caret" aria-hidden="true"></span></summary>
         <ul class="menu-list menu-right">
-<li><a href="../../tools/advisor/"><b>Strategy Advisor</b><small>I know my monkeys, not how to use them: crosspaths, a build order and the gaps.</small></a></li><li><a href="../../tools/simulator/"><b>Simulator</b><small>Strategy lab: invent a build and test it round by round, cash and leaks included.</small></a></li><li><a href="../../tools/xp/"><b>XP calculator</b><small>I have this much XP and want that upgrade: how many games of what.</small></a></li><li><a href="../../tools/defence/"><b>Check my defence</b><small>Your towers and round: the next threats you can&#39;t pop, each with a fix.</small></a></li>        </ul>
+<li><a href="../../tools/advisor/"><b>Strategy Advisor</b><small>I know my monkeys, not how to use them: crosspaths, a build order and the gaps.</small></a></li><li><a href="../../tools/simulator/"><b>Simulator</b><small>Strategy lab: invent a build and test it round by round, cash and leaks included.</small></a></li><li><a href="../../tools/goals/"><b>My goals</b><small>Track the Paragon or tier 5 you want: log runs, spend XP, see runs left.</small></a></li><li><a href="../../tools/xp/"><b>XP calculator</b><small>I have this much XP and want that upgrade: how many games of what.</small></a></li><li><a href="../../tools/defence/"><b>Check my defence</b><small>Your towers and round: the next threats you can&#39;t pop, each with a fix.</small></a></li><li><a href="../../tools/profile/"><b>My profile</b><small>Your unlocks, Paragons, heroes, Monkey Knowledge and Insta Monkeys: every tool uses them.</small></a></li>        </ul>
       </details>
     </nav>
   </div>
@@ -70,7 +72,7 @@
   <span class="glance-d"><span class="dot dot-intermediate" aria-hidden="true"></span>Intermediate</span>
   <span class="glance-l"><b>2</b> lanes</span>
 <span class="glance-e" title="How easy the map plays, 5 is easiest">Easiness <b>1</b>/5</span>  <span class="glance-facts">water: little · line of sight: some</span>
-  <a class="btn btn-small btn-grass glance-btn" href="../../tools/simulator/#map=chutes">Open in Simulator</a>
+  <span class="glance-btn head-acts"><a class="btn btn-small btn-grass" href="../../tools/advisor/#map=chutes&amp;hero=auto">Plan this map</a> <a class="btn btn-small" href="../../tools/simulator/#map=chutes">Open in Simulator</a></span>
 </div>
 <p class="lede">Two very short alternating lanes; chutes block LoS; two pools. Among the hardest Intermediate maps, harder than some Advanced ones.</p>
 <section class="beat" aria-labelledby="hb">
@@ -182,11 +184,11 @@
     </nav>
     <nav class="foot-more" aria-labelledby="footTools">
       <h2 class="foot-h" id="footTools">Tools</h2>
-      <ul><li><a href="../../tools/advisor/">Strategy Advisor</a></li><li><a href="../../tools/simulator/">Simulator</a></li><li><a href="../../tools/xp/">XP calculator</a></li><li><a href="../../tools/defence/">Check my defence</a></li></ul>
+      <ul><li><a href="../../tools/advisor/">Strategy Advisor</a></li><li><a href="../../tools/simulator/">Simulator</a></li><li><a href="../../tools/goals/">My goals</a></li><li><a href="../../tools/xp/">XP calculator</a></li><li><a href="../../tools/defence/">Check my defence</a></li><li><a href="../../tools/profile/">My profile</a></li></ul>
     </nav>
     <div class="foot-legal">
       <p class="disclaimer"><b>Unofficial fan site.</b> Not affiliated with or endorsed by Ninja Kiwi. Bloons and Bloons TD 6 are their trademarks. No game art is used here.</p>
-      <p>Data: BTD6 v57.4, updated 2026-11-05 · Site 0.5.0 · Sources: <a href="https://www.bloonswiki.com/" rel="noopener">Bloons Wiki</a> (CC BY-SA), <a href="https://btd6index.win/" rel="noopener">BTD6 Index</a>, <a href="https://github.com/hemisemidemipresent/cyberquincy" rel="noopener">Cyber Quincy</a>, Ninja Kiwi patch notes.</p>
+      <p>Data: BTD6 v57.4, updated 2026-11-05 · Site 0.8.0 · Sources: <a href="https://www.bloonswiki.com/" rel="noopener">Bloons Wiki</a> (CC BY-SA), <a href="https://btd6index.win/" rel="noopener">BTD6 Index</a>, <a href="https://github.com/hemisemidemipresent/cyberquincy" rel="noopener">Cyber Quincy</a>, Ninja Kiwi patch notes.</p>
       <div class="seg theme-toggle" role="radiogroup" aria-label="Colour theme" hidden>
         <button type="button" role="radio" data-theme-set="auto" aria-checked="true">Auto</button>
         <button type="button" role="radio" data-theme-set="light" aria-checked="false">Light</button>
@@ -207,7 +209,7 @@
     <p class="search-hint" id="searchHint"><kbd>↑</kbd><kbd>↓</kbd> move · <kbd>Enter</kbd> open · <kbd>Esc</kbd> close</p>
   </form>
 </dialog>
-<script src="../../assets/search-core.js?v=0.5.0" defer></script>
-<script src="../../assets/site.js?v=0.5.0" defer></script>
+<script src="../../assets/search-core.js?v=0.8.0" defer></script>
+<script src="../../assets/site.js?v=0.8.0" defer></script>
 </body>
 </html>

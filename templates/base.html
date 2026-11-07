@@ -15,6 +15,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Luckiest+Guy&family=Rubik:wght@400;500;700&display=swap">
 <link rel="stylesheet" href="{{ root }}assets/site.css?v={{ site.version }}">
+<script src="{{ root }}assets/progress.js?v={{ site.version }}" defer></script>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 44'%3E%3Cellipse cx='20' cy='18' rx='14' ry='16' fill='%23E2412E' stroke='%231C1A17' stroke-width='3'/%3E%3Cpath d='M17 34h6l-3 4z' fill='%23E2412E' stroke='%231C1A17' stroke-width='2.5'/%3E%3C/svg%3E">
 {% block head %}{% endblock %}
 </head>
@@ -39,6 +40,7 @@
       <kbd aria-hidden="true">/</kbd>
     </form>
     <a class="searchbtn" href="{{ root }}a-z/" data-search-open aria-haspopup="dialog" aria-label="Search (press /)">{{ ui.icon('search') }}</a>
+    <a class="menubtn mebtn{% if section == 'profile' %} on{% endif %}" href="{{ root }}tools/profile/" aria-label="My profile"{% if section == 'profile' %} aria-current="page"{% endif %}>{{ ui.icon('monkey') }}<span class="sl">Me</span></a>
     <details class="menu more-menu" data-menu>
       <summary class="menubtn" aria-label="More pages">{{ ui.icon('more') }}<span class="sl">More</span></summary>
       <ul class="menu-list menu-right">

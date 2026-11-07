@@ -13,7 +13,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Luckiest+Guy&family=Rubik:wght@400;500;700&display=swap">
-<link rel="stylesheet" href="../../assets/site.css?v=0.5.0">
+<link rel="stylesheet" href="../../assets/site.css?v=0.8.0">
+<script src="../../assets/progress.js?v=0.8.0" defer></script>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 44'%3E%3Cellipse cx='20' cy='18' rx='14' ry='16' fill='%23E2412E' stroke='%231C1A17' stroke-width='3'/%3E%3Cpath d='M17 34h6l-3 4z' fill='%23E2412E' stroke='%231C1A17' stroke-width='2.5'/%3E%3C/svg%3E">
 </head>
 <body class="">
@@ -37,6 +38,7 @@
       <kbd aria-hidden="true">/</kbd>
     </form>
     <a class="searchbtn" href="../../a-z/" data-search-open aria-haspopup="dialog" aria-label="Search (press /)"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="10" cy="10" r="6.5" fill="none" stroke="currentColor" stroke-width="3"/><path d="M15 15l6 6" stroke="currentColor" stroke-width="3.4" stroke-linecap="square"/></svg></a>
+    <a class="menubtn mebtn" href="../../tools/profile/" aria-label="My profile"><svg class="ico" viewBox="0 0 40 40" aria-hidden="true" focusable="false"><path d="M6 32L27 11" stroke="var(--ink)" stroke-width="5"/><path d="M6 32L27 11" stroke="var(--wood)" stroke-width="2"/><path d="M24 6l10 0 0 10z" fill="var(--panel)" stroke="var(--ink)" stroke-width="3" stroke-linejoin="round"/><path d="M4 28l8 8M8 26l6 6" stroke="var(--ink)" stroke-width="3"/></svg><span class="sl">Me</span></a>
     <details class="menu more-menu" data-menu>
       <summary class="menubtn" aria-label="More pages"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="3"/></svg><span class="sl">More</span></summary>
       <ul class="menu-list menu-right">
@@ -50,7 +52,7 @@
       <details class="menu tools-menu" data-menu>
         <summary class="tab">Tools<span class="caret" aria-hidden="true"></span></summary>
         <ul class="menu-list menu-right">
-<li><a href="../../tools/advisor/"><b>Strategy Advisor</b><small>I know my monkeys, not how to use them: crosspaths, a build order and the gaps.</small></a></li><li><a href="../../tools/simulator/"><b>Simulator</b><small>Strategy lab: invent a build and test it round by round, cash and leaks included.</small></a></li><li><a href="../../tools/xp/"><b>XP calculator</b><small>I have this much XP and want that upgrade: how many games of what.</small></a></li><li><a href="../../tools/defence/"><b>Check my defence</b><small>Your towers and round: the next threats you can&#39;t pop, each with a fix.</small></a></li>        </ul>
+<li><a href="../../tools/advisor/"><b>Strategy Advisor</b><small>I know my monkeys, not how to use them: crosspaths, a build order and the gaps.</small></a></li><li><a href="../../tools/simulator/"><b>Simulator</b><small>Strategy lab: invent a build and test it round by round, cash and leaks included.</small></a></li><li><a href="../../tools/goals/"><b>My goals</b><small>Track the Paragon or tier 5 you want: log runs, spend XP, see runs left.</small></a></li><li><a href="../../tools/xp/"><b>XP calculator</b><small>I have this much XP and want that upgrade: how many games of what.</small></a></li><li><a href="../../tools/defence/"><b>Check my defence</b><small>Your towers and round: the next threats you can&#39;t pop, each with a fix.</small></a></li><li><a href="../../tools/profile/"><b>My profile</b><small>Your unlocks, Paragons, heroes, Monkey Knowledge and Insta Monkeys: every tool uses them.</small></a></li>        </ul>
       </details>
     </nav>
   </div>
@@ -81,7 +83,7 @@
 <h2 class="h2" id="paragons">Paragons</h2>
 <div class="table-wrap">
 <table class="tbl">
-  <thead><tr><th scope="col">Paragon</th><th scope="col">Tower</th><th scope="col" class="n">Price</th><th scope="col" class="n">Paragon XP</th><th scope="col" class="n">XP from zero</th></tr></thead>
+  <thead><tr><th scope="col">Paragon</th><th scope="col">Tower</th><th scope="col" class="n">Price</th><th scope="col" class="n">Paragon XP</th><th scope="col" class="n">XP from zero</th><th scope="col"><span class="sr-only">Track</span></th></tr></thead>
   <tbody>
   <tr>
     <th scope="row"><a href="../../monkeys/dart/#paragon">Apex Plasma Master</a></th>
@@ -89,6 +91,7 @@
     <td class="n"><span class="price" data-easy="$127,500" data-medium="$150,000" data-hard="$162,000" data-impoppable="$180,000">$150,000</span></td>
     <td class="n">500,000</td>
     <td class="n"><b>622,300</b></td>
+    <td><a class="btn btn-small btn-banana" href="../../tools/goals/#add=dart.paragon">Go for it</a></td>
   </tr>
   <tr>
     <th scope="row"><a href="../../monkeys/boomerang/#paragon">Glaive Dominus</a></th>
@@ -96,6 +99,7 @@
     <td class="n"><span class="price" data-easy="$318,750" data-medium="$375,000" data-hard="$405,000" data-impoppable="$450,000">$375,000</span></td>
     <td class="n">500,000</td>
     <td class="n"><b>634,390</b></td>
+    <td><a class="btn btn-small btn-banana" href="../../tools/goals/#add=boomerang.paragon">Go for it</a></td>
   </tr>
   <tr>
     <th scope="row"><a href="../../monkeys/bomb/#paragon">Ballistic Obliteration Missile Bunker</a></th>
@@ -103,6 +107,7 @@
     <td class="n"><span class="price" data-easy="$552,500" data-medium="$650,000" data-hard="$702,000" data-impoppable="$780,000">$650,000</span></td>
     <td class="n">750,000</td>
     <td class="n"><b>888,480</b></td>
+    <td><a class="btn btn-small btn-banana" href="../../tools/goals/#add=bomb.paragon">Go for it</a></td>
   </tr>
   <tr>
     <th scope="row"><a href="../../monkeys/tack/#paragon">Crucible of Steel and Flame</a></th>
@@ -110,6 +115,7 @@
     <td class="n"><span class="price" data-easy="$170,000" data-medium="$200,000" data-hard="$216,000" data-impoppable="$240,000">$200,000</span></td>
     <td class="n">500,000</td>
     <td class="n"><b>623,380</b></td>
+    <td><a class="btn btn-small btn-banana" href="../../tools/goals/#add=tack.paragon">Go for it</a></td>
   </tr>
   <tr>
     <th scope="row"><a href="../../monkeys/ice/#paragon">Herald of Everfrost</a></th>
@@ -117,6 +123,7 @@
     <td class="n"><span class="price" data-easy="$255,000" data-medium="$300,000" data-hard="$324,000" data-impoppable="$360,000">$300,000</span></td>
     <td class="n">750,000</td>
     <td class="n"><b>867,730</b></td>
+    <td><a class="btn btn-small btn-banana" href="../../tools/goals/#add=ice.paragon">Go for it</a></td>
   </tr>
   <tr>
     <th scope="row"><a href="../../monkeys/sniper/#paragon">S.P.I.D.E.R. Monkey</a></th>
@@ -124,6 +131,7 @@
     <td class="n"><span class="price" data-easy="$680,000" data-medium="$800,000" data-hard="$864,000" data-impoppable="$960,000">$800,000</span></td>
     <td class="n">750,000</td>
     <td class="n"><b>895,200</b></td>
+    <td><a class="btn btn-small btn-banana" href="../../tools/goals/#add=sniper.paragon">Go for it</a></td>
   </tr>
   <tr>
     <th scope="row"><a href="../../monkeys/sub/#paragon">Nautic Siege Core</a></th>
@@ -131,6 +139,7 @@
     <td class="n"><span class="price" data-easy="$340,000" data-medium="$400,000" data-hard="$432,000" data-impoppable="$480,000">$400,000</span></td>
     <td class="n">1,000,000</td>
     <td class="n"><b>1,154,755</b></td>
+    <td><a class="btn btn-small btn-banana" href="../../tools/goals/#add=sub.paragon">Go for it</a></td>
   </tr>
   <tr>
     <th scope="row"><a href="../../monkeys/buccaneer/#paragon">Navarch of the Seas</a></th>
@@ -138,6 +147,7 @@
     <td class="n"><span class="price" data-easy="$467,500" data-medium="$550,000" data-hard="$594,000" data-impoppable="$660,000">$550,000</span></td>
     <td class="n">750,000</td>
     <td class="n"><b>908,750</b></td>
+    <td><a class="btn btn-small btn-banana" href="../../tools/goals/#add=buccaneer.paragon">Go for it</a></td>
   </tr>
   <tr>
     <th scope="row"><a href="../../monkeys/ace/#paragon">Goliath Doomship</a></th>
@@ -145,6 +155,7 @@
     <td class="n"><span class="price" data-easy="$765,000" data-medium="$900,000" data-hard="$972,000" data-impoppable="$1,080,000">$900,000</span></td>
     <td class="n">1,000,000</td>
     <td class="n"><b>1,162,590</b></td>
+    <td><a class="btn btn-small btn-banana" href="../../tools/goals/#add=ace.paragon">Go for it</a></td>
   </tr>
   <tr>
     <th scope="row"><a href="../../monkeys/wizard/#paragon">Magus Perfectus</a></th>
@@ -152,6 +163,7 @@
     <td class="n"><span class="price" data-easy="$680,000" data-medium="$800,000" data-hard="$864,000" data-impoppable="$960,000">$800,000</span></td>
     <td class="n">1,000,000</td>
     <td class="n"><b>1,143,290</b></td>
+    <td><a class="btn btn-small btn-banana" href="../../tools/goals/#add=wizard.paragon">Go for it</a></td>
   </tr>
   <tr>
     <th scope="row"><a href="../../monkeys/ninja/#paragon">Ascended Shadow</a></th>
@@ -159,6 +171,7 @@
     <td class="n"><span class="price" data-easy="$425,000" data-medium="$500,000" data-hard="$540,000" data-impoppable="$600,000">$500,000</span></td>
     <td class="n">500,000</td>
     <td class="n"><b>676,640</b></td>
+    <td><a class="btn btn-small btn-banana" href="../../tools/goals/#add=ninja.paragon">Go for it</a></td>
   </tr>
   <tr>
     <th scope="row"><a href="../../monkeys/druid/#paragon">Root of all Nature</a></th>
@@ -166,6 +179,7 @@
     <td class="n"><span class="price" data-easy="$403,750" data-medium="$475,000" data-hard="$513,000" data-impoppable="$570,000">$475,000</span></td>
     <td class="n">750,000</td>
     <td class="n"><b>903,510</b></td>
+    <td><a class="btn btn-small btn-banana" href="../../tools/goals/#add=druid.paragon">Go for it</a></td>
   </tr>
   <tr>
     <th scope="row"><a href="../../monkeys/spike/#paragon">Mega Massive Munitions Factory</a></th>
@@ -173,6 +187,7 @@
     <td class="n"><span class="price" data-easy="$637,500" data-medium="$750,000" data-hard="$810,000" data-impoppable="$900,000">$750,000</span></td>
     <td class="n">1,000,000</td>
     <td class="n"><b>1,141,270</b></td>
+    <td><a class="btn btn-small btn-banana" href="../../tools/goals/#add=spike.paragon">Go for it</a></td>
   </tr>
   <tr>
     <th scope="row"><a href="../../monkeys/engineer/#paragon">Master Builder</a></th>
@@ -180,6 +195,7 @@
     <td class="n"><span class="price" data-easy="$510,000" data-medium="$600,000" data-hard="$648,000" data-impoppable="$720,000">$600,000</span></td>
     <td class="n">750,000</td>
     <td class="n"><b>897,180</b></td>
+    <td><a class="btn btn-small btn-banana" href="../../tools/goals/#add=engineer.paragon">Go for it</a></td>
   </tr>
   </tbody>
 </table>
@@ -428,11 +444,11 @@
     </nav>
     <nav class="foot-more" aria-labelledby="footTools">
       <h2 class="foot-h" id="footTools">Tools</h2>
-      <ul><li><a href="../../tools/advisor/">Strategy Advisor</a></li><li><a href="../../tools/simulator/">Simulator</a></li><li><a href="../../tools/xp/">XP calculator</a></li><li><a href="../../tools/defence/">Check my defence</a></li></ul>
+      <ul><li><a href="../../tools/advisor/">Strategy Advisor</a></li><li><a href="../../tools/simulator/">Simulator</a></li><li><a href="../../tools/goals/">My goals</a></li><li><a href="../../tools/xp/">XP calculator</a></li><li><a href="../../tools/defence/">Check my defence</a></li><li><a href="../../tools/profile/">My profile</a></li></ul>
     </nav>
     <div class="foot-legal">
       <p class="disclaimer"><b>Unofficial fan site.</b> Not affiliated with or endorsed by Ninja Kiwi. Bloons and Bloons TD 6 are their trademarks. No game art is used here.</p>
-      <p>Data: BTD6 v57.4, updated 2026-11-05 · Site 0.5.0 · Sources: <a href="https://www.bloonswiki.com/" rel="noopener">Bloons Wiki</a> (CC BY-SA), <a href="https://btd6index.win/" rel="noopener">BTD6 Index</a>, <a href="https://github.com/hemisemidemipresent/cyberquincy" rel="noopener">Cyber Quincy</a>, Ninja Kiwi patch notes.</p>
+      <p>Data: BTD6 v57.4, updated 2026-11-05 · Site 0.8.0 · Sources: <a href="https://www.bloonswiki.com/" rel="noopener">Bloons Wiki</a> (CC BY-SA), <a href="https://btd6index.win/" rel="noopener">BTD6 Index</a>, <a href="https://github.com/hemisemidemipresent/cyberquincy" rel="noopener">Cyber Quincy</a>, Ninja Kiwi patch notes.</p>
       <div class="seg theme-toggle" role="radiogroup" aria-label="Colour theme" hidden>
         <button type="button" role="radio" data-theme-set="auto" aria-checked="true">Auto</button>
         <button type="button" role="radio" data-theme-set="light" aria-checked="false">Light</button>
@@ -453,7 +469,7 @@
     <p class="search-hint" id="searchHint"><kbd>↑</kbd><kbd>↓</kbd> move · <kbd>Enter</kbd> open · <kbd>Esc</kbd> close</p>
   </form>
 </dialog>
-<script src="../../assets/search-core.js?v=0.5.0" defer></script>
-<script src="../../assets/site.js?v=0.5.0" defer></script>
-<script src="../../assets/prices.js?v=0.5.0" defer></script></body>
+<script src="../../assets/search-core.js?v=0.8.0" defer></script>
+<script src="../../assets/site.js?v=0.8.0" defer></script>
+<script src="../../assets/prices.js?v=0.8.0" defer></script></body>
 </html>

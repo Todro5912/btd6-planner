@@ -14,8 +14,13 @@
     <div><dt>Placed on</dt><dd>{{ 'water only' if t.waterOnly else ('land or water' if t.placement == 'land_or_water' else (t.placement or 'land')) }}</dd></div>
     {% if tm.paragon %}<div><dt>Paragon</dt><dd><a href="#paragon">{{ tm.paragon.name }}</a></dd></div>{% endif %}
   </dl>
-  <a class="btn btn-grass" href="{{ root }}tools/simulator/#tower={{ t.id }}">Open in Simulator</a>
+  <div class="head-acts">
+    <a class="btn btn-grass" href="{{ root }}tools/advisor/#hero=auto&amp;t={{ t.id }}">Plan a game with it</a>
+    <a class="btn" href="{{ root }}tools/simulator/#tower={{ t.id }}">Open in Simulator</a>
+    <a class="btn btn-banana" href="{{ root }}tools/goals/#add={{ t.id }}.{{ 'paragon' if tm.paragon else 'all' }}">{% if tm.paragon %}Go for {{ tm.paragon.name }}{% else %}Go for every tier 5{% endif %}</a>
+  </div>
 </div>
+<div data-my-tower="{{ t.id }}" hidden></div>
 
 <section class="for" aria-labelledby="for">
   <h2 class="h2" id="for">What it's for</h2>
@@ -126,6 +131,7 @@
       <div class="stat"><dt>Price</dt><dd class="big money">{{ ui.price(tm.paragon.prices) }}</dd></div>
       <div class="stat"><dt>XP from zero</dt><dd class="big">{{ tm.paragon.total|num }}</dd><dd class="stat-s">all upgrades + {{ tm.paragon.xp|num }} paragon XP</dd></div>
     </dl>
+    <p><a class="btn btn-small btn-banana" href="{{ root }}tools/goals/#add={{ t.id }}.paragon">Track my progress to it</a></p>
   </div>
   {% else %}
   <p class="panel-b muted" id="paragon">{{ t.name }} has no paragon in v{{ meta.version }}.</p>
@@ -150,7 +156,7 @@
   <div class="more-b">
     <p>Best farm: <b>{{ link_maps(f.map, root) }}</b>, {{ f.mode }}. {{ f.setup|rich }}.</p>
     <p>About <b>{{ f.runsToT5 if f.runsToT5 is not none else '?' }}</b> runs to unlock every tier 5{% if tm.paragon and f.runsToParagon %}, <b>{{ f.runsToParagon }}</b> to the paragon{% endif %} (with Monkey Education).</p>
-    {% if tools_ready.get('xp') %}<p><a class="btn btn-small" href="{{ root }}tools/xp/?tower={{ t.id }}">Work it out for your XP</a></p>{% endif %}
+    {% if tools_ready.get('xp') %}<p><a class="btn btn-small" href="{{ root }}tools/xp/#tower={{ t.id }}">Work it out for your XP</a> <a class="btn btn-small btn-sky" href="{{ root }}tools/goals/#add={{ t.id }}.{{ 'paragon' if tm.paragon else 'all' }}">Track it as a goal</a></p>{% endif %}
   </div>
 </details>
 {% endif %}

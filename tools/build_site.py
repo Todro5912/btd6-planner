@@ -62,10 +62,12 @@ DANGER_ROUNDS = [24, 28, 33, 37, 40, 45, 63, 76, 78, 90, 95, 98, 99, 100]
 # Tool pages written by the tools stream (C3). Order = menu order.
 TOOLS = [('advisor', 'Strategy Advisor', 'I know my monkeys, not how to use them: crosspaths, a build order and the gaps.'),
          ('simulator', 'Simulator', 'Strategy lab: invent a build and test it round by round, cash and leaks included.'),
+         ('goals', 'My goals', 'Track the Paragon or tier 5 you want: log runs, spend XP, see runs left.'),
          ('xp', 'XP calculator', 'I have this much XP and want that upgrade: how many games of what.'),
-         ('defence', 'Check my defence', 'Your towers and round: the next threats you can\'t pop, each with a fix.')]
-TOOL_ICON = {'advisor': 'book', 'simulator': 'plan', 'xp': 'xp', 'defence': 'monkey'}
-TOOL_DOOR = {'advisor': 'door-grass', 'simulator': 'door-sky', 'xp': 'door-wood', 'defence': 'door-banana'}
+         ('defence', 'Check my defence', 'Your towers and round: the next threats you can\'t pop, each with a fix.'),
+         ('profile', 'My profile', 'Your unlocks, Paragons, heroes, Monkey Knowledge and Insta Monkeys: every tool uses them.')]
+TOOL_ICON = {'advisor': 'book', 'simulator': 'plan', 'goals': 'yes', 'xp': 'xp', 'defence': 'round', 'profile': 'monkey'}
+TOOL_DOOR = {'advisor': 'door-grass', 'simulator': 'door-sky', 'goals': 'door-banana', 'xp': 'door-wood', 'defence': 'door-grass', 'profile': 'door-sky'}
 # Footer and overflow menu.
 MORE_LINKS = [('Records', 'records/'), ('Patch notes', 'patch/'), ('Known issues', 'guides/known-issues/'),
               ('About', 'about/'), ('A–Z index', 'a-z/')]
@@ -1227,17 +1229,18 @@ def main():
              rel_cards=[card_by[r] for r in q['related'] if r in card_by], about=pop_about)
 
     # ---- tools (C3): S's fragments wrapped in the site chrome. The old planner is retired.
-    page('tools/', 'tools.html', f"Tools · {name}", 'BTD6 tools: strategy advisor, round simulator, XP calculator and defence check.',
+    page('tools/', 'tools.html', f"Tools · {name}", 'BTD6 tools: strategy advisor, round simulator, goal tracker, XP calculator and defence check.',
          section='tools', crumbs=[('Tools', None)], about=None)
     for t in tools:
         body = tool_src.get(t['slug'])
         crumbs = [('Tools', 'tools/'), (t['name'], None)]
+        sec = 'profile' if t['slug'] == 'profile' else 'tools'  # My profile has its own tab in the header
         if body is not None:
             depth_root = '../../'
             body = body.replace('{{BASE}}static/tools/', depth_root + 'assets/tools/').replace('{{BASE}}', depth_root)
             body = body.replace('{{ROOT}}', depth_root)
             page(t['url'], 'tool.html', f"{t['name']} · {name}", t['desc'] or f"{t['name']}: a BTD6 tool.",
-                 section='tools', crumbs=crumbs, tool=t, body=Markup(body), legacy=False,
+                 section=sec, crumbs=crumbs, tool=t, body=Markup(body), legacy=False,
                  about=None)  # the fragment carries its own "About this data" (C3)
         else:
             page(t['url'], 'tool.html', f"{t['name']} · {name}", t['desc'], section='tools', crumbs=crumbs,

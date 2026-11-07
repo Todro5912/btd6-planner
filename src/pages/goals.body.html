@@ -1,0 +1,25 @@
+
+<link rel="stylesheet" href="{{BASE}}static/tools/tools.css">
+<div class="ti" id="gls" data-tool="goals">
+  <div class="ti-head">
+    <div>
+      <h1 class="h1">My goals</h1>
+      <p class="ti-sub">Pick the Paragon or tier 5 you want. Log your runs, spend the XP like you do in the game, and see how many runs are left. Saved in this browser.</p>
+    </div>
+  </div>
+  <noscript><p class="ti-note">My goals needs JavaScript.</p></noscript>
+  <div id="gls-root" class="ti" aria-live="polite"></div>
+  <details class="about-data">
+    <summary>About this data</summary>
+    <div class="about-b">
+      <p>Unlock costs and Paragon XP come from the tower data. The unlock order is cheapest first and never skips a tier, the same as the XP calculator. XP per run is the round XP for the mode on your hardest map tier, with Monkey Education and Elite Military Training if you tick them, assuming only that tower is built. The game's end screen shows the real XP you earned: type that in for exact tracking.</p>
+      <p>Your progress is stored in this browser only (localStorage). Use the backup code to move it to another device. Clearing site data deletes it.</p>
+    </div>
+  </details>
+</div>
+<script src="{{BASE}}static/tools/tools-data.js" defer></script>
+<script src="{{BASE}}static/tools/tools-core.js" defer></script>
+<script src="{{BASE}}static/tools/advisor-core.js" defer></script>
+<script src="{{BASE}}static/tools/goals-core.js" defer></script>
+<script src="{{BASE}}static/tools/tools-ui.js" defer></script>
+<script src="{{BASE}}static/tools/goals.js" defer></script>

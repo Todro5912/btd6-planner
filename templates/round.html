@@ -49,6 +49,7 @@
   {% endif %}
   {% if rm.coming %}<p class="panel-b note"><b>Coming soon:</b> {% for x in rm.coming %}{{ x.label }} on {{ ui.rchip(x.first, root) }}{{ ', ' if not loop.last }}{% endfor %}</p>{% endif %}
   {% if rm.next_danger %}<p class="panel-b note"><b>Next run-enders:</b> {% for n in rm.next_danger %}{{ ui.rchip(n, root) }} {% endfor %}</p>{% endif %}
+  <p class="panel-b"><a class="btn btn-small btn-grass" href="{{ root }}tools/defence/#mode=hard&amp;round={{ rm.n }}">Check my defence from R{{ rm.n }}</a></p>
 </section>
 <p class="note">Standard rounds. <a href="{{ root }}rounds/#abr{{ rm.n }}">ABR round {{ rm.n }}</a> · <a href="{{ root }}guides/danger-rounds/">Danger rounds guide</a></p>
 {% endblock %}
