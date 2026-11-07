@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.8.1 (2026-11-07)
+- **Co-op**: a Players setting (Solo, 2, 3 or 4) in the Simulator and Strategy Advisor. Your cash is your share: start $50 less per player (Deflation splits the start cash), and 1/n of pop cash, round bonuses and More Cash (Bloons Wiki, unverified in game). Farms still pay their owner. Share links keep it (`pl=2`).
+- **Every fix has an action**: Advisor gaps get "Add to my picks" or "Add in the Simulator" (the buy lands at the round you can pay for it); leftovers get "Use a cheaper crosspath"; "Can't use here" gets Remove; Check my defence gets Add and Upgrade on each fix; every Pairs well list adds the tower or hero.
+- **Security**: Content-Security-Policy and referrer meta on every page, private words for the leak check out of the repo, `.gitignore` covers secrets files, bad `#hash` links can't throw.
+- Fix: the Advisor's "Pick for me (Corvus)" named a hero you don't own while the plan used Quincy.
+
 ## 0.8.0 (2026-11-07)
 - **My profile** (`/tools/profile/`, the "Me" button in the header): player level, Monkey Money and your hardest map tier; every tower's unlocked upgrades as tappable pips with Paragon and "not unlocked yet"; heroes you own (or "only the ones my level unlocks"); the Monkey Knowledge nodes from our guide; your Insta Monkey inventory. Backup code covers it.
 - **The tools use it.** Monkey Knowledge the tools can model: More Cash (+$200 start), Hero Favors (heroes 10% cheaper), Empowered Heroes (start at level 3), Self Taught Heroes and Monkey Education (hero XP), Elite Military Training, Better Sell Deals (unverified). Off in CHIMPS and with the profile switch. The Advisor's "Pick for me" picks the best hero you own, marks towers you haven't unlocked and Instas you have, and starts the plan with your best-fitting free Insta ("Use my Insta Monkeys"). The Simulator places Instas for free from your inventory (share links keep them as `i` steps), flags ones you don't own and blocks them in CHIMPS.

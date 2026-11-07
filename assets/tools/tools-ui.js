@@ -60,6 +60,21 @@
   };
   U.field = (label, control, cls) => U.h('label', { class: 'ti-field' + (cls ? ' ' + cls : '') }, [U.h('span', null, label), control]);
 
+  /* Solo / 2 / 3 / 4 players (co-op splits pop cash and round bonuses evenly) */
+  U.playersField = function (n, onchange, idp) {
+    const C = MI.core;
+    const cur = C.players(n);
+    const seg = U.h('div', { class: 'seg', role: 'radiogroup', 'aria-label': 'Players' }, [1, 2, 3, 4].map((k) =>
+      U.h('button', { type: 'button', role: 'radio', id: idp + '-' + k, 'aria-checked': String(cur === k), onclick: () => onchange(k) }, k === 1 ? 'Solo' : k + ' co-op')));
+    return U.h('div', { class: 'ti-field' }, [U.h('span', null, 'Players'), seg]);
+  };
+  /* the "start $650" fact, with your co-op share */
+  U.startFact = function (m, n) {
+    const C = MI.core;
+    n = C.players(n);
+    if (n === 1) return [', start ', U.money(m.startCash)];
+    return [', you start with ', U.money(C.coopStart(m, n)), ' and get 1/' + n + ' of pop cash and round bonuses ', U.badge('unverified')];
+  };
   U.mapOptions = function (D) {
     return MI.core.TIERS.map((tier) => ({ group: tier + ' maps', items: D.maps.filter((m) => m.difficulty === tier).map((m) => ({
       value: m.id, label: m.name,

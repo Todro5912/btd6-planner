@@ -90,8 +90,9 @@
     const [a, b] = C.modeRange(mode);
     const mult = num(mode.costMult, 1);
     const fx = C.fxFor(opts.fx, mode);
-    const base = C.baseCash(D, mode);
-    if (fx && fx.startCash) Object.keys(base).forEach((k) => { base[k] += fx.startCash; });
+    const players = C.players(opts.players);
+    const base = C.baseCash(D, mode, players);
+    if (fx && fx.startCash) Object.keys(base).forEach((k) => { base[k] += fx.startCash / players; });
     const pm = D.pop || {};
     const force = opts.force || {};
     const heroOpts = C.heroOpts(fx);
@@ -358,7 +359,7 @@
       s.why = s.why.filter((p, j) => s.why.indexOf(p) === j);
       s.due = s.why.filter((p) => p === 'income' || (first[p] != null && s.r >= first[p] - 12)).map((p) => ({ prop: p, by: p === 'income' ? null : first[p] }));
     });
-    const plan = { mapId: map.id, modeId: mode.id, heroLevel: null, me: !!(fx && fx.me), emt: !!(fx && fx.emt), fx: opts.fx || null,
+    const plan = { mapId: map.id, modeId: mode.id, heroLevel: null, players, me: !!(fx && fx.me), emt: !!(fx && fx.emt), fx: opts.fx || null,
       steps: steps.map((s) => (s.op === 'hero' ? { uid: s.uid, r: s.r, op: 'hero', h: s.h } : s.op === 'place' ? Object.assign({ uid: s.uid, r: s.r, op: 'place', t: s.t, x: s.x.slice() }, s.insta ? { insta: true } : {}) : { uid: s.uid, r: s.r, op: 'up', ref: s.ref, x: s.x.slice() })) };
     const sim = C.simulate(D, plan);
     const bankAfter = {};
@@ -422,6 +423,7 @@
     if (f.length) parts.push('f=' + f.join(','));
     if (st.mine) parts.push('mine=1');
     if (st.noInsta) parts.push('noinsta=1');
+    if (C.players(st.players) > 1) parts.push('pl=' + C.players(st.players));
     return parts.join('&');
   };
   C.decodeAdvice = function (D, hash) {
@@ -430,7 +432,7 @@
       const i = kv.indexOf('=');
       if (i > 0) { try { q[decodeURIComponent(kv.slice(0, i))] = decodeURIComponent(kv.slice(i + 1)); } catch (e) { /* malformed link: ignore that part */ } }
     });
-    const st = { towers: [], force: {}, mine: q.mine === '1', noInsta: q.noinsta === '1' };
+    const st = { towers: [], force: {}, mine: q.mine === '1', noInsta: q.noinsta === '1', players: /^[1-4]$/.test(q.pl || '') ? +q.pl : 1 };
     if (q.map && C.map(D, q.map)) st.mapId = q.map;
     if (q.mode && C.mode(D, q.mode) && !C.isSandbox(C.mode(D, q.mode))) st.modeId = q.mode;
     if (q.hero === 'auto' || (q.hero && C.hero(D, q.hero))) st.heroId = q.hero;

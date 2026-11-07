@@ -380,6 +380,17 @@ console.log('Progress store and goals');
   const code2 = P.exportCode(); P.reset(); P.importCode(code2);
   ok(P.get().profile.mk['more-cash'] && P.get().profile.instas.length === 1, 'the backup code carries your profile');
   ok(D.mk.length >= 25 && D.mk.every((n) => n.id && n.name && n.effect), 'Monkey Knowledge list ships with the tools');
+  /* co-op: start $50 less per player (Deflation splits it), pop cash and round bonuses split evenly */
+  {
+    const hard = C.mode(D, 'hard');
+    const solo = C.simulate(D, { mapId: 'monkey-meadow', modeId: 'hard', steps: [] });
+    const duo = C.simulate(D, { mapId: 'monkey-meadow', modeId: 'hard', players: 2, steps: [] });
+    ok(duo.rows[0].bank === hard.startCash - 100 && C.coopStart(C.mode(D, 'deflation'), 2) === C.mode(D, 'deflation').startCash / 2, 'co-op start cash: -$50 per player, Deflation split');
+    const r = 13 - solo.start;
+    ok(Math.abs((duo.rows[r].bank - duo.rows[0].bank) * 2 - (solo.rows[r].bank - solo.rows[0].bank)) < 1, 'co-op splits pop cash and round bonuses evenly');
+    ok(C.decodePlan(D, C.encodePlan({ mapId: 'monkey-meadow', modeId: 'hard', players: 3, steps: [] })).players === 3 && C.decodeAdvice(D, C.encodeAdvice({ mapId: 'monkey-meadow', modeId: 'hard', heroId: '', towers: ['dart'], force: {}, players: 4 })).players === 4, 'players survive share links');
+    ok(C.advise(D, { mapId: 'monkey-meadow', modeId: 'hard', heroId: '', towers: ['dart', 'ice'], force: {}, players: 2 }).plan.players === 2, 'the Advisor plans with your co-op share');
+  }
   delete global.localStorage;
 }
 

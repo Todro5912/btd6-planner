@@ -32,6 +32,7 @@
     st.force = p.force;
     st.mine = !!p.mine;
     st.noInsta = !!p.noInsta;
+    st.players = p.players || 1;
   }
   function persist() {
     const hash = C.encodeAdvice(st);
@@ -50,7 +51,7 @@
   function render() {
     const mineAll = U.myUnlocks();
     me = U.me(D);
-    res = C.advise(D, { mapId: st.mapId, modeId: st.modeId, heroId: st.heroId, towers: st.towers, force: st.force, unlocked: st.mine ? mineAll : null,
+    res = C.advise(D, { mapId: st.mapId, modeId: st.modeId, heroId: st.heroId, towers: st.towers, force: st.force, players: st.players, unlocked: st.mine ? mineAll : null,
       fx: me.fx, ownsHero: me.ownsHero, instas: st.noInsta ? [] : me.instas });
     U.clear(root);
     root.appendChild(gamePanel());
@@ -79,10 +80,10 @@
       U.field('Mode', U.combo(U.modeOptions(D), st.modeId, (v) => { st.modeId = v; update(); }, { id: 'adv-mode' }), 'ti-grow'),
       U.field('Hero', U.combo(heroOpts(), st.heroId, (v) => { st.heroId = v; update(); }, { id: 'adv-hero' }), 'ti-grow'),
     ];
-    const facts = h('p', { class: 'ti-note' }, [m.name + ': ', U.rchip(a, 'ti-r-plain'), ' to ', U.rchip(b, 'ti-r-plain'), ', start ', U.money(m.startCash),
+    const facts = h('p', { class: 'ti-note' }, [m.name + ': ', U.rchip(a, 'ti-r-plain'), ' to ', U.rchip(b, 'ti-r-plain'), U.startFact(m, st.players),
       ', prices ×' + m.costMult + (m.rules && m.rules.noSelling ? ', no selling' : '') + (m.rules && m.rules.noIncomeTowers ? ', no farms' : '') + '.']);
     return h('section', { class: 'panel', 'aria-labelledby': 'adv-game-h' }, [h('h2', { class: 'panel-h', id: 'adv-game-h' }, 'Your game'),
-      h('div', { class: 'ti-panel-b ti' }, [h('div', { class: 'ti-row' }, kids), facts, U.profileLine(D, m, me)])]);
+      h('div', { class: 'ti-panel-b ti' }, [h('div', { class: 'ti-row' }, kids), h('div', { class: 'ti-row' }, U.playersField(st.players, (k) => { st.players = k; update(); }, 'adv-pl')), facts, U.profileLine(D, m, me)])]);
   }
   function instaRow() {
     if (!me.instas || !me.instas.length) return null;

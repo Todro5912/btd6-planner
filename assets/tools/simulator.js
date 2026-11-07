@@ -30,6 +30,7 @@
       plan.modeId = p.modeId || plan.modeId;
       plan.steps = p.steps;
       plan.heroLevel = p.heroLevel != null ? p.heroLevel : null;
+      plan.players = p.players || 1;
       return;
     }
     const saved = U.store.get(KEY);
@@ -39,6 +40,7 @@
       plan.modeId = p.modeId || plan.modeId;
       plan.steps = p.steps;
       plan.heroLevel = p.heroLevel != null ? p.heroLevel : null;
+      plan.players = p.players || 1;
       if (typeof saved.me === 'boolean') plan.me = saved.me;
       if (typeof saved.emt === 'boolean') plan.emt = saved.emt;
     }
@@ -128,10 +130,10 @@
     }
     const facts = h('p', { class: 'ti-note' }, [
       m.name + ': ', U.rchip(range()[0], 'ti-r-plain'), ' to ', U.rchip(range()[1], 'ti-r-plain'),
-      ', start ', U.money(m.startCash), ', prices ×' + m.costMult + (m.rules && m.rules.noSelling ? ', no selling' : '') + (m.rules && m.rules.noIncomeTowers ? ', no farms' : ''),
+      U.startFact(m, plan.players), ', prices ×' + m.costMult + (m.rules && m.rules.noSelling ? ', no selling' : '') + (m.rules && m.rules.noIncomeTowers ? ', no farms' : ''),
       heroStep && sim.rows.length ? ['. Hero level ', plan.heroLevel != null ? 'set to ' + plan.heroLevel : 'is an estimate', U.badge('calc', plan.heroLevel != null ? 'manual' : 'estimate')] : null,
     ]);
-    const body = [h('div', { class: 'ti-row' }, kids), facts, U.profileLine(D, m, me)];
+    const body = [h('div', { class: 'ti-row' }, kids), h('div', { class: 'ti-row' }, U.playersField(plan.players, (k) => { plan.players = k; update(); }, 'sim-pl')), facts, U.profileLine(D, m, me)];
     body.push(h('div', { class: 'ti-share' }, [
       h('button', { type: 'button', class: 'btn btn-small', onclick: (e) => copyLink(e.currentTarget) }, 'Copy share link'),
       plan.steps.length ? h('button', { type: 'button', class: 'btn btn-small', onclick: () => { if (window.confirm('Clear every step?')) { plan.steps = []; plan.heroLevel = null; update(); } } }, 'Start over') : null,
@@ -506,6 +508,7 @@
       opts,
       ids.length ? h('div', { class: 'table-wrap table-flat' }, h('table', { class: 'tbl' }, [h('thead', null, h('tr', null, [h('th', null, 'Tower'), h('th', { class: 'n' }, 'XP this run'), h('th', { class: 'n' }, 'Share')])), tb])) : h('p', { class: 'ti-note' }, 'No towers yet.'),
       x.lost > 0 ? h('p', { class: 'ti-note' }, C.int(x.lost) + ' XP is lost on rounds where nothing is built.') : null,
+      C.players(plan.players) > 1 ? h('p', { class: 'ti-note' }, ['In co-op the round\'s XP is split across every player\'s towers by cash spent, so yours get less than this when your partners build too. ', U.badge('unverified')]) : null,
       P && ids.length ? h('div', { class: 'ti-share' }, [
         h('button', { type: 'button', class: 'btn btn-small btn-grass', id: 'sim-log-xp', onclick: (e) => {
           ids.forEach((id) => P.logRun(id, Math.round(x.perTower[id].xp), 'Simulator: ' + (map() ? map().name : '') + ' ' + mode().name));

@@ -62,13 +62,26 @@
     const row = list[r - 1];
     return row && row.round === r ? row : list.find((x) => x.round === r) || null;
   };
-  /* Cash at the START of round r from bloons alone: startCash + cashMult x sum(cash of rounds a..r-1). */
-  C.baseCash = function (D, mode) {
+  /* Co-op (Bloons Wiki, unverified in game): each player starts with $50 less per player in the match
+     (2 players: -$100), except Deflation, which splits the start cash; all pop cash and end-of-round bonuses
+     are split evenly, and so is More Cash. Tower income (farms) goes to its owner. */
+  C.PLAYERS_MAX = 4;
+  C.players = (n) => Math.max(1, Math.min(C.PLAYERS_MAX, Math.round(num(n, 1))));
+  C.coopStart = function (mode, players) {
+    const n = C.players(players);
+    const start = num(mode && mode.startCash, 650);
+    if (n === 1) return start;
+    return mode && mode.id === 'deflation' ? Math.floor(start / n) : Math.max(0, start - 50 * n);
+  };
+  /* Cash at the START of round r from bloons alone: startCash + cashMult x sum(cash of rounds a..r-1).
+     players > 1: your share in co-op (see C.coopStart). */
+  C.baseCash = function (D, mode, players) {
     const [a, b] = C.modeRange(mode);
     const rules = (mode && mode.rules) || {};
     const noIncome = !!(rules.noIncome || rules.noPopCash);
-    const mult = noIncome ? 0 : num(mode && mode.cashMult, 1);
-    const start = num(mode && mode.startCash, 650);
+    const n = C.players(players);
+    const mult = noIncome ? 0 : num(mode && mode.cashMult, 1) / n;
+    const start = C.coopStart(mode, n);
     const out = {};
     let cum = 0;
     for (let r = a; r <= Math.max(b + 1, a); r++) {
@@ -475,8 +488,9 @@
     const mult = num(mode.costMult, 1);
     const rules = mode.rules || {};
     const fx = C.fxFor(plan.fx, mode); /* your Monkey Knowledge (My profile), off in CHIMPS */
-    const base = C.baseCash(D, mode);
-    if (fx && fx.startCash) Object.keys(base).forEach((k) => { base[k] += fx.startCash; });
+    const players = C.players(plan.players);
+    const base = C.baseCash(D, mode, players);
+    if (fx && fx.startCash) Object.keys(base).forEach((k) => { base[k] += fx.startCash / players; });
     const sellRate = num(rules.sellRate, C.SELL_RATE) + (fx ? fx.sellAdd : 0);
     const heroOpts = C.heroOpts(fx);
     const instaLeft = Object.assign({}, plan.instas || {}); /* 'dart.204' -> how many you own */
@@ -632,7 +646,7 @@
     const unknown = {};
     rows.forEach((x) => x.unknown.forEach((u) => { unknown[u] = true; }));
     return {
-      mode, map, start: a, end: b, rows, steps: out, problems, first: problems[0] || null,
+      mode, map, start: a, end: b, players, rows, steps: out, problems, first: problems[0] || null,
       spent, refunds, income, insts: instList, hero, unknown: Object.keys(unknown),
       endBank: rows.length ? rows[rows.length - 1].bank : 0,
       xp: C.runXp(D, mode, map, out, instList, a, b, plan),
@@ -869,6 +883,7 @@
     });
     if (toks.length) parts.push('b=' + toks.join('_'));
     if (plan.heroLevel != null) parts.push('hl=' + plan.heroLevel);
+    if (C.players(plan.players) > 1) parts.push('pl=' + C.players(plan.players));
     return parts.join('&');
   };
   C.decodePlan = function (D, hash) {
@@ -881,6 +896,7 @@
     if (q.map && C.map(D, q.map)) plan.mapId = q.map;
     if (q.mode && C.mode(D, q.mode) && !C.isSandbox(C.mode(D, q.mode))) plan.modeId = q.mode;
     if (q.hl && /^\d+$/.test(q.hl)) plan.heroLevel = Math.max(1, Math.min(20, +q.hl));
+    if (q.pl && /^[1-4]$/.test(q.pl)) plan.players = +q.pl;
     let uid = 0;
     const placed = [];
     const mk = () => 's' + (++uid);

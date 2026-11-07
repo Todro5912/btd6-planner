@@ -260,6 +260,11 @@ async function main() {
     await page.goto(origin + BASE + 'tools/simulator/#map=monkey-meadow&mode=medium&b=1pdart.002', { waitUntil: 'networkidle' });
     await page.click('[aria-labelledby="sim-syn-h"] .ti-fix-a button');
     ok(/_\d+p\w+/.test(await page.evaluate(() => location.hash)), 'Simulator: Pairs well Add puts the tower in the plan', await page.evaluate(() => location.hash));
+    await page.click('#sim-pl-2');
+    ok(/pl=2/.test(await page.evaluate(() => location.hash)) && /you start with \$550/.test(await page.textContent('[aria-labelledby="sim-setup-h"]')), 'Simulator: 2-player co-op lowers your start cash', await page.textContent('[aria-labelledby="sim-setup-h"] .ti-note'));
+    await page.goto(origin + BASE + 'tools/advisor/#map=monkey-meadow&mode=medium&hero=none&t=dart,ice', { waitUntil: 'networkidle' });
+    await page.click('#adv-pl-3');
+    ok(/pl=3/.test(await page.evaluate(() => location.hash)) && /pl=3/.test(await page.getAttribute('#adv-to-sim', 'href')), 'Advisor: co-op setting carries into the Simulator link');
 
     // /planner/ redirects to the simulator and keeps the hash
     await page.goto(origin + BASE + 'planner/#map=dark-castle&mode=chimps&tower=dart', { waitUntil: 'networkidle' });
