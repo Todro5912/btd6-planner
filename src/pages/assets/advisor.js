@@ -67,7 +67,8 @@
   /* ---------- inputs ---------- */
   function heroOpts() {
     const best = C.mapHeroes(D, st.mapId)[0];
-    const own = C.mapHeroes(D, st.mapId).find((x) => me.ownsHero(x.id)) || best;
+    /* show the hero the plan really uses (C.advise picks the best one you own, else Quincy) */
+    const own = res && res.hero && st.heroId === 'auto' ? res.hero : (C.mapHeroes(D, st.mapId).find((x) => me.ownsHero(x.id)) || best);
     return [{ value: 'auto', label: 'Pick for me' + (own ? ' (' + own.name + ')' : ''), keys: 'auto best' }].concat(U.heroOptions(D).map((o) => (o.value && !me.ownsHero(o.value) ? Object.assign({}, o, { label: o.label + ' (not owned)' }) : o)));
   }
   function gamePanel() {

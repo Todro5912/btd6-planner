@@ -2,3 +2,12 @@ src/btd6-planner.html
 src/*.png
 __pycache__/
 node_modules/
+
+# never commit secrets or private lists
+.env
+.env.*
+*.pem
+*.key
+*.p12
+secrets*
+tools/.private-words.txt

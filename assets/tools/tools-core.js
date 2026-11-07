@@ -860,7 +860,7 @@
     const q = {};
     String(hash || '').replace(/^#/, '').split('&').forEach((kv) => {
       const i = kv.indexOf('=');
-      if (i > 0) q[decodeURIComponent(kv.slice(0, i))] = decodeURIComponent(kv.slice(i + 1));
+      if (i > 0) { try { q[decodeURIComponent(kv.slice(0, i))] = decodeURIComponent(kv.slice(i + 1)); } catch (e) { /* malformed link: ignore that part */ } }
     });
     const plan = { steps: [] };
     if (q.map && C.map(D, q.map)) plan.mapId = q.map;

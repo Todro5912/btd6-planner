@@ -428,7 +428,7 @@
     const q = {};
     String(hash || '').replace(/^#/, '').split('&').forEach((kv) => {
       const i = kv.indexOf('=');
-      if (i > 0) q[decodeURIComponent(kv.slice(0, i))] = decodeURIComponent(kv.slice(i + 1));
+      if (i > 0) { try { q[decodeURIComponent(kv.slice(0, i))] = decodeURIComponent(kv.slice(i + 1)); } catch (e) { /* malformed link: ignore that part */ } }
     });
     const st = { towers: [], force: {}, mine: q.mine === '1', noInsta: q.noinsta === '1' };
     if (q.map && C.map(D, q.map)) st.mapId = q.map;

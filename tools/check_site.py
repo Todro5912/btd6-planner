@@ -21,8 +21,19 @@ import subprocess
 import sys
 from html.parser import HTMLParser
 
+def private_words():
+    """Words that must never appear on the site (a real name, a vault name...). They live in
+    tools/.private-words.txt, which is git-ignored, so the public repo doesn't reveal them."""
+    path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '.private-words.txt')
+    try:
+        with open(path, encoding='utf-8') as f:
+            return [w.strip() for w in f if w.strip() and not w.startswith('#')]
+    except OSError:
+        return []
+
+
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-BANNED = re.compile(r'\b(sean|claude|vault)\b', re.I)
+BANNED = re.compile(r'\b(' + '|'.join(['claude', 'vault'] + [re.escape(w) for w in private_words()]) + r')\b', re.I)
 WALL = 450
 # query -> the page that must come first (C4). Synonyms live in data/search-synonyms.json.
 SEARCH_EXPECT = [

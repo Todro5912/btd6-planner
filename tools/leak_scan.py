@@ -41,7 +41,6 @@ PATTERNS = [
     ('unverified', r'\bunverified'),
     ('verify', r'\bverif'),
     ('(calc)', r'\(calc\)'),
-    ('Sean', r'\bsean\b'),
     ('research', r'\bresearch'),
     ('dataset', r'\bdataset'),
     ('data notes', r'\bdata notes'),
@@ -52,6 +51,11 @@ PATTERNS = [
     ('Proven/named', r'Proven/named'),
     ('first person', r'\bmy (?:cash|addition|calc)|\bI (?:swapped|couldn)'),
 ]
+# private words (a real name...) come from the git-ignored tools/.private-words.txt
+_pw = os.path.join(os.path.dirname(os.path.abspath(__file__)), '.private-words.txt')
+if os.path.exists(_pw):
+    with open(_pw, encoding='utf-8') as _f:
+        PATTERNS += [('private word', r'\b' + re.escape(w.strip()) + r'\b') for w in _f if w.strip() and not w.startswith('#')]
 RX = [(name, re.compile(rx, re.I)) for name, rx in PATTERNS]
 SKIP_KEYS = {'notes_internal', '_src', 'source', 'id', 'towerId', 'mapId'}
 

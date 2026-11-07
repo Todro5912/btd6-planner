@@ -234,6 +234,9 @@ async function main() {
     ok(/Insta Dart/.test(await page.textContent('.ti-order-list')), 'Advisor starts the plan with your Insta Dart');
     await page.goto(origin + BASE + 'tools/advisor/#map=logs&mode=chimps&hero=auto&t=dart', { waitUntil: 'networkidle' });
     ok(/turns Monkey Knowledge off/.test(await page.textContent('.ti-prof')) && !/Insta Dart/.test(await page.textContent('.ti-order-list')), 'CHIMPS: no Monkey Knowledge, no Instas');
+    await page.evaluate(() => { const P = window.MonkeyIntel.progress; const m = {}; window.MonkeyIntelData.heroes.forEach((h) => { m[h.id] = h.id === 'quincy'; }); P.setProfile({ heroes: m }); });
+    await page.goto(origin + BASE + 'tools/advisor/#map=erosion&mode=deflation&hero=auto&t=dartling', { waitUntil: 'networkidle' });
+    ok(/Quincy/.test(await page.inputValue('#adv-hero')) && /Place Quincy/.test(await page.textContent('.ti-order-list')), '"Pick for me" label names the hero the plan uses (only Quincy owned)', await page.inputValue('#adv-hero'));
 
     // /planner/ redirects to the simulator and keeps the hash
     await page.goto(origin + BASE + 'planner/#map=dark-castle&mode=chimps&tower=dart', { waitUntil: 'networkidle' });
