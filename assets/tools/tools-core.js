@@ -836,6 +836,21 @@
   };
 
   /* ---------- share links ---------- */
+  /* a gap fix as a plan step: the round you can first pay for it, no earlier than the round before it's needed */
+  C.fixRound = function (sim, cost, needRound) {
+    const rows = arr(sim.rows);
+    const minFrom = (r) => rows.filter((x) => x.r >= r).reduce((m, x) => Math.min(m, x.bank), Infinity);
+    const r0 = Math.max(sim.start, needRound - 1);
+    if (minFrom(r0) >= cost) return r0;
+    for (let r = r0 + 1; r <= sim.end; r++) if (minFrom(r) >= cost) return r;
+    return r0;
+  };
+  C.fixStep = function (sim, f, needRound) {
+    if (!f || f.kind === 'hero') return null;
+    const r = C.fixRound(sim, f.cost, needRound);
+    if (f.kind === 'upgrade') return f.uid ? { op: 'up', ref: f.uid, x: f.x.slice(), r } : null;
+    return f.towerId ? { op: 'place', t: f.towerId, x: f.x.slice(), r } : null;
+  };
   C.encodePlan = function (plan) {
     const parts = [];
     if (plan.mapId) parts.push('map=' + encodeURIComponent(plan.mapId));

@@ -150,7 +150,7 @@
     }
     return h('section', { class: 'ti-alert', 'aria-label': 'First problem' }, [
       h('p', { class: 'ti-alert-t' }, 'R' + f.round + ': ' + f.text),
-      h('p', { class: 'ti-alert-s' }, (res.gaps.length > 1 ? res.gaps.length + ' gaps in this plan. ' : '') + 'The fixes are below. Add one in the Simulator, or pick another monkey.'),
+      h('p', { class: 'ti-alert-s' }, (res.gaps.length > 1 ? res.gaps.length + ' gaps in this plan. ' : '') + 'The fixes are below: tap Add on one.'),
       btns,
     ]);
   }
@@ -223,6 +223,40 @@
       h('div', { class: 'ti-panel-b ti-share' }, [h('a', { class: 'btn btn-small', href: simLink() }, 'Tweak it in the Simulator')]),
     ]);
   }
+  /* the gap's fixes, each with an action: a new monkey goes into your picks (the plan is rebuilt around it);
+     anything else (an upgrade, a second copy) opens the Simulator with that buy added at the round you can pay for it */
+  function fixLink(f, round) {
+    const step = C.fixStep(res.sim, f, round);
+    if (!step) return null;
+    step.uid = 'fx1';
+    return '../simulator/#' + C.encodePlan(Object.assign({}, res.plan, { steps: res.plan.steps.concat([step]) }));
+  }
+  function fixBlock(pr) {
+    const ul = U.fixList(pr.fixes, { hints: pr.hints });
+    const m = mode(), mp = map();
+    Array.prototype.forEach.call(ul.children, (li, i) => {
+      const f = pr.fixes[i];
+      if (!f || f.kind === 'hero') return;
+      const t = f.towerId && C.tower(D, f.towerId);
+      const canPick = f.kind !== 'upgrade' && t && st.towers.indexOf(t.id) < 0 && st.towers.length < C.ADVISE_MAX && !C.placeIssue(D, m, mp, t);
+      const href = fixLink(f, pr.round);
+      const acts = h('span', { class: 'ti-fix-a' }, [
+        canPick ? h('button', { type: 'button', class: 'btn btn-small btn-grass', onclick: () => toggle(t.id) }, 'Add to my picks') : null,
+        href ? h('a', { class: 'btn btn-small' + (canPick ? '' : ' btn-grass'), href }, canPick ? 'Try in the Simulator' : 'Add in the Simulator') : null,
+      ]);
+      li.appendChild(acts);
+    });
+    return ul;
+  }
+  /* a leftover's way out: the dearest end crosspath that fits the cash the plan did find for it */
+  function cheaperBtn(l) {
+    const pk = res.picks.find((p) => p.id === l.id);
+    if (!pk) return null;
+    const fits = pk.options.filter((o) => o.cost <= pk.cost - l.cost && o.x.join('') !== pk.x.join('')).sort((a, b) => b.cost - a.cost)[0]
+      || pk.options.filter((o) => o.cost < pk.cost).sort((a, b) => a.cost - b.cost)[0];
+    if (!fits) return null;
+    return h('button', { type: 'button', class: 'btn btn-small btn-grass', onclick: () => { st.force[pk.id] = fits.x.slice(); update(); } }, ['Use ', C.code(fits.x), ' instead']);
+  }
   function gapsPanel() {
     const body = [];
     const sim = res.sim;
@@ -232,18 +266,18 @@
         ul.appendChild(h('li', { class: 'ti-prob' }, [
           h('div', { class: 'ti-prob-h' }, [U.rchip(p.round, 'ti-r-danger'), h('span', { class: 'ti-prob-t' }, p.text.charAt(0).toUpperCase() + p.text.slice(1)),
             h('span', { class: 'ti-prob-n' }, p.rounds > 1 ? p.rounds + ' rounds need it, to R' + p.last : '')]),
-          U.fixList(p.fixes, { hints: p.hints }),
+          fixBlock(p),
         ]));
       });
       body.push(ul);
     }
     if (res.leftovers.length) {
       body.push(h('div', { class: 'ti-panel-b' }, [h('p', { class: 'ti-lbl' }, 'No cash for these by R' + res.end),
-        h('ul', { class: 'bullets' }, res.leftovers.map((l) => h('li', null, l.hero ? [l.label + ' (', U.money(l.cost), ')'] : [l.label + ' to ', U.x(l.want), ' (', U.money(l.cost), ' more). Pick a cheaper end crosspath above.'])))]));
+        h('ul', { class: 'bullets' }, res.leftovers.map((l) => h('li', null, l.hero ? [l.label + ' (', U.money(l.cost), ')'] : [l.label + ' to ', U.x(l.want), ' (', U.money(l.cost), ' more). ', cheaperBtn(l) || 'Pick a cheaper end crosspath above.'])))]));
     }
     if (res.unusable.length) {
       body.push(h('div', { class: 'ti-panel-b' }, [h('p', { class: 'ti-lbl' }, 'Can\'t use here'),
-        h('ul', { class: 'bullets' }, res.unusable.map((u) => h('li', null, u.name + ': ' + u.issue + '.')))]));
+        h('ul', { class: 'bullets' }, res.unusable.map((u) => h('li', null, [u.name + ': ' + u.issue + '. ', h('button', { type: 'button', class: 'btn btn-small', onclick: () => toggle(u.id) }, 'Remove')])))]));
     }
     if (!body.length) {
       body.push(h('p', { class: 'ti-note ti-panel-b', style: 'margin-top:10px' }, 'No gaps. Your monkeys can hit every bloon type in this mode, in time. That means they can hit them, not that they do enough damage: check the key rounds below in the Simulator.'));

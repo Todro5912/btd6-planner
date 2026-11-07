@@ -353,7 +353,16 @@
     return ul;
   };
 
-  U.suggestionList = function (list, max) {
+  /* a suggestion as {id, x} ("x" read as 0: "x-x-3" is 0-0-3) or {hero}; null for support and avoid lines */
+  U.sugBuild = function (s) {
+    const C = MI.core;
+    if (s && s.kind !== 'avoid' && s.hero && !s.tower && C.hero(U.data(), s.hero)) return { hero: s.hero };
+    if (!s || s.kind === 'avoid' || !s.tower || !C.tower(U.data(), s.tower)) return null;
+    const x = String(s.x || '0-0-0').split('-').map((v) => (/^\d$/.test(v) ? +v : 0));
+    return x.length === 3 && C.validCross(x) ? { id: s.tower, x } : null;
+  };
+  /* onAdd(build, s): when given, each tower suggestion gets an Add button */
+  U.suggestionList = function (list, max, onAdd) {
     const ul = U.h('ul', { class: 'ti-sugs' });
     list.slice(0, max || 6).forEach((s) => {
       const k = s.kind === 'avoid' ? ['ti-sug-no', 'Avoid'] : s.strength === 'core' ? ['ti-sug-core', 'Core'] : ['ti-sug-nice', 'Nice'];
@@ -363,6 +372,7 @@
           U.h('span', { class: 'ti-sug-l' }, s.kind === 'avoid' ? s.name : [s.name + ' ', s.x ? U.h('span', { class: 'ti-x' }, s.x) : null]),
           U.h('br'), U.h('span', { class: 'ti-sug-w' }, s.why),
           s.pairsWith && s.pairsWith.length ? U.h('span', { class: 'ti-sug-p' }, [U.h('br'), 'Pairs with your ' + s.pairsWith.join(', ')]) : null,
+          onAdd && U.sugBuild(s) ? U.h('span', { class: 'ti-fix-a', style: 'justify-content:flex-start' }, U.h('button', { type: 'button', class: 'btn btn-small btn-grass', onclick: () => onAdd(U.sugBuild(s), s) }, (U.sugBuild(s).hero ? 'Use ' : 'Add ') + s.name.replace(/ Monkey$/, ''))) : null,
         ]),
         s.unverified ? U.badge('unverified') : U.h('span'),
       ]));

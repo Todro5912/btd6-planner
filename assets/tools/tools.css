@@ -15,6 +15,7 @@
 .ti-grow { flex: 1 1 200px; }
 .ti-note { font-size: 14px; color: var(--muted); margin: 0; }
 .ti-mono, .ti-x { font-family: var(--font-mono); font-weight: 700; letter-spacing: .02em; }
+.ti-x { white-space: nowrap; }
 .ti-num { font-variant-numeric: tabular-nums; }
 .ti-money { font-variant-numeric: tabular-nums; font-weight: 700; }
 .ti-neg { color: var(--danger); }
@@ -51,6 +52,9 @@
 .ti-fix-l { font-weight: 700; }
 .ti-fix-c { text-align: right; white-space: nowrap; }
 .ti-fix-c small { display: block; font-size: 12px; color: var(--muted); font-weight: 500; }
+.ti-fix-a { display: flex; gap: 6px; justify-content: flex-end; flex-wrap: wrap; grid-column: 1 / -1; }
+.ti-sug .ti-fix-a { margin-top: 6px; }
+.ti-fix-a .btn { white-space: nowrap; }
 
 /* problems */
 .ti-problems { list-style: none; margin: 0 14px; padding: 0; display: grid; gap: 12px; }

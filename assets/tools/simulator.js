@@ -85,18 +85,9 @@
     update();
   }
   /* round to buy a fix: the round before it is needed, if it never pushes the bank negative; else the first round that fits */
-  function fixRound(sim, cost, needRound) {
-    const rows = sim.rows;
-    const minFrom = (r) => rows.filter((x) => x.r >= r).reduce((m, x) => Math.min(m, x.bank), Infinity);
-    const r0 = Math.max(sim.start, needRound - 1);
-    if (minFrom(r0) >= cost) return r0;
-    for (let r = r0 + 1; r <= sim.end; r++) if (minFrom(r) >= cost) return r;
-    return r0;
-  }
   function applyFix(sim, f, needRound) {
-    const r = fixRound(sim, f.cost, needRound);
-    if (f.kind === 'upgrade') addStep({ op: 'up', ref: f.uid, x: f.x.slice(), r });
-    else if (f.kind === 'new' || f.kind === 'support') addStep({ op: 'place', t: f.towerId, x: f.x.slice(), r });
+    const step = C.fixStep(sim, f, needRound);
+    if (step) addStep(step);
   }
 
   /* ---------- render ---------- */
@@ -226,7 +217,7 @@
     Array.prototype.forEach.call(ul.children, (li, i) => {
       const fx = pr.fixes[i];
       if (!fx || fx.kind === 'hero') return;
-      li.lastChild.appendChild(h('button', { type: 'button', class: 'btn btn-small btn-grass', style: 'margin-top:4px', onclick: () => applyFix(sim, fx, pr.round) }, 'Add'));
+      li.appendChild(h('span', { class: 'ti-fix-a' }, h('button', { type: 'button', class: 'btn btn-small btn-grass', onclick: () => applyFix(sim, fx, pr.round) }, 'Add')));
     });
     return ul;
   }
@@ -493,7 +484,7 @@
     const end = sim.end;
     const placed = liveAt(end).map((i) => ({ id: i.id, x: i.x }));
     const list = placed.length ? MI.synergy(placed, ctxFor(placed)) : [];
-    const body = list.length ? U.suggestionList(list, 6) : h('p', { class: 'ti-note ti-panel-b' }, 'Place a few towers to see what pairs well with them.');
+    const body = list.length ? U.suggestionList(list, 6, (b) => { if (b.hero) { plan.steps = plan.steps.filter((x) => x.op !== 'hero'); addStep({ op: 'hero', h: b.hero, r: sim.start }); return; } const t = C.tower(D, b.id); addStep({ op: 'place', t: b.id, x: b.x, r: C.fixRound(sim, C.placeCost(t, b.x, C.mode(D, plan.modeId).costMult), sim.start) }); }) : h('p', { class: 'ti-note ti-panel-b' }, 'Place a few towers to see what pairs well with them.');
     return h('section', { class: 'panel', 'aria-labelledby': 'sim-syn-h' }, [h('h2', { class: 'panel-h', id: 'sim-syn-h' }, ['Pairs well', h('small', null, 'with what you placed')]), body]);
   }
 

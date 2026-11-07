@@ -38,7 +38,7 @@
     if (placed.length) {
       const m = mode();
       const sugs = MI.synergy(placed, { modeId: m.id, endRound: m.endRound, heroId: st.heroId || null, missing: res.threats.map((t) => t.prop), bonuses: res.state.bonuses });
-      if (sugs.length) root.appendChild(h('section', { class: 'panel', 'aria-labelledby': 'dfn-syn-h' }, [h('h2', { class: 'panel-h', id: 'dfn-syn-h' }, ['Pairs well', h('small', null, 'with what you have')]), U.suggestionList(sugs, 4)]));
+      if (sugs.length) root.appendChild(h('section', { class: 'panel', 'aria-labelledby': 'dfn-syn-h' }, [h('h2', { class: 'panel-h', id: 'dfn-syn-h' }, ['Pairs well', h('small', null, 'with what you have')]), U.suggestionList(sugs, 4, (b) => { if (b.hero) { st.heroId = b.hero; st.heroLevel = Math.max(1, C.heroLevelAt(D, b.hero, C.modeRange(mode())[0], Math.max(st.round, C.modeRange(mode())[0]), 'Beginner')); } else st.towers.push(b); render(); })]));
     }
   }
 
@@ -59,10 +59,28 @@
     res.threats.forEach((t, i) => {
       kids.push(h('p', { class: 'ti-alert-t', style: i ? 'font-size:clamp(20px,4vw,28px);margin-top:6px' : null }, 'R' + t.round + ': ' + t.text));
       kids.push(h('p', { class: 'ti-alert-s' }, 'R' + t.round + ' is ' + t.composition + (t.rounds.length > 1 ? '. ' + t.rounds.length + ' of the next 15 rounds need it.' : '.')));
-      kids.push(U.fixList(t.fixes, { hints: t.hints }));
+      kids.push(fixBlock(t));
     });
     if (res.state.unknown.length) kids.push(h('p', { class: 'ti-alert-s' }, 'Not counted (no pop data yet): ' + res.state.unknown.map((id) => C.tower(D, id).name).join(', ') + '.'));
     return h('section', { class: 'ti-alert', 'aria-label': 'Threats' }, kids);
+  }
+
+  /* "Add" on a fix: a new tower goes into your list, an upgrade changes the tower you have */
+  function applyFix(f) {
+    if (f.kind === 'upgrade') {
+      const tw = st.towers[+String(f.uid).slice(1)];
+      if (tw && tw.id === f.towerId) tw.x = f.x.slice();
+    } else if (f.towerId) st.towers.push({ id: f.towerId, x: f.x.slice() });
+    render();
+  }
+  function fixBlock(t) {
+    const ul = U.fixList(t.fixes, { hints: t.hints });
+    Array.prototype.forEach.call(ul.children, (li, i) => {
+      const f = t.fixes[i];
+      if (!f || f.kind === 'hero') return;
+      li.appendChild(h('span', { class: 'ti-fix-a' }, h('button', { type: 'button', class: 'btn btn-small btn-grass', onclick: () => applyFix(f) }, f.kind === 'upgrade' ? 'Upgrade' : 'Add')));
+    });
+    return ul;
   }
 
   function inputs() {

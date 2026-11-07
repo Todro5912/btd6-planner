@@ -238,6 +238,29 @@ async function main() {
     await page.goto(origin + BASE + 'tools/advisor/#map=erosion&mode=deflation&hero=auto&t=dartling', { waitUntil: 'networkidle' });
     ok(/Quincy/.test(await page.inputValue('#adv-hero')) && /Place Quincy/.test(await page.textContent('.ti-order-list')), '"Pick for me" label names the hero the plan uses (only Quincy owned)', await page.inputValue('#adv-hero'));
 
+    // every gap fix has an action: Advisor (picks / Simulator link / cheaper crosspath), Defence (Add / Upgrade), Pairs well (Add)
+    await page.goto(origin + BASE + 'tools/advisor/#map=monkey-meadow&mode=medium&hero=none&t=super,dartling,village&f=super.205,dartling.025', { waitUntil: 'networkidle' });
+    const gapLis = await page.$$eval('[aria-labelledby="adv-gaps-h"] .ti-fixes li:not(.ti-fix-hint)', (ls) => ls.map((l) => !!l.querySelector('.ti-fix-a .btn') || /Your hero/i.test(l.textContent)));
+    ok(gapLis.length > 0 && gapLis.every(Boolean), 'Advisor: every gap fix has an Add button', gapLis.join(','));
+    ok((await page.$$('[aria-labelledby="adv-gaps-h"] .bullets .btn-grass')).length > 0, 'Advisor: leftovers offer a cheaper crosspath');
+    const simHref = await page.$eval('[aria-labelledby="adv-gaps-h"] a.btn', (a) => a.getAttribute('href'));
+    await page.click('[aria-labelledby="adv-gaps-h"] .ti-fix-a button');
+    ok(/t=super,dartling,village,\w+/.test(await page.evaluate(() => location.hash)), 'Advisor: "Add to my picks" adds the monkey', await page.evaluate(() => location.hash));
+    await page.goto(origin + BASE + 'tools/advisor/' + simHref, { waitUntil: 'networkidle' });
+    ok(/b=.*_\d+p/.test(await page.evaluate(() => location.hash)) || /b=/.test(await page.evaluate(() => location.hash)), 'Advisor: "Add in the Simulator" opens the plan with the fix', simHref);
+    await page.evaluate(() => localStorage.setItem('mi-defence-v1', JSON.stringify({ modeId: 'medium', round: 24, towers: [{ id: 'dart', x: [0, 0, 2] }] })));
+    await page.goto(origin + BASE + 'tools/defence/', { waitUntil: 'networkidle' });
+    const dfnN = (await page.$$('.ti-alert .ti-fix-a button')).length;
+    await page.click('.ti-alert .ti-fix-a button');
+    ok(dfnN > 0 && /4-0-2|0-[1-5]-2|[1-5]-0-2|0-0-[3-5]/.test(await page.textContent('.ti-placed')), 'Defence: a fix has Upgrade/Add and it changes your towers', String(dfnN));
+    const pairN = (await page.$$('[aria-labelledby="dfn-syn-h"] .ti-fix-a button')).length;
+    if (pairN) { await page.click('[aria-labelledby="dfn-syn-h"] .ti-fix-a button'); }
+    ok(pairN > 0 && /2 towers/.test(await page.textContent('[aria-labelledby="dfn-in-h"] small')), 'Defence: Pairs well has Add buttons that add the tower');
+    await page.evaluate(() => localStorage.removeItem('mi-defence-v1'));
+    await page.goto(origin + BASE + 'tools/simulator/#map=monkey-meadow&mode=medium&b=1pdart.002', { waitUntil: 'networkidle' });
+    await page.click('[aria-labelledby="sim-syn-h"] .ti-fix-a button');
+    ok(/_\d+p\w+/.test(await page.evaluate(() => location.hash)), 'Simulator: Pairs well Add puts the tower in the plan', await page.evaluate(() => location.hash));
+
     // /planner/ redirects to the simulator and keeps the hash
     await page.goto(origin + BASE + 'planner/#map=dark-castle&mode=chimps&tower=dart', { waitUntil: 'networkidle' });
     ok(/tools\/simulator\//.test(page.url()), '/planner/ redirects to /tools/simulator/', page.url());
