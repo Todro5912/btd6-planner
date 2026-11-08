@@ -271,10 +271,10 @@
    "cost": 2650,
    "incomePerRound": 0,
    "payback": null,
-   "chimpsLegal": false,
-   "notes": "+$50 per Lead it pops (not cut by per-pop reduction); round-dependent (e.g. R28 $300, R59 $2,500); in CHIMPS after 57.1 {unverified}, counted as none",
+   "chimpsLegal": true,
+   "notes": "+$50 per Lead it pops (not cut by per-pop reduction); round-dependent (e.g. R28 $300, R59 $2,500); pays in CHIMPS since 57.0 but not in Deflation (57.1 removed only the x-x-4 gold mutator's CHIMPS income)",
    "_src": {
-    "notes": "+$50 per Lead it pops (not cut by per-pop reduction); round-dependent (e.g. R28 $300, R59 $2,500); CHIMPS after 57.1: conflicting, verify in game (assume none)"
+    "notes": "Bloons Wiki update history, versions 57.0 and 57.1 (Alchemist)"
    }
   },
   {
@@ -1232,7 +1232,7 @@
    "impoppable": 1.2
   },
   "chimpsNote": "CHIMPS uses Hard prices (x1.08), not x1.2 (BW Strategy:CHIMPS Monkey Town $10,800; Steam/kosgames)",
-  "rounding": "nearest $5 per individual upgrade; exact ties (Easy only) round down",
+  "rounding": "nearest $5 per individual upgrade; exact ties (Easy only) round up (checked in game: Sniper $350 -> $300, Glue Splatter $650 -> $555)",
   "verifiedAgainst": 32
  },
  "cumulativeCashStd": [

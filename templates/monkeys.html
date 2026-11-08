@@ -14,7 +14,7 @@
   <ul class="roster">
     {% for tm in tms %}
     <li>
-      <a class="roster-name" href="{{ root }}{{ tm.url }}">{{ tm.t.name }}</a>
+      <a class="roster-name" href="{{ root }}{{ tm.url }}">{{ gimg('towers', tm.t.id, 32, 32, '', root, cls='gimg-ico') }}{{ tm.t.name }}</a>
       <span class="roster-cost num">{{ tm.t.baseCost|money }}</span>
       <span class="roster-x">{% if tm.best %}{{ ui.xgrid(tm.best.cross) }}<code class="xcode">{{ tm.best.code }}</code>{% endif %}</span>
       <span class="roster-tags">{% if tm.paragon %}<span class="tag tag-banana" title="Has a paragon: {{ tm.paragon.name }}">Paragon</span>{% endif %}{% if tm.t.waterOnly %}<span class="tag tag-sky">Water</span>{% endif %}</span>

@@ -15,8 +15,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Luckiest+Guy&family=Rubik:wght@400;500;700&display=swap">
-<link rel="stylesheet" href="../../assets/site.css?v=0.10.0">
-<script src="../../assets/progress.js?v=0.10.0" defer></script>
+<link rel="stylesheet" href="../../assets/site.css?v=0.10.1">
+<script src="../../assets/progress.js?v=0.10.1" defer></script>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 44'%3E%3Cellipse cx='20' cy='18' rx='14' ry='16' fill='%23E2412E' stroke='%231C1A17' stroke-width='3'/%3E%3Cpath d='M17 34h6l-3 4z' fill='%23E2412E' stroke='%231C1A17' stroke-width='2.5'/%3E%3C/svg%3E">
 </head>
 <body class="">
@@ -96,11 +96,6 @@
 </tr>
 </thead>
 <tbody>
-<tr id="g-lead-to-gold-in-chimps">
-<td><strong>Lead to Gold in CHIMPS</strong></td>
-<td>Sources conflict. Plan as if it pays nothing</td>
-<td>CHIMPS game, Alchemist 0-0-3 on R28 or R37 (Lead rounds). Watch its cash counter (added in v57)</td>
-</tr>
 <tr id="g-mm-for-sub-modes-and-chimps">
 <td><strong>MM for sub-modes and CHIMPS</strong></td>
 <td>Assumed to pay the parent difficulty's row; CHIMPS = Impoppable. Advanced Medium / Hard / Impoppable cells are ×3 of Beginner (calc)</td>
@@ -110,11 +105,6 @@
 <td><strong>Income models</strong></td>
 <td>Monkey Bank interest/deposit order, Supply Drop crates per round, Elite Sniper crate value</td>
 <td>Record cash before and after a few rounds in a Medium game</td>
-</tr>
-<tr id="g-easy-price-ties">
-<td><strong>Easy price ties</strong></td>
-<td>Upgrade ties round down; the base Sniper ($350 → $300) rounds up</td>
-<td>Read Easy prices in a Deflation game</td>
 </tr>
 <tr id="g-removal-costs-by-difficulty">
 <td><strong>Removal costs by difficulty</strong></td>
@@ -152,7 +142,7 @@
 <tbody>
 <tr id="g-single-source-v57-prices">
 <td><strong>Single-source v57 prices</strong></td>
-<td>Glue Splatter $650, Glue Strike $4,500, seven Skywarden changes</td>
+<td>Glue Strike $4,500, seven Skywarden changes</td>
 <td>Read the Medium price in a Medium game or Sandbox</td>
 </tr>
 <tr id="g-v57-damage-changes">
@@ -243,6 +233,8 @@
 </table></div>
 <h2 id="settled-recently">Settled recently</h2>
 <ul>
+<li><strong>Easy price ties round up.</strong> Sniper $350 → $300 and Glue Splatter $650 → $555 on Easy, both checked in game. That also confirms Glue Splatter's $650 Medium price.</li>
+<li><strong>Lead to Gold pays in CHIMPS:</strong> +$50 per Lead it pops, since 57.0. 57.1 removed only the 0-0-4 gold mutator's income (patch notes).</li>
 <li><strong>CHIMPS uses Hard prices (×1.08).</strong> Deflation uses Easy prices (×0.85).</li>
 <li><strong>Snipers need line of sight.</strong> Infernal has no LoS blockers (BTD6 Index), with 19.3 RBS on each lane.</li>
 <li><strong>Rubber to Gold</strong> pays nothing in CHIMPS since 57.1.</li>
@@ -281,7 +273,7 @@
     </nav>
     <div class="foot-legal">
       <p class="disclaimer"><b>Unofficial fan site.</b> Not affiliated with or endorsed by Ninja Kiwi. Bloons and Bloons TD 6 are their trademarks. No game art is used here.</p>
-      <p>Data: BTD6 v57.4, updated 2026-11-05 · Site 0.10.0 · Sources: <a href="https://www.bloonswiki.com/" rel="noopener">Bloons Wiki</a> (CC BY-SA), <a href="https://btd6index.win/" rel="noopener">BTD6 Index</a>, <a href="https://github.com/hemisemidemipresent/cyberquincy" rel="noopener">Cyber Quincy</a>, <a href="https://github.com/Btd6ModHelper/btd6-game-data" rel="noopener">BTD Mod Helper game data</a>, Ninja Kiwi patch notes.</p>
+      <p>Data: BTD6 v57.4, updated 2026-11-05 · Site 0.10.1 · Sources: <a href="https://www.bloonswiki.com/" rel="noopener">Bloons Wiki</a> (CC BY-SA), <a href="https://btd6index.win/" rel="noopener">BTD6 Index</a>, <a href="https://github.com/hemisemidemipresent/cyberquincy" rel="noopener">Cyber Quincy</a>, <a href="https://github.com/Btd6ModHelper/btd6-game-data" rel="noopener">BTD Mod Helper game data</a>, Ninja Kiwi patch notes.</p>
       <div class="seg theme-toggle" role="radiogroup" aria-label="Colour theme" hidden>
         <button type="button" role="radio" data-theme-set="auto" aria-checked="true">Auto</button>
         <button type="button" role="radio" data-theme-set="light" aria-checked="false">Light</button>
@@ -302,7 +294,7 @@
     <p class="search-hint" id="searchHint"><kbd>↑</kbd><kbd>↓</kbd> move · <kbd>Enter</kbd> open · <kbd>Esc</kbd> close</p>
   </form>
 </dialog>
-<script src="../../assets/search-core.js?v=0.10.0" defer></script>
-<script src="../../assets/site.js?v=0.10.0" defer></script>
+<script src="../../assets/search-core.js?v=0.10.1" defer></script>
+<script src="../../assets/site.js?v=0.10.1" defer></script>
 </body>
 </html>

@@ -37,7 +37,7 @@
     {% for mm in ms %}
     {% set m = mm.m %}
     <tr data-name="{{ m.name|lower }}" data-d="{{ m.difficulty }}" data-w="{{ m.water }}" data-l="{{ m.losBlockers }}">
-      <th scope="row"><a href="{{ root }}{{ mm.url }}">{{ m.name }}</a></th>
+      <th scope="row"><a href="{{ root }}{{ mm.url }}">{{ gimg('maps', m.id, 80, 45, '', root, cls='gimg-thumb', thumb=True) }}{{ m.name }}</a></th>
       <td class="n">{{ m.paths }}</td>
       <td><span class="wl wl-{{ m.water }}">{{ m.water }}</span></td>
       <td><span class="wl wl-{{ m.losBlockers }}">{{ 'clear' if m.losBlockers == 'none' else m.losBlockers }}</span></td>

@@ -9,3 +9,5 @@ Bloons Fandom wiki (bloons.fandom.com), both licensed CC BY-SA. Map metadata and
 records are summarised from the BTD6 Index (btd6index.win).
 
 Game names, terms and numbers belong to Ninja Kiwi. This is an unofficial fan project.
+
+The game images in `static/img/game/` and `assets/img/game/` are © Ninja Kiwi. They are not part of this dataset and this licence doesn't cover them.

@@ -47,6 +47,7 @@ MANIFEST = os.path.join(ROOT, '.build-manifest.json')
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from mi_lib import PopModel, PROP_LABEL, Linker, code_of, sentences, steps, key_round  # noqa: E402
+from game_images import GameImages  # noqa: E402
 
 PROTECTED_DIRS = {'.git', 'src', 'data', 'content', 'docs', 'tools', 'templates', 'static', 'node_modules'}
 PROTECTED_FILES = {'README.md', 'CHANGELOG.md', 'LICENSE', 'DATA-LICENSE.md', 'site.json', '.nojekyll',
@@ -170,12 +171,12 @@ def norm_name(s):
 
 
 def price(base, mult):
-    """Same rule as L.price: base x mult to the nearest $5, exact ties round down (integer maths)."""
+    """Same rule as L.price: base x mult to the nearest $5, exact halves round up (integer maths)."""
     if base is None:
         return None
     cents = round(base * round(mult * 100))
     q, rem = divmod(cents, 500)
-    return (q + 1 if rem > 250 else q) * 5
+    return (q + 1 if rem >= 250 else q) * 5  # exact halves round up (checked in game: Easy Sniper $300, Glue Splatter $555)
 
 
 def money(v):
@@ -1252,6 +1253,13 @@ def main():
         return Markup(out)
     env.globals['link_maps'] = link_maps
 
+    # game images the site owner adds by hand (docs/IMAGES.md); none yet means no <img> anywhere
+    gimgs = GameImages(os.path.join(STATIC, 'img', 'game'))
+    n_img = gimgs.write_all(W)
+    env.globals['game_art'] = bool(gimgs)
+    env.globals['gimg'] = lambda kind, gid, w, h, alt, root, cls='', lazy=True, thumb=False: Markup(
+        gimgs.tag(kind, gid, w, h, alt, root, cls=cls, lazy=lazy, thumb=thumb))
+
     generic_about = about(c, ['wiki', 'fandom', 'index', 'cq', 'nk'])
     fixture_note = []
     pop_about = about(c, ['wiki', 'fandom', 'nk'], [
@@ -1538,6 +1546,8 @@ def main():
          section=None, crumbs=[('A–Z', None)], az_groups=az_groups)
 
     page('404.html', '404.html', f"Page not found · {name}", 'This page does not exist.', section=None)
+    for w in gimgs.problems():
+        warn(w)
 
     # ---- static assets (+ the tools stream's assets under assets/tools/)
     for fn in sorted(os.listdir(STATIC)):
@@ -1568,7 +1578,8 @@ def main():
           f"{len(W.files)} files; removed {removed} old files; {len(WARNINGS)} warnings; {dt:.2f}s")
     print('inputs: pop model data/pop-model.json, hero levels data/heroes-levels.json'
           + f", tool pages: {', '.join(sorted(tool_src)) or 'none'}"
-          + (', synergy.js: yes' if has_synergy else ', synergy.js: no (built-in hints)'))
+          + (', synergy.js: yes' if has_synergy else ', synergy.js: no (built-in hints)')
+          + f', game images: {n_img}')
 
 
 if __name__ == '__main__':

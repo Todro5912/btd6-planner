@@ -92,7 +92,7 @@ Made by [Todro5912](https://github.com/Todro5912) for Solou. Built with AI assis
 
 ## Disclaimer
 
-This is an unofficial fan project, not affiliated with or endorsed by Ninja Kiwi. Bloons and Bloons TD 6 are trademarks of Ninja Kiwi. No game art is included.
+This is an unofficial fan project, not affiliated with or endorsed by Ninja Kiwi. Bloons and Bloons TD 6 are trademarks of Ninja Kiwi. Game images, when the site owner adds them under `static/img/game/`, are © Ninja Kiwi and are not covered by this repo's licences (see `docs/IMAGES.md`).
 
 ## License
 

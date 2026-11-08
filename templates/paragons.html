@@ -17,7 +17,7 @@
   <tbody>
   {% for tm in ctx.tower_models if tm.paragon %}
   <tr>
-    <th scope="row"><a href="{{ root }}{{ tm.url }}#paragon">{{ tm.paragon.name }}</a></th>
+    <th scope="row"><a href="{{ root }}{{ tm.url }}#paragon">{{ gimg('paragons', tm.t.id, 32, 32, '', root, cls='gimg-ico') }}{{ tm.paragon.name }}</a></th>
     <td><a href="{{ root }}{{ tm.url }}">{{ tm.t.name }}</a></td>
     <td class="n">{{ ui.price(tm.paragon.prices) }}</td>
     <td class="n">{{ tm.paragon.xp|num }}</td>

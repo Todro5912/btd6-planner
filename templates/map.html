@@ -18,6 +18,7 @@
   <h1 class="h1">{{ m.name }}</h1>
   {{ ui.stamp(None, meta.researched) }}
 </div>
+{{ gimg('maps', m.id, 640, 360, m.name, root, cls='gimg-map', lazy=False) }}
 <div class="map-glance">
   <span class="glance-d">{{ ui.tier_dot(m.difficulty) }}{{ m.difficulty }}</span>
   <span class="glance-l"><b>{{ m.paths }}</b> lane{{ 's' if m.paths != 1 }}</span>

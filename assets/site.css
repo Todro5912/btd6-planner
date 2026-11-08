@@ -957,3 +957,14 @@ td .btn-small { white-space: nowrap; }
 .diff-note { display: inline-block; margin-left: 8px; font-size: 12.5px; color: var(--muted); }
 .pk-plan { font-size: 13.5px; font-weight: 700; margin-left: auto; }
 @media (max-width: 720px) { .pk-plan { display: inline-flex; align-items: center; min-height: 44px; } }
+
+/* game images (gimg(), docs/IMAGES.md): identifying pictures only, framed, never filtered */
+.gimg { display: inline-block; vertical-align: middle; object-fit: contain; background: var(--paper-2); border: var(--line) solid var(--ink); border-radius: var(--r); }
+.title-id { display: flex; align-items: center; gap: 12px; min-width: 0; }
+.gimg-head { width: 96px; height: 96px; flex: none; }
+.gimg-map { display: block; width: 100%; max-width: 640px; height: auto; aspect-ratio: 16 / 9; object-fit: cover; margin: 10px 0 14px; }
+.gimg-ico { width: 32px; height: 32px; border-width: 2px; margin-right: 8px; }
+.gimg-thumb { width: 80px; height: 45px; object-fit: cover; border-width: 2px; margin-right: 8px; }
+.gimg-up { width: 48px; height: 48px; border-width: 2px; margin-right: 6px; }
+.gimg-para { width: 96px; height: 96px; margin-right: 10px; }
+@media (max-width: 600px) { .gimg-head, .gimg-para { width: 64px; height: 64px; } .gimg-thumb { display: none; } }

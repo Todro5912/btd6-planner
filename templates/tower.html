@@ -3,8 +3,9 @@
 {% block main %}
 {% set t = tm.t %}
 {% set g = tm.g %}
+{% set pic = gimg('towers', t.id, 96, 96, t.name, root, cls='gimg-head', lazy=False) %}
 <div class="title-row">
-  <h1 class="h1">{{ t.name }}</h1>
+  {% if pic %}<div class="title-id">{{ pic }}<h1 class="h1">{{ t.name }}</h1></div>{% else %}<h1 class="h1">{{ t.name }}</h1>{% endif %}
   {{ ui.stamp(None, meta.researched) }}
 </div>
 <div class="head-bar">
@@ -88,7 +89,7 @@
         {% for x in p.ups %}
         <li class="up{% if x.u.tier == 5 %} up-t5{% endif %}" id="{{ x.anchor }}">
           {{ ui.pips(x.u.tier) }}
-          <span class="up-name">{{ x.u.name }}</span>
+          <span class="up-name">{% if x.u.tier == 5 %}{{ gimg('upgrades', t.id ~ '-' ~ x.code|replace('-', ''), 48, 48, '', root, cls='gimg-up') }}{% endif %}{{ x.u.name }}</span>
           <span class="up-meta"><span class="up-cost">{{ ui.price(x.prices) }}</span> <span class="up-xp" title="XP to unlock">{% if x.u.xp is none %}XP ?{% elif x.u.xp == 0 %}free{% else %}{{ x.u.xp|num }} XP{% endif %}</span></span>
           <code class="xcode up-code">{{ x.code }}</code>
           {% if x.u.effect %}<span class="up-eff">{{ x.u.effect|rich }}</span>{% endif %}
@@ -126,7 +127,7 @@
   <h2 class="panel-h" id="para">Paragon</h2>
   {% if tm.paragon %}
   <div class="paragon" id="paragon">
-    <h3 class="h3">{{ tm.paragon.name }}</h3>
+    <h3 class="h3">{{ gimg('paragons', t.id, 96, 96, '', root, cls='gimg-para') }}{{ tm.paragon.name }}</h3>
     <dl class="stats stats-tight">
       <div class="stat"><dt>Price</dt><dd class="big money">{{ ui.price(tm.paragon.prices) }}</dd></div>
       <div class="stat"><dt>XP from zero</dt><dd class="big">{{ tm.paragon.total|num }}</dd><dd class="stat-s">all upgrades + {{ tm.paragon.xp|num }} paragon XP</dd></div>

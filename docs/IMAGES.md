@@ -1,15 +1,15 @@
-# Game images: what the site would use (prep only)
+# Game images: the checklist
 
-The site owner wants game images on the site and will collect them by hand. **Nothing here is live yet.** The design rule is still "no game art" (see the end of this page), and the owner decides whether it changes. This page is the checklist: every image, its exact file name, size and folder, and how it would be credited.
+The site owner said yes to game images (0.10.1) and collects them by hand. The build is ready: drop a file in the right folder, rebuild, and it shows up. Until a file exists, its page looks exactly as before. This page is the checklist: every image, its exact file name, size and folder, and how it's credited.
 
 Generated from the site's own data (`data/towers.json`, `data/maps.json`, `data/bloons.json`), so every file name uses the id the site already uses in its URLs and share links.
 
 ## How to collect
 
 - **Format:** PNG with a transparent background for towers, upgrades, Paragons, heroes, bloons and bosses. PNG or JPG for map screenshots. No watermarks, no game UI around the picture.
-- **Source size (what you save):** at least the size in the table below, square for portraits, 16:9 for maps. Bigger is fine: the build would shrink it.
+- **Source size (what you save):** at least the size in the table below, square for portraits, 16:9 for maps. Bigger is fine: the build shrinks it.
 - **One file per item, named exactly as listed** (lower case). A missing file is fine: the page keeps today's drawn icon for it.
-- **Folder:** `static/img/game/<kind>/` in the repo, for example `static/img/game/towers/dart.png`. The build would copy it to `assets/img/game/<kind>/` and write WebP copies at the display sizes. That copy step doesn't exist yet: `tools/build_site.py` copies only the top level of `static/` today.
+- **Folder:** `static/img/game/<kind>/` in the repo, for example `static/img/game/towers/dart.png`. `tools/game_images.py` (run by `tools/build_site.py`) writes it to `assets/img/game/<kind>/` as WebP at 2× the largest display size, and maps also get a small `-s` thumbnail. Without Pillow installed it copies the file unchanged. The build's last line says how many game images it found.
 - **Total:** 26 towers + 78 tier 5s + 14 Paragons + 18 heroes + 90 maps + 17 bloons + 7 bosses = 250 files.
 
 ## Sizes
@@ -20,9 +20,9 @@ Generated from the site's own data (`data/towers.json`, `data/maps.json`, `data/
 | Tier 5 upgrade | 256 × 256 | 48 px (96 px file) | 72 px (144 px file) | tower page upgrade rows, Paragons table |
 | Paragon | 256 × 256 | 64 px (128 px file) | 96 px (192 px file) | Paragons table, tower page Paragon block, My goals card |
 | Hero | 256 × 256 | 64 px (128 px file) | 96 px (192 px file) | hero page header, Heroes index; 32 px in the hero pickers |
-| Map | 1280 × 720 | 360 × 203 (720 × 405 file) | 640 × 360 (1280 × 720 file) | map page header; 160 × 90 on the Maps index |
-| Bloon | 128 × 128 | 32 px (64 px file) | 40 px (80 px file) | quick cards, round pages, rounds table |
-| Boss | 256 × 256 | 64 px (128 px file) | 96 px (192 px file) | boss events guide |
+| Map | 1280 × 720 | 360 × 203 (720 × 405 file) | 640 × 360 (1280 × 720 file) | map page header; 80 × 45 on the Maps index (desktop only) |
+| Bloon | 128 × 128 | 32 px (64 px file) | 40 px (80 px file) | not shown yet: collect them, the slots come later |
+| Boss | 256 × 256 | 64 px (128 px file) | 96 px (192 px file) | not shown yet: the boss guide is Markdown, slots come later |
 
 Every image gets an `alt` with the name ("Dart Monkey", "Ultra-Juggernaut"), a fixed width and height so the page doesn't jump while it loads, `loading="lazy"` below the first screen, and the 3px ink outline frame from DESIGN.md around portraits. The picture itself is never recoloured or filtered.
 
@@ -295,13 +295,11 @@ The ids follow the boss events guide (`guides/boss-events/`).
 - **Takedown:** "If you hold the rights to an image and want it removed, open an issue on the GitHub repo (the site's Report an error link) and it comes down." The same sentence goes on the About page.
 - **Don't** use the BTD6 logo, Ninja Kiwi's logo or anything that makes the site look official. The "Unofficial BTD6 fan project" strip stays.
 
-## Lines that would change if the owner says yes
+## What changed when the owner said yes (0.10.1)
 
-These stay as they are until the owner decides:
+- `docs/DESIGN.md`, "Direction": game images are allowed as identifying pictures, framed and never filtered. A "Game images" row says where each one goes.
+- `templates/base.html` footer: says "Game images © Ninja Kiwi…" once at least one image exists, and "No game art is used here" until then.
+- `templates/about.html`: the same switch, plus the takedown sentence.
+- `README.md`, `LICENSE`, `DATA-LICENSE.md` and `static/img/game/README.md`: the images are outside the repo's licences.
 
-- `docs/DESIGN.md`, "Direction": "It borrows the game's UI language, but uses **none of its art**."
-- `templates/base.html`, the footer disclaimer on every page: "No game art is used here."
-- `README.md`: "No game art is included."
-- `templates/_macros.html`, the comment "Icons are drawn here, no game art."
-
-The site's drawn icons (balloon mark, tool icons, the "Me" monkey face) stay either way: they are ours, not game art.
+The site's drawn icons (balloon mark, tool icons, the "Me" monkey face) stay: they are ours, not game art.

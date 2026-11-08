@@ -18,12 +18,12 @@
   var diff = 'medium';
   try { var s = localStorage.getItem('mi-diff'); if (DIFF_LABEL[s]) diff = s; } catch (e) { /* storage blocked */ }
 
-  /* same rule as L.price in src/logic.js and price() in tools/build_site.py: nearest $5, exact ties round down */
+  /* same rule as L.price in src/logic.js and price() in tools/build_site.py: nearest $5, exact ties round up */
   function price(base, mult) {
     if (base == null) return 0;
     var cents = Math.round(base * Math.round(mult * 100));
     var q = Math.floor(cents / 500), rem = cents - q * 500;
-    return (rem > 250 ? q + 1 : q) * 5;
+    return (rem >= 250 ? q + 1 : q) * 5; /* exact halves round up: Easy Sniper $297.50 -> $300, Glue Splatter $552.50 -> $555 (checked in game) */
   }
   function money(v) { return '$' + Math.round(v).toLocaleString('en-US'); }
   function total(t, d) {

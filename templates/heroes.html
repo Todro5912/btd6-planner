@@ -16,7 +16,7 @@
   <tbody>
   {% for hm in ctx.hero_models %}
   <tr>
-    <th scope="row"><a href="{{ root }}{{ hm.url }}">{{ hm.h.name }}</a></th>
+    <th scope="row"><a href="{{ root }}{{ hm.url }}">{{ gimg('heroes', hm.h.id, 32, 32, '', root, cls='gimg-ico') }}{{ hm.h.name }}</a></th>
     <td class="n">{{ ui.price(hm.prices) }}</td>
     <td class="n">{% if hm.h.unlockLevel %}Lv {{ hm.h.unlockLevel }}{% else %}Start{% endif %}</td>
     <td class="c">{% if hm.h.beginnerTier %}<span class="counter tier-{{ hm.h.beginnerTier|lower }}">{{ hm.h.beginnerTier }}</span>{% else %}–{% endif %}</td>

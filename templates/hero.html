@@ -2,8 +2,9 @@
 {% import '_macros.html' as ui %}
 {% block main %}
 {% set h = hm.h %}
+{% set pic = gimg('heroes', h.id, 96, 96, h.name, root, cls='gimg-head', lazy=False) %}
 <div class="title-row">
-  <h1 class="h1">{{ h.name }}</h1>
+  {% if pic %}<div class="title-id">{{ pic }}<h1 class="h1">{{ h.name }}</h1></div>{% else %}<h1 class="h1">{{ h.name }}</h1>{% endif %}
   {{ ui.stamp(None, meta.researched) }}
 </div>
 <div class="head-bar">

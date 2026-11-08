@@ -43,7 +43,7 @@
     const cents = Math.round(base * Math.round(num(mult, 1) * 100));
     const q = Math.floor(cents / 500);
     const rem = cents - q * 500;
-    return (rem > 250 ? q + 1 : q) * 5;
+    return (rem >= 250 ? q + 1 : q) * 5; /* exact halves round up: Easy Sniper $297.50 -> $300, Glue Splatter $552.50 -> $555 (checked in game) */
   };
   C.isSandbox = (mode) => !!(mode && ((mode.rules && mode.rules.noRewards) || mode.startRound == null));
   C.modeRange = (mode) => [num(mode && mode.startRound, 1), num(mode && mode.endRound, 100)];

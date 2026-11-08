@@ -3,7 +3,7 @@
 **Monkey Intel by Solou**, an unofficial BTD6 fan project by Todro5912. The names live in one place, `site.json` (`project`, `brand`, `author`), so they are easy to change.
 
 ## Direction: "game-native"
-The site should feel like it belongs next to BTD6: chunky, tactile and bright. It borrows the game's UI language, but uses **none of its art**. It must NOT look like a generic AI-generated site.
+The site should feel like it belongs next to BTD6: chunky, tactile and bright. It borrows the game's UI language. Game images (towers, upgrades, Paragons, heroes, maps) appear only as identifying pictures, framed in a 3px ink outline and never recoloured or filtered; the site owner adds them by hand (`docs/IMAGES.md`). Everything else, icons included, is drawn here. It must NOT look like a generic AI-generated site.
 
 ### Banned (these read as AI-made)
 - Soft drop shadows, glassmorphism, gradients on backgrounds or buttons, and purple-blue anything.
@@ -70,6 +70,7 @@ The site should feel like it belongs next to BTD6: chunky, tactile and bright. I
 | Focus and place (`U.snapFocus` / `U.restoreFocus`) | The tools rebuild on every edit. The control you used keeps focus (stable `data-fk` keys, a `data-fkb` fallback) and stays under your finger: the page scrolls by the difference. A picker that gets focus back this way doesn't reopen. |
 | Tap targets | On phones every button, chip, segment and pip is at least 44px tall (pips: a 44px button around the small skewed pip you see). Links inside a sentence get padding instead, so the lines don't spread. |
 | Icons | Drawn here, never from the game. The "Me" button is a simple monkey face (`ui.icon('me')`). |
+| Game images (`gimg()`) | 96px portrait beside the h1 on tower and hero pages (64px on phones), 640×360 map picture under the map title, 32px icons in the Monkeys, Heroes and Paragons lists, 80×45 map thumbnails, 48px pictures on tier 5 rows. A 3px ink outline, panel-2 fill, `--r` corners, fixed width and height. No file, no picture: the page looks as it did before. |
 
 **Copy rules:** body text max ~65ch. Long strategy text becomes 3–6 steps; semicolon chains split into separate steps. Cash in bold, round numbers as chips, tower names as links. Facts that aren't up for debate (immunities, first rounds) are stated plainly in the card rule, never hedged.
 

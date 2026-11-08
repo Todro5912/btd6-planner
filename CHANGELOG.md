@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.10.1 (2026-11-08)
+Two price and income facts settled in game and in the patch notes, and the site is ready for game images.
+- **Easy price ties round up.** A price that lands exactly $2.50 over a multiple of $5 now rounds up, everywhere on the site: Sniper $350 → $300 and Glue Splatter $650 → $555 on Easy, both checked in game. Other Easy prices change by $5 too, for example Monkey Bank $3,100 → $3,105 and Banana Farm $1,060 → $1,065. Medium, Hard and Impoppable prices don't change.
+- **Lead to Gold pays in CHIMPS:** +$50 per Lead it pops, since 57.0 (not in Deflation). 57.1 removed only Rubber to Gold's CHIMPS income. The economy and CHIMPS guides say so, and the Advisor no longer calls a 0-0-3 Alchemist wasted money in CHIMPS. The leak check still counts no Lead to Gold income in any mode.
+- **Game images:** the build now shows tower, tier 5, Paragon, hero and map pictures once the files are in `static/img/game/` (checklist in `docs/IMAGES.md`). No file, no picture: today the site looks the same. Pictures are credited to Ninja Kiwi in the footer, sit outside the repo's licences, and come down on request.
+
 ## 0.10.0 (2026-11-08)
 The leak check is rebuilt, the Advisor plans for popping power, and the tools carry your game from one to the next.
 - **Leak check, now a timeline.** Each round plays out: bloon groups spawn at their real times and speeds and move down a track as long as the map. Every attack fires at its real rate, with its pierce and damage type. Children appear where the parent popped, and blimps drop theirs where they died. It also counts freezes, stuns, slows, MOAB Shove, and Glacial Trail freezing your towers. Against 1,481 real two-tower CHIMPS wins it now wrongly shows a leak in 3.5% of them at R80 (0.9.2: 37%) and 43% at R98 (98%). Up to R80 it stays under 4%. From R86 the tools still call it rough.

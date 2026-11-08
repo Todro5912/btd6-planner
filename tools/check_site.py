@@ -156,6 +156,41 @@ class Page(HTMLParser):
             self.title += data
 
 
+def game_images_check(errors, pages):
+    """Game images (docs/IMAGES.md): no picture without a file, credit only when pictures exist, and the helper
+    itself (missing file -> '', bad names skipped, typos reported)."""
+    import tempfile
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    from game_images import GameImages
+    shown = any('class="gimg' in v[1] for v in pages.values())
+    for rel, (_, html) in pages.items():
+        for m in re.finditer(r'<img class="gimg[^>]*>', html):
+            tag = m.group(0)
+            if not all(k in tag for k in (' width="', ' height="', ' alt="')):
+                errors.append(f'{rel}: game image without width, height or alt: {tag[:90]}')
+        credit = 'Game images © Ninja Kiwi' in html
+        if 'class="disclaimer"' in html and credit != shown:
+            errors.append(f'{rel}: footer credit says {"images" if credit else "no game art"} but the site shows {"some" if shown else "none"}')
+    with tempfile.TemporaryDirectory() as d:
+        os.makedirs(os.path.join(d, 'towers'))
+        for fn in ('dart.png', 'Bad.png', 'notes.txt', 'darts.png'):
+            with open(os.path.join(d, 'towers', fn), 'wb') as f:
+                f.write(b'x')
+        g = GameImages(d)
+        if g.tag('towers', 'sniper', 32, 32, '', '../') != '':
+            errors.append('game_images: a missing file must give no <img>')
+        t = g.tag('towers', 'dart', 32, 32, 'Dart "Monkey"', '../')
+        if not (t.startswith('<img class="gimg gimg-towers"') and 'src="../assets/img/game/towers/dart.' in t
+                and 'alt="Dart &quot;Monkey&quot;"' in t and 'loading="lazy"' in t):
+            errors.append(f'game_images: bad tag {t}')
+        probs = g.problems()
+        if not (any('Bad.png' in p for p in probs) and any('notes.txt' in p for p in probs)
+                and any('towers/darts ' in p for p in probs) and not any('towers/dart ' in p for p in probs)):
+            errors.append(f'game_images: problems() should flag Bad.png, notes.txt and the unused darts.png: {probs}')
+        if bool(GameImages(os.path.join(d, 'nothing'))):
+            errors.append('game_images: an empty folder must mean no game art')
+
+
 def main():
     with open(os.path.join(ROOT, 'site.json'), encoding='utf-8') as f:
         site = json.load(f)
@@ -282,6 +317,8 @@ def main():
 
     if not os.path.exists(os.path.join(ROOT, '.nojekyll')):
         errors.append('.nojekyll is missing')
+
+    game_images_check(errors, pages)
 
     print(f'{len(pages)} pages, {n_links} internal links checked, {n_ctl} controls, {n_cards} quick cards, '
           f'{n_search} search queries; search index: ' + ', '.join(f'{k} {v}' for k, v in sorted(kinds.items())))

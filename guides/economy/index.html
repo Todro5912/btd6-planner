@@ -15,8 +15,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Luckiest+Guy&family=Rubik:wght@400;500;700&display=swap">
-<link rel="stylesheet" href="../../assets/site.css?v=0.10.0">
-<script src="../../assets/progress.js?v=0.10.0" defer></script>
+<link rel="stylesheet" href="../../assets/site.css?v=0.10.1">
+<script src="../../assets/progress.js?v=0.10.1" defer></script>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 44'%3E%3Cellipse cx='20' cy='18' rx='14' ry='16' fill='%23E2412E' stroke='%231C1A17' stroke-width='3'/%3E%3Cpath d='M17 34h6l-3 4z' fill='%23E2412E' stroke='%231C1A17' stroke-width='2.5'/%3E%3C/svg%3E">
 </head>
 <body class="">
@@ -535,7 +535,7 @@
 <p>Farm income doesn't scale with difficulty, but prices do. Farms pay back 8% slower on Hard, 20% slower on Impoppable and more than twice as slowly in Half Cash. On Easy they pay back 15% faster.</p>
 <p><strong>Half Cash:</strong> Monkey Bank interest is not halved. A 2-3-0 bank averages about $470 per round there against a Marketplace's $200, which makes banks the best farm in that mode (calc).</p>
 <h2 id="chimps-whats-legal">CHIMPS: what's legal</h2>
-<p>CHIMPS income is starting cash, pop cash and end-of-round cash. <strong>Nothing in the income table above makes money in CHIMPS.</strong></p>
+<p>CHIMPS income is starting cash, pop cash and end-of-round cash. <strong>Almost nothing in the income table above makes money in CHIMPS.</strong> Lead to Gold is the one exception.</p>
 <div class="table-wrap"><table>
 <thead>
 <tr>
@@ -558,7 +558,7 @@
 </tr>
 <tr>
 <td>Lead to Gold</td>
-<td>Conflicting reports; plan as if it pays nothing (unverified)</td>
+<td>Pays +$50 per Lead it pops, since 57.0 (patch notes). Not in Deflation</td>
 </tr>
 <tr>
 <td>Bloon Trap, XXXL Trap, Obyn's Wall of Trees</td>
@@ -694,12 +694,12 @@
 </table></div>
 <p><strong>The $5 rounding rule.</strong> Each base price and each upgrade is multiplied, then rounded to the nearest $5 on its own. A tower's total is the sum of those rounded prices.</p>
 <pre><code>price = round_to_5(medium_price × multiplier)    per upgrade
-ties ($2.50 over a multiple of $5) round DOWN
+ties ($2.50 over a multiple of $5) round UP
 </code></pre>
 <ul>
-<li>Ties only happen on Easy, when the Medium price is an odd multiple of $50. Examples: Monkey Bank $3,650 → $3,100, Banana Farm $1,250 → $1,060, EZ Collect $250 → $210, Crow's Nest $350 → $295.</li>
+<li>Ties only happen on Easy, when the Medium price is an odd multiple of $50. Examples: Monkey Bank $3,650 → $3,105, Banana Farm $1,250 → $1,065, EZ Collect $250 → $215, Crow's Nest $350 → $300.</li>
+<li>Checked in game: Sniper $350 → $300 and Glue Splatter $650 → $555 on Easy. Both are exact ties, and both round up.</li>
 <li>Hard and Impoppable can never tie (calc).</li>
-<li>Base tower prices may not follow the tie rule: Sniper $350 → $300 rounds up on Easy (unverified).</li>
 <li>Multiplying a whole tower's Medium total instead can be off by $5–10.</li>
 </ul>
 <div class="table-wrap"><table>
@@ -810,7 +810,7 @@ ties ($2.50 over a multiple of $5) round DOWN
     </nav>
     <div class="foot-legal">
       <p class="disclaimer"><b>Unofficial fan site.</b> Not affiliated with or endorsed by Ninja Kiwi. Bloons and Bloons TD 6 are their trademarks. No game art is used here.</p>
-      <p>Data: BTD6 v57.4, updated 2026-11-05 · Site 0.10.0 · Sources: <a href="https://www.bloonswiki.com/" rel="noopener">Bloons Wiki</a> (CC BY-SA), <a href="https://btd6index.win/" rel="noopener">BTD6 Index</a>, <a href="https://github.com/hemisemidemipresent/cyberquincy" rel="noopener">Cyber Quincy</a>, <a href="https://github.com/Btd6ModHelper/btd6-game-data" rel="noopener">BTD Mod Helper game data</a>, Ninja Kiwi patch notes.</p>
+      <p>Data: BTD6 v57.4, updated 2026-11-05 · Site 0.10.1 · Sources: <a href="https://www.bloonswiki.com/" rel="noopener">Bloons Wiki</a> (CC BY-SA), <a href="https://btd6index.win/" rel="noopener">BTD6 Index</a>, <a href="https://github.com/hemisemidemipresent/cyberquincy" rel="noopener">Cyber Quincy</a>, <a href="https://github.com/Btd6ModHelper/btd6-game-data" rel="noopener">BTD Mod Helper game data</a>, Ninja Kiwi patch notes.</p>
       <div class="seg theme-toggle" role="radiogroup" aria-label="Colour theme" hidden>
         <button type="button" role="radio" data-theme-set="auto" aria-checked="true">Auto</button>
         <button type="button" role="radio" data-theme-set="light" aria-checked="false">Light</button>
@@ -831,7 +831,7 @@ ties ($2.50 over a multiple of $5) round DOWN
     <p class="search-hint" id="searchHint"><kbd>↑</kbd><kbd>↓</kbd> move · <kbd>Enter</kbd> open · <kbd>Esc</kbd> close</p>
   </form>
 </dialog>
-<script src="../../assets/search-core.js?v=0.10.0" defer></script>
-<script src="../../assets/site.js?v=0.10.0" defer></script>
+<script src="../../assets/search-core.js?v=0.10.1" defer></script>
+<script src="../../assets/site.js?v=0.10.1" defer></script>
 </body>
 </html>

@@ -1107,7 +1107,7 @@
       },
       {
        "has": "alchemist",
-       "x": "x-x-3"
+       "x": "x-x-4"
       },
       {
        "has": "village",
@@ -1119,7 +1119,7 @@
    "suggest": {
     "support": "income upgrades"
    },
-   "why": "Supply Drop, Merchantman, Lead to Gold and Monkey Town pay nothing in CHIMPS.",
+   "why": "Supply Drop, Merchantman, Rubber to Gold and Monkey Town pay nothing in CHIMPS. Lead to Gold (0-0-3) still pays $50 per Lead.",
    "strength": "core",
    "sources": [
     "data/modes.json: chimps.rules.noIncomeTowers"

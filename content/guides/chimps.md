@@ -40,7 +40,7 @@ CHIMPS stands for **no Continues, Hearts lost, Income, Monkey Knowledge, Powers 
 | Sell exceptions | Champion Sentries, Paragon Sentries, Geraldo's level 18+ Creepy Idol and the Special Poperations Marine can still be sold |
 | Sacrifices | Adora's Blood Sacrifice and Sun Temple sacrifices don't count as selling |
 | Rubber to Gold | Pays nothing since 57.1 |
-| Lead to Gold | Conflicting reports; plan as if it pays nothing (unverified) |
+| Lead to Gold | Pays +$50 per Lead it pops, since 57.0. 57.1 only removed the 0-0-4 gold mutator's income |
 
 ### Medals
 

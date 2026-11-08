@@ -132,14 +132,14 @@ Farm income doesn't scale with difficulty, but prices do. Farms pay back 8% slow
 
 ## CHIMPS: what's legal
 
-CHIMPS income is starting cash, pop cash and end-of-round cash. **Nothing in the income table above makes money in CHIMPS.**
+CHIMPS income is starting cash, pop cash and end-of-round cash. **Almost nothing in the income table above makes money in CHIMPS.** Lead to Gold is the one exception.
 
 | Source | CHIMPS |
 |---|---|
 | Banana Farms | Disabled |
 | Benjamin, Merchantmen, Supply Drop, Jungle's Bounty | No income |
 | Rubber to Gold | Pays nothing since 57.1 |
-| Lead to Gold | Conflicting reports; plan as if it pays nothing (unverified) |
+| Lead to Gold | Pays +$50 per Lead it pops, since 57.0 (patch notes). Not in Deflation |
 | Bloon Trap, XXXL Trap, Obyn's Wall of Trees | Only what the bloons would pay if popped normally |
 | Monkey Town / City / Monkeyopolis | No extra income |
 | Map gimmicks that pay cash (Three Mines 'Round crystals) | Still pay |
@@ -192,12 +192,12 @@ Example (calc): selling a $25,450 BRF returns $17,815 at base and $19,088 with B
 
 ```
 price = round_to_5(medium_price × multiplier)    per upgrade
-ties ($2.50 over a multiple of $5) round DOWN
+ties ($2.50 over a multiple of $5) round UP
 ```
 
-- Ties only happen on Easy, when the Medium price is an odd multiple of $50. Examples: Monkey Bank $3,650 → $3,100, Banana Farm $1,250 → $1,060, EZ Collect $250 → $210, Crow's Nest $350 → $295.
+- Ties only happen on Easy, when the Medium price is an odd multiple of $50. Examples: Monkey Bank $3,650 → $3,105, Banana Farm $1,250 → $1,065, EZ Collect $250 → $215, Crow's Nest $350 → $300.
+- Checked in game: Sniper $350 → $300 and Glue Splatter $650 → $555 on Easy. Both are exact ties, and both round up.
 - Hard and Impoppable can never tie (calc).
-- Base tower prices may not follow the tie rule: Sniper $350 → $300 rounds up on Easy (unverified).
 - Multiplying a whole tower's Medium total instead can be off by $5–10.
 
 | Build | Medium | Easy | Hard / CHIMPS | Impoppable |

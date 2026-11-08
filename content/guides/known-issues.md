@@ -36,10 +36,8 @@ The game's own files (the BTD Mod Helper export, game version 56) settled these:
 
 | Item | What we have | How to check |
 |---|---|---|
-| **Lead to Gold in CHIMPS** | Sources conflict. Plan as if it pays nothing | CHIMPS game, Alchemist 0-0-3 on R28 or R37 (Lead rounds). Watch its cash counter (added in v57) |
 | **MM for sub-modes and CHIMPS** | Assumed to pay the parent difficulty's row; CHIMPS = Impoppable. Advanced Medium / Hard / Impoppable cells are ×3 of Beginner (calc) | Note the MM after a first-time CHIMPS, Deflation or Half Cash win, and an Advanced Medium win |
 | **Income models** | Monkey Bank interest/deposit order, Supply Drop crates per round, Elite Sniper crate value | Record cash before and after a few rounds in a Medium game |
-| **Easy price ties** | Upgrade ties round down; the base Sniper ($350 → $300) rounds up | Read Easy prices in a Deflation game |
 | **Removal costs by difficulty** | Index prices fit Medium; unknown if Chutes, Cracked, Tricky Tracks train or Three Mines crystals scale | Compare a removable's price in a Medium game and a CHIMPS game |
 
 ## Modes
@@ -52,7 +50,7 @@ The game's own files (the BTD Mod Helper export, game version 56) settled these:
 
 | Item | What we have | How to check |
 |---|---|---|
-| **Single-source v57 prices** | Glue Splatter $650, Glue Strike $4,500, seven Skywarden changes | Read the Medium price in a Medium game or Sandbox |
+| **Single-source v57 prices** | Glue Strike $4,500, seven Skywarden changes | Read the Medium price in a Medium game or Sandbox |
 | **v57 damage changes** | Sharp Shooter crit 50 → 60; Crossbow Master's second bolt at half speed. Not yet in the damage tables | Tower stats panel and the Damage/Pops toggle in Sandbox |
 | **S.P.I.D.E.R. Monkey line of sight** | Normal Snipers are blocked by LoS; unknown for the Paragon | Sandbox on a LoS-heavy map: look for red zones |
 | **Tower capabilities** | Beast Handler Great White vs Lead; Mermonkey and Skywarden vs Purple; Monkey Sub built-in camo; Advanced Intel and LoS; exact Elite Military Training text | Send a Lead or Purple round in Sandbox; read the tooltips |
@@ -78,6 +76,8 @@ The game's own files (the BTD Mod Helper export, game version 56) settled these:
 
 ## Settled recently
 
+- **Easy price ties round up.** Sniper $350 → $300 and Glue Splatter $650 → $555 on Easy, both checked in game. That also confirms Glue Splatter's $650 Medium price.
+- **Lead to Gold pays in CHIMPS:** +$50 per Lead it pops, since 57.0. 57.1 removed only the 0-0-4 gold mutator's income (patch notes).
 - **CHIMPS uses Hard prices (×1.08).** Deflation uses Easy prices (×0.85).
 - **Snipers need line of sight.** Infernal has no LoS blockers (BTD6 Index), with 19.3 RBS on each lane.
 - **Rubber to Gold** pays nothing in CHIMPS since 57.1.

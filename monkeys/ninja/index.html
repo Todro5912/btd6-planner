@@ -15,8 +15,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Luckiest+Guy&family=Rubik:wght@400;500;700&display=swap">
-<link rel="stylesheet" href="../../assets/site.css?v=0.10.0">
-<script src="../../assets/progress.js?v=0.10.0" defer></script>
+<link rel="stylesheet" href="../../assets/site.css?v=0.10.1">
+<script src="../../assets/progress.js?v=0.10.1" defer></script>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 44'%3E%3Cellipse cx='20' cy='18' rx='14' ry='16' fill='%23E2412E' stroke='%231C1A17' stroke-width='3'/%3E%3Cpath d='M17 34h6l-3 4z' fill='%23E2412E' stroke='%231C1A17' stroke-width='2.5'/%3E%3C/svg%3E">
 </head>
 <body class="">
@@ -67,8 +67,7 @@
 <li><span aria-current="page">Ninja Monkey</span></li>
 </ol></nav>
 <div class="title-row">
-  <h1 class="h1">Ninja Monkey</h1>
-  <span class="stamp"><b>v57.4</b> · updated 2026-11-05</span>
+<h1 class="h1">Ninja Monkey</h1>  <span class="stamp"><b>v57.4</b> · updated 2026-11-05</span>
 </div>
 <div class="head-bar">
   <dl class="chips-dl">
@@ -163,7 +162,7 @@
       <p class="pk-src note"></p>
     </div>
   </div>
-  <script type="application/json" class="pk-data">{"id":"ninja","name":"Ninja Monkey","cls":"Magic","base":400,"mult":{"easy":0.85,"medium":1,"hard":1.08,"impoppable":1.2},"paths":[[{"n":"Ninja Discipline","c":350},{"n":"Sharp Shurikens","c":350},{"n":"Double Shot","c":900},{"n":"Bloonjitsu","c":2750},{"n":"Grandmaster Ninja","c":35000}],[{"n":"Distraction","c":250},{"n":"Counter-Espionage","c":400},{"n":"Shinobi Tactics","c":1200},{"n":"Bloon Sabotage","c":5200},{"n":"Grand Saboteur","c":22000}],[{"n":"Seeking Shuriken","c":300},{"n":"Caltrops","c":450},{"n":"Flash Bomb","c":2250},{"n":"Sticky Bomb","c":5000},{"n":"Master Bomber","c":40000}]],"pathNames":["Top path","Middle path","Bottom path"],"pop":{"camo":{"any":[["base"]],"note":"built-in camo detection"},"lead":{"any":[[{"path":2,"tier":3}]],"note":"Flash Bomb (every 4th throw, explosive stun)"},"purple":{"any":[["base"]]},"black":{"any":[["base"]]},"white":{"any":[["base"]]},"zebra":{"any":[["base"]]},"frozen":{"any":[[{"path":2,"tier":3}]]},"moab":{"any":[["base"]]},"ddt":{"any":[[{"path":0,"maxTier":2},{"path":1,"maxTier":2},{"path":2,"tier":3}]],"note":"derived rule would wrongly pass 0-0-3: Flash Bomb is explosive (no Black) and shurikens are Sharp (no Lead). Pair with Alchemist 2-x-x or MIB (synced with the game files, v56)","conditional":[{"req":[{"path":2,"tier":4}],"note":"Sticky Bomb charges vs DDT unverified"}],"derived":false},"bad":{"any":[["base"]],"note":"BAD takes damage like any MOAB-class; it is only immune to slows, stuns and knockback"},"fortified":{"any":[["base"]],"note":"Fortified is extra HP, never an immunity: anything that can damage the underlying bloon can damage its fortified version."},"bonuses":[{"vs":"bloons","from":{"path":2,"tier":3},"note":"Flash Bomb stun"},{"vs":"moab","from":{"path":2,"tier":4},"note":"Sticky Bomb"},{"vs":"moab","from":{"path":1,"tier":4},"note":"Bloon Sabotage halves bloon speed"},{"vs":"moab","from":{"path":1,"tier":5},"note":"Grand Saboteur weakens MOAB-class"}]},"popKnown":true,"nonAttacker":false,"labels":{"camo":"Camo","lead":"Lead","purple":"Purple","black":"Black","white":"White","zebra":"Zebra","frozen":"Frozen","moab":"MOAB-class","fortified":"Fortified","ddt":"DDT","bad":"BAD"},"fallback":[{"when":"no-camo","tower":"village","name":"Monkey Village","code":"0-2-0","up":"Radar Scanner","why":"Radar Scanner: every tower in range sees camo","url":"monkeys/village/","prices":{"easy":2930,"medium":3450,"hard":3725,"impoppable":4140}},{"when":"no-lead","tower":"alchemist","name":"Alchemist","code":"2-0-0","up":"Acidic Mixture Dip","why":"Acidic Mixture Dip: towers it dips pop Lead","url":"monkeys/alchemist/","prices":{"easy":970,"medium":1150,"hard":1245,"impoppable":1380}},{"when":"no-purple","tower":"village","name":"Monkey Village","code":"0-3-0","up":"Monkey Intelligence Bureau","why":"Monkey Intelligence Bureau: towers in range pop every Bloon type","url":"monkeys/village/","prices":{"easy":9305,"medium":10950,"hard":11825,"impoppable":13140}},{"when":"no-black","tower":"village","name":"Monkey Village","code":"0-3-0","up":"Monkey Intelligence Bureau","why":"Monkey Intelligence Bureau: towers in range pop every Bloon type","url":"monkeys/village/","prices":{"easy":9305,"medium":10950,"hard":11825,"impoppable":13140}},{"when":"no-ddt","tower":"village","name":"Monkey Village","code":"0-3-0","up":"Monkey Intelligence Bureau","why":"Radar + MIB in one Village: towers in range can hit DDTs","url":"monkeys/village/","prices":{"easy":9305,"medium":10950,"hard":11825,"impoppable":13140}},{"when":"attacker","tower":"alchemist","name":"Alchemist","code":"3-0-0","up":"Berserker Brew","why":"Berserker Brew: more damage, pierce, range and speed","url":"monkeys/alchemist/","prices":{"easy":2160,"medium":2550,"hard":2755,"impoppable":3060}},{"when":"attacker","tower":"village","name":"Monkey Village","code":"2-0-0","up":"Jungle Drums","why":"Jungle Drums: everything in range attacks faster","url":"monkeys/village/","prices":{"easy":2635,"medium":3100,"hard":3345,"impoppable":3720}},{"when":"primary","tower":"village","name":"Monkey Village","code":"3-0-0","up":"Primary Training","why":"Primary Training: Primary towers get more pierce and range","url":"monkeys/village/","prices":{"easy":3315,"medium":3900,"hard":4210,"impoppable":4680}},{"when":"support","tower":"dart","name":"Dart Monkey","code":"0-2-4","up":"Sharp Shooter + Very Quick Shots","why":"Put strong attackers in its range: buffs only help towers nearby","url":"monkeys/dart/","prices":{"easy":2890,"medium":3405,"hard":3675,"impoppable":4090}}],"synPrices":{"alchemist:3-0-0":{"easy":2160,"medium":2550,"hard":2755,"impoppable":3060},"alchemist:4-0-0":{"easy":4580,"medium":5400,"hard":5835,"impoppable":6480},"village:2-0-0":{"easy":2635,"medium":3100,"hard":3345,"impoppable":3720},"village:3-0-0":{"easy":3315,"medium":3900,"hard":4210,"impoppable":4680},"engineer:0-4-0":{"easy":13040,"medium":15350,"hard":16580,"impoppable":18420},"engineer:0-5-0":{"easy":74240,"medium":87350,"hard":94340,"impoppable":104820},"sniper:0-5-2":{"easy":20090,"medium":23650,"hard":25545,"impoppable":28380},"alchemist:4-0-1":{"easy":5130,"medium":6050,"hard":6535,"impoppable":7260},"ninja:0-3-0":{"easy":1910,"medium":2250,"hard":2425,"impoppable":2700},"druid:1-0-4":{"easy":3480,"medium":4100,"hard":4435,"impoppable":4920},"dart:0-2-0":{"easy":415,"medium":490,"hard":530,"impoppable":590},"sub:2-0-0":{"easy":810,"medium":955,"hard":1030,"impoppable":1145},"village:0-0-2":{"easy":1870,"medium":2200,"hard":2375,"impoppable":2640},"village:0-2-0":{"easy":2930,"medium":3450,"hard":3725,"impoppable":4140},"village:0-3-0":{"easy":9305,"medium":10950,"hard":11825,"impoppable":13140},"village:2-3-0":{"easy":10920,"medium":12850,"hard":13875,"impoppable":15420},"alchemist:2-0-0":{"easy":970,"medium":1150,"hard":1245,"impoppable":1380},"bomb:0-0-0":{"easy":320,"medium":375,"hard":405,"impoppable":450},"ice:4-0-0":{"easy":3990,"medium":4700,"hard":5075,"impoppable":5640},"mortar:0-0-3":{"easy":1955,"medium":2300,"hard":2485,"impoppable":2760},"wizard:0-0-3":{"easy":1995,"medium":2350,"hard":2540,"impoppable":2820},"ninja:0-2-0":{"easy":890,"medium":1050,"hard":1130,"impoppable":1260},"bomb:0-0-2":{"easy":745,"medium":875,"hard":945,"impoppable":1050},"mortar:0-3-0":{"easy":2040,"medium":2400,"hard":2590,"impoppable":2880},"bomb:0-3-0":{"easy":1720,"medium":2025,"hard":2185,"impoppable":2430},"bomb:2-0-4":{"easy":4225,"medium":4975,"hard":5370,"impoppable":5970},"glue:0-2-2":{"easy":1405,"medium":1655,"hard":1785,"impoppable":1985},"ice:0-3-0":{"easy":3100,"medium":3650,"hard":3940,"impoppable":4380},"glue:0-2-4":{"easy":7865,"medium":9255,"hard":9995,"impoppable":11105},"farm:2-3-0":{"easy":6030,"medium":7100,"hard":7670,"impoppable":8520},"engineer:0-0-4":{"easy":4300,"medium":5070,"hard":5480,"impoppable":6085},"spike:0-4-2":{"easy":10580,"medium":12450,"hard":13445,"impoppable":14940},"sniper:0-0-0":{"easy":295,"medium":350,"hard":380,"impoppable":420}}}</script>
+  <script type="application/json" class="pk-data">{"id":"ninja","name":"Ninja Monkey","cls":"Magic","base":400,"mult":{"easy":0.85,"medium":1,"hard":1.08,"impoppable":1.2},"paths":[[{"n":"Ninja Discipline","c":350},{"n":"Sharp Shurikens","c":350},{"n":"Double Shot","c":900},{"n":"Bloonjitsu","c":2750},{"n":"Grandmaster Ninja","c":35000}],[{"n":"Distraction","c":250},{"n":"Counter-Espionage","c":400},{"n":"Shinobi Tactics","c":1200},{"n":"Bloon Sabotage","c":5200},{"n":"Grand Saboteur","c":22000}],[{"n":"Seeking Shuriken","c":300},{"n":"Caltrops","c":450},{"n":"Flash Bomb","c":2250},{"n":"Sticky Bomb","c":5000},{"n":"Master Bomber","c":40000}]],"pathNames":["Top path","Middle path","Bottom path"],"pop":{"camo":{"any":[["base"]],"note":"built-in camo detection"},"lead":{"any":[[{"path":2,"tier":3}]],"note":"Flash Bomb (every 4th throw, explosive stun)"},"purple":{"any":[["base"]]},"black":{"any":[["base"]]},"white":{"any":[["base"]]},"zebra":{"any":[["base"]]},"frozen":{"any":[[{"path":2,"tier":3}]]},"moab":{"any":[["base"]]},"ddt":{"any":[[{"path":0,"maxTier":2},{"path":1,"maxTier":2},{"path":2,"tier":3}]],"note":"derived rule would wrongly pass 0-0-3: Flash Bomb is explosive (no Black) and shurikens are Sharp (no Lead). Pair with Alchemist 2-x-x or MIB (synced with the game files, v56)","conditional":[{"req":[{"path":2,"tier":4}],"note":"Sticky Bomb charges vs DDT unverified"}],"derived":false},"bad":{"any":[["base"]],"note":"BAD takes damage like any MOAB-class; it is only immune to slows, stuns and knockback"},"fortified":{"any":[["base"]],"note":"Fortified is extra HP, never an immunity: anything that can damage the underlying bloon can damage its fortified version."},"bonuses":[{"vs":"bloons","from":{"path":2,"tier":3},"note":"Flash Bomb stun"},{"vs":"moab","from":{"path":2,"tier":4},"note":"Sticky Bomb"},{"vs":"moab","from":{"path":1,"tier":4},"note":"Bloon Sabotage halves bloon speed"},{"vs":"moab","from":{"path":1,"tier":5},"note":"Grand Saboteur weakens MOAB-class"}]},"popKnown":true,"nonAttacker":false,"labels":{"camo":"Camo","lead":"Lead","purple":"Purple","black":"Black","white":"White","zebra":"Zebra","frozen":"Frozen","moab":"MOAB-class","fortified":"Fortified","ddt":"DDT","bad":"BAD"},"fallback":[{"when":"no-camo","tower":"village","name":"Monkey Village","code":"0-2-0","up":"Radar Scanner","why":"Radar Scanner: every tower in range sees camo","url":"monkeys/village/","prices":{"easy":2935,"medium":3450,"hard":3725,"impoppable":4140}},{"when":"no-lead","tower":"alchemist","name":"Alchemist","code":"2-0-0","up":"Acidic Mixture Dip","why":"Acidic Mixture Dip: towers it dips pop Lead","url":"monkeys/alchemist/","prices":{"easy":985,"medium":1150,"hard":1245,"impoppable":1380}},{"when":"no-purple","tower":"village","name":"Monkey Village","code":"0-3-0","up":"Monkey Intelligence Bureau","why":"Monkey Intelligence Bureau: towers in range pop every Bloon type","url":"monkeys/village/","prices":{"easy":9310,"medium":10950,"hard":11825,"impoppable":13140}},{"when":"no-black","tower":"village","name":"Monkey Village","code":"0-3-0","up":"Monkey Intelligence Bureau","why":"Monkey Intelligence Bureau: towers in range pop every Bloon type","url":"monkeys/village/","prices":{"easy":9310,"medium":10950,"hard":11825,"impoppable":13140}},{"when":"no-ddt","tower":"village","name":"Monkey Village","code":"0-3-0","up":"Monkey Intelligence Bureau","why":"Radar + MIB in one Village: towers in range can hit DDTs","url":"monkeys/village/","prices":{"easy":9310,"medium":10950,"hard":11825,"impoppable":13140}},{"when":"attacker","tower":"alchemist","name":"Alchemist","code":"3-0-0","up":"Berserker Brew","why":"Berserker Brew: more damage, pierce, range and speed","url":"monkeys/alchemist/","prices":{"easy":2175,"medium":2550,"hard":2755,"impoppable":3060}},{"when":"attacker","tower":"village","name":"Monkey Village","code":"2-0-0","up":"Jungle Drums","why":"Jungle Drums: everything in range attacks faster","url":"monkeys/village/","prices":{"easy":2635,"medium":3100,"hard":3345,"impoppable":3720}},{"when":"primary","tower":"village","name":"Monkey Village","code":"3-0-0","up":"Primary Training","why":"Primary Training: Primary towers get more pierce and range","url":"monkeys/village/","prices":{"easy":3315,"medium":3900,"hard":4210,"impoppable":4680}},{"when":"support","tower":"dart","name":"Dart Monkey","code":"0-2-4","up":"Sharp Shooter + Very Quick Shots","why":"Put strong attackers in its range: buffs only help towers nearby","url":"monkeys/dart/","prices":{"easy":2895,"medium":3405,"hard":3675,"impoppable":4090}}],"synPrices":{"alchemist:3-0-0":{"easy":2175,"medium":2550,"hard":2755,"impoppable":3060},"alchemist:4-0-0":{"easy":4600,"medium":5400,"hard":5835,"impoppable":6480},"village:2-0-0":{"easy":2635,"medium":3100,"hard":3345,"impoppable":3720},"village:3-0-0":{"easy":3315,"medium":3900,"hard":4210,"impoppable":4680},"engineer:0-4-0":{"easy":13055,"medium":15350,"hard":16580,"impoppable":18420},"engineer:0-5-0":{"easy":74255,"medium":87350,"hard":94340,"impoppable":104820},"sniper:0-5-2":{"easy":20115,"medium":23650,"hard":25545,"impoppable":28380},"alchemist:4-0-1":{"easy":5155,"medium":6050,"hard":6535,"impoppable":7260},"ninja:0-3-0":{"easy":1915,"medium":2250,"hard":2425,"impoppable":2700},"druid:1-0-4":{"easy":3490,"medium":4100,"hard":4435,"impoppable":4920},"dart:0-2-0":{"easy":415,"medium":490,"hard":530,"impoppable":590},"sub:2-0-0":{"easy":810,"medium":955,"hard":1030,"impoppable":1145},"village:0-0-2":{"easy":1870,"medium":2200,"hard":2375,"impoppable":2640},"village:0-2-0":{"easy":2935,"medium":3450,"hard":3725,"impoppable":4140},"village:0-3-0":{"easy":9310,"medium":10950,"hard":11825,"impoppable":13140},"village:2-3-0":{"easy":10925,"medium":12850,"hard":13875,"impoppable":15420},"alchemist:2-0-0":{"easy":985,"medium":1150,"hard":1245,"impoppable":1380},"bomb:0-0-0":{"easy":320,"medium":375,"hard":405,"impoppable":450},"ice:4-0-0":{"easy":4000,"medium":4700,"hard":5075,"impoppable":5640},"mortar:0-0-3":{"easy":1955,"medium":2300,"hard":2485,"impoppable":2760},"wizard:0-0-3":{"easy":2000,"medium":2350,"hard":2540,"impoppable":2820},"ninja:0-2-0":{"easy":895,"medium":1050,"hard":1130,"impoppable":1260},"bomb:0-0-2":{"easy":745,"medium":875,"hard":945,"impoppable":1050},"mortar:0-3-0":{"easy":2040,"medium":2400,"hard":2590,"impoppable":2880},"bomb:0-3-0":{"easy":1725,"medium":2025,"hard":2185,"impoppable":2430},"bomb:2-0-4":{"easy":4235,"medium":4975,"hard":5370,"impoppable":5970},"glue:0-2-2":{"easy":1410,"medium":1655,"hard":1785,"impoppable":1985},"ice:0-3-0":{"easy":3105,"medium":3650,"hard":3940,"impoppable":4380},"glue:0-2-4":{"easy":7870,"medium":9255,"hard":9995,"impoppable":11105},"farm:2-3-0":{"easy":6040,"medium":7100,"hard":7670,"impoppable":8520},"engineer:0-0-4":{"easy":4315,"medium":5070,"hard":5480,"impoppable":6085},"spike:0-4-2":{"easy":10585,"medium":12450,"hard":13445,"impoppable":14940},"sniper:0-0-0":{"easy":300,"medium":350,"hard":380,"impoppable":420}}}</script>
 </section>
 <section class="panel" aria-labelledby="up">
   <h2 class="panel-h" id="up">Upgrades</h2>
@@ -174,13 +173,13 @@
         <li class="up" id="u-1-1">
           <span class="pips" aria-hidden="true"><i class="pip on"></i><i class="pip"></i><i class="pip"></i><i class="pip"></i><i class="pip"></i></span>
           <span class="up-name">Ninja Discipline</span>
-          <span class="up-meta"><span class="up-cost"><span class="price" data-easy="$295" data-medium="$350" data-hard="$380" data-impoppable="$420">$350</span></span> <span class="up-xp" title="XP to unlock">150 XP</span></span>
+          <span class="up-meta"><span class="up-cost"><span class="price" data-easy="$300" data-medium="$350" data-hard="$380" data-impoppable="$420">$350</span></span> <span class="up-xp" title="XP to unlock">150 XP</span></span>
           <code class="xcode up-code">1-0-0</code>
 <span class="up-eff">Faster attacks, more range</span>        </li>
         <li class="up" id="u-1-2">
           <span class="pips" aria-hidden="true"><i class="pip on"></i><i class="pip on"></i><i class="pip"></i><i class="pip"></i><i class="pip"></i></span>
           <span class="up-name">Sharp Shurikens</span>
-          <span class="up-meta"><span class="up-cost"><span class="price" data-easy="$295" data-medium="$350" data-hard="$380" data-impoppable="$420">$350</span></span> <span class="up-xp" title="XP to unlock">550 XP</span></span>
+          <span class="up-meta"><span class="up-cost"><span class="price" data-easy="$300" data-medium="$350" data-hard="$380" data-impoppable="$420">$350</span></span> <span class="up-xp" title="XP to unlock">550 XP</span></span>
           <code class="xcode up-code">2-0-0</code>
 <span class="up-eff">+pierce</span>        </li>
         <li class="up" id="u-1-3">
@@ -192,7 +191,7 @@
         <li class="up" id="u-1-4">
           <span class="pips" aria-hidden="true"><i class="pip on"></i><i class="pip on"></i><i class="pip on"></i><i class="pip on"></i><i class="pip"></i></span>
           <span class="up-name">Bloonjitsu</span>
-          <span class="up-meta"><span class="up-cost"><span class="price" data-easy="$2,335" data-medium="$2,750" data-hard="$2,970" data-impoppable="$3,300">$2,750</span></span> <span class="up-xp" title="XP to unlock">16,000 XP</span></span>
+          <span class="up-meta"><span class="up-cost"><span class="price" data-easy="$2,340" data-medium="$2,750" data-hard="$2,970" data-impoppable="$3,300">$2,750</span></span> <span class="up-xp" title="XP to unlock">16,000 XP</span></span>
           <code class="xcode up-code">4-0-0</code>
 <span class="up-eff">Throws 5 shurikens</span>        </li>
         <li class="up up-t5" id="u-1-5">
@@ -209,7 +208,7 @@
         <li class="up" id="u-2-1">
           <span class="pips" aria-hidden="true"><i class="pip on"></i><i class="pip"></i><i class="pip"></i><i class="pip"></i><i class="pip"></i></span>
           <span class="up-name">Distraction</span>
-          <span class="up-meta"><span class="up-cost"><span class="price" data-easy="$210" data-medium="$250" data-hard="$270" data-impoppable="$300">$250</span></span> <span class="up-xp" title="XP to unlock">200 XP</span></span>
+          <span class="up-meta"><span class="up-cost"><span class="price" data-easy="$215" data-medium="$250" data-hard="$270" data-impoppable="$300">$250</span></span> <span class="up-xp" title="XP to unlock">200 XP</span></span>
           <code class="xcode up-code">0-1-0</code>
 <span class="up-eff">Chance to knock Bloons back</span>        </li>
         <li class="up" id="u-2-2">
@@ -250,13 +249,13 @@
         <li class="up" id="u-3-2">
           <span class="pips" aria-hidden="true"><i class="pip on"></i><i class="pip on"></i><i class="pip"></i><i class="pip"></i><i class="pip"></i></span>
           <span class="up-name">Caltrops</span>
-          <span class="up-meta"><span class="up-cost"><span class="price" data-easy="$380" data-medium="$450" data-hard="$485" data-impoppable="$540">$450</span></span> <span class="up-xp" title="XP to unlock">500 XP</span></span>
+          <span class="up-meta"><span class="up-cost"><span class="price" data-easy="$385" data-medium="$450" data-hard="$485" data-impoppable="$540">$450</span></span> <span class="up-xp" title="XP to unlock">500 XP</span></span>
           <code class="xcode up-code">0-0-2</code>
 <span class="up-eff">Drops caltrops on the track</span>        </li>
         <li class="up" id="u-3-3">
           <span class="pips" aria-hidden="true"><i class="pip on"></i><i class="pip on"></i><i class="pip on"></i><i class="pip"></i><i class="pip"></i></span>
           <span class="up-name">Flash Bomb</span>
-          <span class="up-meta"><span class="up-cost"><span class="price" data-easy="$1,910" data-medium="$2,250" data-hard="$2,430" data-impoppable="$2,700">$2,250</span></span> <span class="up-xp" title="XP to unlock">2,500 XP</span></span>
+          <span class="up-meta"><span class="up-cost"><span class="price" data-easy="$1,915" data-medium="$2,250" data-hard="$2,430" data-impoppable="$2,700">$2,250</span></span> <span class="up-xp" title="XP to unlock">2,500 XP</span></span>
           <code class="xcode up-code">0-0-3</code>
 <span class="up-eff">Bombs that stun groups. The flash bomb's explosion is Normal damage that can damage every Bloon type, so it pops Lead.</span>        </li>
         <li class="up" id="u-3-4">
@@ -286,43 +285,43 @@
       <td class="nowrap"><button type="button" class="linkbtn" data-set-cross="4-0-1" title="Show 4-0-1 in the picker"><span class="xgrid" aria-hidden="true"><span><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class=""></i></span><span><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i></span><span><i class="on"></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i></span></span><code class="xcode">4-0-1</code></button></td>
       <td>Bloonjitsu w/ Seeking Shuriken <span class="tag tag-banana" title="The tower guide recommends it">top pick</span></td>
       <td class="wrapcell">Bloonjitsu with seeking</td>
-      <td class="n"><b><span class="price" data-easy="$4,285" data-medium="$5,050" data-hard="$5,455" data-impoppable="$6,060">$5,050</span></b></td>
+      <td class="n"><b><span class="price" data-easy="$4,300" data-medium="$5,050" data-hard="$5,455" data-impoppable="$6,060">$5,050</span></b></td>
     </tr>
     <tr>
       <td class="nowrap"><button type="button" class="linkbtn" data-set-cross="0-2-3" title="Show 0-2-3 in the picker"><span class="xgrid" aria-hidden="true"><span><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i></span><span><i class="on"></i><i class="on"></i><i class=""></i><i class=""></i><i class=""></i></span><span><i class="on"></i><i class="on"></i><i class="on"></i><i class=""></i><i class=""></i></span></span><code class="xcode">0-2-3</code></button></td>
       <td>Flash Bomb w/ Counter-Espionage <span class="tag tag-banana" title="The tower guide recommends it">top pick</span></td>
       <td class="wrapcell">Flash Bomb + decamo</td>
-      <td class="n"><b><span class="price" data-easy="$3,435" data-medium="$4,050" data-hard="$4,370" data-impoppable="$4,860">$4,050</span></b></td>
+      <td class="n"><b><span class="price" data-easy="$3,450" data-medium="$4,050" data-hard="$4,370" data-impoppable="$4,860">$4,050</span></b></td>
     </tr>
     <tr>
       <td class="nowrap"><button type="button" class="linkbtn" data-set-cross="0-4-2" title="Show 0-4-2 in the picker"><span class="xgrid" aria-hidden="true"><span><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i></span><span><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class=""></i></span><span><i class="on"></i><i class="on"></i><i class=""></i><i class=""></i><i class=""></i></span></span><code class="xcode">0-4-2</code></button></td>
       <td>Bloon Sabotage w/ Caltrops <span class="tag tag-banana" title="The tower guide recommends it">top pick</span></td>
       <td class="wrapcell">Bloon Sabotage (max 4-5)</td>
-      <td class="n"><b><span class="price" data-easy="$6,965" data-medium="$8,200" data-hard="$8,850" data-impoppable="$9,840">$8,200</span></b></td>
+      <td class="n"><b><span class="price" data-easy="$6,975" data-medium="$8,200" data-hard="$8,850" data-impoppable="$9,840">$8,200</span></b></td>
     </tr>
     <tr>
       <td class="nowrap"><button type="button" class="linkbtn" data-set-cross="0-2-4" title="Show 0-2-4 in the picker"><span class="xgrid" aria-hidden="true"><span><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i></span><span><i class="on"></i><i class="on"></i><i class=""></i><i class=""></i><i class=""></i></span><span><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class=""></i></span></span><code class="xcode">0-2-4</code></button></td>
       <td>Sticky Bomb <span class="tag tag-banana" title="The tower guide recommends it">top pick</span></td>
       <td class="wrapcell">Sticky Bomb</td>
-      <td class="n"><b><span class="price" data-easy="$7,685" data-medium="$9,050" data-hard="$9,770" data-impoppable="$10,860">$9,050</span></b></td>
+      <td class="n"><b><span class="price" data-easy="$7,700" data-medium="$9,050" data-hard="$9,770" data-impoppable="$10,860">$9,050</span></b></td>
     </tr>
     <tr>
       <td class="nowrap"><button type="button" class="linkbtn" data-set-cross="2-5-0" title="Show 2-5-0 in the picker"><span class="xgrid" aria-hidden="true"><span><i class="on"></i><i class="on"></i><i class=""></i><i class=""></i><i class=""></i></span><span><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on t5"></i></span><span><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i></span></span><code class="xcode">2-5-0</code></button></td>
       <td>Grand Saboteur <span class="tag tag-banana" title="The tower guide recommends it">top pick</span></td>
       <td class="wrapcell">Grand Saboteur</td>
-      <td class="n"><b><span class="price" data-easy="$25,620" data-medium="$30,150" data-hard="$32,560" data-impoppable="$36,180">$30,150</span></b></td>
+      <td class="n"><b><span class="price" data-easy="$25,635" data-medium="$30,150" data-hard="$32,560" data-impoppable="$36,180">$30,150</span></b></td>
     </tr>
     <tr>
       <td class="nowrap"><button type="button" class="linkbtn" data-set-cross="3-0-1" title="Show 3-0-1 in the picker"><span class="xgrid" aria-hidden="true"><span><i class="on"></i><i class="on"></i><i class="on"></i><i class=""></i><i class=""></i></span><span><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i></span><span><i class="on"></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i></span></span><code class="xcode">3-0-1</code></button></td>
       <td>Double Shot w/ Seeking</td>
       <td class="wrapcell">Cheap spam with AMD</td>
-      <td class="n"><b><span class="price" data-easy="$1,950" data-medium="$2,300" data-hard="$2,485" data-impoppable="$2,760">$2,300</span></b></td>
+      <td class="n"><b><span class="price" data-easy="$1,960" data-medium="$2,300" data-hard="$2,485" data-impoppable="$2,760">$2,300</span></b></td>
     </tr>
     <tr class="dim">
       <td class="nowrap"><button type="button" class="linkbtn" data-set-cross="0-2-5" title="Show 0-2-5 in the picker"><span class="xgrid" aria-hidden="true"><span><i class=""></i><i class=""></i><i class=""></i><i class=""></i><i class=""></i></span><span><i class="on"></i><i class="on"></i><i class=""></i><i class=""></i><i class=""></i></span><span><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on t5"></i></span></span><code class="xcode">0-2-5</code></button></td>
       <td>Master Bomber w/ Counter-Espionage</td>
       <td class="wrapcell">Self-contained MOAB killer with decamo</td>
-      <td class="n"><b><span class="price" data-easy="$41,685" data-medium="$49,050" data-hard="$52,970" data-impoppable="$58,860">$49,050</span></b></td>
+      <td class="n"><b><span class="price" data-easy="$41,700" data-medium="$49,050" data-hard="$52,970" data-impoppable="$58,860">$49,050</span></b></td>
     </tr>
     </tbody>
   </table>
@@ -395,7 +394,7 @@
     </nav>
     <div class="foot-legal">
       <p class="disclaimer"><b>Unofficial fan site.</b> Not affiliated with or endorsed by Ninja Kiwi. Bloons and Bloons TD 6 are their trademarks. No game art is used here.</p>
-      <p>Data: BTD6 v57.4, updated 2026-11-05 · Site 0.10.0 · Sources: <a href="https://www.bloonswiki.com/" rel="noopener">Bloons Wiki</a> (CC BY-SA), <a href="https://btd6index.win/" rel="noopener">BTD6 Index</a>, <a href="https://github.com/hemisemidemipresent/cyberquincy" rel="noopener">Cyber Quincy</a>, <a href="https://github.com/Btd6ModHelper/btd6-game-data" rel="noopener">BTD Mod Helper game data</a>, Ninja Kiwi patch notes.</p>
+      <p>Data: BTD6 v57.4, updated 2026-11-05 · Site 0.10.1 · Sources: <a href="https://www.bloonswiki.com/" rel="noopener">Bloons Wiki</a> (CC BY-SA), <a href="https://btd6index.win/" rel="noopener">BTD6 Index</a>, <a href="https://github.com/hemisemidemipresent/cyberquincy" rel="noopener">Cyber Quincy</a>, <a href="https://github.com/Btd6ModHelper/btd6-game-data" rel="noopener">BTD Mod Helper game data</a>, Ninja Kiwi patch notes.</p>
       <div class="seg theme-toggle" role="radiogroup" aria-label="Colour theme" hidden>
         <button type="button" role="radio" data-theme-set="auto" aria-checked="true">Auto</button>
         <button type="button" role="radio" data-theme-set="light" aria-checked="false">Light</button>
@@ -416,10 +415,10 @@
     <p class="search-hint" id="searchHint"><kbd>↑</kbd><kbd>↓</kbd> move · <kbd>Enter</kbd> open · <kbd>Esc</kbd> close</p>
   </form>
 </dialog>
-<script src="../../assets/search-core.js?v=0.10.0" defer></script>
-<script src="../../assets/site.js?v=0.10.0" defer></script>
-<script src="../../assets/prices.js?v=0.10.0" defer></script>
-<script src="../../assets/tools/synergy-rules.js?v=0.10.0" defer></script>
-<script src="../../assets/tools/synergy.js?v=0.10.0" defer></script><script src="../../assets/picker.js?v=0.10.0" defer></script>
+<script src="../../assets/search-core.js?v=0.10.1" defer></script>
+<script src="../../assets/site.js?v=0.10.1" defer></script>
+<script src="../../assets/prices.js?v=0.10.1" defer></script>
+<script src="../../assets/tools/synergy-rules.js?v=0.10.1" defer></script>
+<script src="../../assets/tools/synergy.js?v=0.10.1" defer></script><script src="../../assets/picker.js?v=0.10.1" defer></script>
 </body>
 </html>

@@ -96,6 +96,8 @@ ok(chimpsCash[6] === 650, 'CHIMPS starts with $650 at R6');
 const hard = C.baseCash(D, mode('hard')), half = C.baseCash(D, mode('half-cash'));
 ok(Math.abs((half[81] - 325) * 2 - (hard[81] - 650)) < 1e-6, 'Half Cash earns exactly half of Hard');
 ok(C.baseCash(D, mode('deflation'))[60] === 20000, 'Deflation stays at $20,000');
+ok(C.price(350, 0.85) === 300 && C.price(650, 0.85) === 555, 'Easy ties round up, as checked in game: Sniper $350 -> $300, Glue Splatter $650 -> $555');
+ok(C.price(3650, 0.85) === 3105 && C.price(250, 0.85) === 215 && C.price(200, 0.85) === 170 && C.price(200, 1.08) === 215 && C.price(315, 1.08) === 340, 'price rounding: other Easy ties round up, non-ties to the nearest $5');
 const r1 = C.simulate(D, { mapId: 'logs', modeId: 'chimps', noPower: true, steps: [] });
 ok(r1.rows.length === 95 && r1.rows[0].r === 6 && r1.rows[94].r === 100, 'CHIMPS timeline runs R6 to R100');
 ok(Math.abs(r1.rows.find((x) => x.r === 40).avail - 16250) < 1e-6, 'simulator row R40 avail = $16,250 with no buys');
