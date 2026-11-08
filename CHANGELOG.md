@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.10.2 (2026-11-08)
+Monkey Knowledge trees look like the game's, and My goals is easier to reach.
+- **Military, Magic and Support trees sit where the game draws them** (checked against in-game screenshots). Magic now runs SUPER Range, Lingering Magic, Magic Tricks from left to right, with Mo' Monkey Money beside Speedy Brewing. Extra Burny Stuff sits between Rapid Razors and Cheaper Maiming. Arrows bend like the game's. The 14-point rows of Military weren't in the screenshots, so their spots are a best guess. Primary, Heroes and Powers keep the layout worked out from the game files.
+- **A Goals button in the header** on every page, with the number of goals in progress. On narrower screens the More and Me labels drop to icons to make room.
+- **Stop tracking is a real button** in each goal's header bar. It no longer asks "are you sure"; an Undo comes up instead.
+
 ## 0.10.1 (2026-11-08)
 Two price and income facts settled in game and in the patch notes, and the site is ready for game images.
 - **Easy price ties round up.** A price that lands exactly $2.50 over a multiple of $5 now rounds up, everywhere on the site: Sniper $350 → $300 and Glue Splatter $650 → $555 on Easy, both checked in game. Other Easy prices change by $5 too, for example Monkey Bank $3,100 → $3,105 and Banana Farm $1,060 → $1,065. Medium, Hard and Impoppable prices don't change.

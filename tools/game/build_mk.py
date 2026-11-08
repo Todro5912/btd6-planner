@@ -31,6 +31,37 @@ SITE_TOWERS = {'dart', 'boomerang', 'bomb', 'tack', 'ice', 'glue', 'desperado', 
                'mortar', 'dartling', 'wizard', 'super', 'ninja', 'alchemist', 'druid', 'mermonkey', 'skywarden', 'farm',
                'spike', 'village', 'engineer', 'beast'}
 GAME_FILE = 'game file %s (v56.0)'
+# The game files carry no screen positions, so extract_knowledge.py lays trees out itself. These trees are placed the way
+# the game draws them instead (read off in-game screenshots by the site owner, 2026-11-08): {node: (row, col)}; a .5 col
+# sits between two columns, like the game's top nodes over a pair of children. Rows marked "guess" weren't on screen.
+GAME_LAYOUT = {
+    'Magic': {'bandRows': [0, 2, 4], 'cols': 8, 'nodes': {
+        'super-range': (0, 1), 'lingering-magic': (0, 4), 'magic-tricks': (0, 6),
+        'cheaper-doubles': (1, 0), 'heavy-knockback': (1, 1), 'hot-magic': (1, 4), 'speedy-brewing': (1, 6), 'mo-monkey-money': (1, 7),
+        'diversion-tactics': (2, 0), 'strike-down-the-false': (2, 1), 'warm-oak': (2, 3), 'flame-jet': (2, 5), 'strong-tonic': (2, 6),
+        'xray-ultra': (3, 1), 'cold-front': (3, 3), 'arcane-impale': (3, 5), 'acid-stability': (3, 6),
+        'deadly-tranquility': (4, 0), 'there-can-be-only-one': (4, 1), 'vine-rupture': (4, 3),
+        'tiny-tornadoes': (5, 3), 'mana-shield': (5, 5)}},
+    'Military': {'bandRows': [0, 2, 3, 5], 'cols': 8, 'nodes': {
+        'naval-upgrades': (0, 0.5), 'airforce-upgrades': (0, 3.5), 'elite-military-training': (0, 5), 'emergency-unlock': (0, 7),
+        'big-bunch': (1, 1), 'accelerated-aerodarts': (1, 3), 'ceramic-shock': (1, 6),
+        'breaking-ballistic': (2, 0), 'faster-takedowns': (2, 1), 'targeted-pineapples': (2, 3), 'rapid-razors': (2, 4),
+        'extra-burny-stuff': (2, 5), 'cheaper-maiming': (2, 6), 'gorgon-storm': (2, 7),
+        'quad-burst': (3, 0), 'trade-agreements': (3, 1), 'gun-coolant': (3, 3), 'paint-stripper': (3, 5), 'cross-the-streams': (3, 7),
+        'flanking-maneuvers': (4, 0), 'wingmonkey': (4, 2), 'aeronautic-subsidy': (4, 3), 'charged-chinooks': (4, 4),
+        'budget-battery': (4, 5), 'master-defender': (4, 6),
+        # 14-point rows: guess (below the screenshot)
+        'sub-admiral': (5, 0), 'military-conscription': (5, 1), 'door-gunner': (5, 4),
+        'big-bloon-sabotage': (6, 0), 'advanced-logistics': (6, 4)}},
+    'Support': {'bandRows': [0, 2, 4, 5], 'cols': 7, 'nodes': {
+        'flat-pack-buildings': (0, 0.5), 'one-more-spike': (0, 2.5),
+        'insider-trades': (1, 0), 'more-valuable-bananas': (1, 1), 'first-last-line-of-defense': (1, 3),
+        'bigger-banks': (2, 0), 'farm-subsidy': (2, 1), 'vigilant-sentries': (2, 2), 'monkey-education': (2, 5),
+        'backroom-deals': (3, 0), 'inland-revenue-streams': (3, 1), 'thicker-foams': (3, 2), 'very-shreddy': (3, 3), 'to-arms': (3, 5),
+        'better-sell-deals': (4, 0), 'healthy-bananas': (4, 1), 'big-traps': (4, 2), 'hi-value-mines': (4, 3),
+        'veteran-monkey-training': (4, 4), 'global-ability-cooldowns': (4, 6),
+        'bank-deposits': (5, 0), 'paragon-of-power': (5, 4)}},
+}
 # The 29 nodes the site shipped before 0.10 (data/monkey-knowledge.json at 0.9.1): their effect text, fx and source stay
 # exactly as they were, so saved profiles and the 0.9 tests behave the same. New fx keys are added beside them.
 LEGACY = {
@@ -164,6 +195,13 @@ def fx_for(n, by_id):
     return fx, ('applied' if applied else 'noted')
 
 
+def game_layout(tree, site_id, auto):
+    pos = GAME_LAYOUT.get(tree, {}).get('nodes', {}).get(site_id)
+    if pos is None:
+        return {'row': auto['row'], 'col': auto['col']}
+    return {'row': pos[0], 'col': pos[1]}
+
+
 def main():
     G = load(SRC)
     old_by = LEGACY
@@ -190,7 +228,7 @@ def main():
             'ptsNeeded': n['pts'],
             'mm': n['mm'],
             'pre': [site_of[p] for p in n['pre']],
-            'layout': {'row': n['layout']['row'], 'col': n['layout']['col']},
+            'layout': game_layout(n['tree'], sid, n['layout']),
             'tags': n['tags'],
         }
         if fx:
@@ -204,6 +242,13 @@ def main():
     tree_info = {}
     for t, v in G['treeInfo'].items():
         tree_info[t] = {'rows': v['rows'], 'cols': v['cols'], 'bands': v['bands'], 'bandRows': v['bandRows'], 'nodes': v['nodes']}
+        if t in GAME_LAYOUT:
+            gl = GAME_LAYOUT[t]
+            ids = {r['id'] for r in nodes if r['tree'] == t}
+            if set(gl['nodes']) != ids:
+                raise SystemExit(f'GAME_LAYOUT[{t}] nodes differ from the game files: {sorted(set(gl["nodes"]) ^ ids)}')
+            tree_info[t].update(rows=1 + max(r for r, _ in gl['nodes'].values()), cols=gl['cols'], bandRows=gl['bandRows'],
+                                layout='game')
     out = {
         'about': 'All 134 Monkey Knowledge nodes, built by tools/game/build_mk.py from data/game/knowledge.json (game files v56.0). '
                  'fx = effects the tools apply (use "applied") or carry for later (use "noted"). Ids are the game ids in kebab case.',

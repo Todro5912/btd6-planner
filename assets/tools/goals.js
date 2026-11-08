@@ -12,6 +12,24 @@
 
   const pick = { tower: 'dart', target: 'paragon' };
   let flash = null; /* {id, text}: a line shown on one card after an action */
+  let removed = null; /* {goal, index, name}: the goal you just stopped tracking, so it can come back */
+  function stopTracking(id, name) {
+    const i = P.get().goals.findIndex((g) => g.id === id);
+    if (i < 0) return;
+    removed = { goal: P.get().goals[i], index: i, name };
+    P.removeGoal(id);
+    render();
+    const n = document.getElementById('gl-undo');
+    if (n) n.focus({ preventScroll: false });
+  }
+  function undoStop() {
+    const r = removed;
+    removed = null;
+    if (!r) return;
+    P.update((st) => { if (!st.goals.some((g) => g.id === r.goal.id)) st.goals.splice(Math.min(r.index, st.goals.length), 0, r.goal); });
+    focusId = r.goal.id;
+    render();
+  }
   let focusId = null;
   let fullMsg = false; /* the page keeps P.GOALS_MAX goals: say so instead of dropping your oldest */
 
@@ -44,10 +62,20 @@
     const views = s.goals.map((g) => C.goalView(D, g, s.towers[g.tower], s.settings)).filter(Boolean);
     views.forEach((v) => P.cacheGoal(v.g.id, { name: v.name, tower: v.t.name, pct: v.pct, done: v.complete, next: v.next ? v.next.name : '', runs: v.runsLeft,
       total: v.total, remaining: v.remaining, perRun: v.perRun }));
+    const badge = document.querySelector('[data-goal-count]');
+    if (badge) { const n = views.filter((v) => !v.complete).length; badge.textContent = String(n); badge.hidden = !n; }
     /* keep focus (without reopening a picker) and open panels across the re-render */
     const snap = U.snapFocus();
     U.clear(root);
     if (fullMsg) root.appendChild(h('p', { class: 'ti-notice', role: 'status' }, ['You track ' + s.goals.length + ' goals, the most this page keeps. Clear one you have finished (or stop tracking one) to add another. ', h('button', { type: 'button', class: 'btn btn-small', onclick: () => { fullMsg = false; render(); } }, 'OK')]));
+    if (removed) {
+      root.appendChild(h('div', { class: 'ti-notice gl-undo', id: 'gl-undo', role: 'status', tabindex: '-1' }, [
+        h('p', null, ['Stopped tracking ', h('b', null, removed.name), '. Your unlocks and banked XP stay.']),
+        h('div', { class: 'ti-acts' }, [
+          h('button', { type: 'button', class: 'btn btn-small btn-banana', onclick: undoStop }, 'Undo'),
+          h('button', { type: 'button', class: 'btn btn-small', onclick: () => { removed = null; render(); } }, 'OK')]),
+      ]));
+    }
     if (!views.length) root.appendChild(addPanel(true));
     views.forEach((v) => root.appendChild(goalCard(v, s)));
     if (views.length) root.appendChild(addPanel(false));
@@ -118,7 +146,7 @@
         h('p', { class: 'ti-alert-s' }, 'Go build it. Then pick your next goal below.'),
         h('div', { class: 'ti-share' }, [
           h('a', { class: 'btn btn-small', href: '../advisor/#hero=auto&t=' + t.id }, 'Plan a game with it'),
-          h('button', { type: 'button', class: 'btn btn-small', onclick: () => { P.removeGoal(id); render(); } }, 'Clear this goal'),
+          h('button', { type: 'button', class: 'btn btn-small', onclick: () => stopTracking(id, v.name) }, 'Clear this goal'),
         ]),
       ]));
     } else {
@@ -176,10 +204,12 @@
         h('button', { type: 'button', class: 'linkbtn', onclick: () => { const n = C.unlockStep(P.tower(t.id), v.next, true); if (n) { P.setTower(t.id, n); flash = { id, text: 'Marked ' + v.next.name + ' as unlocked.' }; render(); } } }, 'Mark it unlocked'),
         ' (no XP spent). Or set every tier you have in ', h('a', { href: '../profile/#tower=' + t.id }, 'My profile'), '.']));
     }
-    kids.push(h('p', { class: 'ti-note gl-foot' }, [h('a', { href: towerUrl(t.id) }, t.name + ' page'), ' · ',
-      h('button', { type: 'button', class: 'linkbtn', onclick: () => { if (window.confirm('Stop tracking ' + v.name + '? Your unlocks and banked XP stay.')) { P.removeGoal(id); render(); } } }, 'Stop tracking')]));
+    kids.push(h('p', { class: 'ti-note gl-foot' }, [h('a', { href: towerUrl(t.id) }, t.name + ' page')]));
     return h('section', { class: 'panel gl-card' + (v.complete ? ' gl-complete' : ''), id: 'goal-' + id, 'aria-labelledby': 'goal-h-' + id }, [
-      h('h2', { class: 'panel-h', id: 'goal-h-' + id }, [v.name, h('small', null, t.name + ' · ' + KIND[v.target.kind])]),
+      h('div', { class: 'gl-head' }, [
+        h('h2', { class: 'panel-h', id: 'goal-h-' + id }, [v.name, h('small', null, t.name + ' · ' + KIND[v.target.kind])]),
+        h('button', { type: 'button', class: 'btn btn-small btn-cream gl-stop', 'aria-label': 'Stop tracking ' + v.name, 'data-fk': 'stop-' + id, onclick: () => stopTracking(id, v.name) }, 'Stop tracking'),
+      ]),
       h('div', { class: 'ti-panel-b ti gl-b' }, kids),
     ]);
   }

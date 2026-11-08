@@ -171,7 +171,8 @@
   }
 
   /* ---------- Monkey Knowledge: the game's six trees ---------- */
-  /* Rows follow the point gates (data/monkey-knowledge.json layout, from the game files), arrows are prerequisites.
+  /* Rows follow the point gates (data/monkey-knowledge.json layout). Military, Magic and Support sit where the game draws
+     them; the other trees are laid out from the game files' prerequisites. Arrows are prerequisites.
      A node needs every node it has an arrow from (checked in game by the site owner, 2026-11-07), and enough points already
      spent in its tree. */
   const preMet = (on, n) => (n.pre || []).every((p) => on[p]);
@@ -261,6 +262,22 @@
     return { nodes, rows, cols, bandRows, bands: ti.bands || [0], x, y,
       width: x(cols) - TILE.gx + TILE.pad, height: y(rows - 1) + TILE.h + TILE.pad + 6 };
   }
+  /* an L-shaped arrow that crosses no other tile, or null: first out of the parent's side and down into the child's top,
+     then down out of the parent's bottom and into the child's side */
+  function mkElbow(g, p, n) {
+    const box = (m) => ({ l: g.x(m.layout.col) - 3, r: g.x(m.layout.col) + TILE.w + 3, t: g.y(m.layout.row) - 3, b: g.y(m.layout.row) + TILE.h + 3 });
+    const others = g.nodes.filter((m) => m !== p && m !== n).map(box);
+    const hits = (x1, y1, x2, y2) => others.some((o) => Math.max(x1, x2) > o.l && Math.min(x1, x2) < o.r && Math.max(y1, y2) > o.t && Math.min(y1, y2) < o.b);
+    const right = n.layout.col > p.layout.col;
+    const px = g.x(p.layout.col), py = g.y(p.layout.row), nx = g.x(n.layout.col), ny = g.y(n.layout.row);
+    const cx = nx + TILE.w / 2, pmid = py + TILE.h / 2;
+    const side = right ? px + TILE.w : px;
+    if ((right ? cx > side + 4 : cx < side - 4) && !hits(side, pmid, cx, pmid) && !hits(cx, pmid, cx, ny)) return 'M' + side + ',' + pmid + ' H' + cx + ' V' + (ny - 2);
+    const pcx = px + TILE.w / 2, nmid = ny + TILE.h / 2;
+    const nside = right ? nx - 2 : nx + TILE.w + 2;
+    if ((right ? nx > pcx + 4 : nx + TILE.w < pcx - 4) && !hits(pcx, py + TILE.h, pcx, nmid) && !hits(pcx, nmid, nside, nmid)) return 'M' + pcx + ',' + (py + TILE.h) + ' V' + nmid + ' H' + nside;
+    return null;
+  }
   function mkArrows(g, on) {
     const svg = sv('svg', { class: 'mk-lines', width: g.width, height: g.height, viewBox: '0 0 ' + g.width + ' ' + g.height, 'aria-hidden': 'true', focusable: 'false' });
     const defs = sv('defs');
@@ -285,7 +302,15 @@
       const x2 = g.x(n.layout.col) + TILE.w / 2, y2 = g.y(n.layout.row) - 2;
       const midTop = y2 - TILE.gy / 2;
       let d;
-      if (n.layout.row - p.layout.row === 1) d = 'M' + x1 + ',' + y1 + ' V' + (y1 + (midTop - y1) / 2 + 2) + ' H' + x2 + ' V' + y2;
+      const clearBelow = () => !g.nodes.some((m) => m.layout.col === p.layout.col && m.layout.row > p.layout.row && m.layout.row < n.layout.row);
+      if (n.layout.row === p.layout.row) {
+        /* same row (the game draws a few side by side): a short arrow from one tile's side to the other's */
+        const right = n.layout.col > p.layout.col;
+        const yy = g.y(n.layout.row) + TILE.h / 2;
+        d = 'M' + (g.x(p.layout.col) + (right ? TILE.w : 0)) + ',' + yy + ' H' + (g.x(n.layout.col) + (right ? -2 : TILE.w + 2));
+      } else if (n.layout.col === p.layout.col && clearBelow()) d = 'M' + x1 + ',' + y1 + ' V' + y2; /* straight down the column, like the game */
+      else if ((d = mkElbow(g, p, n))) { /* the game's L-shaped arrows: out of a side and down, or down and into a side */ }
+      else if (n.layout.row - p.layout.row === 1) d = 'M' + x1 + ',' + y1 + ' V' + (y1 + (midTop - y1) / 2 + 2) + ' H' + x2 + ' V' + y2;
       else {
         /* longer arrows run down the gap between columns, so they never cross a tile */
         const gut = (x2 >= x1 ? g.x(Math.max(p.layout.col, n.layout.col - 1)) + TILE.w + TILE.gx / 2 : g.x(n.layout.col + 1) - TILE.gx / 2);

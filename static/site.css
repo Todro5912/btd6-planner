@@ -178,7 +178,11 @@ kbd { font-family: var(--font-body); font-size: .8em; font-weight: 700; padding:
 .more-menu { order: 6; }
 .tabs { order: 4; }
 .mebtn { order: 5; }
-.mebtn.on { background: var(--banana); color: var(--ink); }
+.mebtn.on, .goalbtn.on { background: var(--banana); color: var(--ink); }
+.goalbtn { order: 5; position: relative; }
+.gbadge { position: absolute; top: -9px; right: -9px; min-width: 22px; height: 22px; padding: 0 5px; display: inline-flex; align-items: center; justify-content: center; font-size: 12.5px; font-weight: 800; line-height: 1; color: #1C1A17; background: var(--banana); border: 2px solid var(--ink); border-radius: 11px; }
+.gbadge[hidden] { display: none; }
+.goalbtn.on .gbadge { background: var(--panel); color: var(--text); }
 @media (max-width: 1080px) {
   .top-search { display: none; }
   .searchbtn { display: inline-flex; margin-left: auto; }
@@ -187,6 +191,7 @@ kbd { font-family: var(--font-body); font-size: .8em; font-weight: 700; padding:
   .top-in { flex-wrap: wrap; padding: 8px 16px 10px; gap: 10px 10px; }
   .brand { order: 1; }
   .searchbtn { order: 2; }
+  .goalbtn { order: 3; }
   .mebtn { order: 3; }
   .more-menu { order: 3; }
   .tabs { order: 4; flex: 1 0 100%; gap: 6px; }
@@ -935,14 +940,20 @@ span.threat { background: var(--paper-2); color: var(--text); box-shadow: none; 
 td .btn-small { white-space: nowrap; }
 .btn-banana { background: var(--banana); color: #1C1A17; }
 .mi-mine-edit { margin-left: auto; font-size: 13.5px; }
-/* the "Me" button makes four items on the top row: keep them on one line down to 320px */
-@media (max-width: 399px) {
-  .top-in { gap: 10px 6px; padding-left: 12px; padding-right: 12px; }
+/* the Goals and "Me" buttons make five items on the top row: keep them on one line down to 320px */
+@media (max-width: 459px) {
+  .tabs { gap: 5px; }
+  .top-in { gap: 10px 5px; padding-left: 12px; padding-right: 12px; }
   .searchbtn, .menubtn { padding: 5px 7px; }
   .wordmark { font-size: 20px; }
 }
-@media (max-width: 340px) {
+@media (max-width: 389px) {
   .brand-mark { display: none; }
+}
+@media (max-width: 340px) {
+  .top-in { gap: 10px 4px; }
+  .searchbtn, .menubtn { padding: 5px 6px; }
+  .wordmark { font-size: 18px; }
 }
 @media (max-width: 370px) { .tab { padding: 4px 5px; font-size: 13px; letter-spacing: -.01em; } .tabs { gap: 4px; } .caret { margin-left: 0; } }
 @media (max-width: 340px) { .tab { padding: 4px 4px; font-size: 12.5px; } .tabs { gap: 3px; } .top-in { padding-left: 10px; padding-right: 10px; } }
@@ -968,3 +979,12 @@ td .btn-small { white-space: nowrap; }
 .gimg-up { width: 48px; height: 48px; border-width: 2px; margin-right: 6px; }
 .gimg-para { width: 96px; height: 96px; margin-right: 10px; }
 @media (max-width: 600px) { .gimg-head, .gimg-para { width: 64px; height: 64px; } .gimg-thumb { display: none; } }
+
+/* header: with the Goals button the top row runs out of room on mid-size screens, so labels drop in this order:
+   More (the ≡ icon says it), then Me, then Goals. Phones (≤860px) already show icons only. */
+@media (max-width: 1400px) { .more-menu .sl { display: none; } }
+@media (max-width: 1240px) and (min-width: 1081px) { .mebtn .sl { display: none; } }
+@media (max-width: 1040px) and (min-width: 861px) { .mebtn .sl, .goalbtn .sl { display: none; } .top-in { gap: 10px; } .tabs { gap: 6px; } .tab { padding: 5px 10px; } }
+.top-search { min-width: 120px; }
+@media (max-width: 940px) and (min-width: 861px) { .wordmark { font-size: 23px; } .tab { padding: 5px 8px; } .menubtn, .searchbtn { padding: 5px 8px; } }
+.top-search input { width: 100%; }

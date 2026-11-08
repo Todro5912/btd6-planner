@@ -2,6 +2,8 @@
 {% macro icon(name, cls='ico') -%}
 {%- if name == 'search' -%}
 <svg class="{{ cls }}" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="10" cy="10" r="6.5" fill="none" stroke="currentColor" stroke-width="3"/><path d="M15 15l6 6" stroke="currentColor" stroke-width="3.4" stroke-linecap="square"/></svg>
+{%- elif name == 'goal' -%}
+<svg class="{{ cls }}" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 2.5v19" stroke="currentColor" stroke-width="3" stroke-linecap="square"/><path d="M7.5 4h12l-3.2 4.25L19.5 12.5h-12z" fill="currentColor"/></svg>
 {%- elif name == 'yes' -%}
 <svg class="{{ cls }} ico-yes" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M3.5 10.5l4 4 9-9" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="square"/></svg>
 {%- elif name == 'no' -%}

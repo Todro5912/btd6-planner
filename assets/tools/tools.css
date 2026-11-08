@@ -472,3 +472,13 @@ button.ti-pip { cursor: pointer; width: 34px; height: 34px; }
 @media (max-width: 720px) { .ti .seg { display: flex; } .ti .seg > button { flex: 1 1 auto; justify-content: center; } .ti-field > .seg { justify-self: stretch; } }
 .prf-cls-tabs { justify-self: start; }
 .prf-cls-tabs small { margin-left: 2px; }
+/* My goals: "Stop tracking" sits in each goal's header bar, with Undo instead of a confirm box */
+.panel > .gl-head { display: flex; align-items: center; gap: 8px 10px; flex-wrap: wrap; background: var(--wood); border-bottom: var(--line) solid var(--ink); border-radius: 3px 3px 0 0; padding: 0 10px 0 0; margin: 0 0 12px; }
+.gl-head .panel-h { flex: 1 1 260px; border-bottom: 0; margin-bottom: 0; background: none; }
+.gl-complete > .gl-head { background: var(--ok); }
+.gl-complete .gl-head .panel-h { background: none; }
+.gl-stop { margin: 6px 0 6px auto; }
+.gl-undo { grid-template-columns: minmax(0, 1fr) auto; align-items: center; }
+.gl-undo > div { display: flex; gap: 8px; }
+.gl-undo:focus { outline: 3px solid var(--banana); outline-offset: 2px; }
+@media (max-width: 520px) { .panel > .gl-head { padding: 0 8px 8px 0; } .gl-stop { margin: 0 0 0 14px; } .gl-undo { grid-template-columns: 1fr; } }

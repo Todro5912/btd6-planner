@@ -1,6 +1,6 @@
 {
  "generator": "tools/build_site.py",
- "version": "0.10.1",
+ "version": "0.10.2",
  "files": [
   "404.html",
   "a-z/index.html",

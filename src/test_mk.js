@@ -33,8 +33,13 @@ module.exports = function (ok, D, C) {
     ok(byId['more-cash'].ptsNeeded === 10 && byId['more-cash'].mm === 1000 && byId['more-cash'].pre.join() === 'bonus-glue-gunner,bonus-monkey', 'More Cash: 10 pts, 1,000 MM, needs both free-tower nodes (GD MoreCash.json)');
     ok(byId['mo-monkey-money'].pre[0] === 'speedy-brewing' && byId['speedy-brewing'].pre[0] === 'magic-tricks', 'Mo\' Monkey Money comes after Speedy Brewing, after Magic Tricks (GD Magic/)');
     const cell = {};
+    const mag = (id) => byId[id].layout;
+    ok(mag('lingering-magic').col < mag('magic-tricks').col && mag('super-range').col < mag('lingering-magic').col && mag('speedy-brewing').row === mag('mo-monkey-money').row,
+      'Magic tree in the game\'s order: SUPER Range, Lingering Magic, Magic Tricks; Mo\' Monkey Money beside Speedy Brewing (checked in game)');
+    ok(mag('extra-burny-stuff').col > mag('rapid-razors').col && mag('extra-burny-stuff').col < mag('cheaper-maiming').col && mag('farm-subsidy').row === mag('bigger-banks').row,
+      'Military: Extra Burny Stuff sits between Rapid Razors and Cheaper Maiming, as in the game');
     const clash = D.mk.filter((n) => { const k = n.tree + n.layout.row + '.' + n.layout.col; if (cell[k]) return true; cell[k] = 1; return false; });
-    ok(!clash.length && D.mk.every((n) => n.pre.every((p) => byId[p].layout.row < n.layout.row)), 'tree layout: one node per cell, every prerequisite sits above', clash.map((n) => n.id));
+    ok(!clash.length && D.mk.every((n) => n.pre.every((p) => byId[p].layout.row < n.layout.row || (byId[p].layout.row === n.layout.row && Math.abs(byId[p].layout.col - n.layout.col) === 1))), 'tree layout: one node per cell, every prerequisite sits above (or right beside it, as the game draws Mo\' Monkey Money and Wingmonkey)', clash.map((n) => n.id));
   }
 
   console.log('Monkey Knowledge effects the tools apply (GD values)');

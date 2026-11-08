@@ -42,6 +42,7 @@
       <kbd aria-hidden="true">/</kbd>
     </form>
     <a class="searchbtn" href="{{ root }}a-z/" data-search-open aria-haspopup="dialog" aria-label="Search (press /)">{{ ui.icon('search') }}</a>
+    <a class="menubtn goalbtn{% if path == 'tools/goals/' %} on{% endif %}" href="{{ root }}tools/goals/" aria-label="My goals"{% if path == 'tools/goals/' %} aria-current="page"{% endif %}>{{ ui.icon('goal') }}<span class="sl">Goals</span><span class="gbadge" data-goal-count hidden></span></a>
     <a class="menubtn mebtn{% if section == 'profile' %} on{% endif %}" href="{{ root }}tools/profile/" aria-label="My profile"{% if section == 'profile' %} aria-current="page"{% endif %}>{{ ui.icon('me') }}<span class="sl">Me</span></a>
     <details class="menu more-menu" data-menu>
       <summary class="menubtn" aria-label="More pages">{{ ui.icon('more') }}<span class="sl">More</span></summary>

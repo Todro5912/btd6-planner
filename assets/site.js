@@ -143,3 +143,17 @@
   var q = new URLSearchParams(location.search).get('q');
   if (q) open(q);
 })();
+
+/* header "Goals" button: how many goals are still in progress (from the shared progress store) */
+(function () {
+  var b = document.querySelector('[data-goal-count]');
+  var P = window.MonkeyIntel && window.MonkeyIntel.progress;
+  if (!b || !P) return;
+  var n = 0;
+  try { n = P.get().goals.filter(function (g) { return !(g.view && g.view.done); }).length; } catch (e) { return; }
+  if (!n) return;
+  b.textContent = String(n);
+  b.hidden = false;
+  var a = b.closest('a');
+  if (a) a.setAttribute('aria-label', 'My goals, ' + n + ' in progress');
+})();
